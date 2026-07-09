@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Personalized English Lessons | دروس إنجليزي خاصة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-deep:#0B1F3A;
+    --navy-mid:#14315C;
+    --navy-soft:#1F3F6B;
+    --gold:#C9A227;
+    --gold-bright:#E0BA3D;
+    --cream:#FAF8F3;
+    --card-white:#FFFFFF;
+    --text-muted:#5C6B7A;
+    --line:#E7E1D4;
+    --green:#3E8B5C;
+    --red:#B84A3E;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--navy-deep);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .ar{
+    font-family:'Tajawal',sans-serif;
+    direction:rtl;
+    unicode-bidi:isolate;
+  }
+  /* ---------- HERO ---------- */
+  .hero{
+    background:radial-gradient(circle at 20% -10%, #16386b 0%, var(--navy-deep) 55%, #081426 100%);
+    color:#fff;
+    padding:76px 24px 56px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::after{
+    content:"";
+    position:absolute;
+    right:-120px;
+    top:-120px;
+    width:340px;
+    height:340px;
+    border-radius:50%;
+    border:1px solid rgba(201,162,39,0.25);
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    right:-40px;
+    top:-40px;
+    width:220px;
+    height:220px;
+    border-radius:50%;
+    border:1px solid rgba(201,162,39,0.35);
+  }
+  .hero-inner{
+    max-width:760px;
+    margin:0 auto;
+    text-align:center;
+    position:relative;
+    z-index:2;
+  }
+  .seal{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:56px;height:56px;
+    border-radius:50%;
+    border:1.5px solid var(--gold);
+    color:var(--gold-bright);
+    font-family:'Fraunces',serif;
+    font-size:16px;
+    font-weight:600;
+    margin-bottom:22px;
+    letter-spacing:0.02em;
+  }
+  .hero h1{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:clamp(34px,5.5vw,54px);
+    line-height:1.08;
+    margin:0 0 6px;
+    letter-spacing:-0.01em;
+  }
+  .hero h1 span{color:var(--gold-bright);}
+  .hero .ar-title{
+    font-size:clamp(22px,3.4vw,30px);
+    font-weight:800;
+    color:var(--gold-bright);
+    margin:2px 0 22px;
+  }
+  .hero p.sub{
+    font-size:16px;
+    color:#C7D2E3;
+    max-width:520px;
+    margin:0 auto 28px;
+    line-height:1.65;
+  }
+  .hero p.sub .ar{display:block;color:#9FB0C9;font-size:15px;margin-top:6px;}
+  .hero-meta{
+    display:flex;
+    gap:28px;
+    justify-content:center;
+    flex-wrap:wrap;
+    font-size:13px;
+    color:#93A4BE;
+    letter-spacing:0.03em;
+    text-transform:uppercase;
+    margin-bottom:30px;
+  }
+  .hero-meta b{color:var(--gold-bright);font-weight:700;display:block;font-size:20px;font-family:'Fraunces',serif;letter-spacing:0;text-transform:none;}
+
+  .hero-nav{
+    display:flex;
+    gap:10px;
+    justify-content:center;
+    flex-wrap:wrap;
+    position:relative;
+    z-index:2;
+  }
+  .hero-nav a{
+    font-size:12.5px;
+    color:#E0BA3D;
+    text-decoration:none;
+    border:1px solid rgba(201,162,39,0.4);
+    padding:8px 16px;
+    border-radius:999px;
+    letter-spacing:0.02em;
+    transition:all .2s ease;
+  }
+  .hero-nav a:hover{background:var(--gold);border-color:var(--gold);color:var(--navy-deep);}
+
+  .us-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-size:11px;
+    color:#9FB0C9;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    margin-bottom:14px;
+    position:relative;
+    z-index:2;
+  }
+  .us-badge b{color:var(--gold-bright);font-weight:700;}
+
+  /* ---------- SCROLL REVEAL ---------- */
+  .reveal{
+    opacity:0;
+    transform:translateY(16px);
+    transition:opacity .6s ease, transform .6s ease;
+  }
+  .reveal.in{
+    opacity:1;
+    transform:translateY(0);
+  }
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1;transform:none;transition:none;}
+  }
+
+  /* ---------- PRONUNCIATION CLINIC ---------- */
+  .pron-wrap{
+    max-width:820px;
+    margin:0 auto;
+    padding:36px 18px 30px;
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+  }
+  .pron-card{
+    background:var(--card-white);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:24px 24px 20px;
+  }
+  .pron-card .pron-head{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-bottom:6px;
+  }
+  .pron-card .pron-icon{
+    width:40px;height:40px;
+    border-radius:50%;
+    background:var(--navy-deep);
+    color:var(--gold-bright);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;
+    font-weight:700;
+    font-size:15px;
+    flex:0 0 auto;
+  }
+  .pron-card .pron-title{
+    font-family:'Fraunces',serif;
+    font-size:18px;
+    font-weight:600;
+    color:var(--navy-deep);
+  }
+  .pron-card .pron-title .ar{
+    display:block;
+    font-family:'Tajawal',sans-serif;
+    font-size:13.5px;
+    font-weight:500;
+    color:var(--text-muted);
+    margin-top:2px;
+  }
+  .pron-card .tip{
+    font-size:13.5px;
+    color:var(--text-muted);
+    line-height:1.6;
+    margin:12px 0 16px;
+    padding:12px 14px;
+    background:var(--cream);
+    border-radius:10px;
+    border-left:3px solid var(--gold);
+  }
+  .pairs{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:10px;
+  }
+  .pair{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    background:var(--cream);
+    border-radius:10px;
+    padding:10px 14px;
+  }
+  .pair .side{
+    flex:1;
+    text-align:center;
+  }
+  .pair .side.wrong .word{color:var(--red);text-decoration:line-through;text-decoration-color:rgba(184,74,62,0.4);}
+  .pair .side.right .word{color:var(--green);font-weight:700;}
+  .pair .side .word{
+    font-size:15px;
+    font-weight:600;
+    display:block;
+  }
+  .pair .side .say{
+    font-size:12.5px;
+    color:var(--gold);
+    margin-top:3px;
+  }
+  .pair .arrow{color:var(--text-muted);font-size:14px;flex:0 0 auto;}
+
+  /* ---------- GRAMMAR TRAPS ---------- */
+  .grammar-wrap{
+    max-width:820px;
+    margin:0 auto;
+    padding:36px 18px 30px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:18px;
+  }
+  .grammar-card{
+    background:var(--card-white);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:22px;
+  }
+  .grammar-card .g-title{
+    font-family:'Fraunces',serif;
+    font-size:17px;
+    font-weight:600;
+    color:var(--navy-deep);
+    margin-bottom:2px;
+  }
+  .grammar-card .g-title-ar{
+    font-family:'Tajawal',sans-serif;
+    font-size:13.5px;
+    color:var(--text-muted);
+    margin-bottom:16px;
+  }
+  .g-compare{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    margin-bottom:14px;
+  }
+  .g-line{
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    padding:10px 12px;
+    border-radius:10px;
+    font-size:14.5px;
+    line-height:1.5;
+  }
+  .g-line.no{background:rgba(184,74,62,0.08);color:var(--red);}
+  .g-line.yes{background:rgba(62,139,92,0.08);color:var(--green);}
+  .g-line .mark{font-weight:800;flex:0 0 auto;}
+  .g-explain{
+    font-size:13px;
+    color:var(--text-muted);
+    line-height:1.6;
+    margin-bottom:10px;
+  }
+  .g-explain .ar{color:var(--navy-mid);font-weight:500;display:block;margin-top:4px;}
+
+  /* ---------- SECTION HEADERS ---------- */
+  .section-head{
+    max-width:720px;
+    margin:0 auto;
+    padding:64px 18px 0;
+    text-align:center;
+    scroll-margin-top:20px;
+  }
+  .section-head .eyebrow{
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--gold);
+    font-weight:700;
+    margin-bottom:10px;
+  }
+  .section-head h2{
+    font-family:'Fraunces',serif;
+    font-size:clamp(26px,4vw,34px);
+    font-weight:600;
+    margin:0 0 6px;
+    color:var(--navy-deep);
+  }
+  .section-head .ar-h{
+    font-size:17px;
+    color:var(--text-muted);
+    font-weight:700;
+  }
+  .section-head p.desc{
+    color:var(--text-muted);
+    font-size:14.5px;
+    max-width:480px;
+    margin:14px auto 0;
+    line-height:1.6;
+  }
+
+  /* ---------- PROGRESS TRACK ---------- */
+  .track-wrap{
+    background:var(--navy-mid);
+    padding:18px 16px;
+    position:sticky;
+    top:0;
+    z-index:10;
+    box-shadow:0 4px 18px rgba(0,0,0,0.15);
+  }
+  .track{
+    max-width:900px;
+    margin:0 auto;
+    display:flex;
+    gap:8px;
+    overflow-x:auto;
+    padding-bottom:2px;
+  }
+  .track::-webkit-scrollbar{height:0;}
+  .track a{
+    flex:0 0 auto;
+    width:34px;height:34px;
+    border-radius:50%;
+    border:1px solid rgba(201,162,39,0.4);
+    color:#C7D2E3;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:13px;
+    font-weight:600;
+    text-decoration:none;
+    transition:all .2s ease;
+  }
+  .track a:hover{background:var(--gold);border-color:var(--gold);color:var(--navy-deep);}
+
+  /* ---------- THREAD (lesson chat bubbles) ---------- */
+  .thread{
+    max-width:720px;
+    margin:0 auto;
+    padding:36px 18px 30px;
+  }
+  .thread-label{
+    text-align:center;
+    color:var(--text-muted);
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    margin-bottom:36px;
+  }
+  .day{
+    margin-bottom:40px;
+    scroll-margin-top:80px;
+  }
+  .day-flag{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-bottom:16px;
+  }
+  .day-flag .num{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:14px;
+    color:var(--navy-deep);
+    background:var(--gold-bright);
+    width:30px;height:30px;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    flex:0 0 auto;
+  }
+  .day-flag .title{
+    font-family:'Fraunces',serif;
+    font-size:17px;
+    font-weight:600;
+    color:var(--navy-deep);
+  }
+  .day-flag .title .ar{
+    display:block;
+    font-family:'Tajawal',sans-serif;
+    font-size:14px;
+    font-weight:500;
+    color:var(--text-muted);
+    margin-top:2px;
+  }
+
+  .bubble{
+    border-radius:18px;
+    padding:18px 20px;
+    margin-bottom:10px;
+    max-width:88%;
+    box-shadow:0 1px 2px rgba(11,31,58,0.06);
+  }
+  .bubble.coach{
+    background:var(--navy-deep);
+    color:#fff;
+    border-bottom-left-radius:4px;
+    margin-right:auto;
+  }
+  .bubble.coach .en{
+    font-size:16.5px;
+    line-height:1.55;
+    font-weight:500;
+  }
+  .bubble.coach .task{
+    display:inline-block;
+    margin-top:10px;
+    font-size:11.5px;
+    color:var(--gold-bright);
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    border-top:1px solid rgba(255,255,255,0.15);
+    padding-top:10px;
+  }
+  .bubble.reply{
+    background:var(--card-white);
+    border:1px solid var(--line);
+    border-bottom-right-radius:4px;
+    margin-left:auto;
+  }
+  .bubble.reply .ar{
+    font-size:17px;
+    font-weight:700;
+    color:var(--navy-deep);
+    line-height:1.7;
+  }
+  .sound-it{
+    max-width:88%;
+    margin:0 0 14px;
+    padding:11px 20px;
+    background:transparent;
+    border-left:2px solid var(--gold);
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+  }
+  .sound-it .label{
+    font-family:'Inter',sans-serif;
+    font-size:10.5px;
+    color:var(--text-muted);
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    flex:0 0 auto;
+  }
+  .sound-it .ar{
+    font-size:15.5px;
+    color:var(--gold);
+    font-weight:500;
+  }
+
+  /* ---------- WORD CARDS (prepositions / modals) ---------- */
+  .words-wrap{
+    max-width:900px;
+    margin:0 auto;
+    padding:36px 18px 30px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:18px;
+  }
+  .word-card{
+    background:var(--card-white);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:22px 22px 18px;
+  }
+  .word-card .headword{
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    margin-bottom:14px;
+  }
+  .word-card .headword .w{
+    font-family:'Fraunces',serif;
+    font-size:22px;
+    font-weight:700;
+    color:var(--navy-deep);
+  }
+  .word-card .headword .tag{
+    font-size:11px;
+    color:var(--gold);
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    border:1px solid var(--gold);
+    padding:2px 8px;
+    border-radius:999px;
+  }
+  .use{
+    border-top:1px dashed var(--line);
+    padding:14px 0;
+  }
+  .use:first-of-type{border-top:none;padding-top:0;}
+  .use .meaning{
+    font-size:11.5px;
+    color:var(--text-muted);
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+    margin-bottom:6px;
+  }
+  .use .en-ex{
+    font-size:15px;
+    color:var(--navy-deep);
+    font-weight:600;
+    margin-bottom:8px;
+    line-height:1.5;
+  }
+  .use .sound-row{
+    display:flex;
+    gap:8px;
+    align-items:baseline;
+    margin-bottom:6px;
+  }
+  .use .sound-row .lab{
+    font-size:10px;
+    color:var(--text-muted);
+    text-transform:uppercase;
+    flex:0 0 auto;
+  }
+  .use .sound-row .ar{
+    font-size:14px;
+    color:var(--gold);
+    font-weight:500;
+  }
+  .use .mean-row .ar{
+    font-size:15px;
+    color:var(--navy-mid);
+    font-weight:700;
+  }
+
+  /* ---------- QUIZ / SCOREBOARD ---------- */
+  .quiz-wrap{
+    max-width:720px;
+    margin:0 auto;
+    padding:36px 18px 20px;
+  }
+  .scoreboard{
+    background:var(--navy-deep);
+    border-radius:18px;
+    padding:22px 26px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:28px;
+    position:sticky;
+    top:74px;
+    z-index:9;
+    box-shadow:0 8px 24px rgba(11,31,58,0.25);
+  }
+  .scoreboard .lab{
+    color:#93A4BE;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+  }
+  .scoreboard .score{
+    font-family:'Fraunces',serif;
+    font-size:28px;
+    font-weight:700;
+    color:var(--gold-bright);
+  }
+  .scoreboard .reset-btn{
+    background:transparent;
+    border:1px solid rgba(201,162,39,0.5);
+    color:var(--gold-bright);
+    font-size:12px;
+    padding:9px 16px;
+    border-radius:999px;
+    cursor:pointer;
+    font-family:'Inter',sans-serif;
+    transition:all .2s ease;
+  }
+  .scoreboard .reset-btn:hover{background:var(--gold);color:var(--navy-deep);}
+
+  .q-card{
+    background:var(--card-white);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:22px;
+    margin-bottom:16px;
+  }
+  .q-card .q-en{
+    font-size:16px;
+    font-weight:600;
+    color:var(--navy-deep);
+    margin-bottom:16px;
+    line-height:1.55;
+  }
+  .q-card .q-en b{color:var(--gold);}
+  .opts{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .opt-btn{
+    font-family:'Inter',sans-serif;
+    font-size:14px;
+    font-weight:600;
+    background:var(--cream);
+    border:1.5px solid var(--line);
+    color:var(--navy-deep);
+    padding:10px 18px;
+    border-radius:10px;
+    cursor:pointer;
+    transition:all .15s ease;
+  }
+  .opt-btn:hover{border-color:var(--gold);}
+  .opt-btn.correct{background:var(--green);border-color:var(--green);color:#fff;}
+  .opt-btn.wrong{background:var(--red);border-color:var(--red);color:#fff;}
+  .opt-btn:disabled{cursor:default;}
+  .opt-btn:disabled:not(.correct):not(.wrong){opacity:0.45;}
+
+  /* ---------- CONTACT ---------- */
+  .contact-wrap{
+    max-width:560px;
+    margin:0 auto;
+    padding:50px 18px 70px;
+    text-align:center;
+  }
+  .contact-card{
+    background:var(--navy-deep);
+    border-radius:20px;
+    padding:38px 28px;
+    color:#fff;
+    position:relative;
+    overflow:hidden;
+  }
+  .contact-card::after{
+    content:"";
+    position:absolute;
+    right:-60px;bottom:-60px;
+    width:180px;height:180px;
+    border-radius:50%;
+    border:1px solid rgba(201,162,39,0.25);
+  }
+  .contact-card h3{
+    font-family:'Fraunces',serif;
+    font-size:24px;
+    margin:0 0 6px;
+    position:relative;
+    z-index:2;
+  }
+  .contact-card .ar-h3{
+    color:var(--gold-bright);
+    font-size:15px;
+    font-weight:700;
+    margin-bottom:18px;
+    position:relative;
+    z-index:2;
+  }
+  .contact-card p{
+    color:#C7D2E3;
+    font-size:14px;
+    line-height:1.6;
+    margin-bottom:24px;
+    position:relative;
+    z-index:2;
+  }
+  .contact-btns{
+    display:flex;
+    gap:12px;
+    justify-content:center;
+    flex-wrap:wrap;
+    position:relative;
+    z-index:2;
+  }
+  .contact-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    text-decoration:none;
+    font-size:14px;
+    font-weight:700;
+    padding:12px 22px;
+    border-radius:999px;
+  }
+  .contact-btn.whatsapp{background:var(--gold-bright);color:var(--navy-deep);}
+  .contact-btn.call{background:transparent;border:1.5px solid rgba(224,186,61,0.6);color:var(--gold-bright);}
+  .phone-num{
+    margin-top:20px;
+    font-family:'Fraunces',serif;
+    font-size:19px;
+    letter-spacing:0.03em;
+    color:#fff;
+    position:relative;
+    z-index:2;
+  }
+
+  footer{
+    background:var(--navy-deep);
+    color:#8FA0BC;
+    text-align:center;
+    padding:0 20px 46px;
+    font-size:13px;
+  }
+  footer .ar{color:#6E82A2;margin-top:6px;display:block;font-size:13px;}
+  footer .brand{
+    font-family:'Fraunces',serif;
+    color:var(--gold-bright);
+    font-size:16px;
+    margin-bottom:8px;
+  }
+
+  @media (max-width:520px){
+    .bubble{max-width:94%;}
+    .sound-it{max-width:94%;}
+    .scoreboard{top:64px;flex-wrap:wrap;gap:12px;}
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="us-badge"><b>🇺🇸 American English</b> — every "say it" line uses American pronunciation</div>
+    <div class="seal">FE</div>
+    <h1>Personalized <span>English</span> Lessons</h1>
+    <div class="ar-title">دروس إنجليزي خاصة</div>
+    <p class="sub">
+      A running conversation with Tutor Firas — real phrases for real situations, sent the way you'd actually text a friend.
+      <span class="ar">مو دروس جافة، بس محادثة مستمرة مع الأستاذ فراس — جمل تستخدمها فعلاً في حياتك</span>
+    </p>
+    <div class="hero-meta">
+      <div><b>1:1</b>With Tutor Firas</div>
+      <div><b>EN ↔ AR</b>Every phrase</div>
+      <div><b>Say it</b>Not just read it</div>
+    </div>
+    <div class="hero-nav">
+      <a href="#starters">Conversation Starters</a>
+      <a href="#lessons">Lessons</a>
+      <a href="#pronunciation">Pronunciation Clinic</a>
+      <a href="#grammar">Grammar Traps</a>
+      <a href="#words">Words That Matter</a>
+      <a href="#quiz">Quick Check</a>
+      <a href="#contact">Message Tutor Firas</a>
+    </div>
+  </div>
+</section>
+
+<div class="track-wrap">
+  <div class="track" id="track"></div>
+</div>
+
+<!-- CONVERSATION STARTERS -->
+<div class="section-head" id="starters">
+  <div class="eyebrow">First, break the silence</div>
+  <h2>Conversation Starters</h2>
+  <div class="ar-h">كيف تبدأ حديث</div>
+  <p class="desc">The line you say before the "real" conversation even begins. Pick one, keep it in your pocket, use it this week.</p>
+</div>
+<main class="thread" id="starters-thread"></main>
+
+<!-- LESSON THREAD -->
+<div class="section-head" id="lessons">
+  <div class="eyebrow">Then, keep it going</div>
+  <h2>Everyday Situations</h2>
+  <div class="ar-h">مواقف تستخدمها كل يوم</div>
+</div>
+<main class="thread">
+  <p class="thread-label">Scroll the thread — read it like you're chatting with Tutor Firas</p>
+  <div id="days"></div>
+</main>
+
+<!-- PRONUNCIATION CLINIC -->
+<div class="section-head" id="pronunciation">
+  <div class="eyebrow">Sound like it, not just spell it</div>
+  <h2>Pronunciation Clinic</h2>
+  <div class="ar-h">عيادة النطق</div>
+  <p class="desc">The exact sounds that trip up Arabic speakers most — with a quick fix for each, in American English.</p>
+</div>
+<div class="pron-wrap" id="pron-cards"></div>
+
+<!-- GRAMMAR TRAPS -->
+<div class="section-head" id="grammar">
+  <div class="eyebrow">The mistakes almost everyone makes at first</div>
+  <h2>Grammar Traps</h2>
+  <div class="ar-h">أخطاء قواعد شائعة</div>
+  <p class="desc">Patterns that don't exist the same way in Arabic — so they trip up even confident speakers.</p>
+</div>
+<div class="grammar-wrap" id="grammar-cards"></div>
+
+<!-- WORDS THAT MATTER -->
+<div class="section-head" id="words">
+  <div class="eyebrow">The small words that change everything</div>
+  <h2>Words That Matter</h2>
+  <div class="ar-h">كلمات صغيرة وتفرق كبير</div>
+  <p class="desc">To, from, in, on, for, this, that, these, those, could, should, would — where they go, and how the meaning shifts.</p>
+</div>
+<div class="words-wrap" id="word-cards"></div>
+
+<!-- QUICK CHECK QUIZ -->
+<div class="section-head" id="quiz">
+  <div class="eyebrow">Test yourself</div>
+  <h2>Quick Check</h2>
+  <div class="ar-h">اختبر نفسك</div>
+  <p class="desc">10 questions built from the words above. Tap an answer to see if you're right.</p>
+</div>
+<div class="quiz-wrap">
+  <div class="scoreboard">
+    <div>
+      <div class="lab">Score</div>
+      <div class="score" id="score-display">0 / 10</div>
+    </div>
+    <button class="reset-btn" id="reset-quiz">Reset</button>
+  </div>
+  <div id="quiz-questions"></div>
+</div>
+
+<!-- CONTACT -->
+<div class="contact-wrap" id="contact">
+  <div class="contact-card">
+    <h3>Ready for your first lesson?</h3>
+    <div class="ar-h3">جاهز لأول درس؟</div>
+    <p>Message Tutor Firas directly — lessons are built around you, your level, and how you actually talk.
+    <br><span style="color:#9FB0C9;">راسل الأستاذ فراس مباشرة — كل درس مبني عليك أنت</span></p>
+    <div class="contact-btns">
+      <a class="contact-btn whatsapp" href="https://wa.me/966557178070" target="_blank" rel="noopener">WhatsApp Tutor Firas</a>
+      <a class="contact-btn call" href="tel:+966557178070">Call</a>
+    </div>
+    <div class="phone-num">+966 55 717 8070</div>
+  </div>
+</div>
+
+<footer>
+  <div class="brand">Tutor Firas — Personalized English Lessons</div>
+  A little practice every day, straight from a real conversation.
+  <span class="ar">شوي تمرين كل يوم، من محادثة حقيقية</span>
+</footer>
+
+<script>
+/* ---------------- CONVERSATION STARTERS ---------------- */
+const starters = [
+  {
+    title:"Ask what they do",
+    arTitle:"اسأل عن شغله",
+    en:"So, what do you do for work?",
+    task:"A safe opener with almost anyone new",
+    sound:"سو، وات دو يو دو فور ورك؟",
+    ar:"طيب، إيش تشتغل؟"
+  },
+  {
+    title:"Compliment something",
+    arTitle:"جامل شي يعجبك",
+    en:"I really like your [watch] — where did you get it?",
+    task:"Compliments almost always open a conversation",
+    sound:"آي ريلي لايك يور [واتش] — وير ديد يو قت إت؟",
+    ar:"عجبتني [ساعتك] — من وين جبتها؟"
+  },
+  {
+    title:"Check if it's their first time",
+    arTitle:"اسأل إذا أول مرة له",
+    en:"Have you been here before?",
+    task:"Great for events, restaurants, new places",
+    sound:"هاف يو بين هير بيفور؟",
+    ar:"جيت هنا قبل؟"
+  },
+  {
+    title:"Ease into it",
+    arTitle:"ادخل بهدوء",
+    en:"So, how's your day going?",
+    task:"Simple, warm, works basically anywhere",
+    sound:"سو، هاوز يور داي قوينق؟",
+    ar:"طيب، كيف يومك؟"
+  },
+  {
+    title:"Ask about the weekend",
+    arTitle:"اسأل عن خطته",
+    en:"What are you up to this weekend?",
+    task:"Naturally opens the door to plans and hobbies",
+    sound:"وات آر يو أب تو ذيس ويكند؟",
+    ar:"إيش خطتك هالويكند؟"
+  },
+  {
+    title:"Ask where they're from",
+    arTitle:"اسأل من وين هو",
+    en:"Where are you from, originally?",
+    task:"Good for meeting people outside your city",
+    sound:"وير آر يو فروم، أوريجينالي؟",
+    ar:"من وين أصلك؟"
+  }
+];
+
+const startersThread = document.getElementById('starters-thread');
+starters.forEach((d,i)=>{
+  const n = i+1;
+  const div = document.createElement('div');
+  div.className='day';
+  div.innerHTML = `
+    <div class="day-flag">
+      <div class="num">${n}</div>
+      <div class="title">${d.title}<span class="ar">${d.arTitle}</span></div>
+    </div>
+    <div class="bubble coach">
+      <div class="en">${d.en}</div>
+      <div class="task">${d.task}</div>
+    </div>
+    <div class="sound-it">
+      <span class="label">Say it</span>
+      <span class="ar">${d.sound}</span>
+    </div>
+    <div class="bubble reply">
+      <div class="ar">${d.ar}</div>
+    </div>
+  `;
+  startersThread.appendChild(div);
+});
+
+/* ---------------- EVERYDAY SITUATIONS ---------------- */
+const days = [
+  {
+    title:"Introduce yourself",
+    arTitle:"عرّف عن نفسك",
+    en:"Hi, I'm [your name]. Nice to meet you!",
+    task:"Say this out loud to a mirror, 3 times",
+    sound:"هاي، آيم [يور نيم]. نايس تو ميت يو!",
+    ar:"هلا، أنا [اسمك]. تشرفنا!"
+  },
+  {
+    title:"Order like a local",
+    arTitle:"اطلب قهوتك بثقة",
+    en:"Can I get a medium latte, please?",
+    task:"Use this at any coffee shop today",
+    sound:"كان آي قت أ ميديم لاتيه، بليز؟",
+    ar:"ممكن لاتيه وسط، لو سمحت؟"
+  },
+  {
+    title:"Small talk starter",
+    arTitle:"افتح حديث بسيط",
+    en:"It's so hot today, isn't it?",
+    task:"Say it to anyone standing near you",
+    sound:"إتس سو هوت تديّ، إزنت إت؟",
+    ar:"الجو حار اليوم مره، صح؟"
+  },
+  {
+    title:"Text with confidence",
+    arTitle:"راسل بثقة",
+    en:"Hey, are you free later? Let's catch up!",
+    task:"Send this exact text to a friend",
+    sound:"هاي، آر يو فري لايتر؟ ليتس كاتش أب!",
+    ar:"هلا، أنت فاضي بعدين؟ يلا نتقابل!"
+  },
+  {
+    title:"Ask for directions",
+    arTitle:"اسأل عن الطريق",
+    en:"Excuse me, how do I get to the mall from here?",
+    task:"Practice it before your next outing",
+    sound:"إكسكيوز مي، هاو دو آي قت تو ذا مول فروم هير؟",
+    ar:"لو سمحت، كيف أروح المول من هنا؟"
+  },
+  {
+    title:"Job interview opener",
+    arTitle:"افتتاحية المقابلة",
+    en:"Sure, I'm currently studying / working in...",
+    task:"Finish this sentence about yourself out loud",
+    sound:"شور، آيم كارنتلي ستدينق / ووركينق إن...",
+    ar:"أكيد، أنا حالياً أدرس / أشتغل في..."
+  },
+  {
+    title:"Complain politely",
+    arTitle:"اشتكِ بأدب",
+    en:"Sorry to bother you, but this isn't working properly. Can I get a replacement?",
+    task:"Save this for your next return/exchange",
+    sound:"سوري تو بوذر يو، بت ذيس إزنت ووركينق بروبرلي. كان آي قت أ ريبليسمنت؟",
+    ar:"آسف أزعجك، بس هذا مو شغال زين. ممكن أستبدله؟"
+  },
+  {
+    title:"Make plans",
+    arTitle:"رتب خطة",
+    en:"Do you want to grab lunch this weekend?",
+    task:"Text this to a friend before Thursday",
+    sound:"دو يو وانت تو قراب لنش ذيس ويكند؟",
+    ar:"تحب نتغدى مع بعض في الويكند؟"
+  },
+  {
+    title:"Talk about your weekend",
+    arTitle:"احكِ عن ويكندك",
+    en:"I had a really relaxing weekend, I just stayed home and rested.",
+    task:"Say this Sunday morning, out loud",
+    sound:"آي هاد أ ريلي ريلاكسينق ويكند، آي جست ستيد هوم آند رستد.",
+    ar:"الويكند كان مريح مره، بس قعدت البيت واسترحت."
+  },
+  {
+    title:"Give your opinion",
+    arTitle:"أبدِ رأيك",
+    en:"Honestly, I think it's a great idea.",
+    task:"Use it next time someone asks what you think",
+    sound:"أونستلي، آي ثينك إتس أ قريت آيديا.",
+    ar:"بصراحة، أشوفها فكرة حلوة."
+  },
+  {
+    title:"Apologize like you mean it",
+    arTitle:"اعتذر بصدق",
+    en:"I'm really sorry for being late, it won't happen again.",
+    task:"Keep this ready — everyone needs it eventually",
+    sound:"آيم ريلي سوري فور بينق ليت، إت ونت هابن أقين.",
+    ar:"آسف مره على التأخير، ما بتصير مرة ثانية."
+  },
+  {
+    title:"Ask for help",
+    arTitle:"اطلب مساعدة",
+    en:"Could you help me with this, please? I'm a bit stuck.",
+    task:"Use this at work or in class today",
+    sound:"كود يو هلب مي ويذ ذيس، بليز؟ آيم أ بت ستك.",
+    ar:"تقدر تساعدني في هذي؟ أنا متعلق شوي."
+  },
+  {
+    title:"Answer a phone call",
+    arTitle:"رد على مكالمة",
+    en:"Hello, this is [your name] calling. Is this a good time to talk?",
+    task:"Say this before your next English call",
+    sound:"هالو، ذيس إز [يور نيم] كولينق. إز ذيس أ قود تايم تو توك؟",
+    ar:"هلا، معك [اسمك]. الوقت مناسب نتكلم؟"
+  },
+  {
+    title:"Describe your dream job",
+    arTitle:"احكِ عن حلمك",
+    en:"My dream job would be... because I love...",
+    task:"Finish it out loud — no wrong answers",
+    sound:"ماي دريم جوب وود بي... بيكوز آي لف...",
+    ar:"شغلي اللي أحلم فيه هو... لأني أحب..."
+  }
+];
+
+const daysEl = document.getElementById('days');
+const trackEl = document.getElementById('track');
+
+days.forEach((d,i)=>{
+  const n = i+1;
+
+  const trackLink = document.createElement('a');
+  trackLink.href = '#day'+n;
+  trackLink.textContent = n;
+  trackEl.appendChild(trackLink);
+
+  const dayDiv = document.createElement('div');
+  dayDiv.className = 'day';
+  dayDiv.id = 'day'+n;
+  dayDiv.innerHTML = `
+    <div class="day-flag">
+      <div class="num">${n}</div>
+      <div class="title">${d.title}<span class="ar">${d.arTitle}</span></div>
+    </div>
+    <div class="bubble coach">
+      <div class="en">${d.en}</div>
+      <div class="task">${d.task}</div>
+    </div>
+    <div class="sound-it">
+      <span class="label">Say it</span>
+      <span class="ar">${d.sound}</span>
+    </div>
+    <div class="bubble reply">
+      <div class="ar">${d.ar}</div>
+    </div>
+  `;
+  daysEl.appendChild(dayDiv);
+});
+
+/* ---------------- WORDS THAT MATTER ---------------- */
+const wordData = [
+  { w:"To", tag:"preposition", uses:[
+    { meaning:"Direction / destination", en:"I'm going to the gym.", sound:"آيم قوينق تو ذا جم.", ar:"أنا رايح النادي." },
+    { meaning:"Purpose", en:"I called to ask about the price.", sound:"آي كولد تو آسك أباوت ذا برايس.", ar:"اتصلت عشان أسأل عن السعر." }
+  ]},
+  { w:"From", tag:"preposition", uses:[
+    { meaning:"Origin", en:"I'm from Abha.", sound:"آيم فروم أبها.", ar:"أنا من أبها." },
+    { meaning:"Starting point", en:"The store is open from 9 to 5.", sound:"ذا ستور إز أوبن فروم ناين تو فايف.", ar:"المحل فاتح من الساعة ٩ إلى ٥." }
+  ]},
+  { w:"In", tag:"preposition", uses:[
+    { meaning:"Inside a place", en:"The keys are in my bag.", sound:"ذا كيز آر إن ماي باق.", ar:"المفاتيح في شنطتي." },
+    { meaning:"Month / year", en:"I was born in 2005.", sound:"آي واز بورن إن توثاوزند فايف.", ar:"انولدت في ٢٠٠٥." }
+  ]},
+  { w:"On", tag:"preposition", uses:[
+    { meaning:"Surface", en:"Put it on the table.", sound:"بوت إت أون ذا تيبل.", ar:"حطه على الطاولة." },
+    { meaning:"Day / date", en:"I'll see you on Friday.", sound:"آيل سي يو أون فرايدي.", ar:"أشوفك يوم الجمعة." }
+  ]},
+  { w:"For", tag:"preposition", uses:[
+    { meaning:"Purpose / recipient", en:"This gift is for you.", sound:"ذيس قفت إز فور يو.", ar:"هالهدية لك." },
+    { meaning:"Duration", en:"I waited for an hour.", sound:"آي ويتد فور آن آور.", ar:"انتظرت لمدة ساعة." }
+  ]},
+  { w:"That", tag:"pointing / linking", uses:[
+    { meaning:"Pointing at something far", en:"That car is beautiful.", sound:"ذات كار إز بيوتيفل.", ar:"ذيك السيارة حلوة." },
+    { meaning:"Linking an idea", en:"I think that you're right.", sound:"آي ثينك ذات يور رايت.", ar:"أعتقد إنك محق." }
+  ]},
+  { w:"This", tag:"pointing", uses:[
+    { meaning:"Something near", en:"This phone is new.", sound:"ذيس فون إز نيو.", ar:"هذا الجوال جديد." },
+    { meaning:"Right now / current", en:"I'm busy this week.", sound:"آيم بيزي ذيس ويك.", ar:"أنا مشغول هالأسبوع." }
+  ]},
+  { w:"Those", tag:"pointing (plural, far)", uses:[
+    { meaning:"Plural, far away", en:"Those shoes are expensive.", sound:"ذوز شوز آر إكسبنسيف.", ar:"ذيك الأحذية غالية." }
+  ]},
+  { w:"These", tag:"pointing (plural, near)", uses:[
+    { meaning:"Plural, close by", en:"These books are mine.", sound:"ذيز بوكس آر ماين.", ar:"هذي الكتب مالتي." }
+  ]},
+  { w:"Could", tag:"modal verb", uses:[
+    { meaning:"Polite request", en:"Could you open the door?", sound:"كود يو أوبن ذا دور؟", ar:"تقدر تفتح الباب؟" },
+    { meaning:"Possibility", en:"It could rain tomorrow.", sound:"إت كود رين تومورو.", ar:"ممكن تمطر بكرة." }
+  ]},
+  { w:"Should", tag:"modal verb", uses:[
+    { meaning:"Advice", en:"You should drink more water.", sound:"يو شود درينك مور واتر.", ar:"لازم تشرب مويه أكثر." },
+    { meaning:"Expectation", en:"The package should arrive today.", sound:"ذا باكج شود أرايف تودي.", ar:"المفروض الطرد يوصل اليوم." }
+  ]},
+  { w:"Would", tag:"modal verb", uses:[
+    { meaning:"Polite offer", en:"Would you like some tea?", sound:"وود يو لايك سم تي؟", ar:"تحب شاي؟" },
+    { meaning:"Hypothetical (imagined situation)", en:"I would travel if I had time.", sound:"آي وود ترافل إف آي هاد تايم.", ar:"كنت بسافر لو عندي وقت." }
+  ]}
+];
+
+const wordCardsEl = document.getElementById('word-cards');
+wordData.forEach(wd=>{
+  const card = document.createElement('div');
+  card.className='word-card';
+  let usesHtml = '';
+  wd.uses.forEach(u=>{
+    usesHtml += `
+      <div class="use">
+        <div class="meaning">${u.meaning}</div>
+        <div class="en-ex">${u.en}</div>
+        <div class="sound-row"><span class="lab">Say it</span><span class="ar">${u.sound}</span></div>
+        <div class="mean-row"><span class="ar">${u.ar}</span></div>
+      </div>`;
+  });
+  card.innerHTML = `
+    <div class="headword">
+      <div class="w">${wd.w}</div>
+      <div class="tag">${wd.tag}</div>
+    </div>
+    ${usesHtml}
+  `;
+  wordCardsEl.appendChild(card);
+});
+
+/* ---------------- PRONUNCIATION CLINIC ---------------- */
+const pronData = [
+  {
+    icon:"P·B", title:"P vs. B", arTitle:"الفرق بين P و B",
+    tip:"Arabic doesn't have a P sound, so it's natural to swap in a B. For P, push a real puff of air out — hold a tissue near your mouth, it should move.",
+    pairs:[
+      { wrong:"Ben", wrongSound:"بن", right:"Pen", rightSound:"په-ن (بس مع نفخة هوا)" },
+      { wrong:"Bark the car", wrongSound:"بارك ذا كار", right:"Park the car", rightSound:"پارك ذا كار" },
+      { wrong:"Blease", wrongSound:"بليز", right:"Please", rightSound:"پليز" }
+    ]
+  },
+  {
+    icon:"F·V", title:"F vs. V", arTitle:"الفرق بين F و V",
+    tip:"Arabic doesn't have a V sound either, so F often replaces it. For V, let your top teeth touch your bottom lip and buzz — you should feel a vibration.",
+    pairs:[
+      { wrong:"Fery", wrongSound:"فيري", right:"Very", rightSound:"ڤيري (بزّيز بسنانك)" },
+      { wrong:"Fan (as in van)", wrongSound:"فان", right:"Van", rightSound:"ڤان" },
+      { wrong:"Fisit", wrongSound:"فزت", right:"Visit", rightSound:"ڤزت" }
+    ]
+  },
+  {
+    icon:"TH", title:"TH sounds — think / this", arTitle:"صوت TH",
+    tip:"This sound doesn't exist in Arabic, so it often becomes S, Z, T, or D instead. Put your tongue tip lightly between your teeth and blow air (think) or buzz your voice (this).",
+    pairs:[
+      { wrong:"Tink / Sink", wrongSound:"تينك / سينك", right:"Think", rightSound:"ثينك (اللسان بين الأسنان)" },
+      { wrong:"Dis", wrongSound:"دِس", right:"This", rightSound:"ذِس (اللسان بين الأسنان مع صوت)" },
+      { wrong:"Free (as in three)", wrongSound:"فري", right:"Three", rightSound:"ثري" }
+    ]
+  },
+  {
+    icon:"∅", title:"Silent letters", arTitle:"الحروف الصامتة",
+    tip:"Arabic spelling is fully phonetic — every letter is pronounced. English has letters that are written but silent, and skipping them is a very common giveaway.",
+    pairs:[
+      { wrong:"Iss-land", wrongSound:"إس-لاند", right:"Island", rightSound:"آي-لاند (السين ما تنطق)" },
+      { wrong:"Sig-n", wrongSound:"سِق-ن", right:"Sign", rightSound:"ساين (الجي ما تنطق)" },
+      { wrong:"K-now", wrongSound:"ك-ناو", right:"Know", rightSound:"نو (الكاف ما تنطق)" }
+    ]
+  },
+  {
+    icon:"str", title:"Consonant clusters", arTitle:"تجمّع الحروف الساكنة",
+    tip:"Arabic rarely stacks consonants without a vowel between them, so it's natural to slip in an extra vowel sound. Try to jump straight into the cluster without adding anything before it.",
+    pairs:[
+      { wrong:"Espeak", wrongSound:"إسپيك", right:"Speak", rightSound:"سپيك (بدون إي في البداية)" },
+      { wrong:"Sitrong", wrongSound:"سِترونق", right:"Strong", rightSound:"سترونق (الحروف ملزوقة)" },
+      { wrong:"Isport", wrongSound:"إسپورت", right:"Sport", rightSound:"سپورت" }
+    ]
+  }
+];
+
+const pronCardsEl = document.getElementById('pron-cards');
+pronData.forEach(p=>{
+  const card = document.createElement('div');
+  card.className = 'pron-card reveal';
+  let pairsHtml = '';
+  p.pairs.forEach(pr=>{
+    pairsHtml += `
+      <div class="pair">
+        <div class="side wrong"><span class="word">${pr.wrong}</span><span class="say ar">${pr.wrongSound}</span></div>
+        <div class="arrow">→</div>
+        <div class="side right"><span class="word">${pr.right}</span><span class="say ar">${pr.rightSound}</span></div>
+      </div>`;
+  });
+  card.innerHTML = `
+    <div class="pron-head">
+      <div class="pron-icon">${p.icon}</div>
+      <div class="pron-title">${p.title}<span class="ar">${p.arTitle}</span></div>
+    </div>
+    <div class="tip">${p.tip}</div>
+    <div class="pairs">${pairsHtml}</div>
+  `;
+  pronCardsEl.appendChild(card);
+});
+
+/* ---------------- GRAMMAR TRAPS ---------------- */
+const grammarData = [
+  {
+    title:"Don't drop \"to be\"", arTitle:"لا تحذف فعل to be",
+    no:"He happy today.",
+    yes:"He is happy today.",
+    explain:"In Arabic, you don't need a linking verb in the present (\"هو سعيد\" — no \"يكون\" needed). In English, you always need is / am / are.",
+    explainAr:"بالعربي تقول \"هو سعيد\" بدون فعل ربط، بس بالإنجليزي لازم تحط is / am / are دائماً."
+  },
+  {
+    title:"Don't skip \"a / an / the\"", arTitle:"لا تحذف a / an / the",
+    no:"I bought car yesterday.",
+    yes:"I bought a car yesterday.",
+    explain:"Arabic doesn't have a separate word for \"a/an\" — it's built into the noun's form. English always needs it before a singular countable noun.",
+    explainAr:"العربي ما فيه كلمة مستقلة لـ \"a/an\"، بس الإنجليزي يحتاجها قبل أي اسم مفرد يُعد."
+  },
+  {
+    title:"Present perfect vs. past simple", arTitle:"present perfect مقابل past simple",
+    no:"I have seen him yesterday.",
+    yes:"I saw him yesterday.",
+    explain:"If there's a specific past time word (yesterday, last week, in 2020), use the simple past — not \"have/has + verb.\" Save present perfect for \"at some point, unspecified when.\"",
+    explainAr:"إذا فيه وقت محدد في الماضي (يوم أمس، الأسبوع اللي فات) استخدم الماضي البسيط، مو have/has."
+  },
+  {
+    title:"Capitalize names & sentence starts", arTitle:"استخدم الحروف الكبيرة",
+    no:"tomorrow i am visiting sara in riyadh.",
+    yes:"Tomorrow I am visiting Sara in Riyadh.",
+    explain:"Arabic has no capital letters at all, so this one's easy to forget. English capitalizes the start of every sentence, names of people, and place names.",
+    explainAr:"العربي ما فيه حروف كبيرة، فسهل تنسى هذي القاعدة. لازم تكبر أول الجملة وأسماء الناس والأماكن."
+  }
+];
+
+const grammarCardsEl = document.getElementById('grammar-cards');
+grammarData.forEach(g=>{
+  const card = document.createElement('div');
+  card.className = 'grammar-card reveal';
+  card.innerHTML = `
+    <div class="g-title">${g.title}</div>
+    <div class="g-title-ar ar">${g.arTitle}</div>
+    <div class="g-compare">
+      <div class="g-line no"><span class="mark">✕</span><span>${g.no}</span></div>
+      <div class="g-line yes"><span class="mark">✓</span><span>${g.yes}</span></div>
+    </div>
+    <div class="g-explain">${g.explain}<span class="ar">${g.explainAr}</span></div>
+  `;
+  grammarCardsEl.appendChild(card);
+});
+
+/* ---------------- SCROLL REVEAL ---------------- */
+document.querySelectorAll('.day, .word-card, .q-card').forEach(el=>el.classList.add('reveal'));
+const revealObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('in');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold:0.12 });
+document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
+
+const quizData = [
+  { q:"I was born ___ 2005.", opts:["in","on","at"], answer:"in" },
+  { q:"Put the book ___ the table.", opts:["in","on","for"], answer:"on" },
+  { q:"She's ___ Jeddah.", opts:["from","to","for"], answer:"from" },
+  { q:"___ you help me, please?", opts:["Could","Should","Those"], answer:"Could" },
+  { q:"You ___ drink more water — it's good advice.", opts:["should","would","these"], answer:"should" },
+  { q:"___ you like some tea?", opts:["Would","Could","This"], answer:"Would" },
+  { q:"I called ___ ask about the price.", opts:["to","for","in"], answer:"to" },
+  { q:"This gift is ___ you.", opts:["for","to","from"], answer:"for" },
+  { q:"___ shoes over there are expensive.", opts:["Those","These","This"], answer:"Those" },
+  { q:"___ books right here are mine.", opts:["These","Those","That"], answer:"These" }
+];
+
+let score = 0;
+const scoreDisplay = document.getElementById('score-display');
+const quizEl = document.getElementById('quiz-questions');
+
+function renderQuiz(){
+  quizEl.innerHTML = '';
+  score = 0;
+  scoreDisplay.textContent = `0 / ${quizData.length}`;
+  quizData.forEach((item, idx)=>{
+    const qDiv = document.createElement('div');
+    qDiv.className = 'q-card';
+    const qText = item.q.replace('___', '<b>___</b>');
+    let optsHtml = '';
+    item.opts.forEach(o=>{
+      optsHtml += `<button class="opt-btn" data-correct="${o===item.answer}">${o}</button>`;
+    });
+    qDiv.innerHTML = `<div class="q-en">${idx+1}. ${qText}</div><div class="opts">${optsHtml}</div>`;
+    quizEl.appendChild(qDiv);
+  });
+
+  quizEl.querySelectorAll('.q-card').forEach(card=>{
+    const buttons = card.querySelectorAll('.opt-btn');
+    buttons.forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const isCorrect = btn.getAttribute('data-correct') === 'true';
+        buttons.forEach(b=>b.disabled = true);
+        if(isCorrect){
+          btn.classList.add('correct');
+          score++;
+        } else {
+          btn.classList.add('wrong');
+          buttons.forEach(b=>{
+            if(b.getAttribute('data-correct') === 'true') b.classList.add('correct');
+          });
+        }
+        scoreDisplay.textContent = `${score} / ${quizData.length}`;
+      });
+    });
+  });
+}
+
+document.getElementById('reset-quiz').addEventListener('click', renderQuiz);
+renderQuiz();
+</script>
+
+</body>
+</html>
