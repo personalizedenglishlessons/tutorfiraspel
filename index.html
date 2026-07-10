@@ -494,6 +494,121 @@
     font-weight:500;
   }
 
+  /* ---------- VOICE PRACTICE (TTS + speech recognition) ---------- */
+  .voice-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-top:10px;
+  }
+  .voice-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    width:34px;height:34px;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,0.25);
+    background:rgba(255,255,255,0.06);
+    color:#fff;
+    cursor:pointer;
+    font-size:15px;
+    transition:all .18s ease;
+    flex:0 0 auto;
+    padding:0;
+  }
+  .bubble.reply .voice-btn,
+  .word-card .voice-btn,
+  .pron-card .voice-btn{
+    border:1px solid rgba(11,31,58,0.15);
+    background:rgba(11,31,58,0.04);
+    color:var(--navy-deep);
+  }
+  .voice-btn:hover{ background:var(--gold); border-color:var(--gold); color:var(--navy-deep); transform:scale(1.06); }
+  .voice-btn.mic-btn.recording{
+    background:var(--red);
+    border-color:var(--red);
+    color:#fff;
+    animation:mic-pulse 1.1s ease-in-out infinite;
+  }
+  @keyframes mic-pulse{
+    0%{ box-shadow:0 0 0 0 rgba(184,74,62,0.55); }
+    70%{ box-shadow:0 0 0 12px rgba(184,74,62,0); }
+    100%{ box-shadow:0 0 0 0 rgba(184,74,62,0); }
+  }
+  .voice-feedback{
+    font-size:13px;
+    margin-top:8px;
+    padding:8px 12px;
+    border-radius:10px;
+    display:none;
+    line-height:1.5;
+  }
+  .voice-feedback.show{ display:block; }
+  .voice-feedback.good{ background:rgba(62,139,92,0.15); color:#7CD9A0; }
+  .voice-feedback.okay{ background:rgba(201,162,39,0.18); color:var(--gold-bright); }
+  .voice-feedback.retry{ background:rgba(184,74,62,0.18); color:#F0A99E; }
+  .bubble.reply .voice-feedback.good,.word-card .voice-feedback.good,.pron-card .voice-feedback.good{ color:var(--green); }
+  .bubble.reply .voice-feedback.okay,.word-card .voice-feedback.okay,.pron-card .voice-feedback.okay{ color:#8A6A10; }
+  .bubble.reply .voice-feedback.retry,.word-card .voice-feedback.retry,.pron-card .voice-feedback.retry{ color:var(--red); }
+
+  /* ---------- STATS BAR ---------- */
+  .stats-bar{
+    background:var(--navy-mid);
+    padding:26px 18px;
+  }
+  .stats-inner{
+    max-width:720px;
+    margin:0 auto;
+    display:flex;
+    justify-content:center;
+    gap:48px;
+    flex-wrap:wrap;
+    text-align:center;
+  }
+  .stat{ color:#fff; }
+  .stat .num{
+    font-family:'Fraunces',serif;
+    font-size:clamp(26px,4vw,36px);
+    font-weight:700;
+    color:var(--gold-bright);
+    line-height:1;
+  }
+  .stat .lab{
+    font-size:11.5px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:#9FB0C9;
+    margin-top:6px;
+  }
+  .stat .lab .ar{ display:block; color:#7C8DAA; margin-top:2px; font-size:11px; }
+
+  /* ---------- GOLD UNDERLINE DRAW-IN ---------- */
+  .section-head h2{ position:relative; display:inline-block; padding-bottom:10px; }
+  .section-head h2::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    bottom:0;
+    width:0;
+    height:2px;
+    background:var(--gold);
+    transform:translateX(-50%);
+    transition:width 0.7s ease;
+  }
+  .section-head.in h2::after{ width:56px; }
+
+  /* ---------- HOVER LIFT ---------- */
+  .pron-card,.grammar-card,.word-card{ transition:transform .22s ease, box-shadow .22s ease; }
+  .pron-card:hover,.grammar-card:hover,.word-card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 10px 24px rgba(11,31,58,0.1);
+  }
+
+  /* ---------- STICKY NAV HIDE/SHOW ---------- */
+  .track-wrap{ transition:transform .3s ease; }
+  .track-wrap.hide-nav{ transform:translateY(-100%); }
+
   /* ---------- WORD CARDS (prepositions / modals) ---------- */
   .words-wrap{
     max-width:900px;
@@ -631,6 +746,13 @@
     line-height:1.55;
   }
   .q-card .q-en b{color:var(--gold);}
+  .q-card .q-ar{
+    font-size:13.5px;
+    color:var(--text-muted);
+    margin-bottom:16px;
+    margin-top:-8px;
+    display:block;
+  }
   .opts{
     display:flex;
     gap:10px;
@@ -781,7 +903,24 @@
   </div>
 </section>
 
-<div class="track-wrap">
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat">
+      <div class="num" data-count="25">0</div>
+      <div class="lab">Real-Life Lessons<span class="ar">درس مبني على مواقف حقيقية</span></div>
+    </div>
+    <div class="stat">
+      <div class="num" data-count="14">0</div>
+      <div class="lab">Conversation Starters<span class="ar">طريقة تبدأ فيها حديث</span></div>
+    </div>
+    <div class="stat">
+      <div class="num" data-count="100" data-suffix="%">0%</div>
+      <div class="lab">American Pronunciation<span class="ar">نطق أمريكي أصلي</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="track-wrap" id="track-wrap">
   <div class="track" id="track"></div>
 </div>
 
@@ -837,13 +976,13 @@
   <div class="eyebrow">Test yourself</div>
   <h2>Quick Check</h2>
   <div class="ar-h">اختبر نفسك</div>
-  <p class="desc">10 questions built from the words above. Tap an answer to see if you're right.</p>
+  <p class="desc">Questions built from everything above — starters, lessons, and words. Tap an answer to see if you're right, and check the Arabic if you get stuck.</p>
 </div>
 <div class="quiz-wrap">
   <div class="scoreboard">
     <div>
       <div class="lab">Score</div>
-      <div class="score" id="score-display">0 / 10</div>
+      <div class="score" id="score-display">0 / 0</div>
     </div>
     <button class="reset-btn" id="reset-quiz">Reset</button>
   </div>
@@ -872,6 +1011,119 @@
 </footer>
 
 <script>
+/* ---------------- VOICE PRACTICE ENGINE (TTS + speech recognition) ---------------- */
+let americanVoice = null;
+function loadVoices(){
+  if(!('speechSynthesis' in window)) return;
+  const voices = window.speechSynthesis.getVoices();
+  americanVoice = voices.find(v=>v.lang==='en-US' && /Samantha|Alex|Google US/.test(v.name))
+    || voices.find(v=>v.lang==='en-US')
+    || null;
+}
+if('speechSynthesis' in window){
+  loadVoices();
+  window.speechSynthesis.onvoiceschanged = loadVoices;
+}
+
+function voiceRowHTML(text){
+  const safe = String(text).replace(/&/g,'&amp;').replace(/"/g,'&quot;');
+  return `<div class="voice-row" data-text="${safe}">
+      <button type="button" class="voice-btn speak-btn" title="Listen / اسمع">🔊</button>
+      <button type="button" class="voice-btn mic-btn" title="Practice / تمرّن">🎙️</button>
+    </div>
+    <div class="voice-feedback"></div>`;
+}
+
+function escapeHtml(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function speakText(text){
+  if(!('speechSynthesis' in window)){
+    alert("Text-to-speech isn't supported in this browser. Try Chrome or Safari.");
+    return;
+  }
+  const clean = text.replace(/\[|\]/g,'');
+  const utter = new SpeechSynthesisUtterance(clean);
+  utter.lang = 'en-US';
+  utter.rate = 0.92;
+  if(americanVoice) utter.voice = americanVoice;
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(utter);
+}
+
+function normalizeSpeech(s){
+  return s.toLowerCase().replace(/\[[^\]]*\]/g,'').replace(/[^\w\s']/g,'').trim();
+}
+
+function compareSpeech(target, said){
+  const t = normalizeSpeech(target).split(/\s+/).filter(Boolean);
+  const s = normalizeSpeech(said).split(/\s+/).filter(Boolean);
+  if(t.length===0) return 0;
+  const sCopy = [...s];
+  let matched = 0;
+  t.forEach(w=>{
+    const idx = sCopy.indexOf(w);
+    if(idx>-1){ matched++; sCopy.splice(idx,1); }
+  });
+  return matched / t.length;
+}
+
+function practiceSpeech(target, feedbackEl, btn){
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SR){
+    feedbackEl.className = 'voice-feedback show retry';
+    feedbackEl.innerHTML = "Speech recognition isn't supported in this browser — try Chrome.<span class=\"ar\" style=\"display:block;margin-top:4px;\">التعرف الصوتي مو مدعوم بهذا المتصفح، جرّب كروم</span>";
+    return;
+  }
+  if(btn.classList.contains('recording')) return;
+  const recognition = new SR();
+  recognition.lang = 'en-US';
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
+  btn.classList.add('recording');
+  feedbackEl.className = 'voice-feedback show okay';
+  feedbackEl.textContent = 'Listening… speak now / تكلم الحين';
+
+  recognition.onresult = function(e){
+    const said = e.results[0][0].transcript;
+    const score = compareSpeech(target, said);
+    btn.classList.remove('recording');
+    if(score >= 0.75){
+      feedbackEl.className = 'voice-feedback show good';
+      feedbackEl.innerHTML = `✅ Great! Heard: "${escapeHtml(said)}"<span class="ar" style="display:block;margin-top:4px;">ممتاز! نطق واضح</span>`;
+    } else if(score >= 0.4){
+      feedbackEl.className = 'voice-feedback show okay';
+      feedbackEl.innerHTML = `🟡 Close. Heard: "${escapeHtml(said)}" — try again, a bit slower.<span class="ar" style="display:block;margin-top:4px;">قريب، بس جرّب مرة ثانية بهدوء</span>`;
+    } else {
+      feedbackEl.className = 'voice-feedback show retry';
+      feedbackEl.innerHTML = `🔁 Heard: "${escapeHtml(said)}" — doesn't quite match yet.<span class="ar" style="display:block;margin-top:4px;">ما تطابقت العبارة، حاول مرة ثانية</span>`;
+    }
+  };
+  recognition.onerror = function(){
+    btn.classList.remove('recording');
+    feedbackEl.className = 'voice-feedback show retry';
+    feedbackEl.innerHTML = "Mic error — check microphone permission.<span class=\"ar\" style=\"display:block;margin-top:4px;\">فيه مشكلة بالمايك، تأكد من الصلاحية</span>";
+  };
+  recognition.onend = function(){ btn.classList.remove('recording'); };
+  recognition.start();
+}
+
+document.addEventListener('click', function(e){
+  const speakBtn = e.target.closest('.speak-btn');
+  if(speakBtn){
+    const row = speakBtn.closest('.voice-row');
+    speakText(row.dataset.text);
+    return;
+  }
+  const micBtn = e.target.closest('.mic-btn');
+  if(micBtn){
+    const row = micBtn.closest('.voice-row');
+    const feedbackEl = row.nextElementSibling;
+    practiceSpeech(row.dataset.text, feedbackEl, micBtn);
+  }
+});
+
 /* ---------------- CONVERSATION STARTERS ---------------- */
 const starters = [
   {
@@ -921,6 +1173,70 @@ const starters = [
     task:"Good for meeting people outside your city",
     sound:"وير آر يو فروم، أوريجينالي؟",
     ar:"من وين أصلك؟"
+  },
+  {
+    title:"Share your opinion",
+    arTitle:"قول رأيك بصراحة",
+    en:"Honestly, I don't think that's the best idea.",
+    task:"Use this when you disagree, but want to stay polite",
+    sound:"أونستلي، آي دونت ثينك ذاتس ذا بست آيديا.",
+    ar:"بصراحة، ما أشوفها أحسن فكرة."
+  },
+  {
+    title:"Disagree politely",
+    arTitle:"خالف الرأي بأدب",
+    en:"I see your point, but I look at it a bit differently.",
+    task:"Keeps a disagreement respectful, not awkward",
+    sound:"آي سي يور بوينت، بت آي لوك أت إت أ بت ديفرنتلي.",
+    ar:"أفهم وجهة نظرك، بس أنا أشوفها بطريقة ثانية شوي."
+  },
+  {
+    title:"Negotiate the price",
+    arTitle:"فاوض على السعر",
+    en:"Is there any flexibility on the price?",
+    task:"Say this at markets, shops, or when booking services",
+    sound:"إز ذير إني فلكسبيليتي أون ذا برايس؟",
+    ar:"فيه مجال تنزلون السعر شوي؟"
+  },
+  {
+    title:"Give honest feedback",
+    arTitle:"أعطِ رأيك الصادق",
+    en:"Can I be honest with you about something?",
+    task:"A respectful way to open up a tough conversation",
+    sound:"كان آي بي أونست ويذ يو أباوت سمثينق؟",
+    ar:"أقدر أكون صريح معك بشي؟"
+  },
+  {
+    title:"Ask for advice",
+    arTitle:"اطلب نصيحة",
+    en:"What would you do in my situation?",
+    task:"Shows you value the other person's opinion",
+    sound:"وات وود يو دو إن ماي سيتشوايشن؟",
+    ar:"إيش كنت بتسوي لو كنت مكاني؟"
+  },
+  {
+    title:"Bring up the news",
+    arTitle:"افتح حديث عن خبر",
+    en:"Did you hear about that? Pretty crazy, right?",
+    task:"An easy way to spark conversation with anyone",
+    sound:"ديد يو هير أباوت ذات؟ بريتي كريزي، رايت؟",
+    ar:"سمعت عن الخبر؟ غريب مره، صح؟"
+  },
+  {
+    title:"Encourage someone",
+    arTitle:"شجّع شخص",
+    en:"Don't worry, it'll work out — you've got this.",
+    task:"A warm line for when a friend is stressed",
+    sound:"دونت وري، إتل ورك آوت — يوف قوت ذيس.",
+    ar:"لا تشيل هم، بتنحل بإذن الله — أنت قادر."
+  },
+  {
+    title:"Stay in touch",
+    arTitle:"حافظ على التواصل",
+    en:"It was great meeting you — let's stay in touch.",
+    task:"Perfect for networking events or new work contacts",
+    sound:"إت واز قريت ميتينق يو — ليتس ستاي إن تاتش.",
+    ar:"سعدت بلقائك — خلنا نتواصل بعدها."
   }
 ];
 
@@ -937,6 +1253,7 @@ starters.forEach((d,i)=>{
     <div class="bubble coach">
       <div class="en">${d.en}</div>
       <div class="task">${d.task}</div>
+      ${voiceRowHTML(d.en)}
     </div>
     <div class="sound-it">
       <span class="label">Say it</span>
@@ -1062,6 +1379,94 @@ const days = [
     task:"Finish it out loud — no wrong answers",
     sound:"ماي دريم جوب وود بي... بيكوز آي لف...",
     ar:"شغلي اللي أحلم فيه هو... لأني أحب..."
+  },
+  {
+    title:"Describe symptoms to a doctor",
+    arTitle:"اوصف حالتك للدكتور",
+    en:"I've had a headache since yesterday, and I feel a bit dizzy.",
+    task:"Practice this before any doctor's appointment",
+    sound:"آيف هاد أ هيدايك سنس يستردي، آند آي فيل أ بت ديزي.",
+    ar:"عندي صداع من أمس، وأحس بدوخة شوي."
+  },
+  {
+    title:"Decline an invitation",
+    arTitle:"اعتذر عن دعوة بلطف",
+    en:"Thanks so much for the invite, but I can't make it this time.",
+    task:"Polite, warm, and doesn't need a long excuse",
+    sound:"ثانكس سو مچ فور ذا إنفايت، بت آي كانت ميك إت ذيس تايم.",
+    ar:"مشكور على الدعوة، بس ما بقدر أحضر هالمرة."
+  },
+  {
+    title:"Ask about a discount",
+    arTitle:"اسأل عن عرض أو خصم",
+    en:"Do you have any deals running right now?",
+    task:"Use this in any shop before you buy",
+    sound:"دو يو هاف إني ديلز رنينق رايت ناو؟",
+    ar:"فيه عروض حالياً؟"
+  },
+  {
+    title:"Open a bank account",
+    arTitle:"افتح حساب بنكي",
+    en:"I'd like to open a savings account, please.",
+    task:"Say this at your next bank visit",
+    sound:"آيد لايك تو أوبن أ سيفينقز أكاونت، بليز.",
+    ar:"أبغى أفتح حساب توفير، لو سمحت."
+  },
+  {
+    title:"Ask about a job package",
+    arTitle:"اسأل عن مزايا الوظيفة",
+    en:"What does the salary package include, exactly?",
+    task:"A great question for job interviews",
+    sound:"وات دز ذا سالري باكج إنكلود، إكزاكتلي؟",
+    ar:"إيش يشمل الراتب بالضبط؟"
+  },
+  {
+    title:"Open a presentation",
+    arTitle:"افتتح عرضك التقديمي",
+    en:"Good morning everyone, thanks for being here today.",
+    task:"Say this out loud before your next meeting",
+    sound:"قود مورنينق إفريوان، ثانكس فور بينق هير تودي.",
+    ar:"صباح الخير للجميع، شاكر حضوركم اليوم."
+  },
+  {
+    title:"Ask about family",
+    arTitle:"اسأل عن العائلة",
+    en:"Do you have any kids?",
+    task:"Common small talk once you know someone a bit",
+    sound:"دو يو هاف إني كيدز؟",
+    ar:"عندك أطفال؟"
+  },
+  {
+    title:"Talk about your hobbies",
+    arTitle:"احكِ عن هواياتك",
+    en:"In my free time, I usually play football or read.",
+    task:"Prepare your own version and say it out loud",
+    sound:"إن ماي فري تايم، آي يوجولي بلاي فوتبول أور ريد.",
+    ar:"في وقت فراغي، عادةً ألعب كورة أو أقرا."
+  },
+  {
+    title:"Ask for a raise",
+    arTitle:"اطلب زيادة راتب",
+    en:"I'd like to talk about my salary — do you have a few minutes?",
+    task:"Prepare this line before your next review",
+    sound:"آيد لايك تو توك أباوت ماي سالري — دو يو هاف أ فيو منتس؟",
+    ar:"أبغى أتكلم عن راتبي — عندك دقايق؟"
+  },
+  {
+    title:"Check in at a hotel",
+    arTitle:"سجّل دخولك بالفندق",
+    en:"I have a reservation under [your name].",
+    task:"Have this ready for your next trip",
+    sound:"آي هاف أ ريزرفيشن أندر [يور نيم].",
+    ar:"عندي حجز باسم [اسمك]."
+  },
+  {
+    title:"Talk about future plans",
+    arTitle:"احكِ عن خططك المستقبلية",
+    en:"In five years, I hope to have my own business.",
+    task:"A great one for interviews and deep conversations",
+    sound:"إن فايف يرز، آي هوب تو هاف ماي أون بزنس.",
+    ar:"بعد خمس سنين، أتمنى يكون عندي مشروعي الخاص."
   }
 ];
 
@@ -1087,6 +1492,7 @@ days.forEach((d,i)=>{
     <div class="bubble coach">
       <div class="en">${d.en}</div>
       <div class="task">${d.task}</div>
+      ${voiceRowHTML(d.en)}
     </div>
     <div class="sound-it">
       <span class="label">Say it</span>
@@ -1161,6 +1567,7 @@ wordData.forEach(wd=>{
         <div class="en-ex">${u.en}</div>
         <div class="sound-row"><span class="lab">Say it</span><span class="ar">${u.sound}</span></div>
         <div class="mean-row"><span class="ar">${u.ar}</span></div>
+        ${voiceRowHTML(u.en)}
       </div>`;
   });
   card.innerHTML = `
@@ -1232,7 +1639,10 @@ pronData.forEach(p=>{
       <div class="pair">
         <div class="side wrong"><span class="word">${pr.wrong}</span><span class="say ar">${pr.wrongSound}</span></div>
         <div class="arrow">→</div>
-        <div class="side right"><span class="word">${pr.right}</span><span class="say ar">${pr.rightSound}</span></div>
+        <div class="side right">
+          <span class="word">${pr.right}</span><span class="say ar">${pr.rightSound}</span>
+          ${voiceRowHTML(pr.right)}
+        </div>
       </div>`;
   });
   card.innerHTML = `
@@ -1295,7 +1705,7 @@ grammarData.forEach(g=>{
 });
 
 /* ---------------- SCROLL REVEAL ---------------- */
-document.querySelectorAll('.day, .word-card, .q-card').forEach(el=>el.classList.add('reveal'));
+document.querySelectorAll('.day, .word-card, .q-card, .section-head').forEach(el=>el.classList.add('reveal'));
 const revealObserver = new IntersectionObserver((entries)=>{
   entries.forEach(entry=>{
     if(entry.isIntersecting){
@@ -1306,17 +1716,70 @@ const revealObserver = new IntersectionObserver((entries)=>{
 }, { threshold:0.12 });
 document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
 
+/* ---------------- STATS COUNT-UP ---------------- */
+const statEls = document.querySelectorAll('.stat .num');
+function animateCount(el){
+  const target = parseInt(el.getAttribute('data-count'), 10);
+  const suffix = el.getAttribute('data-suffix') || '';
+  const duration = 1100;
+  const start = performance.now();
+  function tick(now){
+    const progress = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.round(target * eased) + suffix;
+    if(progress < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+const statObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      animateCount(entry.target);
+      statObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold:0.5 });
+statEls.forEach(el=>statObserver.observe(el));
+
+/* ---------------- STICKY NAV HIDE ON SCROLL DOWN ---------------- */
+const trackWrap = document.getElementById('track-wrap');
+let lastScrollY = window.scrollY;
+window.addEventListener('scroll', ()=>{
+  const currentY = window.scrollY;
+  if(currentY > lastScrollY && currentY > 200){
+    trackWrap.classList.add('hide-nav');
+  } else {
+    trackWrap.classList.remove('hide-nav');
+  }
+  lastScrollY = currentY;
+}, { passive:true });
+
 const quizData = [
-  { q:"I was born ___ 2005.", opts:["in","on","at"], answer:"in" },
-  { q:"Put the book ___ the table.", opts:["in","on","for"], answer:"on" },
-  { q:"She's ___ Jeddah.", opts:["from","to","for"], answer:"from" },
-  { q:"___ you help me, please?", opts:["Could","Should","Those"], answer:"Could" },
-  { q:"You ___ drink more water — it's good advice.", opts:["should","would","these"], answer:"should" },
-  { q:"___ you like some tea?", opts:["Would","Could","This"], answer:"Would" },
-  { q:"I called ___ ask about the price.", opts:["to","for","in"], answer:"to" },
-  { q:"This gift is ___ you.", opts:["for","to","from"], answer:"for" },
-  { q:"___ shoes over there are expensive.", opts:["Those","These","This"], answer:"Those" },
-  { q:"___ books right here are mine.", opts:["These","Those","That"], answer:"These" }
+  { q:"I was born ___ 2005.", ar:"انولدت في ٢٠٠٥.", opts:["in","on","at"], answer:"in" },
+  { q:"Put the book ___ the table.", ar:"حط الكتاب على الطاولة.", opts:["in","on","for"], answer:"on" },
+  { q:"She's ___ Jeddah.", ar:"هي من جدة.", opts:["from","to","for"], answer:"from" },
+  { q:"___ you help me, please?", ar:"تقدر تساعدني، لو سمحت؟", opts:["Could","Should","Those"], answer:"Could" },
+  { q:"You ___ drink more water — it's good advice.", ar:"لازم تشرب مويه أكثر — نصيحة حلوة.", opts:["should","would","these"], answer:"should" },
+  { q:"___ you like some tea?", ar:"تحب شاي؟", opts:["Would","Could","This"], answer:"Would" },
+  { q:"I called ___ ask about the price.", ar:"اتصلت عشان أسأل عن السعر.", opts:["to","for","in"], answer:"to" },
+  { q:"This gift is ___ you.", ar:"هالهدية لك.", opts:["for","to","from"], answer:"for" },
+  { q:"___ shoes over there are expensive.", ar:"ذيك الأحذية غالية.", opts:["Those","These","This"], answer:"Those" },
+  { q:"___ books right here are mine.", ar:"هذي الكتب مالتي.", opts:["These","Those","That"], answer:"These" },
+  { q:"I have a ___ under my name.", ar:"عندي حجز باسمي.", opts:["reservation","invitation","package"], answer:"reservation" },
+  { q:"Do you have any deals running right ___?", ar:"فيه عروض حالياً؟", opts:["now","from","for"], answer:"now" },
+  { q:"I'd like ___ open a savings account.", ar:"أبغى أفتح حساب توفير.", opts:["to","for","on"], answer:"to" },
+  { q:"I feel a bit dizzy ___ yesterday.", ar:"أحس بدوخة من أمس.", opts:["since","from","at"], answer:"since" },
+  { q:"Thanks so much ___ the invite.", ar:"مشكور على الدعوة.", opts:["for","to","from"], answer:"for" },
+  { q:"I'd like to talk ___ my salary.", ar:"أبغى أتكلم عن راتبي.", opts:["about","for","to"], answer:"about" },
+  { q:"___ you have any kids?", ar:"عندك أطفال؟", opts:["Do","Does","Is"], answer:"Do" },
+  { q:"In my free time, I usually play football ___ read.", ar:"في وقت فراغي ألعب كورة أو أقرا.", opts:["or","and","so"], answer:"or" },
+  { q:"I see your point, ___ I look at it differently.", ar:"أفهم وجهة نظرك، بس أشوفها بطريقة ثانية.", opts:["but","and","so"], answer:"but" },
+  { q:"Is there any flexibility ___ the price?", ar:"فيه مجال تنزلون السعر؟", opts:["on","in","at"], answer:"on" },
+  { q:"Honestly, I don't think ___ the best idea.", ar:"بصراحة، ما أشوفها أحسن فكرة.", opts:["that's","this","those"], answer:"that's" },
+  { q:"Don't worry, it'll work ___.", ar:"لا تشيل هم، بتنحل بإذن الله.", opts:["out","on","for"], answer:"out" },
+  { q:"In five years, I hope ___ have my own business.", ar:"بعد خمس سنين، أتمنى يكون عندي مشروعي.", opts:["to","for","on"], answer:"to" },
+  { q:"Can I be honest ___ you about something?", ar:"أقدر أكون صريح معك بشي؟", opts:["with","to","for"], answer:"with" },
+  { q:"What does the salary package ___?", ar:"إيش يشمل الراتب؟", opts:["include","includes","including"], answer:"include" }
 ];
 
 let score = 0;
@@ -1335,7 +1798,7 @@ function renderQuiz(){
     item.opts.forEach(o=>{
       optsHtml += `<button class="opt-btn" data-correct="${o===item.answer}">${o}</button>`;
     });
-    qDiv.innerHTML = `<div class="q-en">${idx+1}. ${qText}</div><div class="opts">${optsHtml}</div>`;
+    qDiv.innerHTML = `<div class="q-en">${idx+1}. ${qText}</div><span class="q-ar ar">${item.ar}</span><div class="opts">${optsHtml}</div>`;
     quizEl.appendChild(qDiv);
   });
 
