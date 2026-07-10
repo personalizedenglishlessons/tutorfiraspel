@@ -609,6 +609,97 @@
   .track-wrap{ transition:transform .3s ease; }
   .track-wrap.hide-nav{ transform:translateY(-100%); }
 
+  /* ---------- NAME GATE ---------- */
+  .name-gate{
+    position:fixed;
+    inset:0;
+    background:radial-gradient(circle at 20% -10%, #16386b 0%, var(--navy-deep) 55%, #081426 100%);
+    z-index:1000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+  }
+  .name-gate.hidden{ display:none; }
+  .gate-card{
+    background:var(--card-white);
+    border-radius:20px;
+    padding:38px 30px;
+    max-width:380px;
+    width:100%;
+    text-align:center;
+    box-shadow:0 20px 60px rgba(0,0,0,0.35);
+  }
+  .gate-card .seal{
+    margin:0 auto 18px;
+    border-color:var(--gold);
+    color:var(--gold);
+  }
+  .gate-card h2{
+    font-family:'Fraunces',serif;
+    font-size:22px;
+    color:var(--navy-deep);
+    margin:0 0 4px;
+  }
+  .gate-card .ar-h{
+    font-size:15px;
+    color:var(--text-muted);
+    font-weight:700;
+    margin-bottom:18px;
+  }
+  .gate-card input{
+    width:100%;
+    padding:13px 16px;
+    border-radius:12px;
+    border:1.5px solid var(--line);
+    font-family:'Tajawal','Inter',sans-serif;
+    font-size:15px;
+    text-align:center;
+    margin-bottom:14px;
+    outline:none;
+    box-sizing:border-box;
+  }
+  .gate-card input:focus{ border-color:var(--gold); }
+  .gate-card button{
+    width:100%;
+    padding:13px;
+    border-radius:12px;
+    border:none;
+    background:var(--navy-deep);
+    color:#fff;
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:15px;
+    cursor:pointer;
+    transition:background .2s ease;
+  }
+  .gate-card button:hover{ background:var(--navy-soft); }
+  .gate-card .gate-hint{
+    font-size:12.5px;
+    color:var(--text-muted);
+    margin-top:12px;
+    line-height:1.5;
+  }
+  .greeting-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:rgba(224,186,61,0.14);
+    border:1px solid rgba(224,186,61,0.35);
+    color:var(--gold-bright);
+    padding:8px 16px;
+    border-radius:999px;
+    font-size:13.5px;
+    margin-bottom:18px;
+  }
+  .greeting-badge .reset-name{
+    color:#9FB0C9;
+    text-decoration:underline;
+    cursor:pointer;
+    font-size:11.5px;
+    margin-left:6px;
+  }
+
   /* ---------- WORD CARDS (prepositions / modals) ---------- */
   .words-wrap{
     max-width:900px;
@@ -876,15 +967,30 @@
 </head>
 <body>
 
+<div class="name-gate" id="name-gate">
+  <div class="gate-card">
+    <div class="seal">FE</div>
+    <h2>What's your name?</h2>
+    <div class="ar-h">إيش اسمك؟</div>
+    <input type="text" id="gate-name-input" placeholder="Type your name here / اكتب اسمك هنا" autocomplete="off">
+    <button type="button" id="gate-submit">Start Learning / ابدأ التعلم</button>
+    <div class="gate-hint">Just so Tutor Firas' site knows who's practicing<span style="display:block;">بس عشان الموقع يعرف مين اللي يتمرن</span></div>
+  </div>
+</div>
+
 <section class="hero">
   <div class="hero-inner">
-    <div class="us-badge"><b>🇺🇸 American English</b> — every "say it" line uses American pronunciation</div>
+    <div class="greeting-badge" id="greeting-badge" style="display:none;">
+      <span id="greeting-text"></span>
+      <span class="reset-name" id="reset-name">Not you? / مو أنت؟</span>
+    </div>
+    <div class="us-badge"><b>🇺🇸 American English</b>: every "say it" line uses American pronunciation</div>
     <div class="seal">FE</div>
     <h1>Personalized <span>English</span> Lessons</h1>
     <div class="ar-title">دروس إنجليزي خاصة</div>
     <p class="sub">
-      A running conversation with Tutor Firas — real phrases for real situations, sent the way you'd actually text a friend.
-      <span class="ar">مو دروس جافة، بس محادثة مستمرة مع الأستاذ فراس — جمل تستخدمها فعلاً في حياتك</span>
+      A running conversation with Tutor Firas: real phrases for real situations, sent the way you'd actually text a friend.
+      <span class="ar">مو دروس جافة، بس محادثة مستمرة مع الأستاذ فراس، جمل تستخدمها فعلاً في حياتك</span>
     </p>
     <div class="hero-meta">
       <div><b>1:1</b>With Tutor Firas</div>
@@ -940,7 +1046,7 @@
   <div class="ar-h">مواقف تستخدمها كل يوم</div>
 </div>
 <main class="thread">
-  <p class="thread-label">Scroll the thread — read it like you're chatting with Tutor Firas</p>
+  <p class="thread-label">Scroll the thread, read it like you're chatting with Tutor Firas</p>
   <div id="days"></div>
 </main>
 
@@ -949,7 +1055,7 @@
   <div class="eyebrow">Sound like it, not just spell it</div>
   <h2>Pronunciation Clinic</h2>
   <div class="ar-h">عيادة النطق</div>
-  <p class="desc">The exact sounds that trip up Arabic speakers most — with a quick fix for each, in American English.</p>
+  <p class="desc">The exact sounds that trip up Arabic speakers most, with a quick fix for each, in American English.</p>
 </div>
 <div class="pron-wrap" id="pron-cards"></div>
 
@@ -958,7 +1064,7 @@
   <div class="eyebrow">The mistakes almost everyone makes at first</div>
   <h2>Grammar Traps</h2>
   <div class="ar-h">أخطاء قواعد شائعة</div>
-  <p class="desc">Patterns that don't exist the same way in Arabic — so they trip up even confident speakers.</p>
+  <p class="desc">Patterns that don't exist the same way in Arabic, so they trip up even confident speakers.</p>
 </div>
 <div class="grammar-wrap" id="grammar-cards"></div>
 
@@ -967,7 +1073,7 @@
   <div class="eyebrow">The small words that change everything</div>
   <h2>Words That Matter</h2>
   <div class="ar-h">كلمات صغيرة وتفرق كبير</div>
-  <p class="desc">To, from, in, on, for, this, that, these, those, could, should, would — where they go, and how the meaning shifts.</p>
+  <p class="desc">To, from, in, on, for, this, that, these, those, could, should, would: where they go, and how the meaning shifts.</p>
 </div>
 <div class="words-wrap" id="word-cards"></div>
 
@@ -976,7 +1082,7 @@
   <div class="eyebrow">Test yourself</div>
   <h2>Quick Check</h2>
   <div class="ar-h">اختبر نفسك</div>
-  <p class="desc">Questions built from everything above — starters, lessons, and words. Tap an answer to see if you're right, and check the Arabic if you get stuck.</p>
+  <p class="desc">Questions built from everything above: starters, lessons, and words. Tap an answer to see if you're right, and check the Arabic if you get stuck.</p>
 </div>
 <div class="quiz-wrap">
   <div class="scoreboard">
@@ -994,8 +1100,8 @@
   <div class="contact-card">
     <h3>Ready for your first lesson?</h3>
     <div class="ar-h3">جاهز لأول درس؟</div>
-    <p>Message Tutor Firas directly — lessons are built around you, your level, and how you actually talk.
-    <br><span style="color:#9FB0C9;">راسل الأستاذ فراس مباشرة — كل درس مبني عليك أنت</span></p>
+    <p>Message Tutor Firas directly, lessons are built around you, your level, and how you actually talk.
+    <br><span style="color:#9FB0C9;">راسل الأستاذ فراس مباشرة، كل درس مبني عليك أنت</span></p>
     <div class="contact-btns">
       <a class="contact-btn whatsapp" href="https://wa.me/966557178070" target="_blank" rel="noopener">WhatsApp Tutor Firas</a>
       <a class="contact-btn call" href="tel:+966557178070">Call</a>
@@ -1005,12 +1111,65 @@
 </div>
 
 <footer>
-  <div class="brand">Tutor Firas — Personalized English Lessons</div>
+  <div class="brand">Tutor Firas: Personalized English Lessons</div>
   A little practice every day, straight from a real conversation.
   <span class="ar">شوي تمرين كل يوم، من محادثة حقيقية</span>
 </footer>
 
 <script>
+/* ---------------- NAME GATE ---------------- */
+(function(){
+  const GATE_KEY = 'pel_student_name';
+  const gate = document.getElementById('name-gate');
+  const input = document.getElementById('gate-name-input');
+  const submitBtn = document.getElementById('gate-submit');
+  const badge = document.getElementById('greeting-badge');
+  const greetingText = document.getElementById('greeting-text');
+  const resetLink = document.getElementById('reset-name');
+
+  function showGreeting(name){
+    greetingText.textContent = `Welcome back, ${name} 👋 / هلا ${name} 👋`;
+    badge.style.display = 'inline-flex';
+    gate.classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+
+  function openGate(){
+    gate.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    badge.style.display = 'none';
+    input.value = '';
+    setTimeout(()=>input.focus(), 50);
+  }
+
+  function submitName(){
+    const name = input.value.trim();
+    if(!name){
+      input.style.borderColor = 'var(--red)';
+      input.placeholder = 'Please type your name / لازم تكتب اسمك';
+      return;
+    }
+    try{ localStorage.setItem(GATE_KEY, name); }catch(e){}
+    showGreeting(name);
+  }
+
+  submitBtn.addEventListener('click', submitName);
+  input.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') submitName(); });
+  input.addEventListener('input', ()=>{ input.style.borderColor = ''; });
+  resetLink.addEventListener('click', ()=>{
+    try{ localStorage.removeItem(GATE_KEY); }catch(e){}
+    openGate();
+  });
+
+  let savedName = null;
+  try{ savedName = localStorage.getItem(GATE_KEY); }catch(e){}
+  if(savedName){
+    showGreeting(savedName);
+  } else {
+    openGate();
+  }
+})();
+
 /* ---------------- VOICE PRACTICE ENGINE (TTS + speech recognition) ---------------- */
 let americanVoice = null;
 function loadVoices(){
@@ -1072,8 +1231,8 @@ function compareSpeech(target, said){
 function practiceSpeech(target, feedbackEl, btn){
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   if(!SR){
-    feedbackEl.className = 'voice-feedback show retry';
-    feedbackEl.innerHTML = "Speech recognition isn't supported in this browser — try Chrome.<span class=\"ar\" style=\"display:block;margin-top:4px;\">التعرف الصوتي مو مدعوم بهذا المتصفح، جرّب كروم</span>";
+    feedbackEl.className = 'voice-feedback ar show retry';
+    feedbackEl.innerHTML = "التعرف الصوتي مو مدعوم بهذا المتصفح، جرّب كروم 🎙️";
     return;
   }
   if(btn.classList.contains('recording')) return;
@@ -1082,28 +1241,28 @@ function practiceSpeech(target, feedbackEl, btn){
   recognition.interimResults = false;
   recognition.maxAlternatives = 1;
   btn.classList.add('recording');
-  feedbackEl.className = 'voice-feedback show okay';
-  feedbackEl.textContent = 'Listening… speak now / تكلم الحين';
+  feedbackEl.className = 'voice-feedback ar show okay';
+  feedbackEl.textContent = 'قول الجملة الحين... 🎙️';
 
   recognition.onresult = function(e){
     const said = e.results[0][0].transcript;
     const score = compareSpeech(target, said);
     btn.classList.remove('recording');
     if(score >= 0.75){
-      feedbackEl.className = 'voice-feedback show good';
-      feedbackEl.innerHTML = `✅ Great! Heard: "${escapeHtml(said)}"<span class="ar" style="display:block;margin-top:4px;">ممتاز! نطق واضح</span>`;
+      feedbackEl.className = 'voice-feedback ar show good';
+      feedbackEl.innerHTML = `✅ ممتاز! نطقك واضح، سمعت: "${escapeHtml(said)}"`;
     } else if(score >= 0.4){
-      feedbackEl.className = 'voice-feedback show okay';
-      feedbackEl.innerHTML = `🟡 Close. Heard: "${escapeHtml(said)}" — try again, a bit slower.<span class="ar" style="display:block;margin-top:4px;">قريب، بس جرّب مرة ثانية بهدوء</span>`;
+      feedbackEl.className = 'voice-feedback ar show okay';
+      feedbackEl.innerHTML = `🟡 قريب! سمعت: "${escapeHtml(said)}"، جرّب مرة ثانية بهدوء`;
     } else {
-      feedbackEl.className = 'voice-feedback show retry';
-      feedbackEl.innerHTML = `🔁 Heard: "${escapeHtml(said)}" — doesn't quite match yet.<span class="ar" style="display:block;margin-top:4px;">ما تطابقت العبارة، حاول مرة ثانية</span>`;
+      feedbackEl.className = 'voice-feedback ar show retry';
+      feedbackEl.innerHTML = `🔁 سمعت: "${escapeHtml(said)}"، ما تطابقت العبارة، حاول مرة ثانية`;
     }
   };
   recognition.onerror = function(){
     btn.classList.remove('recording');
-    feedbackEl.className = 'voice-feedback show retry';
-    feedbackEl.innerHTML = "Mic error — check microphone permission.<span class=\"ar\" style=\"display:block;margin-top:4px;\">فيه مشكلة بالمايك، تأكد من الصلاحية</span>";
+    feedbackEl.className = 'voice-feedback ar show retry';
+    feedbackEl.innerHTML = "فيه مشكلة بالمايك، تأكد من الصلاحية 🎤";
   };
   recognition.onend = function(){ btn.classList.remove('recording'); };
   recognition.start();
@@ -1137,10 +1296,10 @@ const starters = [
   {
     title:"Compliment something",
     arTitle:"جامل شي يعجبك",
-    en:"I really like your [watch] — where did you get it?",
+    en:"I really like your [watch], where did you get it?",
     task:"Compliments almost always open a conversation",
-    sound:"آي ريلي لايك يور [واتش] — وير ديد يو قت إت؟",
-    ar:"عجبتني [ساعتك] — من وين جبتها؟"
+    sound:"آي ريلي لايك يور [واتش]، وير ديد يو قت إت؟",
+    ar:"عجبتني [ساعتك]، من وين جبتها؟"
   },
   {
     title:"Check if it's their first time",
@@ -1225,18 +1384,18 @@ const starters = [
   {
     title:"Encourage someone",
     arTitle:"شجّع شخص",
-    en:"Don't worry, it'll work out — you've got this.",
+    en:"Don't worry, it'll work out. You've got this.",
     task:"A warm line for when a friend is stressed",
-    sound:"دونت وري، إتل ورك آوت — يوف قوت ذيس.",
-    ar:"لا تشيل هم، بتنحل بإذن الله — أنت قادر."
+    sound:"دونت وري، إتل ورك آوت. يوف قوت ذيس.",
+    ar:"لا تشيل هم، بتنحل بإذن الله. أنت قادر."
   },
   {
     title:"Stay in touch",
     arTitle:"حافظ على التواصل",
-    en:"It was great meeting you — let's stay in touch.",
+    en:"It was great meeting you. Let's stay in touch.",
     task:"Perfect for networking events or new work contacts",
-    sound:"إت واز قريت ميتينق يو — ليتس ستاي إن تاتش.",
-    ar:"سعدت بلقائك — خلنا نتواصل بعدها."
+    sound:"إت واز قريت ميتينق يو. ليتس ستاي إن تاتش.",
+    ar:"سعدت بلقائك، خلنا نتواصل بعدها."
   }
 ];
 
@@ -1352,7 +1511,7 @@ const days = [
     title:"Apologize like you mean it",
     arTitle:"اعتذر بصدق",
     en:"I'm really sorry for being late, it won't happen again.",
-    task:"Keep this ready — everyone needs it eventually",
+    task:"Keep this ready: everyone needs it eventually",
     sound:"آيم ريلي سوري فور بينق ليت، إت ونت هابن أقين.",
     ar:"آسف مره على التأخير، ما بتصير مرة ثانية."
   },
@@ -1376,7 +1535,7 @@ const days = [
     title:"Describe your dream job",
     arTitle:"احكِ عن حلمك",
     en:"My dream job would be... because I love...",
-    task:"Finish it out loud — no wrong answers",
+    task:"Finish it out loud: no wrong answers",
     sound:"ماي دريم جوب وود بي... بيكوز آي لف...",
     ar:"شغلي اللي أحلم فيه هو... لأني أحب..."
   },
@@ -1447,10 +1606,10 @@ const days = [
   {
     title:"Ask for a raise",
     arTitle:"اطلب زيادة راتب",
-    en:"I'd like to talk about my salary — do you have a few minutes?",
+    en:"I'd like to talk about my salary, do you have a few minutes?",
     task:"Prepare this line before your next review",
-    sound:"آيد لايك تو توك أباوت ماي سالري — دو يو هاف أ فيو منتس؟",
-    ar:"أبغى أتكلم عن راتبي — عندك دقايق؟"
+    sound:"آيد لايك تو توك أباوت ماي سالري، دو يو هاف أ فيو منتس؟",
+    ar:"أبغى أتكلم عن راتبي، عندك دقايق؟"
   },
   {
     title:"Check in at a hotel",
@@ -1584,7 +1743,7 @@ wordData.forEach(wd=>{
 const pronData = [
   {
     icon:"P·B", title:"P vs. B", arTitle:"الفرق بين P و B",
-    tip:"Arabic doesn't have a P sound, so it's natural to swap in a B. For P, push a real puff of air out — hold a tissue near your mouth, it should move.",
+    tip:"Arabic doesn't have a P sound, so it's natural to swap in a B. For P, push a real puff of air out, hold a tissue near your mouth, it should move.",
     pairs:[
       { wrong:"Ben", wrongSound:"بن", right:"Pen", rightSound:"په-ن (بس مع نفخة هوا)" },
       { wrong:"Bark the car", wrongSound:"بارك ذا كار", right:"Park the car", rightSound:"پارك ذا كار" },
@@ -1593,7 +1752,7 @@ const pronData = [
   },
   {
     icon:"F·V", title:"F vs. V", arTitle:"الفرق بين F و V",
-    tip:"Arabic doesn't have a V sound either, so F often replaces it. For V, let your top teeth touch your bottom lip and buzz — you should feel a vibration.",
+    tip:"Arabic doesn't have a V sound either, so F often replaces it. For V, let your top teeth touch your bottom lip and buzz, you should feel a vibration.",
     pairs:[
       { wrong:"Fery", wrongSound:"فيري", right:"Very", rightSound:"ڤيري (بزّيز بسنانك)" },
       { wrong:"Fan (as in van)", wrongSound:"فان", right:"Van", rightSound:"ڤان" },
@@ -1601,7 +1760,7 @@ const pronData = [
     ]
   },
   {
-    icon:"TH", title:"TH sounds — think / this", arTitle:"صوت TH",
+    icon:"TH", title:"TH sounds: think / this", arTitle:"صوت TH",
     tip:"This sound doesn't exist in Arabic, so it often becomes S, Z, T, or D instead. Put your tongue tip lightly between your teeth and blow air (think) or buzz your voice (this).",
     pairs:[
       { wrong:"Tink / Sink", wrongSound:"تينك / سينك", right:"Think", rightSound:"ثينك (اللسان بين الأسنان)" },
@@ -1611,7 +1770,7 @@ const pronData = [
   },
   {
     icon:"∅", title:"Silent letters", arTitle:"الحروف الصامتة",
-    tip:"Arabic spelling is fully phonetic — every letter is pronounced. English has letters that are written but silent, and skipping them is a very common giveaway.",
+    tip:"Arabic spelling is fully phonetic: every letter is pronounced. English has letters that are written but silent, and skipping them is a very common giveaway.",
     pairs:[
       { wrong:"Iss-land", wrongSound:"إس-لاند", right:"Island", rightSound:"آي-لاند (السين ما تنطق)" },
       { wrong:"Sig-n", wrongSound:"سِق-ن", right:"Sign", rightSound:"ساين (الجي ما تنطق)" },
@@ -1662,21 +1821,21 @@ const grammarData = [
     title:"Don't drop \"to be\"", arTitle:"لا تحذف فعل to be",
     no:"He happy today.",
     yes:"He is happy today.",
-    explain:"In Arabic, you don't need a linking verb in the present (\"هو سعيد\" — no \"يكون\" needed). In English, you always need is / am / are.",
+    explain:"In Arabic, you don't need a linking verb in the present (\"هو سعيد\", no \"يكون\" needed). In English, you always need is / am / are.",
     explainAr:"بالعربي تقول \"هو سعيد\" بدون فعل ربط، بس بالإنجليزي لازم تحط is / am / are دائماً."
   },
   {
     title:"Don't skip \"a / an / the\"", arTitle:"لا تحذف a / an / the",
     no:"I bought car yesterday.",
     yes:"I bought a car yesterday.",
-    explain:"Arabic doesn't have a separate word for \"a/an\" — it's built into the noun's form. English always needs it before a singular countable noun.",
+    explain:"Arabic doesn't have a separate word for \"a/an\": it's built into the noun's form. English always needs it before a singular countable noun.",
     explainAr:"العربي ما فيه كلمة مستقلة لـ \"a/an\"، بس الإنجليزي يحتاجها قبل أي اسم مفرد يُعد."
   },
   {
     title:"Present perfect vs. past simple", arTitle:"present perfect مقابل past simple",
     no:"I have seen him yesterday.",
     yes:"I saw him yesterday.",
-    explain:"If there's a specific past time word (yesterday, last week, in 2020), use the simple past — not \"have/has + verb.\" Save present perfect for \"at some point, unspecified when.\"",
+    explain:"If there's a specific past time word (yesterday, last week, in 2020), use the simple past, not \"have/has + verb.\" Save present perfect for \"at some point, unspecified when.\"",
     explainAr:"إذا فيه وقت محدد في الماضي (يوم أمس، الأسبوع اللي فات) استخدم الماضي البسيط، مو have/has."
   },
   {
@@ -1759,7 +1918,7 @@ const quizData = [
   { q:"Put the book ___ the table.", ar:"حط الكتاب على الطاولة.", opts:["in","on","for"], answer:"on" },
   { q:"She's ___ Jeddah.", ar:"هي من جدة.", opts:["from","to","for"], answer:"from" },
   { q:"___ you help me, please?", ar:"تقدر تساعدني، لو سمحت؟", opts:["Could","Should","Those"], answer:"Could" },
-  { q:"You ___ drink more water — it's good advice.", ar:"لازم تشرب مويه أكثر — نصيحة حلوة.", opts:["should","would","these"], answer:"should" },
+  { q:"You ___ drink more water, it's good advice.", ar:"لازم تشرب مويه أكثر، نصيحة حلوة.", opts:["should","would","these"], answer:"should" },
   { q:"___ you like some tea?", ar:"تحب شاي؟", opts:["Would","Could","This"], answer:"Would" },
   { q:"I called ___ ask about the price.", ar:"اتصلت عشان أسأل عن السعر.", opts:["to","for","in"], answer:"to" },
   { q:"This gift is ___ you.", ar:"هالهدية لك.", opts:["for","to","from"], answer:"for" },
