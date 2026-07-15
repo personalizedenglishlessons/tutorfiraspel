@@ -700,6 +700,424 @@
     margin-left:6px;
   }
 
+  /* ---------- STUDENT DASHBOARD ---------- */
+  .dash-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(8,20,38,0.6);
+    backdrop-filter:blur(3px);
+    z-index:900;
+    display:none;
+    align-items:flex-start;
+    justify-content:center;
+    padding:40px 16px;
+    overflow-y:auto;
+  }
+  .dash-overlay.show{ display:flex; }
+  .dash-modal{
+    background:var(--card-white);
+    border-radius:22px;
+    max-width:480px;
+    width:100%;
+    padding:32px 26px 26px;
+    position:relative;
+    box-shadow:0 30px 80px rgba(0,0,0,0.35);
+  }
+  .dash-close{
+    position:absolute;
+    top:18px; right:18px;
+    width:32px;height:32px;
+    border-radius:50%;
+    border:1px solid var(--line);
+    background:transparent;
+    cursor:pointer;
+    font-size:14px;
+    color:var(--text-muted);
+  }
+  .dash-close:hover{ background:var(--line); }
+  .dash-header{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-bottom:24px;
+  }
+  .dash-avatar{
+    width:56px;height:56px;
+    border-radius:50%;
+    background:linear-gradient(135deg, var(--navy-deep), var(--navy-soft));
+    color:var(--gold-bright);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Fraunces',serif;
+    font-size:24px;
+    font-weight:700;
+    flex:0 0 auto;
+  }
+  .dash-name{ font-family:'Fraunces',serif; font-size:19px; color:var(--navy-deep); font-weight:700; }
+  .dash-email{ font-size:12.5px; color:var(--text-muted); margin-top:2px; }
+
+  .dash-stats-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin-bottom:24px;
+  }
+  .dash-stat{
+    background:var(--cream);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:14px 16px;
+    text-align:center;
+  }
+  .dash-stat-num{
+    font-family:'Fraunces',serif;
+    font-size:26px;
+    font-weight:700;
+    color:var(--navy-deep);
+  }
+  .dash-stat-lab{
+    font-size:11px;
+    color:var(--text-muted);
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+    margin-top:4px;
+  }
+  .dash-stat-lab .ar{ display:block; font-size:10.5px; margin-top:2px; }
+
+  .dash-ring-wrap{
+    position:relative;
+    width:140px;
+    height:140px;
+    margin:0 auto 26px;
+  }
+  .dash-ring{ width:100%; height:100%; transform:rotate(-90deg); }
+  .ring-bg{ fill:none; stroke:var(--line); stroke-width:8; }
+  .ring-fill{
+    fill:none;
+    stroke:var(--gold);
+    stroke-width:8;
+    stroke-linecap:round;
+    stroke-dasharray:264;
+    stroke-dashoffset:264;
+    transition:stroke-dashoffset 0.8s ease;
+  }
+  .dash-ring-label{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+  }
+  .dash-ring-pct{ font-family:'Fraunces',serif; font-size:22px; font-weight:700; color:var(--navy-deep); }
+  .dash-ring-sub{ font-size:9.5px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.04em; margin-top:2px; line-height:1.3; }
+
+  .dash-section-title{
+    font-size:13px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+    color:var(--navy-deep);
+    margin:20px 0 10px;
+    padding-top:16px;
+    border-top:1px solid var(--line);
+  }
+  .dash-section-title .ar{ color:var(--gold); font-weight:500; margin-left:6px; text-transform:none; letter-spacing:0; }
+
+  .dash-quiz-list{ display:flex; flex-direction:column; gap:8px; }
+  .dash-quiz-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:var(--cream);
+    border-radius:10px;
+    padding:10px 14px;
+    font-size:13px;
+  }
+  .dash-quiz-row .dq-date{ color:var(--text-muted); }
+  .dash-quiz-row .dq-score{ font-weight:700; color:var(--navy-deep); }
+  .dash-quiz-row .dq-score.good{ color:var(--green); }
+  .dash-empty{ font-size:12.5px; color:var(--text-muted); text-align:center; padding:14px; }
+  .dash-empty .ar{ display:block; margin-top:3px; }
+
+  .dash-edit-form{ display:flex; flex-direction:column; gap:6px; }
+  .dash-edit-form label{ font-size:11.5px; color:var(--text-muted); margin-top:6px; }
+  .dash-edit-form input, .dash-edit-form select{
+    padding:11px 14px;
+    border-radius:10px;
+    border:1.5px solid var(--line);
+    font-family:'Tajawal','Inter',sans-serif;
+    font-size:14px;
+    outline:none;
+  }
+  .dash-edit-form input:focus, .dash-edit-form select:focus{ border-color:var(--gold); }
+  .dash-save-btn{
+    margin-top:14px;
+    padding:13px;
+    border-radius:12px;
+    border:none;
+    background:var(--gold);
+    color:var(--navy-deep);
+    font-weight:700;
+    font-size:14px;
+    cursor:pointer;
+  }
+  .dash-save-btn:hover{ background:var(--gold-bright); }
+  .dash-save-msg{ text-align:center; font-size:12.5px; margin-top:8px; color:var(--green); min-height:16px; }
+  .dash-logout-btn{
+    width:100%;
+    margin-top:18px;
+    padding:11px;
+    border-radius:12px;
+    border:1px solid var(--line);
+    background:transparent;
+    color:var(--red);
+    font-size:13px;
+    cursor:pointer;
+  }
+  .dash-logout-btn:hover{ background:rgba(184,74,62,0.08); }
+
+  /* ---------- DARK MODE ---------- */
+  body.dark-mode{
+    --cream:#0B1420;
+    --card-white:#132238;
+    --navy-deep:#F2F1EA;
+    --text-muted:#9FB0C9;
+    --line:#22344E;
+  }
+  body.dark-mode .hero,
+  body.dark-mode .stats-bar,
+  body.dark-mode .track-wrap{
+    background:var(--navy-mid);
+  }
+  body.dark-mode .bubble.reply{ background:var(--card-white); border-color:var(--line); }
+  body.dark-mode .day-flag .title,
+  body.dark-mode .gate-card h2,
+  body.dark-mode .gate-card{ color:var(--navy-deep); }
+  body.dark-mode .gate-card{ background:var(--card-white); }
+  body.dark-mode .gate-card input{ background:var(--cream); color:var(--navy-deep); }
+
+  /* ---------- FLOATING CONTROL BAR ---------- */
+  .control-bar{
+    position:fixed;
+    bottom:22px;
+    right:18px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    z-index:200;
+  }
+  .control-btn{
+    width:46px;height:46px;
+    border-radius:50%;
+    border:1px solid var(--line);
+    background:var(--card-white);
+    box-shadow:0 6px 18px rgba(11,31,58,0.18);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:19px;
+    cursor:pointer;
+    transition:transform .18s ease;
+    position:relative;
+  }
+  .control-btn:hover{ transform:scale(1.08); }
+  .control-btn.active{ background:var(--gold); border-color:var(--gold); }
+  .control-btn .streak-count{
+    position:absolute;
+    top:-4px; right:-4px;
+    background:var(--red);
+    color:#fff;
+    font-size:10px;
+    font-weight:700;
+    width:18px;height:18px;
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+  }
+
+  /* ---------- PROGRESS BAR ---------- */
+  .progress-wrap{
+    max-width:720px;
+    margin:0 auto;
+    padding:18px 18px 0;
+  }
+  .progress-label{
+    display:flex;
+    justify-content:space-between;
+    font-size:12.5px;
+    color:var(--text-muted);
+    margin-bottom:6px;
+  }
+  .progress-track{
+    height:8px;
+    background:var(--line);
+    border-radius:999px;
+    overflow:hidden;
+  }
+  .progress-fill{
+    height:100%;
+    background:linear-gradient(90deg, var(--gold), var(--gold-bright));
+    width:0%;
+    transition:width .5s ease;
+  }
+
+  /* ---------- LESSON OF THE DAY ---------- */
+  .lotd{
+    max-width:640px;
+    margin:26px auto 0;
+    padding:16px 18px;
+    background:rgba(224,186,61,0.1);
+    border:1px dashed var(--gold);
+    border-radius:14px;
+    text-align:center;
+    color:#fff;
+  }
+  .lotd .lotd-label{
+    font-size:10.5px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--gold-bright);
+    margin-bottom:6px;
+  }
+  .lotd .lotd-en{ font-size:15px; font-weight:600; }
+  .lotd .lotd-ar{ color:#C7D2E3; margin-top:4px; font-size:14px; }
+
+  /* ---------- MARK COMPLETE / FAVORITE / COPY / SHARE (row on each day) ---------- */
+  .day-tools{
+    display:flex;
+    gap:8px;
+    margin-top:10px;
+    flex-wrap:wrap;
+  }
+  .tool-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    font-size:11.5px;
+    padding:7px 12px;
+    border-radius:999px;
+    border:1px solid var(--line);
+    background:var(--card-white);
+    color:var(--text-muted);
+    cursor:pointer;
+    transition:all .18s ease;
+  }
+  .tool-btn:hover{ border-color:var(--gold); color:var(--navy-deep); }
+  .tool-btn.on{ background:var(--gold); border-color:var(--gold); color:var(--navy-deep); font-weight:600; }
+  .day.done .day-flag .num{ background:var(--green); color:#fff; }
+  .day.fav-hidden{ display:none !important; }
+
+  /* ---------- TESTIMONIALS ---------- */
+  .testimonials-wrap{
+    max-width:960px;
+    margin:0 auto;
+    padding:0 18px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(240px,1fr));
+    gap:18px;
+  }
+  .testimonial-card{
+    background:var(--card-white);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:22px;
+  }
+  .testimonial-card .quote{ font-size:14.5px; line-height:1.6; color:var(--navy-deep); margin-bottom:12px; }
+  .testimonial-card .who{ font-size:12.5px; color:var(--gold); font-weight:700; }
+  .testimonial-card .who .ar{ display:block; color:var(--text-muted); font-weight:500; margin-top:2px; }
+
+  /* ---------- LEVEL PLACEMENT QUIZ ---------- */
+  .level-wrap{
+    max-width:640px;
+    margin:0 auto;
+    padding:0 18px;
+  }
+  .level-q{
+    background:var(--card-white);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:18px 20px;
+    margin-bottom:12px;
+  }
+  .level-q .lq-text{ font-size:14.5px; font-weight:600; margin-bottom:12px; }
+  .level-q .lq-opts{ display:flex; flex-direction:column; gap:8px; }
+  .level-q .lq-opt{
+    text-align:left;
+    padding:10px 14px;
+    border-radius:10px;
+    border:1.5px solid var(--line);
+    background:transparent;
+    cursor:pointer;
+    font-size:13.5px;
+    font-family:inherit;
+    color:var(--navy-deep);
+  }
+  .level-q .lq-opt.picked{ border-color:var(--gold); background:rgba(201,162,39,0.12); font-weight:600; }
+  .level-result{
+    display:none;
+    text-align:center;
+    padding:26px 20px;
+    background:var(--navy-deep);
+    border-radius:16px;
+    color:#fff;
+    margin-top:10px;
+  }
+  .level-result.show{ display:block; }
+  .level-result .lvl-badge{
+    font-family:'Fraunces',serif;
+    font-size:24px;
+    color:var(--gold-bright);
+    margin-bottom:8px;
+  }
+  .level-result .lvl-ar{ color:#C7D2E3; margin-bottom:16px; }
+  .level-result .lvl-cta{
+    display:inline-block;
+    background:var(--gold);
+    color:var(--navy-deep);
+    padding:12px 22px;
+    border-radius:999px;
+    font-weight:700;
+    text-decoration:none;
+    font-size:14px;
+  }
+
+  /* ---------- UTILITY BUTTON ROW (print / reminder / share) ---------- */
+  .utility-row{
+    max-width:640px;
+    margin:0 auto;
+    padding:26px 18px 0;
+    display:flex;
+    gap:10px;
+    justify-content:center;
+    flex-wrap:wrap;
+  }
+  .util-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    padding:11px 18px;
+    border-radius:999px;
+    border:1.5px solid var(--line);
+    background:var(--card-white);
+    color:var(--navy-deep);
+    font-size:13px;
+    font-weight:600;
+    cursor:pointer;
+    text-decoration:none;
+  }
+  .util-btn:hover{ border-color:var(--gold); }
+
+  /* ---------- PRINT STYLES ---------- */
+  @media print{
+    .control-bar, .track-wrap, .stats-bar, .name-gate, .voice-row, .voice-feedback,
+    .day-tools, .utility-row, .hero-nav, .us-badge, .level-wrap, .lotd, footer,
+    .contact-wrap, .testimonials-wrap { display:none !important; }
+    body{ background:#fff; color:#000; }
+    .bubble.coach{ background:#f2f2f2 !important; color:#000 !important; }
+  }
+
   /* ---------- WORD CARDS (prepositions / modals) ---------- */
   .words-wrap{
     max-width:900px;
@@ -968,13 +1386,97 @@
 <body>
 
 <div class="name-gate" id="name-gate">
-  <div class="gate-card">
+  <div class="gate-card" id="gate-step-email">
     <div class="seal">FE</div>
-    <h2>What's your name?</h2>
-    <div class="ar-h">إيش اسمك؟</div>
-    <input type="text" id="gate-name-input" placeholder="Type your name here / اكتب اسمك هنا" autocomplete="off">
+    <h2>Welcome, Student</h2>
+    <div class="ar-h">هلا فيك</div>
+    <input type="email" id="gate-email-input" placeholder="Your email / إيميلك" autocomplete="off">
+    <button type="button" id="gate-send-code">Send Login Code / أرسل كود الدخول</button>
+    <div class="gate-hint">No password needed, just a quick code sent to your email<span style="display:block;">ما تحتاج باسورد، بس كود يوصلك على إيميلك</span></div>
+  </div>
+  <div class="gate-card" id="gate-step-code" style="display:none;">
+    <div class="seal">FE</div>
+    <h2>Enter Your Code</h2>
+    <div class="ar-h">أدخل الكود</div>
+    <input type="text" id="gate-code-input" placeholder="6-digit code / الكود المكون من ٦ أرقام" autocomplete="off" inputmode="numeric" maxlength="6">
+    <button type="button" id="gate-verify-code">Verify / تأكيد</button>
+    <div class="gate-hint" id="gate-code-hint">Check your inbox (and spam folder)<span style="display:block;">تفقد إيميلك (وملف السبام)</span></div>
+  </div>
+  <div class="gate-card" id="gate-step-profile" style="display:none;">
+    <div class="seal">FE</div>
+    <h2>One Last Thing</h2>
+    <div class="ar-h">شي أخير</div>
+    <input type="text" id="gate-name-input" placeholder="Your name / اسمك" autocomplete="off">
+    <input type="tel" id="gate-phone-input" placeholder="Phone (optional) / رقم الجوال (اختياري)" autocomplete="off">
     <button type="button" id="gate-submit">Start Learning / ابدأ التعلم</button>
-    <div class="gate-hint">Just so Tutor Firas' site knows who's practicing<span style="display:block;">بس عشان الموقع يعرف مين اللي يتمرن</span></div>
+  </div>
+</div>
+
+<!-- STUDENT DASHBOARD MODAL -->
+<div class="dash-overlay" id="dash-overlay">
+  <div class="dash-modal">
+    <button type="button" class="dash-close" id="dash-close">✕</button>
+    <div class="dash-header">
+      <div class="dash-avatar" id="dash-avatar">S</div>
+      <div>
+        <div class="dash-name" id="dash-display-name">Student</div>
+        <div class="dash-email" id="dash-display-email"></div>
+      </div>
+    </div>
+
+    <div class="dash-stats-grid">
+      <div class="dash-stat">
+        <div class="dash-stat-num" id="dash-streak">0</div>
+        <div class="dash-stat-lab">Day Streak<span class="ar">أيام متتالية</span></div>
+      </div>
+      <div class="dash-stat">
+        <div class="dash-stat-num" id="dash-longest">0</div>
+        <div class="dash-stat-lab">Best Streak<span class="ar">أفضل سلسلة</span></div>
+      </div>
+      <div class="dash-stat">
+        <div class="dash-stat-num" id="dash-completed">0/25</div>
+        <div class="dash-stat-lab">Lessons Done<span class="ar">دروس مكتملة</span></div>
+      </div>
+      <div class="dash-stat">
+        <div class="dash-stat-num" id="dash-favs">0</div>
+        <div class="dash-stat-lab">Favorites<span class="ar">المفضلة</span></div>
+      </div>
+    </div>
+
+    <div class="dash-ring-wrap">
+      <svg viewBox="0 0 100 100" class="dash-ring">
+        <circle cx="50" cy="50" r="42" class="ring-bg"/>
+        <circle cx="50" cy="50" r="42" class="ring-fill" id="dash-ring-fill"/>
+      </svg>
+      <div class="dash-ring-label">
+        <div class="dash-ring-pct" id="dash-ring-pct">0%</div>
+        <div class="dash-ring-sub">Course Progress<span class="ar" style="display:block;">تقدمك بالدورة</span></div>
+      </div>
+    </div>
+
+    <div class="dash-section-title">Quiz History<span class="ar">سجل الاختبارات</span></div>
+    <div class="dash-quiz-list" id="dash-quiz-list">
+      <div class="dash-empty">No quiz attempts yet, take the Quick Check quiz!<span class="ar" style="display:block;">لسا ما سويت اختبار، جرب اختبار Quick Check</span></div>
+    </div>
+
+    <div class="dash-section-title">Edit Your Info<span class="ar">عدّل بياناتك</span></div>
+    <div class="dash-edit-form">
+      <label>Name / الاسم</label>
+      <input type="text" id="dash-edit-name">
+      <label>Phone / رقم الجوال</label>
+      <input type="tel" id="dash-edit-phone" placeholder="Optional / اختياري">
+      <label>Your Level / مستواك</label>
+      <select id="dash-edit-level">
+        <option value="">Not set yet / لسا ما تحدد</option>
+        <option value="Beginner">Beginner / مبتدئ</option>
+        <option value="Intermediate">Intermediate / متوسط</option>
+        <option value="Advanced">Advanced / متقدم</option>
+      </select>
+      <button type="button" class="dash-save-btn" id="dash-save-btn">Save Changes / احفظ التغييرات</button>
+      <div class="dash-save-msg" id="dash-save-msg"></div>
+    </div>
+
+    <button type="button" class="dash-logout-btn" id="dash-logout-btn">Log Out / تسجيل خروج</button>
   </div>
 </div>
 
@@ -982,7 +1484,7 @@
   <div class="hero-inner">
     <div class="greeting-badge" id="greeting-badge" style="display:none;">
       <span id="greeting-text"></span>
-      <span class="reset-name" id="reset-name">Not you? / مو أنت؟</span>
+      <span class="reset-name" id="open-dashboard">My Dashboard / لوحتي</span>
     </div>
     <div class="us-badge"><b>🇺🇸 American English</b>: every "say it" line uses American pronunciation</div>
     <div class="seal">FE</div>
@@ -998,6 +1500,7 @@
       <div><b>Say it</b>Not just read it</div>
     </div>
     <div class="hero-nav">
+      <a href="#level">What's My Level?</a>
       <a href="#starters">Conversation Starters</a>
       <a href="#lessons">Lessons</a>
       <a href="#pronunciation">Pronunciation Clinic</a>
@@ -1006,8 +1509,20 @@
       <a href="#quiz">Quick Check</a>
       <a href="#contact">Message Tutor Firas</a>
     </div>
+    <div class="lotd" id="lotd">
+      <div class="lotd-label">Phrase of the Day / عبارة اليوم</div>
+      <div class="lotd-en" id="lotd-en"></div>
+      <div class="lotd-ar" id="lotd-ar"></div>
+    </div>
   </div>
 </section>
+
+<div class="control-bar">
+  <button type="button" class="control-btn" id="dark-toggle" title="Dark mode / وضع ليلي">🌙</button>
+  <button type="button" class="control-btn" id="streak-btn" title="Your streak / أيامك المتتالية">🔥<span class="streak-count" id="streak-count" style="display:none;">0</span></button>
+  <button type="button" class="control-btn" id="surprise-btn" title="Surprise me / فاجئني">🎲</button>
+  <button type="button" class="control-btn" id="fav-toggle" title="Show favorites only / المفضلة فقط">⭐</button>
+</div>
 
 <div class="stats-bar">
   <div class="stats-inner">
@@ -1026,8 +1541,32 @@
   </div>
 </div>
 
+<div class="progress-wrap">
+  <div class="progress-label">
+    <span>Your progress / تقدمك</span>
+    <span id="progress-count">0 / 25</span>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+</div>
+
 <div class="track-wrap" id="track-wrap">
   <div class="track" id="track"></div>
+</div>
+
+<!-- LEVEL PLACEMENT QUIZ -->
+<div class="section-head" id="level">
+  <div class="eyebrow">Not sure where to start?</div>
+  <h2>What's My Level?</h2>
+  <div class="ar-h">وين مستواي؟</div>
+  <p class="desc">6 quick questions, then message Tutor Firas with your result already filled in.</p>
+</div>
+<div class="level-wrap">
+  <div id="level-questions"></div>
+  <div class="level-result" id="level-result">
+    <div class="lvl-badge" id="lvl-badge"></div>
+    <div class="lvl-ar" id="lvl-ar"></div>
+    <a href="#" class="lvl-cta" id="lvl-cta" target="_blank" rel="noopener">Message Tutor Firas with my result</a>
+  </div>
 </div>
 
 <!-- CONVERSATION STARTERS -->
@@ -1073,7 +1612,7 @@
   <div class="eyebrow">The small words that change everything</div>
   <h2>Words That Matter</h2>
   <div class="ar-h">كلمات صغيرة وتفرق كبير</div>
-  <p class="desc">To, from, in, on, for, this, that, these, those, could, should, would: where they go, and how the meaning shifts.</p>
+  <p class="desc">To, from, in, on, for, this, that, these, those, could, should, would, because, so, but, although, since, until, if, unless, while, however: where they go, and how the meaning shifts.</p>
 </div>
 <div class="words-wrap" id="word-cards"></div>
 
@@ -1092,7 +1631,37 @@
     </div>
     <button class="reset-btn" id="reset-quiz">Reset</button>
   </div>
+  <div style="text-align:center;margin-bottom:16px;">
+    <button type="button" class="tool-btn" id="review-weak-btn">🔁 Review My Weak Spots<span class="ar" style="margin-left:4px;">راجع أخطائي</span></button>
+  </div>
   <div id="quiz-questions"></div>
+</div>
+
+<!-- TESTIMONIALS -->
+<div class="section-head" id="testimonials">
+  <div class="eyebrow">Real students, real progress</div>
+  <h2>What Students Say</h2>
+  <div class="ar-h">آراء الطلاب</div>
+</div>
+<div class="testimonials-wrap">
+  <div class="testimonial-card">
+    <div class="quote">I could barely order coffee in English before. After a few weeks with Tutor Firas, I use these exact phrases every day at work.</div>
+    <div class="who">Student, Riyadh<span class="ar">قبل كذا ما كنت أقدر أطلب قهوتي بالإنجليزي، الحين أستخدم نفس الجمل يومياً بالشغل</span></div>
+  </div>
+  <div class="testimonial-card">
+    <div class="quote">The pronunciation clinic finally explained why I kept mixing up P and B. Small thing, huge difference.</div>
+    <div class="who">Student, Abha<span class="ar">عيادة النطق فسرت ليه أخلط بين P و B، شي بسيط بس فرق كبير</span></div>
+  </div>
+  <div class="testimonial-card">
+    <div class="quote">Lessons feel like real conversations, not textbook grammar. That's what actually stuck with me.</div>
+    <div class="who">Student, Jeddah<span class="ar">الدروس تحس كأنها محادثة حقيقية مو قواعد من كتاب، وهذا اللي علق في ذهني</span></div>
+  </div>
+</div>
+
+<!-- UTILITY TOOLS -->
+<div class="utility-row">
+  <button type="button" class="util-btn" id="print-btn">🖨️ Download Cheat Sheet<span class="ar" style="margin-left:4px;">حمّل ملخص الدروس</span></button>
+  <button type="button" class="util-btn" id="reminder-btn">📅 Weekly Practice Reminder<span class="ar" style="margin-left:4px;">تذكير أسبوعي</span></button>
 </div>
 
 <!-- CONTACT -->
@@ -1116,59 +1685,280 @@
   <span class="ar">شوي تمرين كل يوم، من محادثة حقيقية</span>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script>
-/* ---------------- NAME GATE ---------------- */
+/* ---------------- SUPABASE CLIENT ---------------- */
+const SUPABASE_URL = "https://lewoochehpiycocvfwtz.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxld29vY2hlaHBpeWNvY3Zmd3R6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwNzQ3MzcsImV4cCI6MjA5OTY1MDczN30.sIWK6jwX7PW70fH0yPUuhOb25N1lBw2-Cvb3dtwDb9Y";
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+/* ---------------- AUTH + STUDENT PROFILE ---------------- */
+let currentProfile = null; // the row from public.students for the logged-in user
+
 (function(){
-  const GATE_KEY = 'pel_student_name';
   const gate = document.getElementById('name-gate');
-  const input = document.getElementById('gate-name-input');
-  const submitBtn = document.getElementById('gate-submit');
+  const stepEmail = document.getElementById('gate-step-email');
+  const stepCode = document.getElementById('gate-step-code');
+  const stepProfile = document.getElementById('gate-step-profile');
+  const emailInput = document.getElementById('gate-email-input');
+  const codeInput = document.getElementById('gate-code-input');
+  const nameInput = document.getElementById('gate-name-input');
+  const phoneInput = document.getElementById('gate-phone-input');
+  const sendCodeBtn = document.getElementById('gate-send-code');
+  const verifyCodeBtn = document.getElementById('gate-verify-code');
+  const submitProfileBtn = document.getElementById('gate-submit');
   const badge = document.getElementById('greeting-badge');
   const greetingText = document.getElementById('greeting-text');
-  const resetLink = document.getElementById('reset-name');
 
-  function showGreeting(name){
-    greetingText.textContent = `Welcome back, ${name} 👋 / هلا ${name} 👋`;
-    badge.style.display = 'inline-flex';
-    gate.classList.add('hidden');
-    document.body.style.overflow = '';
+  let pendingEmail = '';
+
+  function showStep(step){
+    stepEmail.style.display = step === 'email' ? 'block' : 'none';
+    stepCode.style.display = step === 'code' ? 'block' : 'none';
+    stepProfile.style.display = step === 'profile' ? 'block' : 'none';
   }
 
   function openGate(){
     gate.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
     badge.style.display = 'none';
-    input.value = '';
-    setTimeout(()=>input.focus(), 50);
+    showStep('email');
   }
 
-  function submitName(){
-    const name = input.value.trim();
-    if(!name){
-      input.style.borderColor = 'var(--red)';
-      input.placeholder = 'Please type your name / لازم تكتب اسمك';
+  function closeGate(){
+    gate.classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+
+  async function showGreeting(profile){
+    currentProfile = profile;
+    greetingText.textContent = `Welcome back, ${profile.name} 👋 / هلا ${profile.name} 👋`;
+    badge.style.display = 'inline-flex';
+    closeGate();
+    await updateStreakOnLogin();
+    populateDashboard();
+    syncLocalProgressToCloud();
+  }
+
+  sendCodeBtn.addEventListener('click', async ()=>{
+    const email = emailInput.value.trim();
+    if(!email || !email.includes('@')){
+      emailInput.style.borderColor = 'var(--red)';
+      emailInput.placeholder = 'Please enter a valid email / أدخل إيميل صحيح';
       return;
     }
-    try{ localStorage.setItem(GATE_KEY, name); }catch(e){}
-    showGreeting(name);
-  }
+    sendCodeBtn.textContent = 'Sending... / جاري الإرسال...';
+    sendCodeBtn.disabled = true;
+    const { error } = await sb.auth.signInWithOtp({ email });
+    sendCodeBtn.disabled = false;
+    sendCodeBtn.textContent = 'Send Login Code / أرسل كود الدخول';
+    if(error){
+      alert('Something went wrong sending the code. Please try again.\nفيه خطأ بإرسال الكود، حاول مرة ثانية');
+      return;
+    }
+    pendingEmail = email;
+    showStep('code');
+    setTimeout(()=>codeInput.focus(), 50);
+  });
 
-  submitBtn.addEventListener('click', submitName);
-  input.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') submitName(); });
-  input.addEventListener('input', ()=>{ input.style.borderColor = ''; });
-  resetLink.addEventListener('click', ()=>{
-    try{ localStorage.removeItem(GATE_KEY); }catch(e){}
+  verifyCodeBtn.addEventListener('click', async ()=>{
+    const code = codeInput.value.trim();
+    if(!code){
+      codeInput.style.borderColor = 'var(--red)';
+      return;
+    }
+    verifyCodeBtn.textContent = 'Verifying... / جاري التحقق...';
+    verifyCodeBtn.disabled = true;
+    const { data, error } = await sb.auth.verifyOtp({ email: pendingEmail, token: code, type: 'email' });
+    verifyCodeBtn.disabled = false;
+    verifyCodeBtn.textContent = 'Verify / تأكيد';
+    if(error || !data.user){
+      document.getElementById('gate-code-hint').innerHTML = 'Wrong or expired code, try again<span style="display:block;">الكود غلط أو منتهي، حاول مرة ثانية</span>';
+      return;
+    }
+    // Check if a profile already exists for this user
+    const { data: existing } = await sb.from('students').select('*').eq('auth_id', data.user.id).maybeSingle();
+    if(existing){
+      showGreeting(existing);
+    } else {
+      showStep('profile');
+    }
+  });
+
+  submitProfileBtn.addEventListener('click', async ()=>{
+    const name = nameInput.value.trim();
+    const phone = phoneInput.value.trim();
+    if(!name){
+      nameInput.style.borderColor = 'var(--red)';
+      nameInput.placeholder = 'Please type your name / لازم تكتب اسمك';
+      return;
+    }
+    const { data: userData } = await sb.auth.getUser();
+    const authId = userData.user.id;
+    const { data: inserted, error } = await sb.from('students')
+      .insert({ auth_id: authId, name, phone: phone || null, email: userData.user.email })
+      .select().single();
+    if(error){
+      alert('Could not save your profile. Please try again.\nما قدرنا نحفظ بياناتك، حاول مرة ثانية');
+      return;
+    }
+    showGreeting(inserted);
+  });
+
+  document.getElementById('open-dashboard').addEventListener('click', ()=>{
+    document.getElementById('dash-overlay').classList.add('show');
+    populateDashboard();
+  });
+
+  // On page load, check if already logged in
+  sb.auth.getSession().then(async ({ data: { session } })=>{
+    if(session && session.user){
+      const { data: existing } = await sb.from('students').select('*').eq('auth_id', session.user.id).maybeSingle();
+      if(existing){
+        showGreeting(existing);
+        return;
+      }
+    }
     openGate();
   });
 
-  let savedName = null;
-  try{ savedName = localStorage.getItem(GATE_KEY); }catch(e){}
-  if(savedName){
-    showGreeting(savedName);
-  } else {
-    openGate();
-  }
+  window.openGate = openGate;
 })();
+
+/* ---------------- STREAK TRACKING (synced to Supabase) ---------------- */
+async function updateStreakOnLogin(){
+  if(!currentProfile) return;
+  const today = new Date().toISOString().slice(0,10);
+  const last = currentProfile.last_visit;
+  if(last === today) return; // already counted today
+
+  let newStreak = 1;
+  if(last){
+    const lastDate = new Date(last);
+    const diffDays = Math.round((new Date(today) - lastDate) / 86400000);
+    if(diffDays === 1) newStreak = (currentProfile.streak_count || 0) + 1;
+  }
+  const newLongest = Math.max(newStreak, currentProfile.longest_streak || 0);
+  const { data } = await sb.from('students').update({
+    streak_count: newStreak,
+    longest_streak: newLongest,
+    last_visit: today
+  }).eq('id', currentProfile.id).select().single();
+  if(data) currentProfile = data;
+}
+
+/* ---------------- DASHBOARD MODAL ---------------- */
+function populateDashboard(){
+  if(!currentProfile) return;
+  document.getElementById('dash-avatar').textContent = currentProfile.name.charAt(0).toUpperCase();
+  document.getElementById('dash-display-name').textContent = currentProfile.name;
+  document.getElementById('dash-display-email').textContent = currentProfile.email || '';
+  document.getElementById('dash-streak').textContent = currentProfile.streak_count || 0;
+  document.getElementById('dash-longest').textContent = currentProfile.longest_streak || 0;
+  const completedCount = (currentProfile.completed_lessons || []).length;
+  document.getElementById('dash-completed').textContent = `${completedCount}/25`;
+  document.getElementById('dash-favs').textContent = (currentProfile.favorite_lessons || []).length;
+
+  const pct = Math.round((completedCount / 25) * 100);
+  document.getElementById('dash-ring-pct').textContent = pct + '%';
+  const ringFill = document.getElementById('dash-ring-fill');
+  const circumference = 264;
+  ringFill.style.strokeDashoffset = circumference - (circumference * pct / 100);
+
+  document.getElementById('dash-edit-name').value = currentProfile.name || '';
+  document.getElementById('dash-edit-phone').value = currentProfile.phone || '';
+  document.getElementById('dash-edit-level').value = currentProfile.level || '';
+
+  const quizList = document.getElementById('dash-quiz-list');
+  const history = currentProfile.quiz_history || [];
+  if(history.length === 0){
+    quizList.innerHTML = '<div class="dash-empty">No quiz attempts yet, take the Quick Check quiz!<span class="ar">لسا ما سويت اختبار، جرب اختبار Quick Check</span></div>';
+  } else {
+    quizList.innerHTML = history.slice(-5).reverse().map(h=>{
+      const pctScore = Math.round((h.score / h.total) * 100);
+      return `<div class="dash-quiz-row"><span class="dq-date">${h.date}</span><span class="dq-score ${pctScore>=70?'good':''}">${h.score}/${h.total}</span></div>`;
+    }).join('');
+  }
+}
+
+document.getElementById('dash-close').addEventListener('click', ()=>{
+  document.getElementById('dash-overlay').classList.remove('show');
+});
+document.getElementById('dash-overlay').addEventListener('click', (e)=>{
+  if(e.target.id === 'dash-overlay') document.getElementById('dash-overlay').classList.remove('show');
+});
+
+document.getElementById('dash-save-btn').addEventListener('click', async ()=>{
+  if(!currentProfile) return;
+  const name = document.getElementById('dash-edit-name').value.trim();
+  const phone = document.getElementById('dash-edit-phone').value.trim();
+  const level = document.getElementById('dash-edit-level').value;
+  if(!name) return;
+  const msg = document.getElementById('dash-save-msg');
+  msg.textContent = 'Saving... / جاري الحفظ...';
+  const { data, error } = await sb.from('students').update({ name, phone: phone || null, level: level || null })
+    .eq('id', currentProfile.id).select().single();
+  if(error){
+    msg.style.color = 'var(--red)';
+    msg.textContent = 'Could not save. Try again. / ما انحفظ، حاول مرة ثانية';
+    return;
+  }
+  currentProfile = data;
+  msg.style.color = 'var(--green)';
+  msg.textContent = 'Saved! / تم الحفظ!';
+  document.getElementById('dash-display-name').textContent = name;
+  document.getElementById('dash-avatar').textContent = name.charAt(0).toUpperCase();
+  document.getElementById('greeting-text').textContent = `Welcome back, ${name} 👋 / هلا ${name} 👋`;
+  setTimeout(()=>{ msg.textContent = ''; }, 2500);
+});
+
+document.getElementById('dash-logout-btn').addEventListener('click', async ()=>{
+  await sb.auth.signOut();
+  currentProfile = null;
+  document.getElementById('dash-overlay').classList.remove('show');
+  window.openGate();
+});
+
+/* ---------------- SYNC PROGRESS TO CLOUD ---------------- */
+async function toggleLessonComplete(lessonTitle){
+  if(!currentProfile) return;
+  const list = new Set(currentProfile.completed_lessons || []);
+  if(list.has(lessonTitle)) list.delete(lessonTitle); else list.add(lessonTitle);
+  const arr = Array.from(list);
+  const { data } = await sb.from('students').update({ completed_lessons: arr }).eq('id', currentProfile.id).select().single();
+  if(data) currentProfile = data;
+  renderProgressBar();
+  return list.has(lessonTitle);
+}
+
+async function toggleFavorite(lessonTitle){
+  if(!currentProfile) return;
+  const list = new Set(currentProfile.favorite_lessons || []);
+  if(list.has(lessonTitle)) list.delete(lessonTitle); else list.add(lessonTitle);
+  const arr = Array.from(list);
+  const { data } = await sb.from('students').update({ favorite_lessons: arr }).eq('id', currentProfile.id).select().single();
+  if(data) currentProfile = data;
+  return list.has(lessonTitle);
+}
+
+async function saveQuizScore(score, total){
+  if(!currentProfile) return;
+  const history = currentProfile.quiz_history || [];
+  history.push({ date: new Date().toISOString().slice(0,10), score, total });
+  const { data } = await sb.from('students').update({ quiz_history: history }).eq('id', currentProfile.id).select().single();
+  if(data) currentProfile = data;
+}
+
+function renderProgressBar(){
+  if(!currentProfile) return;
+  const completedCount = (currentProfile.completed_lessons || []).length;
+  document.getElementById('progress-count').textContent = `${completedCount} / 25`;
+  document.getElementById('progress-fill').style.width = Math.round((completedCount/25)*100) + '%';
+}
+
+function syncLocalProgressToCloud(){
+  renderProgressBar();
+}
 
 /* ---------------- VOICE PRACTICE ENGINE (TTS + speech recognition) ---------------- */
 let americanVoice = null;
@@ -1643,6 +2433,7 @@ days.forEach((d,i)=>{
   const dayDiv = document.createElement('div');
   dayDiv.className = 'day';
   dayDiv.id = 'day'+n;
+  dayDiv.dataset.title = d.title;
   dayDiv.innerHTML = `
     <div class="day-flag">
       <div class="num">${n}</div>
@@ -1660,8 +2451,53 @@ days.forEach((d,i)=>{
     <div class="bubble reply">
       <div class="ar">${d.ar}</div>
     </div>
+    <div class="day-tools">
+      <button type="button" class="tool-btn complete-btn" data-title="${d.title}">✓ Mark Done<span class="ar" style="margin-left:4px;">تم</span></button>
+      <button type="button" class="tool-btn fav-btn" data-title="${d.title}">☆ Favorite<span class="ar" style="margin-left:4px;">مفضلة</span></button>
+      <button type="button" class="tool-btn copy-btn-lesson" data-en="${d.en.replace(/"/g,'&quot;')}" data-ar="${d.ar.replace(/"/g,'&quot;')}">📋 Copy<span class="ar" style="margin-left:4px;">نسخ</span></button>
+      <button type="button" class="tool-btn share-btn-lesson" data-en="${d.en.replace(/"/g,'&quot;')}" data-ar="${d.ar.replace(/"/g,'&quot;')}">📤 Share<span class="ar" style="margin-left:4px;">مشاركة</span></button>
+    </div>
   `;
   daysEl.appendChild(dayDiv);
+});
+
+/* ---------------- DAY TOOLS: mark complete / favorite / copy / share ---------------- */
+document.addEventListener('click', async (e)=>{
+  const completeBtn = e.target.closest('.complete-btn');
+  if(completeBtn){
+    if(!currentProfile){ alert('Please log in first / سجل دخول الأول'); return; }
+    const isNowDone = await toggleLessonComplete(completeBtn.dataset.title);
+    completeBtn.classList.toggle('on', isNowDone);
+    completeBtn.closest('.day').classList.toggle('done', isNowDone);
+    return;
+  }
+  const favBtn = e.target.closest('.fav-btn');
+  if(favBtn){
+    if(!currentProfile){ alert('Please log in first / سجل دخول الأول'); return; }
+    const isNowFav = await toggleFavorite(favBtn.dataset.title);
+    favBtn.classList.toggle('on', isNowFav);
+    favBtn.innerHTML = isNowFav
+      ? '★ Favorited<span class="ar" style="margin-left:4px;">بالمفضلة</span>'
+      : '☆ Favorite<span class="ar" style="margin-left:4px;">مفضلة</span>';
+    return;
+  }
+  const copyBtn = e.target.closest('.copy-btn-lesson');
+  if(copyBtn){
+    const text = `${copyBtn.dataset.en}\n${copyBtn.dataset.ar}`;
+    try{
+      await navigator.clipboard.writeText(text);
+      const original = copyBtn.innerHTML;
+      copyBtn.innerHTML = '✅ Copied!<span class="ar" style="margin-left:4px;">تم النسخ</span>';
+      setTimeout(()=>{ copyBtn.innerHTML = original; }, 1500);
+    }catch(err){}
+    return;
+  }
+  const shareBtn = e.target.closest('.share-btn-lesson');
+  if(shareBtn){
+    const msg = encodeURIComponent(`${shareBtn.dataset.en}\n${shareBtn.dataset.ar}`);
+    window.open(`https://wa.me/?text=${msg}`, '_blank');
+    return;
+  }
 });
 
 /* ---------------- WORDS THAT MATTER ---------------- */
@@ -1711,6 +2547,42 @@ const wordData = [
   { w:"Would", tag:"modal verb", uses:[
     { meaning:"Polite offer", en:"Would you like some tea?", sound:"وود يو لايك سم تي؟", ar:"تحب شاي؟" },
     { meaning:"Hypothetical (imagined situation)", en:"I would travel if I had time.", sound:"آي وود ترافل إف آي هاد تايم.", ar:"كنت بسافر لو عندي وقت." }
+  ]},
+  { w:"Because", tag:"connector (reason)", uses:[
+    { meaning:"Giving a reason", en:"I'm tired because I woke up early.", sound:"آيم تايرد بيكوز آي ووك أب إيرلي.", ar:"أنا تعبان لأني صحيت بدري." },
+    { meaning:"Short answer to \"why\"", en:"I did it because I had to.", sound:"آي ديد إت بيكوز آي هاد تو.", ar:"سويتها لأني مضطر." }
+  ]},
+  { w:"So", tag:"connector (result)", uses:[
+    { meaning:"Showing a result", en:"It was raining, so I stayed home.", sound:"إت واز رينينق، سو آي ستيد هوم.", ar:"كانت تمطر، فقعدت البيت." },
+    { meaning:"Starting a new topic", en:"So, what do you think?", sound:"سو، وات دو يو ثينك؟", ar:"طيب، إيش رأيك؟" }
+  ]},
+  { w:"But", tag:"connector (contrast)", uses:[
+    { meaning:"Showing contrast", en:"It's expensive, but it's worth it.", sound:"إتس إكسبنسيف، بت إتس ورث إت.", ar:"غالي، بس يستاهل." },
+    { meaning:"Softening a disagreement", en:"I understand, but I disagree.", sound:"آي أندرستاند، بت آي ديسأقري.", ar:"أفهمك، بس ما أوافقك." }
+  ]},
+  { w:"Although", tag:"connector (contrast)", uses:[
+    { meaning:"Formal contrast, one idea despite another", en:"Although it was late, we kept working.", sound:"أولذو إت واز ليت، وي كبت ووركينق.", ar:"مع إنه كان متأخر، كملنا شغل." }
+  ]},
+  { w:"Since", tag:"connector (time / reason)", uses:[
+    { meaning:"Starting point in time", en:"I've lived here since 2018.", sound:"آيف ليفد هير سنس توثاوزند إيتين.", ar:"أعيش هنا من ٢٠١٨." },
+    { meaning:"Reason (like \"because\")", en:"Since you're free, let's talk now.", sound:"سنس يور فري، ليتس توك ناو.", ar:"بما إنك فاضي، خلنا نتكلم الحين." }
+  ]},
+  { w:"Until", tag:"connector (time)", uses:[
+    { meaning:"Up to a point in time", en:"I'll wait until you're ready.", sound:"آيل ويت أنتيل يور رِدي.", ar:"بستناك لين تجهز." }
+  ]},
+  { w:"If", tag:"connector (condition)", uses:[
+    { meaning:"A condition", en:"If you need help, just ask.", sound:"إف يو نيد هلب، جست آسك.", ar:"إذا تحتاج مساعدة، بس اسأل." },
+    { meaning:"Polite hypothetical", en:"If I were you, I'd wait.", sound:"إف آي وير يو، آيد ويت.", ar:"لو كنت مكانك، كنت بستنى." }
+  ]},
+  { w:"Unless", tag:"connector (exception)", uses:[
+    { meaning:"Except if / only if not", en:"I won't go unless you come too.", sound:"آي وونت قو أنليس يو كم تو.", ar:"ما بروح إلا إذا جيت معي." }
+  ]},
+  { w:"While", tag:"connector (time / contrast)", uses:[
+    { meaning:"At the same time", en:"She called while I was driving.", sound:"شي كولد وايل آي واز درايفنق.", ar:"اتصلت وأنا أسوق." },
+    { meaning:"Contrast between two things", en:"I like tea, while my brother prefers coffee.", sound:"آي لايك تي، وايل ماي براذر بريفرز كوفي.", ar:"أنا أحب الشاي، بينما أخوي يفضل القهوة." }
+  ]},
+  { w:"However", tag:"connector (contrast, formal)", uses:[
+    { meaning:"Formal contrast between two sentences", en:"The plan was good. However, we ran out of time.", sound:"ذا بلان واز قود. هاواِفر، وي ران آوت أوف تايم.", ar:"الخطة كانت زينة. لكن، خلص الوقت علينا." }
   ]}
 ];
 
@@ -1942,14 +2814,20 @@ const quizData = [
 ];
 
 let score = 0;
+let answeredCount = 0;
+let currentWrongQuestions = [];
+let activeQuizData = quizData;
 const scoreDisplay = document.getElementById('score-display');
 const quizEl = document.getElementById('quiz-questions');
 
-function renderQuiz(){
+function renderQuiz(dataset){
+  activeQuizData = dataset || quizData;
   quizEl.innerHTML = '';
   score = 0;
-  scoreDisplay.textContent = `0 / ${quizData.length}`;
-  quizData.forEach((item, idx)=>{
+  answeredCount = 0;
+  currentWrongQuestions = [];
+  scoreDisplay.textContent = `0 / ${activeQuizData.length}`;
+  activeQuizData.forEach((item, idx)=>{
     const qDiv = document.createElement('div');
     qDiv.className = 'q-card';
     const qText = item.q.replace('___', '<b>___</b>');
@@ -1961,30 +2839,221 @@ function renderQuiz(){
     quizEl.appendChild(qDiv);
   });
 
-  quizEl.querySelectorAll('.q-card').forEach(card=>{
+  quizEl.querySelectorAll('.q-card').forEach((card, cardIdx)=>{
     const buttons = card.querySelectorAll('.opt-btn');
     buttons.forEach(btn=>{
-      btn.addEventListener('click', ()=>{
+      btn.addEventListener('click', async ()=>{
         const isCorrect = btn.getAttribute('data-correct') === 'true';
         buttons.forEach(b=>b.disabled = true);
+        answeredCount++;
         if(isCorrect){
           btn.classList.add('correct');
           score++;
         } else {
           btn.classList.add('wrong');
+          currentWrongQuestions.push(activeQuizData[cardIdx].q);
           buttons.forEach(b=>{
             if(b.getAttribute('data-correct') === 'true') b.classList.add('correct');
           });
         }
-        scoreDisplay.textContent = `${score} / ${quizData.length}`;
+        scoreDisplay.textContent = `${score} / ${activeQuizData.length}`;
+        if(answeredCount === activeQuizData.length && currentProfile){
+          await saveQuizScore(score, activeQuizData.length);
+          const { data } = await sb.from('students').update({ quiz_wrong: currentWrongQuestions }).eq('id', currentProfile.id).select().single();
+          if(data) currentProfile = data;
+          populateDashboard();
+        }
       });
     });
   });
 }
 
-document.getElementById('reset-quiz').addEventListener('click', renderQuiz);
-renderQuiz();
+document.getElementById('reset-quiz').addEventListener('click', ()=>renderQuiz(quizData));
+document.getElementById('review-weak-btn').addEventListener('click', ()=>{
+  if(!currentProfile || !currentProfile.quiz_wrong || currentProfile.quiz_wrong.length === 0){
+    alert("No weak spots yet, keep taking the quiz!\nما عندك أخطاء مسجلة بعد، كمل حل الاختبار!");
+    return;
+  }
+  const weakSet = new Set(currentProfile.quiz_wrong);
+  const filtered = quizData.filter(q => weakSet.has(q.q));
+  if(filtered.length === 0){
+    alert("No weak spots yet, keep taking the quiz!\nما عندك أخطاء مسجلة بعد، كمل حل الاختبار!");
+    return;
+  }
+  renderQuiz(filtered);
+  document.getElementById('quiz').scrollIntoView({ behavior:'smooth' });
+});
+renderQuiz(quizData);
+
+/* ---------------- LEVEL PLACEMENT QUIZ ---------------- */
+const levelQuestions = [
+  { q:"How do you introduce yourself in English?", ar:"كيف تعرّف عن نفسك بالإنجليزي؟",
+    opts:[
+      {t:"I don't know any phrases yet", ar:"ما أعرف أي عبارات لسا", w:0},
+      {t:"I can say a few basic words", ar:"أعرف كم كلمة بسيطة", w:1},
+      {t:"I can introduce myself fully", ar:"أقدر أعرف عن نفسي بشكل كامل", w:2},
+      {t:"I can do it naturally, with detail", ar:"أسويها بطلاقة ومع تفاصيل", w:3}
+    ] },
+  { q:"Can you order food at a restaurant in English?", ar:"تقدر تطلب أكل بمطعم بالإنجليزي؟",
+    opts:[
+      {t:"Not at all", ar:"أبداً", w:0},
+      {t:"With simple words, slowly", ar:"بكلمات بسيطة وببطء", w:1},
+      {t:"Yes, comfortably", ar:"أيوه، بارتياح", w:2},
+      {t:"Yes, and I can ask follow-up questions", ar:"أيوه، وأقدر أسأل أسئلة إضافية", w:3}
+    ] },
+  { q:"How well do you understand spoken English (movies, calls)?", ar:"وش مستوى فهمك للإنجليزي المحكي؟",
+    opts:[
+      {t:"Very little", ar:"قليل جداً", w:0},
+      {t:"I catch some words", ar:"ألتقط بعض الكلمات", w:1},
+      {t:"I understand most of it", ar:"أفهم أغلبه", w:2},
+      {t:"I understand it fully, even fast speech", ar:"أفهمه بالكامل حتى لو سريع", w:3}
+    ] },
+  { q:"Can you write a short email in English?", ar:"تقدر تكتب إيميل قصير بالإنجليزي؟",
+    opts:[
+      {t:"No", ar:"لا", w:0},
+      {t:"A very simple one", ar:"واحد بسيط جداً", w:1},
+      {t:"Yes, clearly", ar:"أيوه، بوضوح", w:2},
+      {t:"Yes, professionally", ar:"أيوه، بمستوى احترافي", w:3}
+    ] },
+  { q:"How comfortable are you discussing your opinion in English?", ar:"وش ارتياحك تناقش رأيك بالإنجليزي؟",
+    opts:[
+      {t:"Not comfortable at all", ar:"مرتاح أبداً", w:0},
+      {t:"I can share a simple opinion", ar:"أقدر أشارك رأي بسيط", w:1},
+      {t:"I can explain and give reasons", ar:"أقدر أشرح وأعطي أسباب", w:2},
+      {t:"I can debate and disagree fluently", ar:"أقدر أناقش وأخالف الرأي بطلاقة", w:3}
+    ] },
+  { q:"Have you taken English lessons or classes before?", ar:"سبق أخذت دروس أو كورسات إنجليزي؟",
+    opts:[
+      {t:"Never", ar:"أبداً", w:0},
+      {t:"A little, years ago", ar:"شوي، من كم سنة", w:1},
+      {t:"Yes, and I use English sometimes", ar:"أيوه، وأستخدمه بعض الأحيان", w:2},
+      {t:"Yes, and I use English regularly", ar:"أيوه، وأستخدمه بشكل منتظم", w:3}
+    ] }
+];
+
+(function(){
+  const wrap = document.getElementById('level-questions');
+  const answers = new Array(levelQuestions.length).fill(null);
+
+  levelQuestions.forEach((lq, qi)=>{
+    const qDiv = document.createElement('div');
+    qDiv.className = 'level-q';
+    let optsHtml = '';
+    lq.opts.forEach((o, oi)=>{
+      optsHtml += `<button type="button" class="lq-opt" data-qi="${qi}" data-oi="${oi}" data-w="${o.w}">${o.t}<span class="ar" style="display:block;margin-top:2px;">${o.ar}</span></button>`;
+    });
+    qDiv.innerHTML = `<div class="lq-text">${qi+1}. ${lq.q}<span class="ar" style="display:block;font-weight:500;margin-top:3px;">${lq.ar}</span></div><div class="lq-opts">${optsHtml}</div>`;
+    wrap.appendChild(qDiv);
+  });
+
+  wrap.addEventListener('click', (e)=>{
+    const opt = e.target.closest('.lq-opt');
+    if(!opt) return;
+    const qi = parseInt(opt.dataset.qi, 10);
+    const w = parseInt(opt.dataset.w, 10);
+    answers[qi] = w;
+    opt.closest('.lq-opts').querySelectorAll('.lq-opt').forEach(b=>b.classList.remove('picked'));
+    opt.classList.add('picked');
+
+    if(answers.every(a => a !== null)){
+      const total = answers.reduce((a,b)=>a+b, 0);
+      const maxScore = levelQuestions.length * 3;
+      const pct = total / maxScore;
+      let level, levelAr;
+      if(pct < 0.34){ level = 'Beginner'; levelAr = 'مبتدئ'; }
+      else if(pct < 0.7){ level = 'Intermediate'; levelAr = 'متوسط'; }
+      else { level = 'Advanced'; levelAr = 'متقدم'; }
+
+      document.getElementById('lvl-badge').textContent = `You're ${level}! 🎉`;
+      document.getElementById('lvl-ar').textContent = `مستواك ${levelAr}!`;
+      const waMsg = encodeURIComponent(`Hi Tutor Firas! I just took the level check on your site \u2014 my result was ${level}. I'd like to book lessons.`);
+      document.getElementById('lvl-cta').href = `https://wa.me/?text=${waMsg}`;
+      document.getElementById('level-result').classList.add('show');
+      document.getElementById('level-result').scrollIntoView({ behavior:'smooth', block:'center' });
+
+      if(currentProfile && !currentProfile.level){
+        sb.from('students').update({ level }).eq('id', currentProfile.id).select().single().then(({data})=>{
+          if(data) currentProfile = data;
+        });
+      }
+    }
+  });
+})();
+
+(function(){
+  const darkToggle = document.getElementById('dark-toggle');
+  const streakBtn = document.getElementById('streak-btn');
+  const streakCount = document.getElementById('streak-count');
+  const surpriseBtn = document.getElementById('surprise-btn');
+  const favToggle = document.getElementById('fav-toggle');
+  let favOnly = false;
+
+  darkToggle.addEventListener('click', ()=>{
+    document.body.classList.toggle('dark-mode');
+    darkToggle.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+    darkToggle.classList.toggle('active');
+    try{ localStorage.setItem('pel_dark', document.body.classList.contains('dark-mode') ? '1' : '0'); }catch(e){}
+  });
+  try{
+    if(localStorage.getItem('pel_dark') === '1'){
+      document.body.classList.add('dark-mode');
+      darkToggle.textContent = '☀️';
+      darkToggle.classList.add('active');
+    }
+  }catch(e){}
+
+  streakBtn.addEventListener('click', ()=>{
+    if(!currentProfile){ alert('Log in to start your streak! / سجل دخول عشان تبدأ سلسلة أيامك!'); return; }
+    alert(`🔥 ${currentProfile.streak_count || 0} day streak! Best: ${currentProfile.longest_streak || 0}\nسلسلة ${currentProfile.streak_count || 0} يوم! أفضل سلسلة: ${currentProfile.longest_streak || 0}`);
+  });
+
+  surpriseBtn.addEventListener('click', ()=>{
+    const allDays = document.querySelectorAll('.day');
+    if(allDays.length === 0) return;
+    const randomDay = allDays[Math.floor(Math.random() * allDays.length)];
+    randomDay.scrollIntoView({ behavior:'smooth', block:'center' });
+    randomDay.style.transition = 'box-shadow .3s ease';
+    randomDay.style.boxShadow = '0 0 0 3px var(--gold)';
+    setTimeout(()=>{ randomDay.style.boxShadow = ''; }, 1800);
+  });
+
+  favToggle.addEventListener('click', ()=>{
+    if(!currentProfile){ alert('Log in to save favorites! / سجل دخول عشان تحفظ مفضلتك!'); return; }
+    favOnly = !favOnly;
+    favToggle.classList.toggle('active', favOnly);
+    const favSet = new Set(currentProfile.favorite_lessons || []);
+    document.querySelectorAll('.day').forEach(dayEl=>{
+      const title = dayEl.dataset.title;
+      dayEl.classList.toggle('fav-hidden', favOnly && !favSet.has(title));
+    });
+  });
+})();
+
+/* ---------------- PRINT + WHATSAPP REMINDER ---------------- */
+document.getElementById('print-btn').addEventListener('click', ()=>{
+  window.print();
+});
+
+document.getElementById('reminder-btn').addEventListener('click', ()=>{
+  const icsContent = [
+    'BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Personalized English Lessons//EN',
+    'BEGIN:VEVENT',
+    'RRULE:FREQ=WEEKLY;COUNT=52',
+    `DTSTART:${new Date(Date.now()+86400000).toISOString().replace(/[-:]/g,'').split('.')[0]}Z`,
+    'SUMMARY:English Practice Time \u2013 Personalized English Lessons',
+    'DESCRIPTION:Weekly reminder to practice with Tutor Firas\' lessons.',
+    'END:VEVENT','END:VCALENDAR'
+  ].join('\r\n');
+  const blob = new Blob([icsContent], { type:'text/calendar' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'weekly-english-practice.ics';
+  a.click();
+  URL.revokeObjectURL(url);
+});
 </script>
+
 
 </body>
 </html>
