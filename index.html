@@ -9,15 +9,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --navy-deep:#0B1F3A;
-    --navy-mid:#14315C;
-    --navy-soft:#1F3F6B;
-    --gold:#C9A227;
-    --gold-bright:#E0BA3D;
-    --cream:#FAF8F3;
-    --card-white:#FFFFFF;
-    --text-muted:#5C6B7A;
-    --line:#E7E1D4;
+    --navy-deep:#0F3B38;
+    --navy-mid:#164F4A;
+    --navy-soft:#1F655D;
+    --gold:#C1652F;
+    --gold-bright:#DE7C3E;
+    --cream:#FAF6EE;
+    --card-white:#FFFDF8;
+    --text-muted:#6B6459;
+    --line:#E9E1D2;
     --green:#3E8B5C;
     --red:#B84A3E;
   }
@@ -37,7 +37,7 @@
   }
   /* ---------- HERO ---------- */
   .hero{
-    background:radial-gradient(circle at 20% -10%, #16386b 0%, var(--navy-deep) 55%, #081426 100%);
+    background:radial-gradient(circle at 20% -10%, #1F655D 0%, var(--navy-deep) 55%, #081C1A 100%);
     color:#fff;
     padding:76px 24px 56px;
     position:relative;
@@ -51,7 +51,7 @@
     width:340px;
     height:340px;
     border-radius:50%;
-    border:1px solid rgba(201,162,39,0.25);
+    border:1px solid rgba(193,101,47,0.25);
   }
   .hero::before{
     content:"";
@@ -61,7 +61,7 @@
     width:220px;
     height:220px;
     border-radius:50%;
-    border:1px solid rgba(201,162,39,0.35);
+    border:1px solid rgba(193,101,47,0.35);
   }
   .hero-inner{
     max-width:760px;
@@ -130,9 +130,9 @@
   }
   .hero-nav a{
     font-size:12.5px;
-    color:#E0BA3D;
+    color:#DE7C3E;
     text-decoration:none;
-    border:1px solid rgba(201,162,39,0.4);
+    border:1px solid rgba(193,101,47,0.4);
     padding:8px 16px;
     border-radius:999px;
     letter-spacing:0.02em;
@@ -368,7 +368,7 @@
     flex:0 0 auto;
     width:34px;height:34px;
     border-radius:50%;
-    border:1px solid rgba(201,162,39,0.4);
+    border:1px solid rgba(193,101,47,0.4);
     color:#C7D2E3;
     display:flex;
     align-items:center;
@@ -435,7 +435,7 @@
     padding:18px 20px;
     margin-bottom:10px;
     max-width:88%;
-    box-shadow:0 1px 2px rgba(11,31,58,0.06);
+    box-shadow:0 1px 2px rgba(15,59,56,0.06);
   }
   .bubble.coach{
     background:var(--navy-deep);
@@ -520,8 +520,8 @@
   .bubble.reply .voice-btn,
   .word-card .voice-btn,
   .pron-card .voice-btn{
-    border:1px solid rgba(11,31,58,0.15);
-    background:rgba(11,31,58,0.04);
+    border:1px solid rgba(15,59,56,0.15);
+    background:rgba(15,59,56,0.04);
     color:var(--navy-deep);
   }
   .voice-btn:hover{ background:var(--gold); border-color:var(--gold); color:var(--navy-deep); transform:scale(1.06); }
@@ -546,7 +546,7 @@
   }
   .voice-feedback.show{ display:block; }
   .voice-feedback.good{ background:rgba(62,139,92,0.15); color:#7CD9A0; }
-  .voice-feedback.okay{ background:rgba(201,162,39,0.18); color:var(--gold-bright); }
+  .voice-feedback.okay{ background:rgba(193,101,47,0.18); color:var(--gold-bright); }
   .voice-feedback.retry{ background:rgba(184,74,62,0.18); color:#F0A99E; }
   .bubble.reply .voice-feedback.good,.word-card .voice-feedback.good,.pron-card .voice-feedback.good{ color:var(--green); }
   .bubble.reply .voice-feedback.okay,.word-card .voice-feedback.okay,.pron-card .voice-feedback.okay{ color:#8A6A10; }
@@ -602,7 +602,7 @@
   .pron-card,.grammar-card,.word-card{ transition:transform .22s ease, box-shadow .22s ease; }
   .pron-card:hover,.grammar-card:hover,.word-card:hover{
     transform:translateY(-4px);
-    box-shadow:0 10px 24px rgba(11,31,58,0.1);
+    box-shadow:0 10px 24px rgba(15,59,56,0.1);
   }
 
   /* ---------- STICKY NAV HIDE/SHOW ---------- */
@@ -613,7 +613,7 @@
   .name-gate{
     position:fixed;
     inset:0;
-    background:radial-gradient(circle at 20% -10%, #16386b 0%, var(--navy-deep) 55%, #081426 100%);
+    background:radial-gradient(circle at 20% -10%, #1F655D 0%, var(--navy-deep) 55%, #081C1A 100%);
     z-index:1000;
     display:flex;
     align-items:center;
@@ -684,8 +684,8 @@
     display:inline-flex;
     align-items:center;
     gap:8px;
-    background:rgba(224,186,61,0.14);
-    border:1px solid rgba(224,186,61,0.35);
+    background:rgba(222,124,62,0.14);
+    border:1px solid rgba(222,124,62,0.35);
     color:var(--gold-bright);
     padding:8px 16px;
     border-radius:999px;
@@ -914,7 +914,7 @@
     border-radius:50%;
     border:1px solid var(--line);
     background:var(--card-white);
-    box-shadow:0 6px 18px rgba(11,31,58,0.18);
+    box-shadow:0 6px 18px rgba(15,59,56,0.18);
     display:flex;
     align-items:center;
     justify-content:center;
@@ -968,7 +968,7 @@
     max-width:640px;
     margin:26px auto 0;
     padding:16px 18px;
-    background:rgba(224,186,61,0.1);
+    background:rgba(222,124,62,0.1);
     border:1px dashed var(--gold);
     border-radius:14px;
     text-align:center;
@@ -1054,7 +1054,7 @@
     font-family:inherit;
     color:var(--navy-deep);
   }
-  .level-q .lq-opt.picked{ border-color:var(--gold); background:rgba(201,162,39,0.12); font-weight:600; }
+  .level-q .lq-opt.picked{ border-color:var(--gold); background:rgba(193,101,47,0.12); font-weight:600; }
   .level-result{
     display:none;
     text-align:center;
@@ -1213,7 +1213,7 @@
     position:sticky;
     top:74px;
     z-index:9;
-    box-shadow:0 8px 24px rgba(11,31,58,0.25);
+    box-shadow:0 8px 24px rgba(15,59,56,0.25);
   }
   .scoreboard .lab{
     color:#93A4BE;
@@ -1229,7 +1229,7 @@
   }
   .scoreboard .reset-btn{
     background:transparent;
-    border:1px solid rgba(201,162,39,0.5);
+    border:1px solid rgba(193,101,47,0.5);
     color:var(--gold-bright);
     font-size:12px;
     padding:9px 16px;
@@ -1306,7 +1306,7 @@
     right:-60px;bottom:-60px;
     width:180px;height:180px;
     border-radius:50%;
-    border:1px solid rgba(201,162,39,0.25);
+    border:1px solid rgba(193,101,47,0.25);
   }
   .contact-card h3{
     font-family:'Fraunces',serif;
@@ -1350,7 +1350,7 @@
     border-radius:999px;
   }
   .contact-btn.whatsapp{background:var(--gold-bright);color:var(--navy-deep);}
-  .contact-btn.call{background:transparent;border:1.5px solid rgba(224,186,61,0.6);color:var(--gold-bright);}
+  .contact-btn.call{background:transparent;border:1.5px solid rgba(222,124,62,0.6);color:var(--gold-bright);}
   .phone-num{
     margin-top:20px;
     font-family:'Fraunces',serif;
@@ -1386,29 +1386,19 @@
 <body>
 
 <div class="name-gate" id="name-gate">
-  <div class="gate-card" id="gate-step-email">
+  <div class="gate-card" id="gate-step-auth">
     <div class="seal">FE</div>
-    <h2>Welcome, Student</h2>
-    <div class="ar-h">هلا فيك</div>
-    <input type="email" id="gate-email-input" placeholder="Your email / إيميلك" autocomplete="off">
-    <button type="button" id="gate-send-code">Send Login Code / أرسل كود الدخول</button>
-    <div class="gate-hint">No password needed, just a quick code sent to your email<span style="display:block;">ما تحتاج باسورد، بس كود يوصلك على إيميلك</span></div>
-  </div>
-  <div class="gate-card" id="gate-step-code" style="display:none;">
-    <div class="seal">FE</div>
-    <h2>Enter Your Code</h2>
-    <div class="ar-h">أدخل الكود</div>
-    <input type="text" id="gate-code-input" placeholder="6-digit code / الكود المكون من ٦ أرقام" autocomplete="off" inputmode="numeric" maxlength="6">
-    <button type="button" id="gate-verify-code">Verify / تأكيد</button>
-    <div class="gate-hint" id="gate-code-hint">Check your inbox (and spam folder)<span style="display:block;">تفقد إيميلك (وملف السبام)</span></div>
-  </div>
-  <div class="gate-card" id="gate-step-profile" style="display:none;">
-    <div class="seal">FE</div>
-    <h2>One Last Thing</h2>
-    <div class="ar-h">شي أخير</div>
+    <h2 id="gate-auth-title">Welcome, Student</h2>
+    <div class="ar-h" id="gate-auth-title-ar">هلا فيك</div>
     <input type="text" id="gate-name-input" placeholder="Your name / اسمك" autocomplete="off">
+    <input type="email" id="gate-email-input" placeholder="Your email / إيميلك" autocomplete="off">
+    <input type="password" id="gate-password-input" placeholder="Password / كلمة السر" autocomplete="off">
     <input type="tel" id="gate-phone-input" placeholder="Phone (optional) / رقم الجوال (اختياري)" autocomplete="off">
-    <button type="button" id="gate-submit">Start Learning / ابدأ التعلم</button>
+    <button type="button" id="gate-auth-submit">Start Learning / ابدأ التعلم</button>
+    <div class="gate-hint" id="gate-auth-hint"></div>
+    <div class="gate-hint" style="margin-top:10px;">
+      <span id="gate-toggle-mode" style="text-decoration:underline;cursor:pointer;color:var(--gold);">Already have an account? Log in / عندك حساب؟ سجل دخول</span>
+    </div>
   </div>
 </div>
 
@@ -1459,6 +1449,12 @@
       <div class="dash-empty">No quiz attempts yet, take the Quick Check quiz!<span class="ar" style="display:block;">لسا ما سويت اختبار، جرب اختبار Quick Check</span></div>
     </div>
 
+    <div class="dash-section-title">Verb Practice Test<span class="ar">اختبار الأفعال</span></div>
+    <button type="button" class="dash-save-btn" id="start-verb-test-btn" style="background:var(--navy-deep);color:#fff;">🧪 Take a Verb Test<span class="ar" style="margin-left:6px;">ابدأ اختبار الأفعال</span></button>
+    <div class="dash-quiz-list" id="dash-verb-list" style="margin-top:12px;">
+      <div class="dash-empty">Write your own sentences using random verbs and get scored!<span class="ar" style="display:block;">اكتب جمل بنفسك بأفعال عشوائية واحصل على نتيجتك!</span></div>
+    </div>
+
     <div class="dash-section-title">Edit Your Info<span class="ar">عدّل بياناتك</span></div>
     <div class="dash-edit-form">
       <label>Name / الاسم</label>
@@ -1477,6 +1473,42 @@
     </div>
 
     <button type="button" class="dash-logout-btn" id="dash-logout-btn">Log Out / تسجيل خروج</button>
+  </div>
+</div>
+
+<!-- VERB PRACTICE TEST OVERLAY -->
+<div class="dash-overlay" id="verb-test-overlay">
+  <div class="dash-modal" style="max-width:520px;">
+    <button type="button" class="dash-close" id="verb-test-close">✕</button>
+
+    <div id="verb-test-active">
+      <div class="dash-section-title" style="border-top:none;padding-top:0;margin-top:0;">Verb Practice Test<span class="ar">اختبار الأفعال</span></div>
+      <div class="progress-label" style="margin-bottom:14px;">
+        <span id="vt-progress-label">Verb 1 / 8</span>
+        <span id="vt-score-label">Score: 0</span>
+      </div>
+      <div class="progress-track" style="margin-bottom:20px;">
+        <div class="progress-fill" id="vt-progress-fill"></div>
+      </div>
+
+      <div class="lotd" style="margin:0 0 18px;">
+        <div class="lotd-label">Write a sentence using<span id="vt-tense-label"></span></div>
+        <div class="lotd-en" id="vt-verb-word" style="font-size:22px;"></div>
+        <div class="lotd-ar" id="vt-verb-ar"></div>
+      </div>
+
+      <input type="text" id="vt-sentence-input" placeholder="Type your sentence here / اكتب جملتك هنا" autocomplete="off" style="width:100%;padding:13px 16px;border-radius:12px;border:1.5px solid var(--line);font-family:'Tajawal','Inter',sans-serif;font-size:15px;outline:none;box-sizing:border-box;margin-bottom:12px;">
+
+      <div class="dash-save-msg" id="vt-feedback" style="min-height:20px;font-size:13.5px;"></div>
+
+      <button type="button" class="dash-save-btn" id="vt-submit-btn">Check My Sentence / تحقق من جملتي</button>
+    </div>
+
+    <div id="verb-test-results" style="display:none;text-align:center;">
+      <div class="lvl-badge" style="color:var(--navy-deep);font-size:26px;margin-bottom:6px;" id="vt-final-score"></div>
+      <div style="color:var(--text-muted);margin-bottom:20px;" id="vt-final-ar"></div>
+      <button type="button" class="dash-save-btn" id="vt-retry-btn">Try Again with New Verbs / حاول مرة ثانية بأفعال جديدة</button>
+    </div>
   </div>
 </div>
 
@@ -1697,32 +1729,47 @@ let currentProfile = null; // the row from public.students for the logged-in use
 
 (function(){
   const gate = document.getElementById('name-gate');
-  const stepEmail = document.getElementById('gate-step-email');
-  const stepCode = document.getElementById('gate-step-code');
-  const stepProfile = document.getElementById('gate-step-profile');
-  const emailInput = document.getElementById('gate-email-input');
-  const codeInput = document.getElementById('gate-code-input');
   const nameInput = document.getElementById('gate-name-input');
+  const emailInput = document.getElementById('gate-email-input');
+  const passwordInput = document.getElementById('gate-password-input');
   const phoneInput = document.getElementById('gate-phone-input');
-  const sendCodeBtn = document.getElementById('gate-send-code');
-  const verifyCodeBtn = document.getElementById('gate-verify-code');
-  const submitProfileBtn = document.getElementById('gate-submit');
+  const authSubmit = document.getElementById('gate-auth-submit');
+  const authHint = document.getElementById('gate-auth-hint');
+  const authTitle = document.getElementById('gate-auth-title');
+  const authTitleAr = document.getElementById('gate-auth-title-ar');
+  const toggleMode = document.getElementById('gate-toggle-mode');
   const badge = document.getElementById('greeting-badge');
   const greetingText = document.getElementById('greeting-text');
 
-  let pendingEmail = '';
+  let mode = 'signup'; // or 'login'
 
-  function showStep(step){
-    stepEmail.style.display = step === 'email' ? 'block' : 'none';
-    stepCode.style.display = step === 'code' ? 'block' : 'none';
-    stepProfile.style.display = step === 'profile' ? 'block' : 'none';
+  function setMode(newMode){
+    mode = newMode;
+    authHint.textContent = '';
+    if(mode === 'signup'){
+      authTitle.textContent = 'Welcome, Student';
+      authTitleAr.textContent = 'هلا فيك';
+      nameInput.style.display = 'block';
+      phoneInput.style.display = 'block';
+      authSubmit.textContent = 'Start Learning / ابدأ التعلم';
+      toggleMode.textContent = 'Already have an account? Log in / عندك حساب؟ سجل دخول';
+    } else {
+      authTitle.textContent = 'Welcome Back';
+      authTitleAr.textContent = 'هلا فيك مرة ثانية';
+      nameInput.style.display = 'none';
+      phoneInput.style.display = 'none';
+      authSubmit.textContent = 'Log In / سجل دخول';
+      toggleMode.textContent = "New here? Create an account / أول مرة؟ أنشئ حساب";
+    }
   }
+
+  toggleMode.addEventListener('click', ()=> setMode(mode === 'signup' ? 'login' : 'signup'));
 
   function openGate(){
     gate.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
     badge.style.display = 'none';
-    showStep('email');
+    setMode('signup');
   }
 
   function closeGate(){
@@ -1740,69 +1787,68 @@ let currentProfile = null; // the row from public.students for the logged-in use
     syncLocalProgressToCloud();
   }
 
-  sendCodeBtn.addEventListener('click', async ()=>{
+  authSubmit.addEventListener('click', async ()=>{
     const email = emailInput.value.trim();
+    const password = passwordInput.value;
     if(!email || !email.includes('@')){
-      emailInput.style.borderColor = 'var(--red)';
-      emailInput.placeholder = 'Please enter a valid email / أدخل إيميل صحيح';
+      authHint.style.color = 'var(--red)';
+      authHint.textContent = 'Please enter a valid email / أدخل إيميل صحيح';
       return;
     }
-    sendCodeBtn.textContent = 'Sending... / جاري الإرسال...';
-    sendCodeBtn.disabled = true;
-    const { error } = await sb.auth.signInWithOtp({ email });
-    sendCodeBtn.disabled = false;
-    sendCodeBtn.textContent = 'Send Login Code / أرسل كود الدخول';
-    if(error){
-      alert('Something went wrong sending the code. Please try again.\nفيه خطأ بإرسال الكود، حاول مرة ثانية');
+    if(!password || password.length < 6){
+      authHint.style.color = 'var(--red)';
+      authHint.textContent = 'Password must be at least 6 characters / كلمة السر لازم ٦ أحرف على الأقل';
       return;
     }
-    pendingEmail = email;
-    showStep('code');
-    setTimeout(()=>codeInput.focus(), 50);
-  });
 
-  verifyCodeBtn.addEventListener('click', async ()=>{
-    const code = codeInput.value.trim();
-    if(!code){
-      codeInput.style.borderColor = 'var(--red)';
-      return;
-    }
-    verifyCodeBtn.textContent = 'Verifying... / جاري التحقق...';
-    verifyCodeBtn.disabled = true;
-    const { data, error } = await sb.auth.verifyOtp({ email: pendingEmail, token: code, type: 'email' });
-    verifyCodeBtn.disabled = false;
-    verifyCodeBtn.textContent = 'Verify / تأكيد';
-    if(error || !data.user){
-      document.getElementById('gate-code-hint').innerHTML = 'Wrong or expired code, try again<span style="display:block;">الكود غلط أو منتهي، حاول مرة ثانية</span>';
-      return;
-    }
-    // Check if a profile already exists for this user
-    const { data: existing } = await sb.from('students').select('*').eq('auth_id', data.user.id).maybeSingle();
-    if(existing){
-      showGreeting(existing);
+    authSubmit.disabled = true;
+    authHint.style.color = 'var(--text-muted)';
+
+    if(mode === 'signup'){
+      const name = nameInput.value.trim();
+      if(!name){
+        authHint.style.color = 'var(--red)';
+        authHint.textContent = 'Please enter your name / أدخل اسمك';
+        authSubmit.disabled = false;
+        return;
+      }
+      authHint.textContent = 'Creating your account... / جاري إنشاء حسابك...';
+      const { data, error } = await sb.auth.signUp({ email, password });
+      authSubmit.disabled = false;
+      if(error){
+        authHint.style.color = 'var(--red)';
+        authHint.textContent = error.message.includes('already registered')
+          ? 'This email already has an account, try logging in / هذا الإيميل مسجل، جرب تسجيل الدخول'
+          : 'Something went wrong, please try again / فيه خطأ، حاول مرة ثانية';
+        return;
+      }
+      const phone = phoneInput.value.trim();
+      const { data: inserted, error: insertError } = await sb.from('students')
+        .insert({ auth_id: data.user.id, name, phone: phone || null, email })
+        .select().single();
+      if(insertError){
+        authHint.style.color = 'var(--red)';
+        authHint.textContent = 'Could not save your profile, please try again / ما قدرنا نحفظ بياناتك، حاول مرة ثانية';
+        return;
+      }
+      showGreeting(inserted);
     } else {
-      showStep('profile');
+      authHint.textContent = 'Logging in... / جاري تسجيل الدخول...';
+      const { data, error } = await sb.auth.signInWithPassword({ email, password });
+      authSubmit.disabled = false;
+      if(error){
+        authHint.style.color = 'var(--red)';
+        authHint.textContent = 'Wrong email or password / الإيميل أو كلمة السر غلط';
+        return;
+      }
+      const { data: existing } = await sb.from('students').select('*').eq('auth_id', data.user.id).maybeSingle();
+      if(existing){
+        showGreeting(existing);
+      } else {
+        authHint.style.color = 'var(--red)';
+        authHint.textContent = 'No profile found for this account / ما فيه حساب طالب مرتبط';
+      }
     }
-  });
-
-  submitProfileBtn.addEventListener('click', async ()=>{
-    const name = nameInput.value.trim();
-    const phone = phoneInput.value.trim();
-    if(!name){
-      nameInput.style.borderColor = 'var(--red)';
-      nameInput.placeholder = 'Please type your name / لازم تكتب اسمك';
-      return;
-    }
-    const { data: userData } = await sb.auth.getUser();
-    const authId = userData.user.id;
-    const { data: inserted, error } = await sb.from('students')
-      .insert({ auth_id: authId, name, phone: phone || null, email: userData.user.email })
-      .select().single();
-    if(error){
-      alert('Could not save your profile. Please try again.\nما قدرنا نحفظ بياناتك، حاول مرة ثانية');
-      return;
-    }
-    showGreeting(inserted);
   });
 
   document.getElementById('open-dashboard').addEventListener('click', ()=>{
@@ -1879,6 +1925,7 @@ function populateDashboard(){
       return `<div class="dash-quiz-row"><span class="dq-date">${h.date}</span><span class="dq-score ${pctScore>=70?'good':''}">${h.score}/${h.total}</span></div>`;
     }).join('');
   }
+  renderVerbTestHistory();
 }
 
 document.getElementById('dash-close').addEventListener('click', ()=>{
@@ -2979,6 +3026,180 @@ const levelQuestions = [
     }
   });
 })();
+
+/* ---------------- VERB PRACTICE TEST ---------------- */
+const verbBank = [
+  { base:"go", past:"went", ar:"يذهب" },
+  { base:"eat", past:"ate", ar:"يأكل" },
+  { base:"write", past:"wrote", ar:"يكتب" },
+  { base:"speak", past:"spoke", ar:"يتكلم" },
+  { base:"buy", past:"bought", ar:"يشتري" },
+  { base:"sell", past:"sold", ar:"يبيع" },
+  { base:"make", past:"made", ar:"يصنع" },
+  { base:"take", past:"took", ar:"يأخذ" },
+  { base:"give", past:"gave", ar:"يعطي" },
+  { base:"see", past:"saw", ar:"يرى" },
+  { base:"do", past:"did", ar:"يفعل" },
+  { base:"have", past:"had", ar:"يملك" },
+  { base:"know", past:"knew", ar:"يعرف" },
+  { base:"think", past:"thought", ar:"يفكر" },
+  { base:"feel", past:"felt", ar:"يشعر" },
+  { base:"get", past:"got", ar:"يحصل" },
+  { base:"find", past:"found", ar:"يجد" },
+  { base:"tell", past:"told", ar:"يخبر" },
+  { base:"become", past:"became", ar:"يصبح" },
+  { base:"leave", past:"left", ar:"يغادر" },
+  { base:"bring", past:"brought", ar:"يحضر" },
+  { base:"build", past:"built", ar:"يبني" },
+  { base:"choose", past:"chose", ar:"يختار" },
+  { base:"drive", past:"drove", ar:"يقود" },
+  { base:"drink", past:"drank", ar:"يشرب" },
+  { base:"forget", past:"forgot", ar:"ينسى" },
+  { base:"hear", past:"heard", ar:"يسمع" },
+  { base:"keep", past:"kept", ar:"يحتفظ" },
+  { base:"lose", past:"lost", ar:"يخسر" },
+  { base:"meet", past:"met", ar:"يقابل" },
+  { base:"pay", past:"paid", ar:"يدفع" },
+  { base:"read", past:"read", ar:"يقرأ" },
+  { base:"run", past:"ran", ar:"يجري" },
+  { base:"say", past:"said", ar:"يقول" },
+  { base:"send", past:"sent", ar:"يرسل" },
+  { base:"sit", past:"sat", ar:"يجلس" },
+  { base:"sleep", past:"slept", ar:"ينام" },
+  { base:"stand", past:"stood", ar:"يقف" },
+  { base:"teach", past:"taught", ar:"يعلّم" },
+  { base:"understand", past:"understood", ar:"يفهم" },
+  { base:"wake", past:"woke", ar:"يصحى" },
+  { base:"wear", past:"wore", ar:"يلبس" },
+  { base:"win", past:"won", ar:"يفوز" },
+  { base:"work", past:"worked", ar:"يشتغل" },
+  { base:"call", past:"called", ar:"يتصل" },
+  { base:"play", past:"played", ar:"يلعب" },
+  { base:"walk", past:"walked", ar:"يمشي" },
+  { base:"study", past:"studied", ar:"يدرس" },
+  { base:"watch", past:"watched", ar:"يشاهد" },
+  { base:"help", past:"helped", ar:"يساعد" },
+  { base:"visit", past:"visited", ar:"يزور" },
+  { base:"arrive", past:"arrived", ar:"يوصل" },
+  { base:"decide", past:"decided", ar:"يقرر" },
+  { base:"finish", past:"finished", ar:"يخلص" },
+  { base:"ask", past:"asked", ar:"يسأل" },
+  { base:"listen", past:"listened", ar:"يستمع" },
+  { base:"open", past:"opened", ar:"يفتح" },
+  { base:"close", past:"closed", ar:"يسكر" },
+  { base:"clean", past:"cleaned", ar:"ينظف" },
+  { base:"cook", past:"cooked", ar:"يطبخ" }
+];
+
+let vtVerbs = [];
+let vtIndex = 0;
+let vtScore = 0;
+let vtResults = [];
+
+function pickRandomVerbs(n){
+  const shuffled = [...verbBank].sort(()=>Math.random()-0.5);
+  return shuffled.slice(0, n);
+}
+
+function showVerbQuestion(){
+  const v = vtVerbs[vtIndex];
+  document.getElementById('vt-progress-label').textContent = `Verb ${vtIndex+1} / ${vtVerbs.length}`;
+  document.getElementById('vt-score-label').textContent = `Score: ${vtScore}`;
+  document.getElementById('vt-progress-fill').style.width = Math.round((vtIndex/vtVerbs.length)*100) + '%';
+  document.getElementById('vt-tense-label').innerHTML = ` the past tense of "${v.base}"<span class="ar" style="display:block;">الماضي من الفعل "${v.base}"</span>`;
+  document.getElementById('vt-verb-word').textContent = v.past;
+  document.getElementById('vt-verb-ar').textContent = v.ar;
+  document.getElementById('vt-sentence-input').value = '';
+  document.getElementById('vt-feedback').textContent = '';
+  document.getElementById('vt-sentence-input').focus();
+}
+
+function gradeSentence(sentence, verbForm){
+  const words = sentence.trim().split(/\s+/).filter(Boolean);
+  const hasVerb = new RegExp(`\\b${verbForm}\\b`, 'i').test(sentence);
+  const longEnough = words.length >= 4;
+  return { hasVerb, longEnough, pass: hasVerb && longEnough, wordCount: words.length };
+}
+
+function openVerbTest(){
+  if(!currentProfile){ alert('Please log in first / سجل دخول الأول'); return; }
+  vtVerbs = pickRandomVerbs(8);
+  vtIndex = 0;
+  vtScore = 0;
+  vtResults = [];
+  document.getElementById('verb-test-active').style.display = 'block';
+  document.getElementById('verb-test-results').style.display = 'none';
+  document.getElementById('verb-test-overlay').classList.add('show');
+  showVerbQuestion();
+}
+
+document.getElementById('start-verb-test-btn').addEventListener('click', openVerbTest);
+document.getElementById('verb-test-close').addEventListener('click', ()=>{
+  document.getElementById('verb-test-overlay').classList.remove('show');
+});
+document.getElementById('verb-test-overlay').addEventListener('click', (e)=>{
+  if(e.target.id === 'verb-test-overlay') document.getElementById('verb-test-overlay').classList.remove('show');
+});
+
+document.getElementById('vt-submit-btn').addEventListener('click', async ()=>{
+  const sentence = document.getElementById('vt-sentence-input').value.trim();
+  const v = vtVerbs[vtIndex];
+  const feedback = document.getElementById('vt-feedback');
+  if(!sentence){
+    feedback.style.color = 'var(--red)';
+    feedback.textContent = 'Write a sentence first / اكتب جملة الأول';
+    return;
+  }
+  const result = gradeSentence(sentence, v.past);
+  vtResults.push({ verb:v.base, past:v.past, sentence, pass:result.pass });
+  if(result.pass){
+    vtScore++;
+    feedback.style.color = 'var(--green)';
+    feedback.textContent = `✅ Great! You used "${v.past}" correctly / استخدمت "${v.past}" صح`;
+  } else if(!result.hasVerb){
+    feedback.style.color = 'var(--red)';
+    feedback.textContent = `🔁 Try to include "${v.past}" in your sentence / حاول تستخدم "${v.past}" بجملتك`;
+  } else {
+    feedback.style.color = 'var(--gold)';
+    feedback.textContent = `🟡 Good start, try a longer sentence / زين، بس جرب جملة أطول شوي`;
+  }
+
+  setTimeout(async ()=>{
+    vtIndex++;
+    if(vtIndex < vtVerbs.length){
+      showVerbQuestion();
+    } else {
+      document.getElementById('vt-progress-fill').style.width = '100%';
+      document.getElementById('verb-test-active').style.display = 'none';
+      document.getElementById('verb-test-results').style.display = 'block';
+      document.getElementById('vt-final-score').textContent = `You scored ${vtScore} / ${vtVerbs.length}! 🎉`;
+      document.getElementById('vt-final-ar').textContent = `حصلت على ${vtScore} من ${vtVerbs.length}!`;
+      if(currentProfile){
+        const history = currentProfile.verb_test_history || [];
+        history.push({ date: new Date().toISOString().slice(0,10), score: vtScore, total: vtVerbs.length });
+        const { data } = await sb.from('students').update({ verb_test_history: history }).eq('id', currentProfile.id).select().single();
+        if(data) currentProfile = data;
+        renderVerbTestHistory();
+      }
+    }
+  }, 1400);
+});
+
+document.getElementById('vt-retry-btn').addEventListener('click', openVerbTest);
+
+function renderVerbTestHistory(){
+  if(!currentProfile) return;
+  const list = document.getElementById('dash-verb-list');
+  const history = currentProfile.verb_test_history || [];
+  if(history.length === 0){
+    list.innerHTML = '<div class="dash-empty">Write your own sentences using random verbs and get scored!<span class="ar" style="display:block;">اكتب جمل بنفسك بأفعال عشوائية واحصل على نتيجتك!</span></div>';
+  } else {
+    list.innerHTML = history.slice(-5).reverse().map(h=>{
+      const pctScore = Math.round((h.score / h.total) * 100);
+      return `<div class="dash-quiz-row"><span class="dq-date">${h.date}</span><span class="dq-score ${pctScore>=70?'good':''}">${h.score}/${h.total}</span></div>`;
+    }).join('');
+  }
+}
 
 (function(){
   const darkToggle = document.getElementById('dark-toggle');
