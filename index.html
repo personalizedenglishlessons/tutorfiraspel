@@ -9,15 +9,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --navy-deep:#0F3B38;
-    --navy-mid:#164F4A;
-    --navy-soft:#1F655D;
-    --gold:#C1652F;
-    --gold-bright:#DE7C3E;
-    --cream:#FAF6EE;
-    --card-white:#FFFDF8;
-    --text-muted:#6B6459;
-    --line:#E9E1D2;
+    --navy-deep:#3A1F3D;
+    --text-main:#3A1F3D;
+    --navy-mid:#4E2B52;
+    --navy-soft:#623868;
+    --gold:#D68A2E;
+    --gold-bright:#EBA43E;
+    --cream:#FAF6F1;
+    --card-white:#FFFDFA;
+    --text-muted:#6E6259;
+    --line:#EAE1D8;
     --green:#3E8B5C;
     --red:#B84A3E;
   }
@@ -26,7 +27,7 @@
   body{
     margin:0;
     background:var(--cream);
-    color:var(--navy-deep);
+    color:var(--text-main);
     font-family:'Inter',sans-serif;
     -webkit-font-smoothing:antialiased;
   }
@@ -34,10 +35,12 @@
     font-family:'Tajawal',sans-serif;
     direction:rtl;
     unicode-bidi:isolate;
+    font-size:1.12em;
+    line-height:1.6;
   }
   /* ---------- HERO ---------- */
   .hero{
-    background:radial-gradient(circle at 20% -10%, #1F655D 0%, var(--navy-deep) 55%, #081C1A 100%);
+    background:radial-gradient(circle at 20% -10%, #623868 0%, var(--navy-deep) 55%, #1F1121 100%);
     color:#fff;
     padding:76px 24px 56px;
     position:relative;
@@ -51,7 +54,7 @@
     width:340px;
     height:340px;
     border-radius:50%;
-    border:1px solid rgba(193,101,47,0.25);
+    border:1px solid rgba(214,138,46,0.25);
   }
   .hero::before{
     content:"";
@@ -61,7 +64,7 @@
     width:220px;
     height:220px;
     border-radius:50%;
-    border:1px solid rgba(193,101,47,0.35);
+    border:1px solid rgba(214,138,46,0.35);
   }
   .hero-inner{
     max-width:760px;
@@ -130,15 +133,15 @@
   }
   .hero-nav a{
     font-size:12.5px;
-    color:#DE7C3E;
+    color:#EBA43E;
     text-decoration:none;
-    border:1px solid rgba(193,101,47,0.4);
+    border:1px solid rgba(214,138,46,0.4);
     padding:8px 16px;
     border-radius:999px;
     letter-spacing:0.02em;
     transition:all .2s ease;
   }
-  .hero-nav a:hover{background:var(--gold);border-color:var(--gold);color:var(--navy-deep);}
+  .hero-nav a:hover{background:var(--gold);border-color:var(--gold);color:var(--text-main);}
 
   .us-badge{
     display:inline-flex;
@@ -204,7 +207,7 @@
     font-family:'Fraunces',serif;
     font-size:18px;
     font-weight:600;
-    color:var(--navy-deep);
+    color:var(--text-main);
   }
   .pron-card .pron-title .ar{
     display:block;
@@ -275,7 +278,7 @@
     font-family:'Fraunces',serif;
     font-size:17px;
     font-weight:600;
-    color:var(--navy-deep);
+    color:var(--text-main);
     margin-bottom:2px;
   }
   .grammar-card .g-title-ar{
@@ -331,7 +334,7 @@
     font-size:clamp(26px,4vw,34px);
     font-weight:600;
     margin:0 0 6px;
-    color:var(--navy-deep);
+    color:var(--text-main);
   }
   .section-head .ar-h{
     font-size:17px;
@@ -368,7 +371,7 @@
     flex:0 0 auto;
     width:34px;height:34px;
     border-radius:50%;
-    border:1px solid rgba(193,101,47,0.4);
+    border:1px solid rgba(214,138,46,0.4);
     color:#C7D2E3;
     display:flex;
     align-items:center;
@@ -378,7 +381,7 @@
     text-decoration:none;
     transition:all .2s ease;
   }
-  .track a:hover{background:var(--gold);border-color:var(--gold);color:var(--navy-deep);}
+  .track a:hover{background:var(--gold);border-color:var(--gold);color:var(--text-main);}
 
   /* ---------- THREAD (lesson chat bubbles) ---------- */
   .thread{
@@ -408,7 +411,7 @@
     font-family:'Fraunces',serif;
     font-weight:600;
     font-size:14px;
-    color:var(--navy-deep);
+    color:var(--text-main);
     background:var(--gold-bright);
     width:30px;height:30px;
     border-radius:50%;
@@ -419,7 +422,7 @@
     font-family:'Fraunces',serif;
     font-size:17px;
     font-weight:600;
-    color:var(--navy-deep);
+    color:var(--text-main);
   }
   .day-flag .title .ar{
     display:block;
@@ -435,7 +438,7 @@
     padding:18px 20px;
     margin-bottom:10px;
     max-width:88%;
-    box-shadow:0 1px 2px rgba(15,59,56,0.06);
+    box-shadow:0 1px 2px rgba(58,31,61,0.06);
   }
   .bubble.coach{
     background:var(--navy-deep);
@@ -467,7 +470,7 @@
   .bubble.reply .ar{
     font-size:17px;
     font-weight:700;
-    color:var(--navy-deep);
+    color:var(--text-main);
     line-height:1.7;
   }
   .sound-it{
@@ -520,11 +523,11 @@
   .bubble.reply .voice-btn,
   .word-card .voice-btn,
   .pron-card .voice-btn{
-    border:1px solid rgba(15,59,56,0.15);
-    background:rgba(15,59,56,0.04);
-    color:var(--navy-deep);
+    border:1px solid rgba(58,31,61,0.15);
+    background:rgba(58,31,61,0.04);
+    color:var(--text-main);
   }
-  .voice-btn:hover{ background:var(--gold); border-color:var(--gold); color:var(--navy-deep); transform:scale(1.06); }
+  .voice-btn:hover{ background:var(--gold); border-color:var(--gold); color:var(--text-main); transform:scale(1.06); }
   .voice-btn.mic-btn.recording{
     background:var(--red);
     border-color:var(--red);
@@ -546,7 +549,7 @@
   }
   .voice-feedback.show{ display:block; }
   .voice-feedback.good{ background:rgba(62,139,92,0.15); color:#7CD9A0; }
-  .voice-feedback.okay{ background:rgba(193,101,47,0.18); color:var(--gold-bright); }
+  .voice-feedback.okay{ background:rgba(214,138,46,0.18); color:var(--gold-bright); }
   .voice-feedback.retry{ background:rgba(184,74,62,0.18); color:#F0A99E; }
   .bubble.reply .voice-feedback.good,.word-card .voice-feedback.good,.pron-card .voice-feedback.good{ color:var(--green); }
   .bubble.reply .voice-feedback.okay,.word-card .voice-feedback.okay,.pron-card .voice-feedback.okay{ color:#8A6A10; }
@@ -602,7 +605,7 @@
   .pron-card,.grammar-card,.word-card{ transition:transform .22s ease, box-shadow .22s ease; }
   .pron-card:hover,.grammar-card:hover,.word-card:hover{
     transform:translateY(-4px);
-    box-shadow:0 10px 24px rgba(15,59,56,0.1);
+    box-shadow:0 10px 24px rgba(58,31,61,0.1);
   }
 
   /* ---------- STICKY NAV HIDE/SHOW ---------- */
@@ -613,7 +616,7 @@
   .name-gate{
     position:fixed;
     inset:0;
-    background:radial-gradient(circle at 20% -10%, #1F655D 0%, var(--navy-deep) 55%, #081C1A 100%);
+    background:radial-gradient(circle at 20% -10%, #623868 0%, var(--navy-deep) 55%, #1F1121 100%);
     z-index:1000;
     display:flex;
     align-items:center;
@@ -638,7 +641,7 @@
   .gate-card h2{
     font-family:'Fraunces',serif;
     font-size:22px;
-    color:var(--navy-deep);
+    color:var(--text-main);
     margin:0 0 4px;
   }
   .gate-card .ar-h{
@@ -684,8 +687,8 @@
     display:inline-flex;
     align-items:center;
     gap:8px;
-    background:rgba(222,124,62,0.14);
-    border:1px solid rgba(222,124,62,0.35);
+    background:rgba(235,164,62,0.14);
+    border:1px solid rgba(235,164,62,0.35);
     color:var(--gold-bright);
     padding:8px 16px;
     border-radius:999px;
@@ -754,7 +757,7 @@
     font-weight:700;
     flex:0 0 auto;
   }
-  .dash-name{ font-family:'Fraunces',serif; font-size:19px; color:var(--navy-deep); font-weight:700; }
+  .dash-name{ font-family:'Fraunces',serif; font-size:19px; color:var(--text-main); font-weight:700; }
   .dash-email{ font-size:12.5px; color:var(--text-muted); margin-top:2px; }
 
   .dash-stats-grid{
@@ -774,7 +777,7 @@
     font-family:'Fraunces',serif;
     font-size:26px;
     font-weight:700;
-    color:var(--navy-deep);
+    color:var(--text-main);
   }
   .dash-stat-lab{
     font-size:11px;
@@ -811,7 +814,7 @@
     justify-content:center;
     text-align:center;
   }
-  .dash-ring-pct{ font-family:'Fraunces',serif; font-size:22px; font-weight:700; color:var(--navy-deep); }
+  .dash-ring-pct{ font-family:'Fraunces',serif; font-size:22px; font-weight:700; color:var(--text-main); }
   .dash-ring-sub{ font-size:9.5px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.04em; margin-top:2px; line-height:1.3; }
 
   .dash-section-title{
@@ -819,7 +822,7 @@
     font-weight:700;
     text-transform:uppercase;
     letter-spacing:0.05em;
-    color:var(--navy-deep);
+    color:var(--text-main);
     margin:20px 0 10px;
     padding-top:16px;
     border-top:1px solid var(--line);
@@ -837,7 +840,7 @@
     font-size:13px;
   }
   .dash-quiz-row .dq-date{ color:var(--text-muted); }
-  .dash-quiz-row .dq-score{ font-weight:700; color:var(--navy-deep); }
+  .dash-quiz-row .dq-score{ font-weight:700; color:var(--text-main); }
   .dash-quiz-row .dq-score.good{ color:var(--green); }
   .dash-empty{ font-size:12.5px; color:var(--text-muted); text-align:center; padding:14px; }
   .dash-empty .ar{ display:block; margin-top:3px; }
@@ -859,7 +862,7 @@
     border-radius:12px;
     border:none;
     background:var(--gold);
-    color:var(--navy-deep);
+    color:var(--text-main);
     font-weight:700;
     font-size:14px;
     cursor:pointer;
@@ -881,23 +884,36 @@
 
   /* ---------- DARK MODE ---------- */
   body.dark-mode{
-    --cream:#0B1420;
-    --card-white:#132238;
-    --navy-deep:#F2F1EA;
-    --text-muted:#9FB0C9;
-    --line:#22344E;
+    --cream:#12141C;
+    --card-white:#1B1E29;
+    --text-main:#EDEAE3;
+    --text-muted:#A9A399;
+    --line:#333748;
   }
-  body.dark-mode .hero,
-  body.dark-mode .stats-bar,
-  body.dark-mode .track-wrap{
-    background:var(--navy-mid);
-  }
-  body.dark-mode .bubble.reply{ background:var(--card-white); border-color:var(--line); }
-  body.dark-mode .day-flag .title,
-  body.dark-mode .gate-card h2,
-  body.dark-mode .gate-card{ color:var(--navy-deep); }
+  body.dark-mode .bubble.reply{ background:var(--card-white); border-color:var(--line); color:var(--text-main); }
+  body.dark-mode .bubble.reply .ar{ color:var(--text-main); }
+  body.dark-mode .day-flag .title{ color:var(--text-main); }
   body.dark-mode .gate-card{ background:var(--card-white); }
-  body.dark-mode .gate-card input{ background:var(--cream); color:var(--navy-deep); }
+  body.dark-mode .gate-card h2{ color:var(--text-main); }
+  body.dark-mode .gate-card input{ background:var(--cream); color:var(--text-main); border-color:var(--line); }
+  body.dark-mode .q-card{ background:var(--card-white); border-color:var(--line); }
+  body.dark-mode .q-card .q-en{ color:var(--text-main); }
+  body.dark-mode .word-card, body.dark-mode .pron-card, body.dark-mode .grammar-card{
+    background:var(--card-white); border-color:var(--line); color:var(--text-main);
+  }
+  body.dark-mode .dash-modal{ background:var(--card-white); }
+  body.dark-mode .dash-name{ color:var(--text-main); }
+  body.dark-mode .dash-stat{ background:var(--cream); border-color:var(--line); }
+  body.dark-mode .dash-stat-num{ color:var(--text-main); }
+  body.dark-mode .dash-edit-form input, body.dark-mode .dash-edit-form select{
+    background:var(--cream); color:var(--text-main); border-color:var(--line);
+  }
+  body.dark-mode .level-q{ background:var(--card-white); border-color:var(--line); }
+  body.dark-mode .lq-opt{ color:var(--text-main); border-color:var(--line); }
+  body.dark-mode .testimonial-card{ background:var(--card-white); border-color:var(--line); }
+  body.dark-mode .testimonial-card .quote{ color:var(--text-main); }
+  body.dark-mode .util-btn{ background:var(--card-white); color:var(--text-main); border-color:var(--line); }
+  body.dark-mode .control-btn{ background:var(--card-white); border-color:var(--line); }
 
   /* ---------- FLOATING CONTROL BAR ---------- */
   .control-bar{
@@ -914,7 +930,7 @@
     border-radius:50%;
     border:1px solid var(--line);
     background:var(--card-white);
-    box-shadow:0 6px 18px rgba(15,59,56,0.18);
+    box-shadow:0 6px 18px rgba(58,31,61,0.18);
     display:flex;
     align-items:center;
     justify-content:center;
@@ -968,12 +984,15 @@
     max-width:640px;
     margin:26px auto 0;
     padding:16px 18px;
-    background:rgba(222,124,62,0.1);
+    background:rgba(235,164,62,0.1);
     border:1px dashed var(--gold);
     border-radius:14px;
     text-align:center;
     color:#fff;
+    transition:background .2s ease, transform .15s ease;
   }
+  .lotd[role="button"]:hover{ background:rgba(235,164,62,0.18); transform:translateY(-2px); }
+  .lotd[role="button"]:focus{ outline:2px solid var(--gold-bright); outline-offset:2px; }
   .lotd .lotd-label{
     font-size:10.5px;
     letter-spacing:0.1em;
@@ -1004,8 +1023,8 @@
     cursor:pointer;
     transition:all .18s ease;
   }
-  .tool-btn:hover{ border-color:var(--gold); color:var(--navy-deep); }
-  .tool-btn.on{ background:var(--gold); border-color:var(--gold); color:var(--navy-deep); font-weight:600; }
+  .tool-btn:hover{ border-color:var(--gold); color:var(--text-main); }
+  .tool-btn.on{ background:var(--gold); border-color:var(--gold); color:var(--text-main); font-weight:600; }
   .day.done .day-flag .num{ background:var(--green); color:#fff; }
   .day.fav-hidden{ display:none !important; }
 
@@ -1024,7 +1043,7 @@
     border-radius:16px;
     padding:22px;
   }
-  .testimonial-card .quote{ font-size:14.5px; line-height:1.6; color:var(--navy-deep); margin-bottom:12px; }
+  .testimonial-card .quote{ font-size:14.5px; line-height:1.6; color:var(--text-main); margin-bottom:12px; }
   .testimonial-card .who{ font-size:12.5px; color:var(--gold); font-weight:700; }
   .testimonial-card .who .ar{ display:block; color:var(--text-muted); font-weight:500; margin-top:2px; }
 
@@ -1052,9 +1071,9 @@
     cursor:pointer;
     font-size:13.5px;
     font-family:inherit;
-    color:var(--navy-deep);
+    color:var(--text-main);
   }
-  .level-q .lq-opt.picked{ border-color:var(--gold); background:rgba(193,101,47,0.12); font-weight:600; }
+  .level-q .lq-opt.picked{ border-color:var(--gold); background:rgba(214,138,46,0.12); font-weight:600; }
   .level-result{
     display:none;
     text-align:center;
@@ -1075,7 +1094,7 @@
   .level-result .lvl-cta{
     display:inline-block;
     background:var(--gold);
-    color:var(--navy-deep);
+    color:var(--text-main);
     padding:12px 22px;
     border-radius:999px;
     font-weight:700;
@@ -1101,7 +1120,7 @@
     border-radius:999px;
     border:1.5px solid var(--line);
     background:var(--card-white);
-    color:var(--navy-deep);
+    color:var(--text-main);
     font-size:13px;
     font-weight:600;
     cursor:pointer;
@@ -1119,6 +1138,35 @@
   }
 
   /* ---------- WORD CARDS (prepositions / modals) ---------- */
+  .level-tabs{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    max-width:640px;
+    margin:0 auto 24px;
+    padding:0 18px;
+    flex-wrap:wrap;
+  }
+  .level-tab{
+    padding:11px 20px;
+    border-radius:999px;
+    border:1.5px solid var(--line);
+    background:var(--card-white);
+    color:var(--text-muted);
+    font-size:13.5px;
+    font-weight:600;
+    cursor:pointer;
+    transition:all .18s ease;
+  }
+  .level-tab .ar{ margin-left:5px; font-weight:500; }
+  .level-tab:hover{ border-color:var(--gold); }
+  .level-tab.active{
+    background:var(--navy-deep);
+    border-color:var(--navy-deep);
+    color:#fff;
+  }
+  .day.level-hidden{ display:none !important; }
+
   .words-wrap{
     max-width:900px;
     margin:0 auto;
@@ -1143,7 +1191,7 @@
     font-family:'Fraunces',serif;
     font-size:22px;
     font-weight:700;
-    color:var(--navy-deep);
+    color:var(--text-main);
   }
   .word-card .headword .tag{
     font-size:11px;
@@ -1168,7 +1216,7 @@
   }
   .use .en-ex{
     font-size:15px;
-    color:var(--navy-deep);
+    color:var(--text-main);
     font-weight:600;
     margin-bottom:8px;
     line-height:1.5;
@@ -1213,7 +1261,7 @@
     position:sticky;
     top:74px;
     z-index:9;
-    box-shadow:0 8px 24px rgba(15,59,56,0.25);
+    box-shadow:0 8px 24px rgba(58,31,61,0.25);
   }
   .scoreboard .lab{
     color:#93A4BE;
@@ -1229,7 +1277,7 @@
   }
   .scoreboard .reset-btn{
     background:transparent;
-    border:1px solid rgba(193,101,47,0.5);
+    border:1px solid rgba(214,138,46,0.5);
     color:var(--gold-bright);
     font-size:12px;
     padding:9px 16px;
@@ -1238,7 +1286,7 @@
     font-family:'Inter',sans-serif;
     transition:all .2s ease;
   }
-  .scoreboard .reset-btn:hover{background:var(--gold);color:var(--navy-deep);}
+  .scoreboard .reset-btn:hover{background:var(--gold);color:var(--text-main);}
 
   .q-card{
     background:var(--card-white);
@@ -1250,7 +1298,7 @@
   .q-card .q-en{
     font-size:16px;
     font-weight:600;
-    color:var(--navy-deep);
+    color:var(--text-main);
     margin-bottom:16px;
     line-height:1.55;
   }
@@ -1273,7 +1321,7 @@
     font-weight:600;
     background:var(--cream);
     border:1.5px solid var(--line);
-    color:var(--navy-deep);
+    color:var(--text-main);
     padding:10px 18px;
     border-radius:10px;
     cursor:pointer;
@@ -1306,7 +1354,7 @@
     right:-60px;bottom:-60px;
     width:180px;height:180px;
     border-radius:50%;
-    border:1px solid rgba(193,101,47,0.25);
+    border:1px solid rgba(214,138,46,0.25);
   }
   .contact-card h3{
     font-family:'Fraunces',serif;
@@ -1349,8 +1397,8 @@
     padding:12px 22px;
     border-radius:999px;
   }
-  .contact-btn.whatsapp{background:var(--gold-bright);color:var(--navy-deep);}
-  .contact-btn.call{background:transparent;border:1.5px solid rgba(222,124,62,0.6);color:var(--gold-bright);}
+  .contact-btn.whatsapp{background:var(--gold-bright);color:var(--text-main);}
+  .contact-btn.call{background:transparent;border:1.5px solid rgba(235,164,62,0.6);color:var(--gold-bright);}
   .phone-num{
     margin-top:20px;
     font-family:'Fraunces',serif;
@@ -1424,7 +1472,7 @@
         <div class="dash-stat-lab">Best Streak<span class="ar">أفضل سلسلة</span></div>
       </div>
       <div class="dash-stat">
-        <div class="dash-stat-num" id="dash-completed">0/25</div>
+        <div class="dash-stat-num" id="dash-completed">0/35</div>
         <div class="dash-stat-lab">Lessons Done<span class="ar">دروس مكتملة</span></div>
       </div>
       <div class="dash-stat">
@@ -1505,7 +1553,7 @@
     </div>
 
     <div id="verb-test-results" style="display:none;text-align:center;">
-      <div class="lvl-badge" style="color:var(--navy-deep);font-size:26px;margin-bottom:6px;" id="vt-final-score"></div>
+      <div class="lvl-badge" style="color:var(--text-main);font-size:26px;margin-bottom:6px;" id="vt-final-score"></div>
       <div style="color:var(--text-muted);margin-bottom:20px;" id="vt-final-ar"></div>
       <button type="button" class="dash-save-btn" id="vt-retry-btn">Try Again with New Verbs / حاول مرة ثانية بأفعال جديدة</button>
     </div>
@@ -1533,18 +1581,20 @@
     </div>
     <div class="hero-nav">
       <a href="#level">What's My Level?</a>
+      <a href="#verb-test-section">Verb Test</a>
       <a href="#starters">Conversation Starters</a>
-      <a href="#lessons">Lessons</a>
+      <a href="#lessons">The Course</a>
       <a href="#pronunciation">Pronunciation Clinic</a>
       <a href="#grammar">Grammar Traps</a>
       <a href="#words">Words That Matter</a>
       <a href="#quiz">Quick Check</a>
       <a href="#contact">Message Tutor Firas</a>
     </div>
-    <div class="lotd" id="lotd">
+    <div class="lotd" id="lotd" role="button" tabindex="0" style="cursor:pointer;">
       <div class="lotd-label">Phrase of the Day / عبارة اليوم</div>
-      <div class="lotd-en" id="lotd-en"></div>
-      <div class="lotd-ar" id="lotd-ar"></div>
+      <div class="lotd-en" id="lotd-en">Loading...</div>
+      <div class="lotd-ar" id="lotd-ar">جاري التحميل...</div>
+      <div style="font-size:11px;color:var(--gold-bright);margin-top:8px;">🔊 Tap to hear it / اضغط عشان تسمعها</div>
     </div>
   </div>
 </section>
@@ -1559,7 +1609,7 @@
 <div class="stats-bar">
   <div class="stats-inner">
     <div class="stat">
-      <div class="num" data-count="25">0</div>
+      <div class="num" data-count="35">0</div>
       <div class="lab">Real-Life Lessons<span class="ar">درس مبني على مواقف حقيقية</span></div>
     </div>
     <div class="stat">
@@ -1576,7 +1626,7 @@
 <div class="progress-wrap">
   <div class="progress-label">
     <span>Your progress / تقدمك</span>
-    <span id="progress-count">0 / 25</span>
+    <span id="progress-count">0 / 35</span>
   </div>
   <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
 </div>
@@ -1601,6 +1651,17 @@
   </div>
 </div>
 
+<!-- VERB TEST (MAIN PAGE) -->
+<div class="section-head" id="verb-test-section">
+  <div class="eyebrow">Put your grammar to the test</div>
+  <h2>Verb Practice Test</h2>
+  <div class="ar-h">اختبار الأفعال</div>
+  <p class="desc">8 random verbs, you write the sentences, we check them instantly. Log in to save your score.</p>
+</div>
+<div style="text-align:center;padding:0 18px 10px;">
+  <button type="button" class="util-btn" id="main-start-verb-test-btn" style="background:var(--navy-deep);color:#fff;border-color:var(--navy-deep);font-size:14.5px;padding:14px 28px;">🧪 Take a Verb Test<span class="ar" style="margin-left:6px;">ابدأ اختبار الأفعال</span></button>
+</div>
+
 <!-- CONVERSATION STARTERS -->
 <div class="section-head" id="starters">
   <div class="eyebrow">First, break the silence</div>
@@ -1613,8 +1674,14 @@
 <!-- LESSON THREAD -->
 <div class="section-head" id="lessons">
   <div class="eyebrow">Then, keep it going</div>
-  <h2>Everyday Situations</h2>
-  <div class="ar-h">مواقف تستخدمها كل يوم</div>
+  <h2>The Course</h2>
+  <div class="ar-h">الدورة التدريبية</div>
+  <p class="desc">35 real-life lessons, organized into three levels so you always know what's next.</p>
+</div>
+<div class="level-tabs">
+  <button type="button" class="level-tab active" data-level="beginner">🌱 Beginner<span class="ar">مبتدئ</span></button>
+  <button type="button" class="level-tab" data-level="intermediate">🌿 Intermediate<span class="ar">متوسط</span></button>
+  <button type="button" class="level-tab" data-level="advanced">🌳 Advanced<span class="ar">متقدم</span></button>
 </div>
 <main class="thread">
   <p class="thread-label">Scroll the thread, read it like you're chatting with Tutor Firas</p>
@@ -1769,7 +1836,7 @@ let currentProfile = null; // the row from public.students for the logged-in use
     gate.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
     badge.style.display = 'none';
-    setMode('signup');
+    setMode('login');
   }
 
   function closeGate(){
@@ -1902,10 +1969,10 @@ function populateDashboard(){
   document.getElementById('dash-streak').textContent = currentProfile.streak_count || 0;
   document.getElementById('dash-longest').textContent = currentProfile.longest_streak || 0;
   const completedCount = (currentProfile.completed_lessons || []).length;
-  document.getElementById('dash-completed').textContent = `${completedCount}/25`;
+  document.getElementById('dash-completed').textContent = `${completedCount}/35`;
   document.getElementById('dash-favs').textContent = (currentProfile.favorite_lessons || []).length;
 
-  const pct = Math.round((completedCount / 25) * 100);
+  const pct = Math.round((completedCount / 35) * 100);
   document.getElementById('dash-ring-pct').textContent = pct + '%';
   const ringFill = document.getElementById('dash-ring-fill');
   const circumference = 264;
@@ -1999,8 +2066,8 @@ async function saveQuizScore(score, total){
 function renderProgressBar(){
   if(!currentProfile) return;
   const completedCount = (currentProfile.completed_lessons || []).length;
-  document.getElementById('progress-count').textContent = `${completedCount} / 25`;
-  document.getElementById('progress-fill').style.width = Math.round((completedCount/25)*100) + '%';
+  document.getElementById('progress-count').textContent = `${completedCount} / 35`;
+  document.getElementById('progress-fill').style.width = Math.round((completedCount/35)*100) + '%';
 }
 
 function syncLocalProgressToCloud(){
@@ -2128,7 +2195,7 @@ const starters = [
     en:"So, what do you do for work?",
     task:"A safe opener with almost anyone new",
     sound:"سو، وات دو يو دو فور ورك؟",
-    ar:"طيب، إيش تشتغل؟"
+    ar:"طيب، ايش تشتغل؟"
   },
   {
     title:"Compliment something",
@@ -2140,7 +2207,7 @@ const starters = [
   },
   {
     title:"Check if it's their first time",
-    arTitle:"اسأل إذا أول مرة له",
+    arTitle:"اسأل اذا اول مرة له",
     en:"Have you been here before?",
     task:"Great for events, restaurants, new places",
     sound:"هاف يو بين هير بيفور؟",
@@ -2160,7 +2227,7 @@ const starters = [
     en:"What are you up to this weekend?",
     task:"Naturally opens the door to plans and hobbies",
     sound:"وات آر يو أب تو ذيس ويكند؟",
-    ar:"إيش خطتك هالويكند؟"
+    ar:"ايش خطتك هالويكند؟"
   },
   {
     title:"Ask where they're from",
@@ -2168,7 +2235,7 @@ const starters = [
     en:"Where are you from, originally?",
     task:"Good for meeting people outside your city",
     sound:"وير آر يو فروم، أوريجينالي؟",
-    ar:"من وين أصلك؟"
+    ar:"من وين اصلك؟"
   },
   {
     title:"Share your opinion",
@@ -2176,7 +2243,7 @@ const starters = [
     en:"Honestly, I don't think that's the best idea.",
     task:"Use this when you disagree, but want to stay polite",
     sound:"أونستلي، آي دونت ثينك ذاتس ذا بست آيديا.",
-    ar:"بصراحة، ما أشوفها أحسن فكرة."
+    ar:"بصراحة، ما اشوفها احسن فكرة."
   },
   {
     title:"Disagree politely",
@@ -2184,7 +2251,7 @@ const starters = [
     en:"I see your point, but I look at it a bit differently.",
     task:"Keeps a disagreement respectful, not awkward",
     sound:"آي سي يور بوينت، بت آي لوك أت إت أ بت ديفرنتلي.",
-    ar:"أفهم وجهة نظرك، بس أنا أشوفها بطريقة ثانية شوي."
+    ar:"افهم وجهة نظرك، بس انا اشوفها بطريقة ثانية شوي."
   },
   {
     title:"Negotiate the price",
@@ -2196,11 +2263,11 @@ const starters = [
   },
   {
     title:"Give honest feedback",
-    arTitle:"أعطِ رأيك الصادق",
+    arTitle:"اعطِ رأيك الصادق",
     en:"Can I be honest with you about something?",
     task:"A respectful way to open up a tough conversation",
     sound:"كان آي بي أونست ويذ يو أباوت سمثينق؟",
-    ar:"أقدر أكون صريح معك بشي؟"
+    ar:"اقدر اكون صريح معك بشي؟"
   },
   {
     title:"Ask for advice",
@@ -2208,7 +2275,7 @@ const starters = [
     en:"What would you do in my situation?",
     task:"Shows you value the other person's opinion",
     sound:"وات وود يو دو إن ماي سيتشوايشن؟",
-    ar:"إيش كنت بتسوي لو كنت مكاني؟"
+    ar:"ايش كنت بتسوي لو كنت مكاني؟"
   },
   {
     title:"Bring up the news",
@@ -2224,7 +2291,7 @@ const starters = [
     en:"Don't worry, it'll work out. You've got this.",
     task:"A warm line for when a friend is stressed",
     sound:"دونت وري، إتل ورك آوت. يوف قوت ذيس.",
-    ar:"لا تشيل هم، بتنحل بإذن الله. أنت قادر."
+    ar:"لا تشيل هم، بتنحل بإذن الله. انت قادر."
   },
   {
     title:"Stay in touch",
@@ -2266,14 +2333,16 @@ starters.forEach((d,i)=>{
 const days = [
   {
     title:"Introduce yourself",
+    level:"beginner",
     arTitle:"عرّف عن نفسك",
     en:"Hi, I'm [your name]. Nice to meet you!",
     task:"Say this out loud to a mirror, 3 times",
     sound:"هاي، آيم [يور نيم]. نايس تو ميت يو!",
-    ar:"هلا، أنا [اسمك]. تشرفنا!"
+    ar:"هلا، انا [اسمك]. تشرفنا!"
   },
   {
     title:"Order like a local",
+    level:"beginner",
     arTitle:"اطلب قهوتك بثقة",
     en:"Can I get a medium latte, please?",
     task:"Use this at any coffee shop today",
@@ -2282,6 +2351,7 @@ const days = [
   },
   {
     title:"Small talk starter",
+    level:"beginner",
     arTitle:"افتح حديث بسيط",
     en:"It's so hot today, isn't it?",
     task:"Say it to anyone standing near you",
@@ -2290,38 +2360,43 @@ const days = [
   },
   {
     title:"Text with confidence",
+    level:"beginner",
     arTitle:"راسل بثقة",
     en:"Hey, are you free later? Let's catch up!",
     task:"Send this exact text to a friend",
     sound:"هاي، آر يو فري لايتر؟ ليتس كاتش أب!",
-    ar:"هلا، أنت فاضي بعدين؟ يلا نتقابل!"
+    ar:"هلا، انت فاضي بعدين؟ يلا نتقابل!"
   },
   {
     title:"Ask for directions",
+    level:"beginner",
     arTitle:"اسأل عن الطريق",
     en:"Excuse me, how do I get to the mall from here?",
     task:"Practice it before your next outing",
     sound:"إكسكيوز مي، هاو دو آي قت تو ذا مول فروم هير؟",
-    ar:"لو سمحت، كيف أروح المول من هنا؟"
+    ar:"لو سمحت، كيف اروح المول من هنا؟"
   },
   {
     title:"Job interview opener",
+    level:"advanced",
     arTitle:"افتتاحية المقابلة",
     en:"Sure, I'm currently studying / working in...",
     task:"Finish this sentence about yourself out loud",
     sound:"شور، آيم كارنتلي ستدينق / ووركينق إن...",
-    ar:"أكيد، أنا حالياً أدرس / أشتغل في..."
+    ar:"اكيد، انا حالياً ادرس / اشتغل في..."
   },
   {
     title:"Complain politely",
+    level:"intermediate",
     arTitle:"اشتكِ بأدب",
     en:"Sorry to bother you, but this isn't working properly. Can I get a replacement?",
     task:"Save this for your next return/exchange",
     sound:"سوري تو بوذر يو، بت ذيس إزنت ووركينق بروبرلي. كان آي قت أ ريبليسمنت؟",
-    ar:"آسف أزعجك، بس هذا مو شغال زين. ممكن أستبدله؟"
+    ar:"اسف ازعجك، بس هذا مو شغال زين. ممكن استبدله؟"
   },
   {
     title:"Make plans",
+    level:"intermediate",
     arTitle:"رتب خطة",
     en:"Do you want to grab lunch this weekend?",
     task:"Text this to a friend before Thursday",
@@ -2330,6 +2405,7 @@ const days = [
   },
   {
     title:"Talk about your weekend",
+    level:"intermediate",
     arTitle:"احكِ عن ويكندك",
     en:"I had a really relaxing weekend, I just stayed home and rested.",
     task:"Say this Sunday morning, out loud",
@@ -2338,30 +2414,34 @@ const days = [
   },
   {
     title:"Give your opinion",
-    arTitle:"أبدِ رأيك",
+    level:"intermediate",
+    arTitle:"ابدِ رأيك",
     en:"Honestly, I think it's a great idea.",
     task:"Use it next time someone asks what you think",
     sound:"أونستلي، آي ثينك إتس أ قريت آيديا.",
-    ar:"بصراحة، أشوفها فكرة حلوة."
+    ar:"بصراحة، اشوفها فكرة حلوة."
   },
   {
     title:"Apologize like you mean it",
+    level:"intermediate",
     arTitle:"اعتذر بصدق",
     en:"I'm really sorry for being late, it won't happen again.",
     task:"Keep this ready: everyone needs it eventually",
     sound:"آيم ريلي سوري فور بينق ليت، إت ونت هابن أقين.",
-    ar:"آسف مره على التأخير، ما بتصير مرة ثانية."
+    ar:"اسف مره على التأخير، ما بتصير مرة ثانية."
   },
   {
     title:"Ask for help",
+    level:"intermediate",
     arTitle:"اطلب مساعدة",
     en:"Could you help me with this, please? I'm a bit stuck.",
     task:"Use this at work or in class today",
     sound:"كود يو هلب مي ويذ ذيس، بليز؟ آيم أ بت ستك.",
-    ar:"تقدر تساعدني في هذي؟ أنا متعلق شوي."
+    ar:"تقدر تساعدني في هذي؟ انا متعلق شوي."
   },
   {
     title:"Answer a phone call",
+    level:"beginner",
     arTitle:"رد على مكالمة",
     en:"Hello, this is [your name] calling. Is this a good time to talk?",
     task:"Say this before your next English call",
@@ -2370,31 +2450,35 @@ const days = [
   },
   {
     title:"Describe your dream job",
+    level:"advanced",
     arTitle:"احكِ عن حلمك",
     en:"My dream job would be... because I love...",
     task:"Finish it out loud: no wrong answers",
     sound:"ماي دريم جوب وود بي... بيكوز آي لف...",
-    ar:"شغلي اللي أحلم فيه هو... لأني أحب..."
+    ar:"شغلي اللي احلم فيه هو... لأني احب..."
   },
   {
     title:"Describe symptoms to a doctor",
+    level:"advanced",
     arTitle:"اوصف حالتك للدكتور",
     en:"I've had a headache since yesterday, and I feel a bit dizzy.",
     task:"Practice this before any doctor's appointment",
     sound:"آيف هاد أ هيدايك سنس يستردي، آند آي فيل أ بت ديزي.",
-    ar:"عندي صداع من أمس، وأحس بدوخة شوي."
+    ar:"عندي صداع من امس، وأحس بدوخة شوي."
   },
   {
     title:"Decline an invitation",
+    level:"intermediate",
     arTitle:"اعتذر عن دعوة بلطف",
     en:"Thanks so much for the invite, but I can't make it this time.",
     task:"Polite, warm, and doesn't need a long excuse",
     sound:"ثانكس سو مچ فور ذا إنفايت، بت آي كانت ميك إت ذيس تايم.",
-    ar:"مشكور على الدعوة، بس ما بقدر أحضر هالمرة."
+    ar:"مشكور على الدعوة، بس ما بقدر احضر هالمرة."
   },
   {
     title:"Ask about a discount",
-    arTitle:"اسأل عن عرض أو خصم",
+    level:"intermediate",
+    arTitle:"اسأل عن عرض او خصم",
     en:"Do you have any deals running right now?",
     task:"Use this in any shop before you buy",
     sound:"دو يو هاف إني ديلز رنينق رايت ناو؟",
@@ -2402,22 +2486,25 @@ const days = [
   },
   {
     title:"Open a bank account",
+    level:"advanced",
     arTitle:"افتح حساب بنكي",
     en:"I'd like to open a savings account, please.",
     task:"Say this at your next bank visit",
     sound:"آيد لايك تو أوبن أ سيفينقز أكاونت، بليز.",
-    ar:"أبغى أفتح حساب توفير، لو سمحت."
+    ar:"ابغى افتح حساب توفير، لو سمحت."
   },
   {
     title:"Ask about a job package",
+    level:"advanced",
     arTitle:"اسأل عن مزايا الوظيفة",
     en:"What does the salary package include, exactly?",
     task:"A great question for job interviews",
     sound:"وات دز ذا سالري باكج إنكلود، إكزاكتلي؟",
-    ar:"إيش يشمل الراتب بالضبط؟"
+    ar:"ايش يشمل الراتب بالضبط؟"
   },
   {
     title:"Open a presentation",
+    level:"advanced",
     arTitle:"افتتح عرضك التقديمي",
     en:"Good morning everyone, thanks for being here today.",
     task:"Say this out loud before your next meeting",
@@ -2426,30 +2513,34 @@ const days = [
   },
   {
     title:"Ask about family",
+    level:"beginner",
     arTitle:"اسأل عن العائلة",
     en:"Do you have any kids?",
     task:"Common small talk once you know someone a bit",
     sound:"دو يو هاف إني كيدز؟",
-    ar:"عندك أطفال؟"
+    ar:"عندك اطفال؟"
   },
   {
     title:"Talk about your hobbies",
+    level:"beginner",
     arTitle:"احكِ عن هواياتك",
     en:"In my free time, I usually play football or read.",
     task:"Prepare your own version and say it out loud",
     sound:"إن ماي فري تايم، آي يوجولي بلاي فوتبول أور ريد.",
-    ar:"في وقت فراغي، عادةً ألعب كورة أو أقرا."
+    ar:"في وقت فراغي، عادةً العب كورة او اقرا."
   },
   {
     title:"Ask for a raise",
+    level:"advanced",
     arTitle:"اطلب زيادة راتب",
     en:"I'd like to talk about my salary, do you have a few minutes?",
     task:"Prepare this line before your next review",
     sound:"آيد لايك تو توك أباوت ماي سالري، دو يو هاف أ فيو منتس؟",
-    ar:"أبغى أتكلم عن راتبي، عندك دقايق؟"
+    ar:"ابغى اتكلم عن راتبي، عندك دقايق؟"
   },
   {
     title:"Check in at a hotel",
+    level:"beginner",
     arTitle:"سجّل دخولك بالفندق",
     en:"I have a reservation under [your name].",
     task:"Have this ready for your next trip",
@@ -2458,11 +2549,102 @@ const days = [
   },
   {
     title:"Talk about future plans",
+    level:"advanced",
     arTitle:"احكِ عن خططك المستقبلية",
     en:"In five years, I hope to have my own business.",
     task:"A great one for interviews and deep conversations",
     sound:"إن فايف يرز، آي هوب تو هاف ماي أون بزنس.",
-    ar:"بعد خمس سنين، أتمنى يكون عندي مشروعي الخاص."
+    ar:"بعد خمس سنين، اتمنى يكون عندي مشروعي الخاص."
+  },
+  {
+    title:"Ask someone's name",
+    level:"beginner",
+    arTitle:"اسأل عن اسمه",
+    en:"What's your name?",
+    task:"The most basic way to start any conversation",
+    sound:"واتس يور نيم؟",
+    ar:"ايش اسمك؟"
+  },
+  {
+    title:"Say goodbye casually",
+    level:"beginner",
+    arTitle:"ودّع بأسلوب بسيط",
+    en:"Alright, take care! See you soon.",
+    task:"A relaxed way to end any conversation",
+    sound:"أولرايت، تيك كير! سي يو سون.",
+    ar:"طيب، ديروا بالكم! اشوفكم قريب."
+  },
+  {
+    title:"Talk about the traffic",
+    level:"beginner",
+    arTitle:"احكِ عن الزحمة",
+    en:"Traffic was crazy today, I almost missed it.",
+    task:"Common small talk, especially in the morning",
+    sound:"ترافيك واز كريزي تودي، آي أولموست مِسد إت.",
+    ar:"الزحمة كانت جنونية اليوم، وقريب فاتني الموعد."
+  },
+  {
+    title:"Ask for a table",
+    level:"intermediate",
+    arTitle:"اطلب طاولة بالمطعم",
+    en:"Do you have a table for two, please?",
+    task:"Say this right when you walk into a restaurant",
+    sound:"دو يو هاف أ تيبل فور تو، بليز؟",
+    ar:"عندكم طاولة لشخصين، لو سمحت؟"
+  },
+  {
+    title:"Return an item",
+    level:"intermediate",
+    arTitle:"ارجع منتج بالمحل",
+    en:"I'd like to return this, please. It doesn't fit.",
+    task:"Have this ready before your next store visit",
+    sound:"آيد لايك تو ريترن ذيس، بليز. إت دزنت فت.",
+    ar:"ابغى ارجع هذا، لو سمحت. ما يناسبني."
+  },
+  {
+    title:"Explain you're running late",
+    level:"intermediate",
+    arTitle:"اعتذر عن تأخيرك",
+    en:"Sorry, I'm running a few minutes late.",
+    task:"Send this before any meeting or appointment",
+    sound:"سوري، آيم رنينق أ فيو منتس ليت.",
+    ar:"اسف، بتأخر كم دقيقة."
+  },
+  {
+    title:"Ask someone to repeat",
+    level:"intermediate",
+    arTitle:"اطلب منه يعيد كلامه",
+    en:"Sorry, could you say that again?",
+    task:"Perfectly normal to ask, even for native speakers",
+    sound:"سوري، كود يو ساي ذات أقين؟",
+    ar:"اسف، تقدر تعيد اللي قلته؟"
+  },
+  {
+    title:"Reschedule a meeting",
+    level:"advanced",
+    arTitle:"اجّل موعد الاجتماع",
+    en:"Could we push our meeting to another time?",
+    task:"A professional way to ask for a schedule change",
+    sound:"كود وي بوش أور ميتينق تو أناذر تايم؟",
+    ar:"نقدر نأجل الاجتماع لوقت ثاني؟"
+  },
+  {
+    title:"Give a short toast",
+    level:"advanced",
+    arTitle:"قول كلمة قصيرة بمناسبة",
+    en:"I just want to say a few words before we start.",
+    task:"Useful for weddings, dinners, or work events",
+    sound:"آي جست وانت تو ساي أ فيو ووردز بيفور وي ستارت.",
+    ar:"بس ابغى اقول كم كلمة قبل لا نبدأ."
+  },
+  {
+    title:"Discuss a deadline",
+    level:"advanced",
+    arTitle:"ناقش موعد التسليم",
+    en:"Are we still on track to meet the deadline?",
+    task:"Great for checking progress on a project",
+    sound:"آر وي ستيل أون تراك تو ميت ذا ديدلاين؟",
+    ar:"لسا ماشين حسب الخطة عشان نسلم بالوقت؟"
   }
 ];
 
@@ -2481,9 +2663,9 @@ days.forEach((d,i)=>{
   dayDiv.className = 'day';
   dayDiv.id = 'day'+n;
   dayDiv.dataset.title = d.title;
+  dayDiv.dataset.level = d.level || 'beginner';
   dayDiv.innerHTML = `
-    <div class="day-flag">
-      <div class="num">${n}</div>
+    <div class="day-flag">      <div class="num">${n}</div>
       <div class="title">${d.title}<span class="ar">${d.arTitle}</span></div>
     </div>
     <div class="bubble coach">
@@ -2507,6 +2689,21 @@ days.forEach((d,i)=>{
   `;
   daysEl.appendChild(dayDiv);
 });
+
+/* ---------------- LEVEL TABS ---------------- */
+(function(){
+  const tabs = document.querySelectorAll('.level-tab');
+  function applyLevel(level){
+    document.querySelectorAll('.day').forEach(dayEl=>{
+      dayEl.classList.toggle('level-hidden', dayEl.dataset.level !== level);
+    });
+    tabs.forEach(t=>t.classList.toggle('active', t.dataset.level === level));
+  }
+  tabs.forEach(tab=>{
+    tab.addEventListener('click', ()=>applyLevel(tab.dataset.level));
+  });
+  applyLevel('beginner');
+})();
 
 /* ---------------- DAY TOOLS: mark complete / favorite / copy / share ---------------- */
 document.addEventListener('click', async (e)=>{
@@ -2550,12 +2747,12 @@ document.addEventListener('click', async (e)=>{
 /* ---------------- WORDS THAT MATTER ---------------- */
 const wordData = [
   { w:"To", tag:"preposition", uses:[
-    { meaning:"Direction / destination", en:"I'm going to the gym.", sound:"آيم قوينق تو ذا جم.", ar:"أنا رايح النادي." },
-    { meaning:"Purpose", en:"I called to ask about the price.", sound:"آي كولد تو آسك أباوت ذا برايس.", ar:"اتصلت عشان أسأل عن السعر." }
+    { meaning:"Direction / destination", en:"I'm going to the gym.", sound:"آيم قوينق تو ذا جم.", ar:"انا رايح النادي." },
+    { meaning:"Purpose", en:"I called to ask about the price.", sound:"آي كولد تو آسك أباوت ذا برايس.", ar:"اتصلت عشان اسأل عن السعر." }
   ]},
   { w:"From", tag:"preposition", uses:[
-    { meaning:"Origin", en:"I'm from Abha.", sound:"آيم فروم أبها.", ar:"أنا من أبها." },
-    { meaning:"Starting point", en:"The store is open from 9 to 5.", sound:"ذا ستور إز أوبن فروم ناين تو فايف.", ar:"المحل فاتح من الساعة ٩ إلى ٥." }
+    { meaning:"Origin", en:"I'm from Abha.", sound:"آيم فروم أبها.", ar:"انا من ابها." },
+    { meaning:"Starting point", en:"The store is open from 9 to 5.", sound:"ذا ستور إز أوبن فروم ناين تو فايف.", ar:"المحل فاتح من الساعة ٩ الى ٥." }
   ]},
   { w:"In", tag:"preposition", uses:[
     { meaning:"Inside a place", en:"The keys are in my bag.", sound:"ذا كيز آر إن ماي باق.", ar:"المفاتيح في شنطتي." },
@@ -2563,7 +2760,7 @@ const wordData = [
   ]},
   { w:"On", tag:"preposition", uses:[
     { meaning:"Surface", en:"Put it on the table.", sound:"بوت إت أون ذا تيبل.", ar:"حطه على الطاولة." },
-    { meaning:"Day / date", en:"I'll see you on Friday.", sound:"آيل سي يو أون فرايدي.", ar:"أشوفك يوم الجمعة." }
+    { meaning:"Day / date", en:"I'll see you on Friday.", sound:"آيل سي يو أون فرايدي.", ar:"اشوفك يوم الجمعة." }
   ]},
   { w:"For", tag:"preposition", uses:[
     { meaning:"Purpose / recipient", en:"This gift is for you.", sound:"ذيس قفت إز فور يو.", ar:"هالهدية لك." },
@@ -2571,11 +2768,11 @@ const wordData = [
   ]},
   { w:"That", tag:"pointing / linking", uses:[
     { meaning:"Pointing at something far", en:"That car is beautiful.", sound:"ذات كار إز بيوتيفل.", ar:"ذيك السيارة حلوة." },
-    { meaning:"Linking an idea", en:"I think that you're right.", sound:"آي ثينك ذات يور رايت.", ar:"أعتقد إنك محق." }
+    { meaning:"Linking an idea", en:"I think that you're right.", sound:"آي ثينك ذات يور رايت.", ar:"اعتقد انك محق." }
   ]},
   { w:"This", tag:"pointing", uses:[
     { meaning:"Something near", en:"This phone is new.", sound:"ذيس فون إز نيو.", ar:"هذا الجوال جديد." },
-    { meaning:"Right now / current", en:"I'm busy this week.", sound:"آيم بيزي ذيس ويك.", ar:"أنا مشغول هالأسبوع." }
+    { meaning:"Right now / current", en:"I'm busy this week.", sound:"آيم بيزي ذيس ويك.", ar:"انا مشغول هالأسبوع." }
   ]},
   { w:"Those", tag:"pointing (plural, far)", uses:[
     { meaning:"Plural, far away", en:"Those shoes are expensive.", sound:"ذوز شوز آر إكسبنسيف.", ar:"ذيك الأحذية غالية." }
@@ -2588,7 +2785,7 @@ const wordData = [
     { meaning:"Possibility", en:"It could rain tomorrow.", sound:"إت كود رين تومورو.", ar:"ممكن تمطر بكرة." }
   ]},
   { w:"Should", tag:"modal verb", uses:[
-    { meaning:"Advice", en:"You should drink more water.", sound:"يو شود درينك مور واتر.", ar:"لازم تشرب مويه أكثر." },
+    { meaning:"Advice", en:"You should drink more water.", sound:"يو شود درينك مور واتر.", ar:"لازم تشرب مويه اكثر." },
     { meaning:"Expectation", en:"The package should arrive today.", sound:"ذا باكج شود أرايف تودي.", ar:"المفروض الطرد يوصل اليوم." }
   ]},
   { w:"Would", tag:"modal verb", uses:[
@@ -2596,37 +2793,37 @@ const wordData = [
     { meaning:"Hypothetical (imagined situation)", en:"I would travel if I had time.", sound:"آي وود ترافل إف آي هاد تايم.", ar:"كنت بسافر لو عندي وقت." }
   ]},
   { w:"Because", tag:"connector (reason)", uses:[
-    { meaning:"Giving a reason", en:"I'm tired because I woke up early.", sound:"آيم تايرد بيكوز آي ووك أب إيرلي.", ar:"أنا تعبان لأني صحيت بدري." },
+    { meaning:"Giving a reason", en:"I'm tired because I woke up early.", sound:"آيم تايرد بيكوز آي ووك أب إيرلي.", ar:"انا تعبان لأني صحيت بدري." },
     { meaning:"Short answer to \"why\"", en:"I did it because I had to.", sound:"آي ديد إت بيكوز آي هاد تو.", ar:"سويتها لأني مضطر." }
   ]},
   { w:"So", tag:"connector (result)", uses:[
     { meaning:"Showing a result", en:"It was raining, so I stayed home.", sound:"إت واز رينينق، سو آي ستيد هوم.", ar:"كانت تمطر، فقعدت البيت." },
-    { meaning:"Starting a new topic", en:"So, what do you think?", sound:"سو، وات دو يو ثينك؟", ar:"طيب، إيش رأيك؟" }
+    { meaning:"Starting a new topic", en:"So, what do you think?", sound:"سو، وات دو يو ثينك؟", ar:"طيب، ايش رأيك؟" }
   ]},
   { w:"But", tag:"connector (contrast)", uses:[
     { meaning:"Showing contrast", en:"It's expensive, but it's worth it.", sound:"إتس إكسبنسيف، بت إتس ورث إت.", ar:"غالي، بس يستاهل." },
-    { meaning:"Softening a disagreement", en:"I understand, but I disagree.", sound:"آي أندرستاند، بت آي ديسأقري.", ar:"أفهمك، بس ما أوافقك." }
+    { meaning:"Softening a disagreement", en:"I understand, but I disagree.", sound:"آي أندرستاند، بت آي ديسأقري.", ar:"افهمك، بس ما اوافقك." }
   ]},
   { w:"Although", tag:"connector (contrast)", uses:[
-    { meaning:"Formal contrast, one idea despite another", en:"Although it was late, we kept working.", sound:"أولذو إت واز ليت، وي كبت ووركينق.", ar:"مع إنه كان متأخر، كملنا شغل." }
+    { meaning:"Formal contrast, one idea despite another", en:"Although it was late, we kept working.", sound:"أولذو إت واز ليت، وي كبت ووركينق.", ar:"مع انه كان متأخر، كملنا شغل." }
   ]},
   { w:"Since", tag:"connector (time / reason)", uses:[
-    { meaning:"Starting point in time", en:"I've lived here since 2018.", sound:"آيف ليفد هير سنس توثاوزند إيتين.", ar:"أعيش هنا من ٢٠١٨." },
-    { meaning:"Reason (like \"because\")", en:"Since you're free, let's talk now.", sound:"سنس يور فري، ليتس توك ناو.", ar:"بما إنك فاضي، خلنا نتكلم الحين." }
+    { meaning:"Starting point in time", en:"I've lived here since 2018.", sound:"آيف ليفد هير سنس توثاوزند إيتين.", ar:"اعيش هنا من ٢٠١٨." },
+    { meaning:"Reason (like \"because\")", en:"Since you're free, let's talk now.", sound:"سنس يور فري، ليتس توك ناو.", ar:"بما انك فاضي، خلنا نتكلم الحين." }
   ]},
   { w:"Until", tag:"connector (time)", uses:[
     { meaning:"Up to a point in time", en:"I'll wait until you're ready.", sound:"آيل ويت أنتيل يور رِدي.", ar:"بستناك لين تجهز." }
   ]},
   { w:"If", tag:"connector (condition)", uses:[
-    { meaning:"A condition", en:"If you need help, just ask.", sound:"إف يو نيد هلب، جست آسك.", ar:"إذا تحتاج مساعدة، بس اسأل." },
+    { meaning:"A condition", en:"If you need help, just ask.", sound:"إف يو نيد هلب، جست آسك.", ar:"اذا تحتاج مساعدة، بس اسأل." },
     { meaning:"Polite hypothetical", en:"If I were you, I'd wait.", sound:"إف آي وير يو، آيد ويت.", ar:"لو كنت مكانك، كنت بستنى." }
   ]},
   { w:"Unless", tag:"connector (exception)", uses:[
-    { meaning:"Except if / only if not", en:"I won't go unless you come too.", sound:"آي وونت قو أنليس يو كم تو.", ar:"ما بروح إلا إذا جيت معي." }
+    { meaning:"Except if / only if not", en:"I won't go unless you come too.", sound:"آي وونت قو أنليس يو كم تو.", ar:"ما بروح الا اذا جيت معي." }
   ]},
   { w:"While", tag:"connector (time / contrast)", uses:[
-    { meaning:"At the same time", en:"She called while I was driving.", sound:"شي كولد وايل آي واز درايفنق.", ar:"اتصلت وأنا أسوق." },
-    { meaning:"Contrast between two things", en:"I like tea, while my brother prefers coffee.", sound:"آي لايك تي، وايل ماي براذر بريفرز كوفي.", ar:"أنا أحب الشاي، بينما أخوي يفضل القهوة." }
+    { meaning:"At the same time", en:"She called while I was driving.", sound:"شي كولد وايل آي واز درايفنق.", ar:"اتصلت وأنا اسوق." },
+    { meaning:"Contrast between two things", en:"I like tea, while my brother prefers coffee.", sound:"آي لايك تي، وايل ماي براذر بريفرز كوفي.", ar:"انا احب الشاي، بينما اخوي يفضل القهوة." }
   ]},
   { w:"However", tag:"connector (contrast, formal)", uses:[
     { meaning:"Formal contrast between two sentences", en:"The plan was good. However, we ran out of time.", sound:"ذا بلان واز قود. هاواِفر، وي ران آوت أوف تايم.", ar:"الخطة كانت زينة. لكن، خلص الوقت علينا." }
@@ -2755,14 +2952,14 @@ const grammarData = [
     no:"I have seen him yesterday.",
     yes:"I saw him yesterday.",
     explain:"If there's a specific past time word (yesterday, last week, in 2020), use the simple past, not \"have/has + verb.\" Save present perfect for \"at some point, unspecified when.\"",
-    explainAr:"إذا فيه وقت محدد في الماضي (يوم أمس، الأسبوع اللي فات) استخدم الماضي البسيط، مو have/has."
+    explainAr:"اذا فيه وقت محدد في الماضي (يوم امس، الأسبوع اللي فات) استخدم الماضي البسيط، مو have/has."
   },
   {
     title:"Capitalize names & sentence starts", arTitle:"استخدم الحروف الكبيرة",
     no:"tomorrow i am visiting sara in riyadh.",
     yes:"Tomorrow I am visiting Sara in Riyadh.",
     explain:"Arabic has no capital letters at all, so this one's easy to forget. English capitalizes the start of every sentence, names of people, and place names.",
-    explainAr:"العربي ما فيه حروف كبيرة، فسهل تنسى هذي القاعدة. لازم تكبر أول الجملة وأسماء الناس والأماكن."
+    explainAr:"العربي ما فيه حروف كبيرة، فسهل تنسى هذي القاعدة. لازم تكبر اول الجملة وأسماء الناس والأماكن."
   }
 ];
 
@@ -2837,27 +3034,27 @@ const quizData = [
   { q:"Put the book ___ the table.", ar:"حط الكتاب على الطاولة.", opts:["in","on","for"], answer:"on" },
   { q:"She's ___ Jeddah.", ar:"هي من جدة.", opts:["from","to","for"], answer:"from" },
   { q:"___ you help me, please?", ar:"تقدر تساعدني، لو سمحت؟", opts:["Could","Should","Those"], answer:"Could" },
-  { q:"You ___ drink more water, it's good advice.", ar:"لازم تشرب مويه أكثر، نصيحة حلوة.", opts:["should","would","these"], answer:"should" },
+  { q:"You ___ drink more water, it's good advice.", ar:"لازم تشرب مويه اكثر، نصيحة حلوة.", opts:["should","would","these"], answer:"should" },
   { q:"___ you like some tea?", ar:"تحب شاي؟", opts:["Would","Could","This"], answer:"Would" },
-  { q:"I called ___ ask about the price.", ar:"اتصلت عشان أسأل عن السعر.", opts:["to","for","in"], answer:"to" },
+  { q:"I called ___ ask about the price.", ar:"اتصلت عشان اسأل عن السعر.", opts:["to","for","in"], answer:"to" },
   { q:"This gift is ___ you.", ar:"هالهدية لك.", opts:["for","to","from"], answer:"for" },
   { q:"___ shoes over there are expensive.", ar:"ذيك الأحذية غالية.", opts:["Those","These","This"], answer:"Those" },
   { q:"___ books right here are mine.", ar:"هذي الكتب مالتي.", opts:["These","Those","That"], answer:"These" },
   { q:"I have a ___ under my name.", ar:"عندي حجز باسمي.", opts:["reservation","invitation","package"], answer:"reservation" },
   { q:"Do you have any deals running right ___?", ar:"فيه عروض حالياً؟", opts:["now","from","for"], answer:"now" },
-  { q:"I'd like ___ open a savings account.", ar:"أبغى أفتح حساب توفير.", opts:["to","for","on"], answer:"to" },
-  { q:"I feel a bit dizzy ___ yesterday.", ar:"أحس بدوخة من أمس.", opts:["since","from","at"], answer:"since" },
+  { q:"I'd like ___ open a savings account.", ar:"ابغى افتح حساب توفير.", opts:["to","for","on"], answer:"to" },
+  { q:"I feel a bit dizzy ___ yesterday.", ar:"احس بدوخة من امس.", opts:["since","from","at"], answer:"since" },
   { q:"Thanks so much ___ the invite.", ar:"مشكور على الدعوة.", opts:["for","to","from"], answer:"for" },
-  { q:"I'd like to talk ___ my salary.", ar:"أبغى أتكلم عن راتبي.", opts:["about","for","to"], answer:"about" },
-  { q:"___ you have any kids?", ar:"عندك أطفال؟", opts:["Do","Does","Is"], answer:"Do" },
-  { q:"In my free time, I usually play football ___ read.", ar:"في وقت فراغي ألعب كورة أو أقرا.", opts:["or","and","so"], answer:"or" },
-  { q:"I see your point, ___ I look at it differently.", ar:"أفهم وجهة نظرك، بس أشوفها بطريقة ثانية.", opts:["but","and","so"], answer:"but" },
+  { q:"I'd like to talk ___ my salary.", ar:"ابغى اتكلم عن راتبي.", opts:["about","for","to"], answer:"about" },
+  { q:"___ you have any kids?", ar:"عندك اطفال؟", opts:["Do","Does","Is"], answer:"Do" },
+  { q:"In my free time, I usually play football ___ read.", ar:"في وقت فراغي العب كورة او اقرا.", opts:["or","and","so"], answer:"or" },
+  { q:"I see your point, ___ I look at it differently.", ar:"افهم وجهة نظرك، بس اشوفها بطريقة ثانية.", opts:["but","and","so"], answer:"but" },
   { q:"Is there any flexibility ___ the price?", ar:"فيه مجال تنزلون السعر؟", opts:["on","in","at"], answer:"on" },
-  { q:"Honestly, I don't think ___ the best idea.", ar:"بصراحة، ما أشوفها أحسن فكرة.", opts:["that's","this","those"], answer:"that's" },
+  { q:"Honestly, I don't think ___ the best idea.", ar:"بصراحة، ما اشوفها احسن فكرة.", opts:["that's","this","those"], answer:"that's" },
   { q:"Don't worry, it'll work ___.", ar:"لا تشيل هم، بتنحل بإذن الله.", opts:["out","on","for"], answer:"out" },
-  { q:"In five years, I hope ___ have my own business.", ar:"بعد خمس سنين، أتمنى يكون عندي مشروعي.", opts:["to","for","on"], answer:"to" },
-  { q:"Can I be honest ___ you about something?", ar:"أقدر أكون صريح معك بشي؟", opts:["with","to","for"], answer:"with" },
-  { q:"What does the salary package ___?", ar:"إيش يشمل الراتب؟", opts:["include","includes","including"], answer:"include" }
+  { q:"In five years, I hope ___ have my own business.", ar:"بعد خمس سنين، اتمنى يكون عندي مشروعي.", opts:["to","for","on"], answer:"to" },
+  { q:"Can I be honest ___ you about something?", ar:"اقدر اكون صريح معك بشي؟", opts:["with","to","for"], answer:"with" },
+  { q:"What does the salary package ___?", ar:"ايش يشمل الراتب؟", opts:["include","includes","including"], answer:"include" }
 ];
 
 let score = 0;
@@ -2936,45 +3133,45 @@ renderQuiz(quizData);
 const levelQuestions = [
   { q:"How do you introduce yourself in English?", ar:"كيف تعرّف عن نفسك بالإنجليزي؟",
     opts:[
-      {t:"I don't know any phrases yet", ar:"ما أعرف أي عبارات لسا", w:0},
-      {t:"I can say a few basic words", ar:"أعرف كم كلمة بسيطة", w:1},
-      {t:"I can introduce myself fully", ar:"أقدر أعرف عن نفسي بشكل كامل", w:2},
-      {t:"I can do it naturally, with detail", ar:"أسويها بطلاقة ومع تفاصيل", w:3}
+      {t:"I don't know any phrases yet", ar:"ما اعرف اي عبارات لسا", w:0},
+      {t:"I can say a few basic words", ar:"اعرف كم كلمة بسيطة", w:1},
+      {t:"I can introduce myself fully", ar:"اقدر اعرف عن نفسي بشكل كامل", w:2},
+      {t:"I can do it naturally, with detail", ar:"اسويها بطلاقة ومع تفاصيل", w:3}
     ] },
-  { q:"Can you order food at a restaurant in English?", ar:"تقدر تطلب أكل بمطعم بالإنجليزي؟",
+  { q:"Can you order food at a restaurant in English?", ar:"تقدر تطلب اكل بمطعم بالإنجليزي؟",
     opts:[
-      {t:"Not at all", ar:"أبداً", w:0},
+      {t:"Not at all", ar:"ابداً", w:0},
       {t:"With simple words, slowly", ar:"بكلمات بسيطة وببطء", w:1},
-      {t:"Yes, comfortably", ar:"أيوه، بارتياح", w:2},
-      {t:"Yes, and I can ask follow-up questions", ar:"أيوه، وأقدر أسأل أسئلة إضافية", w:3}
+      {t:"Yes, comfortably", ar:"ايوه، بارتياح", w:2},
+      {t:"Yes, and I can ask follow-up questions", ar:"ايوه، وأقدر اسأل اسئلة اضافية", w:3}
     ] },
   { q:"How well do you understand spoken English (movies, calls)?", ar:"وش مستوى فهمك للإنجليزي المحكي؟",
     opts:[
       {t:"Very little", ar:"قليل جداً", w:0},
-      {t:"I catch some words", ar:"ألتقط بعض الكلمات", w:1},
-      {t:"I understand most of it", ar:"أفهم أغلبه", w:2},
-      {t:"I understand it fully, even fast speech", ar:"أفهمه بالكامل حتى لو سريع", w:3}
+      {t:"I catch some words", ar:"التقط بعض الكلمات", w:1},
+      {t:"I understand most of it", ar:"افهم اغلبه", w:2},
+      {t:"I understand it fully, even fast speech", ar:"افهمه بالكامل حتى لو سريع", w:3}
     ] },
-  { q:"Can you write a short email in English?", ar:"تقدر تكتب إيميل قصير بالإنجليزي؟",
+  { q:"Can you write a short email in English?", ar:"تقدر تكتب ايميل قصير بالإنجليزي؟",
     opts:[
       {t:"No", ar:"لا", w:0},
       {t:"A very simple one", ar:"واحد بسيط جداً", w:1},
-      {t:"Yes, clearly", ar:"أيوه، بوضوح", w:2},
-      {t:"Yes, professionally", ar:"أيوه، بمستوى احترافي", w:3}
+      {t:"Yes, clearly", ar:"ايوه، بوضوح", w:2},
+      {t:"Yes, professionally", ar:"ايوه، بمستوى احترافي", w:3}
     ] },
   { q:"How comfortable are you discussing your opinion in English?", ar:"وش ارتياحك تناقش رأيك بالإنجليزي؟",
     opts:[
-      {t:"Not comfortable at all", ar:"مرتاح أبداً", w:0},
-      {t:"I can share a simple opinion", ar:"أقدر أشارك رأي بسيط", w:1},
-      {t:"I can explain and give reasons", ar:"أقدر أشرح وأعطي أسباب", w:2},
-      {t:"I can debate and disagree fluently", ar:"أقدر أناقش وأخالف الرأي بطلاقة", w:3}
+      {t:"Not comfortable at all", ar:"مرتاح ابداً", w:0},
+      {t:"I can share a simple opinion", ar:"اقدر اشارك رأي بسيط", w:1},
+      {t:"I can explain and give reasons", ar:"اقدر اشرح وأعطي اسباب", w:2},
+      {t:"I can debate and disagree fluently", ar:"اقدر اناقش وأخالف الرأي بطلاقة", w:3}
     ] },
-  { q:"Have you taken English lessons or classes before?", ar:"سبق أخذت دروس أو كورسات إنجليزي؟",
+  { q:"Have you taken English lessons or classes before?", ar:"سبق اخذت دروس او كورسات انجليزي؟",
     opts:[
-      {t:"Never", ar:"أبداً", w:0},
+      {t:"Never", ar:"ابداً", w:0},
       {t:"A little, years ago", ar:"شوي، من كم سنة", w:1},
-      {t:"Yes, and I use English sometimes", ar:"أيوه، وأستخدمه بعض الأحيان", w:2},
-      {t:"Yes, and I use English regularly", ar:"أيوه، وأستخدمه بشكل منتظم", w:3}
+      {t:"Yes, and I use English sometimes", ar:"ايوه، وأستخدمه بعض الأحيان", w:2},
+      {t:"Yes, and I use English regularly", ar:"ايوه، وأستخدمه بشكل منتظم", w:3}
     ] }
 ];
 
@@ -3134,6 +3331,7 @@ function openVerbTest(){
 }
 
 document.getElementById('start-verb-test-btn').addEventListener('click', openVerbTest);
+document.getElementById('main-start-verb-test-btn').addEventListener('click', openVerbTest);
 document.getElementById('verb-test-close').addEventListener('click', ()=>{
   document.getElementById('verb-test-overlay').classList.remove('show');
 });
@@ -3272,6 +3470,58 @@ document.getElementById('reminder-btn').addEventListener('click', ()=>{
   a.download = 'weekly-english-practice.ics';
   a.click();
   URL.revokeObjectURL(url);
+});
+
+/* ---------------- DAILY ROTATING CONTENT (free, no backend) ---------------- */
+window.addEventListener('load', function(){
+  try{
+    const lotdEl = document.getElementById('lotd');
+    const labelEl = lotdEl ? lotdEl.querySelector('.lotd-label') : null;
+    const enEl = document.getElementById('lotd-en');
+    const arEl = document.getElementById('lotd-ar');
+    if(!lotdEl || !labelEl || !enEl || !arEl) return;
+
+    const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(),0,0)) / 86400000);
+    const category = dayOfYear % 3; // 0 = lesson, 1 = starter, 2 = verb
+    let phraseToSpeak = '';
+
+    if(category === 0 && typeof days !== 'undefined' && days.length){
+      const pick = days[dayOfYear % days.length];
+      labelEl.innerHTML = 'Phrase of the Day<span style="display:block;">عبارة اليوم</span>';
+      enEl.textContent = pick.en;
+      arEl.textContent = pick.ar;
+      phraseToSpeak = pick.en;
+    } else if(category === 1 && typeof starters !== 'undefined' && starters.length){
+      const pick = starters[dayOfYear % starters.length];
+      labelEl.innerHTML = 'Conversation Starter of the Day<span style="display:block;">بادئة حديث اليوم</span>';
+      enEl.textContent = pick.en;
+      arEl.textContent = pick.ar;
+      phraseToSpeak = pick.en;
+    } else if(typeof verbBank !== 'undefined' && verbBank.length){
+      const pick = verbBank[dayOfYear % verbBank.length];
+      labelEl.innerHTML = 'Verb of the Day<span style="display:block;">فعل اليوم</span>';
+      enEl.textContent = `${pick.base} \u2192 ${pick.past}`;
+      arEl.textContent = pick.ar;
+      phraseToSpeak = pick.past;
+    } else if(typeof days !== 'undefined' && days.length){
+      // fallback if verbBank isn't ready yet for some reason
+      const pick = days[0];
+      labelEl.innerHTML = 'Phrase of the Day<span style="display:block;">عبارة اليوم</span>';
+      enEl.textContent = pick.en;
+      arEl.textContent = pick.ar;
+      phraseToSpeak = pick.en;
+    }
+
+    const clickHandler = function(){
+      if(phraseToSpeak && typeof speakText === 'function') speakText(phraseToSpeak);
+    };
+    lotdEl.addEventListener('click', clickHandler);
+    lotdEl.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); clickHandler(); }
+    });
+  }catch(err){
+    console.error('Phrase of the Day failed to load:', err);
+  }
 });
 </script>
 
