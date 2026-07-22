@@ -936,6 +936,7 @@
     --text-main:#EDEAE3;
     --text-muted:#A9A399;
     --line:#333748;
+    --navy-mid:#D9B8E3;
   }
   body.dark-mode .bubble.reply{ background:var(--card-white); border-color:var(--line); color:var(--text-main); }
   body.dark-mode .bubble.reply .ar{ color:var(--text-main); }
@@ -1719,16 +1720,18 @@
         <path d="M22 27h20M22 34h13" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/>
       </svg>
     </div>
-    <h2 id="gate-auth-title">Welcome, Student</h2>
-    <div class="ar-h" id="gate-auth-title-ar">هلا فيك</div>
-    <input type="text" id="gate-name-input" placeholder="Your name / اسمك" autocomplete="off">
-    <input type="email" id="gate-email-input" placeholder="Your email / إيميلك" autocomplete="off">
+    <h2 id="gate-auth-title">Welcome Back</h2>
+    <div class="ar-h" id="gate-auth-title-ar">حياك الله</div>
+    <input type="email" id="gate-email-input" placeholder="Your email / ايميلك" autocomplete="off">
     <input type="password" id="gate-password-input" placeholder="Password / كلمة السر" autocomplete="off">
-    <input type="tel" id="gate-phone-input" placeholder="Phone (optional) / رقم الجوال (اختياري)" autocomplete="off">
-    <button type="button" id="gate-auth-submit">Start Learning / ابدأ التعلم</button>
+    <button type="button" id="gate-auth-submit">Log In / سجل دخول</button>
     <div class="gate-hint" id="gate-auth-hint"></div>
-    <div class="gate-hint" style="margin-top:10px;">
-      <span id="gate-toggle-mode" style="text-decoration:underline;cursor:pointer;color:var(--gold);">Already have an account? Log in / عندك حساب؟ سجل دخول</span>
+    <div class="gate-hint" style="margin-top:10px;line-height:1.6;">
+      This site is for enrolled students only.<br>
+      <span class="ar" style="display:block;margin:2px 0 8px;">هذا الموقع مخصص لطلاب الاستاذ فراس المسجلين فقط</span>
+      Don't have login details yet?
+      <a href="https://wa.me/966557178070?text=Hi%20Tutor%20Firas%2C%20I%27d%20like%20to%20get%20set%20up%20with%20a%20student%20login." target="_blank" rel="noopener" style="color:var(--gold);font-weight:700;text-decoration:underline;">Message Tutor Firas on WhatsApp</a>
+      <span class="ar" style="display:block;margin-top:2px;">ما عندك بيانات الدخول؟ راسل الاستاذ فراس على واتساب</span>
     </div>
   </div>
 </div>
@@ -1748,11 +1751,11 @@
     <div class="dash-stats-grid">
       <div class="dash-stat">
         <div class="dash-stat-num" id="dash-streak">0</div>
-        <div class="dash-stat-lab">Day Streak<span class="ar">أيام متتالية</span></div>
+        <div class="dash-stat-lab">Day Streak<span class="ar">ايام ورا بعض</span></div>
       </div>
       <div class="dash-stat">
         <div class="dash-stat-num" id="dash-longest">0</div>
-        <div class="dash-stat-lab">Best Streak<span class="ar">أفضل سلسلة</span></div>
+        <div class="dash-stat-lab">Best Streak<span class="ar">اطول سلسلة تعلم</span></div>
       </div>
       <div class="dash-stat">
         <div class="dash-stat-num" id="dash-completed">0/35</div>
@@ -1813,7 +1816,7 @@
     <button type="button" class="dash-close" id="verb-test-close">✕</button>
 
     <div id="verb-test-active">
-      <div class="dash-section-title" style="border-top:none;padding-top:0;margin-top:0;">Verb Practice Test<span class="ar">اختبار الأفعال</span></div>
+      <div class="dash-section-title" style="border-top:none;padding-top:0;margin-top:0;">Verb Practice Test<span class="ar">اختبار الافعال</span></div>
       <div class="progress-label" style="margin-bottom:14px;">
         <span id="vt-progress-label">Verb 1 / 8</span>
         <span id="vt-score-label">Score: 0</span>
@@ -1838,7 +1841,7 @@
     <div id="verb-test-results" style="display:none;text-align:center;">
       <div class="lvl-badge" style="color:var(--text-main);font-size:26px;margin-bottom:6px;" id="vt-final-score"></div>
       <div style="color:var(--text-muted);margin-bottom:20px;" id="vt-final-ar"></div>
-      <button type="button" class="dash-save-btn" id="vt-retry-btn">Try Again with New Verbs / حاول مرة ثانية بأفعال جديدة</button>
+      <button type="button" class="dash-save-btn" id="vt-retry-btn">Try Again with New Verbs / حاول مرة ثانية بافعال جديدة</button>
     </div>
   </div>
 </div>
@@ -1869,6 +1872,7 @@
     </div>
     <div class="hero-nav">
       <a href="#how">How It Works</a>
+      <a href="#confidence">Speaking Confidence</a>
       <a href="#level">What's My Level?</a>
       <a href="#verb-test-section">Verb Test</a>
       <a href="#starters">Conversation Starters</a>
@@ -1907,11 +1911,11 @@
     </div>
     <div class="stat">
       <div class="num" data-count="14">0</div>
-      <div class="lab">Conversation Starters<span class="ar">طريقة تبدأ فيها حديث</span></div>
+      <div class="lab">Conversation Starters<span class="ar">طريقة تبدا فيها حديث</span></div>
     </div>
     <div class="stat">
       <div class="num" data-count="100" data-suffix="%">0%</div>
-      <div class="lab">American Pronunciation<span class="ar">نطق أمريكي أصلي</span></div>
+      <div class="lab">American Pronunciation<span class="ar">نطق امريكي اصلي</span></div>
     </div>
   </div>
 </div>
@@ -1928,6 +1932,11 @@
   <div class="track" id="track"></div>
 </div>
 
+<div style="max-width:640px;margin:22px auto 0;padding:12px 18px;text-align:center;font-size:12.5px;color:var(--text-muted);">
+  💡 Sections below are collapsed to keep this page short, tap <b>Show Section</b> on any heading to open it.
+  <span class="ar" style="display:block;margin-top:4px;">💡 الاقسام تحت مطويه عشان الصفحه تصير اقصر، اضغط<b>عرض القسم</b> اضغط على اي عنوان عشان تفتحه</span>
+</div>
+
 <!-- HOW IT WORKS -->
 <div class="section-head" id="how">
   <div class="eyebrow">Three simple steps</div>
@@ -1939,8 +1948,8 @@
   <div class="how-step">
     <div class="how-num">1</div>
     <h3>Message Tutor Firas</h3>
-    <div class="how-ar">راسل الأستاذ فراس</div>
-    <p>Send a WhatsApp message and get a free trial lesson, no commitment, no card needed.<span class="ar">ابعث رسالة واتساب واحصل على درس تجريبي مجاني، بدون التزام أو بطاقة.</span></p>
+    <div class="how-ar">تواصل مع الاستاذ فراس عبر واتساب</div>
+    <p>Message Professor Firas on WhatsApp for enrollment and more information.<span class="ar">راسل الاستاذ فراس على واتساب واحجز اول درس لك..</span></p>
   </div>
   <div class="how-step">
     <div class="how-num">2</div>
@@ -1953,6 +1962,34 @@
     <h3>Practice a Little, Daily</h3>
     <div class="how-ar">تمرّن كل يوم شوي</div>
     <p>Real phrases sent like a chat, practice them out loud with voice tools, track your streak and progress.<span class="ar">جمل حقيقية تجيك زي محادثة، تمرّن عليها بصوتك، وتابع سلسلة أيامك وتقدمك.</span></p>
+  </div>
+</div>
+
+<!-- SPEAKING WITH CONFIDENCE -->
+<div class="section-head" id="confidence">
+  <div class="eyebrow">The real blocker isn't grammar</div>
+  <h2>Speaking With Confidence</h2>
+  <div class="ar-h">تكلم بثقة</div>
+  <p class="desc">Most students already know more English than they think, the goal here is getting comfortable saying it out loud.</p>
+</div>
+<div class="how-wrap">
+  <div class="how-step">
+    <div class="how-num">✓</div>
+    <h3>Mistakes Are Part of Practice</h3>
+    <div class="how-ar">الأخطاء جزء من التمرين</div>
+    <p>Every fluent speaker made thousands of mistakes first. Lessons here treat mistakes as normal progress, not something to fear.<span class="ar">كل متحدث بطلاقة سوى آلاف الأخطاء قبل، الدروس هنا تعتبر الخطأ تقدم طبيعي مو شي تخاف منه.</span></p>
+  </div>
+  <div class="how-step">
+    <div class="how-num">✓</div>
+    <h3>Practice Alone First</h3>
+    <div class="how-ar">تمرن لحالك اول</div>
+    <p>The voice tools on this page let you hear a phrase and try it privately, so your first attempt out loud isn't in front of anyone.<span class="ar">أدوات الصوت بالموقع تخليك تسمع العبارة وتجربها لحالك، أول محاولة ما تكون قدام أحد.</span></p>
+  </div>
+  <div class="how-step">
+    <div class="how-num">✓</div>
+    <h3>Small Wins, Every Day</h3>
+    <div class="how-ar">إنجازات صغيرة يومياً</div>
+    <p>One phrase a day, said out loud and used in real life, builds real confidence faster than memorizing long lists.<span class="ar">عبارة وحدة باليوم، تقولها وتستخدمها بحياتك، تبني ثقة حقيقية أسرع من حفظ قوائم طويلة.</span></p>
   </div>
 </div>
 
@@ -2016,9 +2053,9 @@
   <h2>Conversation Starters</h2>
   <div class="ar-h">كيف تبدأ حديث</div>
   <p class="desc">The line you say before the "real" conversation even begins. Pick one, keep it in your pocket, use it this week.</p>
-  <button type="button" class="section-toggle" data-target="starters-thread"><span class="lbl-en">Show Section</span><span class="ar lbl-ar">عرض القسم</span><span class="chev">▾</span></button>
+  <button type="button" class="section-toggle open" data-target="starters-thread"><span class="lbl-en">Hide Section</span><span class="ar lbl-ar">إخفاء القسم</span><span class="chev">▾</span></button>
 </div>
-<main class="thread collapsible-content collapsed" id="starters-thread"></main>
+<main class="thread collapsible-content" id="starters-thread"></main>
 
 <!-- LESSON THREAD -->
 <div class="section-head" id="lessons">
@@ -2192,7 +2229,6 @@
 
 <!-- UTILITY TOOLS -->
 <div class="utility-row">
-  <button type="button" class="util-btn" id="print-btn">🖨️ Download Cheat Sheet<span class="ar" style="margin-left:4px;">حمّل ملخص الدروس</span></button>
   <button type="button" class="util-btn" id="reminder-btn">📅 Weekly Practice Reminder<span class="ar" style="margin-left:4px;">تذكير أسبوعي</span></button>
 </div>
 
@@ -2222,161 +2258,143 @@
 /* ---------------- SUPABASE CLIENT ---------------- */
 const SUPABASE_URL = "https://lewoochehpiycocvfwtz.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxld29vY2hlaHBpeWNvY3Zmd3R6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwNzQ3MzcsImV4cCI6MjA5OTY1MDczN30.sIWK6jwX7PW70fH0yPUuhOb25N1lBw2-Cvb3dtwDb9Y";
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+let sb = null;
+try{
+  if(typeof supabase !== 'undefined'){
+    sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  }
+}catch(e){
+  console.error('Supabase failed to initialize:', e);
+  sb = null;
+}
+/* IMPORTANT: everything below this line must survive even if sb is null
+   (e.g. the login service is blocked or offline) so the rest of the page
+   -- lessons, quizzes, pronunciation, etc. -- always renders. */
 
-/* ---------------- AUTH + STUDENT PROFILE ---------------- */
+/* ---------------- AUTH + STUDENT PROFILE (LOGIN ONLY, NO PUBLIC SIGNUP) ---------------- */
+/* Accounts are created manually by Tutor Firas in the Supabase dashboard
+   (Authentication > Add user, then a matching row in the "students" table
+   with the same auth_id). Students receive their email + password directly
+   from Tutor Firas -- there is no self-signup on this page. */
 let currentProfile = null; // the row from public.students for the logged-in user
 
-(function(){
-  const gate = document.getElementById('name-gate');
-  const nameInput = document.getElementById('gate-name-input');
-  const emailInput = document.getElementById('gate-email-input');
-  const passwordInput = document.getElementById('gate-password-input');
-  const phoneInput = document.getElementById('gate-phone-input');
-  const authSubmit = document.getElementById('gate-auth-submit');
-  const authHint = document.getElementById('gate-auth-hint');
-  const authTitle = document.getElementById('gate-auth-title');
-  const authTitleAr = document.getElementById('gate-auth-title-ar');
-  const toggleMode = document.getElementById('gate-toggle-mode');
-  const badge = document.getElementById('greeting-badge');
-  const greetingText = document.getElementById('greeting-text');
+try{
+  (function(){
+    const gate = document.getElementById('name-gate');
+    const emailInput = document.getElementById('gate-email-input');
+    const passwordInput = document.getElementById('gate-password-input');
+    const authSubmit = document.getElementById('gate-auth-submit');
+    const authHint = document.getElementById('gate-auth-hint');
+    const badge = document.getElementById('greeting-badge');
+    const greetingText = document.getElementById('greeting-text');
 
-  let mode = 'signup'; // or 'login'
+    if(!gate || !emailInput || !passwordInput || !authSubmit) return;
 
-  function setMode(newMode){
-    mode = newMode;
-    authHint.textContent = '';
-    if(mode === 'signup'){
-      authTitle.textContent = 'Welcome, Student';
-      authTitleAr.textContent = 'هلا فيك';
-      nameInput.style.display = 'block';
-      phoneInput.style.display = 'block';
-      authSubmit.textContent = 'Start Learning / ابدأ التعلم';
-      toggleMode.textContent = 'Already have an account? Log in / عندك حساب؟ سجل دخول';
-    } else {
-      authTitle.textContent = 'Welcome Back';
-      authTitleAr.textContent = 'هلا فيك مرة ثانية';
-      nameInput.style.display = 'none';
-      phoneInput.style.display = 'none';
-      authSubmit.textContent = 'Log In / سجل دخول';
-      toggleMode.textContent = "New here? Create an account / أول مرة؟ أنشئ حساب";
+    function openGate(){
+      gate.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      if(badge) badge.style.display = 'none';
     }
-  }
 
-  toggleMode.addEventListener('click', ()=> setMode(mode === 'signup' ? 'login' : 'signup'));
-
-  function openGate(){
-    gate.classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
-    badge.style.display = 'none';
-    setMode('login');
-  }
-
-  function closeGate(){
-    gate.classList.add('hidden');
-    document.body.style.overflow = '';
-  }
-
-  async function showGreeting(profile){
-    currentProfile = profile;
-    greetingText.textContent = `Welcome back, ${profile.name} 👋 / هلا ${profile.name} 👋`;
-    badge.style.display = 'inline-flex';
-    closeGate();
-    await updateStreakOnLogin();
-    populateDashboard();
-    syncLocalProgressToCloud();
-  }
-
-  authSubmit.addEventListener('click', async ()=>{
-    const email = emailInput.value.trim();
-    const password = passwordInput.value;
-    if(!email || !email.includes('@')){
-      authHint.style.color = 'var(--red)';
-      authHint.textContent = 'Please enter a valid email / أدخل إيميل صحيح';
-      return;
+    function closeGate(){
+      gate.classList.add('hidden');
+      document.body.style.overflow = '';
     }
-    if(!password || password.length < 6){
+
+    if(!sb){
       authHint.style.color = 'var(--red)';
-      authHint.textContent = 'Password must be at least 6 characters / كلمة السر لازم ٦ أحرف على الأقل';
+      authHint.innerHTML = "We couldn't reach the login service. Please refresh the page, or check your connection.<br><span class=\"ar\">ما قدرنا نوصل لخدمة تسجيل الدخول، حدّث الصفحة أو تأكد من اتصالك</span>";
+      authSubmit.disabled = true;
+      openGate();
       return;
     }
 
-    authSubmit.disabled = true;
-    authHint.style.color = 'var(--text-muted)';
+    async function showGreeting(profile){
+      currentProfile = profile;
+      if(greetingText) greetingText.textContent = `Welcome back, ${profile.name} 👋 / هلا ${profile.name} 👋`;
+      if(badge) badge.style.display = 'inline-flex';
+      closeGate();
+      await updateStreakOnLogin();
+      populateDashboard();
+      syncLocalProgressToCloud();
+    }
 
-    if(mode === 'signup'){
-      const name = nameInput.value.trim();
-      if(!name){
+    authSubmit.addEventListener('click', async ()=>{
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+      if(!email || !email.includes('@')){
         authHint.style.color = 'var(--red)';
-        authHint.textContent = 'Please enter your name / أدخل اسمك';
-        authSubmit.disabled = false;
+        authHint.textContent = 'Please enter a valid email / أدخل إيميل صحيح';
         return;
       }
-      authHint.textContent = 'Creating your account... / جاري إنشاء حسابك...';
-      const { data, error } = await sb.auth.signUp({ email, password });
-      authSubmit.disabled = false;
-      if(error){
+      if(!password){
         authHint.style.color = 'var(--red)';
-        authHint.textContent = error.message.includes('already registered')
-          ? 'This email already has an account, try logging in / هذا الإيميل مسجل، جرب تسجيل الدخول'
-          : 'Something went wrong, please try again / فيه خطأ، حاول مرة ثانية';
+        authHint.textContent = 'Please enter your password / أدخل كلمة السر';
         return;
       }
-      const phone = phoneInput.value.trim();
-      const { data: inserted, error: insertError } = await sb.from('students')
-        .insert({ auth_id: data.user.id, name, phone: phone || null, email })
-        .select().single();
-      if(insertError){
-        authHint.style.color = 'var(--red)';
-        authHint.textContent = 'Could not save your profile, please try again / ما قدرنا نحفظ بياناتك، حاول مرة ثانية';
-        return;
-      }
-      showGreeting(inserted);
-    } else {
+
+      authSubmit.disabled = true;
+      authHint.style.color = 'var(--text-muted)';
       authHint.textContent = 'Logging in... / جاري تسجيل الدخول...';
-      const { data, error } = await sb.auth.signInWithPassword({ email, password });
-      authSubmit.disabled = false;
-      if(error){
+
+      try{
+        const { data, error } = await sb.auth.signInWithPassword({ email, password });
+        authSubmit.disabled = false;
+        if(error){
+          authHint.style.color = 'var(--red)';
+          authHint.textContent = 'Wrong email or password / الإيميل أو كلمة السر غلط';
+          return;
+        }
+        const { data: existing } = await sb.from('students').select('*').eq('auth_id', data.user.id).maybeSingle();
+        if(existing){
+          showGreeting(existing);
+        } else {
+          authHint.style.color = 'var(--red)';
+          authHint.innerHTML = 'No student profile found for this account. Please contact Tutor Firas to finish setting up your account.<br><span class="ar">ما فيه ملف طالب مرتبط بهذا الحساب، تواصل مع الأستاذ فراس لإكمال إعداد حسابك</span>';
+        }
+      }catch(err){
+        authSubmit.disabled = false;
         authHint.style.color = 'var(--red)';
-        authHint.textContent = 'Wrong email or password / الإيميل أو كلمة السر غلط';
-        return;
+        authHint.textContent = 'Something went wrong, please try again / فيه خطأ، حاول مرة ثانية';
+        console.error(err);
       }
-      const { data: existing } = await sb.from('students').select('*').eq('auth_id', data.user.id).maybeSingle();
-      if(existing){
-        showGreeting(existing);
-      } else {
-        authHint.style.color = 'var(--red)';
-        authHint.textContent = 'No profile found for this account / ما فيه حساب طالب مرتبط';
-      }
+    });
+
+    const openDashBtn = document.getElementById('open-dashboard');
+    if(openDashBtn){
+      openDashBtn.addEventListener('click', ()=>{
+        document.getElementById('dash-overlay').classList.add('show');
+        populateDashboard();
+      });
     }
-  });
 
-  document.getElementById('open-dashboard').addEventListener('click', ()=>{
-    document.getElementById('dash-overlay').classList.add('show');
-    populateDashboard();
-  });
-
-  // On page load, check if already logged in
-  sb.auth.getSession().then(async ({ data: { session } })=>{
-    if(session && session.user){
-      const { data: existing } = await sb.from('students').select('*').eq('auth_id', session.user.id).maybeSingle();
-      if(existing){
-        showGreeting(existing);
-        return;
+    // On page load, check if already logged in
+    sb.auth.getSession().then(async ({ data: { session } })=>{
+      if(session && session.user){
+        try{
+          const { data: existing } = await sb.from('students').select('*').eq('auth_id', session.user.id).maybeSingle();
+          if(existing){
+            showGreeting(existing);
+            return;
+          }
+        }catch(e){ console.error(e); }
       }
-    }
-    openGate();
-  });
+      openGate();
+    }).catch(e=>{ console.error(e); openGate(); });
 
-  window.openGate = openGate;
-})();
+    window.openGate = openGate;
+  })();
+}catch(e){
+  console.error('Auth setup failed, continuing without login:', e);
+}
 
 /* ---------------- STREAK TRACKING (synced to Supabase) ---------------- */
 async function updateStreakOnLogin(){
-  if(!currentProfile) return;
+  if(!currentProfile || !sb) return;
   const today = new Date().toISOString().slice(0,10);
   const last = currentProfile.last_visit;
   if(last === today) return; // already counted today
+
 
   let newStreak = 1;
   if(last){
@@ -3552,6 +3570,12 @@ const faqData = [
     ar:"أقدر أأجل أو ألغي درس؟",
     a:"Yes, just message Tutor Firas ahead of time on WhatsApp and he'll help you find a new slot.",
     aAr:"ايوه، بس راسل الأستاذ فراس مسبقاً بالواتساب وبيساعدك تلقى موعد ثاني."
+  },
+  {
+    q:"How do I get a login for the student area?",
+    ar:"كيف أحصل على حساب دخول للوحة الطالب؟",
+    a:"This site is for enrolled students only, there's no public sign-up. Once you book lessons with Tutor Firas, he'll set up your account and send your email and password directly to you.",
+    aAr:"هذا الموقع لطلاب الأستاذ فراس المسجلين فقط، ما فيه تسجيل عام. بعد ما تحجز دروسك، بيسوي لك فراس حساب ويبعث لك الإيميل وكلمة السر مباشرة."
   }
 ];
 
@@ -4116,11 +4140,7 @@ document.getElementById('track').addEventListener('click', (e)=>{
   }
 });
 
-/* ---------------- PRINT + WHATSAPP REMINDER ---------------- */
-document.getElementById('print-btn').addEventListener('click', ()=>{
-  window.print();
-});
-
+/* ---------------- WHATSAPP REMINDER ---------------- */
 document.getElementById('reminder-btn').addEventListener('click', ()=>{
   const icsContent = [
     'BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Personalized English Lessons//EN',
