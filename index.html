@@ -4,13 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Personalized English Lessons | دروس إنجليزي خاصة</title>
-<meta name="description" content="1:1 personalized English lessons with Tutor Firas for Saudi learners: real conversations, American pronunciation coaching, grammar traps, and IELTS/TOEFL/STEP exam prep, sent straight to your phone.">
-<meta property="og:title" content="Personalized English Lessons | Tutor Firas">
-<meta property="og:description" content="1:1 English coaching for Saudi learners: real conversations, pronunciation clinic, grammar traps, business English, and STEP/IELTS/TOEFL prep.">
-<meta property="og:type" content="website">
-<meta name="theme-color" content="#3A1F3D">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%233A1F3D'/%3E%3Cpath d='M14 14h36a6 6 0 0 1 6 6v18a6 6 0 0 1-6 6H30l-10 9V44h-6a6 6 0 0 1-6-6V20a6 6 0 0 1 6-6z' stroke='%23EBA43E' stroke-width='3.4' stroke-linejoin='round' fill='none'/%3E%3Cpath d='M22 27h20M22 34h13' stroke='%23EBA43E' stroke-width='3.4' stroke-linecap='round'/%3E%3C/svg%3E">
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%233A1F3D'/%3E%3Cpath d='M14 14h36a6 6 0 0 1 6 6v18a6 6 0 0 1-6 6H30l-10 9V44h-6a6 6 0 0 1-6-6V20a6 6 0 0 1 6-6z' stroke='%23EBA43E' stroke-width='3.4' stroke-linejoin='round' fill='none'/%3E%3Cpath d='M22 27h20M22 34h13' stroke='%23EBA43E' stroke-width='3.4' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
@@ -44,23 +37,6 @@
     unicode-bidi:isolate;
     font-size:1.12em;
     line-height:1.6;
-  }
-  /* ---------- SCROLL PROGRESS BAR ---------- */
-  .scroll-progress{
-    position:fixed;
-    top:0; left:0;
-    width:100%;
-    height:4px;
-    background:rgba(58,31,61,0.08);
-    z-index:1001;
-    pointer-events:none;
-  }
-  .scroll-progress-fill{
-    height:100%;
-    width:0%;
-    background:linear-gradient(90deg, var(--gold), var(--gold-bright));
-    box-shadow:0 0 8px rgba(235,164,62,0.6);
-    transition:width .08s linear;
   }
   /* ---------- HERO ---------- */
   .hero{
@@ -372,29 +348,6 @@
     margin:14px auto 0;
     line-height:1.6;
   }
-
-  /* ---------- COLLAPSIBLE SECTIONS ---------- */
-  .section-toggle{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    margin:18px auto 0;
-    padding:11px 22px;
-    border-radius:999px;
-    border:1.5px solid var(--gold);
-    background:transparent;
-    color:var(--gold);
-    font-family:'Inter',sans-serif;
-    font-weight:700;
-    font-size:13px;
-    cursor:pointer;
-    transition:all .18s ease;
-  }
-  .section-toggle:hover{ background:var(--gold); color:#fff; }
-  .section-toggle.open{ background:var(--navy-deep); border-color:var(--navy-deep); color:#fff; }
-  .section-toggle .chev{ transition:transform .2s ease; display:inline-block; }
-  .section-toggle.open .chev{ transform:rotate(180deg); }
-  .collapsible-content.collapsed{ display:none; }
 
   /* ---------- PROGRESS TRACK ---------- */
   .track-wrap{
@@ -936,7 +889,6 @@
     --text-main:#EDEAE3;
     --text-muted:#A9A399;
     --line:#333748;
-    --navy-mid:#D9B8E3;
   }
   body.dark-mode .bubble.reply{ background:var(--card-white); border-color:var(--line); color:var(--text-main); }
   body.dark-mode .bubble.reply .ar{ color:var(--text-main); }
@@ -962,11 +914,6 @@
   body.dark-mode .testimonial-card .quote{ color:var(--text-main); }
   body.dark-mode .util-btn{ background:var(--card-white); color:var(--text-main); border-color:var(--line); }
   body.dark-mode .control-btn{ background:var(--card-white); border-color:var(--line); }
-  body.dark-mode .faq-item{ background:var(--card-white); border-color:var(--line); }
-  body.dark-mode .faq-q{ color:var(--text-main); }
-  body.dark-mode .how-step{ background:var(--card-white); border-color:var(--line); }
-  body.dark-mode .bio-card{ background:var(--card-white); border-color:var(--line); }
-  body.dark-mode .exam-card{ background:var(--card-white); border-color:var(--line); }
 
   /* ---------- FLOATING CONTROL BAR ---------- */
   .control-bar{
@@ -1185,10 +1132,9 @@
   @media print{
     .control-bar, .track-wrap, .stats-bar, .name-gate, .voice-row, .voice-feedback,
     .day-tools, .utility-row, .hero-nav, .us-badge, .level-wrap, .lotd, footer,
-    .contact-wrap, .testimonials-wrap, .section-toggle, .scroll-progress { display:none !important; }
+    .contact-wrap, .testimonials-wrap { display:none !important; }
     body{ background:#fff; color:#000; }
     .bubble.coach{ background:#f2f2f2 !important; color:#000 !important; }
-    .collapsible-content.collapsed{ display:block !important; }
   }
 
   /* ---------- WORD CARDS (prepositions / modals) ---------- */
@@ -1483,255 +1429,23 @@
     .sound-it{max-width:94%;}
     .scoreboard{top:64px;flex-wrap:wrap;gap:12px;}
   }
-
-  /* ---------- HOW IT WORKS ---------- */
-  .how-wrap{
-    max-width:900px;
-    margin:0 auto;
-    padding:36px 18px 10px;
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-    gap:18px;
-  }
-  .how-step{
-    background:var(--card-white);
-    border:1px solid var(--line);
-    border-radius:16px;
-    padding:22px;
-    position:relative;
-  }
-  .how-step .how-num{
-    font-family:'Fraunces',serif;
-    font-size:13px;
-    font-weight:700;
-    color:var(--gold-bright);
-    background:var(--navy-deep);
-    width:30px;height:30px;
-    border-radius:50%;
-    display:flex;align-items:center;justify-content:center;
-    margin-bottom:14px;
-  }
-  .how-step h3{
-    font-family:'Fraunces',serif;
-    font-size:16.5px;
-    font-weight:600;
-    margin:0 0 2px;
-    color:var(--text-main);
-  }
-  .how-step .how-ar{
-    font-family:'Tajawal',sans-serif;
-    font-size:13.5px;
-    color:var(--text-muted);
-    font-weight:500;
-    margin-bottom:10px;
-  }
-  .how-step p{
-    font-size:13.5px;
-    color:var(--text-muted);
-    line-height:1.6;
-    margin:0;
-  }
-  .how-step p .ar{ display:block; margin-top:4px; color:var(--navy-mid); font-weight:500; }
-
-  /* ---------- MEET TUTOR FIRAS (BIO) ---------- */
-  .bio-wrap{
-    max-width:680px;
-    margin:0 auto;
-    padding:36px 18px 10px;
-  }
-  .bio-card{
-    background:var(--card-white);
-    border:1px solid var(--line);
-    border-radius:20px;
-    padding:28px 26px;
-    display:flex;
-    gap:20px;
-    align-items:flex-start;
-  }
-  .bio-avatar{
-    width:64px;height:64px;
-    border-radius:50%;
-    background:linear-gradient(135deg, var(--navy-deep), var(--navy-soft));
-    color:var(--gold-bright);
-    display:flex;align-items:center;justify-content:center;
-    flex:0 0 auto;
-  }
-  .bio-name{
-    font-family:'Fraunces',serif;
-    font-size:19px;
-    font-weight:700;
-    color:var(--text-main);
-    margin-bottom:2px;
-  }
-  .bio-role{
-    font-size:13px;
-    color:var(--gold);
-    font-weight:700;
-    margin-bottom:12px;
-  }
-  .bio-role .ar{ color:var(--text-muted); font-weight:500; margin-left:6px; }
-  .bio-list{
-    list-style:none;
-    margin:0; padding:0;
-    display:flex;
-    flex-direction:column;
-    gap:8px;
-  }
-  .bio-list li{
-    font-size:13.5px;
-    color:var(--text-muted);
-    line-height:1.55;
-    padding-left:18px;
-    position:relative;
-  }
-  .bio-list li::before{
-    content:"✓";
-    position:absolute;
-    left:0;
-    color:var(--green);
-    font-weight:700;
-  }
-  .bio-list li .ar{ display:block; color:var(--navy-mid); font-weight:500; margin-top:2px; }
-  @media (max-width:520px){
-    .bio-card{ flex-direction:column; align-items:center; text-align:center; }
-    .bio-list li{ text-align:left; }
-  }
-
-  /* ---------- EXAM PREP ---------- */
-  .exam-wrap{
-    max-width:920px;
-    margin:0 auto;
-    padding:36px 18px 30px;
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-    gap:18px;
-  }
-  .exam-card{
-    background:var(--card-white);
-    border:1px solid var(--line);
-    border-radius:16px;
-    padding:22px;
-  }
-  .exam-card .exam-tag{
-    display:inline-block;
-    font-family:'Fraunces',serif;
-    font-size:13px;
-    font-weight:700;
-    color:var(--navy-deep);
-    background:var(--gold-bright);
-    padding:4px 12px;
-    border-radius:999px;
-    margin-bottom:12px;
-  }
-  .exam-card h3{
-    font-family:'Fraunces',serif;
-    font-size:17px;
-    font-weight:600;
-    margin:0 0 2px;
-    color:var(--text-main);
-  }
-  .exam-card .exam-ar{
-    font-family:'Tajawal',sans-serif;
-    font-size:13.5px;
-    color:var(--text-muted);
-    font-weight:500;
-    margin-bottom:10px;
-  }
-  .exam-card p{
-    font-size:13px;
-    color:var(--text-muted);
-    line-height:1.6;
-    margin:0 0 12px;
-  }
-  .exam-card .exam-sample{
-    background:var(--cream);
-    border-radius:10px;
-    padding:12px 14px;
-    font-size:13.5px;
-    color:var(--text-main);
-    font-weight:600;
-    margin-bottom:6px;
-  }
-  .exam-card .exam-sample-ar{
-    font-size:13.5px;
-    color:var(--gold);
-    margin-bottom:8px;
-    display:block;
-  }
-
-  /* ---------- FAQ ---------- */
-  .faq-wrap{
-    max-width:720px;
-    margin:0 auto;
-    padding:36px 18px 10px;
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-  }
-  .faq-item{
-    background:var(--card-white);
-    border:1px solid var(--line);
-    border-radius:14px;
-    overflow:hidden;
-  }
-  .faq-q{
-    width:100%;
-    text-align:left;
-    background:transparent;
-    border:none;
-    padding:16px 20px;
-    font-family:'Fraunces',serif;
-    font-size:15px;
-    font-weight:600;
-    color:var(--text-main);
-    cursor:pointer;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:12px;
-  }
-  .faq-q .chev{
-    transition:transform .2s ease;
-    color:var(--gold);
-    flex:0 0 auto;
-    font-size:13px;
-  }
-  .faq-item.open .faq-q .chev{ transform:rotate(180deg); }
-  .faq-a{
-    max-height:0;
-    overflow:hidden;
-    transition:max-height .3s ease;
-    padding:0 20px;
-  }
-  .faq-item.open .faq-a{ max-height:300px; padding:0 20px 18px; }
-  .faq-a p{ margin:0 0 8px; font-size:13.5px; color:var(--text-muted); line-height:1.6; }
-  .faq-a p .ar{ display:block; margin-top:4px; color:var(--navy-mid); font-weight:500; }
 </style>
 </head>
 <body>
 
-<div class="scroll-progress" aria-hidden="true"><div class="scroll-progress-fill" id="scroll-progress-fill"></div></div>
-
 <div class="name-gate" id="name-gate">
   <div class="gate-card" id="gate-step-auth">
-    <div class="seal">
-      <svg viewBox="0 0 64 64" width="30" height="30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M14 14h36a6 6 0 0 1 6 6v18a6 6 0 0 1-6 6H30l-10 9V44h-6a6 6 0 0 1-6-6V20a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="3.4" stroke-linejoin="round"/>
-        <path d="M22 27h20M22 34h13" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/>
-      </svg>
-    </div>
-    <h2 id="gate-auth-title">Welcome Back</h2>
-    <div class="ar-h" id="gate-auth-title-ar">حياك الله</div>
-    <input type="email" id="gate-email-input" placeholder="Your email / ايميلك" autocomplete="off">
+    <div class="seal">FE</div>
+    <h2 id="gate-auth-title">Welcome, Student</h2>
+    <div class="ar-h" id="gate-auth-title-ar">هلا فيك</div>
+    <input type="text" id="gate-name-input" placeholder="Your name / اسمك" autocomplete="off">
+    <input type="email" id="gate-email-input" placeholder="Your email / إيميلك" autocomplete="off">
     <input type="password" id="gate-password-input" placeholder="Password / كلمة السر" autocomplete="off">
-    <button type="button" id="gate-auth-submit">Log In / سجل دخول</button>
+    <input type="tel" id="gate-phone-input" placeholder="Phone (optional) / رقم الجوال (اختياري)" autocomplete="off">
+    <button type="button" id="gate-auth-submit">Start Learning / ابدأ التعلم</button>
     <div class="gate-hint" id="gate-auth-hint"></div>
-    <div class="gate-hint" style="margin-top:10px;line-height:1.6;">
-      This site is for enrolled students only.<br>
-      <span class="ar" style="display:block;margin:2px 0 8px;">هذا الموقع مخصص لطلاب الاستاذ فراس المسجلين فقط</span>
-      Don't have login details yet?
-      <a href="https://wa.me/966557178070?text=Hi%20Tutor%20Firas%2C%20I%27d%20like%20to%20get%20set%20up%20with%20a%20student%20login." target="_blank" rel="noopener" style="color:var(--gold);font-weight:700;text-decoration:underline;">Message Tutor Firas on WhatsApp</a>
-      <span class="ar" style="display:block;margin-top:2px;">ما عندك بيانات الدخول؟ راسل الاستاذ فراس على واتساب</span>
+    <div class="gate-hint" style="margin-top:10px;">
+      <span id="gate-toggle-mode" style="text-decoration:underline;cursor:pointer;color:var(--gold);">Already have an account? Log in / عندك حساب؟ سجل دخول</span>
     </div>
   </div>
 </div>
@@ -1751,11 +1465,11 @@
     <div class="dash-stats-grid">
       <div class="dash-stat">
         <div class="dash-stat-num" id="dash-streak">0</div>
-        <div class="dash-stat-lab">Day Streak<span class="ar">ايام ورا بعض</span></div>
+        <div class="dash-stat-lab">Day Streak<span class="ar">أيام متتالية</span></div>
       </div>
       <div class="dash-stat">
         <div class="dash-stat-num" id="dash-longest">0</div>
-        <div class="dash-stat-lab">Best Streak<span class="ar">اطول سلسلة تعلم</span></div>
+        <div class="dash-stat-lab">Best Streak<span class="ar">أفضل سلسلة</span></div>
       </div>
       <div class="dash-stat">
         <div class="dash-stat-num" id="dash-completed">0/35</div>
@@ -1816,7 +1530,7 @@
     <button type="button" class="dash-close" id="verb-test-close">✕</button>
 
     <div id="verb-test-active">
-      <div class="dash-section-title" style="border-top:none;padding-top:0;margin-top:0;">Verb Practice Test<span class="ar">اختبار الافعال</span></div>
+      <div class="dash-section-title" style="border-top:none;padding-top:0;margin-top:0;">Verb Practice Test<span class="ar">اختبار الأفعال</span></div>
       <div class="progress-label" style="margin-bottom:14px;">
         <span id="vt-progress-label">Verb 1 / 8</span>
         <span id="vt-score-label">Score: 0</span>
@@ -1841,7 +1555,7 @@
     <div id="verb-test-results" style="display:none;text-align:center;">
       <div class="lvl-badge" style="color:var(--text-main);font-size:26px;margin-bottom:6px;" id="vt-final-score"></div>
       <div style="color:var(--text-muted);margin-bottom:20px;" id="vt-final-ar"></div>
-      <button type="button" class="dash-save-btn" id="vt-retry-btn">Try Again with New Verbs / حاول مرة ثانية بافعال جديدة</button>
+      <button type="button" class="dash-save-btn" id="vt-retry-btn">Try Again with New Verbs / حاول مرة ثانية بأفعال جديدة</button>
     </div>
   </div>
 </div>
@@ -1853,12 +1567,7 @@
       <span class="reset-name" id="open-dashboard">My Dashboard / لوحتي</span>
     </div>
     <div class="us-badge"><b>🇺🇸 American English</b>: every "say it" line uses American pronunciation</div>
-    <div class="seal">
-      <svg viewBox="0 0 64 64" width="30" height="30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M14 14h36a6 6 0 0 1 6 6v18a6 6 0 0 1-6 6H30l-10 9V44h-6a6 6 0 0 1-6-6V20a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="3.4" stroke-linejoin="round"/>
-        <path d="M22 27h20M22 34h13" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/>
-      </svg>
-    </div>
+    <div class="seal">FE</div>
     <h1>Personalized <span>English</span> Lessons</h1>
     <div class="ar-title">دروس إنجليزي خاصة</div>
     <p class="sub">
@@ -1871,20 +1580,14 @@
       <div><b>Say it</b>Not just read it</div>
     </div>
     <div class="hero-nav">
-      <a href="#how">How It Works</a>
-      <a href="#confidence">Speaking Confidence</a>
       <a href="#level">What's My Level?</a>
       <a href="#verb-test-section">Verb Test</a>
       <a href="#starters">Conversation Starters</a>
       <a href="#lessons">The Course</a>
       <a href="#pronunciation">Pronunciation Clinic</a>
       <a href="#grammar">Grammar Traps</a>
-      <a href="#idioms">Idioms</a>
       <a href="#words">Words That Matter</a>
-      <a href="#exam-prep">IELTS · TOEFL · STEP</a>
-      <a href="#business">Business English</a>
       <a href="#quiz">Quick Check</a>
-      <a href="#faq">FAQ</a>
       <a href="#contact">Message Tutor Firas</a>
     </div>
     <div class="lotd" id="lotd" role="button" tabindex="0" style="cursor:pointer;">
@@ -1911,11 +1614,11 @@
     </div>
     <div class="stat">
       <div class="num" data-count="14">0</div>
-      <div class="lab">Conversation Starters<span class="ar">طريقة تبدا فيها حديث</span></div>
+      <div class="lab">Conversation Starters<span class="ar">طريقة تبدأ فيها حديث</span></div>
     </div>
     <div class="stat">
       <div class="num" data-count="100" data-suffix="%">0%</div>
-      <div class="lab">American Pronunciation<span class="ar">نطق امريكي اصلي</span></div>
+      <div class="lab">American Pronunciation<span class="ar">نطق أمريكي أصلي</span></div>
     </div>
   </div>
 </div>
@@ -1930,94 +1633,6 @@
 
 <div class="track-wrap" id="track-wrap">
   <div class="track" id="track"></div>
-</div>
-
-<div style="max-width:640px;margin:22px auto 0;padding:12px 18px;text-align:center;font-size:12.5px;color:var(--text-muted);">
-  💡 Sections below are collapsed to keep this page short, tap <b>Show Section</b> on any heading to open it.
-  <span class="ar" style="display:block;margin-top:4px;">💡 الاقسام تحت مطويه عشان الصفحه تصير اقصر، اضغط<b>عرض القسم</b> اضغط على اي عنوان عشان تفتحه</span>
-</div>
-
-<!-- HOW IT WORKS -->
-<div class="section-head" id="how">
-  <div class="eyebrow">Three simple steps</div>
-  <h2>How It Works</h2>
-  <div class="ar-h">كيف تسير الدروس</div>
-  <p class="desc">No app to install, no long registration. Just a real tutor, a phone, and a plan built around you.</p>
-</div>
-<div class="how-wrap">
-  <div class="how-step">
-    <div class="how-num">1</div>
-    <h3>Message Tutor Firas</h3>
-    <div class="how-ar">تواصل مع الاستاذ فراس عبر واتساب</div>
-    <p>Message Professor Firas on WhatsApp for enrollment and more information.<span class="ar">راسل الاستاذ فراس على واتساب واحجز اول درس لك..</span></p>
-  </div>
-  <div class="how-step">
-    <div class="how-num">2</div>
-    <h3>Take the 2-Minute Level Check</h3>
-    <div class="how-ar">اعمل اختبار تحديد المستوى</div>
-    <p>Answer 6 quick questions so your lessons start exactly where you are, not too easy, not too hard.<span class="ar">جاوب على ٦ أسئلة سريعة عشان دروسك تبدأ من مستواك بالضبط.</span></p>
-  </div>
-  <div class="how-step">
-    <div class="how-num">3</div>
-    <h3>Practice a Little, Daily</h3>
-    <div class="how-ar">تمرّن كل يوم شوي</div>
-    <p>Real phrases sent like a chat, practice them out loud with voice tools, track your streak and progress.<span class="ar">جمل حقيقية تجيك زي محادثة، تمرّن عليها بصوتك، وتابع سلسلة أيامك وتقدمك.</span></p>
-  </div>
-</div>
-
-<!-- SPEAKING WITH CONFIDENCE -->
-<div class="section-head" id="confidence">
-  <div class="eyebrow">The real blocker isn't grammar</div>
-  <h2>Speaking With Confidence</h2>
-  <div class="ar-h">تكلم بثقة</div>
-  <p class="desc">Most students already know more English than they think, the goal here is getting comfortable saying it out loud.</p>
-</div>
-<div class="how-wrap">
-  <div class="how-step">
-    <div class="how-num">✓</div>
-    <h3>Mistakes Are Part of Practice</h3>
-    <div class="how-ar">الأخطاء جزء من التمرين</div>
-    <p>Every fluent speaker made thousands of mistakes first. Lessons here treat mistakes as normal progress, not something to fear.<span class="ar">كل متحدث بطلاقة سوى آلاف الأخطاء قبل، الدروس هنا تعتبر الخطأ تقدم طبيعي مو شي تخاف منه.</span></p>
-  </div>
-  <div class="how-step">
-    <div class="how-num">✓</div>
-    <h3>Practice Alone First</h3>
-    <div class="how-ar">تمرن لحالك اول</div>
-    <p>The voice tools on this page let you hear a phrase and try it privately, so your first attempt out loud isn't in front of anyone.<span class="ar">أدوات الصوت بالموقع تخليك تسمع العبارة وتجربها لحالك، أول محاولة ما تكون قدام أحد.</span></p>
-  </div>
-  <div class="how-step">
-    <div class="how-num">✓</div>
-    <h3>Small Wins, Every Day</h3>
-    <div class="how-ar">إنجازات صغيرة يومياً</div>
-    <p>One phrase a day, said out loud and used in real life, builds real confidence faster than memorizing long lists.<span class="ar">عبارة وحدة باليوم، تقولها وتستخدمها بحياتك، تبني ثقة حقيقية أسرع من حفظ قوائم طويلة.</span></p>
-  </div>
-</div>
-
-<!-- MEET TUTOR FIRAS -->
-<div class="section-head" id="firas">
-  <div class="eyebrow">Who's teaching you</div>
-  <h2>Meet Tutor Firas</h2>
-  <div class="ar-h">تعرف على الأستاذ فراس</div>
-</div>
-<div class="bio-wrap">
-  <div class="bio-card">
-    <div class="bio-avatar">
-      <svg viewBox="0 0 64 64" width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M14 14h36a6 6 0 0 1 6 6v18a6 6 0 0 1-6 6H30l-10 9V44h-6a6 6 0 0 1-6-6V20a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="3.4" stroke-linejoin="round"/>
-        <path d="M22 27h20M22 34h13" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/>
-      </svg>
-    </div>
-    <div>
-      <div class="bio-name">Tutor Firas</div>
-      <div class="bio-role">1:1 English Coach<span class="ar">مدرّب إنجليزي خاص</span></div>
-      <ul class="bio-list">
-        <li>Years of experience teaching Saudi and Gulf students, from complete beginners to working professionals.<span class="ar">سنوات خبرة بتعليم طلاب سعوديين وخليجيين، من المبتدئين لغاية الموظفين المحترفين.</span></li>
-        <li>Specializes in American pronunciation and the exact sounds that trip up Arabic speakers.<span class="ar">متخصص بالنطق الأمريكي والأصوات اللي تصعب على الناطقين بالعربي.</span></li>
-        <li>Coaches learners preparing for IELTS, TOEFL, and the Saudi STEP exam for scholarships and university admission.<span class="ar">يدرّب الطلاب المستعدين لاختبارات IELTS و TOEFL واختبار STEP للابتعاث والقبول الجامعي.</span></li>
-        <li>Lessons run over WhatsApp, so there's nothing to download and no fixed classroom time.<span class="ar">الدروس عبر واتساب، بدون تطبيقات أو وقت حصة ثابت.</span></li>
-      </ul>
-    </div>
-  </div>
 </div>
 
 <!-- LEVEL PLACEMENT QUIZ -->
@@ -2053,9 +1668,8 @@
   <h2>Conversation Starters</h2>
   <div class="ar-h">كيف تبدأ حديث</div>
   <p class="desc">The line you say before the "real" conversation even begins. Pick one, keep it in your pocket, use it this week.</p>
-  <button type="button" class="section-toggle open" data-target="starters-thread"><span class="lbl-en">Hide Section</span><span class="ar lbl-ar">إخفاء القسم</span><span class="chev">▾</span></button>
 </div>
-<main class="thread collapsible-content" id="starters-thread"></main>
+<main class="thread" id="starters-thread"></main>
 
 <!-- LESSON THREAD -->
 <div class="section-head" id="lessons">
@@ -2063,19 +1677,16 @@
   <h2>The Course</h2>
   <div class="ar-h">الدورة التدريبية</div>
   <p class="desc">35 real-life lessons, organized into three levels so you always know what's next.</p>
-  <button type="button" class="section-toggle" data-target="course-content"><span class="lbl-en">Show Section</span><span class="ar lbl-ar">عرض القسم</span><span class="chev">▾</span></button>
 </div>
-<div class="collapsible-content collapsed" id="course-content">
-  <div class="level-tabs">
-    <button type="button" class="level-tab active" data-level="beginner">🌱 Beginner<span class="ar">مبتدئ</span></button>
-    <button type="button" class="level-tab" data-level="intermediate">🌿 Intermediate<span class="ar">متوسط</span></button>
-    <button type="button" class="level-tab" data-level="advanced">🌳 Advanced<span class="ar">متقدم</span></button>
-  </div>
-  <main class="thread">
-    <p class="thread-label">Scroll the thread, read it like you're chatting with Tutor Firas</p>
-    <div id="days"></div>
-  </main>
+<div class="level-tabs">
+  <button type="button" class="level-tab active" data-level="beginner">🌱 Beginner<span class="ar">مبتدئ</span></button>
+  <button type="button" class="level-tab" data-level="intermediate">🌿 Intermediate<span class="ar">متوسط</span></button>
+  <button type="button" class="level-tab" data-level="advanced">🌳 Advanced<span class="ar">متقدم</span></button>
 </div>
+<main class="thread">
+  <p class="thread-label">Scroll the thread, read it like you're chatting with Tutor Firas</p>
+  <div id="days"></div>
+</main>
 
 <!-- PRONUNCIATION CLINIC -->
 <div class="section-head" id="pronunciation">
@@ -2083,9 +1694,8 @@
   <h2>Pronunciation Clinic</h2>
   <div class="ar-h">عيادة النطق</div>
   <p class="desc">The exact sounds that trip up Arabic speakers most, with a quick fix for each, in American English.</p>
-  <button type="button" class="section-toggle" data-target="pron-cards"><span class="lbl-en">Show Section</span><span class="ar lbl-ar">عرض القسم</span><span class="chev">▾</span></button>
 </div>
-<div class="pron-wrap collapsible-content collapsed" id="pron-cards"></div>
+<div class="pron-wrap" id="pron-cards"></div>
 
 <!-- GRAMMAR TRAPS -->
 <div class="section-head" id="grammar">
@@ -2093,19 +1703,8 @@
   <h2>Grammar Traps</h2>
   <div class="ar-h">أخطاء قواعد شائعة</div>
   <p class="desc">Patterns that don't exist the same way in Arabic, so they trip up even confident speakers.</p>
-  <button type="button" class="section-toggle" data-target="grammar-cards"><span class="lbl-en">Show Section</span><span class="ar lbl-ar">عرض القسم</span><span class="chev">▾</span></button>
 </div>
-<div class="grammar-wrap collapsible-content collapsed" id="grammar-cards"></div>
-
-<!-- IDIOMS OF THE WEEK -->
-<div class="section-head" id="idioms">
-  <div class="eyebrow">Sound less like a textbook</div>
-  <h2>Idioms Americans Actually Use</h2>
-  <div class="ar-h">تعبيرات أمريكية شائعة</div>
-  <p class="desc">The idioms native speakers drop into everyday conversation, so you can recognize them and use them yourself.</p>
-  <button type="button" class="section-toggle" data-target="idiom-cards"><span class="lbl-en">Show Section</span><span class="ar lbl-ar">عرض القسم</span><span class="chev">▾</span></button>
-</div>
-<div class="words-wrap collapsible-content collapsed" id="idiom-cards"></div>
+<div class="grammar-wrap" id="grammar-cards"></div>
 
 <!-- WORDS THAT MATTER -->
 <div class="section-head" id="words">
@@ -2113,54 +1712,8 @@
   <h2>Words That Matter</h2>
   <div class="ar-h">كلمات صغيرة وتفرق كبير</div>
   <p class="desc">To, from, in, on, for, this, that, these, those, could, should, would, because, so, but, although, since, until, if, unless, while, however: where they go, and how the meaning shifts.</p>
-  <button type="button" class="section-toggle" data-target="word-cards"><span class="lbl-en">Show Section</span><span class="ar lbl-ar">عرض القسم</span><span class="chev">▾</span></button>
 </div>
-<div class="words-wrap collapsible-content collapsed" id="word-cards"></div>
-
-<!-- EXAM PREP -->
-<div class="section-head" id="exam-prep">
-  <div class="eyebrow">Studying abroad or applying for a scholarship?</div>
-  <h2>IELTS · TOEFL · STEP Prep</h2>
-  <div class="ar-h">تحضير لاختبارات IELTS و TOEFL و STEP</div>
-  <p class="desc">Coaching built around the exam you actually need, including the Saudi STEP test used for scholarships and university admission.</p>
-  <button type="button" class="section-toggle" data-target="exam-wrap"><span class="lbl-en">Show Section</span><span class="ar lbl-ar">عرض القسم</span><span class="chev">▾</span></button>
-</div>
-<div class="exam-wrap collapsible-content collapsed" id="exam-wrap">
-  <div class="exam-card">
-    <span class="exam-tag">IELTS</span>
-    <h3>Academic & General Training</h3>
-    <div class="exam-ar">أكاديمي وعام</div>
-    <p>Focused practice on all four skills, Listening, Reading, Writing, and Speaking, with band-score feedback after every mock session.</p>
-    <div class="exam-sample">"Could you describe a time you had to solve a problem at work?"</div>
-    <span class="exam-sample-ar ar">وصف موقف حليت فيه مشكلة بالشغل، نموذج سؤال Speaking Part 2</span>
-  </div>
-  <div class="exam-card">
-    <span class="exam-tag">TOEFL iBT</span>
-    <h3>For US & Canadian Universities</h3>
-    <div class="exam-ar">للجامعات الأمريكية والكندية</div>
-    <p>Integrated tasks practice, reading a passage, listening to a lecture, then speaking or writing about both, exactly like the real test.</p>
-    <div class="exam-sample">"Summarize the professor's argument, then state your own opinion."</div>
-    <span class="exam-sample-ar ar">تلخيص رأي الأستاذ ثم ذكر رأيك انت، نموذج مهمة متكاملة</span>
-  </div>
-  <div class="exam-card">
-    <span class="exam-tag">STEP (Qiyas)</span>
-    <h3>For Saudi Scholarships & Admission</h3>
-    <div class="exam-ar">للابتعاث والقبول الجامعي بالسعودية</div>
-    <p>Targeted practice for the Standardized Test of English Proficiency: grammar, vocabulary, and reading comprehension in the exact format Qiyas uses.</p>
-    <div class="exam-sample">"The manager insisted ___ the report before Thursday."</div>
-    <span class="exam-sample-ar ar">تمرين على أسئلة القواعد والمفردات بنفس أسلوب اختبار STEP</span>
-  </div>
-</div>
-
-<!-- BUSINESS ENGLISH -->
-<div class="section-head" id="business">
-  <div class="eyebrow">For the office and the inbox</div>
-  <h2>Business English</h2>
-  <div class="ar-h">إنجليزي الشغل</div>
-  <p class="desc">The phrases that make you sound confident in meetings, emails, and calls with international colleagues.</p>
-  <button type="button" class="section-toggle" data-target="business-cards"><span class="lbl-en">Show Section</span><span class="ar lbl-ar">عرض القسم</span><span class="chev">▾</span></button>
-</div>
-<div class="words-wrap collapsible-content collapsed" id="business-cards"></div>
+<div class="words-wrap" id="word-cards"></div>
 
 <!-- QUICK CHECK QUIZ -->
 <div class="section-head" id="quiz">
@@ -2168,9 +1721,8 @@
   <h2>Quick Check</h2>
   <div class="ar-h">اختبر نفسك</div>
   <p class="desc">Questions built from everything above: starters, lessons, and words. Tap an answer to see if you're right, and check the Arabic if you get stuck.</p>
-  <button type="button" class="section-toggle" data-target="quiz-wrap"><span class="lbl-en">Show Section</span><span class="ar lbl-ar">عرض القسم</span><span class="chev">▾</span></button>
 </div>
-<div class="quiz-wrap collapsible-content collapsed" id="quiz-wrap">
+<div class="quiz-wrap">
   <div class="scoreboard">
     <div>
       <div class="lab">Score</div>
@@ -2189,9 +1741,8 @@
   <div class="eyebrow">Real students, real progress</div>
   <h2>What Students Say</h2>
   <div class="ar-h">آراء الطلاب</div>
-  <button type="button" class="section-toggle" data-target="testimonials-wrap"><span class="lbl-en">Show Section</span><span class="ar lbl-ar">عرض القسم</span><span class="chev">▾</span></button>
 </div>
-<div class="testimonials-wrap collapsible-content collapsed" id="testimonials-wrap">
+<div class="testimonials-wrap">
   <div class="testimonial-card">
     <div class="quote">I could barely order coffee in English before. After a few weeks with Tutor Firas, I use these exact phrases every day at work.</div>
     <div class="who">Student, Riyadh<span class="ar">قبل كذا ما كنت أقدر أطلب قهوتي بالإنجليزي، الحين أستخدم نفس الجمل يومياً بالشغل</span></div>
@@ -2204,31 +1755,11 @@
     <div class="quote">Lessons feel like real conversations, not textbook grammar. That's what actually stuck with me.</div>
     <div class="who">Student, Jeddah<span class="ar">الدروس تحس كأنها محادثة حقيقية مو قواعد من كتاب، وهذا اللي علق في ذهني</span></div>
   </div>
-  <div class="testimonial-card">
-    <div class="quote">I needed English for my STEP exam and a scholarship interview. Firas built the lessons entirely around that goal.</div>
-    <div class="who">Student, Dammam<span class="ar">احتجت انجليزي لاختبار STEP ومقابلة الابتعاث، والأستاذ فراس بنى الدروس بالكامل حول هالهدف</span></div>
-  </div>
-  <div class="testimonial-card">
-    <div class="quote">Practicing with the voice tool made me so much less shy about speaking out loud. I actually look forward to it now.</div>
-    <div class="who">Student, Khobar<span class="ar">التمرين بأداة الصوت خلاني أقل خجل من التكلم بصوت عالي، الحين اتحمس له</span></div>
-  </div>
-  <div class="testimonial-card">
-    <div class="quote">Business English section alone was worth it, I use those meeting phrases with my international team every week.</div>
-    <div class="who">Student, Riyadh<span class="ar">قسم إنجليزي الشغل لحاله يستاهل، أستخدم جمل الاجتماعات مع فريقي العالمي كل أسبوع</span></div>
-  </div>
 </div>
-
-<!-- FAQ -->
-<div class="section-head" id="faq">
-  <div class="eyebrow">Before you message</div>
-  <h2>Frequently Asked Questions</h2>
-  <div class="ar-h">الأسئلة الشائعة</div>
-  <p class="desc">The questions almost every new student asks first.</p>
-</div>
-<div class="faq-wrap" id="faq-wrap"></div>
 
 <!-- UTILITY TOOLS -->
 <div class="utility-row">
+  <button type="button" class="util-btn" id="print-btn">🖨️ Download Cheat Sheet<span class="ar" style="margin-left:4px;">حمّل ملخص الدروس</span></button>
   <button type="button" class="util-btn" id="reminder-btn">📅 Weekly Practice Reminder<span class="ar" style="margin-left:4px;">تذكير أسبوعي</span></button>
 </div>
 
@@ -2258,143 +1789,161 @@
 /* ---------------- SUPABASE CLIENT ---------------- */
 const SUPABASE_URL = "https://lewoochehpiycocvfwtz.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxld29vY2hlaHBpeWNvY3Zmd3R6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwNzQ3MzcsImV4cCI6MjA5OTY1MDczN30.sIWK6jwX7PW70fH0yPUuhOb25N1lBw2-Cvb3dtwDb9Y";
-let sb = null;
-try{
-  if(typeof supabase !== 'undefined'){
-    sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  }
-}catch(e){
-  console.error('Supabase failed to initialize:', e);
-  sb = null;
-}
-/* IMPORTANT: everything below this line must survive even if sb is null
-   (e.g. the login service is blocked or offline) so the rest of the page
-   -- lessons, quizzes, pronunciation, etc. -- always renders. */
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-/* ---------------- AUTH + STUDENT PROFILE (LOGIN ONLY, NO PUBLIC SIGNUP) ---------------- */
-/* Accounts are created manually by Tutor Firas in the Supabase dashboard
-   (Authentication > Add user, then a matching row in the "students" table
-   with the same auth_id). Students receive their email + password directly
-   from Tutor Firas -- there is no self-signup on this page. */
+/* ---------------- AUTH + STUDENT PROFILE ---------------- */
 let currentProfile = null; // the row from public.students for the logged-in user
 
-try{
-  (function(){
-    const gate = document.getElementById('name-gate');
-    const emailInput = document.getElementById('gate-email-input');
-    const passwordInput = document.getElementById('gate-password-input');
-    const authSubmit = document.getElementById('gate-auth-submit');
-    const authHint = document.getElementById('gate-auth-hint');
-    const badge = document.getElementById('greeting-badge');
-    const greetingText = document.getElementById('greeting-text');
+(function(){
+  const gate = document.getElementById('name-gate');
+  const nameInput = document.getElementById('gate-name-input');
+  const emailInput = document.getElementById('gate-email-input');
+  const passwordInput = document.getElementById('gate-password-input');
+  const phoneInput = document.getElementById('gate-phone-input');
+  const authSubmit = document.getElementById('gate-auth-submit');
+  const authHint = document.getElementById('gate-auth-hint');
+  const authTitle = document.getElementById('gate-auth-title');
+  const authTitleAr = document.getElementById('gate-auth-title-ar');
+  const toggleMode = document.getElementById('gate-toggle-mode');
+  const badge = document.getElementById('greeting-badge');
+  const greetingText = document.getElementById('greeting-text');
 
-    if(!gate || !emailInput || !passwordInput || !authSubmit) return;
+  let mode = 'signup'; // or 'login'
 
-    function openGate(){
-      gate.classList.remove('hidden');
-      document.body.style.overflow = 'hidden';
-      if(badge) badge.style.display = 'none';
+  function setMode(newMode){
+    mode = newMode;
+    authHint.textContent = '';
+    if(mode === 'signup'){
+      authTitle.textContent = 'Welcome, Student';
+      authTitleAr.textContent = 'هلا فيك';
+      nameInput.style.display = 'block';
+      phoneInput.style.display = 'block';
+      authSubmit.textContent = 'Start Learning / ابدأ التعلم';
+      toggleMode.textContent = 'Already have an account? Log in / عندك حساب؟ سجل دخول';
+    } else {
+      authTitle.textContent = 'Welcome Back';
+      authTitleAr.textContent = 'هلا فيك مرة ثانية';
+      nameInput.style.display = 'none';
+      phoneInput.style.display = 'none';
+      authSubmit.textContent = 'Log In / سجل دخول';
+      toggleMode.textContent = "New here? Create an account / أول مرة؟ أنشئ حساب";
     }
+  }
 
-    function closeGate(){
-      gate.classList.add('hidden');
-      document.body.style.overflow = '';
-    }
+  toggleMode.addEventListener('click', ()=> setMode(mode === 'signup' ? 'login' : 'signup'));
 
-    if(!sb){
+  function openGate(){
+    gate.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    badge.style.display = 'none';
+    setMode('login');
+  }
+
+  function closeGate(){
+    gate.classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+
+  async function showGreeting(profile){
+    currentProfile = profile;
+    greetingText.textContent = `Welcome back, ${profile.name} 👋 / هلا ${profile.name} 👋`;
+    badge.style.display = 'inline-flex';
+    closeGate();
+    await updateStreakOnLogin();
+    populateDashboard();
+    syncLocalProgressToCloud();
+  }
+
+  authSubmit.addEventListener('click', async ()=>{
+    const email = emailInput.value.trim();
+    const password = passwordInput.value;
+    if(!email || !email.includes('@')){
       authHint.style.color = 'var(--red)';
-      authHint.innerHTML = "We couldn't reach the login service. Please refresh the page, or check your connection.<br><span class=\"ar\">ما قدرنا نوصل لخدمة تسجيل الدخول، حدّث الصفحة أو تأكد من اتصالك</span>";
-      authSubmit.disabled = true;
-      openGate();
+      authHint.textContent = 'Please enter a valid email / أدخل إيميل صحيح';
+      return;
+    }
+    if(!password || password.length < 6){
+      authHint.style.color = 'var(--red)';
+      authHint.textContent = 'Password must be at least 6 characters / كلمة السر لازم ٦ أحرف على الأقل';
       return;
     }
 
-    async function showGreeting(profile){
-      currentProfile = profile;
-      if(greetingText) greetingText.textContent = `Welcome back, ${profile.name} 👋 / هلا ${profile.name} 👋`;
-      if(badge) badge.style.display = 'inline-flex';
-      closeGate();
-      await updateStreakOnLogin();
-      populateDashboard();
-      syncLocalProgressToCloud();
-    }
+    authSubmit.disabled = true;
+    authHint.style.color = 'var(--text-muted)';
 
-    authSubmit.addEventListener('click', async ()=>{
-      const email = emailInput.value.trim();
-      const password = passwordInput.value;
-      if(!email || !email.includes('@')){
+    if(mode === 'signup'){
+      const name = nameInput.value.trim();
+      if(!name){
         authHint.style.color = 'var(--red)';
-        authHint.textContent = 'Please enter a valid email / أدخل إيميل صحيح';
+        authHint.textContent = 'Please enter your name / أدخل اسمك';
+        authSubmit.disabled = false;
         return;
       }
-      if(!password){
+      authHint.textContent = 'Creating your account... / جاري إنشاء حسابك...';
+      const { data, error } = await sb.auth.signUp({ email, password });
+      authSubmit.disabled = false;
+      if(error){
         authHint.style.color = 'var(--red)';
-        authHint.textContent = 'Please enter your password / أدخل كلمة السر';
+        authHint.textContent = error.message.includes('already registered')
+          ? 'This email already has an account, try logging in / هذا الإيميل مسجل، جرب تسجيل الدخول'
+          : 'Something went wrong, please try again / فيه خطأ، حاول مرة ثانية';
         return;
       }
-
-      authSubmit.disabled = true;
-      authHint.style.color = 'var(--text-muted)';
+      const phone = phoneInput.value.trim();
+      const { data: inserted, error: insertError } = await sb.from('students')
+        .insert({ auth_id: data.user.id, name, phone: phone || null, email })
+        .select().single();
+      if(insertError){
+        authHint.style.color = 'var(--red)';
+        authHint.textContent = 'Could not save your profile, please try again / ما قدرنا نحفظ بياناتك، حاول مرة ثانية';
+        return;
+      }
+      showGreeting(inserted);
+    } else {
       authHint.textContent = 'Logging in... / جاري تسجيل الدخول...';
-
-      try{
-        const { data, error } = await sb.auth.signInWithPassword({ email, password });
-        authSubmit.disabled = false;
-        if(error){
-          authHint.style.color = 'var(--red)';
-          authHint.textContent = 'Wrong email or password / الإيميل أو كلمة السر غلط';
-          return;
-        }
-        const { data: existing } = await sb.from('students').select('*').eq('auth_id', data.user.id).maybeSingle();
-        if(existing){
-          showGreeting(existing);
-        } else {
-          authHint.style.color = 'var(--red)';
-          authHint.innerHTML = 'No student profile found for this account. Please contact Tutor Firas to finish setting up your account.<br><span class="ar">ما فيه ملف طالب مرتبط بهذا الحساب، تواصل مع الأستاذ فراس لإكمال إعداد حسابك</span>';
-        }
-      }catch(err){
-        authSubmit.disabled = false;
+      const { data, error } = await sb.auth.signInWithPassword({ email, password });
+      authSubmit.disabled = false;
+      if(error){
         authHint.style.color = 'var(--red)';
-        authHint.textContent = 'Something went wrong, please try again / فيه خطأ، حاول مرة ثانية';
-        console.error(err);
+        authHint.textContent = 'Wrong email or password / الإيميل أو كلمة السر غلط';
+        return;
       }
-    });
-
-    const openDashBtn = document.getElementById('open-dashboard');
-    if(openDashBtn){
-      openDashBtn.addEventListener('click', ()=>{
-        document.getElementById('dash-overlay').classList.add('show');
-        populateDashboard();
-      });
+      const { data: existing } = await sb.from('students').select('*').eq('auth_id', data.user.id).maybeSingle();
+      if(existing){
+        showGreeting(existing);
+      } else {
+        authHint.style.color = 'var(--red)';
+        authHint.textContent = 'No profile found for this account / ما فيه حساب طالب مرتبط';
+      }
     }
+  });
 
-    // On page load, check if already logged in
-    sb.auth.getSession().then(async ({ data: { session } })=>{
-      if(session && session.user){
-        try{
-          const { data: existing } = await sb.from('students').select('*').eq('auth_id', session.user.id).maybeSingle();
-          if(existing){
-            showGreeting(existing);
-            return;
-          }
-        }catch(e){ console.error(e); }
+  document.getElementById('open-dashboard').addEventListener('click', ()=>{
+    document.getElementById('dash-overlay').classList.add('show');
+    populateDashboard();
+  });
+
+  // On page load, check if already logged in
+  sb.auth.getSession().then(async ({ data: { session } })=>{
+    if(session && session.user){
+      const { data: existing } = await sb.from('students').select('*').eq('auth_id', session.user.id).maybeSingle();
+      if(existing){
+        showGreeting(existing);
+        return;
       }
-      openGate();
-    }).catch(e=>{ console.error(e); openGate(); });
+    }
+    openGate();
+  });
 
-    window.openGate = openGate;
-  })();
-}catch(e){
-  console.error('Auth setup failed, continuing without login:', e);
-}
+  window.openGate = openGate;
+})();
 
 /* ---------------- STREAK TRACKING (synced to Supabase) ---------------- */
 async function updateStreakOnLogin(){
-  if(!currentProfile || !sb) return;
+  if(!currentProfile) return;
   const today = new Date().toISOString().slice(0,10);
   const last = currentProfile.last_visit;
   if(last === today) return; // already counted today
-
 
   let newStreak = 1;
   if(last){
@@ -3281,98 +2830,30 @@ const wordData = [
   ]}
 ];
 
-/* Generic renderer used by Words, Idioms, and Business English sections */
-function renderWordCards(data, container){
-  data.forEach(wd=>{
-    const card = document.createElement('div');
-    card.className='word-card';
-    let usesHtml = '';
-    wd.uses.forEach(u=>{
-      usesHtml += `
-        <div class="use">
-          <div class="meaning">${u.meaning}</div>
-          <div class="en-ex">${u.en}</div>
-          <div class="sound-row"><span class="lab">Say it</span><span class="ar">${u.sound}</span></div>
-          <div class="mean-row"><span class="ar">${u.ar}</span></div>
-          ${voiceRowHTML(u.en)}
-        </div>`;
-    });
-    card.innerHTML = `
-      <div class="headword">
-        <div class="w">${wd.w}</div>
-        <div class="tag">${wd.tag}</div>
-      </div>
-      ${usesHtml}
-    `;
-    container.appendChild(card);
+const wordCardsEl = document.getElementById('word-cards');
+wordData.forEach(wd=>{
+  const card = document.createElement('div');
+  card.className='word-card';
+  let usesHtml = '';
+  wd.uses.forEach(u=>{
+    usesHtml += `
+      <div class="use">
+        <div class="meaning">${u.meaning}</div>
+        <div class="en-ex">${u.en}</div>
+        <div class="sound-row"><span class="lab">Say it</span><span class="ar">${u.sound}</span></div>
+        <div class="mean-row"><span class="ar">${u.ar}</span></div>
+        ${voiceRowHTML(u.en)}
+      </div>`;
   });
-}
-
-renderWordCards(wordData, document.getElementById('word-cards'));
-
-/* ---------------- IDIOMS AMERICANS ACTUALLY USE ---------------- */
-const idiomData = [
-  { w:"Break the ice", tag:"idiom", uses:[
-    { meaning:"To ease tension when meeting someone new", en:"He told a joke to break the ice at the meeting.", sound:"هي تولد أ جوك تو بريك ذا آيس أت ذا ميتينق.", ar:"قال نكتة عشان يكسر الجليد بالاجتماع." }
-  ]},
-  { w:"Hit the books", tag:"idiom", uses:[
-    { meaning:"To start studying seriously", en:"I have a big exam, I need to hit the books tonight.", sound:"آي هاف أ بق إكزام، آي نيد تو هت ذا بوكس تونايت.", ar:"عندي اختبار كبير، لازم اذاكر بجد الليلة." }
-  ]},
-  { w:"Piece of cake", tag:"idiom", uses:[
-    { meaning:"Something very easy", en:"Don't worry about the test, it's a piece of cake.", sound:"دونت وري أباوت ذا تست، إتس أ بيس أوف كيك.", ar:"لا تشيل هم من الاختبار، سهل جداً." }
-  ]},
-  { w:"Under the weather", tag:"idiom", uses:[
-    { meaning:"Feeling slightly ill", en:"I'm feeling a bit under the weather today.", sound:"آيم فيلينق أ بت أندر ذا وذر تودي.", ar:"احس اني تعبان شوي اليوم." }
-  ]},
-  { w:"Cost an arm and a leg", tag:"idiom", uses:[
-    { meaning:"Very expensive", en:"That new phone cost an arm and a leg.", sound:"ذات نيو فون كوست آن آرم آند أ لق.", ar:"هذا الجوال الجديد كلف كثير جداً." }
-  ]},
-  { w:"On the same page", tag:"idiom", uses:[
-    { meaning:"Agreeing / understanding each other", en:"Let's talk this through so we're on the same page.", sound:"ليتس توك ذيس ثرو سو ويار أون ذا سيم بيج.", ar:"خلنا نتناقش عشان نكون متفقين على نفس الفكرة." }
-  ]},
-  { w:"Bite the bullet", tag:"idiom", uses:[
-    { meaning:"To face something difficult with courage", en:"I finally bit the bullet and called the dentist.", sound:"آي فاينالي بت ذا بوليت آند كولد ذا دنتست.", ar:"اخيراً تجرأت واتصلت على طبيب الأسنان." }
-  ]},
-  { w:"Once in a blue moon", tag:"idiom", uses:[
-    { meaning:"Very rarely", en:"We only eat out once in a blue moon.", sound:"وي أونلي إيت آوت وانس إن أ بلو موون.", ar:"ناكل برا نادر جداً، مرة كل فترة طويلة." }
-  ]},
-  { w:"Get the ball rolling", tag:"idiom", uses:[
-    { meaning:"To start something", en:"Let's get the ball rolling on this project.", sound:"ليتس قت ذا بول رولينق أون ذيس بروجكت.", ar:"خلنا نبدأ نشتغل على هالمشروع." }
-  ]},
-  { w:"Speak of the devil", tag:"idiom", uses:[
-    { meaning:"Said when someone appears right after being mentioned", en:"Speak of the devil, here he comes now.", sound:"سبيك أوف ذا ديفل، هير هي كمز ناو.", ar:"قول للحاضر، هذا جاء الحين." }
-  ]}
-];
-renderWordCards(idiomData, document.getElementById('idiom-cards'));
-
-/* ---------------- BUSINESS ENGLISH ---------------- */
-const businessData = [
-  { w:"Starting a meeting", tag:"business english", uses:[
-    { meaning:"Open a meeting professionally", en:"Thanks everyone for joining, let's get started.", sound:"ثانكس إفريوان فور جوينينق، ليتس قت ستارتد.", ar:"شكراً للجميع على الحضور، خلنا نبدأ." }
-  ]},
-  { w:"Giving an update", tag:"business english", uses:[
-    { meaning:"Report progress on a task", en:"We're on track, and the first phase will be done by Thursday.", sound:"ويار أون تراك، آند ذا فرست فيز ويل بي دن باي ثرزدي.", ar:"احنا ماشيين حسب الخطة، والمرحلة الأولى بتخلص يوم الخميس." }
-  ]},
-  { w:"Asking for clarification", tag:"business english", uses:[
-    { meaning:"Politely ask someone to explain more", en:"Sorry, could you clarify what you mean by that?", sound:"سوري، كود يو كلاريفاي وات يو مين باي ذات؟", ar:"اسف، تقدر توضح قصدك بالضبط؟" }
-  ]},
-  { w:"Disagreeing professionally", tag:"business english", uses:[
-    { meaning:"Push back on an idea respectfully", en:"I see where you're coming from, but I'd suggest a different approach.", sound:"آي سي وير يور كمنق فروم، بت آيد سجست أ ديفرنت أبروتش.", ar:"افهم وجهة نظرك، بس اقترح طريقة مختلفة." }
-  ]},
-  { w:"Writing a polite email", tag:"business english", uses:[
-    { meaning:"Open and close a professional email", en:"I hope this email finds you well. Looking forward to your reply.", sound:"آي هوب ذيس إيميل فايندز يو ويل. لوكينق فورورد تو يور ريبلاي.", ar:"أتمنى تكون بخير، بانتظار ردك." }
-  ]},
-  { w:"Presenting an idea", tag:"business english", uses:[
-    { meaning:"Introduce a proposal in a meeting", en:"I'd like to walk you through a proposal I've been working on.", sound:"آيد لايك تو ووك يو ثرو أ بروبوزال آيف بين ووركينق أون.", ar:"ابغى اشرح لكم اقتراح كنت اشتغل عليه." }
-  ]},
-  { w:"Following up", tag:"business english", uses:[
-    { meaning:"Check on something without sounding pushy", en:"Just following up on my last email, any update on this?", sound:"جست فولوينق أب أون ماي لاست إيميل، إني أبديت أون ذيس؟", ar:"بس اتابع على ايميلي الأخير، فيه أي جديد؟" }
-  ]},
-  { w:"Wrapping up a meeting", tag:"business english", uses:[
-    { meaning:"Close a meeting and confirm next steps", en:"Let's wrap up here, I'll send a summary with next steps.", sound:"ليتس راب أب هير، آيل سند أ سمري ويذ نكست ستبس.", ar:"خلنا نختم هنا، بابعث ملخص بالخطوات الجاية." }
-  ]}
-];
-renderWordCards(businessData, document.getElementById('business-cards'));
+  card.innerHTML = `
+    <div class="headword">
+      <div class="w">${wd.w}</div>
+      <div class="tag">${wd.tag}</div>
+    </div>
+    ${usesHtml}
+  `;
+  wordCardsEl.appendChild(card);
+});
 
 /* ---------------- PRONUNCIATION CLINIC ---------------- */
 const pronData = [
@@ -3419,15 +2900,6 @@ const pronData = [
       { wrong:"Espeak", wrongSound:"إسپيك", right:"Speak", rightSound:"سپيك (بدون إي في البداية)" },
       { wrong:"Sitrong", wrongSound:"سِترونق", right:"Strong", rightSound:"سترونق (الحروف ملزوقة)" },
       { wrong:"Isport", wrongSound:"إسپورت", right:"Sport", rightSound:"سپورت" }
-    ]
-  },
-  {
-    icon:"SH·CH", title:"SH vs. CH", arTitle:"الفرق بين SH و CH",
-    tip:"Arabic speakers sometimes swap these two since both feel close to the Arabic \"sh\" sound. SH is soft air only, CH starts with a small T-like stop before the air.",
-    pairs:[
-      { wrong:"Sheap (for cheap)", wrongSound:"شيب", right:"Cheap", rightSound:"تشيب (فيها وقفة خفيفة بالبداية)" },
-      { wrong:"Share (for chair)", wrongSound:"شير", right:"Chair", rightSound:"تشير" },
-      { wrong:"Wash (as in watch)", wrongSound:"واش", right:"Watch", rightSound:"واتش" }
     ]
   }
 ];
@@ -3488,20 +2960,6 @@ const grammarData = [
     yes:"Tomorrow I am visiting Sara in Riyadh.",
     explain:"Arabic has no capital letters at all, so this one's easy to forget. English capitalizes the start of every sentence, names of people, and place names.",
     explainAr:"العربي ما فيه حروف كبيرة، فسهل تنسى هذي القاعدة. لازم تكبر اول الجملة وأسماء الناس والأماكن."
-  },
-  {
-    title:"Subject-verb agreement", arTitle:"مطابقة الفعل مع الفاعل",
-    no:"She go to work every day.",
-    yes:"She goes to work every day.",
-    explain:"Arabic verb endings change with the subject too, but the English rule is easy to forget: add -s or -es for he/she/it in the present simple.",
-    explainAr:"الفعل بالإنجليزي ياخذ s او es مع he/she/it بالمضارع البسيط، وسهل تنسى هذي القاعدة."
-  },
-  {
-    title:"Word order with adjectives", arTitle:"ترتيب الصفة والاسم",
-    no:"I have a car red.",
-    yes:"I have a red car.",
-    explain:"In Arabic, the adjective comes after the noun (سيارة حمراء). In English, it's the opposite: the adjective always comes before the noun.",
-    explainAr:"بالعربي الصفة توصف بعد الاسم، بس بالإنجليزي الصفة تجي قبل الاسم دائماً."
   }
 ];
 
@@ -3521,85 +2979,8 @@ grammarData.forEach(g=>{
   grammarCardsEl.appendChild(card);
 });
 
-/* ---------------- FAQ ---------------- */
-const faqData = [
-  {
-    q:"Is this really a private, one-on-one lesson?",
-    ar:"هل هي فعلاً دروس خاصة فردية؟",
-    a:"Yes, every lesson is 1:1 with Tutor Firas, there are no group classes here. The plan is built entirely around your level and goals.",
-    aAr:"ايوه، كل درس خاص مباشرة مع الأستاذ فراس، ما فيه صفوف جماعية. الخطة مبنية بالكامل على مستواك وأهدافك."
-  },
-  {
-    q:"How do lessons actually happen, an app, Zoom, WhatsApp?",
-    ar:"كيف تصير الدروس، تطبيق، زوم، واتساب؟",
-    a:"Most of the daily practice happens over WhatsApp, real phrases, voice notes, and quick corrections, plus live calls when it's time to practice speaking out loud.",
-    aAr:"أغلب التمرين اليومي يصير عبر واتساب، جمل حقيقية وملاحظات صوتية وتصحيح سريع، بالإضافة لمكالمات مباشرة وقت التمرين على المحادثة."
-  },
-  {
-    q:"Is there a free trial lesson?",
-    ar:"فيه درس تجريبي مجاني؟",
-    a:"Yes. Message Tutor Firas on WhatsApp and mention this website, your first lesson is free with no commitment.",
-    aAr:"ايوه. راسل الأستاذ فراس بالواتساب واذكر انك من هذا الموقع، أول درس مجاني وبدون أي التزام."
-  },
-  {
-    q:"Can this help me prepare for STEP, IELTS, or TOEFL?",
-    ar:"تساعدني في تحضير STEP او IELTS او TOEFL؟",
-    a:"Yes, exam prep is a core part of the program, including the Saudi STEP exam used for scholarships and university admission. See the exam prep section above for details.",
-    aAr:"ايوه، تحضير الاختبارات جزء أساسي من البرنامج، بما فيها اختبار STEP السعودي المستخدم للابتعاث والقبول الجامعي. شوف قسم تحضير الاختبارات فوق للتفاصيل."
-  },
-  {
-    q:"I'm shy about speaking English out loud, will that be a problem?",
-    ar:"انا خجول من التكلم بصوت عالي، بتكون مشكلة؟",
-    a:"Not at all, most students start exactly there. Lessons build up gradually with private voice practice tools before any live conversation, so confidence comes naturally.",
-    aAr:"ابداً، أغلب الطلاب يبدأون بنفس الإحساس. الدروس تبني ثقتك تدريجياً بأدوات تمرين صوتي خاصة قبل أي محادثة مباشرة."
-  },
-  {
-    q:"Do you teach kids, or only adults?",
-    ar:"تدرّس أطفال، ولا بس كبار؟",
-    a:"The lessons on this site are designed for teens and adults. Message Tutor Firas directly to ask about younger learners.",
-    aAr:"الدروس بهذا الموقع مصممة للمراهقين والكبار. راسل الأستاذ فراس مباشرة للسؤال عن الأطفال الأصغر سناً."
-  },
-  {
-    q:"How many lessons per week do I need?",
-    ar:"كم درس بالأسبوع أحتاج؟",
-    a:"It depends on your goal and timeline. Most students do 2-3 sessions a week alongside daily WhatsApp practice, Tutor Firas will recommend a pace after your free trial lesson.",
-    aAr:"يعتمد على هدفك والوقت المتاح. أغلب الطلاب ياخذون ٢-٣ جلسات بالأسبوع مع تمرين يومي بالواتساب، وبيرشحلك فراس السرعة المناسبة بعد الدرس التجريبي."
-  },
-  {
-    q:"Can I reschedule or cancel a lesson?",
-    ar:"أقدر أأجل أو ألغي درس؟",
-    a:"Yes, just message Tutor Firas ahead of time on WhatsApp and he'll help you find a new slot.",
-    aAr:"ايوه، بس راسل الأستاذ فراس مسبقاً بالواتساب وبيساعدك تلقى موعد ثاني."
-  },
-  {
-    q:"How do I get a login for the student area?",
-    ar:"كيف أحصل على حساب دخول للوحة الطالب؟",
-    a:"This site is for enrolled students only, there's no public sign-up. Once you book lessons with Tutor Firas, he'll set up your account and send your email and password directly to you.",
-    aAr:"هذا الموقع لطلاب الأستاذ فراس المسجلين فقط، ما فيه تسجيل عام. بعد ما تحجز دروسك، بيسوي لك فراس حساب ويبعث لك الإيميل وكلمة السر مباشرة."
-  }
-];
-
-const faqWrapEl = document.getElementById('faq-wrap');
-faqData.forEach((f,i)=>{
-  const item = document.createElement('div');
-  item.className = 'faq-item';
-  item.innerHTML = `
-    <button type="button" class="faq-q">
-      <span>${f.q}<span class="ar" style="display:block;font-size:13px;font-weight:500;margin-top:3px;">${f.ar}</span></span>
-      <span class="chev">▾</span>
-    </button>
-    <div class="faq-a">
-      <p>${f.a}<span class="ar">${f.aAr}</span></p>
-    </div>
-  `;
-  item.querySelector('.faq-q').addEventListener('click', ()=>{
-    item.classList.toggle('open');
-  });
-  faqWrapEl.appendChild(item);
-});
-
 /* ---------------- SCROLL REVEAL ---------------- */
-document.querySelectorAll('.day, .word-card, .q-card, .section-head, .how-step, .exam-card, .faq-item').forEach(el=>el.classList.add('reveal'));
+document.querySelectorAll('.day, .word-card, .q-card, .section-head').forEach(el=>el.classList.add('reveal'));
 const revealObserver = new IntersectionObserver((entries)=>{
   entries.forEach(entry=>{
     if(entry.isIntersecting){
@@ -3648,56 +3029,6 @@ window.addEventListener('scroll', ()=>{
   lastScrollY = currentY;
 }, { passive:true });
 
-/* ---------------- SCROLL PROGRESS BAR ---------------- */
-const scrollProgressFill = document.getElementById('scroll-progress-fill');
-function updateScrollProgress(){
-  const scrollTop = window.scrollY || document.documentElement.scrollTop;
-  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-  const pct = docHeight > 0 ? Math.min(100, Math.max(0, (scrollTop / docHeight) * 100)) : 0;
-  if(scrollProgressFill) scrollProgressFill.style.width = pct + '%';
-}
-window.addEventListener('scroll', updateScrollProgress, { passive:true });
-window.addEventListener('resize', updateScrollProgress);
-updateScrollProgress();
-
-/* ---------------- COLLAPSIBLE SECTIONS (keeps the page short until you want more) ---------------- */
-function expandSection(id){
-  const el = document.getElementById(id);
-  if(!el) return;
-  if(el.classList.contains('collapsed')){
-    el.classList.remove('collapsed');
-    const btn = document.querySelector('.section-toggle[data-target="'+id+'"]');
-    if(btn){
-      btn.classList.add('open');
-      const enLbl = btn.querySelector('.lbl-en');
-      const arLbl = btn.querySelector('.lbl-ar');
-      if(enLbl) enLbl.textContent = 'Hide Section';
-      if(arLbl) arLbl.textContent = 'إخفاء القسم';
-    }
-    updateScrollProgress();
-  }
-}
-document.querySelectorAll('.section-toggle').forEach(btn=>{
-  btn.addEventListener('click', ()=>{
-    const id = btn.dataset.target;
-    const el = document.getElementById(id);
-    if(!el) return;
-    const willCollapse = !el.classList.contains('collapsed');
-    el.classList.toggle('collapsed');
-    btn.classList.toggle('open', !willCollapse ? false : true);
-    btn.classList.toggle('open', el.classList.contains('collapsed') ? false : true);
-    const enLbl = btn.querySelector('.lbl-en');
-    const arLbl = btn.querySelector('.lbl-ar');
-    const isCollapsed = el.classList.contains('collapsed');
-    if(enLbl) enLbl.textContent = isCollapsed ? 'Show Section' : 'Hide Section';
-    if(arLbl) arLbl.textContent = isCollapsed ? 'عرض القسم' : 'إخفاء القسم';
-    if(!isCollapsed){
-      setTimeout(()=>{ btn.closest('.section-head').scrollIntoView({ behavior:'smooth', block:'start' }); }, 50);
-    }
-    updateScrollProgress();
-  });
-});
-
 const quizData = [
   { q:"I was born ___ 2005.", ar:"انولدت في ٢٠٠٥.", opts:["in","on","at"], answer:"in" },
   { q:"Put the book ___ the table.", ar:"حط الكتاب على الطاولة.", opts:["in","on","for"], answer:"on" },
@@ -3723,10 +3054,7 @@ const quizData = [
   { q:"Don't worry, it'll work ___.", ar:"لا تشيل هم، بتنحل بإذن الله.", opts:["out","on","for"], answer:"out" },
   { q:"In five years, I hope ___ have my own business.", ar:"بعد خمس سنين، اتمنى يكون عندي مشروعي.", opts:["to","for","on"], answer:"to" },
   { q:"Can I be honest ___ you about something?", ar:"اقدر اكون صريح معك بشي؟", opts:["with","to","for"], answer:"with" },
-  { q:"What does the salary package ___?", ar:"ايش يشمل الراتب؟", opts:["include","includes","including"], answer:"include" },
-  { q:"He told a joke to break the ___ at the meeting.", ar:"قال نكتة عشان يكسر الجليد بالاجتماع.", opts:["ice","cake","bullet"], answer:"ice" },
-  { q:"Don't worry about the test, it's a piece of ___.", ar:"لا تشيل هم من الاختبار، سهل جداً.", opts:["cake","ice","weather"], answer:"cake" },
-  { q:"That new phone cost an arm and a ___.", ar:"هذا الجوال كلف كثير جداً.", opts:["leg","hand","foot"], answer:"leg" }
+  { q:"What does the salary package ___?", ar:"ايش يشمل الراتب؟", opts:["include","includes","including"], answer:"include" }
 ];
 
 let score = 0;
@@ -3796,7 +3124,6 @@ document.getElementById('review-weak-btn').addEventListener('click', ()=>{
     alert("No weak spots yet, keep taking the quiz!\nما عندك أخطاء مسجلة بعد، كمل حل الاختبار!");
     return;
   }
-  expandSection('quiz-wrap');
   renderQuiz(filtered);
   document.getElementById('quiz').scrollIntoView({ behavior:'smooth' });
 });
@@ -4100,23 +3427,19 @@ function renderVerbTestHistory(){
   });
 
   surpriseBtn.addEventListener('click', ()=>{
-    expandSection('course-content');
-    setTimeout(()=>{
-      const allDays = document.querySelectorAll('.day');
-      if(allDays.length === 0) return;
-      const randomDay = allDays[Math.floor(Math.random() * allDays.length)];
-      randomDay.scrollIntoView({ behavior:'smooth', block:'center' });
-      randomDay.style.transition = 'box-shadow .3s ease';
-      randomDay.style.boxShadow = '0 0 0 3px var(--gold)';
-      setTimeout(()=>{ randomDay.style.boxShadow = ''; }, 1800);
-    }, 120);
+    const allDays = document.querySelectorAll('.day');
+    if(allDays.length === 0) return;
+    const randomDay = allDays[Math.floor(Math.random() * allDays.length)];
+    randomDay.scrollIntoView({ behavior:'smooth', block:'center' });
+    randomDay.style.transition = 'box-shadow .3s ease';
+    randomDay.style.boxShadow = '0 0 0 3px var(--gold)';
+    setTimeout(()=>{ randomDay.style.boxShadow = ''; }, 1800);
   });
 
   favToggle.addEventListener('click', ()=>{
     if(!currentProfile){ alert('Log in to save favorites! / سجل دخول عشان تحفظ مفضلتك!'); return; }
     favOnly = !favOnly;
     favToggle.classList.toggle('active', favOnly);
-    if(favOnly) expandSection('course-content');
     const favSet = new Set(currentProfile.favorite_lessons || []);
     document.querySelectorAll('.day').forEach(dayEl=>{
       const title = dayEl.dataset.title;
@@ -4125,22 +3448,11 @@ function renderVerbTestHistory(){
   });
 })();
 
-/* ---------------- DAY-DOT NAV: expand course section before jumping ---------------- */
-document.getElementById('track').addEventListener('click', (e)=>{
-  const link = e.target.closest('a');
-  if(!link) return;
-  const el = document.getElementById('course-content');
-  if(el && el.classList.contains('collapsed')){
-    e.preventDefault();
-    expandSection('course-content');
-    setTimeout(()=>{
-      const target = document.querySelector(link.getAttribute('href'));
-      if(target) target.scrollIntoView({ behavior:'smooth', block:'start' });
-    }, 150);
-  }
+/* ---------------- PRINT + WHATSAPP REMINDER ---------------- */
+document.getElementById('print-btn').addEventListener('click', ()=>{
+  window.print();
 });
 
-/* ---------------- WHATSAPP REMINDER ---------------- */
 document.getElementById('reminder-btn').addEventListener('click', ()=>{
   const icsContent = [
     'BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Personalized English Lessons//EN',
@@ -4170,7 +3482,7 @@ window.addEventListener('load', function(){
     if(!lotdEl || !labelEl || !enEl || !arEl) return;
 
     const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(),0,0)) / 86400000);
-    const category = dayOfYear % 4; // 0 = lesson, 1 = starter, 2 = verb, 3 = idiom
+    const category = dayOfYear % 3; // 0 = lesson, 1 = starter, 2 = verb
     let phraseToSpeak = '';
 
     if(category === 0 && typeof days !== 'undefined' && days.length){
@@ -4185,20 +3497,14 @@ window.addEventListener('load', function(){
       enEl.textContent = pick.en;
       arEl.textContent = pick.ar;
       phraseToSpeak = pick.en;
-    } else if(category === 2 && typeof verbBank !== 'undefined' && verbBank.length){
+    } else if(typeof verbBank !== 'undefined' && verbBank.length){
       const pick = verbBank[dayOfYear % verbBank.length];
       labelEl.innerHTML = 'Verb of the Day<span style="display:block;">فعل اليوم</span>';
       enEl.textContent = `${pick.base} \u2192 ${pick.past}`;
       arEl.textContent = pick.ar;
       phraseToSpeak = pick.past;
-    } else if(typeof idiomData !== 'undefined' && idiomData.length){
-      const pick = idiomData[dayOfYear % idiomData.length];
-      labelEl.innerHTML = 'Idiom of the Day<span style="display:block;">تعبير اليوم</span>';
-      enEl.textContent = pick.w;
-      arEl.textContent = pick.uses[0].ar;
-      phraseToSpeak = pick.uses[0].en;
     } else if(typeof days !== 'undefined' && days.length){
-      // fallback if data isn't ready yet for some reason
+      // fallback if verbBank isn't ready yet for some reason
       const pick = days[0];
       labelEl.innerHTML = 'Phrase of the Day<span style="display:block;">عبارة اليوم</span>';
       enEl.textContent = pick.en;
