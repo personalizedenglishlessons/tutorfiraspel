@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Learning Home — Personalized English Lessons</title>
+<title>Learning Home, Personalized English Lessons</title>
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,7 +12,7 @@
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
 <style>
 /* ============================================================
-   DESIGN SYSTEM TOKENS — shared with index.html / login.html
+   DESIGN SYSTEM TOKENS, shared with index.html / login.html
    ============================================================ */
 :root{
   --bg:#0E0E10; --surface:#17171B; --card:#1E1F25; --card-elevated:#262833;
@@ -48,7 +48,7 @@ button{font-family:inherit; cursor:pointer; color:inherit; background:none; bord
 input,select,textarea{font-family:inherit;}
 ul{list-style:none; margin:0; padding:0;}
 ::selection{ background:var(--gold); color:#0E0E10; }
-.arabic, [dir="rtl"]{ font-family:'Tajawal','Cairo',sans-serif; direction:rtl; }
+.arabic, [dir="rtl"]{ font-family:'Tajawal','Cairo',sans-serif; direction:rtl; line-height:1.7; letter-spacing:0; font-weight:400; unicode-bidi:isolate; }
 ::-webkit-scrollbar{ width:8px; height:8px; }
 ::-webkit-scrollbar-thumb{ background:var(--border); border-radius:4px; }
 ::-webkit-scrollbar-track{ background:transparent; }
@@ -68,7 +68,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 @keyframes spin{ to{ transform:rotate(360deg);} }
 
 /* ============================================================
-   APP SHELL — three column layout
+   APP SHELL, three column layout
    ============================================================ */
 .app-shell{ display:flex; min-height:100vh; }
 
@@ -324,7 +324,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .coming-soon .chip{ margin-top:20px; display:inline-block; }
 
 /* ============================================================
-   PART 3 — TUTOR FIRAS DOCKED CHAT
+   PART 3, TUTOR FIRAS DOCKED CHAT
    ============================================================ */
 .fab-firas{
   position:fixed; bottom:26px; right:26px; z-index:1200; width:58px; height:58px; border-radius:50%;
@@ -333,6 +333,19 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 }
 .fab-firas:hover{ transform:translateY(-3px) scale(1.04); box-shadow:0 20px 50px -10px rgba(200,169,106,.7); }
 .fab-firas .fab-dot{ position:absolute; top:2px; right:2px; width:12px; height:12px; border-radius:50%; background:var(--emerald); border:2px solid var(--bg); }
+.qt-fab{ right:96px; }
+.qt-popup{
+  position:fixed; z-index:1300; bottom:96px; right:26px; width:min(340px,92vw);
+  background:var(--card); border:1px solid var(--border); border-radius:18px; box-shadow:var(--shadow-lift);
+  padding:16px; display:none; max-height:70vh; overflow:auto;
+}
+.qt-popup.open{ display:block; }
+.qt-popup-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+.qt-popup-head .icon-btn{ width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:var(--card-elevated); border:1px solid var(--border); color:var(--text-muted); cursor:pointer; font-size:.8rem; }
+@media(max-width:640px){
+  .qt-fab{ right:26px; bottom:90px; }
+  .qt-popup{ left:12px; right:12px; bottom:12px; width:auto; max-height:80vh; }
+}
 .tutor-dock{
   position:fixed; top:0; right:0; height:100dvh; width:min(420px,100vw); background:var(--surface); border-left:1px solid var(--border);
   box-shadow:var(--shadow-lift); z-index:1300; display:flex; flex-direction:column; transform:translateX(100%);
@@ -382,7 +395,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .tutor-sheet-handle span{ width:40px; height:4px; border-radius:3px; background:var(--border); }
 
 /* ============================================================
-   PART 3 — ACHIEVEMENTS
+   PART 3, ACHIEVEMENTS
    ============================================================ */
 .badge-card{ text-align:center; padding:28px 18px; position:relative; overflow:hidden; }
 .badge-card.locked{ opacity:.45; }
@@ -393,7 +406,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .badge-card .bd-date{ margin-top:10px; font-size:.68rem; color:var(--text-muted); }
 
 /* ============================================================
-   PART 3 — CERTIFICATES
+   PART 3, CERTIFICATES
    ============================================================ */
 .cert-card{ padding:0; overflow:hidden; }
 .cert-top{ padding:28px 26px 22px; background:linear-gradient(135deg, rgba(200,169,106,.14), transparent 70%); border-bottom:1px solid var(--border); position:relative; }
@@ -403,7 +416,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .cert-row:first-child{ border-top:none; }
 
 /* ============================================================
-   PART 3 — STUDY CALENDAR (heatmap)
+   PART 3, STUDY CALENDAR (heatmap)
    ============================================================ */
 .heatmap-grid{ display:grid; grid-template-columns:repeat(26,1fr); gap:4px; }
 .heatmap-cell{ aspect-ratio:1; border-radius:3px; background:var(--border); }
@@ -414,7 +427,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 @media(max-width:720px){ .heatmap-grid{ grid-template-columns:repeat(13,1fr); } }
 
 /* ============================================================
-   PART 3 — PROFILE ROADMAP TIMELINE
+   PART 3, PROFILE ROADMAP TIMELINE
    ============================================================ */
 .roadmap-track{ position:relative; padding-left:30px; }
 .roadmap-track::before{ content:""; position:absolute; left:9px; top:6px; bottom:6px; width:2px; background:var(--border); }
@@ -427,7 +440,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .roadmap-node p{ font-size:.78rem; color:var(--text-muted); margin-top:3px; }
 
 /* ============================================================
-   PART 3 — SETTINGS TOGGLE SWITCH + STAT PILLS
+   PART 3, SETTINGS TOGGLE SWITCH + STAT PILLS
    ============================================================ */
 .switch{ position:relative; display:inline-block; width:42px; height:24px; flex-shrink:0; }
 .switch input{ opacity:0; width:0; height:0; }
@@ -469,7 +482,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .confetti-piece{ position:fixed; top:-10px; width:8px; height:14px; z-index:4000; pointer-events:none; border-radius:2px; }
 
 /* ============================================================
-   PART 2 — THE PRIVATE ACADEMY, LESSON & COURSE SYSTEM
+   PART 2, THE PRIVATE ACADEMY, LESSON & COURSE SYSTEM
    ============================================================ */
 
 /* triplet: Arabic (MSA) / English / Arabic-letter transliteration */
@@ -653,9 +666,9 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
             <span class="notif-dot"></span>
           </button>
           <div class="dropdown notif-dropdown" id="notifDropdown">
-            <div class="notif-item"><b class="arabic" style="display:block;">مبروك، وصلت لانجاز جديد</b><span style="display:block; margin-top:2px;">New streak milestone — you have studied 12 days in a row.</span></div>
+            <div class="notif-item"><b class="arabic" style="display:block;">مبروك، وصلت لانجاز جديد</b><span style="display:block; margin-top:2px;">New streak milestone, you have studied 12 days in a row.</span></div>
             <div class="notif-item"><b class="arabic" style="display:block;">المدرب فراس عنده توصية جديدة</b><span style="display:block; margin-top:2px;">Tutor Firas has a new recommendation for you.</span></div>
-            <div class="notif-item"><b class="arabic" style="display:block;">قربت توصل لهدفك الاسبوعي</b><span style="display:block; margin-top:2px;">Weekly goal almost there — 1 lesson to go.</span></div>
+            <div class="notif-item"><b class="arabic" style="display:block;">قربت توصل لهدفك الاسبوعي</b><span style="display:block; margin-top:2px;">Weekly goal almost there, 1 lesson to go.</span></div>
           </div>
         </div>
 
@@ -861,13 +874,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
           </div>
         </div>
 
-        <div class="context-block">
-          <h4><span class="arabic">ترجمة سريعة</span> · Quick Translation</h4>
-          <div class="qt-box">
-            <textarea id="qtInput" placeholder="اكتب كلمة او جملة بالعربي او الانجليزي... / Type a word or sentence in Arabic or English..."></textarea>
-            <button class="btn-ghost-sm" id="qtBtn" style="margin-top:8px;"><span class="arabic">ترجم</span> · Translate</button>
-            <div class="qt-result" id="qtResult"></div>
-          </div>
+        <div class="context-block" style="display:none;">
+          <!-- Quick Translate moved to its own floating popup (qtFab/qtPopup) below, so it works on mobile regardless of this panel's open state -->
         </div>
 
         <div class="context-block">
@@ -913,6 +921,22 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   <span class="fab-dot"></span>
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="7" width="18" height="12" rx="4"/><path d="M12 7V3"/><circle cx="8.5" cy="13" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="13" r="1.2" fill="currentColor" stroke="none"/><path d="M8 17h8"/></svg>
 </button>
+
+<!-- ================= QUICK TRANSLATE (floating, mobile-friendly) ================= -->
+<button class="fab-firas qt-fab" id="qtFab" aria-label="Open Quick Translate">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h7M7 3v2c0 4.5-2 8-5 10M4 13c1.8 1.5 4 2 5.5 1.8M13 21l4-9 4 9M14.5 18h5"/></svg>
+</button>
+<div class="qt-popup" id="qtPopup">
+  <div class="qt-popup-head">
+    <h4 style="margin:0;"><span class="arabic">ترجمة سريعة</span> · Quick Translate</h4>
+    <button class="icon-btn" id="qtCloseBtn" aria-label="Close">✕</button>
+  </div>
+  <div class="qt-box">
+    <textarea id="qtInput" placeholder="اكتب كلمة او جملة بالعربي او الانجليزي... / Type a word or sentence in Arabic or English..."></textarea>
+    <button class="btn-ghost-sm" id="qtBtn" style="margin-top:8px;"><span class="arabic">ترجم</span> · Translate</button>
+    <div class="qt-result" id="qtResult"></div>
+  </div>
+</div>
 
 <!-- ================= TUTOR FIRAS DOCKED PANEL ================= -->
 <div class="tutor-dock" id="tutorDock" role="dialog" aria-label="Tutor Firas">
@@ -970,7 +994,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 (function(){
 
 /* ============================================================
-   THEME — bridges the app's own key with the marketing-site key
+   THEME, bridges the app's own key with the marketing-site key
    ============================================================ */
 const root = document.documentElement;
 function applyTheme(t){
@@ -1003,33 +1027,72 @@ function client(){
 }
 
 let currentUser = null;
-function uKey(base){ return currentUser ? base + '_' + currentUser.id : base; }
-function reloadUserScopedData(){
-  // Called right after login resolves — re-reads every locally-stored
-  // piece of student data using THIS account's own key, so a new
-  // account never inherits a previous account's XP/lessons/bookmarks
-  // that happened to be sitting in this browser's storage.
-  tutorConvos = JSON.parse(localStorage.getItem(uKey('pel_tutor_convos')) || 'null') || defaultTutorConvos();
+function uKey(base){ return currentUser ? base + '_' + currentUser.id : base; } // still used for the UI-only prefs (theme/lang) that legitimately stay local
+function defaultStudentStateRow(){
+  return {
+    xp: 0, streak: 0, longest_streak: 0, last_study_date: null,
+    completed_lessons: [], favorites: [], bookmarks: [], lesson_notes: {},
+    vocab_store: defaultVocabStore(), notes_store: defaultNotesStore(),
+    tutor_convos: defaultTutorConvos(), student_prefs: defaultStudentPrefs(),
+  };
+}
+function applyStudentStateRow(row){
+  studentStats = { xp: row.xp||0, streak: row.streak||0, longestStreak: row.longest_streak||0, lastStudyDate: row.last_study_date||null };
+  completedLessons = new Set(row.completed_lessons||[]);
+  favorites = new Set(row.favorites||[]);
+  bookmarks = row.bookmarks||[];
+  lessonNotes = row.lesson_notes||{};
+  vocabStore = (row.vocab_store && row.vocab_store.length) ? row.vocab_store : defaultVocabStore();
+  notesStore = (row.notes_store && row.notes_store.length) ? row.notes_store : defaultNotesStore();
+  tutorConvos = (row.tutor_convos && row.tutor_convos.length) ? row.tutor_convos : defaultTutorConvos();
   activeConvoId = tutorConvos[0].id;
-  vocabStore = JSON.parse(localStorage.getItem(uKey('pel_saved_vocab')) || 'null') || defaultVocabStore();
-  notesStore = JSON.parse(localStorage.getItem(uKey('pel_notes')) || 'null') || defaultNotesStore();
-  accountPrefs = JSON.parse(localStorage.getItem(uKey('pel_account_prefs')) || 'null') || {lang:'en'};
-  studentPrefs = JSON.parse(localStorage.getItem(uKey('pel_student_prefs')) || 'null') || defaultStudentPrefs();
-  favorites = new Set(lsGet(uKey('pel_academy_favs'), []));
-  bookmarks = lsGet(uKey('pel_bookmarks'), []);
-  completedLessons = new Set(lsGet(uKey('pel_completed_lessons'), []));
-  lessonNotes = lsGet(uKey('pel_lesson_notes'), {});
-  studentStats = JSON.parse(localStorage.getItem(uKey('pel_student_stats')) || 'null') || defaultStudentStats();
+  studentPrefs = (row.student_prefs && Object.keys(row.student_prefs).length) ? row.student_prefs : defaultStudentPrefs();
   const topXp = document.getElementById('topXp');
   if(topXp) topXp.textContent = studentStats.xp.toLocaleString();
   const streakTxt = document.getElementById('sidebarStreakTxt');
   if(streakTxt) streakTxt.innerHTML = `<span class="arabic">سلسلة ${studentStats.streak} يوم</span> · ${studentStats.streak} day streak`;
-  const langSel = document.getElementById('interfaceLangSelect');
-  if(langSel) langSel.value = accountPrefs.lang;
 }
-function revealApp(user){
+function clearStudentState(){
+  // Wipes every in-memory trace of the previous session's student data.
+  // (Logout also does a full page navigation, which clears JS memory
+  // entirely, this exists so no other code path can leak stale state.)
+  studentStats = defaultStudentStats();
+  completedLessons = new Set(); favorites = new Set(); bookmarks = []; lessonNotes = {};
+  vocabStore = defaultVocabStore(); notesStore = defaultNotesStore();
+  tutorConvos = defaultTutorConvos(); activeConvoId = tutorConvos[0].id;
+  studentPrefs = defaultStudentPrefs();
+}
+async function loadStudentState(){
+  // Source of truth is Supabase, keyed by auth.uid(), never localStorage,
+  // never a hardcoded default beyond the one-time row this creates for a
+  // brand-new student.
+  clearStudentState();
+  const c = client();
+  if(!c || !currentUser) return;
+  const { data, error } = await c.from('student_state').select('*').eq('user_id', currentUser.id).maybeSingle();
+  if(data){ applyStudentStateRow(data); return; }
+  const fresh = defaultStudentStateRow();
+  applyStudentStateRow(fresh);
+  if(!error){
+    try{ await c.from('student_state').upsert({ user_id: currentUser.id, ...fresh, updated_at: new Date().toISOString() }, {onConflict:'user_id'}); }catch(e){}
+  }
+}
+async function persistStudentState(){
+  const c = client();
+  if(!c || !currentUser) return;
+  try{
+    await c.from('student_state').upsert({
+      user_id: currentUser.id,
+      xp: studentStats.xp, streak: studentStats.streak, longest_streak: studentStats.longestStreak, last_study_date: studentStats.lastStudyDate,
+      completed_lessons: [...completedLessons], favorites: [...favorites], bookmarks, lesson_notes: lessonNotes,
+      vocab_store: vocabStore, notes_store: notesStore, tutor_convos: tutorConvos, student_prefs: studentPrefs,
+      updated_at: new Date().toISOString(),
+    }, {onConflict:'user_id'});
+  }catch(e){ /* best-effort, the in-memory state for this session is still correct either way */ }
+}
+async function revealApp(user){
   currentUser = user;
-  reloadUserScopedData();
+  await loadStudentState();
   document.getElementById('authGate').style.display = 'none';
   document.getElementById('appShell').style.display = 'flex';
   document.body.classList.add('ready');
@@ -1050,8 +1113,8 @@ function revealApp(user){
 window.addEventListener('load', async () => {
   const c = client();
   if(!c){
-    // Supabase script failed to load (offline preview) — do not lock the student out of the demo shell.
-    revealApp(null);
+    // Supabase script failed to load (offline preview), do not lock the student out of the demo shell.
+    await revealApp(null);
     return;
   }
   try{
@@ -1060,7 +1123,7 @@ window.addEventListener('load', async () => {
       window.location.href = 'login.html';
       return;
     }
-    revealApp(data.session.user);
+    await revealApp(data.session.user);
     c.auth.onAuthStateChange((event, session) => {
       if(event === 'SIGNED_OUT' || !session){ window.location.href = 'login.html'; }
     });
@@ -1295,7 +1358,7 @@ quickActions.forEach(q => {
 });
 
 /* ============================================================
-   TUTOR FIRAS — docked AI chat engine
+   TUTOR FIRAS, docked AI chat engine
    ============================================================ */
 const firasMessages = document.getElementById('firasMessages');
 const tutorDock = document.getElementById('tutorDock');
@@ -1339,7 +1402,7 @@ function defaultTutorConvos(){ return [
 ]; }
 let tutorConvos = defaultTutorConvos();
 let activeConvoId = tutorConvos[0].id;
-function saveConvos(){ localStorage.setItem(uKey('pel_tutor_convos'), JSON.stringify(tutorConvos)); }
+function saveConvos(){ persistStudentState(); }
 function activeConvo(){ return tutorConvos.find(c => c.id === activeConvoId) || tutorConvos[0]; }
 
 function renderConvoList(filter){
@@ -1410,18 +1473,18 @@ function renderFirasSections(sections){
 function bilingualPlain(ar, en){
   return `${ar ? `<div class="arabic" style="margin-bottom:4px;">${ar}</div>` : ''}${en||''}`;
 }
-const FIRAS_SYSTEM = `You are Tutor Firas — a friendly, patient, encouraging, professional private American English tutor for Saudi Arabian students on the premium app "Personalized English Lessons." You are a real teacher, not a chatbot: explain step by step, correct mistakes kindly, ask practice questions, and adapt to the student's level. Never say "Certainly," "As an AI," "I'd be happy to," "the model," "the API," or "the system." Instead say things like "Let's practice this together," "Good try, let's improve it," "Let's work on this step by step."
+const FIRAS_SYSTEM = `You are Tutor Firas, a friendly, patient, encouraging, professional private American English tutor for Saudi Arabian students on the premium app "Personalized English Lessons." You are a real teacher, not a chatbot: explain step by step, correct mistakes kindly, ask practice questions, and adapt to the student's level. Never say "Certainly," "As an AI," "I'd be happy to," "the model," "the API," or "the system." Instead say things like "Let's practice this together," "Good try, let's improve it," "Let's work on this step by step."
 
-LANGUAGE MIX: Arabic dominates every reply (~70% Arabic, ~20% English, ~10% Arabic-letter transliteration). Use natural Saudi Arabic (اللهجة السعودية) when explaining — avoid stiff, overly formal, textbook Arabic, and never sound like Google Translate. If the student seems like a beginner, lean even more heavily on Saudi Arabic explanation; if they write fluent English, you can lean more English with lighter Arabic support. Every English sentence must be followed immediately by its Arabic translation and Arabic-letter transliteration (never IPA — spell pronunciation using Arabic letters, e.g. "comfortable" → كَمفْتَرْبُل).
+LANGUAGE MIX: Arabic dominates every reply (~70% Arabic, ~20% English, ~10% Arabic-letter transliteration). Use natural Saudi Arabic (اللهجة السعودية) when explaining, avoid stiff, overly formal, textbook Arabic, and never sound like Google Translate. If the student seems like a beginner, lean even more heavily on Saudi Arabic explanation; if they write fluent English, you can lean more English with lighter Arabic support. Every English sentence must be followed immediately by its Arabic translation and Arabic-letter transliteration (never IPA, spell pronunciation using Arabic letters, e.g. "comfortable" → كَمفْتَرْبُل).
 
-ADAPT FREELY, NO FIXED TEMPLATE: build the answer from as many or as few parts as the question actually needs. Never force the same structure twice. Match focus to the question: grammar→start the explanation in Arabic, then give English examples; vocabulary→word, Saudi Arabic meaning, transliteration, a short Arabic explanation, then an example sentence with its Arabic translation; translation→natural American phrasing + literal meaning + a simple Arabic explanation + why Americans phrase it differently; pronunciation→Arabic-letter pronunciation coaching; conversation practice→become the conversation partner, correct kindly, keep it moving; writing→rewritten correction with reasons; business/IELTS/travel→become that specialized coach. No length limit — write as much depth as the topic deserves, and as little as a simple question deserves.
+ADAPT FREELY, NO FIXED TEMPLATE: build the answer from as many or as few parts as the question actually needs. Never force the same structure twice. Match focus to the question: grammar→start the explanation in Arabic, then give English examples; vocabulary→word, Saudi Arabic meaning, transliteration, a short Arabic explanation, then an example sentence with its Arabic translation; translation→natural American phrasing + literal meaning + a simple Arabic explanation + why Americans phrase it differently; pronunciation→Arabic-letter pronunciation coaching; conversation practice→become the conversation partner, correct kindly, keep it moving; writing→rewritten correction with reasons; business/IELTS/travel→become that specialized coach. No length limit, write as much depth as the topic deserves, and as little as a simple question deserves.
 
 TEACH LIKE A TUTOR: explain WHY, not just the rule. Give memory tricks. Name the specific mistake Arabic speakers typically make with this exact topic and why (a/an, the, is/are, do/does, have/has, he/she, prepositions, word order, present perfect, false friends). Use real situations (restaurant, airport, hotel, coffee shop, shopping, hospital, business, interview, university, travel, phone calls, WhatsApp, meetings). When it fits, add a small challenge (quiz, fill-in-the-blank, roleplay line, translation challenge) and/or point to a related topic worth practicing next.
 
-Reply with ONLY compact JSON, no markdown fences, no extra text: {"sections":[{"label_ar":"short Arabic label for this part","label_en":"matching short English label","body":"plain text content of this part, mixing Arabic/English/transliteration per the language mix rule, with real line breaks"}, ...]} — use as many section objects as the answer genuinely needs (often just 1-2 for a simple question). Invent whatever label fits — examples: قاعدة نحوية/Grammar, خطأ شائع/Common Mistake, مفردات/Vocabulary, تدريب سريع/Quick Practice, نصيحة تجارية/Business Tip, درس ذو صلة/Related Lesson.`;
+Reply with ONLY compact JSON, no markdown fences, no extra text: {"sections":[{"label_ar":"short Arabic label for this part","label_en":"matching short English label","body":"plain text content of this part, mixing Arabic/English/transliteration per the language mix rule, with real line breaks"}, ...]}, use as many section objects as the answer genuinely needs (often just 1-2 for a simple question). Invent whatever label fits, examples: قاعدة نحوية/Grammar, خطأ شائع/Common Mistake, مفردات/Vocabulary, تدريب سريع/Quick Practice, نصيحة تجارية/Business Tip, درس ذو صلة/Related Lesson.`;
 
 function historyForAPI(convo){
-  // Keep only the last few turns and truncate each — lowers usage/cost
+  // Keep only the last few turns and truncate each, lowers usage/cost
   // and keeps responses fast, per product requirement to not send
   // unlimited chat history on every request.
   return convo.messages.slice(-5, -1).map(m => ({
@@ -1586,11 +1649,11 @@ function renderCtxLists(){
 }
 renderCtxLists();
 
-/* quick translate — no AI anywhere here.
+/* quick translate, no AI anywhere here.
    1) meaning translation now calls Google Translate's public free
       endpoint directly (no API key, no LLM) for real accuracy.
    2) Arabic-letter transliteration of the English input is still fully
-      local/offline — Google Translate doesn't provide this for Latin-
+      local/offline, Google Translate doesn't provide this for Latin-
       script input, so it's generated with phonics rules below. */
 const phraseBank = {
   'where is the nearest hospital': {ar:'وين اقرب مستشفى؟'},
@@ -1601,7 +1664,7 @@ const phraseBank = {
 
 // Approximate English → Arabic-letter transliteration. Real phonics
 // handling (silent trailing "e", doubled-consonant collapsing,
-// context-sensitive "c"/"g") rather than a flat per-letter swap — still
+// context-sensitive "c"/"g") rather than a flat per-letter swap, still
 // an approximation (English spelling isn't phonetic), but noticeably
 // closer to how the word actually sounds.
 const TRANSLIT_MULTI = [
@@ -1618,10 +1681,10 @@ const TRANSLIT_SINGLE = {
 function transliterateWord(word){
   let w = word.toLowerCase().replace(/[^a-z']/g,'');
   if(!w) return '';
-  // silent trailing "e" after a consonant (make, like, home) — but not
+  // silent trailing "e" after a consonant (make, like, home), but not
   // a real "ee" digraph like "coffee" or "tree"
   if(w.length > 3 && w.endsWith('e') && !w.endsWith('ee')) w = w.slice(0,-1);
-  // collapse doubled consonants — one sound, not two (letter, dinner)
+  // collapse doubled consonants, one sound, not two (letter, dinner)
   w = w.replace(/([bcdfghjklmnpqrstvxz])\1/g, '$1');
   let out = ''; let i = 0;
   while(i < w.length){
@@ -1643,7 +1706,7 @@ function transliterateText(text){
 }
 
 async function googleTranslate(text, targetLang){
-  // Google Translate's public web endpoint — no API key required, so
+  // Google Translate's public web endpoint, no API key required, so
   // it works from the browser with no backend involved. It's the
   // unofficial endpoint the free "google-translate-api" tools use, so
   // treat it as best-effort: it can rate-limit or change without notice.
@@ -1654,6 +1717,12 @@ async function googleTranslate(text, targetLang){
   return (data[0] || []).map(chunk => chunk[0]).join('');
 }
 
+document.getElementById('qtFab').addEventListener('click', () => {
+  document.getElementById('qtPopup').classList.toggle('open');
+});
+document.getElementById('qtCloseBtn').addEventListener('click', () => {
+  document.getElementById('qtPopup').classList.remove('open');
+});
 document.getElementById('qtBtn').addEventListener('click', async () => {
   const raw = document.getElementById('qtInput').value.trim();
   const resultEl = document.getElementById('qtResult');
@@ -1664,7 +1733,8 @@ document.getElementById('qtBtn').addEventListener('click', async () => {
   try{
     const translated = await googleTranslate(raw, targetLang);
     if(isArabicInput){
-      resultEl.textContent = translated;
+      const enTranslit = transliterateText(translated);
+      resultEl.innerHTML = `${escapeHtml(translated)}<div class="arabic" style="margin-top:4px; font-size:.85em; color:var(--text-muted);">${escapeHtml(enTranslit)}</div>`;
     }else{
       const translit = transliterateText(raw);
       resultEl.innerHTML = `${escapeHtml(translated)}<div class="arabic" style="margin-top:4px; font-size:.85em; color:var(--text-muted);">${escapeHtml(translit)}</div>`;
@@ -1717,7 +1787,7 @@ document.getElementById('pomoReset').addEventListener('click', () => { clearInte
 renderPomo();
 
 /* ============================================================
-   SETTINGS — speech voices
+   SETTINGS, speech voices
    ============================================================ */
 function loadVoices(){
   if(!('speechSynthesis' in window)) return;
@@ -1736,18 +1806,18 @@ document.getElementById('reduceMotionToggle').addEventListener('change', functio
 });
 
 /* ============================================================
-   SETTINGS — language, account, security (local persistence)
+   SETTINGS, language, account, security (local persistence)
    ============================================================ */
 let accountPrefs = JSON.parse(localStorage.getItem('pel_account_prefs') || 'null') || {lang:'en'};
 document.getElementById('interfaceLangSelect').value = accountPrefs.lang;
 document.getElementById('interfaceLangSelect').addEventListener('change', function(){
   accountPrefs.lang = this.value;
-  localStorage.setItem(uKey('pel_account_prefs'), JSON.stringify(accountPrefs));
+  localStorage.setItem('pel_account_prefs', JSON.stringify(accountPrefs));
   toast(this.value === 'ar' ? 'تم تحديث لغة الواجهة' : 'Interface language updated');
 });
 
 /* ============================================================
-   PART 2 — DATA MODEL: shared banks used across every section
+   PART 2, DATA MODEL: shared banks used across every section
    ============================================================ */
 
 /* every triplet renders Arabic (MSA) + English + Arabic-letter transliteration */
@@ -1929,7 +1999,7 @@ const WRITING_PROMPTS = [
 ];
 
 /* ============================================================
-   FLAGSHIP LESSONS — fully authored, deep content
+   FLAGSHIP LESSONS, fully authored, deep content
    ============================================================ */
 const FLAGSHIP_LESSONS = {
   'everyday-english::meeting-someone-new': {
@@ -2065,7 +2135,7 @@ function getLesson(academyId, lessonId){
 }
 
 /* ============================================================
-   PERSISTENCE — localStorage now, soft Supabase sync attempt
+   PERSISTENCE, localStorage now, soft Supabase sync attempt
    (wrapped in try/catch; needs a `student_data` table with
    columns user_id/key/value to actually persist remotely)
    ============================================================ */
@@ -2083,23 +2153,23 @@ let studentStats = { xp: 0, streak: 0, longestStreak: 0, lastStudyDate: null };
 let bookmarks = [];
 let completedLessons = new Set();
 let lessonNotes = {};
-function toggleFavorite(id){ favorites.has(id) ? favorites.delete(id) : favorites.add(id); lsSet(uKey('pel_academy_favs'), [...favorites]); }
+function toggleFavorite(id){ favorites.has(id) ? favorites.delete(id) : favorites.add(id); persistStudentState(); }
 function isBookmarked(type, id){ return bookmarks.some(b => b.type===type && b.id===id); }
 function toggleBookmark(type, id, label, sub){
   if(isBookmarked(type,id)){ bookmarks = bookmarks.filter(b => !(b.type===type && b.id===id)); }
   else{ bookmarks.unshift({type,id,label,sub,ts:Date.now()}); toast('<span class="arabic">تم الحفظ في المفضلة</span> · Saved to your bookmarks.'); }
-  lsSet(uKey('pel_bookmarks'), bookmarks);
+  persistStudentState();
   if(viewRenderers.bookmarks) { document.getElementById('view-bookmarks').dataset.rendered=''; if(document.getElementById('view-bookmarks').classList.contains('active')) viewRenderers.bookmarks(); }
 }
 function markLessonComplete(academyId, lessonId){
   const key = lessonKey(academyId, lessonId);
   if(completedLessons.has(key)) return;
-  completedLessons.add(key); lsSet(uKey('pel_completed_lessons'), [...completedLessons]);
+  completedLessons.add(key); persistStudentState();
   awardXp(50);
   toast('<span class="arabic">اكتمل الدرس. عمل رائع</span> · Lesson complete. Great work.'); confettiBurst();
 }
 function defaultStudentStats(){ return { xp: 0, streak: 0, longestStreak: 0, lastStudyDate: null }; }
-function saveStudentStats(){ localStorage.setItem(uKey('pel_student_stats'), JSON.stringify(studentStats)); }
+function saveStudentStats(){ persistStudentState(); }
 function awardXp(amount){
   const today = new Date().toISOString().slice(0,10);
   if(studentStats.lastStudyDate !== today){
@@ -2144,7 +2214,7 @@ function wordMatchScore(heard, target){
 }
 /* ---- one shared recognition session app-wide: works the same way on
    every mic button (Pronunciation Studio, Speaking Studio, ...). No AI
-   involved anywhere in this file — recognition is the browser's own
+   involved anywhere in this file, recognition is the browser's own
    SpeechRecognition API, and scoring is plain local word-matching. ---- */
 let activeRec = null;
 let activeRecTimeout = null;
@@ -2206,7 +2276,7 @@ function recordAndScore(onDone, targetText, btn, _retryCount){
     const code = e && e.error;
     cleanupRecognition();
     // "network" is usually a transient hiccup talking to the browser's
-    // speech service, not a real connectivity problem — retry once
+    // speech service, not a real connectivity problem, retry once
     // silently before bothering the student with an error.
     if(code === 'network' && _retryCount < 1){
       setTimeout(() => recordAndScore(onDone, targetText, btn, _retryCount + 1), 400);
@@ -2248,12 +2318,12 @@ function aiErrorMessage(errorCode, detail){
     auth: bilingualPlain('يجب تسجيل الدخول لاستخدام فراس.', 'Please log in to use Tutor Firas.'),
     rate_limit: bilingualPlain('فراس مشغول حاليا، حاول بعد قليل.', 'Tutor Firas is busy right now, please try again shortly.'),
     timeout: bilingualPlain('استغرق الرد وقتا طويلا، حاول مرة اخرى.', 'That took too long to respond, please try again.'),
-    network: bilingualPlain('تعذر الاتصال بفراس الآن، تحقق من اتصالك وحاول مرة اخرى.', 'Could not reach Tutor Firas — check your connection and try again.'),
+    network: bilingualPlain('تعذر الاتصال بفراس الآن، تحقق من اتصالك وحاول مرة اخرى.', 'Could not reach Tutor Firas, check your connection and try again.'),
     cooldown: bilingualPlain('تمهل شوي قبل السؤال التالي.', 'Please wait a moment before sending another question.'),
     duplicate: bilingualPlain('يبدو انك ارسلت نفس السؤال للتو.', 'Looks like you just sent that same question.'),
     daily_limit_reached: bilingualPlain(`وصلت للحد اليومي من أسئلة Tutor Firas (${detail && detail.limit ? detail.limit : 50} سؤال). ترجع الأسئلة بكرة. استمر بالتعلم!`, 'You have reached your Tutor Firas daily question limit. Your questions reset tomorrow.'),
   };
-  return m[errorCode] || bilingualPlain('تعذر الاتصال بفراس الآن، حاول مرة اخرى.', 'Could not reach Tutor Firas right now — please try again.');
+  return m[errorCode] || bilingualPlain('تعذر الاتصال بفراس الآن، حاول مرة اخرى.', 'Could not reach Tutor Firas right now, please try again.');
 }
 function parseAIJSON(raw){
   if(!raw) return null;
@@ -2434,7 +2504,7 @@ function renderWorkspace(){
   document.getElementById('wsNotes').value = lessonNotes[noteKey] || '';
   document.getElementById('wsSaveNote').addEventListener('click', () => {
     lessonNotes[noteKey] = document.getElementById('wsNotes').value;
-    lsSet(uKey('pel_lesson_notes'), lessonNotes);
+    persistStudentState();
     toast('<span class="arabic">تم حفظ الملاحظة</span> · Note saved.');
   });
   document.getElementById('wsAskFiras').addEventListener('click', () => {
@@ -2535,7 +2605,7 @@ function renderLessonReader(container, academy, lesson){
 }
 
 /* ============================================================
-   VOCABULARY VAULT — flashcards
+   VOCABULARY VAULT, flashcards
    ============================================================ */
 function renderVocabulary(){
   const el = document.getElementById('view-vocabulary');
@@ -2683,7 +2753,7 @@ function renderPronunciation(){
       </div>`;
     card.querySelectorAll('.speak-btn').forEach(btn => btn.addEventListener('click', () => speak(btn.dataset.speak)));
     card.querySelectorAll('[data-record]').forEach(btn => btn.addEventListener('click', function(){
-      // strip "(verb)"/"(noun)" stage directions before scoring — the
+      // strip "(verb)"/"(noun)" stage directions before scoring, the
       // student says the word, not the parenthetical instruction
       const target = t.words[this.dataset.record].en.split(' / ')[0].replace(/\s*\([^)]*\)\s*/g,'').trim();
       const fb = document.getElementById('pron-fb-'+this.dataset.record);
@@ -2696,11 +2766,11 @@ function renderPronunciation(){
           return;
         }
         if(score >= 75){
-          fb.innerHTML = `✅ <span class="arabic">ممتاز! نطقك واضح</span> — سمعت: "${escapeHtml(heard)}" <span class="arabic">(${score}% تقريبي)</span>`;
+          fb.innerHTML = `✅ <span class="arabic">ممتاز! نطقك واضح</span>, سمعت: "${escapeHtml(heard)}" <span class="arabic">(${score}% تقريبي)</span>`;
         } else if(score >= 40){
-          fb.innerHTML = `🟡 <span class="arabic">قريب! سمعت</span>: "${escapeHtml(heard)}" <span class="arabic">(${score}% تقريبي) — الصح هو</span> "<b>${escapeHtml(target)}</b>"، <span class="arabic">جرب مرة ثانية بهدوء</span>`;
+          fb.innerHTML = `🟡 <span class="arabic">قريب! سمعت</span>: "${escapeHtml(heard)}" <span class="arabic">(${score}% تقريبي), الصح هو</span> "<b>${escapeHtml(target)}</b>"، <span class="arabic">جرب مرة ثانية بهدوء</span>`;
         } else {
-          fb.innerHTML = `🔁 <span class="arabic">سمعت</span>: "${escapeHtml(heard)}" <span class="arabic">(${score}% تقريبي) — ما تطابقت مع</span> "<b>${escapeHtml(target)}</b>"، <span class="arabic">اضغط 🔊 لتسمع النطق الصحيح وحاول مرة ثانية</span>`;
+          fb.innerHTML = `🔁 <span class="arabic">سمعت</span>: "${escapeHtml(heard)}" <span class="arabic">(${score}% تقريبي), ما تطابقت مع</span> "<b>${escapeHtml(target)}</b>"، <span class="arabic">اضغط 🔊 لتسمع النطق الصحيح وحاول مرة ثانية</span>`;
         }
       }, target, this);
     }));
@@ -2717,7 +2787,7 @@ function renderPronunciation(){
 viewRenderers.pronunciation = renderPronunciation;
 
 /* ============================================================
-   SPEAKING STUDIO — roleplay simulator
+   SPEAKING STUDIO, roleplay simulator
    ============================================================ */
 function renderSpeaking(){
   const el = document.getElementById('view-speaking');
@@ -2765,7 +2835,7 @@ function renderSpeaking(){
     }
     addBubble('them', persona.opener.en, persona.opener.ar, persona.opener.translit);
     speak(persona.opener.en);
-    // Roleplay is open-ended conversation — there's no single "correct"
+    // Roleplay is open-ended conversation, there's no single "correct"
     // sentence to score against, so (per no-AI requirement) this shows
     // exactly what was heard/typed and responds with a rotating set of
     // scripted encouragements rather than faking a score or a smart reply.
@@ -2778,7 +2848,7 @@ function renderSpeaking(){
     let replyIndex = 0;
     function respondToStudent(userText){
       const fb = document.getElementById('roleplayFeedback');
-      fb.innerHTML = `<div class="card-elevated" style="padding:14px 16px; border-radius:12px;"><span class="arabic">سمعنا:</span> "${escapeHtml(userText)}"<p style="margin-top:6px; font-size:.76rem; color:var(--text-muted);"><span class="arabic">هذي محادثة مفتوحة، فما فيه رد صحيح واحد نقيسه عليه — جرب كذا صياغة وشوف ايش يناسب الموقف.</span></p></div>`;
+      fb.innerHTML = `<div class="card-elevated" style="padding:14px 16px; border-radius:12px;"><span class="arabic">سمعنا:</span> "${escapeHtml(userText)}"<p style="margin-top:6px; font-size:.76rem; color:var(--text-muted);"><span class="arabic">هذي محادثة مفتوحة، فما فيه رد صحيح واحد نقيسه عليه, جرب كذا صياغة وشوف ايش يناسب الموقف.</span></p></div>`;
       const reply = SCRIPTED_REPLIES[replyIndex % SCRIPTED_REPLIES.length];
       replyIndex++;
       setTimeout(() => { addBubble('them', reply.en, reply.ar, reply.translit); speak(reply.en); }, 500);
@@ -2950,7 +3020,7 @@ function renderWriting(){
       <textarea class="writing-editor" id="writingArea" placeholder="ابدأ الكتابة هنا... / Start writing here..." style="margin-top:16px;"></textarea>
       <button class="btn-gold" id="reviewWritingBtn" style="margin-top:14px;"><span class="arabic">اطلب مراجعة فراس</span> · Ask Tutor Firas to Review</button>
       <div id="writingFeedback"></div>`;
-    const WRITING_SYSTEM = `You are a friendly, encouraging writing coach reviewing English writing from a Saudi Arabian learner, for the prompt "${prompt.title}: ${prompt.prompt}". Identify real, specific grammar/style issues in their exact text — never generic filler. Explain WHY each correction is needed, in simple natural Saudi Arabic (اللهجة السعودية), kind and encouraging tone. Reply with ONLY compact JSON, no markdown: {"feedback_ar":"...","feedback_en":"...","corrected":"...","alternative":"..."} — feedback_ar in natural Saudi Arabic explaining the mistakes and why, feedback_en in English (2-4 sentences each), corrected is their full text with grammar fixed, alternative is a more natural/idiomatic American rephrasing of it.`;
+    const WRITING_SYSTEM = `You are a friendly, encouraging writing coach reviewing English writing from a Saudi Arabian learner, for the prompt "${prompt.title}: ${prompt.prompt}". Identify real, specific grammar/style issues in their exact text, never generic filler. Explain WHY each correction is needed, in simple natural Saudi Arabic (اللهجة السعودية), kind and encouraging tone. Reply with ONLY compact JSON, no markdown: {"feedback_ar":"...","feedback_en":"...","corrected":"...","alternative":"..."}, feedback_ar in natural Saudi Arabic explaining the mistakes and why, feedback_en in English (2-4 sentences each), corrected is their full text with grammar fixed, alternative is a more natural/idiomatic American rephrasing of it.`;
     document.getElementById('reviewWritingBtn').addEventListener('click', async () => {
       const text = document.getElementById('writingArea').value.trim();
       if(!text){ toast('<span class="arabic">اكتب شيئا اولا ثم اطلب المراجعة</span> · Write something first, then ask for a review.'); return; }
@@ -3008,7 +3078,7 @@ function renderBookmarks(){
 viewRenderers.bookmarks = renderBookmarks;
 
 /* ============================================================
-   TUTOR FIRAS — dedicated page (launches the full docked panel)
+   TUTOR FIRAS, dedicated page (launches the full docked panel)
    ============================================================ */
 function renderTutorPage(){
   const el = document.getElementById('view-tutor');
@@ -3047,11 +3117,11 @@ function renderTutorPage(){
 viewRenderers.tutor = renderTutorPage;
 
 /* ============================================================
-   PART 3 — PROFILE, ACHIEVEMENTS, CERTIFICATES, CALENDAR DATA
+   PART 3, PROFILE, ACHIEVEMENTS, CERTIFICATES, CALENDAR DATA
    ============================================================ */
 function defaultStudentPrefs(){ return { goal: 'Speak confidently in work meetings and everyday conversations within 6 months.', weeklyGoalLessons: 5, monthlyGoalLessons: 20 }; }
 let studentPrefs = defaultStudentPrefs();
-function saveStudentPrefs(){ localStorage.setItem(uKey('pel_student_prefs'), JSON.stringify(studentPrefs)); }
+function saveStudentPrefs(){ persistStudentState(); }
 
 const SKILL_SCORES = [
   {en:'Grammar', ar:'القواعد', value:74},
