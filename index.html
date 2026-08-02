@@ -100,15 +100,24 @@ img{max-width:100%; display:block;}
   width:22px; height:1px;
   background:var(--gold);
 }
+.eyebrow[dir="rtl"], [dir="rtl"] .eyebrow{
+  font-family:'Tajawal', 'Cairo', sans-serif;
+  letter-spacing:normal;
+  text-transform:none;
+  unicode-bidi:isolate;
+}
 .arabic{
   font-family:'Tajawal', 'Cairo', sans-serif;
   direction:rtl;
+  unicode-bidi:isolate;
   color:var(--text-secondary);
 }
 .arabic-h{
   font-family:'Tajawal', 'Cairo', sans-serif;
   font-weight:700;
   direction:rtl;
+  unicode-bidi:isolate;
+  letter-spacing:normal;
   color:var(--text);
   line-height:1.35;
 }
@@ -432,6 +441,7 @@ section{ position:relative; padding:130px 0; }
 .stat{ text-align:center; }
 .stat-num{ font-family:'Fraunces',serif; font-size:clamp(2.1rem,3.4vw,2.9rem); color:var(--gold); font-weight:500; }
 .stat-label{ margin-top:8px; font-size:.8rem; color:var(--text-muted); letter-spacing:.03em; }
+[dir="rtl"] .stat-label{ letter-spacing:normal; }
 .country-row{
   margin-top:56px; padding-top:48px; border-top:1px solid var(--border);
   display:flex; align-items:center; justify-content:center; gap:14px 30px; flex-wrap:wrap;
@@ -513,7 +523,7 @@ section{ position:relative; padding:130px 0; }
 .course-card .lock svg{ width:15px; height:15px; }
 .course-card.premium::before{
   content:"مميز"; position:absolute; top:14px; left:-30px; transform:rotate(-40deg);
-  background:var(--gold); color:#171412; font-family:'Tajawal',sans-serif; font-size:.65rem; font-weight:800; letter-spacing:.02em;
+  background:var(--gold); color:#171412; font-family:'Tajawal',sans-serif; font-size:.65rem; font-weight:800;
   padding:3px 34px;
 }
 .course-card h4{ font-family:'Tajawal','Fraunces',serif; font-weight:600; font-size:1rem; margin-top:18px; margin-right:20px; }
@@ -612,6 +622,7 @@ section{ position:relative; padding:130px 0; }
   position:absolute; top:-13px; right:34px; background:var(--gold); color:#171412;
   font-size:.68rem; font-weight:800; letter-spacing:.05em; padding:5px 16px; border-radius:var(--ring-radius);
 }
+[dir="rtl"] .price-badge{ letter-spacing:normal; }
 .price-name{ font-size:1.3rem; }
 .price-desc{ color:var(--text-muted); font-size:.88rem; margin-top:10px; }
 .price-value{ margin-top:26px; display:flex; align-items:baseline; gap:8px; }
@@ -658,6 +669,7 @@ footer{ padding:80px 0 40px; }
 @media(max-width:520px){ .footer-top{ grid-template-columns:1fr; } }
 .footer-brand p{ margin-top:16px; color:var(--text-muted); font-size:.88rem; line-height:1.7; max-width:300px; }
 .footer-col h5{ font-size:.78rem; letter-spacing:.08em; text-transform:uppercase; color:var(--text-muted); margin-bottom:18px; }
+[dir="rtl"] .footer-col h5{ letter-spacing:normal; text-transform:none; font-family:'Tajawal','Cairo',sans-serif; }
 .footer-col ul{ display:flex; flex-direction:column; gap:12px; }
 .footer-col a{ font-size:.88rem; color:var(--text-secondary); }
 .footer-col a:hover{ color:var(--gold); }
@@ -745,12 +757,12 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-of
         <button class="btn-outline magnetic" data-magnetic>تواصل مع Tutor Firas</button>
       </div>
       <div class="trust-row" dir="rtl">
-        <div class="trust-item"><span class="dot"></span>منهج أمريكي أصلي</div>
+        <div class="trust-item"><span class="dot"></span>منهج امريكي</div>
         <div class="trust-item"><span class="dot"></span>مئات الدروس</div>
         <div class="trust-item"><span class="dot"></span>متابعة خاصة من معلمك</div>
         <div class="trust-item"><span class="dot"></span>ترجمة وشرح مباشر من فراس</div>
         <div class="trust-item"><span class="dot"></span>تحديثات مستمرة للمنصة</div>
-        <div class="trust-item"><span class="dot"></span>تتبع تقدمك أول بأول</div>
+        <div class="trust-item"><span class="dot"></span>لوحه تحكم تعرض تقدمك بالكامل</div>
       </div>
     </div>
 
@@ -813,7 +825,7 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-of
       <div class="stat reveal reveal-delay-1"><div class="stat-num" data-count="12" data-suffix="+">0</div><div class="stat-label">دولة عربية</div></div>
       <div class="stat reveal reveal-delay-2"><div class="stat-num" data-count="3" data-suffix="+">0</div><div class="stat-label">سنوات خبرة تدريس</div></div>
       <div class="stat reveal reveal-delay-3"><div class="stat-num" data-count="92" data-suffix="%">0</div><div class="stat-label">رضا الطلاب</div></div>
-      <div class="stat reveal reveal-delay-4"><div class="stat-num" data-count="88" data-suffix="%">0</div><div class="stat-label">يستمرون بعد أول شهر</div></div>
+      <div class="stat reveal reveal-delay-4"><div class="stat-num" data-count="88" data-suffix="%">0</div><div class="stat-label">مستمرين بعد اول شهر</div></div>
     </div>
     <div class="country-row">
       <span class="country-pill active">🇸🇦 السعودية</span>
