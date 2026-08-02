@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Personalized English Lessons - تعلم الإنجليزية الأمريكية بثقة</title>
+<title>Personalized English Lessons  تعلم الانجليزيه الامريكيه بثقه</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23c8a96a' stroke-width='1.6'%3E%3Ccircle cx='12' cy='12' r='11' fill='%230b0a09'/%3E%3Cpath d='M7 16.5V8.8a3 3 0 0 1 6 0v2a3 3 0 0 1-3 3H7'/%3E%3Cpath d='M17 8v8a3 3 0 0 1-6 0v-2a3 3 0 0 1 3-3h3'/%3E%3C/svg%3E">
-<meta name="description" content="أكاديمية إنجليزي خاصة للناطقين بالعربية في كل مكان. منهج أمريكي، معلم خاص، وترجمة وشرح بالعربي على يد Tutor Firas.">
+<meta name="description" content="منصه خاصه لتعلم الانجليزيه الامريكيه للناطقين بالعربي مع الاستاذ فراس دروس مرتبه وشرح بسيط يناسب جميع المستويات">
 <meta property="og:title" content="Personalized English Lessons">
-<meta property="og:description" content="تكلم الإنجليزية الأمريكية بثقة. تدريب خاص، منهج أمريكي، لكل الناطقين بالعربية.">
+<meta property="og:description" content="تعلم الانجليزيه الامريكيه بثقه مع الاستاذ فراس دروس مرتبه منهج امريكي وشرح بالعربي.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -83,6 +83,7 @@ img{max-width:100%; display:block;}
   padding:0 40px;
 }
 @media(max-width:768px){ .container{padding:0 24px;} }
+@media(max-width:380px){ .container{padding:0 18px;} }
 
 .eyebrow{
   display:inline-flex;
@@ -171,17 +172,20 @@ header.scrolled{
 }
 .logo{
   font-family:'Fraunces', serif;
-  font-size:1.18rem;
+  font-size:clamp(0.92rem, 3.2vw, 1.18rem);
   letter-spacing:.01em;
   font-weight:500;
   display:flex; align-items:center; gap:10px;
+  min-width:0;
 }
+.logo-text{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .logo-mark{
   width:34px; height:34px; border-radius:50%;
   border:1px solid var(--gold);
   display:flex; align-items:center; justify-content:center;
   color:var(--gold);
   position:relative;
+  flex-shrink:0;
 }
 .logo-mark::after{
   content:""; position:absolute; inset:-4px; border-radius:50%;
@@ -207,6 +211,7 @@ nav.primary-nav a:hover::after{ width:100%; }
   border:1px solid var(--border);
   display:flex; align-items:center; justify-content:center;
   color:var(--text-secondary);
+  flex-shrink:0;
   transition:border-color .3s ease, color .3s ease, transform .3s ease;
 }
 .theme-toggle:hover{ border-color:var(--gold); color:var(--gold); transform:rotate(20deg); }
@@ -246,7 +251,7 @@ nav.primary-nav a:hover::after{ width:100%; }
 
 .magnetic{ will-change:transform; }
 
-.mobile-toggle{ display:none; width:40px; height:40px; align-items:center; justify-content:center; }
+.mobile-toggle{ display:none; width:44px; height:44px; align-items:center; justify-content:center; flex-shrink:0; }
 .mobile-toggle span, .mobile-toggle span::before, .mobile-toggle span::after{
   content:""; display:block; width:20px; height:1px; background:var(--text); position:relative; transition:.3s var(--ease);
 }
@@ -264,16 +269,17 @@ nav.primary-nav a:hover::after{ width:100%; }
   transition:opacity .4s var(--ease), transform .4s var(--ease);
 }
 .mobile-menu.open{ opacity:1; pointer-events:all; transform:translateY(0); }
-.mobile-menu a{ font-family:'Tajawal','Fraunces',serif; font-weight:700; font-size:1.5rem; }
+.mobile-menu .mobile-nav-link{ font-family:'Tajawal','Fraunces',serif; font-weight:700; font-size:1.5rem; }
+.mobile-menu .mobile-menu-actions{ display:flex; flex-direction:column; align-items:stretch; gap:14px; width:min(280px,80vw); margin-top:10px; }
+.mobile-menu .mobile-menu-actions .btn-outline,
+.mobile-menu .mobile-menu-actions .btn-gold{ font-size:.92rem; padding:15px 26px; justify-content:center; width:100%; }
 
 @media(max-width:980px){
   nav.primary-nav{ display:none; }
   .header-actions{ gap:10px; }
+  .header-actions .btn-login,
+  .header-actions .btn-gold{ display:none; }
   .mobile-toggle{ display:flex; }
-}
-@media(max-width:400px){
-  .btn-login span.login-text{ display:none; }
-  .btn-login{ padding:10px 12px; }
 }
 
 /* ===== hero ===== */
@@ -305,10 +311,15 @@ nav.primary-nav a:hover::after{ width:100%; }
 }
 .hero-arabic{ margin-top:14px; font-size:1.05rem; }
 .hero-cta-row{ margin-top:42px; display:flex; gap:16px; flex-wrap:wrap; }
+@media(max-width:480px){
+  .hero-cta-row{ flex-direction:column; }
+  .hero-cta-row .btn-gold, .hero-cta-row .btn-outline{ width:100%; justify-content:center; }
+}
 
 .trust-row{
   margin-top:56px; display:flex; flex-wrap:wrap; gap:14px 28px;
 }
+@media(max-width:640px){ .trust-row{ justify-content:center; } }
 .trust-item{
   display:flex; align-items:center; gap:9px;
   font-size:.82rem; color:var(--text-muted); font-weight:500;
@@ -333,7 +344,7 @@ nav.primary-nav a:hover::after{ width:100%; }
 .dash-header{ display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; }
 .dash-title{ font-family:'Fraunces',serif; font-size:1rem; color:var(--text); }
 .dash-sub{ font-size:.68rem; color:var(--text-muted); margin-top:2px; }
-.dash-avatar{ width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg, var(--gold-soft), var(--bronze)); }
+.dash-avatar{ width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg, var(--gold-soft), var(--bronze)); flex-shrink:0; }
 .dash-ring-row{ display:flex; gap:14px; align-items:center; margin-bottom:18px; }
 .ring{ position:relative; width:74px; height:74px; }
 .ring svg{ width:100%; height:100%; transform:rotate(-90deg); }
@@ -349,11 +360,11 @@ nav.primary-nav a:hover::after{ width:100%; }
 .dash-lesson{
   border-top:1px solid var(--border); padding-top:14px; display:flex; justify-content:space-between; align-items:center;
 }
-.dash-lesson-title{ font-size:.78rem; color:var(--text-secondary); }
-.dash-lesson-title b{ display:block; color:var(--text); font-family:'Fraunces',serif; font-size:.95rem; font-weight:500; margin-bottom:2px; }
+.dash-lesson-title{ font-size:.78rem; color:var(--text-secondary); min-width:0; }
+.dash-lesson-title b{ display:block; color:var(--text); font-family:'Fraunces',serif; font-size:.95rem; font-weight:500; margin-bottom:2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .play-btn{
   width:38px; height:38px; border-radius:50%; background:var(--gold); color:#171412;
-  display:flex; align-items:center; justify-content:center; font-size:.75rem;
+  display:flex; align-items:center; justify-content:center; font-size:.75rem; flex-shrink:0;
 }
 .laptop-base{
   position:absolute; left:50%; bottom:-14px; transform:translateX(-50%);
@@ -394,6 +405,14 @@ nav.primary-nav a:hover::after{ width:100%; }
 @keyframes floaty{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-12px);} }
 @media(max-width:1180px){ .float-card{ display:none; } }
 @media(max-width:980px){ .hero-visual{ height:420px; } .laptop{ width:88%; } }
+@media(max-width:480px){
+  .hero-visual{ height:330px; }
+  .laptop{ width:96%; padding:14px; }
+  .ring{ width:60px; height:60px; }
+  .ring-label{ font-size:.66rem; }
+  .bar-label{ width:60px; font-size:.6rem; }
+  .dash-title{ font-size:.9rem; }
+}
 
 /* ===== section shell ===== */
 section{ position:relative; padding:130px 0; }
@@ -406,7 +425,10 @@ section{ position:relative; padding:130px 0; }
 /* ===== social proof ===== */
 .proof{ background:var(--surface); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
 .stat-grid{ display:grid; grid-template-columns:repeat(5,1fr); gap:32px; }
-@media(max-width:980px){ .stat-grid{ grid-template-columns:repeat(2,1fr); } }
+@media(max-width:980px){
+  .stat-grid{ grid-template-columns:repeat(2,1fr); row-gap:36px; }
+  .stat:last-child{ grid-column:1 / -1; }
+}
 .stat{ text-align:center; }
 .stat-num{ font-family:'Fraunces',serif; font-size:clamp(2.1rem,3.4vw,2.9rem); color:var(--gold); font-weight:500; }
 .stat-label{ margin-top:8px; font-size:.8rem; color:var(--text-muted); letter-spacing:.03em; }
@@ -441,12 +463,20 @@ section{ position:relative; padding:130px 0; }
 .preview-tabs{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom:40px; }
 .preview-tab{
   padding:10px 20px; border-radius:var(--ring-radius); border:1px solid var(--border);
-  font-size:.82rem; color:var(--text-muted); font-weight:500; transition:.3s ease;
+  font-size:.82rem; color:var(--text-muted); font-weight:500; transition:.3s ease; flex-shrink:0;
 }
 .preview-tab.active{ border-color:var(--gold); color:var(--gold); background:rgba(200,169,106,0.08); }
 .preview-stage{
   background:var(--card); border:1px solid var(--border); border-radius:24px; padding:44px;
   box-shadow:var(--shadow-soft); min-height:420px; position:relative; overflow:hidden;
+}
+@media(max-width:768px){
+  .preview-tabs{
+    flex-wrap:nowrap; overflow-x:auto; margin:0 -24px 32px; padding:0 24px 8px;
+    -webkit-overflow-scrolling:touch; scrollbar-width:none;
+  }
+  .preview-tabs::-webkit-scrollbar{ display:none; }
+  .preview-stage{ padding:26px 20px; }
 }
 .preview-panel{ display:none; }
 .preview-panel.active{ display:block; animation:fadeUp .6s var(--ease); }
@@ -509,9 +539,9 @@ section{ position:relative; padding:130px 0; }
 .timeline-step p{ margin-top:8px; font-size:.78rem; color:var(--text-muted); line-height:1.6; }
 @media(max-width:900px){
   .timeline-track{ grid-template-columns:1fr; gap:36px; }
-  .timeline-track::before{ left:22px; top:0; bottom:0; width:1px; height:auto; right:auto; }
-  .timeline-step{ text-align:left; padding-left:58px; }
-  .timeline-num{ position:absolute; left:0; top:0; margin:0; }
+  .timeline-track::before{ right:22px; left:auto; top:0; bottom:0; width:1px; height:auto; }
+  .timeline-step{ text-align:right; padding-right:58px; padding-left:0; }
+  .timeline-num{ position:absolute; right:0; left:auto; top:0; margin:0; }
 }
 
 /* ===== testimonials ===== */
@@ -526,6 +556,7 @@ section{ position:relative; padding:130px 0; }
   width:52px; height:52px; border-radius:50%;
   background:linear-gradient(135deg,var(--gold-soft),var(--bronze));
   display:flex; align-items:center; justify-content:center; font-family:'Tajawal',sans-serif; font-size:1.1rem; color:#171412; font-weight:700;
+  flex-shrink:0;
 }
 .testi-name{ font-family:'Tajawal','Fraunces',serif; font-weight:700; font-size:1rem; }
 .testi-role{ font-size:.76rem; color:var(--text-muted); margin-top:2px; }
@@ -534,7 +565,7 @@ section{ position:relative; padding:130px 0; }
 
 /* ===== comparison ===== */
 .compare-table{ width:100%; border-collapse:collapse; }
-.compare-table th, .compare-table td{ padding:16px 18px; border-bottom:1px solid var(--border); text-align:left; font-size:.88rem; }
+.compare-table th, .compare-table td{ padding:16px 18px; border-bottom:1px solid var(--border); text-align:right; font-size:.88rem; }
 .compare-table th{ font-family:'Tajawal','Fraunces',serif; font-weight:700; color:var(--text-secondary); font-size:.85rem; }
 .compare-table td.center, .compare-table th.center{ text-align:center; }
 .compare-table .yes{ color:var(--emerald); font-size:1rem; }
@@ -612,6 +643,10 @@ section{ position:relative; padding:130px 0; }
 .final-cta p{ margin-top:22px; color:var(--text-secondary); max-width:520px; margin-left:auto; margin-right:auto; }
 .final-cta-buttons{ margin-top:38px; display:flex; gap:16px; justify-content:center; align-items:center; flex-wrap:wrap; }
 .final-cta-email{ font-size:.85rem; color:var(--text-muted); letter-spacing:.01em; }
+@media(max-width:480px){
+  .final-cta-buttons{ flex-direction:column; width:100%; }
+  .final-cta-buttons .btn-gold{ width:100%; justify-content:center; }
+}
 .orb{ position:absolute; border-radius:50%; filter:blur(60px); opacity:.35; pointer-events:none; }
 .orb-1{ width:340px; height:340px; background:var(--gold); top:-120px; left:10%; }
 .orb-2{ width:260px; height:260px; background:var(--emerald); bottom:-100px; right:12%; }
@@ -657,7 +692,7 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-of
   <div class="container header-inner">
     <a href="#" class="logo">
       <span class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 17V7a4 4 0 0 1 8 0v3a4 4 0 0 1-4 4H4"/><path d="M20 7v10a4 4 0 0 1-8 0v-3a4 4 0 0 1 4-4h4"/></svg></span>
-      Personalized English Lessons
+      <span class="logo-text">Personalized English Lessons</span>
     </a>
     <nav class="primary-nav">
       <a href="#home">الرئيسية</a>
@@ -681,15 +716,17 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-of
   </div>
 </header>
 
-<div class="mobile-menu" id="mobileMenu">
-  <a href="#home">الرئيسية</a>
-  <a href="#curriculum">المنصة</a>
-  <a href="#features">المميزات</a>
-  <a href="#stories">قصص النجاح</a>
-  <a href="#pricing">الاشتراك</a>
-  <a href="#faq">الأسئلة</a>
-  <a href="login.html" class="btn-ghost" style="margin-top:8px;">دخول الطلاب</a>
-  <a href="#pricing" class="btn-gold" style="margin-top:16px;">سجل الآن</a>
+<div class="mobile-menu" id="mobileMenu" dir="rtl">
+  <a href="#home" class="mobile-nav-link">الرئيسية</a>
+  <a href="#curriculum" class="mobile-nav-link">المنصة</a>
+  <a href="#features" class="mobile-nav-link">المميزات</a>
+  <a href="#stories" class="mobile-nav-link">قصص النجاح</a>
+  <a href="#pricing" class="mobile-nav-link">الاشتراك</a>
+  <a href="#faq" class="mobile-nav-link">الأسئلة</a>
+  <div class="mobile-menu-actions">
+    <a href="login.html" class="btn-outline">دخول الطلاب</a>
+    <a href="#pricing" class="btn-gold">سجل الآن</a>
+  </div>
 </div>
 
 <main id="home">
@@ -699,12 +736,12 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-of
   <div class="hero-glow"></div>
   <div class="container hero-grid">
     <div class="reveal is-visible">
-      <span class="eyebrow" dir="rtl" style="justify-content:flex-start;">أكاديمية إنجليزي خاصة · لكل الناطقين بالعربية</span>
-      <h1 class="arabic-h" dir="rtl" style="margin-top:22px;">إتقان الإنجليزية الأمريكية <em>بثقة حقيقية.</em></h1>
-      <p class="arabic hero-sub" dir="rtl" style="font-size:1.05rem;">تدريب خاص على الإنجليزية الأمريكية، مصمم لكل طالب طموح من الخليج للمغرب. معلم واحد، خطة واحدة، ومعلمك فراس يترجم ويشرح لك لين لهجتك تصير لهجتك أنت.</p>
-      <p class="hero-arabic" style="color:var(--text-muted); font-size:.92rem;">Personalized English Lessons — American curriculum, one tutor, one roadmap.</p>
+      <span class="eyebrow" dir="rtl" style="justify-content:flex-start;">Personalized English Lessons</span>
+      <h1 class="arabic-h" dir="rtl" style="margin-top:22px;">اتقان الانجليزية الامريكية <em>بثقة حقيقية.</em></h1>
+      <p class="arabic hero-sub" dir="rtl" style="font-size:1.05rem;">تعلم الانجليزيه الامريكيه مع الاستاذ فراس من خلال دروس مرتبه وشرح واضح بالعربي وتمارين تساعدك تستخدم الانجليزيه بثقه</p>
+      <p class="hero-arabic" style="color:var(--text-muted); font-size:.92rem;">Personalized English Lessons, American curriculum.</p>
       <div class="hero-cta-row">
-        <button class="btn-gold magnetic" data-magnetic>سجل الآن</button>
+        <button class="btn-gold magnetic" data-magnetic>سجل الان</button>
         <button class="btn-outline magnetic" data-magnetic>تواصل مع Tutor Firas</button>
       </div>
       <div class="trust-row" dir="rtl">
@@ -932,38 +969,38 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-of
   <div class="container">
     <div class="section-head reveal" dir="rtl">
       <span class="eyebrow" style="justify-content:flex-start;">تجارب طلابنا</span>
-      <h2 class="arabic-h">ثقة حقيقية، بكلامهم هم.</h2>
+      <h2 class="arabic-h">اسمع منهم</h2>
     </div>
     <div class="testi-grid" dir="rtl">
       <div class="testi-card reveal">
-        <div class="testi-top"><div class="testi-avatar">ر</div><div><div class="testi-name">رهف العتيبي</div><div class="testi-role">موظفة موارد بشرية، الرياض</div></div></div>
+        <div class="testi-top"><div class="testi-avatar">ر</div><div><div class="testi-name">رهف العتيبي</div><div class="testi-role">موظفه موارد بشريه الرياض</div></div></div>
         <div class="testi-stars">★★★★★</div>
-        <p class="testi-quote arabic">كنت أتهرب من أي اجتماع فيه أجانب. بعد أربعة أشهر صرت أتكلم بدون ما أحضر الجمل من قبل. النطق لسا يحتاج شغل، بس الثقة تغيرت كلياً.</p>
+        <p class="testi-quote arabic">كنت كل ما صار عندنا اجتماع مع اجانب اسكت واخلي غيري يتكلم بعد فتره مع الاستاذ فراس صرت ارد واتكلم بثقه وحتى مديري لاحظ الفرق</p>
       </div>
       <div class="testi-card reveal reveal-delay-1">
-        <div class="testi-top"><div class="testi-avatar">م</div><div><div class="testi-name">محمد الشمري</div><div class="testi-role">طالب ماجستير، أبها</div></div></div>
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-quote arabic">المعلم يشرح بلهجتي وما يحسسني غبي إذا أخطأت. الجزء اللي فرق معي فعلاً هو تدريب النطق، صار الناس يفهمونني من أول مرة.</p>
+        <div class="testi-top"><div class="testi-avatar">م</div><div><div class="testi-name">علي القحطاني</div><div class="testi-role">طالب جامعي الدمام</div></div></div>
+        <div class="testi-stars">★★★</div>
+        <p class="testi-quote arabic">كنت اذا جاني برزنتيشن بالانجليزي اقعد احفظ الكلام كله قبل اعرضه الحين صرت اتكلم من راسي اكثر وما عاد اخاف اذا نسيت جمله</p>
       </div>
       <div class="testi-card reveal reveal-delay-2">
-        <div class="testi-top"><div class="testi-avatar">ل</div><div><div class="testi-name">لينا حداد</div><div class="testi-role">صيدلانية، دبي</div></div></div>
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-quote arabic">جدولي صعب جداً بسبب الشفتات، بس المرونة في المواعيد ساعدتني أكمل بدون انقطاع. المحادثة اليومية مع Tutor Firas فرق كبير.</p>
+        <div class="testi-top"><div class="testi-avatar">ل</div><div><div class="testi-name">لينا حسن</div><div class="testi-role">صيدلانيه دبي</div></div></div>
+        <div class="testi-stars">★★★★</div>
+        <p class="testi-quote arabic">شغلي كله بالانجليزي بس كنت احيانا اتردد اذا احتجت اشرح شي بالتفصيل لمريض الفرق بعد الدروس ان كلامي صار اسلس وثقتي اكبر</p>
       </div>
       <div class="testi-card reveal">
-        <div class="testi-top"><div class="testi-avatar">ي</div><div><div class="testi-name">يوسف المصري</div><div class="testi-role">مبرمج، القاهرة</div></div></div>
-        <div class="testi-stars">★★★★☆</div>
-        <p class="testi-quote arabic">إنجليزيتي كانت كويسة للقراءة بس ضعيفة للكلام. الآن أقدر أشارك في اجتماعات الفريق بدون توتر. أتمنى بس تكون فيه مواد إضافية للمصطلحات التقنية.</p>
+        <div class="testi-top"><div class="testi-avatar">ي</div><div><div class="testi-name">يوسف عبدالسلام</div><div class="testi-role">مطور برامج القاهره</div></div></div>
+        <div class="testi-stars">★★★</div>
+        <p class="testi-quote arabic">القراءه عندي كانت كويسه لكن الكلام لا اول ما يدخل ميتنج ابقى ساكت دلوقتي بقيت اشارك عادي حتى لو غلطت بكمل ومبقتش اخاف من الموضوع</p>
       </div>
       <div class="testi-card reveal reveal-delay-1">
-        <div class="testi-top"><div class="testi-avatar">د</div><div><div class="testi-name">دانة القحطاني</div><div class="testi-role">طالبة ثانوي، جدة</div></div></div>
+        <div class="testi-top"><div class="testi-avatar">د</div><div><div class="testi-name">دانه العمري</div><div class="testi-role">طالبه ثانوي جده</div></div></div>
         <div class="testi-stars">★★★★★</div>
-        <p class="testi-quote arabic">كنت أخاف أتكلم أمام أحد. الآن أفهم أفلام أمريكية بدون ترجمة، وصرت أعبر عن نفسي بثقة أكثر بكثير من قبل.</p>
+        <p class="testi-quote arabic">كنت احب الانجليزي بس اذا طلبت مني الابله اتكلم قدام الفصل اتوتر مره الحين صرت اجاوب بدون ما افكر كثير واحس نفسي ارتحت صراحه مررره ما قصر</p>
       </div>
       <div class="testi-card reveal reveal-delay-2">
-        <div class="testi-top"><div class="testi-avatar">خ</div><div><div class="testi-name">خالد بن راشد</div><div class="testi-role">مدير مبيعات، الكويت</div></div></div>
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-quote arabic">قابلت عملاء أجانب وقت السفر ولأول مرة ما اضطريت أعيد كلامي مرتين. التدريب على المحادثات الواقعية هو اللي نفعني أكثر من أي شي.</p>
+        <div class="testi-top"><div class="testi-avatar">خ</div><div><div class="testi-name">خالد الهاجري</div><div class="testi-role">مدير مبيعات الكويت</div></div></div>
+        <div class="testi-stars">★★★</div>
+        <p class="testi-quote arabic">اسافر كثير بحكم الشغل ودايم احتاج اتكلم مع عملاء من برا قبل كنت افكر بكل جمله قبل اقولها الحين الامور تمشي بشكل طبيعي وايد</p>
       </div>
     </div>
   </div>
