@@ -1077,34 +1077,18 @@ async function loadStudentState(){
     try{ await c.from('student_state').upsert({ user_id: currentUser.id, ...fresh, updated_at: new Date().toISOString() }, {onConflict:'user_id'}); }catch(e){}
   }
 }
-async function persistStudentState() {
+async function persistStudentState(){
   const c = client();
-  if (!c || !currentUser) return;
-
-  const { data, error } = await c
-    .from("student_state")
-    .upsert(
-      {
-        user_id: currentUser.id,
-        xp: studentStats.xp,
-        streak: studentStats.streak,
-        longest_streak: studentStats.longestStreak,
-        last_study_date: studentStats.lastStudyDate,
-        completed_lessons: [...completedLessons],
-        favorites: [...favorites],
-        bookmarks,
-        lesson_notes: lessonNotes,
-        vocab_store: vocabStore,
-        notes_store: notesStore,
-        tutor_convos: tutorConvos,
-        student_prefs: studentPrefs,
-        updated_at: new Date().toISOString(),
-      },
-      { onConflict: "user_id" }
-    );
-
-  console.log("UPSERT DATA:", data);
-  console.error("UPSERT ERROR:", error);
+  if(!c || !currentUser) return;
+  try{
+    await c.from('student_state').upsert({
+      user_id: currentUser.id,
+      xp: studentStats.xp, streak: studentStats.streak, longest_streak: studentStats.longestStreak, last_study_date: studentStats.lastStudyDate,
+      completed_lessons: [...completedLessons], favorites: [...favorites], bookmarks, lesson_notes: lessonNotes,
+      vocab_store: vocabStore, notes_store: notesStore, tutor_convos: tutorConvos, student_prefs: studentPrefs,
+      updated_at: new Date().toISOString(),
+    }, {onConflict:'user_id'});
+  }catch(e){ /* best-effort, the in-memory state for this session is still correct either way */ }
 }
 async function revealApp(user){
   currentUser = user;
