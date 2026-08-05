@@ -653,8 +653,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
       <div class="topbar-spacer"></div>
 
       <div class="topbar-actions">
-        <div class="pill-stat hide-mid" title="نقاط الخبرة · XP"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4z"/></svg> <b id="topXp">2,140</b> <span class="arabic">نقطة</span> XP</div>
-        <div class="pill-stat hide-mid" title="سلسلة الأيام · Day streak"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z"/></svg> <b>12</b> <span class="arabic">يوم</span> streak</div>
+        <div class="pill-stat hide-mid" title="نقاط الخبرة · XP"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4z"/></svg> <b id="topXp">0</b> <span class="arabic">نقطة</span> XP</div>
+        <div class="pill-stat hide-mid" title="سلسلة الأيام · Day streak"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z"/></svg> <b id="topStreak">0</b> <span class="arabic">يوم</span> streak</div>
 
         <button class="icon-btn" id="themeToggle" aria-label="Toggle theme">
           <svg id="themeIcon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3v2M12 19v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M3 12h2M19 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/><circle cx="12" cy="12" r="4.2"/></svg>
@@ -666,9 +666,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
             <span class="notif-dot"></span>
           </button>
           <div class="dropdown notif-dropdown" id="notifDropdown">
-            <div class="notif-item"><b class="arabic" style="display:block;">مبروك، وصلت لانجاز جديد</b><span style="display:block; margin-top:2px;">New streak milestone, you have studied 12 days in a row.</span></div>
-            <div class="notif-item"><b class="arabic" style="display:block;">المدرب فراس عنده توصية جديدة</b><span style="display:block; margin-top:2px;">Tutor Firas has a new recommendation for you.</span></div>
-            <div class="notif-item"><b class="arabic" style="display:block;">قربت توصل لهدفك الاسبوعي</b><span style="display:block; margin-top:2px;">Weekly goal almost there, 1 lesson to go.</span></div>
+            <div id="notifList"></div>
           </div>
         </div>
 
@@ -759,22 +757,22 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
                 <span style="font-size:.72rem; color:var(--text-muted); display:block; margin-top:8px;">Overall Completion</span>
               </div>
               <div style="text-align:center;">
-                <div class="ring-wrap small"><svg viewBox="0 0 64 64"><circle class="track" cx="32" cy="32" r="26"></circle><circle class="prog" cx="32" cy="32" r="26" stroke-dasharray="163" style="stroke-dashoffset:33; stroke:var(--emerald);"></circle></svg><div class="ring-center"><b>80%</b></div></div>
+                <div class="ring-wrap small"><svg viewBox="0 0 64 64"><circle class="track" cx="32" cy="32" r="26"></circle><circle class="prog" id="heroTodayRing" cx="32" cy="32" r="26" stroke-dasharray="163" style="stroke-dashoffset:163; stroke:var(--emerald);"></circle></svg><div class="ring-center"><b id="heroTodayPct">0%</b></div></div>
                 <span style="font-size:.72rem; color:var(--text-muted); display:block; margin-top:8px;">Today's Goal</span>
               </div>
               <div style="text-align:center;">
-                <div class="ring-wrap small"><svg viewBox="0 0 64 64"><circle class="track" cx="32" cy="32" r="26"></circle><circle class="prog" cx="32" cy="32" r="26" stroke-dasharray="163" style="stroke-dashoffset:75;"></circle></svg><div class="ring-center"><b>54%</b></div></div>
+                <div class="ring-wrap small"><svg viewBox="0 0 64 64"><circle class="track" cx="32" cy="32" r="26"></circle><circle class="prog" id="heroWeeklyRing" cx="32" cy="32" r="26" stroke-dasharray="163" style="stroke-dashoffset:163;"></circle></svg><div class="ring-center"><b id="heroWeeklyPct">0%</b></div></div>
                 <span style="font-size:.72rem; color:var(--text-muted); display:block; margin-top:8px;">Weekly Goal</span>
               </div>
               <div style="text-align:center;">
-                <div class="ring-wrap small"><svg viewBox="0 0 64 64"><circle class="track" cx="32" cy="32" r="26"></circle><circle class="prog" cx="32" cy="32" r="26" stroke-dasharray="163" style="stroke-dashoffset:98;"></circle></svg><div class="ring-center"><b>39%</b></div></div>
+                <div class="ring-wrap small"><svg viewBox="0 0 64 64"><circle class="track" cx="32" cy="32" r="26"></circle><circle class="prog" id="heroMonthlyRing" cx="32" cy="32" r="26" stroke-dasharray="163" style="stroke-dashoffset:163;"></circle></svg><div class="ring-center"><b id="heroMonthlyPct">0%</b></div></div>
                 <span style="font-size:.72rem; color:var(--text-muted); display:block; margin-top:8px;">Monthly Goal</span>
               </div>
             </div>
             <div style="display:flex; gap:28px; flex-wrap:wrap;">
-              <div><b style="font-family:'Fraunces',serif; font-size:1.4rem; color:var(--gold);">12</b><span style="display:block; font-size:.72rem; color:var(--text-muted);">Day streak</span></div>
-              <div><b style="font-family:'Fraunces',serif; font-size:1.4rem;">86</b><span style="display:block; font-size:.72rem; color:var(--text-muted);">Lessons completed</span></div>
-              <div><b style="font-family:'Fraunces',serif; font-size:1.4rem;">41.5</b><span style="display:block; font-size:.72rem; color:var(--text-muted);">Hours studied</span></div>
+              <div><b id="heroStreakNum" style="font-family:'Fraunces',serif; font-size:1.4rem; color:var(--gold);">0</b><span style="display:block; font-size:.72rem; color:var(--text-muted);">Day streak</span></div>
+              <div><b id="heroLessonsNum" style="font-family:'Fraunces',serif; font-size:1.4rem;">0</b><span style="display:block; font-size:.72rem; color:var(--text-muted);">Lessons completed</span></div>
+              <div><b id="heroHoursNum" style="font-family:'Fraunces',serif; font-size:1.4rem;">0</b><span style="display:block; font-size:.72rem; color:var(--text-muted);">Hours studied</span></div>
             </div>
           </div>
         </section>
@@ -1047,6 +1045,10 @@ function applyStudentStateRow(row){
   tutorConvos = (row.tutor_convos && row.tutor_convos.length) ? row.tutor_convos : defaultTutorConvos();
   activeConvoId = tutorConvos[0].id;
   studentPrefs = (row.student_prefs && Object.keys(row.student_prefs).length) ? row.student_prefs : defaultStudentPrefs();
+  syncAcademyProgress();
+  syncAchievements();
+  syncHeroStats();
+  renderNotifications();
   const topXp = document.getElementById('topXp');
   if(topXp) topXp.textContent = studentStats.xp.toLocaleString();
   const streakTxt = document.getElementById('sidebarStreakTxt');
@@ -1061,6 +1063,10 @@ function clearStudentState(){
   vocabStore = defaultVocabStore(); notesStore = defaultNotesStore();
   tutorConvos = defaultTutorConvos(); activeConvoId = tutorConvos[0].id;
   studentPrefs = defaultStudentPrefs();
+  syncAcademyProgress();
+  syncAchievements();
+  syncHeroStats();
+  renderNotifications();
 }
 async function loadStudentState(){
   // Source of truth is Supabase, keyed by auth.uid(), never localStorage,
@@ -1841,36 +1847,36 @@ const LESSON_TITLE_BANK = [
 ];
 
 const ACADEMIES = [
-  {id:'english-foundations', en:'English Foundations', ar:'اساسيات الانجليزي', translit:'انجلش فاونديشنز', cat:'Foundations', icon:'graduation-cap', from:'#C8A96A', to:'#A88345', difficulty:'Beginner', duration:'6h', lessons:36, progress:100},
-  {id:'everyday-english', en:'Everyday English', ar:'انجليزي الحياة اليومية', translit:'ايفري دي انجلش', cat:'Foundations', icon:'sun', from:'#D8BD83', to:'#C8A96A', difficulty:'Beginner', duration:'5h', lessons:28, progress:80},
-  {id:'american-conversations', en:'American Conversations', ar:'المحادثات الامريكية', translit:'اميريكن كونفرسيشنز', cat:'Conversation', icon:'message-circle', from:'#3F8C72', to:'#276b53', difficulty:'Intermediate', duration:'7h', lessons:32, progress:45},
-  {id:'speaking-studio', en:'Speaking Studio', ar:'استوديو المحادثة', translit:'سبيكنج ستوديو', cat:'Conversation', icon:'mic-2', from:'#3F8C72', to:'#C8A96A', difficulty:'Intermediate', duration:'6h', lessons:24, progress:55},
-  {id:'american-accent-lab', en:'American Accent Lab', ar:'مختبر اللكنة الامريكية', translit:'اميريكن اكسنت لاب', cat:'Skills', icon:'mic', from:'#C8A96A', to:'#D8BD83', difficulty:'Intermediate', duration:'8h', lessons:30, progress:64},
-  {id:'vocabulary-vault', en:'Vocabulary Vault', ar:'خزنة المفردات', translit:'فوكابيولري فولت', cat:'Skills', icon:'book-open', from:'#A88345', to:'#C8A96A', difficulty:'All Levels', duration:'10h', lessons:48, progress:70},
-  {id:'grammar-academy', en:'Grammar Academy', ar:'اكاديمية القواعد', translit:'جرامر اكاديمي', cat:'Skills', icon:'spell-check', from:'#343744', to:'#262833', difficulty:'All Levels', duration:'9h', lessons:40, progress:38},
-  {id:'listening-lounge', en:'Listening Lounge', ar:'ركن الاستماع', translit:'ليسننج لاونج', cat:'Skills', icon:'headphones', from:'#3F8C72', to:'#17171B', difficulty:'Intermediate', duration:'6h', lessons:26, progress:22},
-  {id:'reading-corner', en:'Reading Corner', ar:'ركن القراءة', translit:'ريدنج كورنر', cat:'Skills', icon:'book', from:'#C8A96A', to:'#17171B', difficulty:'Intermediate', duration:'6h', lessons:27, progress:18},
-  {id:'writing-workshop', en:'Writing Workshop', ar:'ورشة الكتابة', translit:'رايتنج ووركشوب', cat:'Skills', icon:'pen-line', from:'#A88345', to:'#17171B', difficulty:'Advanced', duration:'7h', lessons:22, progress:12},
-  {id:'travel-english', en:'Travel English', ar:'انجليزي السفر', translit:'ترافل انجلش', cat:'Situational', icon:'plane', from:'#3F8C72', to:'#C8A96A', difficulty:'Intermediate', duration:'5h', lessons:20, progress:30},
-  {id:'business-english', en:'Business English', ar:'انجليزي الاعمال', translit:'بزنس انجلش', cat:'Career', icon:'briefcase', from:'#343744', to:'#C8A96A', difficulty:'Advanced', duration:'8h', lessons:34, progress:15},
-  {id:'workplace-communication', en:'Workplace Communication', ar:'التواصل بالدوام', translit:'وورك بليس كميونيكيشن', cat:'Career', icon:'building-2', from:'#262833', to:'#A88345', difficulty:'Advanced', duration:'6h', lessons:24, progress:0},
-  {id:'job-interview-academy', en:'Job Interview Academy', ar:'اكاديمية مقابلات العمل', translit:'جوب انترفيو اكاديمي', cat:'Career', icon:'user-check', from:'#C8A96A', to:'#343744', difficulty:'Advanced', duration:'4h', lessons:16, progress:0},
-  {id:'airport-english', en:'Airport English', ar:'انجليزي المطار', translit:'ايربورت انجلش', cat:'Situational', icon:'plane-takeoff', from:'#3F8C72', to:'#17171B', difficulty:'Beginner', duration:'3h', lessons:14, progress:50},
-  {id:'restaurant-english', en:'Restaurant English', ar:'انجليزي المطاعم', translit:'ريستورانت انجلش', cat:'Situational', icon:'utensils', from:'#C8A96A', to:'#A88345', difficulty:'Beginner', duration:'3h', lessons:16, progress:66},
-  {id:'coffee-shop-english', en:'Coffee Shop English', ar:'انجليزي الكوفي', translit:'كوفي شوب انجلش', cat:'Situational', icon:'coffee', from:'#A88345', to:'#D8BD83', difficulty:'Beginner', duration:'2h', lessons:10, progress:64},
-  {id:'hotel-english', en:'Hotel English', ar:'انجليزي الفنادق', translit:'هوتيل انجلش', cat:'Situational', icon:'bed', from:'#343744', to:'#C8A96A', difficulty:'Beginner', duration:'3h', lessons:15, progress:20},
-  {id:'hospital-english', en:'Hospital English', ar:'انجليزي المستشفى', translit:'هاسبتل انجلش', cat:'Situational', icon:'cross', from:'#3F8C72', to:'#343744', difficulty:'Intermediate', duration:'3h', lessons:16, progress:0},
-  {id:'shopping-english', en:'Shopping English', ar:'انجليزي التسوق', translit:'شوبنج انجلش', cat:'Situational', icon:'shopping-bag', from:'#C8A96A', to:'#3F8C72', difficulty:'Beginner', duration:'3h', lessons:14, progress:8},
-  {id:'driving-english', en:'Driving English', ar:'انجليزي القيادة', translit:'درايفنج انجلش', cat:'Situational', icon:'car', from:'#262833', to:'#D8BD83', difficulty:'Beginner', duration:'2h', lessons:12, progress:0},
-  {id:'emergency-english', en:'Emergency English', ar:'انجليزي الطوارئ', translit:'اميرجنسي انجلش', cat:'Situational', icon:'siren', from:'#D25C5C', to:'#343744', difficulty:'Intermediate', duration:'2h', lessons:10, progress:0},
-  {id:'american-slang', en:'American Slang', ar:'السلانق الامريكي', translit:'اميريكن سلانق', cat:'Culture', icon:'sparkles', from:'#C8A96A', to:'#17171B', difficulty:'Advanced', duration:'4h', lessons:20, progress:10},
-  {id:'idioms-library', en:'Idioms Library', ar:'مكتبة العبارات', translit:'ايديومز لايبرري', cat:'Culture', icon:'quote', from:'#A88345', to:'#17171B', difficulty:'Advanced', duration:'5h', lessons:26, progress:5},
-  {id:'phrasal-verbs-lab', en:'Phrasal Verbs Lab', ar:'مختبر الفريزل فيربز', translit:'فريزل فيربز لاب', cat:'Culture', icon:'shuffle', from:'#3F8C72', to:'#A88345', difficulty:'Advanced', duration:'5h', lessons:28, progress:0},
-  {id:'movie-english', en:'Movie English', ar:'تعلم من الافلام', translit:'موفي انجلش', cat:'Culture', icon:'film', from:'#343744', to:'#17171B', difficulty:'Advanced', duration:'6h', lessons:18, progress:0},
-  {id:'tv-series-english', en:'TV Series English', ar:'تعلم من المسلسلات', translit:'تي في سيريز انجلش', cat:'Culture', icon:'tv', from:'#17171B', to:'#343744', difficulty:'Advanced', duration:'6h', lessons:18, progress:0},
-  {id:'music-english', en:'Music English', ar:'تعلم من الاغاني', translit:'ميوزك انجلش', cat:'Culture', icon:'music', from:'#A88345', to:'#3F8C72', difficulty:'Intermediate', duration:'4h', lessons:16, progress:0},
-  {id:'english-mastery', en:'English Mastery', ar:'اتقان الانجليزي', translit:'انجلش ماستري', cat:'Mastery', icon:'crown', from:'#C8A96A', to:'#D8BD83', difficulty:'Advanced', duration:'12h', lessons:52, progress:6},
-  {id:'fluency-journey', en:'Fluency Journey', ar:'رحلة الطلاقة', translit:'فلوينسي جورني', cat:'Mastery', icon:'compass', from:'#D8BD83', to:'#A88345', difficulty:'All Levels', duration:'20h', lessons:64, progress:2},
+  {id:'english-foundations', en:'English Foundations', ar:'اساسيات الانجليزي', translit:'انجلش فاونديشنز', cat:'Foundations', icon:'graduation-cap', from:'#C8A96A', to:'#A88345', difficulty:'Beginner', duration:'6h', lessons:36},
+  {id:'everyday-english', en:'Everyday English', ar:'انجليزي الحياة اليومية', translit:'ايفري دي انجلش', cat:'Foundations', icon:'sun', from:'#D8BD83', to:'#C8A96A', difficulty:'Beginner', duration:'5h', lessons:28},
+  {id:'american-conversations', en:'American Conversations', ar:'المحادثات الامريكية', translit:'اميريكن كونفرسيشنز', cat:'Conversation', icon:'message-circle', from:'#3F8C72', to:'#276b53', difficulty:'Intermediate', duration:'7h', lessons:32},
+  {id:'speaking-studio', en:'Speaking Studio', ar:'استوديو المحادثة', translit:'سبيكنج ستوديو', cat:'Conversation', icon:'mic-2', from:'#3F8C72', to:'#C8A96A', difficulty:'Intermediate', duration:'6h', lessons:24},
+  {id:'american-accent-lab', en:'American Accent Lab', ar:'مختبر اللكنة الامريكية', translit:'اميريكن اكسنت لاب', cat:'Skills', icon:'mic', from:'#C8A96A', to:'#D8BD83', difficulty:'Intermediate', duration:'8h', lessons:30},
+  {id:'vocabulary-vault', en:'Vocabulary Vault', ar:'خزنة المفردات', translit:'فوكابيولري فولت', cat:'Skills', icon:'book-open', from:'#A88345', to:'#C8A96A', difficulty:'All Levels', duration:'10h', lessons:48},
+  {id:'grammar-academy', en:'Grammar Academy', ar:'اكاديمية القواعد', translit:'جرامر اكاديمي', cat:'Skills', icon:'spell-check', from:'#343744', to:'#262833', difficulty:'All Levels', duration:'9h', lessons:40},
+  {id:'listening-lounge', en:'Listening Lounge', ar:'ركن الاستماع', translit:'ليسننج لاونج', cat:'Skills', icon:'headphones', from:'#3F8C72', to:'#17171B', difficulty:'Intermediate', duration:'6h', lessons:26},
+  {id:'reading-corner', en:'Reading Corner', ar:'ركن القراءة', translit:'ريدنج كورنر', cat:'Skills', icon:'book', from:'#C8A96A', to:'#17171B', difficulty:'Intermediate', duration:'6h', lessons:27},
+  {id:'writing-workshop', en:'Writing Workshop', ar:'ورشة الكتابة', translit:'رايتنج ووركشوب', cat:'Skills', icon:'pen-line', from:'#A88345', to:'#17171B', difficulty:'Advanced', duration:'7h', lessons:22},
+  {id:'travel-english', en:'Travel English', ar:'انجليزي السفر', translit:'ترافل انجلش', cat:'Situational', icon:'plane', from:'#3F8C72', to:'#C8A96A', difficulty:'Intermediate', duration:'5h', lessons:20},
+  {id:'business-english', en:'Business English', ar:'انجليزي الاعمال', translit:'بزنس انجلش', cat:'Career', icon:'briefcase', from:'#343744', to:'#C8A96A', difficulty:'Advanced', duration:'8h', lessons:34},
+  {id:'workplace-communication', en:'Workplace Communication', ar:'التواصل بالدوام', translit:'وورك بليس كميونيكيشن', cat:'Career', icon:'building-2', from:'#262833', to:'#A88345', difficulty:'Advanced', duration:'6h', lessons:24},
+  {id:'job-interview-academy', en:'Job Interview Academy', ar:'اكاديمية مقابلات العمل', translit:'جوب انترفيو اكاديمي', cat:'Career', icon:'user-check', from:'#C8A96A', to:'#343744', difficulty:'Advanced', duration:'4h', lessons:16},
+  {id:'airport-english', en:'Airport English', ar:'انجليزي المطار', translit:'ايربورت انجلش', cat:'Situational', icon:'plane-takeoff', from:'#3F8C72', to:'#17171B', difficulty:'Beginner', duration:'3h', lessons:14},
+  {id:'restaurant-english', en:'Restaurant English', ar:'انجليزي المطاعم', translit:'ريستورانت انجلش', cat:'Situational', icon:'utensils', from:'#C8A96A', to:'#A88345', difficulty:'Beginner', duration:'3h', lessons:16},
+  {id:'coffee-shop-english', en:'Coffee Shop English', ar:'انجليزي الكوفي', translit:'كوفي شوب انجلش', cat:'Situational', icon:'coffee', from:'#A88345', to:'#D8BD83', difficulty:'Beginner', duration:'2h', lessons:10},
+  {id:'hotel-english', en:'Hotel English', ar:'انجليزي الفنادق', translit:'هوتيل انجلش', cat:'Situational', icon:'bed', from:'#343744', to:'#C8A96A', difficulty:'Beginner', duration:'3h', lessons:15},
+  {id:'hospital-english', en:'Hospital English', ar:'انجليزي المستشفى', translit:'هاسبتل انجلش', cat:'Situational', icon:'cross', from:'#3F8C72', to:'#343744', difficulty:'Intermediate', duration:'3h', lessons:16},
+  {id:'shopping-english', en:'Shopping English', ar:'انجليزي التسوق', translit:'شوبنج انجلش', cat:'Situational', icon:'shopping-bag', from:'#C8A96A', to:'#3F8C72', difficulty:'Beginner', duration:'3h', lessons:14},
+  {id:'driving-english', en:'Driving English', ar:'انجليزي القيادة', translit:'درايفنج انجلش', cat:'Situational', icon:'car', from:'#262833', to:'#D8BD83', difficulty:'Beginner', duration:'2h', lessons:12},
+  {id:'emergency-english', en:'Emergency English', ar:'انجليزي الطوارئ', translit:'اميرجنسي انجلش', cat:'Situational', icon:'siren', from:'#D25C5C', to:'#343744', difficulty:'Intermediate', duration:'2h', lessons:10},
+  {id:'american-slang', en:'American Slang', ar:'السلانق الامريكي', translit:'اميريكن سلانق', cat:'Culture', icon:'sparkles', from:'#C8A96A', to:'#17171B', difficulty:'Advanced', duration:'4h', lessons:20},
+  {id:'idioms-library', en:'Idioms Library', ar:'مكتبة العبارات', translit:'ايديومز لايبرري', cat:'Culture', icon:'quote', from:'#A88345', to:'#17171B', difficulty:'Advanced', duration:'5h', lessons:26},
+  {id:'phrasal-verbs-lab', en:'Phrasal Verbs Lab', ar:'مختبر الفريزل فيربز', translit:'فريزل فيربز لاب', cat:'Culture', icon:'shuffle', from:'#3F8C72', to:'#A88345', difficulty:'Advanced', duration:'5h', lessons:28},
+  {id:'movie-english', en:'Movie English', ar:'تعلم من الافلام', translit:'موفي انجلش', cat:'Culture', icon:'film', from:'#343744', to:'#17171B', difficulty:'Advanced', duration:'6h', lessons:18},
+  {id:'tv-series-english', en:'TV Series English', ar:'تعلم من المسلسلات', translit:'تي في سيريز انجلش', cat:'Culture', icon:'tv', from:'#17171B', to:'#343744', difficulty:'Advanced', duration:'6h', lessons:18},
+  {id:'music-english', en:'Music English', ar:'تعلم من الاغاني', translit:'ميوزك انجلش', cat:'Culture', icon:'music', from:'#A88345', to:'#3F8C72', difficulty:'Intermediate', duration:'4h', lessons:16},
+  {id:'english-mastery', en:'English Mastery', ar:'اتقان الانجليزي', translit:'انجلش ماستري', cat:'Mastery', icon:'crown', from:'#C8A96A', to:'#D8BD83', difficulty:'Advanced', duration:'12h', lessons:52},
+  {id:'fluency-journey', en:'Fluency Journey', ar:'رحلة الطلاقة', translit:'فلوينسي جورني', cat:'Mastery', icon:'compass', from:'#D8BD83', to:'#A88345', difficulty:'All Levels', duration:'20h', lessons:64},
 ];
 const FEATURED = {academy:'coffee-shop-english', lesson:'ordering-coffee'};
 
@@ -2111,6 +2117,17 @@ function genericLesson(bankItem, academy){
   };
 }
 function lessonKey(academyId, lessonId){ return academyId + '::' + lessonId; }
+function syncAcademyProgress(){
+  // Academy progress is now ALWAYS derived from this account's real
+  // completedLessons (loaded from Supabase student_state) - never a
+  // static field on the academy data itself.
+  ACADEMIES.forEach(a => {
+    if(!a.lessons){ a.progress = 0; return; }
+    let done = 0;
+    completedLessons.forEach(k => { if(k.indexOf(a.id + '::') === 0) done++; });
+    a.progress = Math.min(100, Math.round(100 * done / a.lessons));
+  });
+}
 function academyLessonList(academy){
   const idx = ACADEMIES.findIndex(a => a.id === academy.id);
   const list = [];
@@ -2165,7 +2182,11 @@ function markLessonComplete(academyId, lessonId){
   const key = lessonKey(academyId, lessonId);
   if(completedLessons.has(key)) return;
   completedLessons.add(key); persistStudentState();
+  syncAcademyProgress();
   awardXp(50);
+  syncAchievements();
+  syncHeroStats();
+  renderNotifications();
   toast('<span class="arabic">اكتمل الدرس. عمل رائع</span> · Lesson complete. Great work.'); confettiBurst();
 }
 function defaultStudentStats(){ return { xp: 0, streak: 0, longestStreak: 0, lastStudyDate: null }; }
@@ -3133,19 +3154,83 @@ const SKILL_SCORES = [
 ];
 
 const ACHIEVEMENTS = [
-  {id:'first-lesson', en:'First Lesson', ar:'اول درس', icon:'footprints', earned:true, date:'Jun 3, 2026'},
-  {id:'streak-7', en:'7 Day Streak', ar:'استمرار ٧ ايام', icon:'flame', earned:true, date:'Jun 10, 2026'},
-  {id:'streak-30', en:'30 Day Streak', ar:'استمرار ٣٠ يوم', icon:'flame', earned:false},
-  {id:'lessons-100', en:'100 Lessons', ar:'١٠٠ درس', icon:'layers', earned:false},
-  {id:'vocab-expert', en:'Vocabulary Expert', ar:'خبير المفردات', icon:'book-open', earned:true, date:'Jul 2, 2026'},
-  {id:'grammar-expert', en:'Grammar Expert', ar:'خبير القواعد', icon:'spell-check', earned:false},
-  {id:'pronunciation-pro', en:'Pronunciation Pro', ar:'احتراف النطق', icon:'mic', earned:true, date:'Jul 14, 2026'},
-  {id:'conversation-master', en:'Conversation Master', ar:'احتراف المحادثة', icon:'message-circle', earned:false},
-  {id:'business-ready', en:'Business Ready', ar:'جاهز للاعمال', icon:'briefcase', earned:false},
-  {id:'travel-ready', en:'Travel Ready', ar:'جاهز للسفر', icon:'plane', earned:true, date:'Jun 22, 2026'},
-  {id:'american-accent', en:'American Accent', ar:'اللكنة الامريكية', icon:'audio-lines', earned:false},
-  {id:'fluent-speaker', en:'Fluent Speaker', ar:'متحدث بطلاقة', icon:'crown', earned:false},
+  {id:'first-lesson', en:'First Lesson', ar:'اول درس', icon:'footprints'},
+  {id:'streak-7', en:'7 Day Streak', ar:'استمرار ٧ ايام', icon:'flame'},
+  {id:'streak-30', en:'30 Day Streak', ar:'استمرار ٣٠ يوم', icon:'flame'},
+  {id:'lessons-100', en:'100 Lessons', ar:'١٠٠ درس', icon:'layers'},
+  {id:'vocab-expert', en:'Vocabulary Expert', ar:'خبير المفردات', icon:'book-open'},
+  {id:'grammar-expert', en:'Grammar Expert', ar:'خبير القواعد', icon:'spell-check'},
+  {id:'pronunciation-pro', en:'Pronunciation Pro', ar:'احتراف النطق', icon:'mic'},
+  {id:'conversation-master', en:'Conversation Master', ar:'احتراف المحادثة', icon:'message-circle'},
+  {id:'business-ready', en:'Business Ready', ar:'جاهز للاعمال', icon:'briefcase'},
+  {id:'travel-ready', en:'Travel Ready', ar:'جاهز للسفر', icon:'plane'},
+  {id:'american-accent', en:'American Accent', ar:'اللكنة الامريكية', icon:'audio-lines'},
+  {id:'fluent-speaker', en:'Fluent Speaker', ar:'متحدث بطلاقة', icon:'crown'},
 ];
+function academyProgressById(id){ const a = ACADEMIES.find(x => x.id === id); return a ? a.progress : 0; }
+function computeAchievementEarned(id){
+  // 100% derived from this account's real Supabase-backed state -
+  // never a hardcoded flag.
+  switch(id){
+    case 'first-lesson': return completedLessons.size >= 1;
+    case 'streak-7': return studentStats.longestStreak >= 7;
+    case 'streak-30': return studentStats.longestStreak >= 30;
+    case 'lessons-100': return completedLessons.size >= 100;
+    case 'vocab-expert': return bookmarks.filter(b => b.type === 'vocab').length >= 20;
+    case 'grammar-expert': return academyProgressById('grammar-academy') >= 100;
+    case 'pronunciation-pro': return academyProgressById('american-accent-lab') >= 100;
+    case 'conversation-master': return academyProgressById('american-conversations') >= 100;
+    case 'business-ready': return academyProgressById('business-english') >= 100;
+    case 'travel-ready': return academyProgressById('travel-english') >= 100;
+    case 'american-accent': return academyProgressById('american-accent-lab') >= 100;
+    case 'fluent-speaker': return studentStats.xp >= 5000;
+    default: return false;
+  }
+}
+function syncAchievements(){ ACHIEVEMENTS.forEach(a => { a.earned = computeAchievementEarned(a.id); }); }
+function syncHeroStats(){
+  const today = new Date().toISOString().slice(0,10);
+  const studiedToday = studentStats.lastStudyDate === today;
+  const weeklyGoal = studentPrefs.weeklyGoalLessons || 0;
+  const monthlyGoal = studentPrefs.monthlyGoalLessons || 0;
+  const weeklyPct = weeklyGoal ? Math.min(100, Math.round(100 * Math.min(studentStats.streak, weeklyGoal) / weeklyGoal)) : 0;
+  const monthlyPct = monthlyGoal ? Math.min(100, Math.round(100 * Math.min(completedLessons.size, monthlyGoal) / monthlyGoal)) : 0;
+  const todayPct = studiedToday ? 100 : 0;
+  const estHours = Math.round((completedLessons.size * 12 / 60) * 10) / 10;
+
+  const setRing = (circleId, labelId, pct, circumference) => {
+    const circle = document.getElementById(circleId);
+    const label = document.getElementById(labelId);
+    if(circle) circle.style.strokeDashoffset = circumference - (circumference * pct / 100);
+    if(label) label.textContent = pct + '%';
+  };
+  setRing('heroRing', 'heroRingLabel', weeklyPct, 251);
+  setRing('heroTodayRing', 'heroTodayPct', todayPct, 163);
+  setRing('heroWeeklyRing', 'heroWeeklyPct', weeklyPct, 163);
+  setRing('heroMonthlyRing', 'heroMonthlyPct', monthlyPct, 163);
+
+  const streakNum = document.getElementById('heroStreakNum'); if(streakNum) streakNum.textContent = studentStats.streak;
+  const lessonsNum = document.getElementById('heroLessonsNum'); if(lessonsNum) lessonsNum.textContent = completedLessons.size;
+  const hoursNum = document.getElementById('heroHoursNum'); if(hoursNum) hoursNum.textContent = estHours;
+  const topStreak = document.getElementById('topStreak'); if(topStreak) topStreak.textContent = studentStats.streak;
+}
+function renderNotifications(){
+  const list = document.getElementById('notifList');
+  if(!list) return;
+  const items = [];
+  const milestones = [7, 14, 30, 60, 100];
+  if(milestones.includes(studentStats.streak)){
+    items.push({ar:'مبروك، وصلت لانجاز جديد', en:`New streak milestone, you have studied ${studentStats.streak} days in a row.`});
+  }
+  const doneThisWeekApprox = completedLessons.size; // no weekly-window tracking yet, so this is a lifetime count, framed accordingly below
+  const remaining = Math.max(0, (studentPrefs.weeklyGoalLessons||0) - (studentStats.streak > 0 ? 1 : 0));
+  if(studentPrefs.weeklyGoalLessons && remaining > 0 && remaining <= 1){
+    items.push({ar:'قربت توصل لهدفك الاسبوعي', en:`Weekly goal almost there, ${remaining} lesson to go.`});
+  }
+  list.innerHTML = items.length
+    ? items.map(n => `<div class="notif-item"><b class="arabic" style="display:block;">${n.ar}</b><span style="display:block; margin-top:2px;">${n.en}</span></div>`).join('')
+    : `<div class="notif-item"><b class="arabic" style="display:block;">لا توجد اشعارات بعد</b><span style="display:block; margin-top:2px;">No notifications yet, complete a lesson to see your first update here.</span></div>`;
+}
 
 const CERTIFICATES = ACADEMIES.filter(a => a.progress === 100).map((a,i) => ({
   id:a.id, en:a.en, ar:a.ar, date:'Jun 28, 2026', certId:'PEL-' + (10230+i),
@@ -3264,7 +3349,8 @@ viewRenderers.profile = renderProfile;
 function renderAchievements(){
   const el = document.getElementById('view-achievements');
   el.dataset.rendered = '1';
-  const earnedCount = ACHIEVEMENTS.filter(a => a.earned).length;
+  const earnedCount = ACHIEVEMENTS.filter(a => computeAchievementEarned(a.id)).length;
+  syncAchievements();
   el.innerHTML = `
     <div class="page-head">
       <span class="eyebrow"><span class="arabic" style="font-size:.95em;">الانجازات</span> · Achievements</span>
@@ -3277,7 +3363,7 @@ function renderAchievements(){
       <div class="badge-icon-wrap"><i data-lucide="${a.earned ? a.icon : 'lock'}" width="26" height="26"></i></div>
       <h4>${a.en}</h4>
       <p class="arabic">${a.ar}</p>
-      <div class="bd-date">${a.earned ? '<span class="arabic">تم الحصول عليها</span> · Earned ' + a.date : '<span class="arabic">لم تُحصَّل بعد</span> · Not yet earned'}</div>
+      <div class="bd-date">${a.earned ? '<span class="arabic">تم الحصول عليها</span> · Earned' : '<span class="arabic">لم تُحصَّل بعد</span> · Not yet earned'}</div>
     </div>`).join('');
   document.getElementById('achievementsGrid').addEventListener('click', e => {
     const card = e.target.closest('.badge-card');
@@ -3334,19 +3420,22 @@ function renderCalendar(){
       </div>
     </div>
     <div class="grid" style="grid-template-columns:repeat(4,1fr);">
-      <div class="stat-pill"><b>12</b><span class="arabic" style="display:block;">السلسلة الحالية</span><span>Current streak</span></div>
-      <div class="stat-pill"><b>19</b><span class="arabic" style="display:block;">اطول سلسلة</span><span>Longest streak</span></div>
-      <div class="stat-pill"><b>4 / 5</b><span class="arabic" style="display:block;">الهدف الاسبوعي</span><span>Weekly goal</span></div>
-      <div class="stat-pill"><b>14 / 20</b><span class="arabic" style="display:block;">الهدف الشهري</span><span>Monthly goal</span></div>
+      <div class="stat-pill"><b>${studentStats.streak}</b><span class="arabic" style="display:block;">السلسلة الحالية</span><span>Current streak</span></div>
+      <div class="stat-pill"><b>${studentStats.longestStreak}</b><span class="arabic" style="display:block;">اطول سلسلة</span><span>Longest streak</span></div>
+      <div class="stat-pill"><b>${Math.min(studentStats.streak,studentPrefs.weeklyGoalLessons||0)} / ${studentPrefs.weeklyGoalLessons||0}</b><span class="arabic" style="display:block;">الهدف الاسبوعي</span><span>Weekly goal</span></div>
+      <div class="stat-pill"><b>${Math.min(completedLessons.size,studentPrefs.monthlyGoalLessons||0)} / ${studentPrefs.monthlyGoalLessons||0}</b><span class="arabic" style="display:block;">الهدف الشهري</span><span>Monthly goal</span></div>
     </div>`;
   const grid = document.getElementById('heatmapGrid');
-  let seed = 42;
-  function rand(){ seed = (seed*9301+49297) % 233280; return seed/233280; }
+  // Honest rendering: we only track a cumulative streak + last study
+  // date, not a real per-day activity log, so we mark exactly the real
+  // streak's worth of recent days as active and leave everything else
+  // empty rather than fabricating a plausible-looking history.
+  const lastStudy = studentStats.lastStudyDate ? new Date(studentStats.lastStudyDate) : null;
   let html = '';
-  for(let i=0;i<182;i++){
-    const r = rand();
-    const lvl = r > .82 ? 4 : r > .65 ? 3 : r > .48 ? 2 : r > .32 ? 1 : 0;
-    html += `<div class="heatmap-cell" data-lvl="${lvl}" title="${lvl ? lvl*20+'% ' + 'شدة الدراسة' : 'لا دراسة · No study'}"></div>`;
+  for(let i = 181; i >= 0; i--){
+    let lvl = 0;
+    if(lastStudy && i < studentStats.streak) lvl = 3;
+    html += `<div class="heatmap-cell" data-lvl="${lvl}" title="${lvl ? 'شدة الدراسة' : 'لا دراسة · No study'}"></div>`;
   }
   grid.innerHTML = html;
 }
