@@ -711,9 +711,9 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
                 <div class="ring-center"><b id="heroRingLabel">68%</b><span><span class="arabic" style="display:block; font-size:.9em;">الهدف الاسبوعي</span>Weekly goal</span></div>
               </div>
               <div style="flex:1; min-width:240px;">
-                <span class="chip gold"><span class="arabic">مستوى ٣</span> · Level 3 · Intermediate</span>
+                <span class="chip gold" id="heroLevelChip"><span class="arabic">مستوى ١</span> · Level 1 · Beginner</span>
                 <h2 style="margin-top:12px; font-size:1.5rem;"><span class="arabic" style="display:block; font-size:.7em; font-weight:400; color:var(--text-secondary); margin-bottom:2px;">كمل من حيث توقفت</span>Resume where you left off</h2>
-                <p style="margin-top:8px; color:var(--text-secondary); font-size:.9rem;"><span class="arabic">مقهى القهوة · طلب القهوة</span> · Coffee Shop English · Ordering Coffee</p>
+                <p style="margin-top:8px; color:var(--text-secondary); font-size:.9rem;" id="heroResumeText"></p>
                 <div style="display:flex; gap:14px; margin-top:18px; flex-wrap:wrap;">
                   <button class="btn-gold magnetic" data-goto-view="lessonOfDay"><span class="arabic">كمل التعلم</span> · Resume Learning</button>
                   <span class="chip" style="align-self:center;"><span class="arabic">تقريبا ٨ دقائق متبقية</span> · Est. 8 min remaining</span>
@@ -728,16 +728,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
             <div style="width:74px; height:74px; border-radius:16px; background:linear-gradient(135deg, rgba(200,169,106,.22), rgba(168,131,69,.14)); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
               <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.7"><path d="M8 5v14l11-7z"/></svg>
             </div>
-            <div style="flex:1; min-width:220px;">
-              <span class="chip emerald">Coffee Shop English</span>
-              <h3 style="margin-top:10px; font-size:1.15rem;">Ordering Coffee</h3>
-              <div style="display:flex; align-items:center; gap:12px; margin-top:12px;">
-                <div class="progress-track" style="flex:1; max-width:280px;"><span class="progress-fill" data-fill="64" style="width:0%;"></span></div>
-                <span style="font-size:.76rem; color:var(--text-muted);">64% · 14 min lesson</span>
-              </div>
-              <p style="margin-top:8px; font-size:.76rem; color:var(--text-muted);">Last studied yesterday at 8:40 PM</p>
-            </div>
-            <button class="btn-outline" data-goto-view="lessonOfDay">Resume</button>
+            <div style="flex:1; min-width:220px;" id="continueLearningBody"></div>
           </div>
 
           <!-- DAILY EXPERIENCE -->
@@ -753,7 +744,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
           <div class="card" style="display:flex; gap:36px; flex-wrap:wrap; align-items:center; justify-content:space-between;">
             <div style="display:flex; gap:30px; flex-wrap:wrap;">
               <div style="text-align:center;">
-                <div class="ring-wrap small"><svg viewBox="0 0 64 64"><circle class="track" cx="32" cy="32" r="26"></circle><circle class="prog" cx="32" cy="32" r="26" stroke-dasharray="163" style="stroke-dashoffset:52;"></circle></svg><div class="ring-center"><b>68%</b></div></div>
+                <div class="ring-wrap small"><svg viewBox="0 0 64 64"><circle class="track" cx="32" cy="32" r="26"></circle><circle class="prog" id="overallCompletionRing" cx="32" cy="32" r="26" stroke-dasharray="163" style="stroke-dashoffset:163;"></circle></svg><div class="ring-center"><b id="overallCompletionPct">0%</b></div></div>
                 <span style="font-size:.72rem; color:var(--text-muted); display:block; margin-top:8px;">Overall Completion</span>
               </div>
               <div style="text-align:center;">
@@ -865,11 +856,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
       <aside class="context-panel" id="contextPanel">
         <div class="context-block">
           <h4><span class="arabic">الدرس القادم</span> · Upcoming Lesson</h4>
-          <div class="card-elevated" style="padding:16px; border-radius:14px; border:1px solid var(--border);">
-            <span class="chip gold">Tomorrow</span>
-            <p style="margin-top:8px; font-size:.86rem; font-family:'Fraunces',serif;">American Slang: Everyday Expressions</p>
-            <p style="margin-top:4px; font-size:.74rem; color:var(--text-muted);">12 min · Intermediate</p>
-          </div>
+          <div id="ctxUpcomingLesson"></div>
         </div>
 
         <div class="context-block" style="display:none;">
@@ -1049,6 +1036,8 @@ function applyStudentStateRow(row){
   syncAchievements();
   syncHeroStats();
   renderNotifications();
+  renderUpcomingLesson();
+  renderContinueLearning();
   const topXp = document.getElementById('topXp');
   if(topXp) topXp.textContent = studentStats.xp.toLocaleString();
   const streakTxt = document.getElementById('sidebarStreakTxt');
@@ -1067,6 +1056,8 @@ function clearStudentState(){
   syncAchievements();
   syncHeroStats();
   renderNotifications();
+  renderUpcomingLesson();
+  renderContinueLearning();
 }
 async function loadStudentState(){
   // Source of truth is Supabase, keyed by auth.uid(), never localStorage,
@@ -1399,11 +1390,8 @@ TUTOR_QUICK_ACTIONS.forEach(q => {
 
 /* ---- conversation store (local, seeded) ---- */
 function defaultTutorConvos(){ return [
-  {id:'c1', title:'Present perfect vs past simple', pinned:true, fav:false, messages:[
+  {id:'c1', title:'New conversation', pinned:false, fav:false, messages:[
     {who:'firas', kind:'plain', text:"مرحبا، انا فراس، مدربك الخاص باللغة الانجليزية. اسألني عن القواعد او المفردات او النطق او اي شيء من درس اليوم.<br>Hi, I'm Firas, your private English coach. Ask me about grammar, vocabulary, pronunciation, or anything from today's lesson."}
-  ]},
-  {id:'c2', title:'Coffee shop roleplay', pinned:false, fav:true, messages:[
-    {who:'firas', kind:'plain', text:"خلنا نتمرن على طلب قهوة. انا بمثل دور الباريستا وانت الزبون. جاهز؟<br>Let's practice ordering coffee. I'll play the barista, you play the customer. Ready?"}
   ]},
 ]; }
 let tutorConvos = defaultTutorConvos();
@@ -1645,8 +1633,8 @@ paletteResults.addEventListener('click', e => {
    CONTEXT PANEL WIDGETS
    ============================================================ */
 /* saved vocabulary + notes (local persistence, seeded) */
-function defaultVocabStore(){ return [{en:'Reservation', ar:'حجز'}, {en:'Confident', ar:'واثق'}]; }
-function defaultNotesStore(){ return [{text:'Remember: present perfect for unfinished time.'}]; }
+function defaultVocabStore(){ return []; }
+function defaultNotesStore(){ return []; }
 let vocabStore = defaultVocabStore();
 let notesStore = defaultNotesStore();
 function renderCtxLists(){
@@ -2187,6 +2175,8 @@ function markLessonComplete(academyId, lessonId){
   syncAchievements();
   syncHeroStats();
   renderNotifications();
+  renderUpcomingLesson();
+  renderContinueLearning();
   toast('<span class="arabic">اكتمل الدرس. عمل رائع</span> · Lesson complete. Great work.'); confettiBurst();
 }
 function defaultStudentStats(){ return { xp: 0, streak: 0, longestStreak: 0, lastStudyDate: null }; }
@@ -3145,12 +3135,12 @@ let studentPrefs = defaultStudentPrefs();
 function saveStudentPrefs(){ persistStudentState(); }
 
 const SKILL_SCORES = [
-  {en:'Grammar', ar:'القواعد', value:74},
-  {en:'Speaking', ar:'المحادثة', value:61},
-  {en:'Pronunciation', ar:'النطق', value:68},
-  {en:'Listening', ar:'الاستماع', value:55},
-  {en:'Reading', ar:'القراءة', value:80},
-  {en:'Writing', ar:'الكتابة', value:47},
+  {en:'Grammar', ar:'القواعد', academyId:'grammar-academy'},
+  {en:'Speaking', ar:'المحادثة', academyId:'speaking-studio'},
+  {en:'Pronunciation', ar:'النطق', academyId:'american-accent-lab'},
+  {en:'Listening', ar:'الاستماع', academyId:'listening-lounge'},
+  {en:'Reading', ar:'القراءة', academyId:'reading-corner'},
+  {en:'Writing', ar:'الكتابة', academyId:'writing-workshop'},
 ];
 
 const ACHIEVEMENTS = [
@@ -3188,6 +3178,48 @@ function computeAchievementEarned(id){
   }
 }
 function syncAchievements(){ ACHIEVEMENTS.forEach(a => { a.earned = computeAchievementEarned(a.id); }); }
+function renderUpcomingLesson(){
+  const el = document.getElementById('ctxUpcomingLesson');
+  if(!el) return;
+  const inProgress = ACADEMIES.find(a => a.progress > 0 && a.progress < 100);
+  el.innerHTML = inProgress
+    ? `<div class="card-elevated" style="padding:16px; border-radius:14px; border:1px solid var(--border);">
+        <span class="chip gold"><span class="arabic">قيد التقدم</span> · In Progress</span>
+        <p style="margin-top:8px; font-size:.86rem; font-family:'Fraunces',serif;">${inProgress.en}</p>
+        <p class="arabic" style="margin-top:2px; font-size:.8rem; color:var(--text-secondary);">${inProgress.ar}</p>
+        <p style="margin-top:4px; font-size:.74rem; color:var(--text-muted);">${inProgress.progress}% <span class="arabic">مكتمل</span> · complete</p>
+      </div>`
+    : `<div class="card-elevated" style="padding:16px; border-radius:14px; border:1px solid var(--border);">
+        <p class="arabic" style="font-size:.84rem; color:var(--text-muted);">ما بدأت اي اكاديمية بعد</p>
+        <p style="margin-top:4px; font-size:.8rem; color:var(--text-muted);">No lesson in progress yet, start an academy from the Library.</p>
+      </div>`;
+}
+function renderContinueLearning(){
+  const inProgress = ACADEMIES.find(a => a.progress > 0 && a.progress < 100);
+  const level = 1 + Math.floor(studentStats.xp / 500);
+  const levelLabelEn = level <= 2 ? 'Beginner' : level <= 5 ? 'Intermediate' : 'Advanced';
+  const levelLabelAr = level <= 2 ? 'مبتدئ' : level <= 5 ? 'متوسط' : 'متقدم';
+  const levelChip = document.getElementById('heroLevelChip');
+  if(levelChip) levelChip.innerHTML = `<span class="arabic">مستوى ${level}</span> · Level ${level} · ${levelLabelEn}`;
+
+  const resumeText = document.getElementById('heroResumeText');
+  const card = document.getElementById('continueLearningCard');
+  const body = document.getElementById('continueLearningBody');
+  if(inProgress){
+    if(resumeText) resumeText.innerHTML = `<span class="arabic">${inProgress.ar}</span> · ${inProgress.en}`;
+    if(card) card.style.display = '';
+    if(body) body.innerHTML = `
+      <span class="chip emerald">${inProgress.en}</span>
+      <div style="display:flex; align-items:center; gap:12px; margin-top:12px;">
+        <div class="progress-track" style="flex:1; max-width:280px;"><span class="progress-fill" style="width:${inProgress.progress}%;"></span></div>
+        <span style="font-size:.76rem; color:var(--text-muted);">${inProgress.progress}%</span>
+      </div>
+      <button class="btn-outline" data-goto-view="lessonOfDay" style="margin-top:12px;"><span class="arabic">كمل</span> · Resume</button>`;
+  }else{
+    if(resumeText) resumeText.innerHTML = `<span class="arabic">ما بدأت اي درس بعد</span> · No lesson started yet.`;
+    if(card) card.style.display = 'none';
+  }
+}
 function syncHeroStats(){
   const today = new Date().toISOString().slice(0,10);
   const studiedToday = studentStats.lastStudyDate === today;
@@ -3316,11 +3348,11 @@ function renderProfile(){
     if(val && val.trim()){ studentPrefs.goal = val.trim(); saveStudentPrefs(); document.getElementById('profileGoalText').textContent = studentPrefs.goal; toast('<span class="arabic">تم تحديث هدف التعلم</span> · Learning goal updated'); }
   });
 
-  document.getElementById('skillScoresList').innerHTML = SKILL_SCORES.map(s => `
+  document.getElementById('skillScoresList').innerHTML = SKILL_SCORES.map(s => { const v = academyProgressById(s.academyId); return `
     <div>
-      <div style="display:flex; justify-content:space-between; font-size:.8rem; margin-bottom:6px;"><span>${s.en} · <span class="arabic">${s.ar}</span></span><b>${s.value}%</b></div>
-      <div class="progress-track"><span class="progress-fill" style="width:${s.value}%;"></span></div>
-    </div>`).join('');
+      <div style="display:flex; justify-content:space-between; font-size:.8rem; margin-bottom:6px;"><span>${s.en} · <span class="arabic">${s.ar}</span></span><b>${v}%</b></div>
+      <div class="progress-track"><span class="progress-fill" style="width:${v}%;"></span></div>
+    </div>`; }).join('');
 
   document.getElementById('profileFavList').innerHTML = vocabStore.length
     ? vocabStore.map(v => `<div class="mini-list-item"><div class="ml-en">${v.en}</div><div class="ml-ar">${v.ar}</div></div>`).join('')
