@@ -1116,19 +1116,25 @@ window.addEventListener('load', async () => {
     await revealApp(null);
     return;
   }
+  let session;
   try{
     const { data } = await c.auth.getSession();
-    if(!data || !data.session){
-      window.location.href = 'login.html';
-      return;
-    }
-    await revealApp(data.session.user);
-    c.auth.onAuthStateChange((event, session) => {
-      if(event === 'SIGNED_OUT' || !session){ window.location.href = 'login.html'; }
-    });
+    session = data && data.session;
   }catch(err){
     window.location.href = 'login.html';
+    return;
   }
+  if(!session){
+    window.location.href = 'login.html';
+    return;
+  }
+  // Anything that throws past this point is a real app bug, not a logout -
+  // it must never be misread as an auth failure and bounce the user back
+  // to login.html (that's what caused the reload loop last time).
+  await revealApp(session.user);
+  c.auth.onAuthStateChange((event, session) => {
+    if(event === 'SIGNED_OUT' || !session){ window.location.href = 'login.html'; }
+  });
 });
 
 document.getElementById('logoutBtn').addEventListener('click', async () => {
@@ -1340,7 +1346,6 @@ function renderDailyGrid(){
   });
   if(window.lucide) lucide.createIcons();
 }
-renderDailyGrid();
 
 const quickActions = [
   {icon:'play-circle', label:'Continue Learning', view:'lessonOfDay'},
