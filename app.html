@@ -679,7 +679,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
         <div class="user-menu-wrap">
           <button class="user-menu-trigger" id="userMenuBtn">
             <span class="avatar-circle" id="avatarInitial">M</span>
-            <span class="user-meta"><b id="userNameLabel">Mohammed</b><span id="userLevelLabel"><span class="arabic">مستوى ٣ · متوسط</span></span></span>
+            <span class="user-meta"><b id="userNameLabel">Mohammed</b><span id="userLevelLabel"></span></span>
           </button>
           <div class="dropdown" id="userDropdown">
             <button class="dropdown-item" data-view="profile"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg> <span><span class="arabic" style="display:block;">الملف الشخصي</span><span style="display:block; font-size:.82em; color:var(--text-muted);">View Profile</span></span></button>
@@ -712,10 +712,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
               </div>
               <div style="flex:1; min-width:240px;">
                 <span class="chip gold" id="heroLevelChip"><span class="arabic">مستوى ١</span> · Level 1 · Beginner</span>
-                <h2 style="margin-top:12px; font-size:1.5rem;"><span class="arabic" style="display:block; font-size:.7em; font-weight:400; color:var(--text-secondary); margin-bottom:2px;">كمل من حيث توقفت</span>Resume where you left off</h2>
+                <h2 style="margin-top:12px; font-size:1.5rem;" id="heroResumeTitle"><span class="arabic" style="display:block; font-size:.7em; font-weight:400; color:var(--text-secondary); margin-bottom:2px;">كمل من حيث توقفت</span>Resume where you left off</h2>
                 <p style="margin-top:8px; color:var(--text-secondary); font-size:.9rem;" id="heroResumeText"></p>
                 <div style="display:flex; gap:14px; margin-top:18px; flex-wrap:wrap;">
-                  <button class="btn-gold magnetic" data-goto-view="lessonOfDay"><span class="arabic">كمل التعلم</span> · Resume Learning</button>
+                  <button class="btn-gold magnetic" data-goto-view="lessonOfDay" id="heroResumeBtn"><span class="arabic">كمل التعلم</span> · Resume Learning</button>
                   <span class="chip" style="align-self:center;"><span class="arabic">تقريبا ٨ دقائق متبقية</span> · Est. 8 min remaining</span>
                 </div>
               </div>
@@ -1038,6 +1038,7 @@ function applyStudentStateRow(row){
   renderNotifications();
   renderUpcomingLesson();
   renderContinueLearning();
+  renderDailyGrid();
   const topXp = document.getElementById('topXp');
   if(topXp) topXp.textContent = studentStats.xp.toLocaleString();
   const streakTxt = document.getElementById('sidebarStreakTxt');
@@ -1058,6 +1059,7 @@ function clearStudentState(){
   renderNotifications();
   renderUpcomingLesson();
   renderContinueLearning();
+  renderDailyGrid();
 }
 async function loadStudentState(){
   // Source of truth is Supabase, keyed by auth.uid(), never localStorage,
@@ -1319,20 +1321,26 @@ const dailyItems = [
   {icon:'mic', title:'Pronunciation Challenge', body:'TH sound practice', sub:'3 words · 2 min', view:'pronunciation'},
   {icon:'message-circle', title:'Speaking Challenge', body:'Order a coffee', sub:'Roleplay · Coffee Shop English', view:'speaking'},
   {icon:'spell-check', title:'Grammar Tip', body:'Present perfect vs past simple', sub:'A 90 second refresher', view:'grammar'},
-  {icon:'bot', title:'From Tutor Firas', body:'"You are close to a new streak record."', sub:'Personal note', view:'tutor'},
+  {icon:'bot', title:'From Tutor Firas', body: studentStats.streak >= 2 ? `You're on a ${studentStats.streak} day streak, keep going!` : 'Complete a lesson today to start your streak.', sub:'', view:'tutor'},
 ];
 const dailyGrid = document.getElementById('dailyExperienceGrid');
-dailyItems.forEach(d => {
-  const card = document.createElement('div');
-  card.className = 'card hoverable';
-  card.dataset.view = d.view;
-  card.innerHTML = `
-    <div style="width:38px;height:38px;border-radius:11px;background:rgba(200,169,106,.14);color:var(--gold);display:flex;align-items:center;justify-content:center;margin-bottom:16px;"><i data-lucide="${d.icon}" width="18" height="18"></i></div>
-    <span class="chip" style="margin-bottom:10px; display:inline-block;">${d.title}</span>
-    <h4 style="font-size:1.02rem;">${d.body}</h4>
-    <p style="margin-top:8px; font-size:.78rem; color:var(--text-muted);">${d.sub}</p>`;
-  dailyGrid.appendChild(card);
-});
+function renderDailyGrid(){
+  dailyItems[7].body = studentStats.streak >= 2 ? `You're on a ${studentStats.streak} day streak, keep going!` : 'Complete a lesson today to start your streak.';
+  dailyGrid.innerHTML = '';
+  dailyItems.forEach(d => {
+    const card = document.createElement('div');
+    card.className = 'card hoverable';
+    card.dataset.view = d.view;
+    card.innerHTML = `
+      <div style="width:38px;height:38px;border-radius:11px;background:rgba(200,169,106,.14);color:var(--gold);display:flex;align-items:center;justify-content:center;margin-bottom:16px;"><i data-lucide="${d.icon}" width="18" height="18"></i></div>
+      <span class="chip" style="margin-bottom:10px; display:inline-block;">${d.title}</span>
+      <h4 style="font-size:1.02rem;">${d.body}</h4>
+      <p style="margin-top:8px; font-size:.78rem; color:var(--text-muted);">${d.sub}</p>`;
+    dailyGrid.appendChild(card);
+  });
+  if(window.lucide) lucide.createIcons();
+}
+renderDailyGrid();
 
 const quickActions = [
   {icon:'play-circle', label:'Continue Learning', view:'lessonOfDay'},
@@ -2177,6 +2185,7 @@ function markLessonComplete(academyId, lessonId){
   renderNotifications();
   renderUpcomingLesson();
   renderContinueLearning();
+  renderDailyGrid();
   toast('<span class="arabic">اكتمل الدرس. عمل رائع</span> · Lesson complete. Great work.'); confettiBurst();
 }
 function defaultStudentStats(){ return { xp: 0, streak: 0, longestStreak: 0, lastStudyDate: null }; }
@@ -3130,7 +3139,11 @@ viewRenderers.tutor = renderTutorPage;
 /* ============================================================
    PART 3, PROFILE, ACHIEVEMENTS, CERTIFICATES, CALENDAR DATA
    ============================================================ */
-function defaultStudentPrefs(){ return { goal: 'Speak confidently in work meetings and everyday conversations within 6 months.', weeklyGoalLessons: 5, monthlyGoalLessons: 20 }; }
+function defaultStudentPrefs(){ return { goal: '', weeklyGoalLessons: 5, monthlyGoalLessons: 20 }; }
+function isFirstTimeStudent(){
+  return studentStats.xp === 0 && studentStats.streak === 0 && completedLessons.size === 0
+    && bookmarks.length === 0 && Object.keys(lessonNotes).length === 0;
+}
 let studentPrefs = defaultStudentPrefs();
 function saveStudentPrefs(){ persistStudentState(); }
 
@@ -3194,30 +3207,56 @@ function renderUpcomingLesson(){
         <p style="margin-top:4px; font-size:.8rem; color:var(--text-muted);">No lesson in progress yet, start an academy from the Library.</p>
       </div>`;
 }
-function renderContinueLearning(){
-  const inProgress = ACADEMIES.find(a => a.progress > 0 && a.progress < 100);
+function levelInfo(){
   const level = 1 + Math.floor(studentStats.xp / 500);
-  const levelLabelEn = level <= 2 ? 'Beginner' : level <= 5 ? 'Intermediate' : 'Advanced';
-  const levelLabelAr = level <= 2 ? 'مبتدئ' : level <= 5 ? 'متوسط' : 'متقدم';
-  const levelChip = document.getElementById('heroLevelChip');
-  if(levelChip) levelChip.innerHTML = `<span class="arabic">مستوى ${level}</span> · Level ${level} · ${levelLabelEn}`;
+  const en = level <= 2 ? 'Beginner' : level <= 5 ? 'Intermediate' : 'Advanced';
+  const ar = level <= 2 ? 'مبتدئ' : level <= 5 ? 'متوسط' : 'متقدم';
+  return {level, en, ar};
+}
+function renderContinueLearning(){
+  const firstTime = isFirstTimeStudent();
+  const inProgress = ACADEMIES.find(a => a.progress > 0 && a.progress < 100);
+  const {level, en: levelEn} = levelInfo();
 
+  const heroLevelChip = document.getElementById('heroLevelChip');
+  const topLevel = document.getElementById('userLevelLabel');
+  const profileLevelChip = document.getElementById('profileLevelChip');
+  const levelHtml = `<span class="arabic">مستوى ${level}</span> · Level ${level} · ${levelEn}`;
+  if(heroLevelChip) heroLevelChip.innerHTML = firstTime ? '' : levelHtml;
+  if(topLevel) topLevel.innerHTML = firstTime ? '' : `<span class="arabic">مستوى ${level} · ${levelInfo().ar}</span>`;
+  if(profileLevelChip) profileLevelChip.innerHTML = firstTime ? '' : levelHtml;
+
+  const profileLessonChip = document.getElementById('profileCurrentLessonChip');
+  if(profileLessonChip) profileLessonChip.innerHTML = (!firstTime && inProgress) ? `<span class="arabic">${inProgress.ar}</span> · ${inProgress.en}` : '';
+
+  const heroTitle = document.getElementById('heroResumeTitle');
   const resumeText = document.getElementById('heroResumeText');
+  const resumeBtn = document.getElementById('heroResumeBtn');
   const card = document.getElementById('continueLearningCard');
   const body = document.getElementById('continueLearningBody');
-  if(inProgress){
-    if(resumeText) resumeText.innerHTML = `<span class="arabic">${inProgress.ar}</span> · ${inProgress.en}`;
-    if(card) card.style.display = '';
-    if(body) body.innerHTML = `
-      <span class="chip emerald">${inProgress.en}</span>
-      <div style="display:flex; align-items:center; gap:12px; margin-top:12px;">
-        <div class="progress-track" style="flex:1; max-width:280px;"><span class="progress-fill" style="width:${inProgress.progress}%;"></span></div>
-        <span style="font-size:.76rem; color:var(--text-muted);">${inProgress.progress}%</span>
-      </div>
-      <button class="btn-outline" data-goto-view="lessonOfDay" style="margin-top:12px;"><span class="arabic">كمل</span> · Resume</button>`;
-  }else{
-    if(resumeText) resumeText.innerHTML = `<span class="arabic">ما بدأت اي درس بعد</span> · No lesson started yet.`;
+
+  if(firstTime){
+    if(heroTitle) heroTitle.innerHTML = `<span class="arabic" style="display:block; font-size:.7em; font-weight:400; color:var(--text-secondary); margin-bottom:2px;">مرحباً بك في Tutor Firas</span>Welcome to Tutor Firas`;
+    if(resumeText) resumeText.innerHTML = `<span class="arabic">لنبدأ رحلتك في تعلم الانجليزي. اكمل درسك الاول لفتح لوحتك الشخصية.</span><br>Let's begin your English journey. Complete your first lesson to unlock your personalized dashboard.`;
+    if(resumeBtn) resumeBtn.innerHTML = `<span class="arabic">ابدأ درسك الاول</span> · Start Your First Lesson`;
     if(card) card.style.display = 'none';
+  }else{
+    if(heroTitle) heroTitle.innerHTML = `<span class="arabic" style="display:block; font-size:.7em; font-weight:400; color:var(--text-secondary); margin-bottom:2px;">كمل من حيث توقفت</span>Resume where you left off`;
+    if(resumeBtn) resumeBtn.innerHTML = `<span class="arabic">كمل التعلم</span> · Resume Learning`;
+    if(inProgress){
+      if(resumeText) resumeText.innerHTML = `<span class="arabic">${inProgress.ar}</span> · ${inProgress.en}`;
+      if(card) card.style.display = '';
+      if(body) body.innerHTML = `
+        <span class="chip emerald">${inProgress.en}</span>
+        <div style="display:flex; align-items:center; gap:12px; margin-top:12px;">
+          <div class="progress-track" style="flex:1; max-width:280px;"><span class="progress-fill" style="width:${inProgress.progress}%;"></span></div>
+          <span style="font-size:.76rem; color:var(--text-muted);">${inProgress.progress}%</span>
+        </div>
+        <button class="btn-outline" data-goto-view="lessonOfDay" style="margin-top:12px;"><span class="arabic">كمل</span> · Resume</button>`;
+    }else{
+      if(resumeText) resumeText.innerHTML = `<span class="arabic">ما بدأت اي درس بعد</span> · No lesson started yet.`;
+      if(card) card.style.display = 'none';
+    }
   }
 }
 function syncHeroStats(){
@@ -3286,8 +3325,8 @@ function renderProfile(){
       <span class="avatar-circle" id="profileAvatarInitial" style="width:64px; height:64px; font-size:1.5rem;"></span>
       <div style="flex:1; min-width:200px;">
         <h3 id="profileNameDisplay" style="font-size:1.2rem;"></h3>
-        <span class="chip gold" style="margin-top:8px; display:inline-block;"><span class="arabic">مستوى ٣</span> · Level 3 · Intermediate</span>
-        <span class="chip" style="margin-top:8px; margin-left:8px; display:inline-block;"><span class="arabic">مقهى القهوة</span> · Coffee Shop English · Ordering Coffee</span>
+        <span class="chip gold" style="margin-top:8px; display:inline-block;" id="profileLevelChip"></span>
+        <span class="chip" style="margin-top:8px; margin-left:8px; display:inline-block;" id="profileCurrentLessonChip"></span>
       </div>
       <button class="btn-outline" id="editGoalBtn"><span class="arabic">تعديل هدف التعلم</span> · Edit learning goal</button>
     </div>
@@ -3340,7 +3379,9 @@ function renderProfile(){
     {v:studentStats.xp.toLocaleString(), l:'Total XP', ar:'اجمالي النقاط'},
   ].map(s => `<div class="stat-pill"><b>${s.v}</b><span class="arabic" style="display:block;">${s.ar}</span><span>${s.l}</span></div>`).join('');
 
-  document.getElementById('profileGoalText').textContent = studentPrefs.goal;
+  document.getElementById('profileGoalText').innerHTML = studentPrefs.goal
+    ? studentPrefs.goal
+    : `<span class="arabic">اختر هدفك التعليمي لتخصيص تجربتك.</span><br>Choose your learning goal to personalize your experience.`;
   document.getElementById('weeklyGoalNum').textContent = studentPrefs.weeklyGoalLessons;
   document.getElementById('monthlyGoalNum').textContent = studentPrefs.monthlyGoalLessons;
   document.getElementById('editGoalBtn').addEventListener('click', () => {
@@ -3348,11 +3389,14 @@ function renderProfile(){
     if(val && val.trim()){ studentPrefs.goal = val.trim(); saveStudentPrefs(); document.getElementById('profileGoalText').textContent = studentPrefs.goal; toast('<span class="arabic">تم تحديث هدف التعلم</span> · Learning goal updated'); }
   });
 
-  document.getElementById('skillScoresList').innerHTML = SKILL_SCORES.map(s => { const v = academyProgressById(s.academyId); return `
-    <div>
-      <div style="display:flex; justify-content:space-between; font-size:.8rem; margin-bottom:6px;"><span>${s.en} · <span class="arabic">${s.ar}</span></span><b>${v}%</b></div>
-      <div class="progress-track"><span class="progress-fill" style="width:${v}%;"></span></div>
-    </div>`; }).join('');
+  document.getElementById('skillScoresList').innerHTML = isFirstTimeStudent()
+    ? SKILL_SCORES.map(s => `
+        <div style="display:flex; justify-content:space-between; font-size:.8rem;"><span>${s.en} · <span class="arabic">${s.ar}</span></span><span style="color:var(--text-muted);"><span class="arabic">لا توجد بيانات كافية بعد</span> · Not enough data yet</span></div>`).join('')
+    : SKILL_SCORES.map(s => { const v = academyProgressById(s.academyId); return `
+        <div>
+          <div style="display:flex; justify-content:space-between; font-size:.8rem; margin-bottom:6px;"><span>${s.en} · <span class="arabic">${s.ar}</span></span><b>${v}%</b></div>
+          <div class="progress-track"><span class="progress-fill" style="width:${v}%;"></span></div>
+        </div>`; }).join('');
 
   document.getElementById('profileFavList').innerHTML = vocabStore.length
     ? vocabStore.map(v => `<div class="mini-list-item"><div class="ml-en">${v.en}</div><div class="ml-ar">${v.ar}</div></div>`).join('')
