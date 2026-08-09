@@ -902,7 +902,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 </div>
 
 <!-- ================= TUTOR FIRAS FLOATING LAUNCHER ================= -->
-<button class="fab-firas" id="firasFab" aria-label="Open Tutor Firas">
+<button class="fab-firas" id="firasFab" aria-label="Open Tutor Firas" style="display:none;">
   <span class="fab-dot"></span>
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="7" width="18" height="12" rx="4"/><path d="M12 7V3"/><circle cx="8.5" cy="13" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="13" r="1.2" fill="currentColor" stroke="none"/><path d="M8 17h8"/></svg>
 </button>
@@ -1354,7 +1354,6 @@ function renderDailyGrid(){
 const quickActions = [
   {icon:'play-circle', label:'Continue Learning', view:'lessonOfDay'},
   {icon:'message-circle', label:'Practice Speaking', view:'speaking'},
-  {icon:'bot', label:'Ask Tutor Firas', action:'firas'},
   {icon:'book-open', label:'Review Vocabulary', view:'vocabulary'},
   {icon:'check-circle', label:'Daily Quiz', view:'lessonOfDay'},
   {icon:'calendar-days', label:'Study Calendar', view:'calendar'},
