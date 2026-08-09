@@ -1012,6 +1012,7 @@ function client(){
 }
 
 let currentUser = null;
+let studentStats = { xp: 0, streak: 0, longestStreak: 0, lastStudyDate: null };
 function uKey(base){ return currentUser ? base + '_' + currentUser.id : base; } // still used for the UI-only prefs (theme/lang) that legitimately stay local
 function defaultStudentStateRow(){
   return {
@@ -2167,7 +2168,6 @@ function lsSet(key, val){ localStorage.setItem(key, JSON.stringify(val));
   }).catch(()=>{}); }
 }
 let favorites = new Set();
-let studentStats = { xp: 0, streak: 0, longestStreak: 0, lastStudyDate: null };
 let bookmarks = [];
 let completedLessons = new Set();
 let lessonNotes = {};
