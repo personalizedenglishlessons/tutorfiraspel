@@ -779,6 +779,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
         <section class="view" id="view-listening"></section>
         <section class="view" id="view-reading"></section>
         <section class="view" id="view-writing"></section>
+        <section class="view" id="view-tutor"></section>
         <section class="view" id="view-bookmarks"></section>
 
         <!-- ================= COMING IN THE NEXT PHASE ================= -->
@@ -873,6 +874,14 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
         </div>
 
         <div class="context-block">
+          <h4><span class="arabic">المدرب فراس</span> · Tutor Firas</h4>
+          <div class="card-elevated" style="padding:16px; border-radius:14px; border:1px solid var(--border);">
+            <p id="ctxFirasQuote" style="font-size:.82rem; color:var(--text-secondary); line-height:1.6;"></p>
+            <button class="btn-ghost-sm" id="askFirasBtn" style="margin-top:10px;"><span class="arabic">اسأل فراس</span> · Ask Tutor Firas →</button>
+          </div>
+        </div>
+
+        <div class="context-block">
           <h4><span class="arabic">تقويم مصغر</span> · Mini Calendar</h4>
           <div class="mini-cal-grid" id="miniCalGrid"></div>
         </div>
@@ -892,6 +901,12 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   </div>
 </div>
 
+<!-- ================= TUTOR FIRAS FLOATING LAUNCHER ================= -->
+<button class="fab-firas" id="firasFab" aria-label="Open Tutor Firas" style="display:none;">
+  <span class="fab-dot"></span>
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="7" width="18" height="12" rx="4"/><path d="M12 7V3"/><circle cx="8.5" cy="13" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="13" r="1.2" fill="currentColor" stroke="none"/><path d="M8 17h8"/></svg>
+</button>
+
 <!-- ================= QUICK TRANSLATE (floating, mobile-friendly) ================= -->
 <button class="fab-firas qt-fab" id="qtFab" aria-label="Open Quick Translate">
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h7M7 3v2c0 4.5-2 8-5 10M4 13c1.8 1.5 4 2 5.5 1.8M13 21l4-9 4 9M14.5 18h5"/></svg>
@@ -905,6 +920,46 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
     <textarea id="qtInput" placeholder="اكتب كلمة او جملة بالعربي او الانجليزي... / Type a word or sentence in Arabic or English..."></textarea>
     <button class="btn-ghost-sm" id="qtBtn" style="margin-top:8px;"><span class="arabic">ترجم</span> · Translate</button>
     <div class="qt-result" id="qtResult"></div>
+  </div>
+</div>
+
+<!-- ================= TUTOR FIRAS DOCKED PANEL ================= -->
+<div class="tutor-dock" id="tutorDock" role="dialog" aria-label="Tutor Firas">
+  <div class="tutor-sheet-handle"><span></span></div>
+  <div class="tutor-head">
+    <span class="avatar-circle" style="background:linear-gradient(135deg,var(--gold-soft),var(--bronze));">F</span>
+    <div>
+      <b style="font-family:'Fraunces',serif; font-size:1.02rem; display:block;">Tutor Firas</b>
+      <span class="arabic" style="font-size:.72rem; color:var(--text-muted);">المدرب فراس · متصل الان</span>
+    </div>
+    <div class="tutor-head-controls">
+      <button class="tutor-icon-btn" id="tutorSidebarToggle" aria-label="Toggle conversation list" title="Conversations">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg>
+      </button>
+      <button class="tutor-icon-btn" id="tutorExpandBtn" aria-label="Expand" title="Expand">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+      </button>
+      <button class="tutor-icon-btn" id="tutorFullscreenBtn" aria-label="Fullscreen" title="Fullscreen">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/></svg>
+      </button>
+      <button class="tutor-icon-btn" id="tutorCloseBtn" aria-label="Close">✕</button>
+    </div>
+  </div>
+  <div class="tutor-body">
+    <aside class="tutor-sidebar" id="tutorSidebar">
+      <div class="tutor-sidebar-search"><input type="text" id="tutorConvoSearch" placeholder="ابحث في المحادثات... / Search conversations..."></div>
+      <div class="tutor-sidebar-scroll" id="tutorConvoList"></div>
+      <div style="padding:10px;"><button class="btn-ghost-sm" id="tutorNewConvo" style="width:100%; justify-content:center; border:1px solid var(--border); border-radius:10px;">+ <span class="arabic">محادثة جديدة</span> · New conversation</button></div>
+    </aside>
+    <div class="tutor-main">
+      <div class="tutor-chips-row" id="tutorChipsRow"></div>
+      <div id="firasMessages" class="tutor-messages"></div>
+      <div id="firasUsageCounter" style="font-size:.72rem; color:var(--text-muted); padding:0 4px 6px;"></div>
+      <div class="tutor-input-row">
+        <input type="text" id="firasInput" placeholder="اسأل فراس اي شيء... / Ask Tutor Firas anything...">
+        <button class="btn-gold" id="firasSendBtn" style="padding:11px 18px;"><span class="arabic">ارسال</span> · Send</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -964,7 +1019,7 @@ function defaultStudentStateRow(){
     xp: 0, streak: 0, longest_streak: 0, last_study_date: null,
     completed_lessons: [], favorites: [], bookmarks: [], lesson_notes: {},
     vocab_store: defaultVocabStore(), notes_store: defaultNotesStore(),
-    student_prefs: defaultStudentPrefs(),
+    tutor_convos: defaultTutorConvos(), student_prefs: defaultStudentPrefs(),
   };
 }
 function applyStudentStateRow(row){
@@ -975,6 +1030,8 @@ function applyStudentStateRow(row){
   lessonNotes = row.lesson_notes||{};
   vocabStore = (row.vocab_store && row.vocab_store.length) ? row.vocab_store : defaultVocabStore();
   notesStore = (row.notes_store && row.notes_store.length) ? row.notes_store : defaultNotesStore();
+  tutorConvos = (row.tutor_convos && row.tutor_convos.length) ? row.tutor_convos : defaultTutorConvos();
+  activeConvoId = tutorConvos[0].id;
   studentPrefs = (row.student_prefs && Object.keys(row.student_prefs).length) ? row.student_prefs : defaultStudentPrefs();
   syncAcademyProgress();
   syncAchievements();
@@ -983,6 +1040,7 @@ function applyStudentStateRow(row){
   renderUpcomingLesson();
   renderContinueLearning();
   renderDailyGrid();
+  renderFirasQuote();
   const topXp = document.getElementById('topXp');
   if(topXp) topXp.textContent = studentStats.xp.toLocaleString();
   const streakTxt = document.getElementById('sidebarStreakTxt');
@@ -995,6 +1053,7 @@ function clearStudentState(){
   studentStats = defaultStudentStats();
   completedLessons = new Set(); favorites = new Set(); bookmarks = []; lessonNotes = {};
   vocabStore = defaultVocabStore(); notesStore = defaultNotesStore();
+  tutorConvos = defaultTutorConvos(); activeConvoId = tutorConvos[0].id;
   studentPrefs = defaultStudentPrefs();
   syncAcademyProgress();
   syncAchievements();
@@ -1003,6 +1062,7 @@ function clearStudentState(){
   renderUpcomingLesson();
   renderContinueLearning();
   renderDailyGrid();
+  renderFirasQuote();
 }
 async function loadStudentState(){
   // Source of truth is Supabase, keyed by auth.uid(), never localStorage,
@@ -1027,7 +1087,7 @@ async function persistStudentState(){
       user_id: currentUser.id,
       xp: studentStats.xp, streak: studentStats.streak, longest_streak: studentStats.longestStreak, last_study_date: studentStats.lastStudyDate,
       completed_lessons: [...completedLessons], favorites: [...favorites], bookmarks, lesson_notes: lessonNotes,
-      vocab_store: vocabStore, notes_store: notesStore, student_prefs: studentPrefs,
+      vocab_store: vocabStore, notes_store: notesStore, tutor_convos: tutorConvos, student_prefs: studentPrefs,
       updated_at: new Date().toISOString(),
     }, {onConflict:'user_id'});
   }catch(e){ /* best-effort, the in-memory state for this session is still correct either way */ }
@@ -1151,6 +1211,7 @@ const navGroups = [
     {id:'writing', en:'Writing Workshop', ar:'ورشة الكتابة', icon:'pen-line'},
   ]},
   { items:[
+    {id:'tutor', en:'Tutor Firas', ar:'المدرب فراس', icon:'bot'},
     {id:'bookmarks', en:'Bookmarks', ar:'المفضلة', icon:'bookmark'},
     {id:'achievements', en:'Achievements', ar:'الانجازات', icon:'award'},
     {id:'certificates', en:'Certificates', ar:'الشهادات', icon:'graduation-cap'},
@@ -1305,11 +1366,233 @@ quickActions.forEach(q => {
   card.className = 'card hoverable';
   card.style.textAlign = 'left';
   if(q.view) card.dataset.view = q.view;
+  if(q.action === 'firas') card.id = 'qaFirasBtn';
   card.innerHTML = `<div style="width:36px;height:36px;border-radius:10px;background:rgba(200,169,106,.14);color:var(--gold);display:flex;align-items:center;justify-content:center;margin-bottom:14px;"><i data-lucide="${q.icon}" width="17" height="17"></i></div><span style="font-size:.86rem; font-weight:600;">${q.label}</span>`;
   qaGrid.appendChild(card);
 });
 
+/* ============================================================
+   TUTOR FIRAS, docked AI chat engine
+   ============================================================ */
+const firasMessages = document.getElementById('firasMessages');
+const tutorDock = document.getElementById('tutorDock');
+
+/* ---- quick actions (grouped) ---- */
+const TUTOR_QUICK_ACTIONS = [
+  {icon:'check-circle', en:'Correct my sentence', ar:'صحح جملتي'},
+  {icon:'languages', en:'Translate this', ar:'ترجم هذا'},
+  {icon:'spell-check', en:'Explain this grammar', ar:'اشرح القاعدة'},
+  {icon:'book-open', en:'Teach me vocabulary', ar:'علمني مفردات'},
+  {icon:'mic', en:'Teach me pronunciation', ar:'علمني النطق'},
+  {icon:'message-circle', en:'Practice speaking', ar:'خلني احادثك'},
+  {icon:'drama', en:'Roleplay: Job interview', ar:'تمثيل: مقابلة عمل'},
+  {icon:'coffee', en:'Roleplay: Coffee shop', ar:'تمثيل: كوفي شوب'},
+  {icon:'plane', en:'Roleplay: Airport', ar:'تمثيل: المطار'},
+  {icon:'hotel', en:'Roleplay: Hotel', ar:'تمثيل: الفندق'},
+  {icon:'shopping-bag', en:'Roleplay: Shopping', ar:'تمثيل: التسوق'},
+  {icon:'briefcase', en:'Business English', ar:'انجليزي الاعمال'},
+  {icon:'quote', en:'American slang', ar:'سلانج امريكي'},
+  {icon:'sparkle', en:'Idioms', ar:'تعابير اصطلاحية'},
+  {icon:'shuffle', en:'Phrasal verbs', ar:'افعال مركبة'},
+  {icon:'calendar-check', en:'Build my study plan', ar:'خطة دراسة لي'},
+];
+const chipsRow = document.getElementById('tutorChipsRow');
+TUTOR_QUICK_ACTIONS.forEach(q => {
+  const b = document.createElement('button');
+  b.className = 'tutor-chip';
+  b.innerHTML = `<i data-lucide="${q.icon}" width="14" height="14"></i><span>${q.en}</span>`;
+  b.addEventListener('click', () => sendFirasPrompt(q.en));
+  chipsRow.appendChild(b);
+});
+
 /* ---- conversation store (local, seeded) ---- */
+function defaultTutorConvos(){ return [
+  {id:'c1', title:'New conversation', pinned:false, fav:false, messages:[
+    {who:'firas', kind:'plain', text:"مرحبا، انا فراس، مدربك الخاص باللغة الانجليزية. اسألني عن القواعد او المفردات او النطق او اي شيء من درس اليوم.<br>Hi, I'm Firas, your private English coach. Ask me about grammar, vocabulary, pronunciation, or anything from today's lesson."}
+  ]},
+]; }
+let tutorConvos = defaultTutorConvos();
+let activeConvoId = tutorConvos[0].id;
+function saveConvos(){ persistStudentState(); }
+function activeConvo(){ return tutorConvos.find(c => c.id === activeConvoId) || tutorConvos[0]; }
+
+function renderConvoList(filter){
+  const list = document.getElementById('tutorConvoList');
+  const q = (filter||'').trim().toLowerCase();
+  const pinned = tutorConvos.filter(c => c.pinned && c.title.toLowerCase().includes(q));
+  const faved = tutorConvos.filter(c => c.fav && !c.pinned && c.title.toLowerCase().includes(q));
+  const recent = tutorConvos.filter(c => !c.pinned && !c.fav && c.title.toLowerCase().includes(q));
+  function row(c){
+    return `<button class="tutor-convo-item${c.id===activeConvoId?' active':''}" data-convo="${c.id}">
+      <i data-lucide="message-square" width="14" height="14"></i>
+      <span class="tc-title">${c.title}</span>
+      <i data-lucide="star" width="13" height="13" class="tc-star${c.fav?' faved':''}" data-star="${c.id}"></i>
+    </button>`;
+  }
+  list.innerHTML =
+    (pinned.length ? `<div class="tutor-sidebar-label"><span class="arabic">مثبتة</span> · Pinned</div>${pinned.map(row).join('')}` : '') +
+    (faved.length ? `<div class="tutor-sidebar-label"><span class="arabic">المفضلة</span> · Favourites</div>${faved.map(row).join('')}` : '') +
+    (recent.length ? `<div class="tutor-sidebar-label"><span class="arabic">الاخيرة</span> · Recent</div>${recent.map(row).join('')}` : '') ||
+    `<div style="padding:14px 10px; font-size:.78rem; color:var(--text-muted);"><span class="arabic">لا توجد محادثات</span> · No conversations found.</div>`;
+  if(window.lucide) lucide.createIcons();
+}
+document.getElementById('tutorConvoList').addEventListener('click', e => {
+  const star = e.target.closest('[data-star]');
+  if(star){ const c = tutorConvos.find(x => x.id === star.dataset.star); c.fav = !c.fav; saveConvos(); renderConvoList(document.getElementById('tutorConvoSearch').value); return; }
+  const item = e.target.closest('[data-convo]');
+  if(item){ activeConvoId = item.dataset.convo; saveConvos(); renderConvoList(document.getElementById('tutorConvoSearch').value); renderActiveMessages(); }
+});
+document.getElementById('tutorConvoSearch').addEventListener('input', function(){ renderConvoList(this.value); });
+document.getElementById('tutorNewConvo').addEventListener('click', () => {
+  const c = {id:'c'+Date.now(), title:'New conversation', pinned:false, fav:false, messages:[
+    {who:'firas', kind:'plain', text:"مرحبا، انا فراس. على ايش تحب تشتغل اليوم؟<br>Hi, I'm Firas. What would you like to work on?"}
+  ]};
+  tutorConvos.unshift(c); activeConvoId = c.id; saveConvos(); renderConvoList(''); renderActiveMessages();
+});
+
+function renderActiveMessages(){
+  const convo = activeConvo();
+  firasMessages.innerHTML = '';
+  convo.messages.forEach(m => appendMessageNode(m.who, m.kind, m.text));
+  firasMessages.scrollTop = firasMessages.scrollHeight;
+}
+function appendMessageNode(who, kind, html){
+  const row = document.createElement('div');
+  row.style.display = 'flex';
+  row.style.flexDirection = who === 'user' ? 'row-reverse' : 'row';
+  if(kind === 'format'){ row.innerHTML = html; }
+  else { row.innerHTML = `<div class="chat-bubble ${who==='user'?'me':'them'}">${html}</div>`; }
+  firasMessages.appendChild(row);
+  firasMessages.scrollTop = firasMessages.scrollHeight;
+  return row;
+}
+function pushAndRender(who, kind, html){
+  activeConvo().messages.push({who, kind, text:html});
+  if(activeConvo().messages.length === 2 && activeConvo().title === 'New conversation'){ /* leave default title, renamed by user context */ }
+  saveConvos();
+  return appendMessageNode(who, kind, html);
+}
+
+/* ---- dynamic sections renderer: AI decides how many sections and what they're called ---- */
+function renderFirasSections(sections){
+  return sections.map(s => `
+    <div style="margin-bottom:14px;">
+      <div style="font-size:.7rem; font-weight:700; letter-spacing:.03em; color:var(--gold-soft); margin-bottom:5px;">${escapeHtml(s.label_ar||'')}${s.label_en?' · '+escapeHtml(s.label_en):''}</div>
+      <div style="white-space:pre-wrap; line-height:1.85; unicode-bidi:plaintext;">${escapeHtml(s.body||'')}</div>
+    </div>`).join('');
+}
+function bilingualPlain(ar, en){
+  return `${ar ? `<div class="arabic" style="margin-bottom:4px;">${ar}</div>` : ''}${en||''}`;
+}
+const FIRAS_SYSTEM = `You are Tutor Firas, a friendly, patient, encouraging, professional private American English tutor for Saudi Arabian students on the premium app "Personalized English Lessons." You are a real teacher, not a chatbot: explain step by step, correct mistakes kindly, ask practice questions, and adapt to the student's level. Never say "Certainly," "As an AI," "I'd be happy to," "the model," "the API," or "the system." Instead say things like "Let's practice this together," "Good try, let's improve it," "Let's work on this step by step."
+
+LANGUAGE MIX: Arabic dominates every reply (~70% Arabic, ~20% English, ~10% Arabic-letter transliteration). Use natural Saudi Arabic (اللهجة السعودية) when explaining, avoid stiff, overly formal, textbook Arabic, and never sound like Google Translate. If the student seems like a beginner, lean even more heavily on Saudi Arabic explanation; if they write fluent English, you can lean more English with lighter Arabic support. Every English sentence must be followed immediately by its Arabic translation and Arabic-letter transliteration (never IPA, spell pronunciation using Arabic letters, e.g. "comfortable" → كَمفْتَرْبُل).
+
+ADAPT FREELY, NO FIXED TEMPLATE: build the answer from as many or as few parts as the question actually needs. Never force the same structure twice. Match focus to the question: grammar→start the explanation in Arabic, then give English examples; vocabulary→word, Saudi Arabic meaning, transliteration, a short Arabic explanation, then an example sentence with its Arabic translation; translation→natural American phrasing + literal meaning + a simple Arabic explanation + why Americans phrase it differently; pronunciation→Arabic-letter pronunciation coaching; conversation practice→become the conversation partner, correct kindly, keep it moving; writing→rewritten correction with reasons; business/IELTS/travel→become that specialized coach. No length limit, write as much depth as the topic deserves, and as little as a simple question deserves.
+
+TEACH LIKE A TUTOR: explain WHY, not just the rule. Give memory tricks. Name the specific mistake Arabic speakers typically make with this exact topic and why (a/an, the, is/are, do/does, have/has, he/she, prepositions, word order, present perfect, false friends). Use real situations (restaurant, airport, hotel, coffee shop, shopping, hospital, business, interview, university, travel, phone calls, WhatsApp, meetings). When it fits, add a small challenge (quiz, fill-in-the-blank, roleplay line, translation challenge) and/or point to a related topic worth practicing next.
+
+Reply with ONLY compact JSON, no markdown fences, no extra text: {"sections":[{"label_ar":"short Arabic label for this part","label_en":"matching short English label","body":"plain text content of this part, mixing Arabic/English/transliteration per the language mix rule, with real line breaks"}, ...]}, use as many section objects as the answer genuinely needs (often just 1-2 for a simple question). Invent whatever label fits, examples: قاعدة نحوية/Grammar, خطأ شائع/Common Mistake, مفردات/Vocabulary, تدريب سريع/Quick Practice, نصيحة تجارية/Business Tip, درس ذو صلة/Related Lesson.`;
+
+function historyForAPI(convo){
+  // Keep only the last few turns and truncate each, lowers usage/cost
+  // and keeps responses fast, per product requirement to not send
+  // unlimited chat history on every request.
+  return convo.messages.slice(-5, -1).map(m => ({
+    role: m.who === 'user' ? 'user' : 'assistant',
+    content: (m.text||'').replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim().slice(0,300) || '...'
+  }));
+}
+let firasController = null;
+async function sendFirasPrompt(userText){
+  if(firasController) firasController.abort();
+  firasController = new AbortController();
+  const myController = firasController;
+  pushAndRender('user', 'plain', escapeHtml(userText));
+  const history = historyForAPI(activeConvo());
+  const thinking = pushAndRender('firas', 'plain', '<span class="typing-dots">•••</span>');
+  const result = await callTutorAI(FIRAS_SYSTEM, userText, history, {signal: myController.signal});
+  if(myController.signal.aborted) return; // a newer message superseded this one
+  thinking.remove(); activeConvo().messages.pop(); saveConvos();
+  if(!result.ok){
+    pushAndRender('firas', 'plain', aiErrorMessage(result.errorCode, result.detail));
+    return;
+  }
+  const data = parseAIJSON(result.text);
+  if(!data || !Array.isArray(data.sections) || !data.sections.length){
+    pushAndRender('firas', 'plain', aiErrorMessage('empty'));
+    return;
+  }
+  pushAndRender('firas', 'format', renderFirasSections(data.sections));
+}
+document.getElementById('firasSendBtn').addEventListener('click', () => {
+  const input = document.getElementById('firasInput');
+  const val = input.value.trim();
+  if(!val) return;
+  input.value = '';
+  sendFirasPrompt(val);
+});
+document.getElementById('firasInput').addEventListener('keydown', e => { if(e.key === 'Enter') document.getElementById('firasSendBtn').click(); });
+
+/* ---- open / close / expand / fullscreen / mobile swipe ---- */
+function updateUsageCounter(usage){
+  const el = document.getElementById('firasUsageCounter');
+  if(!el || !usage) return;
+  if(usage.limit < 0){ el.innerHTML = `<span class="arabic">اسئلة غير محدودة</span> · Unlimited questions`; return; }
+  const remaining = Math.max(0, usage.limit - usage.used);
+  if(remaining <= 0){ el.innerHTML = `<span class="arabic">وصلت للحد اليومي (${usage.limit} سؤال)، ترجع بكرة</span>`; }
+  else if(remaining <= 5){ el.innerHTML = `<span class="arabic">ممتاز! باقي لك ${remaining} أسئلة اليوم</span>`; }
+  else{ el.innerHTML = `<span class="arabic">أسئلة Tutor Firas اليوم: ${usage.used}/${usage.limit}</span>`; }
+}
+async function fetchUsageCounter(){
+  const c = client();
+  if(!c || !currentUser) return;
+  try{
+    const today = new Date().toISOString().slice(0,10);
+    const [{ data: plan }, { data: usageRow }] = await Promise.all([
+      c.from('student_plans').select('daily_question_limit').eq('user_id', currentUser.id).maybeSingle(),
+      c.from('tutor_usage').select('questions_used').eq('user_id', currentUser.id).eq('usage_date', today).maybeSingle(),
+    ]);
+    updateUsageCounter({ used: usageRow?.questions_used || 0, limit: plan?.daily_question_limit ?? 50 });
+  }catch(e){ /* usage counter is a nice-to-have, fail silently */ }
+}
+function openFiras(){
+  tutorDock.classList.add('open');
+  renderConvoList('');
+  renderActiveMessages();
+  fetchUsageCounter();
+}
+function closeFiras(){ tutorDock.classList.remove('open','expanded','fullscreen'); }
+document.getElementById('firasFab').addEventListener('click', openFiras);
+document.getElementById('askFirasBtn').addEventListener('click', openFiras);
+document.getElementById('qaFirasBtn') && document.getElementById('qaFirasBtn').addEventListener('click', openFiras);
+document.getElementById('tutorCloseBtn').addEventListener('click', closeFiras);
+document.getElementById('tutorExpandBtn').addEventListener('click', () => { tutorDock.classList.toggle('expanded'); tutorDock.classList.remove('fullscreen'); });
+document.getElementById('tutorFullscreenBtn').addEventListener('click', () => { tutorDock.classList.toggle('fullscreen'); tutorDock.classList.remove('expanded'); });
+document.getElementById('tutorSidebarToggle').addEventListener('click', () => document.getElementById('tutorSidebar').classList.toggle('hidden-side'));
+
+/* mobile bottom-sheet: swipe down to close */
+(function(){
+  let startY = null, currentY = null;
+  const handle = tutorDock.querySelector('.tutor-sheet-handle');
+  const head = tutorDock.querySelector('.tutor-head');
+  [handle, head].forEach(el => {
+    el.addEventListener('touchstart', e => { startY = e.touches[0].clientY; tutorDock.style.transition = 'none'; }, {passive:true});
+    el.addEventListener('touchmove', e => {
+      if(startY===null || window.innerWidth > 720) return;
+      currentY = e.touches[0].clientY;
+      const delta = Math.max(0, currentY - startY);
+      tutorDock.style.transform = `translateY(${delta}px)`;
+    }, {passive:true});
+    el.addEventListener('touchend', () => {
+      tutorDock.style.transition = '';
+      if(startY!==null && currentY!==null && (currentY - startY) > 110) closeFiras();
+      tutorDock.style.transform = '';
+      startY = null; currentY = null;
+    });
+  });
+})();
+
 /* ============================================================
    COMMAND PALETTE
    ============================================================ */
@@ -1911,6 +2194,7 @@ function markLessonComplete(academyId, lessonId){
   renderUpcomingLesson();
   renderContinueLearning();
   renderDailyGrid();
+  renderFirasQuote();
   toast('<span class="arabic">اكتمل الدرس. عمل رائع</span> · Lesson complete. Great work.'); confettiBurst();
 }
 function defaultStudentStats(){ return { xp: 0, streak: 0, longestStreak: 0, lastStudyDate: null }; }
@@ -2227,6 +2511,7 @@ function renderWorkspace(){
         <textarea id="wsNotes" placeholder="Write a private note for this lesson..." style="width:100%; min-height:100px; background:var(--card-elevated); border:1px solid var(--border); border-radius:12px; padding:12px; color:var(--text); font-size:.82rem;"></textarea>
         <button class="btn-ghost-sm" id="wsSaveNote" style="margin-top:8px;">Save Note</button>
         <h4 style="margin-top:22px;">Ask Tutor Firas</h4>
+        <button class="btn-outline" id="wsAskFiras" style="width:100%; justify-content:center;">Ask about this lesson</button>
       </aside>
     </div>`;
   document.getElementById('wsBack').addEventListener('click', () => goToView('paths'));
@@ -2250,6 +2535,10 @@ function renderWorkspace(){
     lessonNotes[noteKey] = document.getElementById('wsNotes').value;
     persistStudentState();
     toast('<span class="arabic">تم حفظ الملاحظة</span> · Note saved.');
+  });
+  document.getElementById('wsAskFiras').addEventListener('click', () => {
+    openFiras();
+    document.getElementById('firasInput').value = 'Can you help me understand the lesson "' + lesson.title + '"?';
   });
   if(window.lucide) lucide.createIcons();
 }
@@ -2820,6 +3109,42 @@ viewRenderers.bookmarks = renderBookmarks;
 /* ============================================================
    TUTOR FIRAS, dedicated page (launches the full docked panel)
    ============================================================ */
+function renderTutorPage(){
+  const el = document.getElementById('view-tutor');
+  el.dataset.rendered = '1';
+  el.innerHTML = `
+    <div class="page-head">
+      <span class="eyebrow"><span class="arabic" style="font-size:.95em;">المدرب فراس</span> · Tutor Firas</span>
+      <h1><span class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">مدربك الخاص بالذكاء الاصطناعي.</span>Your private AI coach.</h1>
+      <p><span class="arabic" style="display:block; margin-bottom:4px;">صحح جملك، اشرح القواعد، علّم المفردات والنطق، او مثّل محادثات حقيقية، دائما بالعربية اولا ثم الانجليزية.</span>Correct sentences, explain grammar, teach vocabulary and pronunciation, or roleplay real conversations, always in Arabic first, English second.</p>
+    </div>
+    <div class="card card-elevated hoverable" style="max-width:640px; display:flex; align-items:center; gap:22px; padding:30px;" id="tutorPageOpenCard">
+      <span class="avatar-circle" style="width:56px; height:56px; font-size:1.3rem; background:linear-gradient(135deg,var(--gold-soft),var(--bronze));">F</span>
+      <div style="flex:1;">
+        <h3 style="font-size:1.08rem;"><span class="arabic" style="display:block; font-weight:400; font-size:.85em; margin-bottom:2px;">افتح محادثتك مع فراس</span>Open your conversation with Tutor Firas</h3>
+        <p style="margin-top:6px; font-size:.84rem; color:var(--text-muted);"><span class="arabic" style="display:block;">تظهر جانب شاشتك حتى لا تفقد مكانك في الدرس.</span>Docks on the side of your screen so you never lose your place in a lesson.</p>
+      </div>
+      <button class="btn-gold"><span class="arabic">فتح</span> · Open</button>
+    </div>
+    <div class="grid grid-4" style="margin-top:26px;" id="tutorPageQuickGrid"></div>`;
+  document.getElementById('tutorPageOpenCard').addEventListener('click', openFiras);
+  const grid = document.getElementById('tutorPageQuickGrid');
+  grid.innerHTML = TUTOR_QUICK_ACTIONS.slice(0,8).map(q => `
+    <button class="card hoverable" style="text-align:left;" data-quick="${q.en}" data-quick-ar="${q.ar}">
+      <div style="width:36px;height:36px;border-radius:10px;background:rgba(200,169,106,.14);color:var(--gold);display:flex;align-items:center;justify-content:center;margin-bottom:14px;"><i data-lucide="${q.icon}" width="17" height="17"></i></div>
+      <span style="font-size:.86rem; font-weight:600;">${q.en}</span>
+      <span class="arabic" style="display:block; font-size:.8rem; margin-top:4px; color:var(--text-muted);">${q.ar}</span>
+    </button>`).join('');
+  grid.addEventListener('click', e => {
+    const b = e.target.closest('[data-quick]');
+    if(!b) return;
+    openFiras();
+    sendFirasPrompt(b.dataset.quick);
+  });
+  if(window.lucide) lucide.createIcons();
+}
+viewRenderers.tutor = renderTutorPage;
+
 /* ============================================================
    PART 3, PROFILE, ACHIEVEMENTS, CERTIFICATES, CALENDAR DATA
    ============================================================ */
@@ -2968,6 +3293,17 @@ function syncHeroStats(){
   const lessonsNum = document.getElementById('heroLessonsNum'); if(lessonsNum) lessonsNum.textContent = completedLessons.size;
   const hoursNum = document.getElementById('heroHoursNum'); if(hoursNum) hoursNum.textContent = estHours;
   const topStreak = document.getElementById('topStreak'); if(topStreak) topStreak.textContent = studentStats.streak;
+}
+function renderFirasQuote(){
+  const el = document.getElementById('ctxFirasQuote');
+  if(!el) return;
+  const s = studentStats.streak;
+  let ar, en;
+  if(s <= 0){ ar='ابدأ اول يوم لك، خطوة صغيرة اليوم تسوي فرق كبير بعدين.'; en='Start your first day, one small step today makes a big difference later.'; }
+  else if(s === 1){ ar='بداية موفقة، خلك مستمر يوم ثاني عشان تبني عادة.'; en="Good start, keep it going tomorrow to build the habit."; }
+  else if(s < 7){ ar=`انت مستمر ${s} ايام، خطوات صغيرة يومية افضل من جلسات طويلة نادرة.`; en=`You're ${s} days in, small steps daily beat long sessions rarely.`; }
+  else{ ar=`ممتاز، انت مستمر ${s} يوم، استمر على هالسلسلة!`; en=`Excellent, you're ${s} days in, keep the streak alive!`; }
+  el.innerHTML = `<span class="arabic">"${ar}"</span><br>"${en}"`;
 }
 function renderNotifications(){
   const list = document.getElementById('notifList');
