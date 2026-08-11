@@ -464,9 +464,13 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 
 /* mini calendar */
 .mini-cal-grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:4px; margin-top:10px; }
-.mini-cal-day{ aspect-ratio:1; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:.66rem; color:var(--text-muted); background:var(--card-elevated); }
+.mini-cal-day{ aspect-ratio:1; border-radius:6px; display:flex; flex-direction:column; gap:2px; align-items:center; justify-content:center; font-size:.66rem; color:var(--text-muted); background:var(--card-elevated); }
+.mini-cal-day .mc-dow{ font-size:.55rem; line-height:1; opacity:.75; }
+.mini-cal-day .mc-date{ font-size:.74rem; line-height:1; }
 .mini-cal-day.studied{ background:rgba(200,169,106,.22); color:var(--gold); font-weight:700; }
 .mini-cal-day.today{ border:1px solid var(--gold); }
+.mini-remove-btn{ background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:1rem; line-height:1; padding:2px 6px; border-radius:6px; flex-shrink:0; }
+.mini-remove-btn:hover{ color:var(--danger); background:rgba(210,92,92,.12); }
 
 /* quick translate */
 .qt-box textarea{ width:100%; background:var(--card-elevated); border:1px solid var(--border); border-radius:12px; padding:10px 12px; color:var(--text); font-size:.82rem; resize:none; min-height:56px; }
@@ -708,15 +712,15 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
             <div style="display:flex; gap:32px; align-items:center; flex-wrap:wrap; position:relative;">
               <div class="ring-wrap">
                 <svg viewBox="0 0 96 96"><circle class="track" cx="48" cy="48" r="40"></circle><circle class="prog" id="heroRing" cx="48" cy="48" r="40" stroke-dasharray="251" stroke-dashoffset="251"></circle></svg>
-                <div class="ring-center"><b id="heroRingLabel">68%</b><span><span class="arabic" style="display:block; font-size:.9em;">الهدف الاسبوعي</span>Weekly goal</span></div>
+                <div class="ring-center"><b id="heroRingLabel">0%</b><span><span class="arabic" style="display:block; font-size:.9em;">الهدف الاسبوعي</span>Weekly goal</span></div>
               </div>
               <div style="flex:1; min-width:240px;">
                 <span class="chip gold" id="heroLevelChip"><span class="arabic">مستوى ١</span> · Level 1 · Beginner</span>
                 <h2 style="margin-top:12px; font-size:1.5rem;" id="heroResumeTitle"><span class="arabic" style="display:block; font-size:.7em; font-weight:400; color:var(--text-secondary); margin-bottom:2px;">كمل من حيث توقفت</span>Resume where you left off</h2>
                 <p style="margin-top:8px; color:var(--text-secondary); font-size:.9rem;" id="heroResumeText"></p>
                 <div style="display:flex; gap:14px; margin-top:18px; flex-wrap:wrap;">
-                  <button class="btn-gold magnetic" data-goto-view="lessonOfDay" id="heroResumeBtn"><span class="arabic">كمل التعلم</span> · Resume Learning</button>
-                  <span class="chip" style="align-self:center;"><span class="arabic">تقريبا ٨ دقائق متبقية</span> · Est. 8 min remaining</span>
+                  <button class="btn-gold magnetic" data-goto-view="resume" id="heroResumeBtn"><span class="arabic">كمل التعلم</span> · Resume Learning</button>
+                  <span class="chip" id="heroEstChip" style="align-self:center;"><span class="arabic">—</span> · —</span>
                 </div>
               </div>
             </div>
@@ -870,6 +874,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 
         <div class="context-block">
           <h4><span class="arabic">ملاحظات حديثة</span> · Recent Notes</h4>
+          <div style="display:flex; gap:6px; margin-bottom:8px;">
+            <input id="ctxNoteInput" placeholder="Write a note..." style="flex:1; min-width:0; background:var(--card-elevated); border:1px solid var(--border); border-radius:8px; padding:7px 10px; color:var(--text); font-size:.78rem;">
+            <button class="btn-ghost-sm" id="ctxNoteAdd" style="flex-shrink:0;">+</button>
+          </div>
           <div id="ctxNotesList"></div>
         </div>
 
@@ -1259,6 +1267,7 @@ function renderComingSoon(viewId){
 
 function goToView(id){
   if(id === 'lessonOfDay'){ openLesson(FEATURED.academy, FEATURED.lesson); return; }
+  if(id === 'resume'){ const n = nextLesson(); if(n) openLesson(n.academy, n.lesson); else goToView('paths'); return; }
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.querySelectorAll('.side-link').forEach(l => l.classList.remove('active'));
   const target = document.getElementById('view-' + id);
@@ -1314,8 +1323,14 @@ document.addEventListener('click', () => document.querySelectorAll('.dropdown').
    RINGS + COUNT UP on Learning Home entry
    ============================================================ */
 function animateHomeRings(){
+  // Animate the weekly-goal ring to the same real value syncHeroStats computed,
+  // never a hardcoded placeholder.
+  const weeklyGoal = studentPrefs.weeklyGoalLessons || 0;
+  const weeklyPct = weeklyGoal ? Math.min(100, Math.round(100 * Math.min(studentStats.streak, weeklyGoal) / weeklyGoal)) : 0;
   const ring = document.getElementById('heroRing');
-  ring.style.strokeDashoffset = 251 - (251*0.68);
+  const label = document.getElementById('heroRingLabel');
+  if(ring) ring.style.strokeDashoffset = 251 - (251 * weeklyPct / 100);
+  if(label) label.textContent = weeklyPct + '%';
   document.querySelectorAll('#view-home .progress-fill').forEach(f => f.style.width = f.dataset.fill + '%');
 }
 setTimeout(animateHomeRings, 300);
@@ -1323,18 +1338,31 @@ setTimeout(animateHomeRings, 300);
 /* ============================================================
    DAILY EXPERIENCE + QUICK ACTIONS
    ============================================================ */
-const dailyItems = [
-  {icon:'sparkles', title:'Lesson of the Day', body:'Ordering Coffee', sub:'Coffee Shop English · 9 min', view:'lessonOfDay'},
-  {icon:'book-open', title:'Word of the Day', body:'Reservation', sub:'حجز · ريزرڤيشِن', view:'vocabulary'},
-  {icon:'quote', title:'Idiom of the Day', body:'Break the ice', sub:'يكسر الجليد، يبدأ الونسة', view:'vocabulary'},
-  {icon:'flag', title:'American Expression', body:'"No worries at all"', sub:'ما فيه مشكلة أبدًا', view:'vocabulary'},
-  {icon:'mic', title:'Pronunciation Challenge', body:'TH sound practice', sub:'3 words · 2 min', view:'pronunciation'},
-  {icon:'message-circle', title:'Speaking Challenge', body:'Order a coffee', sub:'Roleplay · Coffee Shop English', view:'speaking'},
-  {icon:'spell-check', title:'Grammar Tip', body:'Present perfect vs past simple', sub:'A 90 second refresher', view:'grammar'},
-  {icon:'bot', title:'From Tutor Firas', body: studentStats.streak >= 2 ? `You're on a ${studentStats.streak} day streak, keep going!` : 'Complete a lesson today to start your streak.', sub:'', view:'tutor'},
-];
 const dailyGrid = document.getElementById('dailyExperienceGrid');
+function buildDailyItems(){
+  // Every tile below is sourced from this app's real lesson/vocab/grammar/
+  // speaking banks, rotating daily - no hardcoded filler.
+  const dayIdx = Math.floor(Date.now() / 86400000);
+  const feat = FEATURED;
+  const lesson = getLesson(feat.academy, feat.lesson) || {title:feat.en, ar:feat.ar, duration:'6 min'};
+  const word = VOCAB_BANK[dayIdx % VOCAB_BANK.length];
+  const phrase = VOCAB_BANK[(dayIdx * 7 + 3) % VOCAB_BANK.length];
+  const gram = GRAMMAR_TOPICS[dayIdx % GRAMMAR_TOPICS.length];
+  const persona = SPEAKING_PERSONAS[dayIdx % SPEAKING_PERSONAS.length];
+  const ac = ACADEMIES.find(a => a.id === feat.academy);
+  return [
+    {icon:'sparkles', title:'Lesson of the Day', body: lesson.title, sub: `${ac ? ac.en : ''} · ${lesson.duration}`, view:'lessonOfDay'},
+    {icon:'book-open', title:'Word of the Day', body: word.en, sub: `${word.ar} · ${word.translit}`, view:'vocabulary'},
+    {icon:'quote', title:'Phrase of the Day', body: phrase.example ? phrase.example.en : phrase.en, sub: phrase.example ? phrase.example.ar : phrase.ar, view:'vocabulary'},
+    {icon:'flag', title:'Collocation of the Day', body: word.collocations || word.en, sub: word.ar, view:'vocabulary'},
+    {icon:'mic', title:'Pronunciation Challenge', body: word.en, sub: word.ipa || 'Listen & repeat', view:'pronunciation'},
+    {icon:'message-circle', title:'Speaking Challenge', body: persona.title, sub: persona.opener.en, view:'speaking'},
+    {icon:'spell-check', title:'Grammar Tip', body: gram.title, sub:'A 90 second refresher', view:'grammar'},
+    {icon:'bot', title:'From Tutor Firas', body: studentStats.streak >= 2 ? `You're on a ${studentStats.streak} day streak, keep going!` : 'Complete a lesson today to start your streak.', sub:'', view:'tutor'},
+  ];
+}
 function renderDailyGrid(){
+  const dailyItems = buildDailyItems();
   dailyItems[7].body = studentStats.streak >= 2 ? `You're on a ${studentStats.streak} day streak, keep going!` : 'Complete a lesson today to start your streak.';
   dailyGrid.innerHTML = '';
   dailyItems.forEach(d => {
@@ -1623,12 +1651,31 @@ const paletteResults = document.getElementById('paletteResults');
 function renderPalette(query){
   const q = query.trim().toLowerCase();
   const matches = paletteData.filter(item => item.label.toLowerCase().includes(q));
+  if(q){
+    // Search real lesson/vocab/grammar content, not just navigation.
+    LESSON_TITLE_BANK.forEach(l => {
+      if(l.en.toLowerCase().includes(q) || l.ar.includes(q)){
+        const ac = ACADEMIES.find(a => academyLessonList(a).some(x => x.id === l.id));
+        matches.push({group:'Lessons', icon:'book-open', label:`${l.en} · <span class="arabic">${l.ar}</span>`, view:'lesson', academy: ac ? ac.id : ACADEMIES[0].id, lesson: l.id});
+      }
+    });
+    VOCAB_BANK.forEach(v => {
+      if(v.en.toLowerCase().includes(q) || v.ar.includes(q)){
+        matches.push({group:'Vocabulary', icon:'bookmark', label:`${v.en} · ${v.ar}`, view:'vocabulary'});
+      }
+    });
+    GRAMMAR_TOPICS.forEach(g => {
+      if(g.title.toLowerCase().includes(q) || g.rule.toLowerCase().includes(q)){
+        matches.push({group:'Grammar', icon:'spell-check', label:g.title, view:'grammar'});
+      }
+    });
+  }
   if(matches.length === 0){ paletteResults.innerHTML = `<div class="palette-empty">No results for "${query}". Try a lesson, word, or setting.</div>`; return; }
   const groups = {};
   matches.forEach(m => { (groups[m.group] = groups[m.group] || []).push(m); });
   paletteResults.innerHTML = Object.keys(groups).map(g => `
     <div class="palette-group-label">${g}</div>
-    ${groups[g].map(m => `<button class="palette-item" data-view="${m.view}"><i data-lucide="${m.icon}" width="16" height="16"></i>${m.label}</button>`).join('')}
+    ${groups[g].map(m => `<button class="palette-item" data-view="${m.view}"${m.lesson ? ` data-academy="${m.academy}" data-lesson="${m.lesson}"` : ''}><i data-lucide="${m.icon}" width="16" height="16"></i>${m.label}</button>`).join('')}
   `).join('');
   if(window.lucide) lucide.createIcons();
 }
@@ -1643,7 +1690,10 @@ document.addEventListener('keydown', e => {
 });
 paletteResults.addEventListener('click', e => {
   const item = e.target.closest('.palette-item');
-  if(item){ closePalette(); goToView(item.dataset.view); }
+  if(!item) return;
+  closePalette();
+  if(item.dataset.lesson){ openLesson(item.dataset.academy, item.dataset.lesson); return; }
+  goToView(item.dataset.view);
 });
 
 /* ============================================================
@@ -1655,9 +1705,43 @@ function defaultNotesStore(){ return []; }
 let vocabStore = defaultVocabStore();
 let notesStore = defaultNotesStore();
 function renderCtxLists(){
-  document.getElementById('ctxVocabList').innerHTML = vocabStore.map(v => `<div class="mini-list-item"><div class="ml-en">${v.en}</div><div class="ml-ar">${v.ar}</div></div>`).join('') || '<div class="mini-list-item" style="color:var(--text-muted);">No saved words yet.</div>';
-  document.getElementById('ctxNotesList').innerHTML = notesStore.map(n => `<div class="mini-list-item">${n.text}</div>`).join('') || '<div class="mini-list-item" style="color:var(--text-muted);"><span class="arabic">لا توجد ملاحظات بعد</span> · No notes yet.</div>';
+  const vEl = document.getElementById('ctxVocabList');
+  vEl.innerHTML = vocabStore.length
+    ? vocabStore.map((v,i) => `<div class="mini-list-item"><div class="ml-en">${v.en}</div><div class="ml-ar">${v.ar}</div><button class="mini-remove-btn" data-rm-vocab="${i}" aria-label="Remove">×</button></div>`).join('')
+    : '<div class="mini-list-item" style="color:var(--text-muted);">No saved words yet.</div>';
+  const nEl = document.getElementById('ctxNotesList');
+  nEl.innerHTML = notesStore.length
+    ? notesStore.map((n,i) => `<div class="mini-list-item"><div class="ml-note">${n.text}</div><button class="mini-remove-btn" data-rm-note="${i}" aria-label="Remove">×</button></div>`).join('')
+    : '<div class="mini-list-item" style="color:var(--text-muted);"><span class="arabic">لا توجد ملاحظات بعد</span> · No notes yet.</div>';
 }
+document.getElementById('ctxVocabList').addEventListener('click', e => {
+  const btn = e.target.closest('[data-rm-vocab]');
+  if(!btn) return;
+  const en = vocabStore[+btn.dataset.rmVocab] && vocabStore[+btn.dataset.rmVocab].en;
+  vocabStore.splice(+btn.dataset.rmVocab, 1);
+  if(en) bookmarks = bookmarks.filter(b => !(b.type==='vocab' && b.label === en));
+  persistStudentState();
+  renderCtxLists();
+});
+document.getElementById('ctxNotesList').addEventListener('click', e => {
+  const btn = e.target.closest('[data-rm-note]');
+  if(!btn) return;
+  notesStore.splice(+btn.dataset.rmNote, 1);
+  persistStudentState();
+  renderCtxLists();
+});
+const ctxNoteInput = document.getElementById('ctxNoteInput');
+const ctxNoteAdd = document.getElementById('ctxNoteAdd');
+if(ctxNoteAdd) ctxNoteAdd.addEventListener('click', () => {
+  const text = (ctxNoteInput.value||'').trim();
+  if(!text) return;
+  notesStore.unshift({text, ts: Date.now()});
+  ctxNoteInput.value = '';
+  persistStudentState();
+  renderCtxLists();
+  toast('<span class="arabic">تم حفظ الملاحظة</span> · Note saved.');
+});
+if(ctxNoteInput) ctxNoteInput.addEventListener('keydown', e => { if(e.key === 'Enter') ctxNoteAdd.click(); });
 renderCtxLists();
 
 /* quick translate, no AI anywhere here.
@@ -1762,16 +1846,22 @@ document.getElementById('qtBtn').addEventListener('click', async () => {
   }
 });
 
-/* mini calendar (last 7 days, mock studied pattern) */
+/* mini calendar (real last 7 days from actual study history) */
 const miniCal = document.getElementById('miniCalGrid');
-const studiedPattern = [1,1,1,0,1,1,1];
-const dayLetters = ['S','M','T','W','T','F','S'];
-dayLetters.forEach((d,i) => {
-  const cell = document.createElement('div');
-  cell.className = 'mini-cal-day' + (studiedPattern[i] ? ' studied' : '') + (i===6 ? ' today' : '');
-  cell.textContent = d;
-  miniCal.appendChild(cell);
-});
+function renderMiniCal(){
+  if(!miniCal) return;
+  const studyDays = lsGet('pel_study_days', []);
+  miniCal.innerHTML = '';
+  for(let i=6;i>=0;i--){
+    const d = new Date(Date.now() - i*86400000);
+    const key = d.toISOString().slice(0,10);
+    const cell = document.createElement('div');
+    cell.className = 'mini-cal-day' + (studyDays.indexOf(key)!==-1 ? ' studied' : '') + (i===0 ? ' today' : '');
+    cell.innerHTML = `<span class="mc-dow">${['S','M','T','W','T','F','S'][d.getDay()]}</span><span class="mc-date">${d.getDate()}</span>`;
+    miniCal.appendChild(cell);
+  }
+}
+renderMiniCal();
 
 /* pomodoro timer */
 let pomoSeconds = 25*60, pomoRunning = false, pomoInterval = null;
@@ -1815,6 +1905,22 @@ if('speechSynthesis' in window){
 document.getElementById('reduceMotionToggle').addEventListener('change', function(){
   document.documentElement.style.setProperty('--dur', this.checked ? '1ms' : '300ms');
 });
+/* Notification preference toggles - real, persisted, and respected by the
+   alerts rendered in renderNotifications (daily reminder / streak risk /
+   analytics share). */
+function notifPrefs(){ return lsGet('pel_notif_prefs', {daily:true, streak:true, analytics:true}); }
+(function initNotifToggles(){
+  const p = notifPrefs();
+  const set = (id, key) => {
+    const el = document.getElementById(id);
+    if(!el) return;
+    el.checked = p[key];
+    el.addEventListener('change', () => { const np = notifPrefs(); np[key] = el.checked; lsSet('pel_notif_prefs', np); renderNotifications(); });
+  };
+  set('notifToggle', 'daily');
+  set('streakToggle', 'streak');
+  set('analyticsToggle', 'analytics');
+})();
 
 /* ============================================================
    SETTINGS, language, account, security (local persistence)
@@ -1883,7 +1989,14 @@ const ACADEMIES = [
   {id:'english-mastery', en:'English Mastery', ar:'اتقان الانجليزي', translit:'انجلش ماستري', cat:'Mastery', icon:'crown', from:'#C8A96A', to:'#D8BD83', difficulty:'Advanced', duration:'12h', lessons:52},
   {id:'fluency-journey', en:'Fluency Journey', ar:'رحلة الطلاقة', translit:'فلوينسي جورني', cat:'Mastery', icon:'compass', from:'#D8BD83', to:'#A88345', difficulty:'All Levels', duration:'20h', lessons:64},
 ];
-const FEATURED = {academy:'coffee-shop-english', lesson:'ordering-coffee'};
+const FEATURED = (function(){
+  // Lesson of the Day: a real lesson from a real academy, rotating daily.
+  const dayIdx = Math.floor(Date.now() / 86400000);
+  const academy = ACADEMIES[dayIdx % ACADEMIES.length];
+  const ai = ACADEMIES.indexOf(academy);
+  const lesson = LESSON_TITLE_BANK[(ai + (dayIdx % 6)) % LESSON_TITLE_BANK.length];
+  return {academy: academy.id, lesson: lesson.id, en: lesson.en, ar: lesson.ar};
+})();
 
 /* ---- vocabulary bank (full trilingual flashcard fields) ---- */
 const VOCAB_BANK = [
@@ -2122,15 +2235,35 @@ function genericLesson(bankItem, academy){
   };
 }
 function lessonKey(academyId, lessonId){ return academyId + '::' + lessonId; }
+function nextLesson(){
+  // Resume where you left off: the in-progress academy always comes first,
+  // so the hero and continue-learning cards match the academy the student is
+  // actually working through - not just the first academy in the list.
+  const inProgress = ACADEMIES.find(a => a.progress > 0 && a.progress < 100);
+  const targets = inProgress ? [inProgress].concat(ACADEMIES.filter(a => a.id !== inProgress.id)) : ACADEMIES;
+  for(const a of targets){
+    const list = academyLessonList(a);
+    for(const l of list){
+      if(l.locked) break;
+      if(!completedLessons.has(lessonKey(a.id, l.id))) return {academy: a.id, lesson: l.id};
+    }
+  }
+  const a0 = ACADEMIES[0];
+  const l0 = academyLessonList(a0)[0];
+  return l0 ? {academy: a0.id, lesson: l0.id} : null;
+}
 function syncAcademyProgress(){
   // Academy progress is now ALWAYS derived from this account's real
   // completedLessons (loaded from Supabase student_state) - never a
   // static field on the academy data itself.
   ACADEMIES.forEach(a => {
-    if(!a.lessons){ a.progress = 0; return; }
+    // Progress is measured against the lessons the student can actually
+    // open in this academy (academyLessonList), not the aspirational
+    // declared lesson counts - otherwise progress could never reach 100%.
     let done = 0;
     completedLessons.forEach(k => { if(k.indexOf(a.id + '::') === 0) done++; });
-    a.progress = Math.min(100, Math.round(100 * done / a.lessons));
+    const total = academyLessonList(a).length;
+    a.progress = total ? Math.min(100, Math.round(100 * done / total)) : 0;
   });
 }
 function academyLessonList(academy){
@@ -2144,7 +2277,10 @@ function academyLessonList(academy){
     const bankItem = LESSON_TITLE_BANK.find(b => b.id === lid);
     if(bankItem){ const filtered = list.filter(b => b.id !== lid); list.length = 0; list.push(bankItem, ...filtered); }
   }
-  const unlockedCount = Math.max(1, Math.min(6, 1 + Math.floor(academy.progress / 30)));
+  // Locked progression is scaled to the 6 lessons this academy actually
+  // exposes (progress is done/6*100), so all six unlock by ~84% - otherwise
+  // progress could never reach 100% and certificates would be unearnable.
+  const unlockedCount = Math.min(6, Math.max(1, 1 + Math.floor((academy.progress || 0) * 6 / 100)));
   return list.map((b,i) => ({ ...b, locked: i >= unlockedCount }));
 }
 function getLesson(academyId, lessonId){
@@ -2186,6 +2322,9 @@ function markLessonComplete(academyId, lessonId){
   const key = lessonKey(academyId, lessonId);
   if(completedLessons.has(key)) return;
   completedLessons.add(key); persistStudentState();
+  const compDates = lsGet('pel_completion_dates', {});
+  compDates[key] = new Date().toISOString().slice(0,10);
+  lsSet('pel_completion_dates', compDates);
   syncAcademyProgress();
   awardXp(50);
   syncAchievements();
@@ -2206,6 +2345,9 @@ function awardXp(amount){
     studentStats.streak = (studentStats.lastStudyDate === yesterday) ? studentStats.streak + 1 : 1;
     studentStats.longestStreak = Math.max(studentStats.longestStreak, studentStats.streak);
     studentStats.lastStudyDate = today;
+    const studyDays = lsGet('pel_study_days', []);
+    if(studyDays.indexOf(today) === -1){ studyDays.push(today); lsSet('pel_study_days', studyDays); }
+    renderMiniCal();
   }
   studentStats.xp += amount;
   saveStudentStats();
@@ -2533,7 +2675,10 @@ function renderWorkspace(){
   document.getElementById('wsNotes').value = lessonNotes[noteKey] || '';
   document.getElementById('wsSaveNote').addEventListener('click', () => {
     lessonNotes[noteKey] = document.getElementById('wsNotes').value;
+    const text = document.getElementById('wsNotes').value.trim();
+    if(text) notesStore.unshift({text, lesson: lesson.title, ts: Date.now()});
     persistStudentState();
+    renderCtxLists();
     toast('<span class="arabic">تم حفظ الملاحظة</span> · Note saved.');
   });
   document.getElementById('wsAskFiras').addEventListener('click', () => {
@@ -2689,7 +2834,11 @@ function renderVocabulary(){
     grid.querySelectorAll('.bookmark-word-btn').forEach(btn => btn.addEventListener('click', e => {
       e.stopPropagation();
       toggleBookmark('vocab', btn.dataset.word, btn.dataset.en, btn.dataset.ar);
-      btn.innerHTML = isBookmarked('vocab', btn.dataset.word) ? '★ <span class="arabic">محفوظة</span> · Bookmarked' : '☆ <span class="arabic">احفظ الكلمة</span> · Save Word';
+      const saved = isBookmarked('vocab', btn.dataset.word);
+      vocabStore = vocabStore.filter(v => v.en !== btn.dataset.en);
+      if(saved) vocabStore.unshift({en: btn.dataset.en, ar: btn.dataset.ar});
+      persistStudentState();
+      btn.innerHTML = saved ? '★ <span class="arabic">محفوظة</span> · Bookmarked' : '☆ <span class="arabic">احفظ الكلمة</span> · Save Word';
       renderCtxLists();
     }));
     if(window.lucide) lucide.createIcons();
@@ -3248,12 +3397,20 @@ function renderContinueLearning(){
     if(heroTitle) heroTitle.innerHTML = `<span class="arabic" style="display:block; font-size:.7em; font-weight:400; color:var(--text-secondary); margin-bottom:2px;">مرحباً بك في Tutor Firas</span>Welcome to Tutor Firas`;
     if(resumeText) resumeText.innerHTML = `<span class="arabic">لنبدأ رحلتك في تعلم الانجليزي. اكمل درسك الاول لفتح لوحتك الشخصية.</span><br>Let's begin your English journey. Complete your first lesson to unlock your personalized dashboard.`;
     if(resumeBtn) resumeBtn.innerHTML = `<span class="arabic">ابدأ درسك الاول</span> · Start Your First Lesson`;
+    const firstLesson = nextLesson();
+    const firstObj = firstLesson ? getLesson(firstLesson.academy, firstLesson.lesson) : null;
+    const estChip = document.getElementById('heroEstChip');
+    if(estChip && firstObj && firstObj.duration) estChip.innerHTML = `<span class="arabic">تقريبا ${firstObj.duration}</span> · Est. ${firstObj.duration}`;
     if(card) card.style.display = 'none';
   }else{
     if(heroTitle) heroTitle.innerHTML = `<span class="arabic" style="display:block; font-size:.7em; font-weight:400; color:var(--text-secondary); margin-bottom:2px;">كمل من حيث توقفت</span>Resume where you left off`;
     if(resumeBtn) resumeBtn.innerHTML = `<span class="arabic">كمل التعلم</span> · Resume Learning`;
     if(inProgress){
-      if(resumeText) resumeText.innerHTML = `<span class="arabic">${inProgress.ar}</span> · ${inProgress.en}`;
+      const next = nextLesson();
+      const nextObj = next ? getLesson(next.academy, next.lesson) : null;
+      const estChip = document.getElementById('heroEstChip');
+      if(estChip && nextObj && nextObj.duration) estChip.innerHTML = `<span class="arabic">تقريبا ${nextObj.duration}</span> · Est. ${nextObj.duration} remaining`;
+      if(resumeText) resumeText.innerHTML = nextObj ? `<span class="arabic">${nextObj.ar}</span> · ${nextObj.title}` : `<span class="arabic">${inProgress.ar}</span> · ${inProgress.en}`;
       if(card) card.style.display = '';
       if(body) body.innerHTML = `
         <span class="chip emerald">${inProgress.en}</span>
@@ -3261,7 +3418,7 @@ function renderContinueLearning(){
           <div class="progress-track" style="flex:1; max-width:280px;"><span class="progress-fill" style="width:${inProgress.progress}%;"></span></div>
           <span style="font-size:.76rem; color:var(--text-muted);">${inProgress.progress}%</span>
         </div>
-        <button class="btn-outline" data-goto-view="lessonOfDay" style="margin-top:12px;"><span class="arabic">كمل</span> · Resume</button>`;
+        <button class="btn-outline" data-goto-view="resume" style="margin-top:12px;"><span class="arabic">كمل</span> · Resume</button>`;
     }else{
       if(resumeText) resumeText.innerHTML = `<span class="arabic">ما بدأت اي درس بعد</span> · No lesson started yet.`;
       if(card) card.style.display = 'none';
@@ -3297,6 +3454,12 @@ function syncHeroStats(){
 function renderFirasQuote(){
   const el = document.getElementById('ctxFirasQuote');
   if(!el) return;
+  // When the student opts out of sharing study analytics with the tutor,
+  // Firas keeps the encouragement generic instead of quoting their streak.
+  if(!notifPrefs().analytics){
+    el.innerHTML = `<span class="arabic">"أنا هنا دائماً، جهز نفسك لدرس جديد."</span><br>"I'm always here, get ready for your next lesson."`;
+    return;
+  }
   const s = studentStats.streak;
   let ar, en;
   if(s <= 0){ ar='ابدأ اول يوم لك، خطوة صغيرة اليوم تسوي فرق كبير بعدين.'; en='Start your first day, one small step today makes a big difference later.'; }
@@ -3308,12 +3471,21 @@ function renderFirasQuote(){
 function renderNotifications(){
   const list = document.getElementById('notifList');
   if(!list) return;
+  const prefs = notifPrefs();
+  const today = new Date().toISOString().slice(0,10);
+  const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0,10);
   const items = [];
+  // Real, toggle-gated alerts computed from this account's actual state.
+  if(prefs.daily && studentStats.lastStudyDate !== today && !isFirstTimeStudent()){
+    items.push({ar:'وقت الدراسة اليوم', en:'You have not studied yet today — a few minutes keeps your streak alive.'});
+  }
+  if(prefs.streak && studentStats.streak > 0 && studentStats.lastStudyDate === yesterday){
+    items.push({ar:'خطر فقدان السلسلة', en:`Your ${studentStats.streak}-day streak ends today if you don't study.`});
+  }
   const milestones = [7, 14, 30, 60, 100];
   if(milestones.includes(studentStats.streak)){
     items.push({ar:'مبروك، وصلت لانجاز جديد', en:`New streak milestone, you have studied ${studentStats.streak} days in a row.`});
   }
-  const doneThisWeekApprox = completedLessons.size; // no weekly-window tracking yet, so this is a lifetime count, framed accordingly below
   const remaining = Math.max(0, (studentPrefs.weeklyGoalLessons||0) - (studentStats.streak > 0 ? 1 : 0));
   if(studentPrefs.weeklyGoalLessons && remaining > 0 && remaining <= 1){
     items.push({ar:'قربت توصل لهدفك الاسبوعي', en:`Weekly goal almost there, ${remaining} lesson to go.`});
@@ -3321,11 +3493,22 @@ function renderNotifications(){
   list.innerHTML = items.length
     ? items.map(n => `<div class="notif-item"><b class="arabic" style="display:block;">${n.ar}</b><span style="display:block; margin-top:2px;">${n.en}</span></div>`).join('')
     : `<div class="notif-item"><b class="arabic" style="display:block;">لا توجد اشعارات بعد</b><span style="display:block; margin-top:2px;">No notifications yet, complete a lesson to see your first update here.</span></div>`;
+  const dot = document.querySelector('.notif-dot');
+  if(dot) dot.style.display = items.length ? '' : 'none';
 }
 
-const CERTIFICATES = ACADEMIES.filter(a => a.progress === 100).map((a,i) => ({
-  id:a.id, en:a.en, ar:a.ar, date:'Jun 28, 2026', certId:'PEL-' + (10230+i),
-}));
+function buildCertificates(){
+  // Computed at render time from this account's real progress and the real
+  // per-lesson completion dates recorded in markLessonComplete - never a
+  // hardcoded list or a fabricated date.
+  const compDates = lsGet('pel_completion_dates', {});
+  return ACADEMIES.filter(a => a.progress === 100).map((a,i) => {
+    const keys = [...completedLessons].filter(k => k.indexOf(a.id + '::') === 0);
+    const dates = keys.map(k => compDates[k]).filter(Boolean).sort();
+    const last = dates.length ? new Date(dates[dates.length-1] + 'T00:00:00').toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'}) : '—';
+    return { id:a.id, en:a.en, ar:a.ar, date:last, certId:'PEL-' + (10230+i) };
+  });
+}
 
 /* ---- Profile ---- */
 function renderProfile(){
@@ -3481,6 +3664,7 @@ function renderCertificates(){
     </div>
     <div class="grid grid-3" id="certGrid"></div>`;
   const grid = document.getElementById('certGrid');
+  const CERTIFICATES = buildCertificates();
   grid.innerHTML = CERTIFICATES.length ? CERTIFICATES.map(c => `
     <div class="card cert-card hoverable">
       <div class="cert-top">
@@ -3522,16 +3706,15 @@ function renderCalendar(){
       <div class="stat-pill"><b>${Math.min(completedLessons.size,studentPrefs.monthlyGoalLessons||0)} / ${studentPrefs.monthlyGoalLessons||0}</b><span class="arabic" style="display:block;">الهدف الشهري</span><span>Monthly goal</span></div>
     </div>`;
   const grid = document.getElementById('heatmapGrid');
-  // Honest rendering: we only track a cumulative streak + last study
-  // date, not a real per-day activity log, so we mark exactly the real
-  // streak's worth of recent days as active and leave everything else
-  // empty rather than fabricating a plausible-looking history.
-  const lastStudy = studentStats.lastStudyDate ? new Date(studentStats.lastStudyDate) : null;
+  // Real per-day log from this account's actual study history (recorded
+  // in awardXp) - never a fabricated pattern.
+  const studyDays = lsGet('pel_study_days', []);
   let html = '';
   for(let i = 181; i >= 0; i--){
-    let lvl = 0;
-    if(lastStudy && i < studentStats.streak) lvl = 3;
-    html += `<div class="heatmap-cell" data-lvl="${lvl}" title="${lvl ? 'شدة الدراسة' : 'لا دراسة · No study'}"></div>`;
+    const d = new Date(Date.now() - i*86400000);
+    const key = d.toISOString().slice(0,10);
+    const lvl = studyDays.indexOf(key) !== -1 ? 3 : 0;
+    html += `<div class="heatmap-cell" data-lvl="${lvl}" title="${lvl ? 'درست في هذا اليوم · Studied ' + key : 'لا دراسة · No study'}"></div>`;
   }
   grid.innerHTML = html;
 }
