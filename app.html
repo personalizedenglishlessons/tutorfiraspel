@@ -426,43 +426,85 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   body[data-printing] #toastStack,
   body[data-printing] #sidebarOverlay,
   body[data-printing] #qtPopup,
+  body[data-printing] #qtFab,
+  body[data-printing] #firasFab,
   body[data-printing] #tutorDock,
   body[data-printing] #paletteOverlay{ display:none !important; }
   body[data-printing] #certPrintRoot{ display:block !important; }
 }
+/* The printed certificate carries the app's own identity: dark surface,
+   gold + bronze accents, Fraunces serif, Tajawal Arabic, the P monogram,
+   gold corner ornaments and a rotated seal. print-color-adjust:exact keeps
+   the dark background and gold in the PDF instead of dropping to white. */
 .cert-sheet{
-  width:277mm; height:190mm; margin:10mm auto 0; background:#FFFFFF; color:#1B1B1F;
-  position:relative; box-sizing:border-box; padding:11mm 12mm;
+  width:277mm; height:190mm; margin:10mm auto 0;
+  background:
+    radial-gradient(60% 40% at 50% -5%, rgba(200,169,106,.16), transparent 70%),
+    radial-gradient(45% 35% at 0% 105%, rgba(63,140,114,.10), transparent 70%),
+    radial-gradient(40% 30% at 100% 100%, rgba(168,131,69,.10), transparent 70%),
+    linear-gradient(160deg, #121216 0%, #0E0E10 55%, #101014 100%);
+  color:#F7F4EF; position:relative; box-sizing:border-box;
   font-family:'Plus Jakarta Sans',-apple-system,sans-serif;
+  -webkit-print-color-adjust:exact; print-color-adjust:exact;
 }
-.cert-sheet *{ box-sizing:border-box; }
-.cert-sheet .cs-frame{ position:absolute; inset:5mm; border:1.2mm solid #B08D47; outline:0.5mm solid #B08D47; outline-offset:-2.5mm; }
-.cert-sheet .cs-inner{ position:relative; height:100%; display:flex; flex-direction:column; align-items:center; text-align:center; padding:14mm 20mm 10mm; }
-.cert-sheet .cs-school{ font-size:10.5pt; letter-spacing:.42em; text-transform:uppercase; color:#8A6D3B; font-weight:600; }
-.cert-sheet .cs-school-ar{ font-family:'Tajawal','Cairo','Segoe UI',Tahoma,sans-serif; font-size:8.5pt; letter-spacing:.06em; color:#8A6D3B; margin-top:2mm; direction:rtl; }
-.cert-sheet .cs-monogram{ width:22mm; height:22mm; border-radius:50%; border:1mm solid #B08D47; color:#B08D47; display:flex; align-items:center; justify-content:center; margin:7mm 0 4mm; font-family:'Fraunces',serif; font-size:11pt; font-weight:600; position:relative; }
-.cert-sheet .cs-title{ font-family:'Fraunces',serif; font-size:26pt; font-weight:500; color:#1B1B1F; letter-spacing:.04em; margin-top:1mm; }
-.cert-sheet .cs-title-ar{ font-family:'Tajawal','Cairo','Segoe UI',Tahoma,sans-serif; font-size:13pt; color:#4A4A4F; margin-top:1.5mm; direction:rtl; }
-.cert-sheet .cs-certifies{ font-size:10.5pt; color:#4A4A4F; margin-top:6mm; }
-.cert-sheet .cs-certifies-ar{ font-family:'Tajawal','Cairo','Segoe UI',Tahoma,sans-serif; font-size:8.5pt; color:#8A8A90; margin-top:1mm; direction:rtl; }
-.cert-sheet .cs-name{ font-family:'Fraunces',serif; font-size:30pt; font-weight:600; color:#8A6D3B; margin-top:6mm; line-height:1.15; max-width:200mm; }
-.cert-sheet .cs-completed{ font-size:10.5pt; color:#4A4A4F; margin-top:5mm; }
-.cert-sheet .cs-completed-ar{ font-family:'Tajawal','Cairo','Segoe UI',Tahoma,sans-serif; font-size:9pt; color:#8A8A90; margin-top:1mm; direction:rtl; }
-.cert-sheet .cs-academy{ font-family:'Fraunces',serif; font-size:17pt; font-weight:600; color:#1B1B1F; margin-top:2.5mm; }
-.cert-sheet .cs-academy-ar{ font-family:'Tajawal','Cairo','Segoe UI',Tahoma,sans-serif; font-size:9.5pt; color:#4A4A4F; margin-top:1mm; direction:rtl; }
-.cert-sheet .cs-meta{ display:flex; gap:26mm; margin-top:9mm; font-size:9pt; color:#4A4A4F; }
-.cert-sheet .cs-meta b{ display:block; font-weight:700; color:#1B1B1F; margin-top:1.5mm; font-size:10pt; }
-.cert-sheet .cs-meta .cs-m-ar{ font-family:'Tajawal','Cairo','Segoe UI',Tahoma,sans-serif; font-size:7.5pt; color:#8A8A90; direction:rtl; }
-.cert-sheet .cs-verify{ margin-top:7mm; font-size:8pt; letter-spacing:.08em; color:#4A4A4F; }
-.cert-sheet .cs-verify b{ font-family:'Fraunces',serif; letter-spacing:.16em; color:#8A6D3B; }
-.cert-sheet .cs-verify .cs-m-ar{ font-family:'Tajawal','Cairo','Segoe UI',Tahoma,sans-serif; font-size:7pt; color:#8A8A90; margin-right:6mm; direction:rtl; }
-.cert-sheet .cs-sign{ position:absolute; bottom:9mm; left:0; right:0; display:flex; justify-content:space-between; align-items:flex-end; padding:0 26mm; }
+.cert-sheet *{ box-sizing:border-box; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+.cert-sheet .cs-frame{
+  position:absolute; inset:5mm;
+  border:0.9mm solid rgba(200,169,106,.85);
+  outline:0.3mm solid rgba(200,169,106,.35); outline-offset:-2.2mm;
+}
+.cert-sheet .cs-corner{ position:absolute; width:24mm; height:24mm; border:0.7mm solid #C8A96A; }
+.cert-sheet .cs-c-tl{ top:-0.7mm; left:-0.7mm; border-right:none; border-bottom:none; }
+.cert-sheet .cs-c-tr{ top:-0.7mm; right:-0.7mm; border-left:none; border-bottom:none; }
+.cert-sheet .cs-c-bl{ bottom:-0.7mm; left:-0.7mm; border-right:none; border-top:none; }
+.cert-sheet .cs-c-br{ bottom:-0.7mm; right:-0.7mm; border-left:none; border-top:none; }
+.cert-sheet .cs-inner{ position:relative; height:100%; display:flex; flex-direction:column; align-items:center; text-align:center; padding:10mm 22mm 14mm; }
+.cert-sheet .cs-school{ font-size:10pt; letter-spacing:.4em; text-transform:uppercase; color:#C8A96A; font-weight:600; text-indent:.4em; }
+.cert-sheet .cs-school-ar{ font-family:'Tajawal','Cairo','Segoe UI',Tahoma,sans-serif; font-size:8pt; letter-spacing:.06em; color:#A88345; margin-top:1.5mm; direction:rtl; }
+.cert-sheet .cs-monogram{
+  width:19mm; height:19mm; border-radius:50%; margin:4mm 0 3mm;
+  background:radial-gradient(circle at 50% 35%, rgba(216,189,131,.16), rgba(200,169,106,.05));
+  border:0.9mm solid #C8A96A; color:#D8BD83; display:flex; align-items:center; justify-content:center;
+  font-family:'Fraunces',serif; font-size:10.5pt; font-weight:600; box-shadow:0 0 10mm rgba(200,169,106,.25);
+}
+.cert-sheet .cs-ornament{ display:flex; align-items:center; gap:5mm; margin-top:2.5mm; width:70mm; }
+.cert-sheet .cs-ornament::before,
+.cert-sheet .cs-ornament::after{ content:''; flex:1; height:.35mm; background:linear-gradient(90deg, transparent, rgba(200,169,106,.7), transparent); }
+.cert-sheet .cs-ornament .cs-diamond{ width:2.6mm; height:2.6mm; transform:rotate(45deg); border:0.4mm solid #C8A96A; }
+.cert-sheet .cs-title{ font-family:'Fraunces',serif; font-size:26pt; font-weight:500; color:#F1E8D6; letter-spacing:.03em; margin-top:2mm; }
+.cert-sheet .cs-title-ar{ font-family:'Tajawal','Cairo','Segoe UI',Tahoma,sans-serif; font-size:13pt; color:#D8BD83; margin-top:1.5mm; direction:rtl; }
+.cert-sheet .cs-certifies{ font-size:10pt; color:#9B98A2; margin-top:4mm; }
+.cert-sheet .cs-certifies-ar{ font-family:'Tajawal','Cairo','Segoe UI',Tahoma,sans-serif; font-size:8pt; color:#6E6B74; margin-top:0.8mm; direction:rtl; }
+.cert-sheet .cs-name{
+  font-family:'Fraunces',serif; font-size:28pt; font-weight:600; color:#E8D5A8;
+  margin-top:4mm; line-height:1.15; max-width:200mm;
+  text-shadow:0 0 8mm rgba(200,169,106,.35);
+}
+.cert-sheet .cs-name-rule{ width:64mm; height:.4mm; margin-top:3mm; background:linear-gradient(90deg, transparent, rgba(200,169,106,.8), transparent); }
+.cert-sheet .cs-completed{ font-size:10pt; color:#9B98A2; margin-top:3mm; }
+.cert-sheet .cs-completed-ar{ font-family:'Tajawal','Cairo','Segoe UI',Tahoma,sans-serif; font-size:8.5pt; color:#6E6B74; margin-top:0.8mm; direction:rtl; }
+.cert-sheet .cs-academy{ font-family:'Fraunces',serif; font-size:17pt; font-weight:600; color:#D8BD83; margin-top:2.5mm; }
+.cert-sheet .cs-academy-ar{ font-family:'Tajawal','Cairo','Segoe UI',Tahoma,sans-serif; font-size:10pt; color:#A88345; margin-top:1mm; direction:rtl; }
+.cert-sheet .cs-meta{ display:flex; gap:30mm; margin-top:6mm; font-size:9pt; color:#9B98A2; }
+.cert-sheet .cs-meta > div{ position:relative; padding:0 10mm; }
+.cert-sheet .cs-meta > div + div::before{ content:''; position:absolute; left:-15mm; top:10%; height:80%; width:.3mm; background:rgba(200,169,106,.35); }
+.cert-sheet .cs-meta b{ display:block; font-weight:700; color:#F7F4EF; margin-top:1.5mm; font-size:10.5pt; }
+.cert-sheet .cs-meta .cs-m-ar{ font-family:'Tajawal','Cairo','Segoe UI',Tahoma,sans-serif; font-size:7.5pt; color:#8A8578; direction:rtl; }
+.cert-sheet .cs-verify{ margin-top:4mm; font-size:8pt; letter-spacing:.06em; color:#8A8578; }
+.cert-sheet .cs-verify b{ font-family:'Fraunces',serif; letter-spacing:.16em; color:#C8A96A; }
+.cert-sheet .cs-verify .cs-m-ar{ font-family:'Tajawal','Cairo','Segoe UI',Tahoma,sans-serif; font-size:7pt; color:#6E6B74; margin-right:6mm; direction:rtl; }
+.cert-sheet .cs-sign{ position:absolute; bottom:8mm; left:0; right:0; display:flex; justify-content:space-between; align-items:flex-end; padding:0 26mm; }
 .cert-sheet .cs-sign .cs-sign-block{ text-align:center; }
-.cert-sheet .cs-sign .cs-sign-name{ font-family:'Fraunces',serif; font-style:italic; font-size:15pt; color:#1B1B1F; }
-.cert-sheet .cs-sign .cs-sign-line{ width:52mm; height:.45mm; background:#1B1B1F; margin:3mm auto 2mm; }
-.cert-sheet .cs-sign .cs-sign-cap{ font-size:8pt; text-transform:uppercase; letter-spacing:.14em; color:#8A8A90; }
-.cert-sheet .cs-stamp{ width:24mm; height:24mm; border-radius:50%; border:.8mm solid #B08D47; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#8A6D3B; font-family:'Fraunces',serif; font-size:7pt; font-weight:600; line-height:1.3; transform:rotate(-8deg); }
-.cert-sheet .cs-watermark{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; opacity:.045; pointer-events:none; font-family:'Fraunces',serif; font-size:120pt; font-weight:600; color:#B08D47; }
+.cert-sheet .cs-sign .cs-sign-name{ font-family:'Fraunces',serif; font-style:italic; font-size:15pt; color:#D8BD83; }
+.cert-sheet .cs-sign .cs-sign-line{ width:52mm; height:.4mm; background:linear-gradient(90deg, transparent, rgba(200,169,106,.85), transparent); margin:3mm auto 2mm; }
+.cert-sheet .cs-sign .cs-sign-cap{ font-size:8pt; text-transform:uppercase; letter-spacing:.14em; color:#8A8578; }
+.cert-sheet .cs-stamp{
+  width:22mm; height:22mm; border-radius:50%; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  color:#C8A96A; font-family:'Fraunces',serif; font-size:6.5pt; font-weight:600; line-height:1.35;
+  transform:rotate(-8deg); position:relative;
+  border:0.7mm solid #C8A96A; box-shadow:inset 0 0 0 1.2mm rgba(200,169,106,.06), 0 0 6mm rgba(200,169,106,.22);
+}
+.cert-sheet .cs-watermark{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; opacity:.035; pointer-events:none; font-family:'Fraunces',serif; font-size:130pt; font-weight:600; color:#C8A96A; }
 
 /* ============================================================
    PART 3, STUDY CALENDAR (heatmap)
@@ -5565,32 +5607,32 @@ function studentFullName(){
 /* Build the A4 certificate sheet and open the system print dialog (from
    which the student can "Save as PDF"). Only the sheet is printed; the app
    chrome is hidden via the body[data-printing] print rules above. */
-function printCertificate(cert){
-  let root = document.getElementById('certPrintRoot');
-  if(!root){
-    root = document.createElement('div');
-    root.id = 'certPrintRoot';
-    document.body.appendChild(root);
-  }
+function certSheetHtml(cert){
   const name = studentFullName();
   // Arabic names need an Arabic-capable font, not the Latin Fraunces, or they
   // fall back to an unshaped/system font (especially in printed PDFs).
   const nameStyle = /[\u0600-\u06FF]/.test(name)
     ? "font-family:'Tajawal','Cairo','Segoe UI',Tahoma,sans-serif; direction:rtl; font-size:24pt;"
     : "";
-  root.innerHTML = `
+  return `
     <div class="cert-sheet">
       <div class="cs-frame"></div>
+      <div class="cs-corner cs-c-tl"></div>
+      <div class="cs-corner cs-c-tr"></div>
+      <div class="cs-corner cs-c-bl"></div>
+      <div class="cs-corner cs-c-br"></div>
       <div class="cs-watermark">PEL</div>
       <div class="cs-inner">
         <div class="cs-school">Personalized English Lessons</div>
         <div class="cs-school-ar">دروس انجليزي مخصصة · اكاديمية الاستاذ فراس</div>
         <div class="cs-monogram">P</div>
+        <div class="cs-ornament"><span class="cs-diamond"></span></div>
         <div class="cs-title">Certificate of Completion</div>
         <div class="cs-title-ar">شهادة إتمام</div>
         <div class="cs-certifies">This certifies that</div>
         <div class="cs-certifies-ar">تشهد هذه الشهادة بأن</div>
         <div class="cs-name" style="${nameStyle}">${escapeHtml(name)}</div>
+        <div class="cs-name-rule"></div>
         <div class="cs-completed">has successfully completed the academy</div>
         <div class="cs-completed-ar">أكمل بنجاح أكاديمية</div>
         <div class="cs-academy">${escapeHtml(cert.en)}</div>
@@ -5610,15 +5652,44 @@ function printCertificate(cert){
         <div class="cs-stamp"><div>PEL</div><div>VERIFIED</div><div>موثقة</div></div>
       </div>
     </div>`;
+}
+/* Global print cleanup: after any print (button or direct Ctrl+P) the app
+   chrome comes back and the sheet is removed. */
+function clearPrintState(){
+  delete document.body.dataset.printing;
+  const root = document.getElementById('certPrintRoot');
+  if(root) root.innerHTML = '';
+}
+window.addEventListener('afterprint', clearPrintState);
+/* Direct Ctrl+P (or any print) from the Certificates view prints the sheet
+   alone - never the app page, its buttons, or the floating translate
+   launcher. The Print PDF button builds the sheet first and this simply
+   skips because the sheet already exists. */
+window.addEventListener('beforeprint', () => {
+  const root = document.getElementById('certPrintRoot');
+  if(root && root.querySelector('.cert-sheet')) return;
+  const activeView = document.querySelector('.view.active');
+  if(activeView && activeView.id === 'view-certificates'){
+    const certs = buildCertificates();
+    if(certs.length){
+      const el = root || (() => { const r = document.createElement('div'); r.id = 'certPrintRoot'; document.body.appendChild(r); return r; })();
+      el.innerHTML = certSheetHtml(certs[0]);
+      document.body.dataset.printing = '1';
+    }
+  }
+});
+function printCertificate(cert){
+  let root = document.getElementById('certPrintRoot');
+  if(!root){
+    root = document.createElement('div');
+    root.id = 'certPrintRoot';
+    document.body.appendChild(root);
+  }
+  root.innerHTML = certSheetHtml(cert);
   document.body.dataset.printing = '1';
-  const done = () => {
-    delete document.body.dataset.printing;
-    root.innerHTML = '';
-  };
-  window.addEventListener('afterprint', done, { once:true });
-  // Safari/Electron fallback: also clean up when the print media query toggles back.
+  // Safari/Electron fallback for cleanup when afterprint does not fire.
   const mql = window.matchMedia('print');
-  const onToggle = (e) => { if(!e.matches){ done(); mql.removeEventListener('change', onToggle); } };
+  const onToggle = (e) => { if(!e.matches){ clearPrintState(); mql.removeEventListener('change', onToggle); } };
   mql.addEventListener('change', onToggle);
   // Small delay lets the sheet paint before the dialog opens.
   setTimeout(() => window.print(), 60);
@@ -5688,13 +5759,26 @@ function certCodeFor(academyId){
 /* Register certificates with the public registry. Best-effort and silent:
    if the RPC is unavailable (table not created yet, offline, etc.) the app
    keeps working and retries the next time certificates render. */
+/* Register every certificate with the public registry. Returns a per-
+   certificate status list so callers can show exactly what happened instead
+   of failing silently: { academy, en, code, registered, error }. */
 async function syncCertificateRecords(){
   const c = client();
-  if(!c || !currentUser) return;
+  const result = [];
+  if(!c || !currentUser) return result;
   for(const cert of buildCertificates()){
     const entry = certCodeFor(cert.id);
+    const status = { academy: cert.id, en: cert.en, code: entry.code, registered: !!entry.synced, error: null };
+    result.push(status);
     if(entry.synced) continue;
-    if(!cert.dateRaw) continue;
+    // Never skip registration: if the completion-date log is missing (e.g.
+    // cleared storage or an older account), fall back to the newest recorded
+    // completion date for this academy, then to today.
+    const compDates = lsGet('pel_completion_dates', {});
+    const dates = Object.keys(compDates)
+      .filter(k => k.indexOf(cert.id + '::') === 0)
+      .map(k => compDates[k]).filter(Boolean).sort();
+    const dateRaw = dates.length ? dates[dates.length - 1] : new Date().toISOString().slice(0,10);
     try{
       const { error } = await c.rpc('issue_certificate', {
         p_code: entry.code,
@@ -5702,17 +5786,23 @@ async function syncCertificateRecords(){
         p_student_name: studentFullName(),
         p_academy_en: cert.en,
         p_academy_ar: cert.ar,
-        p_completed_at: cert.dateRaw,
+        p_completed_at: dateRaw,
         p_academy_id: cert.id,
       });
-      if(!error){
+      if(error){
+        status.error = (error && error.message) ? error.message : String(error);
+      }else{
         // Re-read the store: certCodeFor may have just created this entry.
         const fresh = lsGet('pel_cert_codes', {});
         if(fresh[cert.id]) fresh[cert.id].synced = true;
         lsSet('pel_cert_codes', fresh);
+        status.registered = true;
       }
-    }catch(e){ /* retry on next render */ }
+    }catch(e){
+      status.error = (e && e.message) ? e.message : String(e);
+    }
   }
+  return result;
 }
 function shareCertLink(cert){
   // Same origin as the app, pointing at the public verify page.
@@ -5736,7 +5826,7 @@ function copyTextToClipboard(text){
     document.body.removeChild(ta);
   }
 }
-function openCertVerify(cert){
+async function openCertVerify(cert){
   const link = shareCertLink(cert);
   let modal = document.getElementById('certVerifyModal');
   if(!modal){
@@ -5769,12 +5859,38 @@ function openCertVerify(cert){
       <input readonly value="${escapeHtml(cert.code)}" style="flex:1; background:var(--surface); border:1px dashed var(--border); border-radius:10px; padding:11px 13px; color:var(--gold-soft); font-family:'Fraunces',serif; font-size:.9rem; letter-spacing:.14em; outline:none; text-align:center;">
       <button class="btn-outline" id="copyVerifyCode" style="padding:0 14px;"><span class="arabic">نسخ</span> · Copy</button>
     </div>
-    <a href="${escapeHtml(link)}" target="_blank" rel="noopener" class="btn-gold" style="display:flex; align-items:center; justify-content:center; gap:8px; margin-top:22px; text-decoration:none; padding:13px 0; border-radius:12px;"><span class="arabic">فتح صفحة التحقق</span> · Open verification page</a>
-    <p style="margin-top:14px; font-size:.72rem; color:var(--text-muted); line-height:1.7;"><span class="arabic" style="display:block; margin-bottom:2px;">لأول مرة تفتح الرابط، خذ ثواني عشان يتسجل السجل في قاعدة البيانات.</span>If the link is opened right after earning the certificate, give it a moment for the record to register.</p>
+    <div id="certStatus" style="margin-top:18px; padding:13px 16px; border-radius:12px; font-size:.82rem; line-height:1.7; display:none;"></div>
+    <a href="${escapeHtml(link)}" target="_blank" rel="noopener" class="btn-gold" style="display:flex; align-items:center; justify-content:center; gap:8px; margin-top:18px; text-decoration:none; padding:13px 0; border-radius:12px;"><span class="arabic">فتح صفحة التحقق</span> · Open verification page</a>
+    <button class="btn-outline" id="certRetryBtn" style="margin-top:10px; width:100%; justify-content:center; display:none;"><span class="arabic">اعادة المحاولة</span> · Try again</button>
   `;
+  const statusEl = document.getElementById('certStatus');
+  const retryBtn = document.getElementById('certRetryBtn');
+  const showStatus = (kind, ar, en, canRetry) => {
+    statusEl.style.display = 'block';
+    statusEl.style.border = '1px solid ' + (kind === 'ok' ? 'rgba(66,163,106,.35)' : kind === 'err' ? 'rgba(210,92,92,.35)' : 'rgba(216,156,61,.35)');
+    statusEl.style.background = kind === 'ok' ? 'rgba(66,163,106,.08)' : kind === 'err' ? 'rgba(210,92,92,.08)' : 'rgba(216,156,61,.08)';
+    statusEl.style.color = kind === 'ok' ? 'var(--success)' : kind === 'err' ? 'var(--error)' : 'var(--warning)';
+    statusEl.innerHTML = '<span class="arabic" style="display:block; margin-bottom:2px;">' + ar + '</span>' + en;
+    retryBtn.style.display = canRetry ? 'flex' : 'none';
+  };
+  const doSync = async () => {
+    showStatus('warn', 'جاري تسجيل الشهادة في السجل الرسمي...', 'Registering the certificate in the official registry...', false);
+    const results = await syncCertificateRecords();
+    const mine = results.find(r => r.academy === cert.id);
+    if(!mine){ showStatus('err', 'تعذر الوصول لسجل الشهادات.', 'Could not reach the certificate registry.', true); return; }
+    if(mine.registered){
+      showStatus('ok', 'تم تسجيل الشهادة بنجاح. الرابط يشتغل الحين.', 'Certificate registered. The link works now.', false);
+    }else if(mine.error){
+      showStatus('err', 'ما تم تسجيل الشهادة.', 'Registration failed: ' + escapeHtml(mine.error) + '.', true);
+    }else{
+      showStatus('warn', 'التسجيل قيد المحاولة.', 'Registration pending.', true);
+    }
+  };
   document.getElementById('copyVerifyLink').addEventListener('click', () => copyTextToClipboard(link));
   document.getElementById('copyVerifyCode').addEventListener('click', () => copyTextToClipboard(cert.code));
+  retryBtn.addEventListener('click', doSync);
   modal.classList.add('open');
+  doSync();
   if(window.lucide) lucide.createIcons();
 }
 
