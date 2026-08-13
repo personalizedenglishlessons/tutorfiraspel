@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Certificate Verification · Personalized English Lessons</title>
+<meta name="description" content="Verify a Personalized English Lessons certificate of completion.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+<style>
+:root{
+  --bg:#0E0E10; --surface:#17171B; --card:#1E1F25; --card-elevated:#262833;
+  --border:#343744; --text:#F7F4EF; --text-secondary:#D0CBC4; --text-muted:#9B98A2;
+  --gold:#C8A96A; --gold-soft:#D8BD83; --bronze:#A88345; --success:#42A36A; --error:#D25C5C;
+  --shadow-lift:0 30px 90px -25px rgba(0,0,0,.7);
+  --gold-glow:0 0 40px -8px rgba(200,169,106,.45);
+  --ease:cubic-bezier(.16,.84,.32,1);
+}
+*,*::before,*::after{ box-sizing:border-box; }
+html,body{ height:100%; }
+body{
+  margin:0; background:
+    radial-gradient(1000px 500px at 80% -10%, rgba(200,169,106,.09), transparent 60%),
+    radial-gradient(800px 400px at 10% 110%, rgba(63,140,114,.07), transparent 60%),
+    var(--bg);
+  color:var(--text); font-family:'Plus Jakarta Sans',sans-serif; -webkit-font-smoothing:antialiased;
+  display:flex; flex-direction:column; min-height:100%;
+}
+h1,h2,h3{ font-family:'Fraunces',serif; font-weight:500; line-height:1.15; letter-spacing:0; margin:0; }
+p{ margin:0; }
+a{ color:var(--gold); text-decoration:none; }
+button{ font-family:inherit; cursor:pointer; }
+::selection{ background:var(--gold); color:#0E0E10; }
+.arabic{ font-family:'Tajawal','Cairo',sans-serif; direction:rtl; line-height:1.7; letter-spacing:0; unicode-bidi:isolate; }
+
+.site-head{
+  display:flex; align-items:center; justify-content:center; gap:14px;
+  padding:34px 24px 10px;
+}
+.site-logo{
+  width:44px; height:44px; border-radius:14px;
+  background:linear-gradient(135deg,var(--gold-soft),var(--bronze));
+  color:#171412; font-family:'Fraunces',serif; font-weight:600; font-size:1.25rem;
+  display:flex; align-items:center; justify-content:center; box-shadow:var(--gold-glow);
+}
+.site-name{ font-size:.9rem; color:var(--text-secondary); line-height:1.4; }
+.site-name b{ color:var(--text); font-weight:600; }
+
+.wrap{ flex:1; display:flex; flex-direction:column; align-items:center; padding:28px 20px 60px; }
+.card{
+  width:100%; max-width:560px; background:var(--card-elevated); border:1px solid var(--border);
+  border-radius:24px; box-shadow:var(--shadow-lift); padding:38px 34px; text-align:center;
+}
+.eyebrow{ font-size:.7rem; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); font-weight:600; }
+.card h1{ font-size:1.7rem; margin-top:10px; }
+.card .sub{ margin-top:10px; font-size:.9rem; color:var(--text-muted); line-height:1.7; }
+.card .sub.ar{ margin-top:4px; color:var(--text-secondary); }
+
+/* states */
+.state{ display:none; }
+.state.show{ display:block; }
+.seal{
+  width:86px; height:86px; border-radius:50%; margin:26px auto 20px;
+  display:flex; align-items:center; justify-content:center;
+}
+.seal.ok{ border:2px solid var(--success); color:var(--success); background:rgba(66,163,106,.08); box-shadow:0 0 0 8px rgba(66,163,106,.06); }
+.seal.bad{ border:2px solid var(--error); color:var(--error); background:rgba(210,92,92,.08); box-shadow:0 0 0 8px rgba(210,92,92,.06); }
+.verified-badge{
+  display:inline-flex; align-items:center; gap:8px; margin-top:8px;
+  background:rgba(66,163,106,.12); color:var(--success); border:1px solid rgba(66,163,106,.35);
+  padding:7px 16px; border-radius:999px; font-size:.78rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+}
+.cert-student{ font-family:'Fraunces',serif; font-size:2rem; font-weight:600; color:var(--gold); margin-top:22px; line-height:1.2; }
+.cert-line{ font-size:.9rem; color:var(--text-secondary); margin-top:14px; }
+.cert-academy{ font-family:'Fraunces',serif; font-size:1.25rem; font-weight:600; color:var(--text); margin-top:6px; }
+.cert-academy-ar{ margin-top:4px; font-size:.95rem; color:var(--text-secondary); }
+.cert-meta{
+  display:flex; justify-content:center; gap:40px; margin-top:26px; flex-wrap:wrap;
+}
+.cert-meta .m{ text-align:center; }
+.cert-meta .m .lab{ font-size:.66rem; text-transform:uppercase; letter-spacing:.12em; color:var(--text-muted); }
+.cert-meta .m .val{ font-size:.95rem; font-weight:700; color:var(--text); margin-top:4px; }
+.genuine{ margin-top:24px; padding:14px 18px; border-radius:14px; background:rgba(200,169,106,.07); border:1px solid rgba(200,169,106,.25); font-size:.85rem; color:var(--gold-soft); line-height:1.7; }
+
+.lookup-form{ margin-top:24px; display:flex; gap:10px; }
+.lookup-form input{
+  flex:1; background:var(--surface); border:1px solid var(--border); color:var(--text);
+  border-radius:12px; padding:13px 16px; font-family:'Fraunces',serif; font-size:.95rem; letter-spacing:.08em;
+  text-transform:uppercase; outline:none; transition:border-color .2s ease;
+}
+.lookup-form input:focus{ border-color:var(--gold); }
+.btn-gold{
+  background:linear-gradient(135deg,var(--gold-soft),var(--bronze)); color:#171412;
+  border:none; border-radius:12px; padding:13px 22px; font-weight:700; font-size:.85rem;
+  transition:transform .15s ease, box-shadow .2s ease;
+}
+.btn-gold:hover{ transform:translateY(-1px); box-shadow:var(--gold-glow); }
+.btn-ghost{ background:none; border:1px solid var(--border); color:var(--text-secondary); border-radius:12px; padding:12px 20px; font-size:.82rem; transition:border-color .2s ease, color .2s ease; }
+.btn-ghost:hover{ border-color:var(--gold); color:var(--gold); }
+.spinner{
+  width:42px; height:42px; margin:34px auto 18px; border-radius:50%;
+  border:3px solid var(--border); border-top-color:var(--gold);
+  animation:spin .8s linear infinite;
+}
+@keyframes spin{ to{ transform:rotate(360deg); } }
+.site-foot{ text-align:center; padding:0 20px 34px; font-size:.72rem; color:var(--text-muted); line-height:1.8; }
+.code-chip{
+  font-family:'Fraunces',serif; letter-spacing:.14em; color:var(--text-secondary);
+  background:var(--surface); border:1px dashed var(--border); border-radius:10px;
+  padding:9px 16px; font-size:.85rem; display:inline-block; margin-top:18px;
+}
+</style>
+</head>
+<body>
+
+<header class="site-head">
+  <div class="site-logo">P</div>
+  <div class="site-name">
+    <b>Personalized English Lessons</b>
+    <div class="arabic" style="font-size:.8rem; color:var(--text-muted);">دروس انجليزي مخصصة · اكاديمية الاستاذ فراس</div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="card">
+    <div class="eyebrow">Certificate Verification · <span class="arabic">التحقق من الشهادة</span></div>
+
+    <!-- verified -->
+    <div class="state" id="st-ok">
+      <div class="seal ok">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.1V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+      </div>
+      <div class="verified-badge"><span class="arabic">موثقة</span> · Verified</div>
+      <div class="cert-student" id="okName"></div>
+      <div class="cert-line"><span class="arabic">أكمل بنجاح أكاديمية</span> · has successfully completed</div>
+      <div class="cert-academy" id="okAcademy"></div>
+      <div class="cert-academy-ar arabic" id="okAcademyAr"></div>
+      <div class="cert-meta">
+        <div class="m"><div class="lab"><span class="arabic">تاريخ الاتمام</span> · Completion Date</div><div class="val" id="okDate"></div></div>
+        <div class="m"><div class="lab"><span class="arabic">رقم الشهادة</span> · Certificate ID</div><div class="val" id="okCertId"></div></div>
+      </div>
+      <div class="code-chip" id="okCode"></div>
+      <div id="okIdCheck" style="margin-top:14px; display:none; font-size:.76rem; line-height:1.7;"></div>
+      <div class="genuine">
+        <span class="arabic" style="display:block; margin-bottom:4px;">هذه الشهادة أصلية وموثقة من اكاديمية الاستاذ فراس.</span>
+        This certificate is genuine and issued by Personalized English Lessons.
+      </div>
+    </div>
+
+    <!-- not found -->
+    <div class="state" id="st-bad">
+      <div class="seal bad">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>
+      </div>
+      <h1><span class="arabic" style="display:block; font-size:.55em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">تعذر التحقق من هذه الشهادة</span>Unable to verify this certificate</h1>
+      <p class="sub"><span class="arabic" style="display:block; margin-bottom:4px;">ما لقينا سجل لهذا الرمز. تأكد من الرمز وحاول مرة ثانية.</span>We could not find a record for this code. Double-check it and try again.</p>
+      <form class="lookup-form" id="badForm">
+        <input id="badCode" placeholder="PEL-XXXX-XXXX" autocomplete="off" spellcheck="false" aria-label="Verification code">
+        <button class="btn-gold" type="submit">Verify</button>
+      </form>
+      <p class="sub" style="margin-top:14px;"><span class="arabic">تأكد من الرمز</span> · Check the code on your certificate</p>
+    </div>
+
+    <!-- error (supabase unavailable) -->
+    <div class="state" id="st-err">
+      <div class="seal bad">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.7 3.86a2 2 0 00-3.4 0z"/></svg>
+      </div>
+      <h1><span class="arabic" style="display:block; font-size:.55em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">خدمة التحقق غير متاحة حاليا</span>Verification service unavailable</h1>
+      <p class="sub"><span class="arabic" style="display:block; margin-bottom:4px;">تعذر الاتصال بخدمة التحقق. جرب مرة ثانية بعد قليل.</span>We could not reach the verification service. Please try again shortly.</p>
+      <button class="btn-ghost" id="retryBtn" style="margin-top:18px;">Try again · <span class="arabic">جرب مرة ثانية</span></button>
+    </div>
+
+    <!-- lookup prompt (no code yet) -->
+    <div class="state" id="st-form">
+      <h1 style="margin-top:6px;"><span class="arabic" style="display:block; font-size:.55em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">تحقق من صحة شهادة</span>Verify a certificate</h1>
+      <p class="sub"><span class="arabic" style="display:block; margin-bottom:4px;">ادخل رمز التحقق الموجود على الشهادة.</span>Enter the verification code printed on the certificate.</p>
+      <form class="lookup-form" id="mainForm">
+        <input id="mainCode" placeholder="PEL-XXXX-XXXX" autocomplete="off" spellcheck="false" aria-label="Verification code">
+        <button class="btn-gold" type="submit">Verify</button>
+      </form>
+      <div style="margin-top:26px; padding-top:20px; border-top:1px solid var(--border);">
+        <p class="sub" style="font-size:.78rem;"><span class="arabic" style="display:block; margin-bottom:4px;">كل شهادة صادرة من التطبيق لها رمز تحقق فريد لا يمكن تخمينه.</span>Every certificate issued by the app carries a unique, unguessable verification code.</p>
+      </div>
+      <div style="margin-top:22px; padding-top:20px; border-top:1px solid var(--border);">
+        <p style="font-size:.78rem; font-weight:700; color:var(--text-secondary);"><span class="arabic">فحص رقم الشهادة</span> · Validate a certificate number</p>
+        <p class="sub" style="font-size:.76rem; margin-top:6px;"><span class="arabic" style="display:block; margin-bottom:4px;">كل رقم شهادة فيه تاريخ الاصدار ورقم تحقق (checksum). الرقم المزور ينكشف هنا فورا، بدون قاعدة البيانات.</span>Every certificate number embeds its issue date and a checksum digit. A forged number is caught here instantly, with no database lookup.</p>
+        <form class="lookup-form" id="numForm">
+          <input id="numCode" placeholder="PEL-260813-531-9" autocomplete="off" spellcheck="false" aria-label="Certificate number">
+          <button class="btn-gold" type="submit">Check</button>
+        </form>
+        <div id="numResult" style="margin-top:14px; display:none;"></div>
+      </div>
+    </div>
+
+    <!-- loading -->
+    <div class="state" id="st-load">
+      <div class="spinner"></div>
+      <p class="sub"><span class="arabic" style="display:block; margin-bottom:4px;">جاري التحقق...</span>Verifying certificate...</p>
+    </div>
+  </div>
+</main>
+
+<footer class="site-foot">
+  <span class="arabic" style="display:block;">التحقق يتم مباشرة من سجل الشهادات الرسمي، ولا يمكن تزوير الشهادات.</span>
+  Verification runs against the official certificate registry. Certificates cannot be forged.
+</footer>
+
+<script>
+/* ==========================================================================
+   SUPABASE CONFIGURATION (public anon key, read-only lookup via RPC)
+   ========================================================================== */
+const SUPABASE_URL = 'https://lewoochehpiycocvfwtz.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxld29vY2hlaHBpeWNvY3Zmd3R6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwNzQ3MzcsImV4cCI6MjA5OTY1MDczN30.sIWK6jwX7PW70fH0yPUuhOb25N1lBw2-Cvb3dtwDb9Y';
+
+let supabaseClient = null;
+function initClient(){
+  if(supabaseClient) return supabaseClient;
+  if(window.supabase && SUPABASE_URL.indexOf('YOUR-PROJECT-REF') === -1){
+    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  }
+  return supabaseClient;
+}
+
+function showState(id){
+  document.querySelectorAll('.state').forEach(s => s.classList.remove('show'));
+  const el = document.getElementById(id);
+  if(el) el.classList.add('show');
+  if(id === 'st-bad') document.getElementById('badCode').focus();
+  if(id === 'st-form') document.getElementById('mainCode').focus();
+}
+
+async function lookup(code){
+  const clean = String(code || '').trim().toUpperCase().replace(/\s+/g, '');
+  if(!clean){ showState('st-form'); return; }
+  showState('st-load');
+  const client = initClient();
+  if(!client){ showState('st-err'); return; }
+  try{
+    const { data, error } = await client.rpc('verify_certificate', { p_code: clean });
+    if(error){ showState('st-err'); return; }
+    if(!data || !data.length){
+      document.getElementById('badCode').value = clean;
+      showState('st-bad');
+      return;
+    }
+    const row = data[0];
+    const nameEl = document.getElementById('okName');
+    nameEl.textContent = row.student_name;
+    // Arabic names need an Arabic-capable font, not the Latin Fraunces.
+    if(/[\u0600-\u06FF]/.test(row.student_name)){
+      nameEl.style.fontFamily = "'Tajawal','Cairo','Segoe UI',Tahoma,sans-serif";
+      nameEl.style.direction = 'rtl';
+    }
+    document.getElementById('okAcademy').textContent = row.academy_en;
+    document.getElementById('okAcademyAr').textContent = row.academy_ar;
+    document.getElementById('okDate').textContent = row.completed_at;
+    document.getElementById('okCertId').textContent = row.cert_id;
+    document.getElementById('okCode').textContent = 'CODE · ' + clean;
+    const idCheck = document.getElementById('okIdCheck');
+    if(validCertNumber(row.cert_id)){
+      idCheck.style.display = 'block';
+      idCheck.style.color = 'var(--success)';
+      idCheck.innerHTML = '✓ <span class="arabic">رقم الشهادة سليم (التاريخ ورقم التحقق مطابقان)</span> · Certificate ID checksum valid';
+    }else{
+      idCheck.style.display = 'block';
+      idCheck.style.color = 'var(--warning)';
+      idCheck.innerHTML = '! <span class="arabic">رقم الشهادة لا يطابق الصيغة الرسمية</span> · Certificate ID checksum does not match';
+    }
+    showState('st-ok');
+  }catch(e){ showState('st-err'); }
+}
+
+function normalizeParam(){
+  const params = new URLSearchParams(location.search);
+  return (params.get('code') || '').trim().toUpperCase().replace(/\s+/g, '');
+}
+
+document.getElementById('mainForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  lookup(document.getElementById('mainCode').value);
+  history.replaceState(null, '', location.pathname);
+});
+document.getElementById('badForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  lookup(document.getElementById('badCode').value);
+  history.replaceState(null, '', location.pathname);
+});
+/* ---- local certificate number check (issue date + checksum) ---- */
+function luhnDigit(numStr){
+  let sum = 0, double = true;
+  for(let i = numStr.length - 1; i >= 0; i--){
+    let d = numStr.charCodeAt(i) - 48;
+    if(double){ d *= 2; if(d > 9) d -= 9; }
+    sum += d;
+    double = !double;
+  }
+  return (10 - (sum % 10)) % 10;
+}
+function validCertNumber(idStr){
+  const m = String(idStr || '').trim().toUpperCase().match(/^PEL-(\d{6})-(\d{3})-(\d)$/);
+  if(!m) return false;
+  const yymmdd = m[1], sss = m[2], check = m[3];
+  const yy = +yymmdd.slice(0,2), mm = +yymmdd.slice(2,4), dd = +yymmdd.slice(4,6);
+  if(mm < 1 || mm > 12 || dd < 1 || dd > 31) return false;
+  const d = new Date(2000 + yy, mm - 1, dd);
+  if(d.getFullYear() !== 2000 + yy || d.getMonth() !== mm - 1 || d.getDate() !== dd) return false;
+  return luhnDigit(yymmdd + sss) === +check;
+}
+function showNumResult(ok, htmlAr, htmlEn){
+  const box = document.getElementById('numResult');
+  box.style.display = 'block';
+  box.style.padding = '13px 16px';
+  box.style.borderRadius = '12px';
+  box.style.fontSize = '.82rem';
+  box.style.lineHeight = '1.7';
+  box.style.border = '1px solid ' + (ok ? 'rgba(66,163,106,.35)' : 'rgba(210,92,92,.35)');
+  box.style.background = (ok ? 'rgba(66,163,106,.08)' : 'rgba(210,92,92,.08)');
+  box.style.color = ok ? 'var(--success)' : 'var(--error)';
+  box.innerHTML = '<span class="arabic" style="display:block; margin-bottom:2px;">' + htmlAr + '</span>' + htmlEn;
+}
+document.getElementById('numForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const raw = document.getElementById('numCode').value.trim();
+  const m = String(raw).toUpperCase().match(/^PEL-(\d{6})-(\d{3})-(\d)$/);
+  if(!m){
+    showNumResult(false, 'الصيغة غير صحيحة.', 'Wrong format. Expected PEL-YYMMDD-SSS-C, e.g. PEL-260813-531-9.');
+    return;
+  }
+  if(validCertNumber(raw)){
+    const d = m[1];
+    showNumResult(true, 'رقم سليم: تاريخ الاصدار ' + d.slice(0,2) + '/' + d.slice(2,4) + '/' + '20' + d.slice(0,2) + ' ورقم التحقق مطابق.',
+      'Valid number: issued ' + '20' + d.slice(0,2) + '-' + d.slice(2,4) + '-' + d.slice(4,6) + ', checksum matches. Authenticity still requires the secret verification code.');
+  }else{
+    showNumResult(false, 'رقم مزور او تالف: خانة التحقق غير مطابقة.', 'This number is forged or corrupted: the checksum digit does not match.');
+  }
+});
+document.getElementById('retryBtn').addEventListener('click', () => {
+  const code = normalizeParam();
+  if(code) lookup(code); else showState('st-form');
+});
+
+window.addEventListener('load', () => {
+  const code = normalizeParam();
+  if(code) lookup(code);
+  else showState('st-form');
+});
+</script>
+</body>
+</html>
