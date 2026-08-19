@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PEL · سياسة الخصوصية والشروط</title>
+<meta name="description" content="سياسة الخصوصية والشروط والأحكام لمنصة Personalized English Lessons مع الاستاذ فراس.">
+<meta name="robots" content="index, follow">
+<link rel="icon" type="image/svg+xml" href="brand/pel-favicon.svg?v=2">
+<link rel="icon" type="image/png" sizes="32x32" href="brand/favicon-32.png?v=2">
+<link rel="icon" type="image/png" sizes="48x48" href="brand/favicon-48.png?v=2">
+<link rel="apple-touch-icon" href="brand/apple-touch-icon.png?v=2">
+<meta name="theme-color" content="#0E0E10">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0E0E10;
+  --surface:#17171B;
+  --card:#1E1F25;
+  --card-elevated:#262833;
+  --border:#343744;
+  --text:#F7F4EF;
+  --text-secondary:#D0CBC4;
+  --text-muted:#9B98A2;
+  --gold:#C8A96A;
+  --gold-soft:#D8BD83;
+  --bronze:#A88345;
+  --emerald:#3F8C72;
+  --success:#42A36A;
+  --pel-stem:#F7F4EF;
+  --pel-gold:#C8A96A;
+  --shadow-soft: 0 20px 60px -20px rgba(0,0,0,0.55);
+  --ease: cubic-bezier(.16,.84,.32,1);
+}
+html[data-theme="light"]{
+  --bg:#FAF8F4;
+  --surface:#FFFFFF;
+  --card:#F5F2EC;
+  --card-elevated:#FFFFFF;
+  --border:#E5DFD2;
+  --text:#17171B;
+  --text-secondary:#4B463D;
+  --text-muted:#8C877C;
+  --pel-stem:#17171B;
+  --pel-gold:#A88345;
+  --shadow-soft: 0 20px 60px -25px rgba(30,25,15,0.18);
+}
+*,*::before,*::after{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Tajawal','Plus Jakarta Sans',sans-serif;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  transition:background .5s var(--ease), color .5s var(--ease);
+  line-height:1.9;
+}
+h1,h2,h3,h4{ font-family:'Fraunces',serif; font-weight:500; line-height:1.3; letter-spacing:-0.01em; margin:0; }
+p{margin:0;}
+a{color:inherit; text-decoration:none;}
+ul{list-style:none; margin:0; padding:0;}
+button{font-family:inherit; cursor:pointer; border:none; background:none; color:inherit;}
+::selection{background:var(--gold); color:#0E0E10;}
+.container{ max-width:860px; margin:0 auto; padding:0 40px; }
+@media(max-width:768px){ .container{ padding:0 24px; } }
+
+.eyebrow{
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:.72rem; letter-spacing:.22em; text-transform:uppercase;
+  color:var(--gold); font-weight:600;
+}
+.eyebrow::before{ content:""; width:22px; height:1px; background:var(--gold); }
+[dir="rtl"] .eyebrow{ letter-spacing:normal; text-transform:none; font-family:'Tajawal','Cairo',sans-serif; }
+
+/* header */
+header{
+  position:sticky; top:0; z-index:1000;
+  background:color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter:blur(18px) saturate(140%);
+  -webkit-backdrop-filter:blur(18px) saturate(140%);
+  border-bottom:1px solid var(--border);
+}
+.header-inner{ display:flex; align-items:center; justify-content:space-between; gap:20px; padding-top:16px; padding-bottom:16px; }
+.logo{
+  display:flex; align-items:center; min-width:0;
+}
+.logo img{ height:24px; width:auto; flex-shrink:0; }
+.pel-logo{ display:inline-block; vertical-align:middle; }
+.pel-logo-light{ display:none; }
+html[data-theme="light"] .pel-logo{ display:none; }
+html[data-theme="light"] .pel-logo-light{ display:inline-block; }
+.header-actions{ display:flex; align-items:center; gap:12px; }
+.nav-pill{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:10px 18px; border-radius:999px;
+  border:1px solid var(--border); color:var(--text-secondary);
+  font-size:.84rem; font-weight:500; transition:border-color .3s, color .3s;
+}
+.nav-pill:hover{ border-color:var(--gold); color:var(--gold-soft); }
+.theme-toggle{
+  width:42px; height:42px; border-radius:50%;
+  border:1px solid var(--border); display:flex; align-items:center; justify-content:center;
+  color:var(--text-secondary); flex-shrink:0; transition:border-color .3s, color .3s, transform .3s;
+}
+.theme-toggle:hover{ border-color:var(--gold); color:var(--gold); transform:rotate(20deg); }
+
+/* page head */
+main{ padding:90px 0 40px; }
+.page-head{ margin-bottom:64px; }
+.page-head h1{ font-size:clamp(2rem,4.4vw,3rem); margin-top:20px; }
+.page-head .updated{ margin-top:14px; font-size:.86rem; color:var(--text-muted); }
+.legal-nav{ display:flex; gap:12px; flex-wrap:wrap; margin-top:30px; }
+.legal-nav a{
+  padding:10px 22px; border-radius:999px; border:1px solid var(--border);
+  color:var(--text-secondary); font-size:.9rem; font-weight:600; transition:border-color .3s, background .3s, color .3s;
+}
+.legal-nav a:hover, .legal-nav a:focus-visible{ border-color:var(--gold); color:var(--gold); background:rgba(200,169,106,.06); }
+
+/* legal sections */
+.legal-section{ scroll-margin-top:110px; }
+.legal-card{
+  background:var(--card); border:1px solid var(--border); border-radius:22px;
+  padding:44px 46px; margin-bottom:46px; box-shadow:var(--shadow-soft);
+}
+@media(max-width:640px){ .legal-card{ padding:30px 24px; } }
+.legal-card h2{ font-size:1.7rem; margin-top:12px; }
+.legal-card .intro{ margin-top:18px; color:var(--text-secondary); font-size:.98rem; }
+.legal-card h3{
+  font-size:1.14rem; font-weight:600; margin-top:36px; padding-bottom:10px;
+  border-bottom:1px solid var(--border); color:var(--gold);
+}
+.legal-card h3:first-of-type{ margin-top:34px; }
+.legal-card p{ margin-top:14px; font-size:.95rem; color:var(--text-secondary); }
+.legal-card p b{ color:var(--text); font-weight:700; }
+.legal-card ul{ margin-top:14px; display:flex; flex-direction:column; gap:12px; }
+.legal-card li{ display:flex; gap:10px; font-size:.95rem; color:var(--text-secondary); }
+.legal-card li::before{ content:"◆"; color:var(--gold); font-size:.7rem; line-height:2.1; flex-shrink:0; }
+.legal-card .note{
+  margin-top:26px; padding:16px 18px; border-radius:14px;
+  background:rgba(200,169,106,.08); border:1px solid rgba(200,169,106,.3);
+  font-size:.88rem; color:var(--text-secondary);
+}
+.legal-card .note b{ color:var(--gold); }
+
+/* footer */
+footer{ padding:60px 0 40px; border-top:1px solid var(--border); margin-top:60px; }
+.footer-inner{ display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap; }
+.footer-links{ display:flex; gap:22px; flex-wrap:wrap; font-size:.86rem; color:var(--text-muted); }
+.footer-links a:hover{ color:var(--gold); }
+.footer-bottom{ margin-top:26px; font-size:.78rem; color:var(--text-muted); }
+
+/* back to top */
+.back-to-top{
+  position:fixed; bottom:28px; left:28px; width:46px; height:46px; border-radius:50%;
+  background:var(--card-elevated); border:1px solid var(--border); color:var(--gold);
+  display:flex; align-items:center; justify-content:center; z-index:900;
+  opacity:0; pointer-events:none; transform:translateY(10px);
+  transition:opacity .4s ease, transform .4s ease, border-color .3s ease;
+}
+.back-to-top.show{ opacity:1; pointer-events:all; transform:translateY(0); }
+.back-to-top:hover{ border-color:var(--gold); }
+/* consent notice bar */
+.consent-bar{
+  position:fixed; left:16px; right:16px; bottom:16px; z-index:2000;
+  max-width:620px; margin:0 auto;
+  background:var(--card-elevated); border:1px solid rgba(200,169,106,.4);
+  border-radius:16px; padding:16px 18px;
+  display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+  box-shadow:var(--shadow-soft);
+  opacity:0; transform:translateY(16px); pointer-events:none;
+  transition:opacity .4s var(--ease), transform .4s var(--ease);
+}
+.consent-bar.show{ opacity:1; transform:translateY(0); pointer-events:all; }
+.consent-text{ flex:1; min-width:230px; font-size:.84rem; color:var(--text-secondary); line-height:1.7; }
+.consent-actions{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+.consent-link{ font-size:.78rem; color:var(--gold); font-weight:600; }
+.consent-link:hover{ text-decoration:underline; }
+.consent-btn{
+  padding:9px 20px; border-radius:999px;
+  background:linear-gradient(135deg, var(--gold-soft), var(--gold) 55%, var(--bronze));
+  color:#171412; font-weight:700; font-size:.82rem;
+  transition:transform .3s var(--ease), box-shadow .3s var(--ease);
+}
+.consent-btn:hover{ transform:translateY(-1px); box-shadow:var(--gold-glow); }
+
+a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-offset:3px; border-radius:6px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container header-inner">
+    <a href="index.html" class="logo">
+      <img class="pel-logo" src="brand/pel-wordmark.svg" alt="PEL">
+      <img class="pel-logo pel-logo-light" src="brand/pel-wordmark-dark.svg" alt="PEL">
+    </a>
+    <div class="header-actions">
+      <a href="index.html" class="nav-pill">العودة للرئيسية</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="تبديل المظهر">
+        <svg id="themeIcon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v2M12 19v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M3 12h2M19 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/><circle cx="12" cy="12" r="4.2"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <div class="page-head">
+    <span class="eyebrow">وثائق المنصة · Legal</span>
+    <h1>سياسة الخصوصية والشروط</h1>
+    <p class="updated">آخر تحديث: 18 أغسطس 2026</p>
+    <div class="legal-nav">
+      <a href="#privacy">سياسة الخصوصية</a>
+      <a href="#terms">الشروط والأحكام</a>
+    </div>
+  </div>
+
+  <section class="legal-section" id="privacy">
+    <div class="legal-card">
+      <span class="eyebrow">قسم 1</span>
+      <h2>سياسة الخصوصية</h2>
+      <p class="intro">هذي الصفحة توضح لك وش نجمع من بياناتك، ليش نجمعها، وكيف نحميها. باختصار: نستخدم بياناتك عشان تشتغل المنصة لك بشكل صحيح، وما نبيع بياناتك لأي أحد.</p>
+
+      <h3>1. من نحن</h3>
+      <p>منصة <b>Personalized English Lessons</b> يديرها الأستاذ فراس. تقدر تتواصل معنا في أي وقت عبر واتساب <b>+966 55 717 8070</b> أو عبر البريد <b>personalizedenglishlessons@proton.me</b>.</p>
+
+      <h3>2. وش نجمع من بياناتك</h3>
+      <ul>
+        <li><b>بيانات الحساب:</b> اسمك، بريدك الإلكتروني، وكلمة المرور. كلمة المرور محفوظة بشكل مشفر عن طريق خدمة الدخول الآمن (Supabase Auth)، وما نقدر نشوفها نحن.</li>
+        <li><b>بيانات التقدم والتعلم:</b> الدروس اللي تكملها، أيام الدراسة، نتائج المراجعة الذكية، الكلمات اللي تحفظها، ملاحظاتك، وكتابتك اللي ترسلها للمراجعة عشان تصحح لك.</li>
+        <li><b>الشهادات:</b> لما تكمل مسار كامل، نسجل شهادة باسمك مع رمز تحقق خاص فيها.</li>
+        <li><b>تفضيلات الجهاز:</b> المظهر (داكن أو فاتح) ولغة الواجهة تنحفظ على جهازك نفسه.</li>
+        <li><b>ما نجمع:</b> ما نطلب رقم بطاقتك ولا بيانات دفع داخل المنصة. الدفع والتفعيل يتم بالترتيب المباشر عبر واتساب.</li>
+      </ul>
+
+      <h3>3. ليش نستخدم بياناتك</h3>
+      <ul>
+        <li>تشغيل المنصة: تسجيل الدخول، فتح الدروس، تتبع تقدمك ومستواك.</li>
+        <li>إصدار الشهادات ورمز التحقق الخاص فيها.</li>
+        <li>تحسين الدروس والمحتوى حسب طريقة تعلم الطلاب.</li>
+        <li>التواصل معك بخصوص اشتراكك أو تفعيل حسابك.</li>
+      </ul>
+
+      <h3>4. ما نبيع بياناتك</h3>
+      <p>ما نبيع بياناتك ولا نشاركها مع أي طرف ثالث لأغراض إعلانية. المنصة ما فيها إعلانات أصلًا. البيانات تبقى لخدمتك أنت فقط.</p>
+
+      <h3>5. وين تنحفظ بياناتك</h3>
+      <p>بياناتك تنحفظ على <b>Supabase</b>، وهي خدمة استضافة سحابية مؤمنة. أي تواصل عبر واتساب يخضع لسياسة الخصوصية الخاصة بتطبيق واتساب.</p>
+
+      <h3>6. حقوقك على بياناتك</h3>
+      <ul>
+        <li>تطلب نسخة من بياناتك في أي وقت.</li>
+        <li>تطلب حذف حسابك وبياناتك نهائيًا.</li>
+        <li>تعدل معلوماتك الشخصية من داخل المنصة.</li>
+      </ul>
+      <p>أي طلب من هذي ننفذه خلال فترة معقولة، وترسله لنا على واتساب أو البريد اللي فوق.</p>
+
+      <h3>7. الأطفال</h3>
+      <p>المنصة مو موجهة للأطفال تحت سن 13 سنة، وما نجمع بياناتهم عن قصد.</p>
+
+      <h3>8. التغييرات على هذي السياسة</h3>
+      <p>لو تغيرت السياسة، نحدّث هذي الصفحة ونغيّر تاريخ آخر تحديث. يكفي إنك تراجع الصفحة من وقت لثاني.</p>
+    </div>
+  </section>
+
+  <section class="legal-section" id="terms">
+    <div class="legal-card">
+      <span class="eyebrow">قسم 2</span>
+      <h2>الشروط والأحكام</h2>
+      <p class="intro">بما إنك تستخدم المنصة، فأنت موافق على هذي الشروط. اقرأها مرة، وأي سؤال راسلنا عليه.</p>
+
+      <h3>1. الاشتراك والوصول</h3>
+      <p>المنصة باشتراك، وكل اشتراك يمنحك وصول كامل للدروس والتمارين ولوحة التحكم للمدة اللي تدفعها. الباقات الحالية: <b>شهري 79 ريال، 3 أشهر 199 ريال، و6 أشهر 329 ريال</b>. الأسعار ممكن تتغير مستقبلًا، والسعر اللي ينطبق عليك هو اللي كان ظاهر وقت اشتراكك.</p>
+
+      <h3>2. الدفع والتفعيل</h3>
+      <p>الدفع والتفعيل يتمان بالترتيب المباشر عبر واتساب. بعد تأكيد الدفع، نفعّل حسابك خلال وقت قصير. <b>ما فيه تجديد تلقائي</b>: لما تنتهي مدتك، تختار أنت إذا تبي تجدد أو لا.</p>
+
+      <h3>3. غير المشمول في باقات المنصة</h3>
+      <p>باقات المنصة تشمل الدروس المسجلة والتمارين ولوحة التحكم. <b>الدروس المباشرة (أونلاين) مع الأستاذ فراس مو مشمولة</b> في هذي الباقات، ولها ترتيب خاص حسب هدفك وسعرها مختلف.</p>
+
+      <h3>4. حسابك مسؤوليتك</h3>
+      <ul>
+        <li>حسابك شخصي، وما تشاركه مع غيرك.</li>
+        <li>ما تشارك كلمة المرور مع أي أحد.</li>
+        <li>لو صار في المنصة نشاط غير طبيعي من حسابك، نخبرك فورًا.</li>
+      </ul>
+
+      <h3>5. استخدام المحتوى</h3>
+      <p>كل الدروس والمحتوى ملك للمنصة، واستخدامك لها شخصي للتعلم فقط. ما تقدر تعيد نشر الدروس ولا تبيعها ولا تشاركها في منصات ثانية.</p>
+
+      <h3>6. الشهادات</h3>
+      <p>الشهادة تصدر لما تكمل مسارًا بنسبة 100%، وعليها رمز تحقق يثبت صحتها. الشهادة توثق إكمالك للدروس داخل المنصة، وهي مو شهادة رسمية من جهة خارجية ولا تعادل شهادة أكاديمية.</p>
+
+      <h3>7. السلوك داخل المنصة</h3>
+      <p>ما تسيء استخدام المنصة، وما تحاول الوصول لحسابات غيرك أو التلاعب بنظام التقدم. الحسابات اللي تخالف هذي الشروط ممكن يتم تعليقها.</p>
+
+      <h3>8. الإلغاء والاسترداد</h3>
+      <p>لو طلبت الإلغاء قبل ما تستخدم الاشتراك فعليًا، راسلنا على واتساب وننظر في طلبك ونرد عليك حسب حالتك. بعد ما تبدأ تستخدم المنصة، الاسترداد يكون حسب الحالة وبالتنسيق معنا.</p>
+
+      <h3>9. النتائج والحدود</h3>
+      <p>المنصة أداة تعليمية، والنتيجة تعتمد على اجتهادك ومتابعتك. ما نضمن نتائج محددة مثل اجتياز اختبار معين أو الوصول لمستوى محدد خلال مدة معينة.</p>
+
+      <h3>10. التعديلات على الشروط</h3>
+      <p>نقدر نعدل هذي الشروط من وقت لثاني، ونسويلك إشعار بالتحديث في الصفحة. استمرارك في استخدام المنصة بعد التحديث يعني موافقتك على الشروط الجديدة.</p>
+
+      <h3>11. تواصل معنا</h3>
+      <p>أي استفسار عن هذي الوثائق أو عن اشتراكك، راسلنا واتساب <b>+966 55 717 8070</b> أو على البريد <b>personalizedenglishlessons@proton.me</b>.</p>
+
+      <div class="note"><b>ملاحظة:</b> استخدامك للمنصة يعني إنك قرأت وفهمت هذي السياسة والشروط. لو عندك سؤال قبل الاشتراك، اسألنا أول.</div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <span class="footer-links">
+        <a href="index.html">الرئيسية</a>
+        <a href="index.html#pricing">الاشتراك</a>
+        <a href="login.html">دخول الطلاب</a>
+        <a href="https://wa.me/966557178070" target="_blank" rel="noopener">واتساب الأستاذ فراس</a>
+      </span>
+      <span style="display:inline-flex; align-items:center; gap:8px; font-size:.82rem; color:var(--text-muted);"><img class="pel-logo" src="brand/pel-wordmark.svg" alt="PEL" style="height:12px; width:auto;"><img class="pel-logo pel-logo-light" src="brand/pel-wordmark-dark.svg" alt="PEL" style="height:12px; width:auto;">Personalized English Lessons</span>
+    </div>
+    <div class="footer-bottom">© 2026 Personalized English Lessons. جميع الحقوق محفوظة.</div>
+  </div>
+</footer>
+
+<!-- consent notice bar (local-only storage disclosure, dismissible) -->
+<div class="consent-bar" id="consentBar" role="dialog" aria-label="إشعار الخصوصية">
+  <div class="consent-text">
+    <span class="arabic" style="display:block;">منصتنا تخزّن على جهازك فقط: المظهر، لغة الواجهة، وجلسة الدخول. ما نستخدم ملفات تتبع ولا نشارك بياناتك مع أي أحد.</span>
+    <span style="font-size:.76rem; color:var(--text-muted);">We store only your theme, language and sign-in session on this device. No tracking, no data sharing.</span>
+  </div>
+  <div class="consent-actions">
+    <a href="#privacy" class="consent-link">سياسة الخصوصية · Privacy</a>
+    <button class="consent-btn" id="consentBtn">تمام، فهمت · Got it</button>
+  </div>
+</div>
+
+<button class="back-to-top" id="backToTop" aria-label="العودة للأعلى">↑</button>
+
+<script>
+(function(){
+  const root = document.documentElement;
+  const savedTheme = localStorage.getItem('pel-theme') || 'dark';
+  root.setAttribute('data-theme', savedTheme);
+  document.getElementById('themeToggle').addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    root.setAttribute('data-theme', next);
+    localStorage.setItem('pel-theme', next);
+  });
+  const backToTop = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => {
+    backToTop.classList.toggle('show', window.scrollY > 500);
+  }, {passive:true});
+  backToTop.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+
+  /* Consent notice: dismissible and remembered on this device. Same flag key
+     as index.html, so accepting on one page silences it on the other. */
+  const consentBar = document.getElementById('consentBar');
+  if(consentBar){
+    try{
+      if(localStorage.getItem('pel_consent') === '1'){
+        consentBar.remove();
+      }else{
+        requestAnimationFrame(() => consentBar.classList.add('show'));
+        const consentBtn = document.getElementById('consentBtn');
+        if(consentBtn) consentBtn.addEventListener('click', () => {
+          try{ localStorage.setItem('pel_consent', '1'); }catch(e){}
+          consentBar.classList.remove('show');
+          setTimeout(() => { if(consentBar.parentNode) consentBar.parentNode.removeChild(consentBar); }, 400);
+        });
+      }
+    }catch(e){}
+  }
+})();
+</script>
+</body>
+</html>
