@@ -3,9 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Personalized English Lessons</title>
+<title>PEL · Personalized English Lessons · دخول الطلاب</title>
 <meta name="description" content="Sign in to your dashboard. Enrolled students only.">
 <meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="brand/pel-favicon.svg?v=2">
+<link rel="icon" type="image/png" sizes="32x32" href="brand/favicon-32.png?v=2">
+<link rel="icon" type="image/png" sizes="48x48" href="brand/favicon-48.png?v=2">
+<link rel="apple-touch-icon" href="brand/apple-touch-icon.png?v=2">
+<link rel="manifest" href="brand/manifest.webmanifest">
+<meta name="theme-color" content="#0E0E10">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;500;700&display=swap" rel="stylesheet">
@@ -26,6 +32,8 @@
   --emerald:#3F8C72;
   --error:#D25C5C;
   --success:#42A36A;
+  --pel-stem:#F7F4EF;
+  --pel-gold:#C8A96A;
 
   --shadow-soft: 0 20px 60px -20px rgba(0,0,0,0.55);
   --shadow-lift: 0 30px 90px -25px rgba(0,0,0,0.7);
@@ -35,6 +43,7 @@
 html[data-theme="light"]{
   --bg:#FAF8F4; --surface:#FFFFFF; --card:#F5F2EC; --card-elevated:#FFFFFF;
   --border:#E5DFD2; --text:#17171B; --text-secondary:#4B463D; --text-muted:#8C877C;
+  --pel-stem:#17171B; --pel-gold:#A88345;
   --shadow-soft:0 20px 60px -25px rgba(30,25,15,0.18);
   --shadow-lift:0 30px 90px -30px rgba(30,25,15,0.24);
   --gold-glow:0 0 40px -10px rgba(168,131,69,0.35);
@@ -48,12 +57,12 @@ body{
   transition:background .5s var(--ease), color .5s var(--ease);
   overflow-x:hidden;
 }
-h1,h2,h3{ font-family:'Fraunces', serif; font-weight:500; line-height:1.1; letter-spacing:-0.01em; margin:0; }
+h1,h2,h3{ font-family:'Fraunces', serif; font-weight:500; line-height:1.1; letter-spacing:0; margin:0; }
 p{margin:0;}
 a{color:inherit;}
 button{font-family:inherit; cursor:pointer;}
 ::selection{ background:var(--gold); color:#0E0E10; }
-.arabic{ font-family:'Tajawal','Cairo',sans-serif; direction:rtl; }
+.arabic{ font-family:'Tajawal','Cairo',sans-serif; direction:rtl; line-height:1.7; letter-spacing:0; unicode-bidi:isolate; }
 
 @media(prefers-reduced-motion:reduce){
   *{ animation-duration:.001ms !important; transition-duration:.001ms !important; }
@@ -103,6 +112,30 @@ button{font-family:inherit; cursor:pointer;}
 }
 .theme-toggle:hover{ border-color:var(--gold); color:var(--gold); transform:rotate(20deg); }
 
+/* interface language pill (fixed, beside theme) */
+.lang-pill{
+  position:fixed; top:26px; right:82px; z-index:50;
+  min-width:46px; height:46px; padding:0 12px; border-radius:14px;
+  background:color-mix(in srgb, var(--card) 70%, transparent);
+  backdrop-filter:blur(12px);
+  border:1px solid var(--border); color:var(--text-secondary);
+  font-weight:700; font-size:.8rem; letter-spacing:.04em;
+  display:flex; align-items:center; justify-content:center;
+  transition:border-color .3s ease, color .3s ease;
+}
+.lang-pill:hover{ border-color:var(--gold); color:var(--gold-soft); }
+
+/* RTL (Arabic UI) refinements for the auth layout */
+body.ui-ar .brand-heading-ar{ text-align:right; }
+body.ui-ar .panel-label, body.ui-ar .form-title, body.ui-ar .form-sub{ text-align:right; }
+body.ui-ar .field label, body.ui-ar .remember{ direction:rtl; }
+body.ui-ar .benefits, body.ui-ar .trust-strip p{ text-align:right; }
+body.ui-ar .brand-copy, body.ui-ar .brand-arabic{ text-align:right; }
+body.ui-ar .divider-line{ direction:ltr; }
+@media(max-width:980px){
+  body.ui-ar .brand-heading-ar, body.ui-ar .brand-copy, body.ui-ar .brand-arabic, body.ui-ar .benefits{ text-align:center; }
+}
+
 .back-home{
   position:fixed; top:30px; left:26px; z-index:50; display:flex; align-items:center; gap:8px;
   font-size:.84rem; color:var(--text-muted); font-weight:500;
@@ -124,15 +157,13 @@ button{font-family:inherit; cursor:pointer;}
 @media(max-width:1180px){ .brand-side{ padding:70px 56px; } }
 @media(max-width:980px){ .brand-side{ padding:70px 32px 40px; text-align:center; align-items:center; } }
 
-.brand-logo{ display:flex; align-items:center; gap:12px; }
+.brand-logo{ display:flex; align-items:center; }
 @media(max-width:980px){ .brand-logo{ justify-content:center; } }
-.logo-mark{
-  width:42px; height:42px; border-radius:50%; border:1px solid var(--gold);
-  display:flex; align-items:center; justify-content:center; color:var(--gold);
-  font-family:'Fraunces',serif; font-size:1.1rem; position:relative;
-}
-.logo-mark::after{ content:""; position:absolute; inset:-5px; border-radius:50%; border:1px solid rgba(200,169,106,0.25); }
-.brand-name{ font-family:'Fraunces',serif; font-size:1.05rem; }
+.brand-logo img{ height:40px; width:auto; }
+.pel-logo{ display:inline-block; vertical-align:middle; }
+.pel-logo-light{ display:none; }
+html[data-theme="light"] .pel-logo{ display:none; }
+html[data-theme="light"] .pel-logo-light{ display:inline-block; }
 
 .brand-heading-ar{
   margin-top:52px; font-family:'Tajawal','Cairo',sans-serif; direction:rtl; text-align:right;
@@ -328,7 +359,8 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 </div>
 <div class="spotlight" id="spotlight"></div>
 
-<a href="index.html" class="back-home">← <span class="label">Back to Academy</span></a>
+<a href="app.html" class="back-home">← <span class="label">Back to Academy</span></a>
+<button class="lang-pill" id="loginLangBtn" aria-label="Switch interface language">EN</button>
 <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v2M12 19v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M3 12h2M19 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/><circle cx="12" cy="12" r="4.2"/></svg>
 </button>
@@ -338,20 +370,20 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   <!-- BRAND SIDE -->
   <div class="brand-side">
     <div class="brand-logo">
-      <span class="logo-mark">P</span>
-      <span class="brand-name">Personalized English Lessons</span>
+      <img class="pel-logo" src="brand/pel-wordmark.svg" alt="PEL">
+      <img class="pel-logo pel-logo-light" src="brand/pel-wordmark-dark.svg" alt="PEL">
     </div>
     <div class="brand-heading-ar">حياك الله</div>
     <h1 class="brand-heading">Welcome back. <em>Continue your English journey.</em></h1>
-    <p class="brand-copy">Welcome to a private academy built exclusively for Tutor Firas's students, featuring a full American English curriculum, personalised guidance, and Tutor Firas who already knows how you speak.</p>
-    <p class="arabic brand-arabic">حياك في اكاديمية استاذ فراس، المكان المخصص لطلابه فقط، بمنهج امريكي كامل باللغة الانجليزية، ومتابعة مع استاذ فراس خطوة بخطوة</p>
+    <p class="brand-copy">Welcome to a private academy with a full American English curriculum, personalised guidance, and every lesson explained in natural Saudi Arabian Arabic.</p>
+    <p class="arabic brand-arabic">حياك في اكاديمية الاستاذ فراس، بمنهج امريكي كامل وشرح بالعربي، وكل شيء مبني على مستواك خطوة بخطوة</p>
 
     <div class="float-stack" aria-hidden="true">
-      <div class="mini-card mc-1"><div class="mc-icon">✦</div><div><b>Lesson of the Day</b><span>American Small Talk</span></div></div>
-      <div class="mini-card mc-2"><div class="mc-icon">★</div><div><b>Current Streak</b><span>12 days</span></div></div>
-      <div class="mini-card mc-3"><div class="mc-icon">✎</div><div><b>Vocabulary Progress</b><span>640 words learned</span></div></div>
-      <div class="mini-card mc-4"><div class="mc-icon">●</div><div><b>Tutor Firas</b><span>Ready when you are</span></div></div>
-      <div class="mini-card mc-5"><div class="mc-icon">🎙</div><div><b>American Accent</b><span>Clarity 87%</span></div></div>
+      <div class="mini-card mc-1"><div class="mc-icon">✦</div><div><b>Lesson of the Day</b><span>Your daily lesson</span></div></div>
+      <div class="mini-card mc-2"><div class="mc-icon">★</div><div><b>Daily Streaks</b><span>Built one day at a time</span></div></div>
+      <div class="mini-card mc-3"><div class="mc-icon">✎</div><div><b>Vocabulary</b><span>Grows with every lesson</span></div></div>
+      <div class="mini-card mc-4"><div class="mc-icon">✎</div><div><b>Writing Feedback</b><span>Explains your mistakes</span></div></div>
+      <div class="mini-card mc-5"><div class="mc-icon">🎙</div><div><b>American Accent</b><span>Practice makes progress</span></div></div>
     </div>
   </div>
 
@@ -406,10 +438,10 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 
         <div class="benefits">
           <div class="benefit-item"><span class="b-icon">◈</span>Hundreds of American lessons</div>
-          <div class="benefit-item"><span class="b-icon">✦</span>Tutor Firas Coach</div>
+          <div class="benefit-item"><span class="b-icon">✦</span>Writing feedback coach</div>
           <div class="benefit-item"><span class="b-icon">🎙</span>Speaking practice</div>
           <div class="benefit-item"><span class="b-icon">♬</span>Pronunciation training</div>
-          <div class="benefit-item"><span class="b-icon">ع</span>Saudi Arabic explanations</div>
+          <div class="benefit-item"><span class="b-icon">ع</span>Saudi Arabian Arabic explanations</div>
           <div class="benefit-item"><span class="b-icon">Aa</span>Arabic transliteration</div>
           <div class="benefit-item"><span class="b-icon">✎</span>Vocabulary builder</div>
           <div class="benefit-item"><span class="b-icon">§</span>Grammar academy</div>
@@ -449,6 +481,30 @@ themeToggle.addEventListener('click', () => {
   root.setAttribute('data-theme', next);
   localStorage.setItem('pel-theme', next);
 });
+
+/* ============ INTERFACE LANGUAGE (ar / en) + RTL ============
+   Shares the exact same pel_account_prefs key as app.html, so the
+   language the student chose in the app applies here too, and a
+   choice made on the login page follows them into the app. */
+function readAccountPrefs(){
+  try{ return JSON.parse(localStorage.getItem('pel_account_prefs') || 'null') || { lang:'en', direction:'en' }; }
+  catch(e){ return { lang:'en', direction:'en' }; }
+}
+function applyLoginLang(lang){
+  lang = lang === 'ar' ? 'ar' : 'en';
+  root.lang = lang;
+  root.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  document.body.classList.toggle('ui-ar', lang === 'ar');
+  document.body.classList.toggle('ui-en', lang === 'en');
+  const pill = document.getElementById('loginLangBtn');
+  if(pill) pill.textContent = lang === 'ar' ? 'EN' : 'ع';
+  const prefs = readAccountPrefs();
+  prefs.lang = lang;
+  try{ localStorage.setItem('pel_account_prefs', JSON.stringify(prefs)); }catch(e){}
+}
+const loginLangBtn = document.getElementById('loginLangBtn');
+if(loginLangBtn) loginLangBtn.addEventListener('click', () => applyLoginLang(root.lang === 'ar' ? 'en' : 'ar'));
+applyLoginLang((readAccountPrefs().lang === 'ar') ? 'ar' : 'en');
 
 /* ============ SPOTLIGHT ============ */
 const spotlight = document.getElementById('spotlight');
