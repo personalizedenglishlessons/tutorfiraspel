@@ -3,15 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Personalized English Lessons  تعلم الانجليزيه الامريكيه بثقه</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23c8a96a' stroke-width='1.6'%3E%3Ccircle cx='12' cy='12' r='11' fill='%230b0a09'/%3E%3Cpath d='M7 16.5V8.8a3 3 0 0 1 6 0v2a3 3 0 0 1-3 3H7'/%3E%3Cpath d='M17 8v8a3 3 0 0 1-6 0v-2a3 3 0 0 1 3-3h3'/%3E%3C/svg%3E">
+<title>PEL · Personalized English Lessons · تعلم الانجليزية الامريكية بثقة</title>
+<link rel="canonical" href="index.html">
+<link rel="icon" type="image/svg+xml" href="brand/pel-favicon.svg?v=2">
+<link rel="icon" type="image/png" sizes="32x32" href="brand/favicon-32.png?v=2">
+<link rel="icon" type="image/png" sizes="48x48" href="brand/favicon-48.png?v=2">
+<link rel="apple-touch-icon" href="brand/apple-touch-icon.png?v=2">
+<link rel="manifest" href="brand/manifest.webmanifest">
+<meta name="theme-color" content="#0E0E10">
 <meta name="description" content="منصه خاصه لتعلم الانجليزيه الامريكيه للناطقين بالعربي مع الاستاذ فراس دروس مرتبه وشرح بسيط يناسب جميع المستويات">
-<meta property="og:title" content="Personalized English Lessons">
+<meta property="og:title" content="PEL · Personalized English Lessons">
 <meta property="og:description" content="تعلم الانجليزيه الامريكيه بثقه مع الاستاذ فراس دروس مرتبه منهج امريكي وشرح بالعربي.">
 <meta property="og:type" content="website">
+<meta property="og:image" content="brand/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="PEL · Personalized English Lessons">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","name":"PEL","alternateName":"Personalized English Lessons","url":"."}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"PEL","alternateName":"Personalized English Lessons","logo":"brand/pel-wordmark.svg"}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="daily-lesson.js" defer></script>
+<script src="pel-personalization.js" defer></script>
+<script src="onboard.js" defer></script>
 <style>
 :root{
   --bg:#0E0E10;
@@ -27,6 +46,8 @@
   --bronze:#A88345;
   --emerald:#3F8C72;
   --success:#42A36A;
+  --pel-stem:#F7F4EF;
+  --pel-gold:#C8A96A;
 
   --shadow-soft: 0 20px 60px -20px rgba(0,0,0,0.55);
   --shadow-lift: 0 30px 80px -25px rgba(0,0,0,0.65);
@@ -47,6 +68,8 @@ html[data-theme="light"]{
   --text:#17171B;
   --text-secondary:#4B463D;
   --text-muted:#8C877C;
+  --pel-stem:#17171B;
+  --pel-gold:#A88345;
   --shadow-soft: 0 20px 60px -25px rgba(30,25,15,0.18);
   --shadow-lift: 0 30px 80px -30px rgba(30,25,15,0.22);
   --gold-glow: 0 0 40px -10px rgba(168,131,69,0.35);
@@ -180,27 +203,18 @@ header.scrolled{
   display:flex; align-items:center; justify-content:space-between; gap:24px;
 }
 .logo{
-  font-family:'Fraunces', serif;
-  font-size:clamp(0.92rem, 3.2vw, 1.18rem);
-  letter-spacing:.01em;
-  font-weight:500;
-  display:flex; align-items:center; gap:10px;
+  display:flex; align-items:center;
   min-width:0;
 }
-.logo-text{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.logo-mark{
-  width:34px; height:34px; border-radius:50%;
-  border:1px solid var(--gold);
-  display:flex; align-items:center; justify-content:center;
-  color:var(--gold);
-  position:relative;
-  flex-shrink:0;
-}
-.logo-mark::after{
-  content:""; position:absolute; inset:-4px; border-radius:50%;
-  border:1px solid rgba(200,169,106,0.25);
-}
-.logo-mark svg{ width:15px; height:15px; }
+.logo img{ height:24px; width:auto; flex-shrink:0; }
+.pel-logo{ display:inline-block; vertical-align:middle; }
+.pel-logo-light{ display:none; }
+html[data-theme="light"] .pel-logo{ display:none; }
+html[data-theme="light"] .pel-logo-light{ display:inline-block; }
+.hero-eyebrow::before{ display:none; }
+.hero-eyebrow .pel-logo{ height:30px; width:auto; flex-shrink:0; }
+.hero-eyebrow .pel-word{ font-family:'Fraunces',serif; font-weight:600; letter-spacing:.02em; font-size:1.05em; }
+.hero-eyebrow .pel-tag{ font-family:'Plus Jakarta Sans','Tajawal',sans-serif; font-size:.62em; letter-spacing:.26em; text-transform:uppercase; opacity:.55; margin-left:3px; }
 nav.primary-nav{ display:flex; align-items:center; gap:38px; }
 nav.primary-nav a{
   font-family:'Tajawal', 'Plus Jakarta Sans', sans-serif;
@@ -224,6 +238,7 @@ nav.primary-nav a:hover::after{ width:100%; }
   transition:border-color .3s ease, color .3s ease, transform .3s ease;
 }
 .theme-toggle:hover{ border-color:var(--gold); color:var(--gold); transform:rotate(20deg); }
+
 .btn-ghost{
   font-size:.86rem; color:var(--text-secondary); font-weight:500;
   padding:10px 4px;
@@ -290,6 +305,9 @@ nav.primary-nav a:hover::after{ width:100%; }
   .header-actions .btn-gold{ display:none; }
   .mobile-toggle{ display:flex; }
 }
+@media(max-width:640px){
+  .logo-text{ display:none; }
+}
 
 /* ===== hero ===== */
 .hero{
@@ -318,7 +336,6 @@ nav.primary-nav a:hover::after{ width:100%; }
 .hero-sub{
   margin-top:26px; font-size:1.08rem; color:var(--text-secondary); max-width:460px; line-height:1.7;
 }
-.hero-arabic{ margin-top:14px; font-size:1.05rem; }
 .hero-cta-row{ margin-top:42px; display:flex; gap:16px; flex-wrap:wrap; }
 @media(max-width:480px){
   .hero-cta-row{ flex-direction:column; }
@@ -431,6 +448,43 @@ section{ position:relative; padding:130px 0; }
 .section-head p{ margin-top:18px; color:var(--text-secondary); font-size:1.02rem; line-height:1.7; }
 .section-head.center{ margin-left:auto; margin-right:auto; text-align:center; }
 
+/* ===== lesson of the day strip (live from the platform) ===== */
+.daily-strip{ padding:0; background:transparent; border-bottom:1px solid var(--border); }
+.daily-strip-inner{
+  display:flex; align-items:center; gap:22px;
+  padding-top:28px; padding-bottom:28px;
+  border:1px solid var(--border); border-bottom:none;
+  border-radius:20px 20px 0 0;
+  background:linear-gradient(120deg, color-mix(in srgb, var(--card) 85%, transparent), color-mix(in srgb, var(--card-elevated) 55%, transparent));
+}
+@media(max-width:760px){
+  .daily-strip-inner{ flex-direction:column; align-items:flex-start; gap:16px; }
+}
+.daily-strip-mark{
+  width:52px; height:52px; border-radius:16px; flex-shrink:0;
+  background:linear-gradient(135deg, var(--gold-soft), var(--bronze));
+  color:#171412; display:flex; align-items:center; justify-content:center;
+  box-shadow:var(--gold-glow);
+}
+.daily-strip-mark svg{ width:24px; height:24px; }
+.daily-strip-body{ flex:1; min-width:0; }
+.daily-strip-title{
+  margin-top:8px; font-family:'Fraunces',serif; font-size:clamp(1.15rem, 2.4vw, 1.5rem);
+  color:var(--text); font-weight:500; line-height:1.25;
+}
+.daily-strip-title .arabic{ color:var(--text); font-size:1.05em; }
+.daily-strip-sub{
+  margin-top:6px; font-size:.82rem; color:var(--text-muted);
+  display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+}
+.daily-strip-sub .pill{
+  font-size:.72rem; padding:4px 12px; border-radius:var(--ring-radius);
+  border:1px solid var(--border); color:var(--text-secondary);
+}
+.daily-strip-sub .pill.gold{ border-color:rgba(200,169,106,0.5); color:var(--gold); }
+.daily-strip-cta{ flex-shrink:0; }
+@media(max-width:480px){ .daily-strip-cta{ width:100%; justify-content:center; } }
+
 /* ===== social proof ===== */
 .proof{ background:var(--surface); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
 .stat-grid{ display:grid; grid-template-columns:repeat(5,1fr); gap:32px; }
@@ -499,6 +553,9 @@ section{ position:relative; padding:130px 0; }
 .mock-line.short{ width:40%; }
 .mock-line.gold{ background:linear-gradient(90deg,var(--gold-soft),var(--gold)); }
 .mock-chip{ display:inline-flex; padding:5px 12px; border-radius:var(--ring-radius); font-size:.68rem; background:rgba(200,169,106,0.12); color:var(--gold); font-weight:600; }
+.mock-chip.gold{ background:linear-gradient(135deg,var(--gold-soft),var(--gold)); color:#171412; }
+.preview-panel .bar-label{ width:52px; font-size:.62rem; }
+.preview-panel .bar-fill{ width:0%; }
 .wave-bars{ display:flex; align-items:flex-end; gap:4px; height:60px; margin:14px 0; }
 .wave-bars span{ flex:1; background:linear-gradient(180deg,var(--emerald),var(--success)); border-radius:3px; opacity:.85; }
 .mic-btn{ width:64px; height:64px; border-radius:50%; background:linear-gradient(135deg,var(--gold-soft),var(--gold)); display:flex; align-items:center; justify-content:center; color:#171412; margin:20px auto 0; box-shadow:var(--gold-glow); }
@@ -610,27 +667,68 @@ section{ position:relative; padding:130px 0; }
 }
 
 /* ===== pricing ===== */
-.pricing-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:26px; }
-@media(max-width:860px){ .pricing-grid{ grid-template-columns:1fr; } }
+.pricing-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:26px; align-items:stretch; }
+@media(max-width:980px){ .pricing-grid{ grid-template-columns:1fr; max-width:520px; margin:0 auto; } }
 .price-card{
   background:var(--card); border:1px solid var(--border); border-radius:22px; padding:38px;
-  position:relative; transition:transform .4s var(--ease), box-shadow .4s var(--ease);
+  position:relative; display:flex; flex-direction:column;
+  transition:transform .4s var(--ease), box-shadow .4s var(--ease), border-color .4s var(--ease);
 }
-.price-card.highlight{ border-color:var(--gold); box-shadow:var(--gold-glow); }
-.price-card:hover{ transform:translateY(-6px); }
+.price-card:hover{ transform:translateY(-6px); box-shadow:var(--shadow-soft); }
+.price-card.highlight{
+  border-color:rgba(200,169,106,0.65); box-shadow:var(--gold-glow), var(--shadow-soft);
+  background:linear-gradient(180deg, color-mix(in srgb, var(--card-elevated) 60%, transparent), var(--card));
+}
+.price-card.highlight:hover{ box-shadow:0 0 60px -8px rgba(200,169,106,0.5), var(--shadow-lift); }
 .price-badge{
   position:absolute; top:-13px; right:34px; background:var(--gold); color:#171412;
   font-size:.68rem; font-weight:800; letter-spacing:.05em; padding:5px 16px; border-radius:var(--ring-radius);
 }
 [dir="rtl"] .price-badge{ letter-spacing:normal; }
 .price-name{ font-size:1.3rem; }
-.price-desc{ color:var(--text-muted); font-size:.88rem; margin-top:10px; }
-.price-value{ margin-top:26px; display:flex; align-items:baseline; gap:8px; }
-.price-value .amount{ font-family:'Tajawal','Fraunces',serif; font-weight:700; font-size:1.15rem; color:var(--gold); }
-.price-list{ margin-top:26px; display:flex; flex-direction:column; gap:12px; }
-.price-list li{ display:flex; align-items:center; gap:10px; font-size:.88rem; color:var(--text-secondary); }
-.price-list li::before{ content:"✓"; color:var(--emerald); font-weight:700; }
+.price-term{ font-size:.78rem; color:var(--text-muted); margin-top:4px; }
+.price-desc{ color:var(--text-muted); font-size:.88rem; margin-top:12px; line-height:1.65; }
+.price-value{ margin-top:24px; display:flex; align-items:baseline; gap:8px; }
+.price-value .amount{ font-family:'Tajawal','Fraunces',serif; font-weight:700; font-size:2.2rem; color:var(--text); letter-spacing:-0.02em; }
+.price-value .amount small{ font-size:1rem; color:var(--gold); font-weight:700; margin-left:2px; }
+.price-value .per{ font-size:.8rem; color:var(--text-muted); }
+.price-save{
+  margin-top:10px; display:inline-flex; align-items:center; gap:6px;
+  font-size:.74rem; font-weight:700; color:var(--success);
+}
+.price-list{ margin-top:26px; display:flex; flex-direction:column; gap:12px; flex:1; }
+.price-list li{ display:flex; align-items:flex-start; gap:10px; font-size:.88rem; color:var(--text-secondary); line-height:1.5; }
+.price-list li::before{ content:"✓"; color:var(--emerald); font-weight:700; flex-shrink:0; line-height:1.4; }
+.price-excluded{
+  margin-top:22px; padding-top:18px; border-top:1px solid var(--border);
+  display:flex; gap:9px; align-items:flex-start;
+  font-size:.78rem; color:var(--text-muted); line-height:1.55;
+}
+.price-excluded .x{ color:var(--bronze); font-weight:700; flex-shrink:0; }
 .price-card .btn-gold, .price-card .btn-outline{ width:100%; justify-content:center; margin-top:28px; }
+.pricing-note{
+  margin-top:34px; text-align:center; font-size:.82rem; color:var(--text-muted); line-height:1.8;
+}
+.pricing-note b{ color:var(--text-secondary); }
+.pricing-note a{ color:var(--gold); font-weight:600; }
+.pricing-note a:hover{ text-decoration:underline; }
+
+/* ===== whatsapp button ===== */
+.btn-wa{
+  display:inline-flex; align-items:center; gap:10px;
+  padding:13px 26px; border-radius:var(--ring-radius);
+  border:1px solid rgba(63,140,114,0.55); color:var(--text);
+  font-weight:600; font-size:.86rem;
+  background:rgba(63,140,114,0.08);
+  transition:border-color .35s ease, background .35s ease, transform .35s ease, box-shadow .35s ease;
+}
+.btn-wa:hover{ border-color:var(--emerald); background:rgba(63,140,114,0.14); transform:translateY(-2px); box-shadow:0 12px 30px -14px rgba(63,140,114,0.45); }
+.btn-wa svg{ width:16px; height:16px; color:var(--emerald); flex-shrink:0; }
+[dir="rtl"] .btn-wa svg{ transform:scaleX(-1); }
+
+/* scroll-spy active nav */
+nav.primary-nav a.active{ color:var(--gold); }
+nav.primary-nav a.active::after{ width:100%; }
 
 /* ===== faq ===== */
 .faq-list{ max-width:820px; margin:0 auto; }
@@ -690,8 +788,234 @@ footer{ padding:80px 0 40px; }
 .back-to-top.show{ opacity:1; pointer-events:all; transform:translateY(0); }
 .back-to-top:hover{ border-color:var(--gold); }
 
+/* consent notice bar */
+.consent-bar{
+  position:fixed; left:16px; right:16px; bottom:16px; z-index:2000;
+  max-width:620px; margin:0 auto;
+  background:var(--card-elevated); border:1px solid rgba(200,169,106,.4);
+  border-radius:16px; padding:16px 18px;
+  display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+  box-shadow:var(--shadow-soft);
+  opacity:0; transform:translateY(16px); pointer-events:none;
+  transition:opacity .4s var(--ease), transform .4s var(--ease);
+}
+.consent-bar.show{ opacity:1; transform:translateY(0); pointer-events:all; }
+.consent-text{ flex:1; min-width:230px; font-size:.84rem; color:var(--text-secondary); line-height:1.7; }
+.consent-actions{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+.consent-link{ font-size:.78rem; color:var(--gold); font-weight:600; }
+.consent-link:hover{ text-decoration:underline; }
+.consent-btn{
+  padding:9px 20px; border-radius:999px;
+  background:linear-gradient(135deg, var(--gold-soft), var(--gold) 55%, var(--bronze));
+  color:#171412; font-weight:700; font-size:.82rem;
+  transition:transform .3s var(--ease), box-shadow .3s var(--ease);
+}
+.consent-btn:hover{ transform:translateY(-1px); box-shadow:var(--gold-glow); }
+
 /* focus states */
 a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-offset:3px; border-radius:6px; }
+
+/* ============================================================
+   PERSONALIZATION: path entry + returning-student home + onboarding
+   ============================================================ */
+.btn-path{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:11px 18px; border-radius:999px;
+  background:color-mix(in srgb, var(--card-elevated) 70%, transparent);
+  border:1px solid var(--border); color:var(--text);
+  font-family:inherit; font-size:.86rem; font-weight:600; cursor:pointer;
+  transition:border-color .3s ease, color .3s ease, transform .3s ease;
+}
+.btn-path:hover{ border-color:var(--gold); color:var(--gold-soft); transform:translateY(-1px); }
+.btn-path svg{ flex-shrink:0; }
+@media(max-width:900px){ .btn-path span{ display:none; } .btn-path{ padding:11px 12px; } }
+
+.path-hint{
+  margin-top:20px; font-size:.82rem; color:var(--text-secondary); line-height:1.7;
+  display:flex; flex-direction:column; gap:4px; max-width:520px;
+}
+.path-hint .path-hint-en{ color:var(--text-muted); font-size:.74rem; }
+
+/* returning-student personalized home */
+.plan-home{ padding:40px 0 0; position:relative; }
+.plan-home .plan-home-inner{ max-width:1200px; margin:0 auto; padding:0 40px; }
+@media(max-width:768px){ .plan-home .plan-home-inner{ padding:0 20px; } }
+.plan-home .ph-grid{ display:grid; grid-template-columns:1.25fr .9fr; gap:18px; align-items:stretch; }
+@media(max-width:960px){ .plan-home .ph-grid{ grid-template-columns:1fr; } }
+.ph-main{
+  background:var(--surface); border:1px solid var(--border); border-radius:22px;
+  padding:28px 30px; position:relative; overflow:hidden;
+}
+.ph-main::before{
+  content:""; position:absolute; top:-90px; left:-70px; width:260px; height:260px; border-radius:50%;
+  background:radial-gradient(circle, rgba(200,169,106,.14), transparent 70%); pointer-events:none;
+}
+.ph-side{ display:flex; flex-direction:column; gap:18px; }
+.ph-card{ background:var(--surface); border:1px solid var(--border); border-radius:18px; padding:20px 22px; }
+.ph-eyebrow{
+  display:flex; align-items:center; gap:8px; font-size:.72rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--gold); font-weight:600; margin-bottom:10px;
+}
+.ph-title{ font-size:1.25rem; margin:0; }
+.ph-sub{ margin-top:8px; font-size:.86rem; color:var(--text-secondary); line-height:1.65; }
+.ph-row{ display:flex; flex-wrap:wrap; gap:10px; margin-top:16px; }
+.ph-chip{
+  display:inline-flex; align-items:center; gap:6px; padding:7px 13px; border-radius:999px;
+  background:var(--card-elevated); border:1px solid var(--border); color:var(--text-secondary);
+  font-size:.76rem; font-weight:600;
+}
+.ph-chip.gold{ border-color:rgba(200,169,106,.45); color:var(--gold-soft); }
+.ph-cta-row{ display:flex; gap:12px; margin-top:20px; flex-wrap:wrap; }
+.ph-progress{ margin-top:18px; }
+.ph-progress .ph-pbar{ height:8px; border-radius:999px; background:var(--card-elevated); overflow:hidden; }
+.ph-progress .ph-pfill{ height:100%; border-radius:999px; background:linear-gradient(90deg, var(--gold-soft), var(--gold)); }
+.ph-progress .ph-plabel{ margin-top:8px; font-size:.76rem; color:var(--text-muted); }
+
+/* route timeline (shared by plan-home and matched plan) */
+.path-stages{ display:flex; flex-direction:column; gap:0; }
+.stage-line{ position:relative; padding:0 0 18px 26px; }
+.stage-line::before{
+  content:""; position:absolute; left:6px; top:8px; bottom:0; width:2px;
+  background:var(--border); border-radius:2px;
+}
+.stage-line:last-child::before{ display:none; }
+.stage-line .stage-dot{
+  position:absolute; left:0; top:2px; width:14px; height:14px; border-radius:50%;
+  background:var(--card-elevated); border:2px solid var(--border);
+}
+.stage-line.current .stage-dot{ border-color:var(--gold); background:var(--gold); box-shadow:0 0 0 4px rgba(200,169,106,.18); }
+.stage-line.complete .stage-dot{ border-color:var(--success); background:var(--success); }
+.stage-line.locked .stage-dot{ border-color:var(--border); background:var(--card); }
+.stage-line .stage-body{ background:var(--card); border:1px solid var(--border); border-radius:14px; padding:12px 16px; }
+.stage-line.current .stage-body{ border-color:rgba(200,169,106,.45); }
+.stage-line.locked .stage-body{ opacity:.72; }
+.stage-line .stage-name{ font-weight:700; font-size:.92rem; display:flex; align-items:center; gap:8px; }
+.stage-line .stage-meta{ margin-top:3px; font-size:.74rem; color:var(--text-muted); }
+.stage-line .stage-preview{ margin-top:10px; display:none; }
+.stage-line.locked.open .stage-preview{ display:block; }
+.stage-preview-links{ display:flex; flex-direction:column; gap:4px; font-size:.78rem; color:var(--text-secondary); }
+.stage-preview-btn{
+  background:none; border:none; color:var(--gold-soft); font-size:.74rem; cursor:pointer;
+  padding:0; font-family:inherit; text-align:left;
+}
+.stage-preview-btn:hover{ color:var(--gold); }
+.stage-lock-ico{ color:var(--text-muted); }
+
+/* onboarding overlay */
+.onboard{ position:fixed; inset:0; z-index:3000; display:flex; align-items:center; justify-content:center; padding:24px; opacity:0; pointer-events:none; transition:opacity .35s var(--ease); }
+.onboard.show{ opacity:1; pointer-events:all; }
+.onboard-scrim{ position:absolute; inset:0; background:rgba(8,8,10,.78); backdrop-filter:blur(10px); }
+.onboard-card{
+  position:relative; width:100%; max-width:640px; max-height:90vh; overflow:hidden;
+  background:var(--surface); border:1px solid var(--border); border-radius:26px;
+  box-shadow:var(--shadow-lift); display:flex; flex-direction:column;
+  transform:translateY(14px) scale(.98); transition:transform .35s var(--ease);
+}
+.onboard.show .onboard-card{ transform:translateY(0) scale(1); }
+.onboard-close{
+  position:absolute; top:16px; right:16px; z-index:5; width:36px; height:36px; border-radius:50%;
+  background:color-mix(in srgb, var(--card) 80%, transparent); border:1px solid var(--border);
+  color:var(--text-muted); display:flex; align-items:center; justify-content:center; cursor:pointer;
+  transition:border-color .3s ease, color .3s ease;
+}
+.onboard-close:hover{ border-color:var(--gold); color:var(--gold); }
+.onboard[dir="rtl"] .onboard-close{ right:auto; left:16px; }
+.onboard-body{ overflow-y:auto; padding:34px 34px 28px; }
+@media(max-width:560px){ .onboard-body{ padding:26px 20px 20px; } }
+
+.ob-eyebrow{ display:flex; align-items:center; gap:8px; font-size:.7rem; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); font-weight:600; }
+.ob-title{ margin-top:12px; font-size:1.45rem; line-height:1.25; }
+.ob-sub{ margin-top:8px; font-size:.88rem; color:var(--text-secondary); line-height:1.7; }
+.ob-progress{ margin-top:18px; display:flex; align-items:center; gap:12px; }
+.ob-progress .ob-pbar{ flex:1; height:6px; border-radius:999px; background:var(--card-elevated); overflow:hidden; }
+.ob-progress .ob-pfill{ height:100%; background:linear-gradient(90deg, var(--gold-soft), var(--gold)); border-radius:999px; transition:width .4s var(--ease); }
+.ob-progress .ob-count{ font-size:.76rem; color:var(--text-muted); white-space:nowrap; }
+
+.ob-options{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:22px; }
+@media(max-width:520px){ .ob-options{ grid-template-columns:1fr; } }
+.ob-option{
+  display:flex; align-items:center; gap:10px; padding:13px 15px; border-radius:13px;
+  background:var(--card); border:1px solid var(--border); color:var(--text);
+  font-family:inherit; font-size:.86rem; line-height:1.45; text-align:left; cursor:pointer;
+  transition:border-color .25s ease, background .25s ease, transform .25s ease;
+}
+.ob-option:hover{ border-color:var(--gold); transform:translateY(-1px); }
+.ob-option.selected{
+  border-color:var(--gold); background:color-mix(in srgb, rgba(200,169,106,.14), var(--card) 70%);
+  box-shadow:inset 0 0 0 1px var(--gold);
+}
+.ob-option .ob-check{
+  width:18px; height:18px; border-radius:50%; border:1px solid var(--border); flex-shrink:0;
+  display:flex; align-items:center; justify-content:center; font-size:.6rem; color:transparent;
+  transition:all .2s ease;
+}
+.ob-option.selected .ob-check{ background:var(--gold); border-color:var(--gold); color:#171412; font-weight:800; }
+.ob-option.multi .ob-check{ border-radius:5px; }
+
+.ob-nav{ display:flex; align-items:center; gap:12px; margin-top:26px; }
+.ob-nav .ob-back{ background:none; border:none; color:var(--text-muted); font-family:inherit; font-size:.86rem; cursor:pointer; padding:10px 6px; display:inline-flex; align-items:center; gap:6px; }
+.ob-nav .ob-back:hover{ color:var(--gold-soft); }
+.ob-nav .ob-next{
+  margin-left:auto; padding:12px 26px; border-radius:999px; border:none;
+  background:linear-gradient(135deg, var(--gold-soft), var(--gold) 55%, var(--bronze));
+  color:#171412; font-weight:700; font-size:.9rem; cursor:pointer;
+  display:inline-flex; align-items:center; gap:9px;
+  transition:transform .3s var(--ease), box-shadow .3s var(--ease);
+}
+.ob-nav .ob-next:disabled{ opacity:.4; cursor:not-allowed; transform:none; }
+.ob-nav .ob-next:hover:not(:disabled){ transform:translateY(-1px); box-shadow:var(--gold-glow); }
+
+.ob-lang-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:26px; }
+@media(max-width:440px){ .ob-lang-grid{ grid-template-columns:1fr; } }
+.ob-lang-btn{
+  padding:26px 22px; border-radius:18px; background:var(--card); border:1px solid var(--border);
+  color:var(--text); font-family:inherit; cursor:pointer; text-align:center;
+  transition:border-color .25s ease, transform .25s ease, background .25s ease;
+}
+.ob-lang-btn:hover{ border-color:var(--gold); transform:translateY(-2px); }
+.ob-lang-btn b{ display:block; font-size:1.5rem; font-weight:700; }
+.ob-lang-btn span{ display:block; margin-top:8px; font-size:.78rem; color:var(--text-muted); }
+
+.ob-note{ margin-top:22px; font-size:.76rem; color:var(--text-muted); line-height:1.7; }
+.ob-cols{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:24px; }
+@media(max-width:520px){ .ob-cols{ grid-template-columns:1fr; } }
+.ob-mini{ background:var(--card); border:1px solid var(--border); border-radius:14px; padding:16px 18px; }
+.ob-mini .ob-mini-label{ font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:var(--gold); font-weight:600; }
+.ob-mini .ob-mini-val{ margin-top:8px; font-size:1rem; font-weight:600; }
+.ob-mini .ob-mini-note{ margin-top:6px; font-size:.76rem; color:var(--text-muted); line-height:1.6; }
+
+.ob-plan-title{ display:flex; align-items:center; gap:12px; }
+.ob-plan-title .ob-plan-lvl{ padding:8px 14px; border-radius:12px; background:rgba(200,169,106,.14); border:1px solid rgba(200,169,106,.4); color:var(--gold-soft); font-weight:800; font-size:1.05rem; }
+.ob-route-head{ display:flex; align-items:center; gap:10px; margin:26px 0 14px; }
+.ob-route-head .eye{ font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); font-weight:600; }
+.ob-first-lesson{ margin-top:22px; background:var(--card); border:1px solid rgba(200,169,106,.4); border-radius:16px; padding:16px 18px; }
+.ob-first-lesson .fl-label{ font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:var(--gold); font-weight:600; }
+.ob-first-lesson .fl-title{ margin-top:8px; font-size:1.08rem; font-weight:700; }
+.ob-first-lesson .fl-academy{ margin-top:4px; font-size:.78rem; color:var(--text-muted); }
+.ob-first-lesson .fl-why{ margin-top:10px; font-size:.82rem; color:var(--text-secondary); line-height:1.6; }
+
+.pace-chips{ display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
+.pace-chip{ padding:8px 15px; border-radius:999px; background:var(--card); border:1px solid var(--border); color:var(--text-secondary); font-family:inherit; font-size:.8rem; font-weight:600; cursor:pointer; transition:border-color .2s ease, color .2s ease; }
+.pace-chip.active{ border-color:var(--gold); color:var(--gold-soft); background:rgba(200,169,106,.12); }
+.pace-chip:hover{ border-color:var(--gold); }
+
+.est-rows{ display:flex; flex-direction:column; gap:10px; margin-top:14px; }
+.est-row{ display:flex; justify-content:space-between; align-items:center; font-size:.84rem; gap:12px; }
+.est-row b{ color:var(--gold-soft); }
+.est-row .est-hint{ font-size:.7rem; color:var(--text-muted); }
+
+.why-lines{ display:flex; flex-direction:column; gap:8px; margin-top:14px; }
+.why-lines div{ display:flex; gap:9px; align-items:flex-start; font-size:.82rem; color:var(--text-secondary); line-height:1.6; }
+.why-lines .why-dot{ color:var(--gold); flex-shrink:0; margin-top:2px; }
+
+.ob-save-cta{ display:flex; gap:12px; margin-top:26px; flex-wrap:wrap; align-items:center; }
+.ob-save-note{ font-size:.74rem; color:var(--text-muted); line-height:1.6; margin-top:12px; }
+
+.building{ display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px; padding:40px 0; text-align:center; }
+.building .building-ring{ width:56px; height:56px; border-radius:50%; border:2px solid var(--border); border-top-color:var(--gold); animation:obspin .9s linear infinite; }
+@keyframes obspin{ to{ transform:rotate(360deg); } }
+.building p{ font-size:.92rem; color:var(--text-secondary); }
+.building .building-route{ font-size:.78rem; color:var(--text-muted); }
 </style>
 </head>
 <body>
@@ -703,8 +1027,8 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-of
 <header id="siteHeader">
   <div class="container header-inner">
     <a href="#" class="logo">
-      <span class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 17V7a4 4 0 0 1 8 0v3a4 4 0 0 1-4 4H4"/><path d="M20 7v10a4 4 0 0 1-8 0v-3a4 4 0 0 1 4-4h4"/></svg></span>
-      <span class="logo-text">Personalized English Lessons</span>
+      <img class="pel-logo" src="brand/pel-wordmark.svg" alt="PEL">
+      <img class="pel-logo pel-logo-light" src="brand/pel-wordmark-dark.svg" alt="PEL">
     </a>
     <nav class="primary-nav">
       <a href="#home">الرئيسية</a>
@@ -717,6 +1041,10 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-of
     <div class="header-actions">
       <button class="theme-toggle" id="themeToggle" aria-label="تبديل المظهر">
         <svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v2M12 19v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M3 12h2M19 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/><circle cx="12" cy="12" r="4.2"/></svg>
+      </button>
+      <button class="btn-path" data-open-path aria-haspopup="dialog">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="2.5"/><circle cx="18" cy="5" r="2.5"/><path d="M8.5 19H15a3 3 0 0 0 3-3v-8.5M6 16.5V8a3 3 0 0 1 3-3h3.5"/></svg>
+        <span>ابني مسار تعلمي</span>
       </button>
       <a href="login.html" class="btn-outline btn-login magnetic" data-magnetic>
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
@@ -736,6 +1064,7 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-of
   <a href="#pricing" class="mobile-nav-link">الاشتراك</a>
   <a href="#faq" class="mobile-nav-link">الأسئلة</a>
   <div class="mobile-menu-actions">
+    <button class="btn-gold" data-open-path style="width:100%; border:none; border-radius:999px; padding:13px 22px; font-family:inherit; font-weight:700;">ابني مسار تعلمي</button>
     <a href="login.html" class="btn-outline">دخول الطلاب</a>
     <a href="#pricing" class="btn-gold">سجل الآن</a>
   </div>
@@ -748,40 +1077,50 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-of
   <div class="hero-glow"></div>
   <div class="container hero-grid">
     <div class="reveal is-visible">
-      <span class="eyebrow" dir="rtl" style="justify-content:flex-start;">Personalized English Lessons</span>
+      <span class="eyebrow hero-eyebrow" dir="ltr" style="justify-content:flex-start;"><img class="pel-logo" src="brand/pel-wordmark.svg" alt="PEL"><img class="pel-logo pel-logo-light" src="brand/pel-wordmark-dark.svg" alt="PEL"></span>
       <h1 class="arabic-h" dir="rtl" style="margin-top:22px;">اتقان الانجليزية الامريكية <em>بثقة حقيقية.</em></h1>
       <p class="arabic hero-sub" dir="rtl" style="font-size:1.05rem;">تعلم الانجليزيه الامريكيه مع الاستاذ فراس من خلال دروس مرتبه وشرح واضح بالعربي وتمارين تساعدك تستخدم الانجليزيه بثقه</p>
-      <p class="hero-arabic" style="color:var(--text-muted); font-size:.92rem;">Personalized English Lessons, American curriculum.</p>
       <div class="hero-cta-row">
-        <button class="btn-gold magnetic" data-magnetic>سجل الان</button>
-        <button class="btn-outline magnetic" data-magnetic>تواصل مع Tutor Firas</button>
+        <button class="btn-gold magnetic" data-open-path id="heroPathCta">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="2.5"/><circle cx="18" cy="5" r="2.5"/><path d="M8.5 19H15a3 3 0 0 0 3-3v-8.5M6 16.5V8a3 3 0 0 1 3-3h3.5"/></svg>
+          <span>ابني مسار تعلمي</span>
+        </button>
+        <a href="#pricing" class="btn-outline magnetic" data-magnetic>سجل الآن</a>
+        <a href="https://wa.me/966557178070?text=%D8%A3%D8%A8%D9%8A%20%D8%A3%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%B9%D9%86%20%D8%A7%D9%84%D9%85%D9%86%D8%B5%D8%A9" target="_blank" rel="noopener" class="btn-wa magnetic" data-magnetic>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.32 4.95L2.05 22l5.3-1.39c1.45.79 3.09 1.21 4.69 1.21 5.46 0 9.9-4.44 9.9-9.9 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.15c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.26 8.26 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.23 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.81-.78.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.13-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.16-.48-.29z"/></svg>
+          <span>راسل الاستاذ فراس واتساب</span>
+        </a>
+      </div>
+      <div class="path-hint" dir="rtl">
+        <span class="arabic">اسئلة قصيرة، وPEL يبني لك خطة على هدفك ومستواك ومواقفك الحقيقية ووقتك المتاح.</span>
+        <span class="path-hint-en" dir="ltr">Answer a few quick questions — PEL builds a route from your goals, level, real-life needs and available time.</span>
       </div>
       <div class="trust-row" dir="rtl">
         <div class="trust-item"><span class="dot"></span>منهج امريكي</div>
         <div class="trust-item"><span class="dot"></span>مئات الدروس</div>
-        <div class="trust-item"><span class="dot"></span>متابعة خاصة من معلمك</div>
-        <div class="trust-item"><span class="dot"></span>ترجمة وشرح مباشر من فراس</div>
+        <div class="trust-item"><span class="dot"></span>معلم يشرح كل درس بالعربي</div>
+        <div class="trust-item"><span class="dot"></span>ترجمة فورية مجانية داخل المنصة</div>
         <div class="trust-item"><span class="dot"></span>تحديثات مستمرة للمنصة</div>
         <div class="trust-item"><span class="dot"></span>لوحه تحكم تعرض تقدمك بالكامل</div>
       </div>
     </div>
 
     <div class="hero-visual" id="heroVisual">
-      <div class="float-card fc-1">
+      <div class="float-card fc-1" id="dailyLessonFloat">
         <div class="fc-icon">✦</div>
-        <div class="fc-text"><b>Lesson of the Day</b><span>American Small Talk</span></div>
+        <div class="fc-text"><b>درس اليوم</b><span>Lesson of the Day · American Small Talk</span></div>
       </div>
       <div class="float-card fc-2">
         <div class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c2.5 3 4.5 5.5 4.5 9a4.5 4.5 0 0 1-9 0c0-1.6.7-2.8 1.5-4 .3 1.6 1.2 2.5 1.7 2.5.6 0 .9-1 .5-2.3C10.7 6.5 11 4.8 12 3z"/></svg></div>
-        <div class="fc-text"><b>Speaking Streak</b><span>12 days running</span></div>
+        <div class="fc-text"><b>تدريب المحادثة</b><span>Speaking Practice · Streak 12 يوم</span></div>
       </div>
       <div class="float-card fc-3">
         <div class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/><path d="M8.5 21h7"/></svg></div>
-        <div class="fc-text"><b>American Accent</b><span>Clarity 87%</span></div>
+        <div class="fc-text"><b>مختبر النطق</b><span>Pronunciation Lab · وضوح 87%</span></div>
       </div>
       <div class="float-card fc-4">
         <div class="fc-icon">●</div>
-        <div class="fc-text"><b>Tutor Firas</b><span>Online now</span></div>
+        <div class="fc-text"><b>ترجمة فورية</b><span>Instant Translate · مجانية بلا حدود</span></div>
       </div>
 
       <div class="laptop" id="laptopTilt">
@@ -813,7 +1152,27 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-of
         </div>
         <div class="laptop-base"></div>
       </div>
+</div>
+  </div>
+</section>
+
+<!-- PERSONALIZED HOME (returning students with a saved plan) -->
+<section class="plan-home" id="planHome" style="display:none;" aria-label="Your learning plan"></section>
+
+<!-- LESSON OF THE DAY STRIP -->
+<section class="daily-strip" id="dailyStrip">
+  <div class="container daily-strip-inner">
+    <div class="daily-strip-mark">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9z"/></svg>
     </div>
+    <div class="daily-strip-body">
+      <span class="eyebrow" dir="rtl" style="justify-content:flex-start;">درس اليوم · Lesson of the Day</span>
+      <div class="daily-strip-title" id="dailyStripTitle"><span class="arabic">جارٍ جلب درس اليوم...</span></div>
+      <div class="daily-strip-sub" id="dailyStripSub"></div>
+    </div>
+    <a href="login.html" class="btn-outline daily-strip-cta" id="dailyStripCta">
+      <span class="arabic">افتح الدرس في المنصة</span> · Open in the app
+    </a>
   </div>
 </section>
 
@@ -853,15 +1212,12 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-of
       <div class="feature-card reveal"><div class="feature-icon">◈</div><h3 class="arabic-h" style="font-size:1.05rem;">خطة تعلم مخصصة</h3><p class="arabic">مسار واضح من مستواك الحالي إلى محادثة طليقة وواثقة، مبني حول أهدافك أنت.</p></div>
       <div class="feature-card reveal reveal-delay-1"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 12h1M7 7v10M11 4v16M15 7v10M19 9v6M21 12h0"/></svg></div><h3 class="arabic-h" style="font-size:1.05rem;">أكاديمية النطق الأمريكي</h3><p class="arabic">تتدرب على نفس الأصوات ونبرة الكلام الطبيعية اللي يستخدمها الأمريكان.</p></div>
       <div class="feature-card reveal reveal-delay-2"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/><path d="M8.5 21h7"/></svg></div><h3 class="arabic-h" style="font-size:1.05rem;">تدريب محادثة حقيقي</h3><p class="arabic">مو اختيار من متعدد. تتكلم من أول درس، بجمل حقيقية وموضوعات حقيقية.</p></div>
-      <div class="feature-card reveal"><div class="feature-icon">✦</div><h3 class="arabic-h" style="font-size:1.05rem;">معلمك فراس</h3><p class="arabic">معلم حقيقي يترجم ويشرح كل درس بالعربي، ويهتم بسرعتك ومستواك وأهدافك الشخصية.</p></div>
-      <div class="feature-card reveal reveal-delay-1"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 8a5 5 0 0 1 0 8"/><path d="M19.5 5.5a9 9 0 0 1 0 13"/></svg></div><h3 class="arabic-h" style="font-size:1.05rem;">تسجيلات صوتية أصلية</h3><p class="arabic">كل درس مسجل بصوت متحدثين أمريكيين حقيقيين، ما فيه صوت اصطناعي.</p></div>
-      <div class="feature-card reveal reveal-delay-2"><div class="feature-icon">ع</div><h3 class="arabic-h" style="font-size:1.05rem;">شرح بالعربي أول</h3><p class="arabic">القواعد تنشرح بالعربي أولاً، عشان ما يضيع منك شي بالترجمة.</p></div>
-      <div class="feature-card reveal"><div class="feature-icon">Aa</div><h3 class="arabic-h" style="font-size:1.05rem;">نطق مكتوب بالعربي</h3><p class="arabic">كل كلمة جديدة معها طريقة نطقها مكتوبة بأحرف عربية تقرأها بسهولة.</p></div>
-      <div class="feature-card reveal reveal-delay-1"><div class="feature-icon">◔</div><h3 class="arabic-h" style="font-size:1.05rem;">متابعة تقدمك</h3><p class="arabic">تشوف تطورك أسبوع بعد أسبوع، في لوحة تحكم خاصة فيك أنت بس.</p></div>
-      <div class="feature-card reveal reveal-delay-2"><div class="feature-icon">✎</div><h3 class="arabic-h" style="font-size:1.05rem;">بناء المفردات</h3><p class="arabic">نظام تكرار منظم يخلي الكلمات الجديدة تصير جزء من استخدامك اليومي.</p></div>
-      <div class="feature-card reveal"><div class="feature-icon">§</div><h3 class="arabic-h" style="font-size:1.05rem;">قواعد بطريقة مختلفة</h3><p class="arabic">القواعد تنعلم من خلال قصص ومحادثات، مو جداول تحفظها وتنساها.</p></div>
-      <div class="feature-card reveal reveal-delay-1"><div class="feature-icon">▤</div><h3 class="arabic-h" style="font-size:1.05rem;">لوحة تحكم خاصة</h3><p class="arabic">دروسك، معلمك، وتقدمك، كله في مكان واحد ما يشوفه غيرك.</p></div>
-      <div class="feature-card reveal reveal-delay-2"><div class="feature-icon">∞</div><h3 class="arabic-h" style="font-size:1.05rem;">تحديثات مستمرة</h3><p class="arabic">المنهج يتطور باستمرار، وبمجرد ما تصير طالب عندنا يبقى وصولك مفتوح.</p></div>
+      <div class="feature-card reveal"><div class="feature-icon">✦</div><h3 class="arabic-h" style="font-size:1.05rem;">معلمك فراس</h3><p class="arabic">معلم يشرح لك كل درس بالعربي خطوة بخطوة، ويهتم بسرعتك ومستواك وأهدافك الشخصية.</p></div>
+      <div class="feature-card reveal reveal-delay-1"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 8a5 5 0 0 1 0 8"/><path d="M19.5 5.5a9 9 0 0 1 0 13"/></svg></div><h3 class="arabic-h" style="font-size:1.05rem;">نطق مسموع لكل كلمة</h3><p class="arabic">كل كلمة وجملة تنسمع بوضوح داخل الدرس، تسمع النطق الصح وتردده.</p></div>
+      <div class="feature-card reveal reveal-delay-2"><div class="feature-icon">Aa</div><h3 class="arabic-h" style="font-size:1.05rem;">شرح ونطق مكتوب بالعربي</h3><p class="arabic">القواعد والمفردات تنشرح بالعربي أولاً، وكل كلمة جديدة معها نطقها مكتوب بأحرف عربية تقرأها بسهولة.</p></div>
+      <div class="feature-card reveal"><div class="feature-icon">◔</div><h3 class="arabic-h" style="font-size:1.05rem;">متابعة تقدمك في لوحة خاصة</h3><p class="arabic">دروسك وتطورك أسبوع بعد أسبوع في لوحة تحكم خاصة فيك أنت بس، ما يشوفها غيرك.</p></div>
+      <div class="feature-card reveal reveal-delay-1"><div class="feature-icon">✎</div><h3 class="arabic-h" style="font-size:1.05rem;">بناء المفردات</h3><p class="arabic">نظام تكرار منظم يخلي الكلمات الجديدة تصير جزء من استخدامك اليومي.</p></div>
+      <div class="feature-card reveal reveal-delay-2"><div class="feature-icon">§</div><h3 class="arabic-h" style="font-size:1.05rem;">قواعد بطريقة مختلفة</h3><p class="arabic">القواعد تنعلم من خلال قصص ومحادثات، مو جداول تحفظها وتنساها.</p></div>
     </div>
   </div>
 </section>
@@ -877,7 +1233,7 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-of
     <div class="preview-tabs" id="previewTabs" dir="rtl">
       <button class="preview-tab active" data-tab="dashboard">لوحة التحكم</button>
       <button class="preview-tab" data-tab="lesson">عرض الدرس</button>
-      <button class="preview-tab" data-tab="tutor">مع فراس</button>
+      <button class="preview-tab" data-tab="tutor">مراجعة الكتابة</button>
       <button class="preview-tab" data-tab="vocab">بناء المفردات</button>
       <button class="preview-tab" data-tab="pronunciation">مختبر النطق</button>
       <button class="preview-tab" data-tab="analytics">تحليل التقدم</button>
@@ -886,12 +1242,20 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-of
       <div class="preview-panel active" data-panel="dashboard">
         <div class="mock-row">
           <div class="mock-col">
-            <div class="mock-card-inner"><span class="mock-chip">Level 3</span><div class="mock-line" style="margin-top:16px;width:70%"></div><div class="mock-line short"></div></div>
-            <div class="mock-card-inner"><div class="mock-line gold" style="width:50%"></div><div class="mock-line"></div><div class="mock-line short"></div></div>
+            <div class="mock-card-inner"><span class="mock-chip">مستواك · Level 3</span><div class="mock-line" style="margin-top:16px;width:70%"></div><div class="mock-line short"></div></div>
+            <div class="mock-card-inner">
+              <div class="mock-chip">مهاراتك اليوم</div>
+              <div style="display:flex; flex-direction:column; gap:10px; margin-top:14px;">
+                <div class="bar-row"><span class="bar-label">محادثة</span><div class="bar-track"><span class="bar-fill" data-fill="82" style="width:82%"></span></div></div>
+                <div class="bar-row"><span class="bar-label">استماع</span><div class="bar-track"><span class="bar-fill" data-fill="68" style="width:68%"></span></div></div>
+                <div class="bar-row"><span class="bar-label">مفردات</span><div class="bar-track"><span class="bar-fill" data-fill="75" style="width:75%"></span></div></div>
+                <div class="bar-row"><span class="bar-label">قواعد</span><div class="bar-track"><span class="bar-fill" data-fill="71" style="width:71%"></span></div></div>
+              </div>
+            </div>
           </div>
           <div class="mock-col">
-            <div class="mock-card-inner"><div class="mock-line" style="width:60%"></div><div class="mock-line"></div><div class="mock-line" style="width:80%"></div></div>
-            <div class="mock-card-inner"><div class="mock-line gold short"></div><div class="mock-line"></div></div>
+            <div class="mock-card-inner"><span class="mock-chip">متابعة أسبوعية</span><div class="mock-line" style="width:60%; margin-top:14px;"></div><div class="mock-line"></div><div class="mock-line" style="width:80%"></div></div>
+            <div class="mock-card-inner"><span class="mock-chip gold">درس اليوم · مكتمل ✓</span><div class="mock-line" style="width:55%; margin-top:14px;"></div><div class="mock-line short"></div></div>
           </div>
         </div>
       </div>
@@ -908,10 +1272,13 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-of
       <div class="preview-panel" data-panel="tutor">
         <div class="mock-row">
           <div class="mock-col">
-            <div class="mock-card-inner" style="display:flex;gap:12px;align-items:center;"><div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--gold-soft),var(--bronze));flex-shrink:0;"></div><div style="flex:1"><div class="mock-line" style="width:80%"></div><div class="mock-line short"></div></div></div>
-            <div class="mock-card-inner" style="margin-left:40px;"><div class="mock-line" style="width:60%"></div></div>
+            <span class="mock-chip">Writing Feedback</span>
+            <div class="mock-line" style="margin-top:18px;width:85%;text-decoration:line-through;opacity:.5;"></div>
+            <div class="mock-line gold" style="width:80%; margin-top:6px;"></div>
+            <div class="mock-line short" style="margin-top:8px;"></div>
+            <div class="mock-card-inner" style="margin-top:14px;"><span style="font-size:.72rem; color:var(--text-muted);">السبب: استخدم have been مع since</span></div>
           </div>
-          <div class="mock-col"><div class="mock-card-inner" style="text-align:center; color:var(--text-muted); font-size:.8rem;">Tutor Firas is listening<div class="mic-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/><path d="M8.5 21h7"/></svg></div></div></div>
+          <div class="mock-col"><div class="mock-card-inner" style="height:180px; display:flex; align-items:center; justify-content:center; color:var(--text-muted); font-size:.8rem;">Explains each mistake in Arabic</div></div>
         </div>
       </div>
       <div class="preview-panel" data-panel="vocab">
@@ -968,7 +1335,7 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-of
         <div class="timeline-step reveal"><div class="timeline-num">1</div><h4 class="arabic-h" style="font-size:1.05rem;">التسجيل</h4><p class="arabic">تنضم للأكاديمية وتتعرف على معلمك الخاص.</p></div>
         <div class="timeline-step reveal reveal-delay-1"><div class="timeline-num">2</div><h4 class="arabic-h" style="font-size:1.05rem;">تحديد المستوى</h4><p class="arabic">تسوي اختبار قصير يحدد مستواك الحقيقي.</p></div>
         <div class="timeline-step reveal reveal-delay-2"><div class="timeline-num">3</div><h4 class="arabic-h" style="font-size:1.05rem;">خطتك الخاصة</h4><p class="arabic">تتابع خطة مبنية على أهدافك أنت بالضبط.</p></div>
-        <div class="timeline-step reveal reveal-delay-3"><div class="timeline-num">4</div><h4 class="arabic-h" style="font-size:1.05rem;">التمرين مع فراس</h4><p class="arabic">تتكلم يومياً مع معلمك الشخصي Tutor Firas.</p></div>
+        <div class="timeline-step reveal reveal-delay-3"><div class="timeline-num">4</div><h4 class="arabic-h" style="font-size:1.05rem;">التمرين اليومي</h4><p class="arabic">تتمرن يومياً بمحادثات وتمارين تناسب مستواك بالضبط.</p></div>
         <div class="timeline-step reveal reveal-delay-4"><div class="timeline-num">5</div><h4 class="arabic-h" style="font-size:1.05rem;">بناء الثقة</h4><p class="arabic">تتحول الإجابات الصحيحة لمحادثة طبيعية.</p></div>
         <div class="timeline-step reveal reveal-delay-4"><div class="timeline-num">6</div><h4 class="arabic-h" style="font-size:1.05rem;">الطلاقة</h4><p class="arabic">تتكلم إنجليزي بدون ما تترجم بالراس.</p></div>
       </div>
@@ -1032,8 +1399,7 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-of
           <tr><td>منهج إنجليزي أمريكي أصلي</td><td class="center"><span class="yes">✓</span></td></tr>
           <tr><td>تسجيلات صوتية بلغة أصلية</td><td class="center"><span class="yes">✓</span></td></tr>
           <tr><td>تصحيح النطق لحظياً</td><td class="center"><span class="yes">✓</span></td></tr>
-          <tr><td>ترجمة وشرح مباشر من Tutor Firas</td><td class="center"><span class="yes">✓</span></td></tr>
-          <tr><td>شرح بالعربي لكل درس</td><td class="center"><span class="yes">✓</span></td></tr>
+          <tr><td>ترجمة فورية وشرح بالعربي لكل درس</td><td class="center"><span class="yes">✓</span></td></tr>
           <tr><td>نطق مكتوب بأحرف عربية</td><td class="center"><span class="yes">✓</span></td></tr>
           <tr><td>تحديات محادثة أسبوعية</td><td class="center"><span class="yes">✓</span></td></tr>
           <tr><td>دروس يومية</td><td class="center"><span class="yes">✓</span></td></tr>
@@ -1041,6 +1407,7 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-of
           <tr><td>شهادات إتمام</td><td class="center"><span class="yes">✓</span></td></tr>
           <tr><td>لوحة تحكم خاصة بك</td><td class="center"><span class="yes">✓</span></td></tr>
           <tr><td>دعم مباشر من معلمك</td><td class="center"><span class="yes">✓</span></td></tr>
+          <tr style="opacity:.75;"><td>دروس مباشرة (أونلاين) مع الاستاذ فراس</td><td class="center" style="color:var(--bronze); font-weight:700;">✕</td></tr>
         </tbody>
       </table>
     </div>
@@ -1081,37 +1448,63 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-of
 <section id="pricing" style="background:var(--surface); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
   <div class="container">
     <div class="section-head center reveal" dir="rtl">
-      <span class="eyebrow">الاشتراك</span>
-      <h2 class="arabic-h">اختار خطتك، وحدد السعر بعد ما نتواصل.</h2>
-      <p class="arabic">ما فيه سعر ثابت معروض هنا، لأن كل خطة تختلف حسب مستواك وهدفك. راسلنا وبنرد عليك بالتفاصيل والسعر المناسب.</p>
+      <span class="eyebrow">باقات المنصة</span>
+      <h2 class="arabic-h">وصول كامل للمنصة، بسعر واضح.</h2>
+      <p class="arabic">هذي الباقات لمن يبي يتعلم ذاتياً من لوحة التحكم والأكاديمية كاملة. الدروس المباشرة (أونلاين) مو مشمولة في هذي الباقات.</p>
     </div>
     <div class="pricing-grid" dir="rtl">
       <div class="price-card reveal">
-        <div class="price-name arabic-h" style="font-size:1.3rem;">الأساسيات</div>
-        <div class="price-desc arabic">لمن يبدأ رحلته نحو إنجليزية طبيعية وواثقة.</div>
-        <div class="price-value"><span class="amount">السعر بعد التواصل</span></div>
+        <div class="price-name arabic-h">شهري</div>
+        <div class="price-term">Monthly · المرونة الكاملة</div>
+        <div class="price-desc arabic">ابدأ وجرّب المنصة شهر بشهر، بدون التزام طويل.</div>
+        <div class="price-value"><span class="amount">79<small>ريال</small></span><span class="per">/ شهرياً</span></div>
         <ul class="price-list">
-          <li class="arabic">منهج إنجليزي أمريكي كامل</li>
-          <li class="arabic">دعم وترجمة من Tutor Firas في كل درس</li>
-          <li class="arabic">شرح بالعربي في كل درس</li>
-          <li class="arabic">لوحة تحكم خاصة بتقدمك</li>
+          <li class="arabic">وصول كامل لجميع الأكاديميات والدروس</li>
+          <li class="arabic">لوحة تحكم تعرض تقدمك ومستواك</li>
+          <li class="arabic">ترجمة فورية مجانية بلا حدود</li>
+          <li class="arabic">مراجعة كتابة وتمارين تفاعلية</li>
+          <li class="arabic">متابعة تقدمك أسبوع بعد أسبوع</li>
         </ul>
-        <a href="mailto:personalizedenglishlessons@proton.me?subject=%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%AE%D8%B7%D8%A9%20%D8%A7%D9%84%D8%A3%D8%B3%D8%A7%D8%B3%D9%8A%D8%A7%D8%AA" class="btn-outline magnetic" data-magnetic>راسلنا للتفاصيل</a>
+        <div class="price-excluded"><span class="x">✕</span><span class="arabic">دروس مباشرة (أونلاين) غير مشمولة</span></div>
+        <a href="https://wa.me/966557178070?text=%D8%A3%D8%A8%D9%8A%20%D8%A3%D8%B4%D8%AA%D8%B1%D9%83%20%D8%A8%D8%A8%D8%A7%D9%82%D8%A9%20%D8%A7%D9%84%D9%85%D9%86%D8%B5%D8%A9%20%D8%A7%D9%84%D8%B4%D9%87%D8%B1%D9%8A%D8%A9" target="_blank" rel="noopener" class="btn-outline magnetic" data-magnetic>سجل شهري</a>
       </div>
       <div class="price-card highlight reveal reveal-delay-1">
         <span class="price-badge">الأكثر اختياراً</span>
-        <div class="price-name arabic-h" style="font-size:1.3rem;">الانغماس الكامل</div>
-        <div class="price-desc arabic">تدريب فردي مباشر مع وصول كامل للأكاديمية الخاصة.</div>
-        <div class="price-value"><span class="amount">السعر بعد التواصل</span></div>
+        <div class="price-name arabic-h">3 أشهر</div>
+        <div class="price-term">3 Months · الأكثر توازناً</div>
+        <div class="price-desc arabic">ثلاثة أشهر كاملة، وسعر شهري أوفر من الباقة الشهرية.</div>
+        <div class="price-value"><span class="amount">199<small>ريال</small></span><span class="per">/ 3 أشهر</span></div>
+        <div class="price-save">وفر 38 ريال مقارنة بالشهري</div>
         <ul class="price-list">
-          <li class="arabic">كل مزايا خطة الأساسيات</li>
-          <li class="arabic">جلسات خاصة أسبوعية مع معلمك</li>
-          <li class="arabic">أولوية في المواعيد ودعم مميز</li>
-          <li class="arabic">تحديثات مستمرة مدى الحياة</li>
+          <li class="arabic">كل مزايا الباقة الشهرية</li>
+          <li class="arabic">وصول كامل لجميع الأكاديميات والدروس</li>
+          <li class="arabic">تمارين محادثة واستماع وقراءة</li>
+          <li class="arabic">متابعة تقدمك وتحليلاتك</li>
+          <li class="arabic">شهادة إتمام عند الانتهاء من كل مسار</li>
         </ul>
-        <a href="mailto:personalizedenglishlessons@proton.me?subject=%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%AE%D8%B7%D8%A9%20%D8%A7%D9%84%D8%A7%D9%86%D8%BA%D9%85%D8%A7%D8%B3%20%D8%A7%D9%84%D9%83%D8%A7%D9%85%D9%84" class="btn-gold magnetic" data-magnetic>راسلنا للتفاصيل</a>
+        <div class="price-excluded"><span class="x">✕</span><span class="arabic">دروس مباشرة (أونلاين) غير مشمولة</span></div>
+        <a href="https://wa.me/966557178070?text=%D8%A3%D8%A8%D9%8A%20%D8%A3%D8%B4%D8%AA%D8%B1%D9%83%20%D8%A8%D8%A8%D8%A7%D9%82%D8%A9%20%D8%A7%D9%84%D9%85%D9%86%D8%B5%D8%A9%203%20%D8%A3%D8%B4%D9%87%D8%B1" target="_blank" rel="noopener" class="btn-gold magnetic" data-magnetic>سجل 3 أشهر</a>
+      </div>
+      <div class="price-card reveal reveal-delay-2">
+        <div class="price-name arabic-h">6 أشهر</div>
+        <div class="price-term">6 Months · أفضل قيمة</div>
+        <div class="price-desc arabic">نصف سنة تعلم متواصل بأفضل سعر شهري، ويناسب الالتزام الجاد.</div>
+        <div class="price-value"><span class="amount">329<small>ريال</small></span><span class="per">/ 6 أشهر</span></div>
+        <div class="price-save">وفر 145 ريال مقارنة بالشهري</div>
+        <ul class="price-list">
+          <li class="arabic">كل مزايا باقة 3 أشهر</li>
+          <li class="arabic">أفضل سعر شهري: 55 ريال للشهر</li>
+          <li class="arabic">وصول كامل لجميع الأكاديميات والدروس</li>
+          <li class="arabic">متابعة تقدمك وتحليلاتك</li>
+          <li class="arabic">شهادة إتمام عند الانتهاء من كل مسار</li>
+        </ul>
+        <div class="price-excluded"><span class="x">✕</span><span class="arabic">دروس مباشرة (أونلاين) غير مشمولة</span></div>
+        <a href="https://wa.me/966557178070?text=%D8%A3%D8%A8%D9%8A%20%D8%A3%D8%B4%D8%AA%D8%B1%D9%83%20%D8%A8%D8%A8%D8%A7%D9%82%D8%A9%20%D8%A7%D9%84%D9%85%D9%86%D8%B5%D8%A9%206%20%D8%A3%D8%B4%D9%87%D8%B1" target="_blank" rel="noopener" class="btn-outline magnetic" data-magnetic>سجل 6 أشهر</a>
       </div>
     </div>
+    <p class="pricing-note arabic">
+      <b>هل تبي دروس مباشرة مع الاستاذ فراس؟</b> هذي الباقات للمنصة فقط. لو تبي تدريب فردي أونلاين، <a href="https://wa.me/966557178070?text=%D8%A3%D8%A8%D9%8A%20%D8%A3%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%B9%D9%86%20%D8%AF%D8%B1%D9%88%D8%B3%20%D9%85%D8%A8%D8%A7%D8%B4%D8%B1%D8%A9%20%D9%85%D8%B9%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D8%A7%D8%B0%20%D9%81%D8%B1%D8%A7%D8%B3" target="_blank" rel="noopener">راسلنا واتساب</a> ونرتب لك خطة خاصة.
+    </p>
   </div>
 </section>
 
@@ -1135,8 +1528,15 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-of
     <h2 class="arabic-h" style="margin-top:20px;">جاهز تتكلم إنجليزي بثقة؟</h2>
     <p class="arabic">راسلنا، نتعرف على مستواك وهدفك، ونرجع لك بخطة وسعر يناسبك.</p>
     <div class="final-cta-buttons">
-      <a href="mailto:personalizedenglishlessons@proton.me?subject=%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%A7%D9%84%D8%A7%D9%86%D8%B6%D9%85%D8%A7%D9%85" class="btn-gold magnetic" data-magnetic>راسلنا الآن</a>
-      <span class="final-cta-email" dir="ltr">personalizedenglishlessons@proton.me</span>
+      <button class="btn-gold magnetic" data-open-path id="finalPathCta">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="2.5"/><circle cx="18" cy="5" r="2.5"/><path d="M8.5 19H15a3 3 0 0 0 3-3v-8.5M6 16.5V8a3 3 0 0 1 3-3h3.5"/></svg>
+        <span>ابني خطتي الحين</span>
+      </button>
+      <a href="https://wa.me/966557178070?text=%D8%A3%D8%A8%D9%8A%20%D8%A3%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%B9%D9%86%20%D8%A7%D9%84%D8%A7%D9%86%D8%B6%D9%85%D8%A7%D9%85%20%D9%84%D9%84%D9%85%D9%86%D8%B5%D8%A9" target="_blank" rel="noopener" class="btn-wa magnetic" data-magnetic>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.32 4.95L2.05 22l5.3-1.39c1.45.79 3.09 1.21 4.69 1.21 5.46 0 9.9-4.44 9.9-9.9 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.15c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.26 8.26 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.23 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.81-.78.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.13-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.16-.48-.29z"/></svg>
+        <span>راسل الاستاذ فراس على واتساب</span>
+      </a>
+      <span class="final-cta-email" dir="ltr">+966 55 717 8070</span>
     </div>
   </div>
 </section>
@@ -1147,7 +1547,7 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-of
   <div class="container">
     <div class="footer-top">
       <div class="footer-brand" dir="rtl">
-        <a href="#" class="logo"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 17V7a4 4 0 0 1 8 0v3a4 4 0 0 1-4 4H4"/><path d="M20 7v10a4 4 0 0 1-8 0v-3a4 4 0 0 1 4-4h4"/></svg></span>Personalized English Lessons</a>
+        <a href="#" class="logo"><img class="pel-logo" src="brand/pel-wordmark.svg" alt="PEL"><img class="pel-logo pel-logo-light" src="brand/pel-wordmark-dark.svg" alt="PEL"></a>
         <p class="arabic">أكاديمية خاصة لكل ناطق بالعربية يرفض إنه يتكلم مثل كتاب مدرسي. مبنية حول معلم واحد، وصوت واحد، وخطة واحدة في كل مرة.</p>
       </div>
       <div class="footer-col" dir="rtl">
@@ -1162,16 +1562,17 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-of
       <div class="footer-col" dir="rtl">
         <h5>تواصل</h5>
         <ul>
-          <li><a href="mailto:personalizedenglishlessons@proton.me">راسلنا للتسجيل</a></li>
+          <li><a href="https://wa.me/966557178070" target="_blank" rel="noopener">واتساب الاستاذ فراس</a></li>
+          <li><a href="mailto:personalizedenglishlessons@proton.me">راسلنا للإيميل</a></li>
         </ul>
-        <p class="arabic" style="font-size:.78rem; color:var(--text-muted); margin-top:10px;">راسلنا وبنرد عليك بالتفاصيل والسعر المناسب</p>
+        <p class="arabic" style="font-size:.78rem; color:var(--text-muted); margin-top:10px;">راسلنا واتساب وبنرد عليك بالتفاصيل والسعر المناسب</p>
       </div>
       <div class="footer-col" dir="rtl">
         <h5>الأكاديمية</h5>
         <ul>
           <li><a href="login.html">دخول الطلاب</a></li>
-          <li><a href="#">سياسة الخصوصية</a></li>
-          <li><a href="#">الشروط والأحكام</a></li>
+          <li><a href="legal.html#privacy">سياسة الخصوصية</a></li>
+          <li><a href="legal.html#terms">الشروط والأحكام</a></li>
         </ul>
       </div>
     </div>
@@ -1182,7 +1583,30 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-of
   </div>
 </footer>
 
+<!-- consent notice bar (local-only storage disclosure, dismissible) -->
+<div class="consent-bar" id="consentBar" role="dialog" aria-label="إشعار الخصوصية">
+  <div class="consent-text">
+    <span class="arabic" style="display:block;">منصتنا تخزّن على جهازك فقط: المظهر، لغة الواجهة، وجلسة الدخول. ما نستخدم ملفات تتبع ولا نشارك بياناتك مع أي أحد.</span>
+    <span style="font-size:.76rem; color:var(--text-muted);">We store only your theme, language and sign-in session on this device. No tracking, no data sharing.</span>
+  </div>
+  <div class="consent-actions">
+    <a href="legal.html#privacy" class="consent-link">سياسة الخصوصية · Privacy</a>
+    <button class="consent-btn" id="consentBtn">تمام، فهمت · Got it</button>
+  </div>
+</div>
+
 <button class="back-to-top" id="backToTop" aria-label="العودة للأعلى">↑</button>
+
+<!-- ================= PERSONALIZATION ONBOARDING OVERLAY ================= -->
+<div class="onboard" id="onboardOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Build your learning path">
+  <div class="onboard-scrim" data-close-onboard></div>
+  <div class="onboard-card" id="onboardCard">
+    <button class="onboard-close" id="onboardClose" aria-label="Close">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="onboard-body" id="onboardBody"></div>
+  </div>
+</div>
 
 <script>
 (function(){
@@ -1212,13 +1636,28 @@ window.addEventListener('scroll', () => {
 }, {passive:true});
 backToTop.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
 
-/* CTA BUTTONS WITHOUT A REAL DESTINATION -> SCROLL TO PRICING/CONTACT */
-document.querySelectorAll('button.btn-gold, button.btn-outline').forEach(btn => {
-  if(btn.hasAttribute('disabled')) return;
+/* CTA BUTTONS WITHOUT A REAL DESTINATION -> SCROLL TO PRICING.
+   Buttons with data-open-path (the personalization entry) are excluded. */
+document.querySelectorAll('button.btn-gold, button.btn-outline, button.btn-wa').forEach(btn => {
+  if(btn.hasAttribute('disabled') || btn.hasAttribute('data-open-path')) return;
   btn.addEventListener('click', () => {
     document.getElementById('pricing').scrollIntoView({behavior:'smooth', block:'start'});
   });
 });
+
+/* SCROLL SPY: highlight the current section in the primary nav */
+const spySections = ['home','features','curriculum','stories','pricing','faq'].map(id => document.getElementById(id));
+const spyLinks = document.querySelectorAll('.primary-nav a');
+function updateSpy(){
+  const pos = window.scrollY + 140;
+  let current = 'home';
+  for(const sec of spySections){
+    if(sec && sec.getBoundingClientRect().top + window.scrollY <= pos) current = sec.id;
+  }
+  spyLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+}
+window.addEventListener('scroll', updateSpy, {passive:true});
+updateSpy();
 
 /* MOBILE MENU */
 const mobileToggle = document.getElementById('mobileToggle');
@@ -1227,7 +1666,7 @@ mobileToggle.addEventListener('click', () => {
   mobileToggle.classList.toggle('open');
   mobileMenu.classList.toggle('open');
 });
-mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+mobileMenu.querySelectorAll('a, button').forEach(a => a.addEventListener('click', () => {
   mobileToggle.classList.remove('open'); mobileMenu.classList.remove('open');
 }));
 
@@ -1284,6 +1723,30 @@ const io = new IntersectionObserver((entries) => {
   entries.forEach(entry => { if(entry.isIntersecting){ entry.target.classList.add('is-visible'); io.unobserve(entry.target); } });
 }, {threshold:0.15});
 revealEls.forEach(el => io.observe(el));
+
+/* LESSON OF THE DAY - live from the shared platform data (daily-lesson.js) */
+function renderDailyLesson(){
+  if(!window.PEL_DAILY) return;
+  let pick;
+  try{ pick = PEL_DAILY.featured(); }catch(e){ return; }
+  if(!pick || !pick.lesson || !pick.academy) return;
+  const titleEl = document.getElementById('dailyStripTitle');
+  const subEl = document.getElementById('dailyStripSub');
+  const floatEl = document.getElementById('dailyLessonFloat');
+  const ctaEl = document.getElementById('dailyStripCta');
+  const lesson = pick.lesson, ac = pick.academy;
+  if(titleEl) titleEl.innerHTML = `<span class="arabic">${lesson.ar}</span> · ${lesson.en}`;
+  if(subEl) subEl.innerHTML = `<span class="pill gold">${ac.en}</span><span class="pill">${ac.ar}</span>      <span class="pill">كل يوم درس جديد · New every day</span>`;
+  if(floatEl){
+    const t = floatEl.querySelector('.fc-text');
+    if(t) t.innerHTML = `<b>درس اليوم</b><span>${lesson.en} · ${ac.en}</span>`;
+  }
+  if(ctaEl) ctaEl.href = 'login.html';
+}
+renderDailyLesson();
+// daily-lesson.js is deferred, so if it hasn't arrived yet (it runs after
+// the inline script during parsing), render again once the page has loaded.
+window.addEventListener('load', renderDailyLesson);
 
 /* HERO DASHBOARD ANIMATION (ring + bars) once visible */
 let heroAnimated = false;
@@ -1381,11 +1844,12 @@ const faqs = [
   {q:'المنهج إنجليزي أمريكي فعلاً؟', a:'إي والله. كل درس وتسجيل ودليل نطق مبني على الإنجليزية الأمريكية.'},
   {q:'الشرح يكون بالعربي؟', a:'نعم. القواعد والمفردات تنشرح بالعربي أول، مع نطق مكتوب بجانب كل كلمة جديدة.'},
   {q:'أقدر أدرس من الجوال؟', a:'أكيد. لوحة التحكم الخاصة فيك متجاوبة بالكامل، تكمل دروسك من أي مكان.'},
-  {q:'كم مدة وصولي للمنصة؟', a:'الطلاب المسجلين يحتفظون بوصول دائم للمنصة، وكل تحديث جديد يوصلهم تلقائياً.'},
-  {q:'كيف يشتغل Tutor Firas؟', a:'فراس معلمك الشخصي، يترجم ويشرح كل درس بالعربي، ويصحح نطقك، ويتابع مستواك بنفسه في كل جلسة.'},
+  {q:'كم مدة وصولي للمنصة؟', a:'حسب الباقة اللي تختارها: شهري، 3 أشهر، أو 6 أشهر. طول فترة اشتراكك يبقى الوصول كامل لكل الدروس والتحديثات الجديدة.'},
+  {q:'كيف أترجم وأصحح كتابتي؟', a:'داخل المنصة ترجمة فورية مجانية بلا حدود لأي كلمة أو جملة، وورشة كتابة تصحح لك وتبين لك سبب كل خطأ بالعربي.'},
   {q:'أقدر أتابع تقدمي؟', a:'نعم. لوحتك الخاصة تتابع تطور محادثتك واستماعك ومفرداتك أسبوع بعد أسبوع.'},
-  {q:'ليش ما فيه سعر ثابت معروض؟', a:'لأن كل طالب مختلف، مستواه ووقته وهدفه يفرق. راسلنا وبنحدد لك خطة وسعر يناسب وضعك بالضبط.'},
-  {q:'كيف أبدأ التسجيل؟', a:'راسلنا على البريد، ونرجع لك بتفاصيل الخطة والسعر، وبعدها تحدد إذا تبي تكمل.'},
+  {q:'كم سعر الاشتراك؟', a:'فيه باقات منصة واضحة: شهري 79 ريال، 3 أشهر 199 ريال، و6 أشهر 329 ريال. هذا سعر وصول المنصة كاملة بكل الدروس والتمارين، والدروس المباشرة مع الاستاذ فراس لها ترتيب خاص حسب هدفك.'},
+  {q:'هل الباقات تشمل دروس مباشرة مع الاستاذ فراس؟', a:'لا. باقات المنصة تشمل وصول كامل للدروس والتمارين ولوحة التحكم. لو تبي دروس مباشرة (أونلاين) مع الاستاذ فراس، راسله على واتساب ويرتب لك خطة خاصة.'},
+  {q:'كيف أبدأ التسجيل؟', a:'راسلنا على واتساب، نرسل لك تفاصيل الدفع ونفعّل حسابك خلال وقت قصير.'},
 ];
 const faqList = document.getElementById('faqList');
 faqs.forEach((f,i) => {
@@ -1408,9 +1872,29 @@ faqs.forEach((f,i) => {
       item.classList.add('open');
       panel.style.maxHeight = panel.scrollHeight + 'px';
     }
-  });
-});
+  });  });
 
+})();
+</script>
+<script>
+/* Consent notice: explains what is stored locally, dismissible and remembered
+   on this device only. Same flag key on index.html and legal.html. */
+(function(){
+  var bar = document.getElementById('consentBar');
+  if(!bar) return;
+  try{
+    if(localStorage.getItem('pel_consent') === '1'){
+      bar.parentNode.removeChild(bar);
+      return;
+    }
+    requestAnimationFrame(function(){ bar.classList.add('show'); });
+    var btn = document.getElementById('consentBtn');
+    if(btn) btn.addEventListener('click', function(){
+      try{ localStorage.setItem('pel_consent', '1'); }catch(e){}
+      bar.classList.remove('show');
+      setTimeout(function(){ if(bar.parentNode) bar.parentNode.removeChild(bar); }, 400);
+    });
+  }catch(e){}
 })();
 </script>
 </body>
