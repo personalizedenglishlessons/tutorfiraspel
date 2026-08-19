@@ -3,9 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Certificate Verification · Personalized English Lessons</title>
+<title>PEL · Certificate Verification · التحقق من الشهادة</title>
 <meta name="description" content="Verify a Personalized English Lessons certificate of completion.">
 <meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="brand/pel-favicon.svg?v=2">
+<link rel="icon" type="image/png" sizes="32x32" href="brand/favicon-32.png?v=2">
+<link rel="icon" type="image/png" sizes="48x48" href="brand/favicon-48.png?v=2">
+<link rel="apple-touch-icon" href="brand/apple-touch-icon.png?v=2">
+<meta name="theme-color" content="#0E0E10">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;500;700&display=swap" rel="stylesheet">
@@ -41,11 +46,10 @@ button{ font-family:inherit; cursor:pointer; }
   padding:34px 24px 10px;
 }
 .site-logo{
-  width:44px; height:44px; border-radius:14px;
-  background:linear-gradient(135deg,var(--gold-soft),var(--bronze));
-  color:#171412; font-family:'Fraunces',serif; font-weight:600; font-size:1.25rem;
-  display:flex; align-items:center; justify-content:center; box-shadow:var(--gold-glow);
+  display:flex; align-items:center;
 }
+.site-logo img{ height:32px; width:auto; }
+.pel-logo{ display:inline-block; vertical-align:middle; }
 .site-name{ font-size:.9rem; color:var(--text-secondary); line-height:1.4; }
 .site-name b{ color:var(--text); font-weight:600; }
 
@@ -112,17 +116,38 @@ button{ font-family:inherit; cursor:pointer; }
   background:var(--surface); border:1px dashed var(--border); border-radius:10px;
   padding:9px 16px; font-size:.85rem; display:inline-block; margin-top:18px;
 }
+
+/* interface language pill (fixed, top right) */
+.lang-pill{
+  position:fixed; top:22px; right:22px; z-index:60;
+  min-width:46px; height:46px; padding:0 12px; border-radius:14px;
+  background:color-mix(in srgb, var(--card-elevated) 80%, transparent);
+  backdrop-filter:blur(12px);
+  border:1px solid var(--border); color:var(--text-secondary);
+  font-weight:700; font-size:.8rem; letter-spacing:.04em;
+  display:flex; align-items:center; justify-content:center;
+  transition:border-color .25s ease, color .25s ease;
+}
+.lang-pill:hover{ border-color:var(--gold); color:var(--gold-soft); }
+
+/* RTL (Arabic UI) refinements for the certificate page */
+body.ui-ar .site-head{ direction:rtl; }
+body.ui-ar .card, body.ui-ar .site-foot{ text-align:right; }
+body.ui-ar .lookup-form input{ direction:ltr; text-align:center; }
+body.ui-ar .cert-meta .m{ text-align:center; }
+body.ui-ar .eyebrow{ direction:rtl; }
 </style>
 </head>
 <body>
 
 <header class="site-head">
-  <div class="site-logo">P</div>
+  <div class="site-logo"><img class="pel-logo" src="brand/pel-wordmark.svg" alt="PEL"></div>
   <div class="site-name">
     <b>Personalized English Lessons</b>
-    <div class="arabic" style="font-size:.8rem; color:var(--text-muted);">دروس انجليزي مخصصة · اكاديمية الاستاذ فراس</div>
+    <div class="arabic" style="font-size:.8rem; color:var(--text-muted);">دروس انجليزي مخصصة · الاكاديمية</div>
   </div>
 </header>
+<button class="lang-pill" id="verifyLangBtn" aria-label="Switch interface language">EN</button>
 
 <main class="wrap">
   <div class="card">
@@ -145,7 +170,7 @@ button{ font-family:inherit; cursor:pointer; }
       <div class="code-chip" id="okCode"></div>
       <div id="okIdCheck" style="margin-top:14px; display:none; font-size:.76rem; line-height:1.7;"></div>
       <div class="genuine">
-        <span class="arabic" style="display:block; margin-bottom:4px;">هذه الشهادة أصلية وموثقة من اكاديمية الاستاذ فراس.</span>
+        <span class="arabic" style="display:block; margin-bottom:4px;">هذه الشهادة أصلية وموثقة من الاكاديمية.</span>
         This certificate is genuine and issued by Personalized English Lessons.
       </div>
     </div>
@@ -210,6 +235,32 @@ button{ font-family:inherit; cursor:pointer; }
 </footer>
 
 <script>
+/* ==========================================================================
+   INTERFACE LANGUAGE (ar / en) + RTL
+   Shares the same pel_account_prefs key as app.html and login.html, so a
+   certificate page opened by a returning student keeps their language, and
+   a switch here is remembered for next time.
+   ========================================================================== */
+function readAcctPrefs(){
+  try{ return JSON.parse(localStorage.getItem('pel_account_prefs') || 'null') || { lang:'en', direction:'en' }; }
+  catch(e){ return { lang:'en', direction:'en' }; }
+}
+function applyVerifyLang(lang){
+  lang = lang === 'ar' ? 'ar' : 'en';
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  document.body.classList.toggle('ui-ar', lang === 'ar');
+  document.body.classList.toggle('ui-en', lang === 'en');
+  const pill = document.getElementById('verifyLangBtn');
+  if(pill) pill.textContent = lang === 'ar' ? 'EN' : 'ع';
+  const prefs = readAcctPrefs();
+  prefs.lang = lang;
+  try{ localStorage.setItem('pel_account_prefs', JSON.stringify(prefs)); }catch(e){}
+}
+const verifyLangBtn = document.getElementById('verifyLangBtn');
+if(verifyLangBtn) verifyLangBtn.addEventListener('click', () => applyVerifyLang(document.documentElement.lang === 'ar' ? 'en' : 'ar'));
+applyVerifyLang(readAcctPrefs().lang === 'ar' ? 'ar' : 'en');
+
 /* ==========================================================================
    SUPABASE CONFIGURATION (public anon key, read-only lookup via RPC)
    ========================================================================== */
