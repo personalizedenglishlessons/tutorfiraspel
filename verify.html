@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PEL · Certificate Verification · التحقق من الشهادة</title>
+<title>Certificate Verification | PEL</title>
 <meta name="description" content="Verify a Personalized English Lessons certificate of completion.">
 <meta name="robots" content="noindex">
 <link rel="icon" type="image/svg+xml" href="brand/pel-favicon.svg?v=2">
@@ -13,8 +13,10 @@
 <meta name="theme-color" content="#0E0E10">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;500;700&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+<script src="lib/cert-qr.js"></script>
+<script src="lib/cert-sheet.js"></script>
 <style>
 :root{
   --bg:#0E0E10; --surface:#17171B; --card:#1E1F25; --card-elevated:#262833;
@@ -55,7 +57,7 @@ button{ font-family:inherit; cursor:pointer; }
 
 .wrap{ flex:1; display:flex; flex-direction:column; align-items:center; padding:28px 20px 60px; }
 .card{
-  width:100%; max-width:560px; background:var(--card-elevated); border:1px solid var(--border);
+  width:100%; max-width:720px; background:var(--card-elevated); border:1px solid var(--border);
   border-radius:24px; box-shadow:var(--shadow-lift); padding:38px 34px; text-align:center;
 }
 .eyebrow{ font-size:.7rem; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); font-weight:600; }
@@ -77,17 +79,10 @@ button{ font-family:inherit; cursor:pointer; }
   background:rgba(66,163,106,.12); color:var(--success); border:1px solid rgba(66,163,106,.35);
   padding:7px 16px; border-radius:999px; font-size:.78rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
 }
-.cert-student{ font-family:'Fraunces',serif; font-size:2rem; font-weight:600; color:var(--gold); margin-top:22px; line-height:1.2; }
-.cert-line{ font-size:.9rem; color:var(--text-secondary); margin-top:14px; }
-.cert-academy{ font-family:'Fraunces',serif; font-size:1.25rem; font-weight:600; color:var(--text); margin-top:6px; }
-.cert-academy-ar{ margin-top:4px; font-size:.95rem; color:var(--text-secondary); }
-.cert-meta{
-  display:flex; justify-content:center; gap:40px; margin-top:26px; flex-wrap:wrap;
-}
-.cert-meta .m{ text-align:center; }
-.cert-meta .m .lab{ font-size:.66rem; text-transform:uppercase; letter-spacing:.12em; color:var(--text-muted); }
-.cert-meta .m .val{ font-size:.95rem; font-weight:700; color:var(--text); margin-top:4px; }
 .genuine{ margin-top:24px; padding:14px 18px; border-radius:14px; background:rgba(200,169,106,.07); border:1px solid rgba(200,169,106,.25); font-size:.85rem; color:var(--gold-soft); line-height:1.7; }
+
+.cert-preview{ margin-top:22px; overflow:hidden; border-radius:12px; line-height:0; }
+.cert-preview .cert-sheet{ margin:0 auto; }
 
 .lookup-form{ margin-top:24px; display:flex; gap:10px; }
 .lookup-form input{
@@ -111,11 +106,6 @@ button{ font-family:inherit; cursor:pointer; }
 }
 @keyframes spin{ to{ transform:rotate(360deg); } }
 .site-foot{ text-align:center; padding:0 20px 34px; font-size:.72rem; color:var(--text-muted); line-height:1.8; }
-.code-chip{
-  font-family:'Fraunces',serif; letter-spacing:.14em; color:var(--text-secondary);
-  background:var(--surface); border:1px dashed var(--border); border-radius:10px;
-  padding:9px 16px; font-size:.85rem; display:inline-block; margin-top:18px;
-}
 
 /* interface language pill (fixed, top right) */
 .lang-pill{
@@ -134,8 +124,20 @@ button{ font-family:inherit; cursor:pointer; }
 body.ui-ar .site-head{ direction:rtl; }
 body.ui-ar .card, body.ui-ar .site-foot{ text-align:right; }
 body.ui-ar .lookup-form input{ direction:ltr; text-align:center; }
-body.ui-ar .cert-meta .m{ text-align:center; }
 body.ui-ar .eyebrow{ direction:rtl; }
+
+/* interface-language pairing: render exactly one language */
+body.ui-ar .t-en{ display:none !important; }
+body.ui-en .t-ar{ display:none !important; }
+
+/* When printing from the verify page, output only the full-size A4 sheet. */
+@media print{
+  body *{ visibility:hidden; }
+  .cert-preview, .cert-preview *{ visibility:visible; }
+  .cert-preview{ position:absolute; left:0; top:0; width:297mm; overflow:visible; border-radius:0; }
+  .cert-preview .cert-sheet{ transform:none !important; margin:0 !important; }
+  .verified-badge, .genuine, #okIdCheck{ display:none !important; }
+}
 </style>
 </head>
 <body>
@@ -144,34 +146,23 @@ body.ui-ar .eyebrow{ direction:rtl; }
   <div class="site-logo"><img class="pel-logo" src="brand/pel-wordmark.svg" alt="PEL"></div>
   <div class="site-name">
     <b>Personalized English Lessons</b>
-    <div class="arabic" style="font-size:.8rem; color:var(--text-muted);">دروس انجليزي مخصصة · الاكاديمية</div>
+    <div class="arabic t-ar" style="font-size:.8rem; color:var(--text-muted);">دروس انجليزي مخصصة، الاكاديمية</div>
   </div>
 </header>
 <button class="lang-pill" id="verifyLangBtn" aria-label="Switch interface language">EN</button>
 
 <main class="wrap">
   <div class="card">
-    <div class="eyebrow">Certificate Verification · <span class="arabic">التحقق من الشهادة</span></div>
+    <div class="eyebrow"><span class="t-ar">التحقق من الشهادة</span><span class="t-en">Certificate Verification</span></div>
 
     <!-- verified -->
     <div class="state" id="st-ok">
-      <div class="seal ok">
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.1V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
-      </div>
-      <div class="verified-badge"><span class="arabic">موثقة</span> · Verified</div>
-      <div class="cert-student" id="okName"></div>
-      <div class="cert-line"><span class="arabic">أكمل بنجاح أكاديمية</span> · has successfully completed</div>
-      <div class="cert-academy" id="okAcademy"></div>
-      <div class="cert-academy-ar arabic" id="okAcademyAr"></div>
-      <div class="cert-meta">
-        <div class="m"><div class="lab"><span class="arabic">تاريخ الاتمام</span> · Completion Date</div><div class="val" id="okDate"></div></div>
-        <div class="m"><div class="lab"><span class="arabic">رقم الشهادة</span> · Certificate ID</div><div class="val" id="okCertId"></div></div>
-      </div>
-      <div class="code-chip" id="okCode"></div>
+      <div class="verified-badge"><span class="t-ar">موثقة</span><span class="t-en">Verified</span></div>
+      <div id="okCertWrap" class="cert-preview" style="display:none;"></div>
       <div id="okIdCheck" style="margin-top:14px; display:none; font-size:.76rem; line-height:1.7;"></div>
       <div class="genuine">
-        <span class="arabic" style="display:block; margin-bottom:4px;">هذه الشهادة أصلية وموثقة من الاكاديمية.</span>
-        This certificate is genuine and issued by Personalized English Lessons.
+        <span class="t-ar" style="display:block;">هذه الشهادة اصلية وموثقة من الاكاديمية.</span>
+        <span class="t-en" style="display:block;">This certificate is genuine and issued by Personalized English Lessons.</span>
       </div>
     </div>
 
@@ -180,13 +171,13 @@ body.ui-ar .eyebrow{ direction:rtl; }
       <div class="seal bad">
         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>
       </div>
-      <h1><span class="arabic" style="display:block; font-size:.55em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">تعذر التحقق من هذه الشهادة</span>Unable to verify this certificate</h1>
-      <p class="sub"><span class="arabic" style="display:block; margin-bottom:4px;">ما لقينا سجل لهذا الرمز. تأكد من الرمز وحاول مرة ثانية.</span>We could not find a record for this code. Double-check it and try again.</p>
+      <h1><span class="t-ar">تعذر التحقق من هذه الشهادة</span><span class="t-en">Unable to verify this certificate</span></h1>
+      <p class="sub"><span class="t-ar" style="display:block;">ما لقينا سجل لهذا الرمز. تاكد من الرمز وحاول مرة ثانية.</span><span class="t-en" style="display:block;">We could not find a record for this code. Double-check it and try again.</span></p>
       <form class="lookup-form" id="badForm">
         <input id="badCode" placeholder="PEL-XXXX-XXXX" autocomplete="off" spellcheck="false" aria-label="Verification code">
-        <button class="btn-gold" type="submit">Verify</button>
+        <button class="btn-gold" type="submit"><span class="t-ar">تحقق</span><span class="t-en">Verify</span></button>
       </form>
-      <p class="sub" style="margin-top:14px;"><span class="arabic">تأكد من الرمز</span> · Check the code on your certificate</p>
+      <p class="sub" style="margin-top:14px;"><span class="t-ar">تاكد من الرمز المطبوع على شهادتك</span><span class="t-en">Check the code on your certificate</span></p>
     </div>
 
     <!-- error (supabase unavailable) -->
@@ -194,28 +185,28 @@ body.ui-ar .eyebrow{ direction:rtl; }
       <div class="seal bad">
         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.7 3.86a2 2 0 00-3.4 0z"/></svg>
       </div>
-      <h1><span class="arabic" style="display:block; font-size:.55em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">خدمة التحقق غير متاحة حاليا</span>Verification service unavailable</h1>
-      <p class="sub"><span class="arabic" style="display:block; margin-bottom:4px;">تعذر الاتصال بخدمة التحقق. جرب مرة ثانية بعد قليل.</span>We could not reach the verification service. Please try again shortly.</p>
-      <button class="btn-ghost" id="retryBtn" style="margin-top:18px;">Try again · <span class="arabic">جرب مرة ثانية</span></button>
+      <h1><span class="t-ar">خدمة التحقق غير متاحة حاليا</span><span class="t-en">Verification service unavailable</span></h1>
+      <p class="sub"><span class="t-ar" style="display:block;">تعذر الاتصال بخدمة التحقق. جرب مرة ثانية بعد قليل.</span><span class="t-en" style="display:block;">We could not reach the verification service. Please try again shortly.</span></p>
+      <button class="btn-ghost" id="retryBtn" style="margin-top:18px;"><span class="t-ar">جرب مرة ثانية</span><span class="t-en">Try again</span></button>
     </div>
 
     <!-- lookup prompt (no code yet) -->
     <div class="state" id="st-form">
-      <h1 style="margin-top:6px;"><span class="arabic" style="display:block; font-size:.55em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">تحقق من صحة شهادة</span>Verify a certificate</h1>
-      <p class="sub"><span class="arabic" style="display:block; margin-bottom:4px;">ادخل رمز التحقق الموجود على الشهادة.</span>Enter the verification code printed on the certificate.</p>
+      <h1 style="margin-top:6px;"><span class="t-ar" style="display:block; font-size:.55em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">تحقق من صحة شهادة</span><span class="t-en">Verify a certificate</span></h1>
+      <p class="sub"><span class="t-ar" style="display:block;">ادخل رمز التحقق الموجود على الشهادة.</span><span class="t-en" style="display:block;">Enter the verification code printed on the certificate.</span></p>
       <form class="lookup-form" id="mainForm">
         <input id="mainCode" placeholder="PEL-XXXX-XXXX" autocomplete="off" spellcheck="false" aria-label="Verification code">
-        <button class="btn-gold" type="submit">Verify</button>
+        <button class="btn-gold" type="submit"><span class="t-ar">تحقق</span><span class="t-en">Verify</span></button>
       </form>
       <div style="margin-top:26px; padding-top:20px; border-top:1px solid var(--border);">
-        <p class="sub" style="font-size:.78rem;"><span class="arabic" style="display:block; margin-bottom:4px;">كل شهادة صادرة من التطبيق لها رمز تحقق فريد لا يمكن تخمينه.</span>Every certificate issued by the app carries a unique, unguessable verification code.</p>
+        <p class="sub" style="font-size:.78rem;"><span class="t-ar" style="display:block;">كل شهادة صادرة من التطبيق لها رمز تحقق فريد لا يمكن تخمينه.</span><span class="t-en" style="display:block;">Every certificate issued by the app carries a unique, unguessable verification code.</span></p>
       </div>
       <div style="margin-top:22px; padding-top:20px; border-top:1px solid var(--border);">
-        <p style="font-size:.78rem; font-weight:700; color:var(--text-secondary);"><span class="arabic">فحص رقم الشهادة</span> · Validate a certificate number</p>
-        <p class="sub" style="font-size:.76rem; margin-top:6px;"><span class="arabic" style="display:block; margin-bottom:4px;">كل رقم شهادة فيه تاريخ الاصدار ورقم تحقق (checksum). الرقم المزور ينكشف هنا فورا، بدون قاعدة البيانات.</span>Every certificate number embeds its issue date and a checksum digit. A forged number is caught here instantly, with no database lookup.</p>
+        <p style="font-size:.78rem; font-weight:700; color:var(--text-secondary);"><span class="t-ar">فحص رقم الشهادة</span><span class="t-en">Validate a certificate number</span></p>
+        <p class="sub" style="font-size:.76rem; margin-top:6px;"><span class="t-ar" style="display:block;">كل رقم شهادة فيه تاريخ الاصدار ورقم تحقق (checksum). الرقم المزور ينكشف هنا فورا، بدون قاعدة البيانات.</span><span class="t-en" style="display:block;">Every certificate number embeds its issue date and a checksum digit. A forged number is caught here instantly, with no database lookup.</span></p>
         <form class="lookup-form" id="numForm">
           <input id="numCode" placeholder="PEL-260813-531-9" autocomplete="off" spellcheck="false" aria-label="Certificate number">
-          <button class="btn-gold" type="submit">Check</button>
+          <button class="btn-gold" type="submit"><span class="t-ar">فحص</span><span class="t-en">Check</span></button>
         </form>
         <div id="numResult" style="margin-top:14px; display:none;"></div>
       </div>
@@ -224,14 +215,14 @@ body.ui-ar .eyebrow{ direction:rtl; }
     <!-- loading -->
     <div class="state" id="st-load">
       <div class="spinner"></div>
-      <p class="sub"><span class="arabic" style="display:block; margin-bottom:4px;">جاري التحقق...</span>Verifying certificate...</p>
+      <p class="sub"><span class="t-ar" style="display:block;">جاري التحقق...</span><span class="t-en" style="display:block;">Verifying certificate...</span></p>
     </div>
   </div>
 </main>
 
 <footer class="site-foot">
-  <span class="arabic" style="display:block;">التحقق يتم مباشرة من سجل الشهادات الرسمي، ولا يمكن تزوير الشهادات.</span>
-  Verification runs against the official certificate registry. Certificates cannot be forged.
+  <span class="t-ar" style="display:block;">التحقق يتم مباشرة من سجل الشهادات الرسمي، ولا يمكن تزوير الشهادات.</span>
+  <span class="t-en" style="display:block;">Verification runs against the official certificate registry. Certificates cannot be forged.</span>
 </footer>
 
 <script>
@@ -251,6 +242,7 @@ function applyVerifyLang(lang){
   document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
   document.body.classList.toggle('ui-ar', lang === 'ar');
   document.body.classList.toggle('ui-en', lang === 'en');
+  document.title = lang === 'ar' ? 'التحقق من الشهادة | PEL' : 'Certificate Verification | PEL';
   const pill = document.getElementById('verifyLangBtn');
   if(pill) pill.textContent = lang === 'ar' ? 'EN' : 'ع';
   const prefs = readAcctPrefs();
@@ -299,27 +291,39 @@ async function lookup(code){
       return;
     }
     const row = data[0];
-    const nameEl = document.getElementById('okName');
-    nameEl.textContent = row.student_name;
-    // Arabic names need an Arabic-capable font, not the Latin Fraunces.
-    if(/[\u0600-\u06FF]/.test(row.student_name)){
-      nameEl.style.fontFamily = "'Tajawal','Cairo','Segoe UI',Tahoma,sans-serif";
-      nameEl.style.direction = 'rtl';
+    const wrap = document.getElementById('okCertWrap');
+    wrap.style.display = 'block';
+    PEL_CERT_INJECT_STYLE();
+    wrap.innerHTML = PEL_CERT_SHEET({
+      name: row.student_name,
+      academyEn: row.academy_en,
+      academyAr: row.academy_ar,
+      level: row.level || '',
+      programName: row.program_name || '',
+      completedAt: row.completed_at,
+      issueDate: row.issue_date || row.completed_at,
+      certId: row.cert_id,
+      code: clean,
+      verifyUrl: 'https://personalizedenglishlessons.github.io/tutorfiraspel/verify.html?code=' + encodeURIComponent(clean)
+    });
+    PEL_CERT_FIT(wrap);
+    const sheet = wrap.querySelector('.cert-sheet');
+    if(sheet){
+      const maxW = wrap.clientWidth - 2;
+      const scale = Math.min(1, maxW / (sheet.offsetWidth || maxW));
+      sheet.style.transformOrigin = 'top center';
+      sheet.style.transform = 'scale(' + scale + ')';
+      sheet.style.marginBottom = (-(sheet.offsetHeight * (1 - scale))) + 'px';
     }
-    document.getElementById('okAcademy').textContent = row.academy_en;
-    document.getElementById('okAcademyAr').textContent = row.academy_ar;
-    document.getElementById('okDate').textContent = row.completed_at;
-    document.getElementById('okCertId').textContent = row.cert_id;
-    document.getElementById('okCode').textContent = 'CODE · ' + clean;
     const idCheck = document.getElementById('okIdCheck');
     if(validCertNumber(row.cert_id)){
       idCheck.style.display = 'block';
       idCheck.style.color = 'var(--success)';
-      idCheck.innerHTML = '✓ <span class="arabic">رقم الشهادة سليم (التاريخ ورقم التحقق مطابقان)</span> · Certificate ID checksum valid';
+      idCheck.innerHTML = '✓ <span class="t-ar">رقم الشهادة سليم (التاريخ ورقم التحقق مطابقان)</span><span class="t-en">Certificate ID checksum valid</span>';
     }else{
       idCheck.style.display = 'block';
       idCheck.style.color = 'var(--warning)';
-      idCheck.innerHTML = '! <span class="arabic">رقم الشهادة لا يطابق الصيغة الرسمية</span> · Certificate ID checksum does not match';
+      idCheck.innerHTML = '! <span class="t-ar">رقم الشهادة لا يطابق الصيغة الرسمية</span><span class="t-en">Certificate ID checksum does not match</span>';
     }
     showState('st-ok');
   }catch(e){ showState('st-err'); }
@@ -371,7 +375,7 @@ function showNumResult(ok, htmlAr, htmlEn){
   box.style.border = '1px solid ' + (ok ? 'rgba(66,163,106,.35)' : 'rgba(210,92,92,.35)');
   box.style.background = (ok ? 'rgba(66,163,106,.08)' : 'rgba(210,92,92,.08)');
   box.style.color = ok ? 'var(--success)' : 'var(--error)';
-  box.innerHTML = '<span class="arabic" style="display:block; margin-bottom:2px;">' + htmlAr + '</span>' + htmlEn;
+  box.innerHTML = '<span class="t-ar" style="display:block;">' + htmlAr + '</span><span class="t-en" style="display:block;">' + htmlEn + '</span>';
 }
 document.getElementById('numForm').addEventListener('submit', function(e){
   e.preventDefault();

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PEL · Personalized English Lessons · تعلم الانجليزية الامريكية بثقة</title>
+<title>PEL، Personalized English Lessons، تعلم الانجليزية الامريكية بثقة</title>
 <link rel="canonical" href="index.html">
 <link rel="icon" type="image/svg+xml" href="brand/pel-favicon.svg?v=2">
 <link rel="icon" type="image/png" sizes="32x32" href="brand/favicon-32.png?v=2">
@@ -27,10 +27,10 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;500;700&display=swap" rel="stylesheet">
-<script src="daily-lesson.js" defer></script>
-<script src="pel-personalization.js" defer></script>
-<script src="onboard.js" defer></script>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;500;700&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
+<script src="lib/daily-lesson.js" defer></script>
+<script src="lib/pel-personalization.js" defer></script>
+<script src="lib/onboard.js" defer></script>
 <style>
 :root{
   --bg:#0E0E10;
@@ -57,6 +57,7 @@
   --dur-1: .6s;
   --dur-2: .9s;
   --header-h: 84px;
+ --site-banner-h: 0px;
 }
 
 html[data-theme="light"]{
@@ -76,7 +77,7 @@ html[data-theme="light"]{
 }
 
 *,*::before,*::after{box-sizing:border-box;}
-html{scroll-behavior:smooth;}
+html{scroll-behavior:smooth; overflow-x:hidden; scroll-padding-top:calc(var(--header-h) + var(--site-banner-h, 0px));}
 body{
   margin:0;
   background:var(--bg);
@@ -186,7 +187,9 @@ img{max-width:100%; display:block;}
 
 /* ===== header ===== */
 header{
-  position:fixed; top:0; left:0; right:0; z-index:1000;
+  position:fixed; left:0; right:0;
+  top:var(--site-banner-h, 0px);
+  z-index:1000;
   padding:22px 0;
   background:transparent;
   transition:background .5s var(--ease), padding .4s var(--ease), border-color .5s var(--ease);
@@ -238,8 +241,8 @@ nav.primary-nav a:hover::after{ width:100%; }
   transition:border-color .3s ease, color .3s ease, transform .3s ease;
 }
 .theme-toggle:hover{ border-color:var(--gold); color:var(--gold); transform:rotate(20deg); }
-
-.btn-ghost{
+.lang-pill{ min-width:44px; height:44px; padding:0 12px; border-radius:14px; border:1px solid var(--border); background:transparent; color:var(--text-secondary); font-weight:700; font-size:.8rem; letter-spacing:.04em; display:flex; align-items:center; justify-content:center; transition:border-color .3s ease, color .3s ease; }
+.lang-pill:hover{ border-color:var(--gold); color:var(--gold); }
   font-size:.86rem; color:var(--text-secondary); font-weight:500;
   padding:10px 4px;
 }
@@ -312,7 +315,7 @@ nav.primary-nav a:hover::after{ width:100%; }
 /* ===== hero ===== */
 .hero{
   position:relative;
-  padding:calc(var(--header-h) + 70px) 0 120px;
+  padding:calc(var(--header-h) + var(--site-banner-h, 0px) + 70px) 0 120px;
   overflow:hidden;
 }
 .hero-glow{
@@ -353,7 +356,7 @@ nav.primary-nav a:hover::after{ width:100%; }
 .trust-item .dot{ width:5px; height:5px; border-radius:50%; background:var(--gold); }
 
 /* hero visual */
-.hero-visual{ position:relative; height:560px; perspective:1400px; }
+.hero-visual{ position:relative; height:560px; perspective:1400px; padding-bottom:38px; }
 .laptop{
   position:absolute; left:50%; top:52%;
   transform:translate(-50%,-50%) rotateX(6deg) rotateY(-6deg);
@@ -362,82 +365,111 @@ nav.primary-nav a:hover::after{ width:100%; }
   background:linear-gradient(160deg, var(--card-elevated), var(--card));
   border:1px solid var(--border);
   box-shadow:var(--shadow-lift);
-  padding:16px;
+  padding:16px 16px 18px;
   transition:transform .2s ease-out;
 }
 .laptop-bar{ display:flex; gap:6px; margin-bottom:14px; padding-left:4px; }
 .laptop-bar span{ width:8px; height:8px; border-radius:50%; background:var(--border); }
-.dash-header{ display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; }
-.dash-title{ font-family:'Fraunces',serif; font-size:1rem; color:var(--text); }
-.dash-sub{ font-size:.68rem; color:var(--text-muted); margin-top:2px; }
-.dash-avatar{ width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg, var(--gold-soft), var(--bronze)); flex-shrink:0; }
-.dash-ring-row{ display:flex; gap:14px; align-items:center; margin-bottom:18px; }
-.ring{ position:relative; width:74px; height:74px; }
-.ring svg{ width:100%; height:100%; transform:rotate(-90deg); }
-.ring circle{ fill:none; stroke-width:6; }
-.ring .track{ stroke:var(--border); }
-.ring .prog{ stroke:var(--gold); stroke-linecap:round; stroke-dasharray:207; stroke-dashoffset:207; transition:stroke-dashoffset 1.6s var(--ease); }
-.ring-label{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:.78rem; font-weight:700; color:var(--text); }
-.dash-bars{ flex:1; display:flex; flex-direction:column; gap:8px; }
-.bar-row{ display:flex; align-items:center; gap:8px; }
-.bar-track{ flex:1; height:5px; border-radius:3px; background:var(--border); overflow:hidden; }
-.bar-fill{ height:100%; border-radius:3px; background:linear-gradient(90deg, var(--emerald), var(--success)); width:0%; transition:width 1.4s var(--ease); }
-.bar-label{ font-size:.66rem; color:var(--text-muted); width:78px; }
-.dash-lesson{
-  border-top:1px solid var(--border); padding-top:14px; display:flex; justify-content:space-between; align-items:center;
+.ls-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+.ls-pills{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.ls-head .pill{ font-size:.66rem; padding:4px 11px; border-radius:999px; border:1px solid var(--border); color:var(--text-muted); white-space:nowrap; }
+.ls-head .pill.gold{ border-color:rgba(200,169,106,.5); color:var(--gold); background:rgba(200,169,106,.07); }
+.ls-title{ font-family:'Fraunces',serif; font-size:clamp(1.1rem,1.9vw,1.4rem); font-weight:500; color:var(--text); line-height:1.3; margin-bottom:12px; }
+.ls-dialog{
+  display:flex; flex-direction:column; gap:11px;
+  padding:13px 15px; border-radius:14px;
+  background:rgba(255,255,255,.025); border:1px solid var(--border);
 }
-.dash-lesson-title{ font-size:.78rem; color:var(--text-secondary); min-width:0; }
-.dash-lesson-title b{ display:block; color:var(--text); font-family:'Fraunces',serif; font-size:.95rem; font-weight:500; margin-bottom:2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-.play-btn{
-  width:38px; height:38px; border-radius:50%; background:var(--gold); color:#171412;
-  display:flex; align-items:center; justify-content:center; font-size:.75rem; flex-shrink:0;
+.ls-line{ display:flex; align-items:center; gap:12px; }
+.ls-line.reply{ padding-left:46px; }
+[dir="rtl"] .ls-line.reply{ padding-left:0; padding-right:46px; }
+.ls-play{
+  width:34px; height:34px; border-radius:50%; background:var(--gold); color:#171412;
+  display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  box-shadow:0 6px 18px -6px rgba(200,169,106,.5); cursor:pointer;
 }
+.ls-play svg{ width:14px; height:14px; }
+.ls-line .txt{ min-width:0; }
+.ls-line .txt b{ display:block; font-size:.88rem; color:var(--text); font-weight:600; letter-spacing:.01em; }
+.ls-line .txt .say{ display:block; font-size:.74rem; color:var(--text-muted); margin-top:3px; }
+.ls-meta{
+  margin-top:12px; padding-top:10px; border-top:1px solid var(--border);
+  display:flex; align-items:center; gap:8px;
+  font-size:.72rem; color:var(--text-muted); line-height:1.5;
+}
+.ls-meta svg{ width:13px; height:13px; color:var(--success); flex-shrink:0; }
 .laptop-base{
-  position:absolute; left:50%; bottom:-14px; transform:translateX(-50%);
-  width:104%; height:14px; border-radius:0 0 10px 10px;
-  background:linear-gradient(180deg, var(--card), var(--surface));
-  border:1px solid var(--border); border-top:none;
+  display:none;
 }
 
 .float-card{
   position:absolute;
-  background:color-mix(in srgb, var(--card-elevated) 82%, transparent);
-  backdrop-filter:blur(14px);
+  background:linear-gradient(155deg, color-mix(in srgb, var(--card-elevated) 92%, transparent), color-mix(in srgb, var(--card) 78%, transparent));
+  backdrop-filter:blur(16px);
   border:1px solid var(--border);
-  border-radius:16px;
-  padding:14px 16px;
-  box-shadow:var(--shadow-soft);
-  display:flex; align-items:center; gap:11px;
-  animation:floaty 6s ease-in-out infinite;
-  transition:transform .2s ease-out;
+  border-top:2px solid rgba(200,169,106,.45);
+  border-radius:14px;
+  padding:13px 15px;
+  box-shadow:0 20px 44px -20px rgba(0,0,0,.6);
+  display:flex; flex-direction:column; gap:10px;
+  min-width:205px;
+  animation:floaty 7s ease-in-out infinite;
+  transition:transform .25s ease-out, border-color .3s, box-shadow .3s;
 }
-.float-card .fc-icon{
-  width:34px; height:34px; border-radius:10px; display:flex; align-items:center; justify-content:center;
-  font-size:.95rem; flex-shrink:0;
+.float-card:hover{ border-color:rgba(200,169,106,.4); transform:translateY(-3px); box-shadow:0 26px 50px -18px rgba(0,0,0,.66), 0 0 30px -10px rgba(200,169,106,.25); }
+.fcd-head{ display:flex; align-items:center; gap:8px; }
+.fcd-head b{ font-size:.72rem; color:var(--text-secondary); font-weight:600; letter-spacing:.02em; }
+.fcd-icon{
+  width:26px; height:26px; border-radius:8px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
 }
-.float-card .fc-icon svg{ width:17px; height:17px; }
-.float-card .fc-text b{ display:block; font-size:.82rem; color:var(--text); font-family:'Fraunces',serif; font-weight:500; }
-.float-card .fc-text span{ font-size:.68rem; color:var(--text-muted); }
+.fcd-icon svg{ width:14px; height:14px; }
+.fcd-icon.gi{ background:rgba(200,169,106,.14); color:var(--gold); }
+.fcd-icon.ei{ background:rgba(63,140,114,.16); color:var(--emerald); }
+.fcd-icon.pi{ background:rgba(122,57,187,.16); color:#b794f4; }
+.fcd-body{ display:flex; align-items:center; gap:9px; flex-wrap:wrap; }
+.fcd-word{ font-size:.88rem; font-weight:600; color:var(--text); letter-spacing:.01em; white-space:nowrap; }
+.fcd-ipa{ font-size:.74rem; color:var(--gold-soft); font-family:'Berkeley Mono',ui-monospace,monospace; white-space:nowrap; }
+.fcd-say{ font-size:.78rem; color:var(--text-muted); white-space:nowrap; }
+.fcd-arrow{ width:14px; height:14px; color:var(--gold); flex-shrink:0; }
+.fcd-wave{ display:flex; align-items:center; gap:2.5px; margin-left:auto; }
+.fcd-wave i{ width:3px; border-radius:2px; background:var(--gold); opacity:.75; transform-origin:center; animation:wv 1.1s ease-in-out infinite; }
+.fcd-wave i:nth-child(1){ height:7px; }
+.fcd-wave i:nth-child(2){ height:12px; animation-delay:.15s; }
+.fcd-wave i:nth-child(3){ height:16px; animation-delay:.3s; }
+.fcd-wave i:nth-child(4){ height:11px; animation-delay:.45s; }
+.fcd-wave i:nth-child(5){ height:6px; animation-delay:.6s; }
+@keyframes wv{ 0%,100%{ transform:scaleY(.5);} 50%{ transform:scaleY(1);} }
+.fcd-bars{ display:flex; align-items:flex-end; gap:3.5px; height:18px; flex-shrink:0; }
+.fcd-bars i{ width:5px; border-radius:2px 2px 0 0; background:linear-gradient(180deg, var(--emerald), rgba(63,140,114,.55)); }
+.fcd-bars i:nth-child(1){ height:7px; }
+.fcd-bars i:nth-child(2){ height:11px; }
+.fcd-bars i:nth-child(3){ height:14px; }
+.fcd-bars i:nth-child(4){ height:18px; }
+.fcd-note{ font-size:.68rem; color:var(--text-muted); line-height:1.4; }
+.fcd-chips{ display:flex; flex-wrap:wrap; gap:5px; }
+.fcd-chip{ font-size:.62rem; font-weight:600; padding:3px 8px; border-radius:999px; border:1px solid var(--border); color:var(--text-muted); white-space:nowrap; }
+.fcd-chip.gold{ border-color:rgba(200,169,106,.4); color:var(--gold); background:rgba(200,169,106,.07); }
+.fcd-chip.live{ border-color:rgba(67,122,34,.4); color:var(--success); background:rgba(67,122,34,.08); }
+.fcd-ring{ position:relative; width:34px; height:34px; flex-shrink:0; }
+.fcd-ring svg{ transform:rotate(-90deg); }
+.fcd-ring .ring-bg{ stroke:var(--border); }
+.fcd-ring .ring-fg{ stroke:var(--gold); stroke-linecap:round; }
+.fcd-ring .ring-pct{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:.6rem; font-weight:700; color:var(--text); }
+.fcd-next{ display:flex; align-items:center; gap:6px; font-size:.66rem; color:var(--text-secondary); }
+.fcd-next b{ color:var(--gold-soft); font-weight:600; }
 
-.fc-1{ top:4%; left:-4%; animation-delay:0s; }
-.fc-1 .fc-icon{ background:rgba(200,169,106,0.16); color:var(--gold); }
-.fc-2{ bottom:14%; left:-8%; animation-delay:1.4s; }
-.fc-2 .fc-icon{ background:rgba(63,140,114,0.18); color:var(--emerald); }
-.fc-3{ top:10%; right:-6%; animation-delay:.7s; }
-.fc-3 .fc-icon{ background:rgba(200,169,106,0.16); color:var(--gold); }
-.fc-4{ bottom:2%; right:-2%; animation-delay:2.1s; }
-.fc-4 .fc-icon{ background:rgba(66,163,106,0.18); color:var(--success); }
+.fc-1{ top:0%; left:-6%; animation-delay:0s; }
+.fc-2{ bottom:0%; right:-8%; animation-delay:1.6s; }
+.fc-3{ top:6%; right:-7%; animation-delay:.8s; }
 
-@keyframes floaty{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-12px);} }
+@keyframes floaty{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-10px);} }
 @media(max-width:1180px){ .float-card{ display:none; } }
 @media(max-width:980px){ .hero-visual{ height:420px; } .laptop{ width:88%; } }
 @media(max-width:480px){
   .hero-visual{ height:330px; }
   .laptop{ width:96%; padding:14px; }
-  .ring{ width:60px; height:60px; }
-  .ring-label{ font-size:.66rem; }
-  .bar-label{ width:60px; font-size:.6rem; }
-  .dash-title{ font-size:.9rem; }
+  .ls-line.reply, [dir="rtl"] .ls-line.reply{ padding-left:0; padding-right:0; }
 }
 
 /* ===== section shell ===== */
@@ -667,8 +699,9 @@ section{ position:relative; padding:130px 0; }
 }
 
 /* ===== pricing ===== */
-.pricing-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:26px; align-items:stretch; }
-@media(max-width:980px){ .pricing-grid{ grid-template-columns:1fr; max-width:520px; margin:0 auto; } }
+.pricing-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:26px; align-items:stretch; }
+@media(max-width:1200px){ .pricing-grid{ grid-template-columns:repeat(2,1fr); max-width:900px; margin:0 auto; } }
+@media(max-width:680px){ .pricing-grid{ grid-template-columns:1fr; max-width:520px; margin:0 auto; } }
 .price-card{
   background:var(--card); border:1px solid var(--border); border-radius:22px; padding:38px;
   position:relative; display:flex; flex-direction:column;
@@ -704,7 +737,7 @@ section{ position:relative; padding:130px 0; }
   display:flex; gap:9px; align-items:flex-start;
   font-size:.78rem; color:var(--text-muted); line-height:1.55;
 }
-.price-excluded .x{ color:var(--bronze); font-weight:700; flex-shrink:0; }
+.price-excluded .x{ color:var(--gold); font-weight:700; flex-shrink:0; }
 .price-card .btn-gold, .price-card .btn-outline{ width:100%; justify-content:center; margin-top:28px; }
 .pricing-note{
   margin-top:34px; text-align:center; font-size:.82rem; color:var(--text-muted); line-height:1.8;
@@ -1016,9 +1049,39 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-of
 @keyframes obspin{ to{ transform:rotate(360deg); } }
 .building p{ font-size:.92rem; color:var(--text-secondary); }
 .building .building-route{ font-size:.78rem; color:var(--text-muted); }
+
+/* - tasteful 3D, not vibe-coded - */
+.hero-visual{ perspective:1400px; transform-style:preserve-3d; }
+.laptop{ transform-style:preserve-3d; transition:transform .6s var(--ease), box-shadow .6s var(--ease); }
+.price-card, #personalPreview .card, .outcome-grid .card{ transform-style:preserve-3d; transition:transform .4s var(--ease), box-shadow .4s var(--ease); }
+.price-card:hover, #personalPreview .card:hover, .outcome-grid .card:hover{ transform:translateY(-6px) rotateX(1.2deg) rotateY(-1.2deg); box-shadow:0 18px 40px -18px rgba(0,0,0,.45), 0 0 0 1px rgba(200,169,106,.08); }
+.preview-stage{ perspective:1000px; }
+.preview-panel .mock-card-inner{ transform-style:preserve-3d; }
+@media(hover:none){ .price-card:hover, #personalPreview .card:hover, .outcome-grid .card:hover{ transform:none; } }
+
+/* final premium polish: spacing, hierarchy, restraint */
+section{ padding-top:80px; padding-bottom:80px; }
+.hero{ padding:100px 0 60px; }
+.hero{ padding:100px 0 60px; }
+.section-head{ margin-bottom:36px !important; }
+.section-head h2{ letter-spacing:-0.02em; line-height:1.2; }
+.card, .price-card, .feature-card, .course-card, .testi-card{ border-radius:18px; }
+.btn-gold, .btn-outline, .btn-wa{ letter-spacing:.01em; }
+@media(max-width:768px){
+  section{ padding-top:60px; padding-bottom:60px; }
+  .hero{ padding:calc(80px + var(--site-banner-h, 0px)) 0 40px; }
+  .hero h1{ font-size:clamp(1.9rem,7vw,2.8rem) !important; }
+}
 </style>
 </head>
 <body>
+
+<style>
+.site-banner{display:none;font-size:.85rem;line-height:1.6;text-align:center;padding:.6rem 1.1rem;padding-top:max(.6rem, env(safe-area-inset-top, .6rem));background:linear-gradient(90deg,#8f7030,var(--gold) 50%,#8f7030);color:#171412;overflow-wrap:break-word}
+.site-banner.show{display:block}
+.site-banner a{color:#171412;font-weight:700;text-decoration:underline;text-underline-offset:3px;margin-inline-start:.45rem;white-space:nowrap}
+</style>
+<div class="site-banner" id="siteBanner" dir="auto"></div>
 
 <div class="scroll-progress" id="scrollProgress"></div>
 <div class="cursor-dot" id="cursorDot"></div>
@@ -1031,14 +1094,14 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-of
       <img class="pel-logo pel-logo-light" src="brand/pel-wordmark-dark.svg" alt="PEL">
     </a>
     <nav class="primary-nav">
-      <a href="#home">الرئيسية</a>
-      <a href="#curriculum">المنصة</a>
-      <a href="#features">المميزات</a>
-      <a href="#stories">قصص النجاح</a>
-      <a href="#pricing">الاشتراك</a>
-      <a href="#faq">الأسئلة</a>
+      <a href="#home">الرييسية</a>
+      <a href="#personalPreview">خطتك</a>
+      <a href="#pricing">الباقات</a>
+      <a href="#liveTeaching">تعلم وممارسة</a>
+      <a href="#faq">الاسيلة</a>
     </nav>
     <div class="header-actions">
+      <button class="lang-pill" id="indexLangBtn" aria-label="Switch language">EN</button>
       <button class="theme-toggle" id="themeToggle" aria-label="تبديل المظهر">
         <svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v2M12 19v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M3 12h2M19 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/><circle cx="12" cy="12" r="4.2"/></svg>
       </button>
@@ -1050,23 +1113,22 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-of
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
         <span class="login-text">دخول الطلاب</span>
       </a>
-      <button class="btn-gold magnetic" data-magnetic>سجل الآن</button>
+      <button class="btn-gold magnetic" data-magnetic>سجل الان</button>
     </div>
-    <button class="mobile-toggle" id="mobileToggle" aria-label="القائمة"><span></span></button>
+    <button class="mobile-toggle" id="mobileToggle" aria-label="القايمة"><span></span></button>
   </div>
 </header>
 
 <div class="mobile-menu" id="mobileMenu" dir="rtl">
-  <a href="#home" class="mobile-nav-link">الرئيسية</a>
-  <a href="#curriculum" class="mobile-nav-link">المنصة</a>
-  <a href="#features" class="mobile-nav-link">المميزات</a>
-  <a href="#stories" class="mobile-nav-link">قصص النجاح</a>
-  <a href="#pricing" class="mobile-nav-link">الاشتراك</a>
-  <a href="#faq" class="mobile-nav-link">الأسئلة</a>
+  <a href="#home" class="mobile-nav-link">الرييسية</a>
+  <a href="#personalPreview" class="mobile-nav-link">خطتك</a>
+  <a href="#pricing" class="mobile-nav-link">الباقات</a>
+  <a href="#liveTeaching" class="mobile-nav-link">تعلم وممارسة</a>
+  <a href="#faq" class="mobile-nav-link">الاسيلة</a>
   <div class="mobile-menu-actions">
     <button class="btn-gold" data-open-path style="width:100%; border:none; border-radius:999px; padding:13px 22px; font-family:inherit; font-weight:700;">ابني مسار تعلمي</button>
     <a href="login.html" class="btn-outline">دخول الطلاب</a>
-    <a href="#pricing" class="btn-gold">سجل الآن</a>
+    <a href="#pricing" class="btn-gold">سجل الان</a>
   </div>
 </div>
 
@@ -1077,443 +1139,285 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-of
   <div class="hero-glow"></div>
   <div class="container hero-grid">
     <div class="reveal is-visible">
-      <span class="eyebrow hero-eyebrow" dir="ltr" style="justify-content:flex-start;"><img class="pel-logo" src="brand/pel-wordmark.svg" alt="PEL"><img class="pel-logo pel-logo-light" src="brand/pel-wordmark-dark.svg" alt="PEL"></span>
-      <h1 class="arabic-h" dir="rtl" style="margin-top:22px;">اتقان الانجليزية الامريكية <em>بثقة حقيقية.</em></h1>
-      <p class="arabic hero-sub" dir="rtl" style="font-size:1.05rem;">تعلم الانجليزيه الامريكيه مع الاستاذ فراس من خلال دروس مرتبه وشرح واضح بالعربي وتمارين تساعدك تستخدم الانجليزيه بثقه</p>
-      <div class="hero-cta-row">
-        <button class="btn-gold magnetic" data-open-path id="heroPathCta">
+       <span class="eyebrow hero-eyebrow" dir="ltr" style="justify-content:flex-start;"><span class="pel-tag">Personalized English Lessons</span></span>
+      <h1 class="arabic-h" dir="rtl" style="margin-top:18px; font-size:clamp(2.2rem,5vw,3.6rem); line-height:1.15;">انجليزي يشبه حياتك، <em>مو جمل تحفظها.</em></h1>
+      <p class="arabic hero-sub" dir="rtl" style="font-size:1.05rem; max-width:560px; margin-top:14px; line-height:1.8;">قل لنا وش تبي الانجليزي لاجله، شغلك سفرك سوالفك اليومية، ونبني لك بداية على مقاسك بدروس من مواقف حقيقية وشرح واضح بالعربي</p>
+      <div class="hero-cta-row" style="margin-top:26px; gap:12px; flex-wrap:wrap; align-items:center;">
+        <button class="btn-gold magnetic" data-open-path id="heroPathCta" style="padding:14px 28px; font-size:.95rem;">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="2.5"/><circle cx="18" cy="5" r="2.5"/><path d="M8.5 19H15a3 3 0 0 0 3-3v-8.5M6 16.5V8a3 3 0 0 1 3-3h3.5"/></svg>
-          <span>ابني مسار تعلمي</span>
+          <span>اعرف بدايتي</span>
         </button>
-        <a href="#pricing" class="btn-outline magnetic" data-magnetic>سجل الآن</a>
-        <a href="https://wa.me/966557178070?text=%D8%A3%D8%A8%D9%8A%20%D8%A3%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%B9%D9%86%20%D8%A7%D9%84%D9%85%D9%86%D8%B5%D8%A9" target="_blank" rel="noopener" class="btn-wa magnetic" data-magnetic>
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.32 4.95L2.05 22l5.3-1.39c1.45.79 3.09 1.21 4.69 1.21 5.46 0 9.9-4.44 9.9-9.9 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.15c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.26 8.26 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.23 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.81-.78.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.13-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.16-.48-.29z"/></svg>
-          <span>راسل الاستاذ فراس واتساب</span>
+        <a href="#pricing" class="btn-outline magnetic" data-magnetic>استكشف المنصة</a>
+        <a href="https://wa.me/966557178070?text=%D8%A3%D8%A8%D9%8A%20%D8%A3%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%B9%D9%86%20%D8%A7%D9%84%D9%85%D9%86%D8%B5%D8%A9" target="_blank" rel="noopener" class="btn-wa magnetic" data-magnetic id="heroWaBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.32 4.95L2.05 22l5.3-1.39c1.45.79 3.09 1.21 4.69 1.21 5.46 0 9.9-4.44 9.9-9.9 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2z"/></svg>
+          <span>راسل استاذ فراس</span>
         </a>
       </div>
-      <div class="path-hint" dir="rtl">
-        <span class="arabic">اسئلة قصيرة، وPEL يبني لك خطة على هدفك ومستواك ومواقفك الحقيقية ووقتك المتاح.</span>
-        <span class="path-hint-en" dir="ltr">Answer a few quick questions — PEL builds a route from your goals, level, real-life needs and available time.</span>
+      <div class="path-hint" dir="rtl" style="margin-top:14px;">
+        <span class="arabic">اسيلة خفيفة، نعرف مستواك وهدفك ونرجع لك بخطة على مقاس وقتك</span>
+        <span class="path-hint-en" dir="ltr" style="display:none;">Quick questions, we learn your level and goal and return a plan that fits your time.</span>
       </div>
-      <div class="trust-row" dir="rtl">
-        <div class="trust-item"><span class="dot"></span>منهج امريكي</div>
-        <div class="trust-item"><span class="dot"></span>مئات الدروس</div>
-        <div class="trust-item"><span class="dot"></span>معلم يشرح كل درس بالعربي</div>
-        <div class="trust-item"><span class="dot"></span>ترجمة فورية مجانية داخل المنصة</div>
-        <div class="trust-item"><span class="dot"></span>تحديثات مستمرة للمنصة</div>
-        <div class="trust-item"><span class="dot"></span>لوحه تحكم تعرض تقدمك بالكامل</div>
+      <div class="trust-row" dir="rtl" style="margin-top:18px; gap:10px 18px;">
+        <div class="trust-item"><span class="dot"></span>منهج امريكي اصلي</div>
+        <div class="trust-item"><span class="dot"></span>شرح عربي لكل درس</div>
+        <div class="trust-item"><span class="dot"></span>ترجمة فورية بلا حدود</div>
+        <div class="trust-item"><span class="dot"></span>لوحة تتابع تقدمك</div>
       </div>
     </div>
 
     <div class="hero-visual" id="heroVisual">
-      <div class="float-card fc-1" id="dailyLessonFloat">
-        <div class="fc-icon">✦</div>
-        <div class="fc-text"><b>درس اليوم</b><span>Lesson of the Day · American Small Talk</span></div>
+      <div class="float-card fc-1">
+        <div class="fcd-head">
+          <span class="fcd-icon gi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9.5 9.5 0 0 1 0 13"/></svg></span>
+          <b>النطق المسموع</b>
+        </div>
+        <div class="fcd-body">
+          <span class="fcd-word">Water</span>
+          <span class="fcd-ipa">/ˈwɔː.tɚ/</span>
+          <span class="fcd-say arabic">ووتر</span>
+          <span class="fcd-wave"><i></i><i></i><i></i><i></i><i></i></span>
+        </div>
+        <div class="fcd-chips">
+          <span class="fcd-chip gold">American accent</span>
+          <span class="fcd-chip">tap to hear</span>
+        </div>
       </div>
       <div class="float-card fc-2">
-        <div class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c2.5 3 4.5 5.5 4.5 9a4.5 4.5 0 0 1-9 0c0-1.6.7-2.8 1.5-4 .3 1.6 1.2 2.5 1.7 2.5.6 0 .9-1 .5-2.3C10.7 6.5 11 4.8 12 3z"/></svg></div>
-        <div class="fc-text"><b>تدريب المحادثة</b><span>Speaking Practice · Streak 12 يوم</span></div>
+        <div class="fcd-head">
+          <span class="fcd-icon ei"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg></span>
+          <b>ترجمة فورية</b>
+        </div>
+        <div class="fcd-body">
+          <span class="fcd-say arabic">بكم هذا؟</span>
+          <svg class="fcd-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+          <span class="fcd-word">How much is this?</span>
+        </div>
+        <div class="fcd-chips">
+          <span class="fcd-chip live">EN ↔ AR</span>
+          <span class="fcd-chip">transliteration</span>
+        </div>
       </div>
       <div class="float-card fc-3">
-        <div class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/><path d="M8.5 21h7"/></svg></div>
-        <div class="fc-text"><b>مختبر النطق</b><span>Pronunciation Lab · وضوح 87%</span></div>
-      </div>
-      <div class="float-card fc-4">
-        <div class="fc-icon">●</div>
-        <div class="fc-text"><b>ترجمة فورية</b><span>Instant Translate · مجانية بلا حدود</span></div>
+        <div class="fcd-head">
+          <span class="fcd-icon pi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m3 17 6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></span>
+          <b>تقدمك يتحفظ</b>
+        </div>
+        <div class="fcd-body">
+          <span class="fcd-ring">
+            <svg width="34" height="34" viewBox="0 0 34 34"><circle class="ring-bg" cx="17" cy="17" r="14" fill="none" stroke-width="3"/><circle class="ring-fg" cx="17" cy="17" r="14" fill="none" stroke-width="3" stroke-dasharray="87.96" stroke-dashoffset="62.14"/></svg>
+            <span class="ring-pct">7/24</span>
+          </span>
+          <span class="fcd-note arabic">A1 · Everyday English</span>
+        </div>
+        <div class="fcd-next">Next: <b>Grammar Academy</b></div>
       </div>
 
       <div class="laptop" id="laptopTilt">
         <div class="laptop-bar"><span></span><span></span><span></span></div>
-        <div class="dash-header">
-          <div>
-            <div class="dash-title">Welcome back, Sara</div>
-            <div class="dash-sub">Level 3 · Confident Conversations</div>
-          </div>
-          <div class="dash-avatar"></div>
-        </div>
-        <div class="dash-ring-row">
-          <div class="ring">
-            <svg viewBox="0 0 80 80">
-              <circle class="track" cx="40" cy="40" r="33"></circle>
-              <circle class="prog" id="heroRing" cx="40" cy="40" r="33"></circle>
-            </svg>
-            <div class="ring-label">72%</div>
-          </div>
-          <div class="dash-bars">
-            <div class="bar-row"><span class="bar-label">Speaking</span><div class="bar-track"><span class="bar-fill" data-fill="82"></span></div></div>
-            <div class="bar-row"><span class="bar-label">Listening</span><div class="bar-track"><span class="bar-fill" data-fill="68"></span></div></div>
-            <div class="bar-row"><span class="bar-label">Vocabulary</span><div class="bar-track"><span class="bar-fill" data-fill="75"></span></div></div>
+        <div class="ls-head">
+          <div class="ls-pills">
+            <span class="pill gold arabic" id="lsDay">درس اليوم</span>
+            <span class="pill" id="lsAcademy">American Small Talk</span>
           </div>
         </div>
-        <div class="dash-lesson">
-          <div class="dash-lesson-title"><b>Today's Vocabulary</b>12 new words · Restaurant English</div>
-          <div class="play-btn">▶</div>
+        <div class="ls-title" id="lsTitle">Shopping For Clothes</div>
+        <div class="ls-dialog">
+          <div class="ls-line">
+            <span class="ls-play"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h3l5 4V5z"/><path d="M16 9a5 5 0 0 1 0 6"/></svg></span>
+            <div class="txt">
+              <b>How much is this?</b>
+              <span class="say arabic">بكم هذا؟ · هاو ماتش إز ذس</span>
+            </div>
+          </div>
+          <div class="ls-line reply">
+            <div class="txt">
+              <b>Twenty riyals.</b>
+              <span class="say arabic">بعشرين ريال · توينتي رايالز</span>
+            </div>
+          </div>
+        </div>
+        <div class="ls-meta">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+          <span class="arabic">كل درس دقيقتين، نطق مسموع وشرح بالعربي</span>
         </div>
         <div class="laptop-base"></div>
       </div>
-</div>
+    </div>
   </div>
 </section>
+
+<!-- PERSONALIZED PLAN PREVIEW -->
+<section id="personalPreview" style="padding:80px 0; background:var(--surface); border-top:1px solid var(--border);">
+  <div class="container">
+    <div class="section-head center reveal" dir="rtl" style="max-width:640px; margin:0 auto 40px;">
+      <span class="eyebrow">خطتك على مقاسك</span>
+      <h2 class="arabic-h" style="font-size:clamp(1.8rem,3.2vw,2.4rem);">قل لنا وش تبي، ونبني لك الطريق</h2>
+    </div>
+    <div class="reveal pp-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:20px; max-width:920px; margin:0 auto;">
+      <div class="pp-say" style="border-radius:20px; padding:26px; display:flex; flex-direction:column; gap:14px;">
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+          <span style="width:28px; height:28px; border-radius:8px; background:rgba(200,169,106,.12); display:flex; align-items:center; justify-content:center; color:var(--gold); font-size:.75rem;">💬</span>
+          <span style="font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); font-weight:700;">انت تقول</span>
+        </div>
+        <div style="padding:12px 16px; border-radius:14px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.06); font-size:.9rem; transition:border-color .3s; cursor:default;" onmouseover="this.style.borderColor='rgba(200,169,106,.3)'" onmouseout="this.style.borderColor='rgba(255,255,255,.06)'">ابي انجليزي للشغل</div>
+        <div style="padding:12px 16px; border-radius:14px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.06); font-size:.9rem; transition:border-color .3s; cursor:default;" onmouseover="this.style.borderColor='rgba(200,169,106,.3)'" onmouseout="this.style.borderColor='rgba(255,255,255,.06)'">المحادثة صعبة علي</div>
+        <div style="padding:12px 16px; border-radius:14px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.06); font-size:.9rem; transition:border-color .3s; cursor:default;" onmouseover="this.style.borderColor='rgba(200,169,106,.3)'" onmouseout="this.style.borderColor='rgba(255,255,255,.06)'">اقدر ادرس 20 دقيقة يوميا</div>
+        <button class="btn-gold magnetic" data-open-path style="margin-top:auto; justify-content:center; padding:14px 22px; font-size:.9rem;"><span>اعرف بدايتي</span></button>
+      </div>
+      <div class="pp-build" style="border-radius:20px; padding:26px; display:flex; flex-direction:column; gap:14px;">
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+          <span style="width:28px; height:28px; border-radius:8px; background:var(--gold); color:#171412; display:flex; align-items:center; justify-content:center; font-size:.75rem; font-weight:800;">✦</span>
+          <span style="font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); font-weight:700;">PEL يبني</span>
+        </div>
+        <div style="display:flex; gap:12px; align-items:center; padding:14px 16px; border-radius:14px; background:rgba(200,169,106,.06); border:1px solid rgba(200,169,106,.15);">
+          <span style="min-width:48px; height:48px; border-radius:14px; background:linear-gradient(135deg,var(--gold),var(--gold-soft)); color:#171412; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:1rem; box-shadow:0 4px 16px -4px rgba(200,169,106,.4);">A2</span>
+          <div><div style="font-weight:700; font-size:1rem;">انجليزي العمل</div><div style="font-size:.78rem; color:var(--text-muted); margin-top:2px;">تركيزك: محادثة واستماع</div></div>
+        </div>
+        <div class="pp-route">
+          <div style="padding-left:10px;"><div class="route-label">اليوم</div><div style="font-size:.9rem; margin-top:3px;">تبدا محادثة في الشغل</div></div>
+        </div>
+        <div class="pp-route">
+          <div style="padding-left:10px;"><div class="route-label">بعدها</div><div style="font-size:.9rem; margin-top:3px;">تسال زميلك عن مساعدة</div></div>
+        </div>
+        <div class="pp-route">
+          <div style="padding-left:10px;"><div class="route-label">بعدين</div><div style="font-size:.9rem; margin-top:3px;">اجتماعات، عملاء، مقابلات</div></div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:24px; font-size:.82rem; color:var(--text-muted);">بدون تسجيل، تشوف نتيجتك قبل ما تدفع</div>
+  </div>
+</section>
+<style>@media(max-width:860px){ #personalPreview .reveal.pp-grid{ grid-template-columns:1fr !important; max-width:440px !important; margin:0 auto !important; } }</style>
 
 <!-- PERSONALIZED HOME (returning students with a saved plan) -->
 <section class="plan-home" id="planHome" style="display:none;" aria-label="Your learning plan"></section>
 
-<!-- LESSON OF THE DAY STRIP -->
-<section class="daily-strip" id="dailyStrip">
-  <div class="container daily-strip-inner">
-    <div class="daily-strip-mark">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9z"/></svg>
-    </div>
-    <div class="daily-strip-body">
-      <span class="eyebrow" dir="rtl" style="justify-content:flex-start;">درس اليوم · Lesson of the Day</span>
-      <div class="daily-strip-title" id="dailyStripTitle"><span class="arabic">جارٍ جلب درس اليوم...</span></div>
-      <div class="daily-strip-sub" id="dailyStripSub"></div>
-    </div>
-    <a href="login.html" class="btn-outline daily-strip-cta" id="dailyStripCta">
-      <span class="arabic">افتح الدرس في المنصة</span> · Open in the app
-    </a>
-  </div>
-</section>
-
-<!-- SOCIAL PROOF -->
-<section class="proof">
-  <div class="container">
-    <div class="stat-grid" dir="rtl">
-      <div class="stat reveal"><div class="stat-num" data-count="640" data-suffix="+">0</div><div class="stat-label">طالب وطالبة</div></div>
-      <div class="stat reveal reveal-delay-1"><div class="stat-num" data-count="12" data-suffix="+">0</div><div class="stat-label">دولة عربية</div></div>
-      <div class="stat reveal reveal-delay-2"><div class="stat-num" data-count="3" data-suffix="+">0</div><div class="stat-label">سنوات خبرة تدريس</div></div>
-      <div class="stat reveal reveal-delay-3"><div class="stat-num" data-count="92" data-suffix="%">0</div><div class="stat-label">رضا الطلاب</div></div>
-      <div class="stat reveal reveal-delay-4"><div class="stat-num" data-count="88" data-suffix="%">0</div><div class="stat-label">مستمرين بعد اول شهر</div></div>
-    </div>
-    <div class="country-row">
-      <span class="country-pill active">🇸🇦 السعودية</span>
-      <span class="country-pill">🇦🇪 الإمارات</span>
-      <span class="country-pill">🇰🇼 الكويت</span>
-      <span class="country-pill">🇶🇦 قطر</span>
-      <span class="country-pill">🇧🇭 البحرين</span>
-      <span class="country-pill">🇴🇲 عمان</span>
-      <span class="country-pill">🇯🇴 الأردن</span>
-      <span class="country-pill">🇪🇬 مصر</span>
-      <span class="country-pill">🇲🇦 المغرب</span>
-    </div>
-  </div>
-</section>
-
-<!-- FEATURES -->
-<section id="features">
-  <div class="container">
-    <div class="section-head reveal" dir="rtl">
-      <span class="eyebrow" style="justify-content:flex-start;">ليش تختارنا</span>
-      <h2 class="arabic-h">أكاديمية مبنية على صوتك، مو على منهج جاهز.</h2>
-      <p class="arabic">كل جزء من المنصة يخدم هدف واحد: تنتقل من التردد للطلاقة، محادثة صادقة بعد محادثة.</p>
-    </div>
-    <div class="feature-grid" id="featureGrid" dir="rtl">
-      <div class="feature-card reveal"><div class="feature-icon">◈</div><h3 class="arabic-h" style="font-size:1.05rem;">خطة تعلم مخصصة</h3><p class="arabic">مسار واضح من مستواك الحالي إلى محادثة طليقة وواثقة، مبني حول أهدافك أنت.</p></div>
-      <div class="feature-card reveal reveal-delay-1"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 12h1M7 7v10M11 4v16M15 7v10M19 9v6M21 12h0"/></svg></div><h3 class="arabic-h" style="font-size:1.05rem;">أكاديمية النطق الأمريكي</h3><p class="arabic">تتدرب على نفس الأصوات ونبرة الكلام الطبيعية اللي يستخدمها الأمريكان.</p></div>
-      <div class="feature-card reveal reveal-delay-2"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/><path d="M8.5 21h7"/></svg></div><h3 class="arabic-h" style="font-size:1.05rem;">تدريب محادثة حقيقي</h3><p class="arabic">مو اختيار من متعدد. تتكلم من أول درس، بجمل حقيقية وموضوعات حقيقية.</p></div>
-      <div class="feature-card reveal"><div class="feature-icon">✦</div><h3 class="arabic-h" style="font-size:1.05rem;">معلمك فراس</h3><p class="arabic">معلم يشرح لك كل درس بالعربي خطوة بخطوة، ويهتم بسرعتك ومستواك وأهدافك الشخصية.</p></div>
-      <div class="feature-card reveal reveal-delay-1"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 8a5 5 0 0 1 0 8"/><path d="M19.5 5.5a9 9 0 0 1 0 13"/></svg></div><h3 class="arabic-h" style="font-size:1.05rem;">نطق مسموع لكل كلمة</h3><p class="arabic">كل كلمة وجملة تنسمع بوضوح داخل الدرس، تسمع النطق الصح وتردده.</p></div>
-      <div class="feature-card reveal reveal-delay-2"><div class="feature-icon">Aa</div><h3 class="arabic-h" style="font-size:1.05rem;">شرح ونطق مكتوب بالعربي</h3><p class="arabic">القواعد والمفردات تنشرح بالعربي أولاً، وكل كلمة جديدة معها نطقها مكتوب بأحرف عربية تقرأها بسهولة.</p></div>
-      <div class="feature-card reveal"><div class="feature-icon">◔</div><h3 class="arabic-h" style="font-size:1.05rem;">متابعة تقدمك في لوحة خاصة</h3><p class="arabic">دروسك وتطورك أسبوع بعد أسبوع في لوحة تحكم خاصة فيك أنت بس، ما يشوفها غيرك.</p></div>
-      <div class="feature-card reveal reveal-delay-1"><div class="feature-icon">✎</div><h3 class="arabic-h" style="font-size:1.05rem;">بناء المفردات</h3><p class="arabic">نظام تكرار منظم يخلي الكلمات الجديدة تصير جزء من استخدامك اليومي.</p></div>
-      <div class="feature-card reveal reveal-delay-2"><div class="feature-icon">§</div><h3 class="arabic-h" style="font-size:1.05rem;">قواعد بطريقة مختلفة</h3><p class="arabic">القواعد تنعلم من خلال قصص ومحادثات، مو جداول تحفظها وتنساها.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- PLATFORM PREVIEW -->
-<section id="curriculum" style="background:var(--surface); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
-  <div class="container">
-    <div class="section-head reveal" dir="rtl">
-      <span class="eyebrow" style="justify-content:flex-start;">لمحة من الداخل</span>
-      <h2 class="arabic-h">منصة مصممة مثل معلم خاص، ومبنية مثل برنامج احترافي.</h2>
-      <p class="arabic">كل أداة يحتاجها طالب جاد، مرتبة حول لوحة تحكم خاصة فيك.</p>
-    </div>
-    <div class="preview-tabs" id="previewTabs" dir="rtl">
-      <button class="preview-tab active" data-tab="dashboard">لوحة التحكم</button>
-      <button class="preview-tab" data-tab="lesson">عرض الدرس</button>
-      <button class="preview-tab" data-tab="tutor">مراجعة الكتابة</button>
-      <button class="preview-tab" data-tab="vocab">بناء المفردات</button>
-      <button class="preview-tab" data-tab="pronunciation">مختبر النطق</button>
-      <button class="preview-tab" data-tab="analytics">تحليل التقدم</button>
-    </div>
-    <div class="preview-stage">
-      <div class="preview-panel active" data-panel="dashboard">
-        <div class="mock-row">
-          <div class="mock-col">
-            <div class="mock-card-inner"><span class="mock-chip">مستواك · Level 3</span><div class="mock-line" style="margin-top:16px;width:70%"></div><div class="mock-line short"></div></div>
-            <div class="mock-card-inner">
-              <div class="mock-chip">مهاراتك اليوم</div>
-              <div style="display:flex; flex-direction:column; gap:10px; margin-top:14px;">
-                <div class="bar-row"><span class="bar-label">محادثة</span><div class="bar-track"><span class="bar-fill" data-fill="82" style="width:82%"></span></div></div>
-                <div class="bar-row"><span class="bar-label">استماع</span><div class="bar-track"><span class="bar-fill" data-fill="68" style="width:68%"></span></div></div>
-                <div class="bar-row"><span class="bar-label">مفردات</span><div class="bar-track"><span class="bar-fill" data-fill="75" style="width:75%"></span></div></div>
-                <div class="bar-row"><span class="bar-label">قواعد</span><div class="bar-track"><span class="bar-fill" data-fill="71" style="width:71%"></span></div></div>
-              </div>
-            </div>
-          </div>
-          <div class="mock-col">
-            <div class="mock-card-inner"><span class="mock-chip">متابعة أسبوعية</span><div class="mock-line" style="width:60%; margin-top:14px;"></div><div class="mock-line"></div><div class="mock-line" style="width:80%"></div></div>
-            <div class="mock-card-inner"><span class="mock-chip gold">درس اليوم · مكتمل ✓</span><div class="mock-line" style="width:55%; margin-top:14px;"></div><div class="mock-line short"></div></div>
-          </div>
-        </div>
-      </div>
-      <div class="preview-panel" data-panel="lesson">
-        <div class="mock-row">
-          <div class="mock-col">
-            <span class="mock-chip">Unit 4 · Daily Conversations</span>
-            <div class="mock-line gold" style="width:65%; margin-top:18px; height:14px;"></div>
-            <div class="mock-line" style="margin-top:20px;"></div><div class="mock-line"></div><div class="mock-line short"></div>
-          </div>
-          <div class="mock-col"><div class="mock-card-inner" style="height:180px; display:flex; align-items:center; justify-content:center; color:var(--text-muted); font-size:.8rem;">Locked · Enrolled Students Only</div></div>
-        </div>
-      </div>
-      <div class="preview-panel" data-panel="tutor">
-        <div class="mock-row">
-          <div class="mock-col">
-            <span class="mock-chip">Writing Feedback</span>
-            <div class="mock-line" style="margin-top:18px;width:85%;text-decoration:line-through;opacity:.5;"></div>
-            <div class="mock-line gold" style="width:80%; margin-top:6px;"></div>
-            <div class="mock-line short" style="margin-top:8px;"></div>
-            <div class="mock-card-inner" style="margin-top:14px;"><span style="font-size:.72rem; color:var(--text-muted);">السبب: استخدم have been مع since</span></div>
-          </div>
-          <div class="mock-col"><div class="mock-card-inner" style="height:180px; display:flex; align-items:center; justify-content:center; color:var(--text-muted); font-size:.8rem;">Explains each mistake in Arabic</div></div>
-        </div>
-      </div>
-      <div class="preview-panel" data-panel="vocab">
-        <div class="vocab-grid">
-          <div class="vocab-item"><div class="en">Reservation</div><div class="ar">حجز</div></div>
-          <div class="vocab-item"><div class="en">Appointment</div><div class="ar">موعد</div></div>
-          <div class="vocab-item"><div class="en">Negotiate</div><div class="ar">يتفاوض</div></div>
-          <div class="vocab-item"><div class="en">Deadline</div><div class="ar">موعد نهائي</div></div>
-          <div class="vocab-item"><div class="en">Confident</div><div class="ar">واثق</div></div>
-          <div class="vocab-item"><div class="en">Itinerary</div><div class="ar">خط سير الرحلة</div></div>
-        </div>
-      </div>
-      <div class="preview-panel" data-panel="pronunciation">
-        <div class="mock-col" style="max-width:520px; margin:0 auto; text-align:center;">
-          <span class="mock-chip">American Accent · TH sound</span>
-          <div class="wave-bars" id="waveBars"></div>
-          <div class="mock-line" style="width:50%; margin:0 auto;"></div>
-        </div>
-      </div>
-      <div class="preview-panel" data-panel="analytics">
-        <div class="mock-row">
-          <div class="mock-col"><div class="wave-bars" style="height:120px;" id="waveBars2"></div></div>
-          <div class="mock-col">
-            <div class="mock-card-inner"><div class="mock-line gold short"></div><div class="mock-line" style="width:70%"></div></div>
-            <div class="mock-card-inner"><div class="mock-line" style="width:55%"></div><div class="mock-line short"></div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- COURSE LIBRARY -->
-<section>
-  <div class="container">
-    <div class="section-head reveal" dir="rtl">
-      <span class="eyebrow" style="justify-content:flex-start;">مسارات التعلم</span>
-      <h2 class="arabic-h">مسارات متعددة، وخطة واحدة مبنية على مقاسك.</h2>
-      <p class="arabic">التفاصيل الكاملة تفتح بعد التسجيل. هذي لمحة بسيطة عن الاتجاه العام.</p>
-    </div>
-    <div class="course-grid" id="courseGrid" dir="rtl"></div>
-  </div>
-</section>
-
-<!-- TIMELINE -->
-<section style="background:var(--surface); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
-  <div class="container">
-    <div class="section-head center reveal" style="margin-bottom:80px;" dir="rtl">
-      <span class="eyebrow">رحلة التعلم</span>
-      <h2 class="arabic-h">كيف تسير رحلتك معنا.</h2>
-    </div>
-    <div class="timeline" dir="rtl">
-      <div class="timeline-track">
-        <div class="timeline-step reveal"><div class="timeline-num">1</div><h4 class="arabic-h" style="font-size:1.05rem;">التسجيل</h4><p class="arabic">تنضم للأكاديمية وتتعرف على معلمك الخاص.</p></div>
-        <div class="timeline-step reveal reveal-delay-1"><div class="timeline-num">2</div><h4 class="arabic-h" style="font-size:1.05rem;">تحديد المستوى</h4><p class="arabic">تسوي اختبار قصير يحدد مستواك الحقيقي.</p></div>
-        <div class="timeline-step reveal reveal-delay-2"><div class="timeline-num">3</div><h4 class="arabic-h" style="font-size:1.05rem;">خطتك الخاصة</h4><p class="arabic">تتابع خطة مبنية على أهدافك أنت بالضبط.</p></div>
-        <div class="timeline-step reveal reveal-delay-3"><div class="timeline-num">4</div><h4 class="arabic-h" style="font-size:1.05rem;">التمرين اليومي</h4><p class="arabic">تتمرن يومياً بمحادثات وتمارين تناسب مستواك بالضبط.</p></div>
-        <div class="timeline-step reveal reveal-delay-4"><div class="timeline-num">5</div><h4 class="arabic-h" style="font-size:1.05rem;">بناء الثقة</h4><p class="arabic">تتحول الإجابات الصحيحة لمحادثة طبيعية.</p></div>
-        <div class="timeline-step reveal reveal-delay-4"><div class="timeline-num">6</div><h4 class="arabic-h" style="font-size:1.05rem;">الطلاقة</h4><p class="arabic">تتكلم إنجليزي بدون ما تترجم بالراس.</p></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- TESTIMONIALS -->
-<section id="stories">
-  <div class="container">
-    <div class="section-head reveal" dir="rtl">
-      <span class="eyebrow" style="justify-content:flex-start;">تجارب طلابنا</span>
-      <h2 class="arabic-h">اسمع منهم</h2>
-    </div>
-    <div class="testi-grid" dir="rtl">
-      <div class="testi-card reveal">
-        <div class="testi-top"><div class="testi-avatar">ر</div><div><div class="testi-name">رهف العتيبي</div><div class="testi-role">موظفه موارد بشريه الرياض</div></div></div>
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-quote arabic">كنت كل ما صار عندنا اجتماع مع اجانب اسكت واخلي غيري يتكلم بعد فتره مع الاستاذ فراس صرت ارد واتكلم بثقه وحتى مديري لاحظ الفرق</p>
-      </div>
-      <div class="testi-card reveal reveal-delay-1">
-        <div class="testi-top"><div class="testi-avatar">م</div><div><div class="testi-name">علي القحطاني</div><div class="testi-role">طالب جامعي الدمام</div></div></div>
-        <div class="testi-stars">★★★</div>
-        <p class="testi-quote arabic">كنت اذا جاني برزنتيشن بالانجليزي اقعد احفظ الكلام كله قبل اعرضه الحين صرت اتكلم من راسي اكثر وما عاد اخاف اذا نسيت جمله</p>
-      </div>
-      <div class="testi-card reveal reveal-delay-2">
-        <div class="testi-top"><div class="testi-avatar">ل</div><div><div class="testi-name">لينا حسن</div><div class="testi-role">صيدلانيه دبي</div></div></div>
-        <div class="testi-stars">★★★★</div>
-        <p class="testi-quote arabic">شغلي كله بالانجليزي بس كنت احيانا اتردد اذا احتجت اشرح شي بالتفصيل لمريض الفرق بعد الدروس ان كلامي صار اسلس وثقتي اكبر</p>
-      </div>
-      <div class="testi-card reveal">
-        <div class="testi-top"><div class="testi-avatar">ي</div><div><div class="testi-name">يوسف عبدالسلام</div><div class="testi-role">مطور برامج القاهره</div></div></div>
-        <div class="testi-stars">★★★</div>
-        <p class="testi-quote arabic">القراءه عندي كانت كويسه لكن الكلام لا اول ما يدخل ميتنج ابقى ساكت دلوقتي بقيت اشارك عادي حتى لو غلطت بكمل ومبقتش اخاف من الموضوع</p>
-      </div>
-      <div class="testi-card reveal reveal-delay-1">
-        <div class="testi-top"><div class="testi-avatar">د</div><div><div class="testi-name">دانه العمري</div><div class="testi-role">طالبه ثانوي جده</div></div></div>
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-quote arabic">كنت احب الانجليزي بس اذا طلبت مني الابله اتكلم قدام الفصل اتوتر مره الحين صرت اجاوب بدون ما افكر كثير واحس نفسي ارتحت صراحه مررره ما قصر</p>
-      </div>
-      <div class="testi-card reveal reveal-delay-2">
-        <div class="testi-top"><div class="testi-avatar">خ</div><div><div class="testi-name">خالد الهاجري</div><div class="testi-role">مدير مبيعات الكويت</div></div></div>
-        <div class="testi-stars">★★★</div>
-        <p class="testi-quote arabic">اسافر كثير بحكم الشغل ودايم احتاج اتكلم مع عملاء من برا قبل كنت افكر بكل جمله قبل اقولها الحين الامور تمشي بشكل طبيعي وايد</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- COMPARISON -->
-<section style="background:var(--surface); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
-  <div class="container">
-    <div class="section-head reveal" dir="rtl">
-      <span class="eyebrow" style="justify-content:flex-start;">اللي تحصل عليه</span>
-      <h2 class="arabic-h">كل شي يحتاجه طالب جاد. ولا شي زيادة.</h2>
-    </div>
-    <div class="table-wrap reveal" dir="rtl">
-      <table class="compare-table">
-        <thead><tr><th>يشمل كل اشتراك</th><th class="center">متوفر</th></tr></thead>
-        <tbody>
-          <tr><td>منهج إنجليزي أمريكي أصلي</td><td class="center"><span class="yes">✓</span></td></tr>
-          <tr><td>تسجيلات صوتية بلغة أصلية</td><td class="center"><span class="yes">✓</span></td></tr>
-          <tr><td>تصحيح النطق لحظياً</td><td class="center"><span class="yes">✓</span></td></tr>
-          <tr><td>ترجمة فورية وشرح بالعربي لكل درس</td><td class="center"><span class="yes">✓</span></td></tr>
-          <tr><td>نطق مكتوب بأحرف عربية</td><td class="center"><span class="yes">✓</span></td></tr>
-          <tr><td>تحديات محادثة أسبوعية</td><td class="center"><span class="yes">✓</span></td></tr>
-          <tr><td>دروس يومية</td><td class="center"><span class="yes">✓</span></td></tr>
-          <tr><td>تتبع التقدم والتحليلات</td><td class="center"><span class="yes">✓</span></td></tr>
-          <tr><td>شهادات إتمام</td><td class="center"><span class="yes">✓</span></td></tr>
-          <tr><td>لوحة تحكم خاصة بك</td><td class="center"><span class="yes">✓</span></td></tr>
-          <tr><td>دعم مباشر من معلمك</td><td class="center"><span class="yes">✓</span></td></tr>
-          <tr style="opacity:.75;"><td>دروس مباشرة (أونلاين) مع الاستاذ فراس</td><td class="center" style="color:var(--bronze); font-weight:700;">✕</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
-
-<!-- LESSON PREVIEW -->
-<section>
-  <div class="container">
-    <div class="section-head reveal" dir="rtl">
-      <span class="eyebrow" style="justify-content:flex-start;">شكل الدرس</span>
-      <h2 class="arabic-h">لمحة عن شكل الدرس، مو الدرس نفسه.</h2>
-    </div>
-    <div class="lesson-card reveal" dir="rtl">
-      <div>
-        <span class="eyebrow" style="color:var(--emerald); justify-content:flex-start;">من مسار المحادثة اليومية</span>
-        <h3 class="arabic-h" style="margin-top:16px; font-size:1.4rem;">تتكلم بثقة في المواقف اليومية</h3>
-        <p class="arabic" style="margin-top:12px; font-size:.94rem; line-height:1.7;">تتمرن على العبارات ونبرة الكلام اللي يستخدمها المتحدث الأصلي في مواقف الحياة اليومية.</p>
-        <div class="lesson-meta">
-          <span class="meta-pill">متوسط</span>
-          <span class="meta-pill">14 دقيقة</span>
-          <span class="meta-pill">مفردات جديدة</span>
-          <span class="meta-pill">محادثة · استماع</span>
-        </div>
-        <button class="btn-disabled" disabled>متاح للطلاب المسجلين فقط</button>
-      </div>
-      <div>
-        <div class="lesson-blur">
-          <div class="fake-lines"><div style="width:80%"></div><div style="width:60%"></div><div style="width:70%"></div><div style="width:40%"></div></div>
-          <div class="lock-badge"><span class="lock-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span>معاينة محتوى مميز</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PRICING -->
+<!-- PRICING - brought up for faster decision -->
 <section id="pricing" style="background:var(--surface); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
   <div class="container">
     <div class="section-head center reveal" dir="rtl">
       <span class="eyebrow">باقات المنصة</span>
       <h2 class="arabic-h">وصول كامل للمنصة، بسعر واضح.</h2>
-      <p class="arabic">هذي الباقات لمن يبي يتعلم ذاتياً من لوحة التحكم والأكاديمية كاملة. الدروس المباشرة (أونلاين) مو مشمولة في هذي الباقات.</p>
+      <p class="arabic">هذي الباقات تعطيك وصول كامل للمنصة، وبعضها يشمل حصصاً مباشرة (اونلاين) مع الاستاذ فراس اسبوعياً. الاشتراك يتم عبر واتساب مباشرة.</p>
     </div>
-    <div class="pricing-grid" dir="rtl">
-      <div class="price-card reveal">
-        <div class="price-name arabic-h">شهري</div>
-        <div class="price-term">Monthly · المرونة الكاملة</div>
-        <div class="price-desc arabic">ابدأ وجرّب المنصة شهر بشهر، بدون التزام طويل.</div>
-        <div class="price-value"><span class="amount">79<small>ريال</small></span><span class="per">/ شهرياً</span></div>
-        <ul class="price-list">
-          <li class="arabic">وصول كامل لجميع الأكاديميات والدروس</li>
-          <li class="arabic">لوحة تحكم تعرض تقدمك ومستواك</li>
-          <li class="arabic">ترجمة فورية مجانية بلا حدود</li>
-          <li class="arabic">مراجعة كتابة وتمارين تفاعلية</li>
-          <li class="arabic">متابعة تقدمك أسبوع بعد أسبوع</li>
-        </ul>
-        <div class="price-excluded"><span class="x">✕</span><span class="arabic">دروس مباشرة (أونلاين) غير مشمولة</span></div>
-        <a href="https://wa.me/966557178070?text=%D8%A3%D8%A8%D9%8A%20%D8%A3%D8%B4%D8%AA%D8%B1%D9%83%20%D8%A8%D8%A8%D8%A7%D9%82%D8%A9%20%D8%A7%D9%84%D9%85%D9%86%D8%B5%D8%A9%20%D8%A7%D9%84%D8%B4%D9%87%D8%B1%D9%8A%D8%A9" target="_blank" rel="noopener" class="btn-outline magnetic" data-magnetic>سجل شهري</a>
-      </div>
-      <div class="price-card highlight reveal reveal-delay-1">
-        <span class="price-badge">الأكثر اختياراً</span>
-        <div class="price-name arabic-h">3 أشهر</div>
-        <div class="price-term">3 Months · الأكثر توازناً</div>
-        <div class="price-desc arabic">ثلاثة أشهر كاملة، وسعر شهري أوفر من الباقة الشهرية.</div>
-        <div class="price-value"><span class="amount">199<small>ريال</small></span><span class="per">/ 3 أشهر</span></div>
-        <div class="price-save">وفر 38 ريال مقارنة بالشهري</div>
-        <ul class="price-list">
-          <li class="arabic">كل مزايا الباقة الشهرية</li>
-          <li class="arabic">وصول كامل لجميع الأكاديميات والدروس</li>
-          <li class="arabic">تمارين محادثة واستماع وقراءة</li>
-          <li class="arabic">متابعة تقدمك وتحليلاتك</li>
-          <li class="arabic">شهادة إتمام عند الانتهاء من كل مسار</li>
-        </ul>
-        <div class="price-excluded"><span class="x">✕</span><span class="arabic">دروس مباشرة (أونلاين) غير مشمولة</span></div>
-        <a href="https://wa.me/966557178070?text=%D8%A3%D8%A8%D9%8A%20%D8%A3%D8%B4%D8%AA%D8%B1%D9%83%20%D8%A8%D8%A8%D8%A7%D9%82%D8%A9%20%D8%A7%D9%84%D9%85%D9%86%D8%B5%D8%A9%203%20%D8%A3%D8%B4%D9%87%D8%B1" target="_blank" rel="noopener" class="btn-gold magnetic" data-magnetic>سجل 3 أشهر</a>
-      </div>
-      <div class="price-card reveal reveal-delay-2">
-        <div class="price-name arabic-h">6 أشهر</div>
-        <div class="price-term">6 Months · أفضل قيمة</div>
-        <div class="price-desc arabic">نصف سنة تعلم متواصل بأفضل سعر شهري، ويناسب الالتزام الجاد.</div>
-        <div class="price-value"><span class="amount">329<small>ريال</small></span><span class="per">/ 6 أشهر</span></div>
-        <div class="price-save">وفر 145 ريال مقارنة بالشهري</div>
-        <ul class="price-list">
-          <li class="arabic">كل مزايا باقة 3 أشهر</li>
-          <li class="arabic">أفضل سعر شهري: 55 ريال للشهر</li>
-          <li class="arabic">وصول كامل لجميع الأكاديميات والدروس</li>
-          <li class="arabic">متابعة تقدمك وتحليلاتك</li>
-          <li class="arabic">شهادة إتمام عند الانتهاء من كل مسار</li>
-        </ul>
-        <div class="price-excluded"><span class="x">✕</span><span class="arabic">دروس مباشرة (أونلاين) غير مشمولة</span></div>
-        <a href="https://wa.me/966557178070?text=%D8%A3%D8%A8%D9%8A%20%D8%A3%D8%B4%D8%AA%D8%B1%D9%83%20%D8%A8%D8%A8%D8%A7%D9%82%D8%A9%20%D8%A7%D9%84%D9%85%D9%86%D8%B5%D8%A9%206%20%D8%A3%D8%B4%D9%87%D8%B1" target="_blank" rel="noopener" class="btn-outline magnetic" data-magnetic>سجل 6 أشهر</a>
-      </div>
-    </div>
+    <div class="pricing-grid" id="pricingGrid" dir="rtl"></div>
     <p class="pricing-note arabic">
-      <b>هل تبي دروس مباشرة مع الاستاذ فراس؟</b> هذي الباقات للمنصة فقط. لو تبي تدريب فردي أونلاين، <a href="https://wa.me/966557178070?text=%D8%A3%D8%A8%D9%8A%20%D8%A3%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%B9%D9%86%20%D8%AF%D8%B1%D9%88%D8%B3%20%D9%85%D8%A8%D8%A7%D8%B4%D8%B1%D8%A9%20%D9%85%D8%B9%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D8%A7%D8%B0%20%D9%81%D8%B1%D8%A7%D8%B3" target="_blank" rel="noopener">راسلنا واتساب</a> ونرتب لك خطة خاصة.
+      <b>ما تعرف اي باقة تناسبك؟</b> راسلنا واتساب، نتعرف على مستواك وهدفك، ونرجع لك بخطة وسعر يناسبك - او نخصص لك تدريباً فردياً اونلاين.
     </p>
   </div>
 </section>
+
+<!-- LIVE TEACHING + REAL-LIFE ENGLISH -->
+<section id="liveTeaching" style="padding:80px 0; background:var(--bg);">
+  <div class="container">
+    <div class="section-head center reveal" dir="rtl" style="max-width:620px; margin:0 auto 36px;">
+      <span class="eyebrow">تعلم وممارسة</span>
+      <h2 class="arabic-h" style="font-size:clamp(1.8rem,3.2vw,2.4rem);">تتعلم في المنصة، وتتكلم مع ناس</h2>
+    </div>
+    <div class="reveal" style="display:flex; align-items:flex-start; justify-content:center; gap:16px; flex-wrap:wrap; max-width:880px; margin:0 auto;">
+      <div class="lt-step" style="flex:1; min-width:200px; text-align:center; padding:24px 16px; background:var(--card); border:1px solid var(--border); border-radius:18px; transition:border-color .3s,transform .3s;" onmouseover="this.style.borderColor='rgba(200,169,106,.3)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='none'">
+        <div class="lt-icon gi">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 9h8"/><path d="M8 13h5"/></svg>
+        </div>
+        <div style="font-weight:700; font-size:.95rem;">اتعلم في PEL</div>
+        <div style="margin-top:6px; font-size:.8rem; color:var(--text-muted); line-height:1.6;">دروس قصيرة من مواقف حقيقية</div>
+      </div>
+      <div class="lt-step" style="flex:1; min-width:200px; text-align:center; padding:24px 16px; background:var(--card); border:1px solid rgba(200,169,106,.3); box-shadow:0 8px 32px -12px rgba(200,169,106,.2); border-radius:18px; position:relative; transition:transform .3s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='none'">
+        <div class="lt-icon gm">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+        </div>
+        <div style="font-weight:700; font-size:.95rem;">تتمرن مع الاستاذ</div>
+        <div style="margin-top:6px; font-size:.8rem; color:var(--text-muted); line-height:1.6;">حصة جماعية مباشرة كل اسبوع</div>
+      </div>
+      <div class="lt-step" style="flex:1; min-width:200px; text-align:center; padding:24px 16px; background:var(--card); border:1px solid var(--border); border-radius:18px; transition:border-color .3s,transform .3s;" onmouseover="this.style.borderColor='rgba(63,140,114,.3)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='none'">
+        <div class="lt-icon ei">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5"/><path d="M21 11.5a8.5 8.5 0 0 0-8.5-8.5"/></svg>
+        </div>
+        <div style="font-weight:700; font-size:.95rem;">تستخدمها بالحياة</div>
+        <div style="margin-top:6px; font-size:.8rem; color:var(--text-muted); line-height:1.6;">شغل، سفر، سوالف يومية</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="lib/pel-plans.js"></script>
+<script src="lib/pel-settings.js"></script>
+<script>
+/* PRICING - rendered from the single authoritative config (pel-plans.js). Bilingual, reacts to pel_account_prefs.lang */
+(function () {
+  var grid = document.getElementById('pricingGrid');
+  if (!grid || !window.PEL_PLANS) return;
+  function getLang(){ try{ var p=JSON.parse(localStorage.getItem('pel_account_prefs')||'null'); return p&&p.lang==='ar'?'ar':'en'; }catch(e){ return document.documentElement.lang==='ar'?'ar':'en'; } }
+  /* Live availability: the admin Site Settings toggle overrides pel-plans.js
+     so flipping "6-Month plan available" in /admin.html re-opens this card
+     without a redeploy. Falls back to the static config until settings load. */
+  function planView(p){
+    if (p.code === 'plan-6m' && window.PEL_SITE && window.PEL_SITE.plan6mAvailable === true) {
+      var v = {};
+      for (var k in p) v[k] = p[k];
+      v.available = true;
+      v.badgeAr = 'متاح الان';
+      v.badgeEn = 'Back & available';
+      v.liveNoteAr = 'عدد الجلسات حسب تقدمك - والوقت يناسب جدولك';
+      v.liveNoteEn = 'Sessions added as you progress, scheduled around your time';
+      return v;
+    }
+    return p;
+  }
+  function renderPricing(){
+    var ar = getLang()==='ar';
+    grid.setAttribute('dir', ar ? 'rtl' : 'ltr');
+    var plans = window.PEL_PLANS.plans.map(planView);
+    var stages = {
+      'plan-30d': {ar:'بداية', en:'Start'},
+      'plan-2m': {ar:'ابني عادتك', en:'Build the habit'},
+      'plan-3m': {ar:'ابني ثقتك', en:'Build confidence'},
+      'plan-6m': {ar:'تعمق', en:'Go deeper'}
+    };
+    var html = '';
+    for (var i = 0; i < plans.length; i++) {
+      var p = plans[i];
+      var delay = i === 0 ? '' : ' reveal-delay-' + (i % 3 + 1);
+      var st = stages[p.code]||{ar:'',en:''};
+      html += '<div class="price-card reveal' + delay + (p.featured ? ' highlight' : '') + '">';
+      var badge = ar ? p.badgeAr : (p.badgeEn||p.badgeAr);
+      if (badge) html += '<span class="price-badge">' + badge + '</span>';
+      html += '<div style="font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); font-weight:700; margin-bottom:6px;">' + (ar?st.ar:st.en) + '</div>';
+      html += '<div class="price-name ' + (ar?'arabic-h':'') + '">' + (ar ? p.nameAr : p.nameEn) + '</div>';
+      html += '<div class="price-term">' + (ar ? (p.termAr) : (p.termEn)) + '</div>';
+      html += '<div class="price-desc ' + (ar?'arabic':'') + '" style="min-height:42px;">' + (ar ? p.liveNoteAr : p.liveNoteEn) + '</div>';
+      html += '<div class="price-value"><span class="amount">' + p.price + '<small>' + (ar?window.PEL_PLANS.currencyAr:window.PEL_PLANS.currency) + '</small></span><span class="per">/ ' + p.durationDays + (ar?' يوم':' days') + '</span></div>';
+      var perMonth = ar ? p.perMonthAr : (p.perMonthEn||p.perMonthAr);
+      if (perMonth) html += '<div class="price-save">' + perMonth + '</div>';
+      html += '<ul class="price-list">';
+      var feats = ar ? p.featuresAr : (p.featuresEn||p.featuresAr);
+      for (var f = 0; f < feats.length; f++) {
+        html += '<li class="' + (ar?'arabic':'') + '">' + feats[f] + '</li>';
+      }
+      html += '</ul>';
+      html += '<div class="price-excluded"><span class="x">✓</span><span class="' + (ar?'arabic':'') + '">' + (ar ? 'الدفع عبر واتساب - التنشيط خلال دقايق' : 'Pay via WhatsApp, activated in minutes') + '</span></div>';
+      if (p.available === false) {
+        html += '<a href="' + window.PEL_PLANS.waLink(p, ar?'ar':'en') + '" target="_blank" rel="noopener" class="btn-outline magnetic" data-magnetic style="opacity:.75;">' + (ar ? 'ابلغني لما تتوفر' : 'Notify me when live') + '</a>';
+      } else {
+        html += '<a href="' + window.PEL_PLANS.waLink(p, ar?'ar':'en') + '" target="_blank" rel="noopener" class="' + (p.featured ? 'btn-gold' : 'btn-outline') + ' magnetic" data-magnetic>' + (ar ? 'سجل الان' : 'Enroll Now') + '</a>';
+      }
+      html += '</div>';
+    }
+    grid.innerHTML = html;
+  }
+  renderPricing();
+  window.addEventListener('pel-lang-changed', renderPricing);
+  window.addEventListener('storage', function(e){ if(e.key==='pel_account_prefs') renderPricing(); });
+  window.addEventListener('pel-site-settings', function(){ renderPricing(); });
+})();
+</script>
 
 <!-- FAQ -->
 <section id="faq">
   <div class="container">
     <div class="section-head center reveal" dir="rtl">
-      <span class="eyebrow">الأسئلة الشائعة</span>
-      <h2 class="arabic-h">أسئلة يسألها الطلاب دايماً.</h2>
+      <span class="eyebrow">الاسيلة الشايعة</span>
+      <h2 class="arabic-h">اسيلة يسالها الطلاب دايماً.</h2>
     </div>
     <div class="faq-list" id="faqList" dir="rtl"></div>
   </div>
@@ -1524,8 +1428,8 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-of
   <div class="orb orb-1"></div>
   <div class="orb orb-2"></div>
   <div class="container reveal" dir="rtl">
-    <span class="eyebrow" style="justify-content:center;">ابدأ اليوم</span>
-    <h2 class="arabic-h" style="margin-top:20px;">جاهز تتكلم إنجليزي بثقة؟</h2>
+    <span class="eyebrow" style="justify-content:center;">ابدا اليوم</span>
+    <h2 class="arabic-h" style="margin-top:20px;">جاهز تتكلم انجليزي بثقة؟</h2>
     <p class="arabic">راسلنا، نتعرف على مستواك وهدفك، ونرجع لك بخطة وسعر يناسبك.</p>
     <div class="final-cta-buttons">
       <button class="btn-gold magnetic" data-open-path id="finalPathCta">
@@ -1548,54 +1452,53 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-of
     <div class="footer-top">
       <div class="footer-brand" dir="rtl">
         <a href="#" class="logo"><img class="pel-logo" src="brand/pel-wordmark.svg" alt="PEL"><img class="pel-logo pel-logo-light" src="brand/pel-wordmark-dark.svg" alt="PEL"></a>
-        <p class="arabic">أكاديمية خاصة لكل ناطق بالعربية يرفض إنه يتكلم مثل كتاب مدرسي. مبنية حول معلم واحد، وصوت واحد، وخطة واحدة في كل مرة.</p>
+        <p class="arabic">اكاديمية خاصة لكل ناطق بالعربية يرفض انه يتكلم مثل كتاب مدرسي. مبنية حول معلم واحد، وصوت واحد، وخطة واحدة في كل مرة.</p>
       </div>
       <div class="footer-col" dir="rtl">
         <h5>المنصة</h5>
         <ul>
-          <li><a href="#curriculum">المنهج</a></li>
-          <li><a href="#features">المميزات</a></li>
-          <li><a href="#stories">قصص النجاح</a></li>
-          <li><a href="#pricing">الاشتراك</a></li>
+          <li><a href="#personalPreview">خطتك</a></li>
+          <li><a href="#pricing">الباقات</a></li>
+          <li><a href="#liveTeaching">تعلم وممارسة</a></li>
         </ul>
       </div>
       <div class="footer-col" dir="rtl">
         <h5>تواصل</h5>
         <ul>
           <li><a href="https://wa.me/966557178070" target="_blank" rel="noopener">واتساب الاستاذ فراس</a></li>
-          <li><a href="mailto:personalizedenglishlessons@proton.me">راسلنا للإيميل</a></li>
+          <li><a href="mailto:personalizedenglishlessons@proton.me">راسلنا للايميل</a></li>
         </ul>
         <p class="arabic" style="font-size:.78rem; color:var(--text-muted); margin-top:10px;">راسلنا واتساب وبنرد عليك بالتفاصيل والسعر المناسب</p>
       </div>
       <div class="footer-col" dir="rtl">
-        <h5>الأكاديمية</h5>
+        <h5>الاكاديمية</h5>
         <ul>
           <li><a href="login.html">دخول الطلاب</a></li>
           <li><a href="legal.html#privacy">سياسة الخصوصية</a></li>
-          <li><a href="legal.html#terms">الشروط والأحكام</a></li>
+          <li><a href="legal.html#terms">الشروط والاحكام</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
       <span>© 2026 Personalized English Lessons. All rights reserved.</span>
-      <span class="arabic">تعلم إنجليزي بطريقة طبيعية</span>
+      <span class="arabic">تعلم انجليزي بطريقة طبيعية</span>
     </div>
   </div>
 </footer>
 
 <!-- consent notice bar (local-only storage disclosure, dismissible) -->
-<div class="consent-bar" id="consentBar" role="dialog" aria-label="إشعار الخصوصية">
+<div class="consent-bar" id="consentBar" role="dialog" aria-label="اشعار الخصوصية">
   <div class="consent-text">
-    <span class="arabic" style="display:block;">منصتنا تخزّن على جهازك فقط: المظهر، لغة الواجهة، وجلسة الدخول. ما نستخدم ملفات تتبع ولا نشارك بياناتك مع أي أحد.</span>
+    <span class="arabic" style="display:block;">منصتنا تخزّن على جهازك فقط: المظهر، لغة الواجهة، وجلسة الدخول. ما نستخدم ملفات تتبع ولا نشارك بياناتك مع اي احد.</span>
     <span style="font-size:.76rem; color:var(--text-muted);">We store only your theme, language and sign-in session on this device. No tracking, no data sharing.</span>
   </div>
   <div class="consent-actions">
-    <a href="legal.html#privacy" class="consent-link">سياسة الخصوصية · Privacy</a>
-    <button class="consent-btn" id="consentBtn">تمام، فهمت · Got it</button>
+    <a href="legal.html#privacy" class="consent-link">سياسة الخصوصية، Privacy</a>
+    <button class="consent-btn" id="consentBtn">تمام، فهمت، Got it</button>
   </div>
 </div>
 
-<button class="back-to-top" id="backToTop" aria-label="العودة للأعلى">↑</button>
+<button class="back-to-top" id="backToTop" aria-label="العودة للاعلى">↑</button>
 
 <!-- ================= PERSONALIZATION ONBOARDING OVERLAY ================= -->
 <div class="onboard" id="onboardOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Build your learning path">
@@ -1623,6 +1526,487 @@ themeToggle.addEventListener('click', () => {
   localStorage.setItem('pel-theme', next);
 });
 
+/* LANGUAGE - global pel_account_prefs, persists from landing */
+function readLangPrefs(){ try{ var p=JSON.parse(localStorage.getItem('pel_account_prefs')||'null'); return p&&p.lang==='ar'?'ar':'en'; }catch(e){ return 'ar'; } }
+function saveLangPrefs(lang){ try{ var p=JSON.parse(localStorage.getItem('pel_account_prefs')||'null')||{lang:'en',direction:'en'}; p.lang=lang; localStorage.setItem('pel_account_prefs', JSON.stringify(p)); }catch(e){} }
+function applyIndexLang(lang){
+  lang = lang==='ar'?'ar':'en';
+  root.lang = lang;
+  root.dir = lang==='ar'?'rtl':'ltr';
+  document.body.classList.toggle('ui-ar', lang==='ar');
+  document.body.classList.toggle('ui-en', lang==='en');
+  var btn=document.getElementById('indexLangBtn');
+  if(btn) btn.textContent = lang==='ar' ? 'EN' : 'ع';
+  // header nav
+  var navMap = [
+    {sel:'.primary-nav a[href="#home"]', ar:'الرييسية', en:'Home'},
+    {sel:'.primary-nav a[href="#personalPreview"]', ar:'خطتك', en:'Your plan'},
+    {sel:'.primary-nav a[href="#pricing"]', ar:'الباقات', en:'Pricing'},
+    {sel:'.primary-nav a[href="#liveTeaching"]', ar:'تعلم وممارسة', en:'Learn & practice'},
+    {sel:'.primary-nav a[href="#faq"]', ar:'الاسيلة', en:'FAQ'},
+    {sel:'.mobile-menu a[href="#home"]', ar:'الرييسية', en:'Home'},
+    {sel:'.mobile-menu a[href="#personalPreview"]', ar:'خطتك', en:'Your plan'},
+    {sel:'.mobile-menu a[href="#pricing"]', ar:'الباقات', en:'Pricing'},
+    {sel:'.mobile-menu a[href="#liveTeaching"]', ar:'تعلم وممارسة', en:'Learn & practice'},
+    {sel:'.mobile-menu a[href="#faq"]', ar:'الاسيلة', en:'FAQ'}
+  ];
+  navMap.forEach(function(m){ var el=document.querySelector(m.sel); if(el) el.textContent=m[lang]; });
+  // section heads - bilingual (preserve structure, just translate)
+  var heads=[
+    {sel:'#features .section-head h2', ar:'اكاديمية مبنية على صوتك، مو على منهج جاهز.', en:'An academy built around your voice, not a ready curriculum.'},
+    {sel:'#features .section-head p', ar:'كل جز من المنصة يخدم هدف واحد: تنتقل من التردد للطلاقة، محادثة صادقة بعد محادثة.', en:'Every part of the platform serves one goal: move you from hesitation to fluency, one honest conversation at a time.'},
+    {sel:'#curriculum .section-head h2', ar:'منصة مصممة مثل معلم خاص، ومبنية مثل برنامج احترافي.', en:'A platform designed like a private tutor, built like pro software.'},
+    {sel:'#curriculum .section-head p', ar:'كل اداة يحتاجها طالب جاد، مرتبة حول لوحة تحكم خاصة فيك.', en:'Every tool a serious learner needs, organized around your personal dashboard.'},
+    {sel:'#stories .section-head h2', ar:'اسمع منهم', en:'Hear from them'},
+    {sel:'.proof .section-head h2', ar:'انجليزي تستخدمه برا التطبيق', en:'English you use outside the app'},
+    {sel:'.proof .section-head p', ar:'مو درجات وشهادات بس، مواقف حقيقية تصير اسهل يوم بعد يوم', en:'Not just scores and certificates, real situations that get easier day by day'}
+  ];
+  heads.forEach(function(h){ var el=document.querySelector(h.sel); if(el) el.textContent = lang==='ar'?h.ar:h.en; });
+  var pathBtns=document.querySelectorAll('[data-open-path] span');
+  pathBtns.forEach(function(el){ el.textContent = lang==='ar' ? 'اعرف بدايتي' : 'Find my starting point'; });
+  var loginTexts=document.querySelectorAll('.login-text');
+  loginTexts.forEach(function(el){ el.textContent = lang==='ar' ? 'دخول الطلاب' : 'Student Login'; });
+  // hero
+  var heroH1=document.querySelector('.hero h1.arabic-h');
+  if(heroH1) heroH1.innerHTML = lang==='ar' ? 'انجليزي يشبه حياتك، <em>مو جمل تحفظها.</em>' : 'English that sounds like your life, <em>not a textbook.</em>';
+  var heroSub=document.querySelector('.hero .hero-sub');
+  if(heroSub) heroSub.textContent = lang==='ar' ? 'قل لنا وش تبي الانجليزي لاجله، شغلك سفرك سوالفك اليومية، ونبني لك بداية على مقاسك بدروس من مواقف حقيقية وشرح واضح بالعربي' : 'Tell us what you need English for, work travel everyday talk. We will build your starting point from real situations, with clear Arabic support.';
+  var pathHint=document.querySelector('.path-hint .arabic');
+  if(pathHint) pathHint.textContent = lang==='ar' ? 'اسيلة خفيفة، نعرف مستواك وهدفك ونرجع لك بخطة على مقاس وقتك' : 'Quick questions, we learn your level and goal and return a plan that fits your time.';
+  var pathHintEn=document.querySelector('.path-hint-en');
+  if(pathHintEn) pathHintEn.textContent = lang==='ar' ? '' : 'Quick questions, we learn your level and goal and return a plan that fits your time.';
+  var trustItems=document.querySelectorAll('.trust-item');
+  var trustAr=['منهج امريكي اصلي','شرح عربي لكل درس','ترجمة فورية بلا حدود','لوحة تتابع تقدمك'];
+  var trustEn=['Authentic American curriculum','Arabic explained every lesson','Unlimited instant translation','Progress tracking dashboard'];
+  trustItems.forEach(function(el,i){ if(trustAr[i]){ var dot=el.querySelector('.dot'); var txt=lang==='ar'?trustAr[i]:trustEn[i]; el.innerHTML=(dot?'<span class="dot"></span>':'')+txt; }});
+  var heroPrimary=document.querySelector('#heroPathCta span');
+  if(heroPrimary) heroPrimary.textContent = lang==='ar' ? 'اعرف بدايتي' : 'Find my starting point';
+  var heroSecondary=document.querySelector('.hero-cta-row a.btn-outline');
+  if(heroSecondary) heroSecondary.textContent = lang==='ar' ? 'استكشف المنصة' : 'Explore PEL';
+  // hero social proof removed: fabricated statistics are not allowed on PEL
+  var heroWa=document.querySelector('#heroWaBtn span');
+  if(heroWa) heroWa.textContent = lang==='ar' ? 'راسل استاذ فراس' : 'Message Tutor Firas';
+  // daily strip CTA
+  var dailyCta=document.getElementById('dailyStripCta');
+  if(dailyCta){
+    var span=dailyCta.querySelector('span');
+    if(span) span.textContent = lang==='ar' ? 'افتح الدرس في المنصة' : 'Open in app';
+    else dailyCta.textContent = lang==='ar' ? 'افتح الدرس في المنصة' : 'Open in app';
+  }
+  // hero visual micro-demo cards + laptop chrome
+  var fcT = lang==='ar'
+    ? [{t:'النطق المسموع'},{t:'ترجمة فورية'},{t:'تقدمك يتحفظ'}]
+    : [{t:'Audible pronunciation'},{t:'Instant Translate'},{t:'Your progress saves'}];
+  document.querySelectorAll('.float-card').forEach(function(card,i){
+    var d=fcT[i]; if(!d) return;
+    var bEl=card.querySelector('.fcd-head b'); if(bEl) bEl.textContent=d.t;
+  });
+  var fcNote=document.querySelector('.fcd-note');
+  if(fcNote) fcNote.textContent = lang==='ar' ? 'درس بعد درس، مستواك يطلع' : 'Lesson by lesson, your level rises';
+  var lsDay=document.getElementById('lsDay');
+  if(lsDay) lsDay.textContent = lang==='ar' ? 'درس اليوم' : 'Lesson of the Day';
+  var lsMeta=document.querySelector('.ls-meta span');
+  if(lsMeta) lsMeta.textContent = lang==='ar' ? 'كل درس دقيقتين، نطق مسموع وشرح بالعربي' : 'Every lesson is 2 minutes, with audio pronunciation and Arabic explanation';
+  // extra catch for stray Arabic UI still showing in English (personalPreview badge etc.)
+  document.querySelectorAll('.card .chip.gold').forEach(function(el){
+    var t=(el.textContent||'').trim();
+    if(t==='اكثر طلبا' || t==='Most popular'){
+      el.textContent = lang==='ar' ? 'اكثر طلبا' : 'Most popular';
+    }
+  });
+  // personalPreview extra texts
+  var personalHint=document.querySelector('#personalPreview p[style*="font-size:.88rem"]');
+  if(personalHint) personalHint.textContent = lang==='ar' ? 'نفس الاختبار الخفيف، بس كل جواب يغير توصيتك. مستواك، هدفك، وقتك، كلها تدخل في حساب الخطة' : 'Same light test, every answer changes your recommendation. Level, goal and time all count toward your plan.';
+  var personalSubNote=document.querySelector('#personalPreview div[style*="font-size:.76rem"]');
+  if(personalSubNote) personalSubNote.textContent = lang==='ar' ? 'بدون تسجيل، تشوف نتيجتك قبل ما تدفع' : 'No signup needed, see your result before you pay.';
+  // compact plan preview bilingual
+  var ppHead=document.querySelector('#personalPreview .eyebrow');
+  if(ppHead) ppHead.textContent = lang==='ar' ? 'خطتك على مقاسك' : 'Your plan, your size';
+  var ppH2=document.querySelector('#personalPreview h2');
+  if(ppH2) ppH2.textContent = lang==='ar' ? 'قل لنا وش تبي، ونبني لك الطريق' : 'Tell us what you need, we build the path';
+  var ppCols=document.querySelectorAll('#personalPreview .reveal > div');
+  var ppAr={say:'انت تقول', items:['ابي انجليزي للشغل','المحادثة صعبة علي','اقدر ادرس 20 دقيقة يوميا'], build:'PEL يبني', path:'انجليزي العمل', focus:'تركيزك: محادثة واستماع', todayL:'اليوم', todayV:'تبدا محادثة في الشغل', nextL:'بعدها', nextV:'تسال زميلك عن مساعدة', laterL:'بعدين', laterV:'اجتماعات، عملاء، مقابلات'};
+  var ppEn={say:'You tell PEL', items:['I need English for work','Speaking is hard for me','I can study 20 minutes a day'], build:'PEL builds', path:'Workplace English', focus:'Focus: speaking + listening', todayL:'Today', todayV:'Start a conversation at work', nextL:'Next', nextV:'Ask a coworker for help', laterL:'Later', laterV:'Meetings, customers, interviews'};
+  var ppData = lang==='ar'?ppAr:ppEn;
+  if(ppCols.length>=2){
+    var sayCol=ppCols[0], buildCol=ppCols[1];
+    var labels=sayCol.querySelectorAll('div[style*="letter-spacing:.14em"]');
+    if(labels[0]) labels[0].textContent=ppData.say;
+    var chips=sayCol.querySelectorAll('div[style*="padding:10px 14px"]');
+    chips.forEach(function(c,i){ if(ppData.items[i]) c.textContent=ppData.items[i]; });
+    var buildLabel=buildCol.querySelector('div[style*="letter-spacing:.14em"]');
+    if(buildLabel) buildLabel.textContent=ppData.build;
+    var pathName=buildCol.querySelector('div[style*="font-weight:700"][style*=".95rem"]');
+    if(pathName) pathName.textContent=ppData.path;
+    var pathFocus=buildCol.querySelector('div[style*="font-size:.78rem"][style*="color:var(--text-muted)"]');
+    if(pathFocus) pathFocus.textContent=ppData.focus;
+    var rows=buildCol.querySelectorAll('div[style*="padding:12px 14px"]');
+    var rowPairs=[[ppData.todayL,ppData.todayV],[ppData.nextL,ppData.nextV],[ppData.laterL,ppData.laterV]];
+    rows.forEach(function(r,i){ if(!rowPairs[i]) return; var l=r.querySelector('div[style*="font-size:.7rem"]'); if(l) l.textContent=rowPairs[i][0]; var v=r.querySelector('div[style*="font-size:.88rem"]'); if(v) v.textContent=rowPairs[i][1]; });
+  }
+  // personalPreview bilingual - labels and chips
+  var ppSayLabel=document.querySelector('#personalPreview .pp-say span[style*="letter-spacing"]');
+  if(ppSayLabel) ppSayLabel.textContent = lang==='ar' ? 'انت تقول' : 'You tell PEL';
+  var ppBuildLabel=document.querySelector('#personalPreview .pp-build span[style*="letter-spacing"]');
+  if(ppBuildLabel) ppBuildLabel.textContent = lang==='ar' ? 'PEL يبني' : 'PEL builds';
+  var ppChips=document.querySelectorAll('#personalPreview .pp-say div[style*="padding:12px"]');
+  var ppChipAr=['ابي انجليزي للشغل','المحادثة صعبة علي','اقدر ادرس 20 دقيقة يوميا'];
+  var ppChipEn=['I need English for work','Speaking is hard for me','I can study 20 minutes a day'];
+  ppChips.forEach(function(c,i){ var arr=lang==='ar'?ppChipAr:ppChipEn; if(arr[i]) c.textContent=arr[i]; });
+  var ppPathName=document.querySelector('#personalPreview .pp-build div[style*="font-weight:700"][style*="1rem"]');
+  if(ppPathName) ppPathName.textContent = lang==='ar' ? 'انجليزي العمل' : 'Workplace English';
+  var ppPathFocus=document.querySelector('#personalPreview .pp-build div[style*="font-size:.78rem"]');
+  if(ppPathFocus) ppPathFocus.textContent = lang==='ar' ? 'تركيزك: محادثة واستماع' : 'Focus: speaking + listening';
+  var ppRoutes=document.querySelectorAll('#personalPreview .pp-route');
+  var ppRouteAr=[{l:'اليوم',v:'تبدا محادثة في الشغل'},{l:'بعدها',v:'تسال زميلك عن مساعدة'},{l:'بعدين',v:'اجتماعات، عملاء، مقابلات'}];
+  var ppRouteEn=[{l:'Today',v:'Start a conversation at work'},{l:'Next',v:'Ask a coworker for help'},{l:'Later',v:'Meetings, customers, interviews'}];
+  ppRoutes.forEach(function(r,i){ var arr=lang==='ar'?ppRouteAr:ppRouteEn; if(!arr[i])return; var lbl=r.querySelector('.route-label'); if(lbl) lbl.textContent=arr[i].l; var val=r.querySelector('div[style*="font-size:.9rem"]'); if(val) val.textContent=arr[i].v; });
+  var ppBtn=document.querySelector('#personalPreview .btn-gold span');
+  if(ppBtn) ppBtn.textContent = lang==='ar' ? 'اعرف بدايتي' : 'Find my starting point';
+  var ppNote=document.querySelector('#personalPreview div[style*="font-size:.82rem"]');
+  if(ppNote) ppNote.textContent = lang==='ar' ? 'بدون تسجيل، تشوف نتيجتك قبل ما تدفع' : 'No signup needed, see your result before you pay';
+  // live teaching bilingual
+  var ltHead=document.querySelector('#liveTeaching .eyebrow');
+  if(ltHead) ltHead.textContent = lang==='ar' ? 'تعلم وممارسة' : 'Learn & practice';
+  var ltH2c=document.querySelector('#liveTeaching h2');
+  if(ltH2c) ltH2c.textContent = lang==='ar' ? 'تتعلم في المنصة، وتتكلم مع ناس' : 'Learn in PEL, speak with people';
+  var ltSteps=document.querySelectorAll('#liveTeaching .lt-step');
+  var ltAr=[{t:'اتعلم في PEL',d:'دروس قصيرة من مواقف حقيقية'},{t:'تتمرن مع الاستاذ',d:'حصة جماعية مباشرة كل اسبوع'},{t:'تستخدمها بالحياة',d:'شغل، سفر، سوالف يومية'}];
+  var ltEn=[{t:'Learn in PEL',d:'Short lessons from real situations'},{t:'Practice with a teacher',d:'Live group session every week'},{t:'Use it in real life',d:'Work, travel, everyday talk'}];
+  ltSteps.forEach(function(step,i){ var arr=lang==='ar'?ltAr:ltEn; if(!arr[i])return; var tEl=step.querySelector('div[style*="font-weight:700"]'); if(tEl) tEl.textContent=arr[i].t; var dEl=step.querySelector('div[style*="color:var(--text-muted)"]'); if(dEl) dEl.textContent=arr[i].d; });
+  // any remaining “ابني مسار تعلمي” buttons not covered by data-open-path span
+  document.querySelectorAll('[data-open-path]').forEach(function(btn){
+    var txt=(btn.textContent||'').trim();
+    if(txt==='ابني مسار تعلمي' || txt==='اعرف بدايتي' || txt==='Find my starting point' || txt==='Build my path'){
+      // handled via span above, but fallback for buttons without span
+      var span=btn.querySelector('span');
+      if(!span) btn.textContent = lang==='ar' ? 'اعرف بدايتي' : 'Find my starting point';
+    }
+  });
+  // header enroll buttons (without data-open-path) - robust, any “سجل الان”
+  document.querySelectorAll('button, a').forEach(function(el){
+    var txt=(el.textContent||'').trim();
+    if(txt==='سجل الان' || txt==='Enroll Now' || txt==='Enroll'){
+      if(el.classList.contains('btn-gold') || el.classList.contains('btn-outline') || el.closest('.header-actions') || el.closest('.mobile-menu') || el.closest('.hero-cta-row')){
+        // keep inner icon if exists, just replace text node
+        var span=el.querySelector('span');
+        if(span && (span.textContent.trim()==='سجل الان' || span.textContent.trim()==='Enroll Now')) span.textContent = lang==='ar' ? 'سجل الان' : 'Enroll Now';
+        else if(!span) el.textContent = lang==='ar' ? 'سجل الان' : 'Enroll Now';
+      }
+    }
+    if(txt==='دخول الطلاب' || txt==='Student Login'){
+      if(el.classList.contains('btn-login') || el.classList.contains('btn-outline') || el.closest('.header-actions') || el.closest('.mobile-menu')){
+        var span2=el.querySelector('.login-text');
+        if(span2) span2.textContent = lang==='ar' ? 'دخول الطلاب' : 'Student Login';
+        else if(!el.querySelector('span')) el.textContent = lang==='ar' ? 'دخول الطلاب' : 'Student Login';
+      }
+    }
+    // catch-all for stray “ابني مسار تعلمي” / “اعرف بدايتي” outside data-open-path
+    if(txt==='ابني مسار تعلمي' || txt==='اعرف بدايتي' || txt==='Find my starting point' || txt==='Build my path'){
+      if(el.hasAttribute('data-open-path') || el.closest('[data-open-path]') || el.classList.contains('btn-gold')){
+        var s=el.querySelector('span');
+        if(s) s.textContent = lang==='ar' ? 'اعرف بدايتي' : 'Find my starting point';
+        else el.textContent = lang==='ar' ? 'اعرف بدايتي' : 'Find my starting point';
+      }
+    }
+  });
+  // final catch for mobile menu plain links that still hold Arabic
+  document.querySelectorAll('.mobile-menu a, .mobile-menu button').forEach(function(el){
+    var t=(el.textContent||'').trim();
+    var map={ 'سجل الان':'Enroll Now', 'دخول الطلاب':'Student Login', 'ابني مسار تعلمي':'Find my starting point', 'اعرف بدايتي':'Find my starting point' };
+    if(lang==='en' && map[t]) el.textContent = map[t];
+    if(lang==='ar'){
+      var rev=Object.keys(map).find(k=>map[k]===t);
+      if(rev) el.textContent=rev;
+    }
+  });
+  document.querySelectorAll('.mobile-menu .btn-outline').forEach(function(el){
+    var txt=(el.textContent||'').trim();
+    if(txt==='دخول الطلاب' || txt==='Student Login') el.textContent = lang==='ar' ? 'دخول الطلاب' : 'Student Login';
+  });
+  // generic fallback for any remaining hard-coded Arabic UI that was missed
+  var genericMap={
+    'العودة للرييسية':'Back to Home',
+    'وثايق المنصة، Legal':'Legal documents',
+    'سياسة الخصوصية والشروط':'Privacy Policy & Terms',
+    'اخر تحديث: 18 اغسطس 2026':'Last updated: August 18, 2026'
+  };
+  Object.keys(genericMap).forEach(function(arTxt){
+    var enTxt=genericMap[arTxt];
+    document.querySelectorAll('*').forEach(function(el){
+      if(el.childNodes.length===1 && el.childNodes[0].nodeType===3){
+        var t=(el.textContent||'').trim();
+        if(t===arTxt && lang==='en') el.textContent=enTxt;
+        if(t===enTxt && lang==='ar') el.textContent=arTxt;
+      }
+    });
+  });
+  // pricing header
+  var pricingHead=document.querySelector('#pricing .section-head h2');
+  if(pricingHead) pricingHead.textContent = lang==='ar' ? 'وصول كامل للمنصة، بسعر واضح.' : 'Full platform access, clear pricing.';
+  var pricingP=document.querySelector('#pricing .section-head p');
+  if(pricingP) pricingP.textContent = lang==='ar' ? 'هذي الباقات تعطيك وصول كامل للمنصة، وكل باقة تشمل حصصاً مباشرة (اونلاين) مع الاستاذ فراس. الاشتراك يتم عبر واتساب مباشرة.' : 'These plans give you full platform access - every plan includes live sessions with Tutor Firas. Enrollment via WhatsApp.';
+  var pricingNote=document.querySelector('.pricing-note');
+  if(pricingNote) pricingNote.innerHTML = lang==='ar' ? '<b>ما تعرف اي باقة تناسبك؟</b> راسلنا واتساب، نتعرف على مستواك وهدفك، ونرجع لك بخطة وسعر يناسبك - او نخصص لك تدريباً فردياً اونلاين.' : '<b>Not sure which plan fits?</b> Message us on WhatsApp - we’ll assess your level and goal and recommend the right plan, or a private option.';
+  // footer + remaining section heads (minimal bilingual to satisfy full-site requirement)
+  var footerBrandP=document.querySelector('.footer-brand p.arabic');
+  if(footerBrandP) footerBrandP.textContent = lang==='ar' ? 'اكاديمية خاصة لكل ناطق بالعربية يرفض انه يتكلم مثل كتاب مدرسي. مبنية حول معلم واحد، وصوت واحد، وخطة واحدة في كل مرة.' : 'A private academy for Arabic speakers who refuse to sound like a textbook. Built around one teacher, one voice, one plan at a time.';
+  var faqH2=document.querySelector('#faq .section-head h2');
+  if(faqH2) faqH2.textContent = lang==='ar' ? 'اسيلة يسالها الطلاب دايماً.' : 'Questions students always ask.';
+  var finalH2=document.querySelector('.final-cta h2');
+  if(finalH2) finalH2.textContent = lang==='ar' ? 'جاهز تتكلم انجليزي بثقة؟' : 'Ready to speak English with confidence?';
+  var finalP=document.querySelector('.final-cta p.arabic');
+  if(finalP) finalP.textContent = lang==='ar' ? 'راسلنا، نتعرف على مستواك وهدفك، ونرجع لك بخطة وسعر يناسبك.' : 'Message us, we will assess your level and goal and get back with the right plan and price.';
+  // personalPreview
+  var ppEyebrow=document.querySelector('#personalPreview .eyebrow');
+  if(ppEyebrow) ppEyebrow.textContent = lang==='ar' ? 'نفس المنصة، خطة غير' : 'Same platform, different plan';
+  var ppH2=document.querySelector('#personalPreview h2');
+  if(ppH2) ppH2.textContent = lang==='ar' ? 'كل واحد يتعلم بطريقة غير' : 'Everyone learns differently';
+  var ppP=document.querySelector('#personalPreview .section-head p');
+  if(ppP) ppP.textContent = lang==='ar' ? 'PEL ما يعطي الكل نفس الدروس. قل لنا وش تبي الانجليزي لاجله، ونبني لك خطة على مقاس هدفك ومستواك ووقتك' : 'PEL does not give everyone the same lessons. Tell us what you need English for, and we build a plan around your goal, level and time.';
+  var ppCards=document.querySelectorAll('#personalPreview .card');
+  var ppAr=[{k:'شغل',t:'انجليزي العمل',d:'تركيزك: محادثة<br>وقتك: 20 دقيقة يوميا<br>مواقف: اجتماع، ايميل، مكالمة'},{k:'سفر',t:'انجليزي السفر',d:'تركيزك: استماع<br>وقتك: 15 دقيقة يوميا<br>مواقف: مطار، فندق، مطعم'},{k:'سوالف يومية',t:'انجليزي يومي',d:'تركيزك: محادثة<br>وقتك: 15 دقيقة يوميا<br>مواقف: سوالف، طلبات، مساعدة'}];
+  var ppEn=[{k:'Work',t:'Work English',d:'Focus: speaking<br>Time: 20 min a day<br>Situations: meeting, email, call'},{k:'Travel',t:'Travel English',d:'Focus: listening<br>Time: 15 min a day<br>Situations: airport, hotel, restaurant'},{k:'Everyday',t:'Everyday English',d:'Focus: conversation<br>Time: 15 min a day<br>Situations: small talk, requests, help'}];
+  ppCards.forEach(function(card,i){
+    var data = lang==='ar'?ppAr[i]:ppEn[i];
+    if(!data) return;
+    var kEl=card.querySelector('div[style*="letter-spacing:.1em"]');
+    if(kEl) kEl.textContent = data.k;
+    var tEl=card.querySelector('div[style*="font-weight:700"][style*="1.05rem"]');
+    if(tEl) tEl.textContent = data.t;
+    var dEl=card.querySelector('div[style*="font-size:.82rem"]');
+    if(dEl) dEl.innerHTML = data.d;
+  });
+  // outcomes (formerly proof stats)
+  var outHead=document.querySelector('.proof .section-head h2');
+  if(outHead) outHead.textContent = lang==='ar' ? 'انجليزي تستخدمه برا التطبيق' : 'English you use outside the app';
+  var outP=document.querySelector('.proof .section-head p');
+  if(outP) outP.textContent = lang==='ar' ? 'مو درجات وشهادات بس، مواقف حقيقية تصير اسهل يوم بعد يوم' : 'Not just scores and certificates, real situations that get easier day by day';
+  var outCards=document.querySelectorAll('.outcome-grid .card');
+  var outAr=[{t:'تتكلم في شغلك',d:'اجتماع، مكالمة، ايميل، ترد وانت واثق'},{t:'تطلب وتسافر',d:'مطار، مطعم، فندق، بدون ما تتلخبط'},{t:'تفهم اللي تسمعه',d:'مقطع، سوالف، تعليمات، تلقط المعنى بسرعة'},{t:'تكتب بدون تردد',d:'رسالة، طلب، وصف، كلامك واضح'}];
+  var outEn=[{t:'Speak at work',d:'Meeting, call, email, you reply with confidence'},{t:'Order and travel',d:'Airport, restaurant, hotel, no confusion'},{t:'Understand what you hear',d:'Clips, small talk, instructions, you catch the meaning fast'},{t:'Write without hesitation',d:'Message, request, description, clear'}];
+  outCards.forEach(function(card,i){
+    var data = lang==='ar'?outAr[i]:outEn[i];
+    if(!data) return;
+    var tEl=card.querySelector('div[style*="font-weight:700"][style*=".92rem"]');
+    if(tEl) tEl.textContent = data.t;
+    var dEl=card.querySelector('div[style*="color:var(--text-muted)"]');
+    if(dEl) dEl.textContent = data.d;
+  });
+  // preview tabs bilingual
+  var previewTabsMap=[
+    {sel:'[data-tab="dashboard"]', ar:'لوحة التحكم', en:'Dashboard'},
+    {sel:'[data-tab="lesson"]', ar:'عرض الدرس', en:'Lesson view'},
+    {sel:'[data-tab="vocab"]', ar:'بنا المفردات', en:'Vocabulary'},
+    {sel:'[data-tab="tutor"]', ar:'مراجعة الكتابة', en:'Writing review'}
+  ];
+  previewTabsMap.forEach(function(m){ var el=document.querySelector('.preview-tabs '+m.sel); if(el) el.textContent=m[lang]; });
+  // remaining section heads
+  var moreHeads=[
+    {sel:'#features .section-head h2', ar:'اكاديمية مبنية على صوتك، مو على منهج جاهز.', en:'An academy built around your voice, not a ready curriculum.'},
+    {sel:'#features .section-head p', ar:'كل جز من المنصة يخدم هدف واحد: تنتقل من التردد للطلاقة، محادثة صادقة بعد محادثة.', en:'Every part of the platform serves one goal: move you from hesitation to fluency, one honest conversation at a time.'},
+    {sel:'#curriculum .section-head h2', ar:'منصة مصممة مثل معلم خاص، ومبنية مثل برنامج احترافي.', en:'A platform designed like a private tutor, built like pro software.'},
+    {sel:'#curriculum .section-head p', ar:'كل اداة يحتاجها طالب جاد، مرتبة حول لوحة تحكم خاصة فيك.', en:'Every tool a serious learner needs, organized around your personal dashboard.'},
+    {sel:'.course-section .section-head h2', ar:'مسارات متعددة، وخطة واحدة مبنية على مقاسك.', en:'Multiple paths, one plan built for you.'},
+    {sel:'.course-section .section-head p', ar:'التفاصيل الكاملة تفتح بعد التسجيل. هذي لمحة بسيطة عن الاتجاه العام.', en:'Full details unlock after enrollment. This is a brief overview.'},
+    {sel:'#timeline .section-head h2', ar:'كيف تسير رحلتك معنا.', en:'How your journey goes with us.'},
+    {sel:'#stories .section-head h2', ar:'اسمع منهم', en:'Hear from them'},
+    {sel:'.lesson-preview-head h2', ar:'لمحة عن شكل الدرس، مو الدرس نفسه.', en:'A glimpse of a lesson, not the lesson itself.'}
+  ];
+  moreHeads.forEach(function(h){ var el=document.querySelector(h.sel); if(el && h.ar) el.textContent = lang==='ar'?h.ar:h.en; });
+  // timeline steps
+  var tStepsAr=[
+    {t:'التسجيل',d:'تنضم للاكاديمية وتتعرف على معلمك الخاص.'},
+    {t:'تحديد المستوى',d:'تسوي اختبار قصير يحدد مستواك الحقيقي.'},
+    {t:'خطتك الخاصة',d:'تتابع خطة مبنية على اهدافك انت بالضبط.'},
+    {t:'التمرين اليومي',d:'تتمرن يومياً بمحادثات وتمارين تناسب مستواك بالضبط.'},
+    {t:'بنا الثقة',d:'تتحول الاجابات الصحيحة لمحادثة طبيعية.'},
+    {t:'الطلاقة',d:'تتكلم انجليزي بدون ما تترجم بالراس.'}
+  ];
+  var tStepsEn=[
+    {t:'Enroll',d:'Join the academy and meet your private teacher.'},
+    {t:'Placement',d:'Short check that finds your real level.'},
+    {t:'Your personal plan',d:'Follow a plan built exactly around your goals.'},
+    {t:'Daily practice',d:'Practice daily with conversations at your level.'},
+    {t:'Build confidence',d:'Correct answers become natural speech.'},
+    {t:'Fluency',d:'Speak without translating in your head.'}
+  ];
+  document.querySelectorAll('.timeline-step').forEach(function(step,i){
+    var data = lang==='ar'?tStepsAr[i]:tStepsEn[i];
+    if(!data) return;
+    var h4=step.querySelector('h4'); if(h4) h4.textContent=data.t;
+    var p=step.querySelector('p'); if(p) p.textContent=data.d;
+  });
+  // course library head
+  var courseGridEl=document.getElementById('courseGrid');
+  if(courseGridEl){
+    var sec=courseGridEl.closest('section');
+    if(sec){
+      var ch2=sec.querySelector('h2'); if(ch2) ch2.textContent = lang==='ar' ? 'مسارات متعددة، وخطة واحدة مبنية على مقاسك.' : 'Multiple paths, one plan built for you.';
+      var cp=sec.querySelector('p.arabic'); if(cp) cp.textContent = lang==='ar' ? 'التفاصيل الكاملة تفتح بعد التسجيل. هذي لمحة بسيطة عن الاتجاه العام.' : 'Full details unlock after enrollment. This is a brief overview.';
+    }
+  }
+  // daily strip
+  var dailyTitle=document.getElementById('dailyStripTitle');
+  if(dailyTitle){
+    var isEn = lang==='en';
+    // keep bilingual as is, but ensure CTA is bilingual
+    var cta=document.getElementById('dailyStripCta');
+    if(cta){
+      var span=cta.querySelector('span');
+      if(span) span.textContent = lang==='ar' ? 'افتح الدرس في المنصة' : 'Open in app';
+    }
+  }
+  // lesson preview head
+  var lessonHead=document.querySelector('.lesson-card h3');
+  if(lessonHead) lessonHead.textContent = lang==='ar' ? 'تتكلم بثقة في المواقف اليومية' : 'Speak confidently in everyday situations';
+  var lessonP=document.querySelector('.lesson-card p.arabic');
+  if(lessonP) lessonP.textContent = lang==='ar' ? 'تتمرن على العبارات ونبرة الكلام اللي يستخدمها المتحدث الاصلي في مواقف الحياة اليومية.' : 'Practice phrases and tone used by native speakers in everyday situations.';
+  // testimonials bilingual
+  var testiAr=[
+    {name:'رهف العتيبي',role:'موظفه موارد بشريه الرياض',quote:'كنت كل ما صار عندنا اجتماع مع اجانب اسكت واخلي غيري يتكلم بعد فتره مع الاستاذ فراس صرت ارد واتكلم بثقه وحتى مديري لاحظ الفرق'},
+    {name:'علي القحطاني',role:'طالب جامعي الدمام',quote:'كنت اذا جاني برزنتيشن بالانجليزي اقعد احفظ الكلام كله قبل اعرضه الحين صرت اتكلم من راسي اكثر وما عاد اخاف اذا نسيت جمله'},
+    {name:'لينا حسن',role:'صيدلانيه دبي',quote:'شغلي كله بالانجليزي بس كنت احيانا اتردد اذا احتجت اشرح شي بالتفصيل لمريض الفرق بعد الدروس ان كلامي صار اسلس وثقتي اكبر'},
+    {name:'يوسف عبدالسلام',role:'مطور برامج القاهره',quote:'القراوه عندي كانت كويسه لكن الكلام لا اول ما يدخل ميتنج ابقى ساكت دلوقتي بقيت اشارك عادي حتى لو غلطت بكمل ومبقتش اخاف من الموضوع'},
+    {name:'دانه العمري',role:'طالبه ثانوي جده',quote:'كنت احب الانجليزي بس اذا طلبت مني الابله اتكلم قدام الفصل اتوتر مره الحين صرت اجاوب بدون ما افكر كثير واحس نفسي ارتحت صراحه مررره ما قصر'},
+    {name:'خالد الهاجري',role:'مدير مبيعات الكويت',quote:'اسافر كثير بحكم الشغل ودايم احتاج اتكلم مع عملا من برا قبل كنت افكر بكل جمله قبل اقولها الحين الامور تمشي بشكل طبيعي وايد'}
+  ];
+  var testiEn=[
+    {name:'Rahaf Al-Otaibi',role:'HR Officer, Riyadh',quote:'I used to stay silent in meetings with foreigners and let others talk. After a while with Tutor Firas, I started responding with confidence, even my manager noticed.'},
+    {name:'Ali Al-Qahtani',role:'University Student, Dammam',quote:'When I had an English presentation I would memorize everything before. Now I speak more from my head and I am not afraid if I forget a sentence.'},
+    {name:'Lina Hassan',role:'Pharmacist, Dubai',quote:'My work is all in English but I sometimes hesitated when I needed to explain something in detail to a patient. After the lessons my speech is smoother and my confidence higher.'},
+    {name:'Youssef Abdelsalam',role:'Software Developer, Cairo',quote:'My reading was good but speaking not. As soon as I entered a meeting I stayed silent. Now I participate normally even if I make mistakes I continue and I am no longer afraid.'},
+    {name:'Dana Al-Omari',role:'High School Student, Jeddah',quote:'I loved English but when the teacher asked me to speak in front of class I got very nervous. Now I answer without overthinking and I feel relieved, really.'},
+    {name:'Khalid Al-Hajri',role:'Sales Manager, Kuwait',quote:'I travel a lot for work and always need to talk to clients abroad. Before I would think about every sentence before saying it. Now things go naturally.'}
+  ];
+  document.querySelectorAll('.testi-card').forEach(function(card,i){
+    var data = lang==='ar'?testiAr[i]:testiEn[i];
+    if(!data) return;
+    var nameEl=card.querySelector('.testi-name'); if(nameEl) nameEl.textContent=data.name;
+    var roleEl=card.querySelector('.testi-role'); if(roleEl) roleEl.textContent=data.role;
+    var quoteEl=card.querySelector('.testi-quote'); if(quoteEl) quoteEl.textContent=data.quote;
+  });
+  // what happens after
+  var whH2=document.querySelector('#whatHappens h2');
+  if(whH2) whH2.textContent = lang==='ar' ? 'من رسالة واتساب الى اول درس' : 'From WhatsApp message to first lesson';
+  var whP=document.querySelector('#whatHappens .section-head p');
+  if(whP) whP.textContent = lang==='ar' ? 'ما فيه تعقيد. ثلاث خطوات واضحة، وانت داخل المنصة' : 'No complexity. Three clear steps, and you are inside.';
+  var whCards=document.querySelectorAll('#whatHappens .card');
+  var whAr=[
+    {t:'نفعّل حسابك',d:'ترسل لنا واتساب، ناكد الدفع ونفعل حسابك خلال دقايق، توصلك رسالة دخول'},
+    {t:'تشوف خطتك',d:'لوحة تحكمك تفتح على مستواك وهدفك وطريقك المقترح، مع اول درس جاهز'},
+    {t:'تبدا درسك الاول',d:'درس قصير، تسمع، تردد، تجاوب، تشوف تصحيحك فورا بالعربي'}
+  ];
+  var whEn=[
+    {t:'We activate your account',d:'Message us on WhatsApp, we confirm payment and activate within minutes, you get a login message'},
+    {t:'See your plan',d:'Your dashboard opens with your level, goal and suggested path, first lesson ready'},
+    {t:'Start your first lesson',d:'Short lesson, listen, repeat, answer, see correction instantly in Arabic'}
+  ];
+  whCards.forEach(function(card,i){
+    var data = lang==='ar'?whAr[i]:whEn[i];
+    if(!data) return;
+    var tEl=card.querySelector('div[style*="font-weight:700"][style*="1rem"]');
+    if(tEl) tEl.textContent=data.t;
+    var dEl=card.querySelector('div[style*="font-size:.84rem"]');
+    if(dEl) dEl.textContent=data.d;
+  });
+  // learning loop bilingual
+  var loopH2=document.querySelector('#learningLoop h2');
+  if(loopH2) loopH2.textContent = lang==='ar' ? 'تقييم، تخصيص، تعلم، ممارسة' : 'Assess, personalize, learn, practice';
+  var loopP=document.querySelector('#learningLoop p');
+  if(loopP) loopP.textContent = lang==='ar' ? 'كل خطوة تبني على اللي قبلها، وتقدمك يرجع للنظام' : 'Each step builds on the last, and your progress feeds back into the system.';
+  // live teaching bilingual
+  var liveH2=document.querySelector('#liveTeaching h2');
+  if(liveH2) liveH2.textContent = lang==='ar' ? 'تتعلم في المنصة، وتتمرن مع استاذ حقيقي' : 'Learn in the app, practice with a real teacher';
+  var liveP=document.querySelector('#liveTeaching .section-head p');
+  if(liveP) liveP.textContent = lang==='ar' ? 'مو حصص عشوايية على زوم. كل حصة مرتبطة بخطتك، وترجع ملاحظاتها للمنصة' : 'Not random Zoom classes. Every session is tied to your plan and feedback returns to the platform.';
+  var liveCards=document.querySelectorAll('#liveTeaching .card');
+  var liveAr=[
+    {t:'تتعلم داخل المنصة',d:'دروس قصيرة، 14 دقيقة، على وقتك'},
+    {t:'تتمرن مع الاستاذ',d:'حصة جماعية صغيرة، تتكلم وتسمع ملاحظات مباشرة'},
+    {t:'تستخدمه مع غيرك',d:'تطبق مع طلاب ثانيين، ترجع ملاحظاتك للوحة'}
+  ];
+  var liveEn=[
+    {t:'Learn inside PEL',d:'Short lessons, 14 minutes, on your time'},
+    {t:'Practice with tutor',d:'Small group, speak and get live feedback'},
+    {t:'Use it with others',d:'Apply with peers, feedback returns to dashboard'}
+  ];
+  liveCards.forEach(function(card,i){
+    var data = lang==='ar'?liveAr[i]:liveEn[i];
+    if(!data) return;
+    var tEl=card.querySelector('div[style*="font-weight:700"]');
+    if(tEl) tEl.textContent=data.t;
+    var dEl=card.querySelector('div[style*="font-size:.82rem"]');
+    if(dEl) dEl.textContent=data.d;
+  });
+  var liveRightTitle=document.querySelector('#liveTeaching div[style*="font-weight:800"][style*="1.15rem"]');
+  if(liveRightTitle) liveRightTitle.textContent = lang==='ar' ? 'حصة مباشرة: محادثة العمل' : 'Live session: Work conversation';
+  var liveRightSub=document.querySelector('#liveTeaching div[style*="font-size:.84rem"][style*="color:var(--text-muted)"]');
+  if(liveRightSub) liveRightSub.textContent = lang==='ar' ? 'الثلاثا 8م، اونلاين، 45 دقيقة، 6 طلاب' : 'Tuesday 8pm, online, 45 minutes, 6 students';
+  var loopSteps=document.querySelectorAll('#learningLoop .card');
+  var loopAr=[
+    {t:'قيّم',d:'اسيلة خفيفة عن مستواك'},
+    {t:'خصص',d:'خطة على مقاس هدفك'},
+    {t:'اتعلم',d:'دروس من مواقف حقيقية'},
+    {t:'مارس',d:'محادثة وكتابة يوميا'},
+    {t:'تقدم',d:'تتبع وملاحظات ترجع للخطة'}
+  ];
+  var loopEn=[
+    {t:'Assess',d:'Light questions about your level'},
+    {t:'Personalize',d:'Plan built for your goal'},
+    {t:'Learn',d:'Lessons from real situations'},
+    {t:'Practice',d:'Daily speaking and writing'},
+    {t:'Progress',d:'Tracking feeds back to plan'}
+  ];
+  loopSteps.forEach(function(card,i){
+    var data = lang==='ar'?loopAr[i]:loopEn[i];
+    if(!data) return;
+    var tEl=card.querySelector('div[style*="font-weight:700"][style*=".9rem"]');
+    if(tEl) tEl.textContent=data.t;
+    var dEl=card.querySelector('div[style*="font-size:.78rem"]');
+    if(dEl) dEl.textContent=data.d;
+  });
+  // faq + final cta heads
+  var faqEyebrow=document.querySelector('#faq .eyebrow');
+  if(faqEyebrow) faqEyebrow.textContent = lang==='ar' ? 'الاسيلة الشايعة' : 'Common questions';
+  var finalEyebrow=document.querySelector('.final-cta .eyebrow');
+  if(finalEyebrow) finalEyebrow.textContent = lang==='ar' ? 'ابدا اليوم' : 'Start today';
+  var finalBtn=document.querySelector('#finalPathCta span');
+  if(finalBtn) finalBtn.textContent = lang==='ar' ? 'ابني خطتي الحين' : 'Build my plan now';
+  var finalWa=document.querySelector('.final-cta .btn-wa span');
+  if(finalWa) finalWa.textContent = lang==='ar' ? 'راسل الاستاذ فراس على واتساب' : 'Message Tutor Firas on WhatsApp';
+  // footer bilingual
+  var footCols=document.querySelectorAll('footer .footer-col');
+  var footAr=[{h:'المنصة',links:['خطتك','الباقات','تعلم وممارسة']},{h:'تواصل',links:['واتساب الاستاذ فراس','راسلنا للايميل']},{h:'الاكاديمية',links:['دخول الطلاب','سياسة الخصوصية','الشروط والاحكام']}];
+  var footEn=[{h:'Platform',links:['Your plan','Pricing','Learn & practice']},{h:'Contact',links:['WhatsApp Tutor Firas','Email us']},{h:'Academy',links:['Student Login','Privacy Policy','Terms & Conditions']}];
+  var footData = lang==='ar'?footAr:footEn;
+  footCols.forEach(function(col,i){
+    var d=footData[i]; if(!d) return;
+    var h5=col.querySelector('h5'); if(h5) h5.textContent=d.h;
+    col.querySelectorAll('li a').forEach(function(a,j){ if(d.links[j]) a.textContent=d.links[j]; });
+  });
+  var footTag=document.querySelector('.footer-bottom .arabic');
+  if(footTag) footTag.textContent = lang==='ar' ? 'تعلم انجليزي بطريقة طبيعية' : 'Learn English the natural way';
+  var footNote=document.querySelector('.footer-col p.arabic');
+  if(footNote) footNote.textContent = lang==='ar' ? 'راسلنا واتساب وبنرد عليك بالتفاصيل والسعر المناسب' : 'Message us on WhatsApp and we will reply with details and the right price';
+  var consentAr=document.querySelector('#consentBar .arabic');
+  if(consentAr){ consentAr.textContent = 'منصتنا تخزّن على جهازك فقط: المظهر، لغة الواجهة، وجلسة الدخول. ما نستخدم ملفات تتبع ولا نشارك بياناتك مع اي احد.'; consentAr.style.display = lang==='ar' ? 'block' : 'none'; }
+  var consentEn=document.querySelector('#consentBar span[style*="font-size:.76rem"]');
+  if(consentEn) consentEn.style.display = lang==='ar' ? 'none' : 'block';
+  var consentLink=document.querySelector('.consent-link');
+  if(consentLink) consentLink.textContent = lang==='ar' ? 'سياسة الخصوصية' : 'Privacy Policy';
+  var consentBtn=document.getElementById('consentBtn');
+  if(consentBtn) consentBtn.textContent = lang==='ar' ? 'تمام، فهمت' : 'Got it';
+  // ensure sections flip dir properly
+  document.querySelectorAll('#curriculum, #features, #stories, #pricing, #faq, .final-cta, footer, #personalPreview, .proof, #whatHappens, #learningLoop').forEach(function(sec){ sec.setAttribute('dir', lang==='ar'?'rtl':'ltr'); });
+  // direction for pricing and others already handled via grid dir
+  saveLangPrefs(lang);
+  window.dispatchEvent(new CustomEvent('pel-lang-changed'));
+}
+var indexLangBtn=document.getElementById('indexLangBtn');
+if(indexLangBtn) indexLangBtn.addEventListener('click', function(){ var cur=readLangPrefs(); applyIndexLang(cur==='ar'?'en':'ar'); });
+applyIndexLang(readLangPrefs());
+
 /* HEADER SCROLL */
 const header = document.getElementById('siteHeader');
 const scrollProgress = document.getElementById('scrollProgress');
@@ -1646,7 +2030,7 @@ document.querySelectorAll('button.btn-gold, button.btn-outline, button.btn-wa').
 });
 
 /* SCROLL SPY: highlight the current section in the primary nav */
-const spySections = ['home','features','curriculum','stories','pricing','faq'].map(id => document.getElementById(id));
+const spySections = ['home','personalPreview','pricing','liveTeaching','faq'].map(id => document.getElementById(id));
 const spyLinks = document.querySelectorAll('.primary-nav a');
 function updateSpy(){
   const pos = window.scrollY + 140;
@@ -1717,12 +2101,19 @@ if(window.matchMedia('(hover:hover)').matches){
   });
 }
 
-/* REVEAL ON SCROLL */
-const revealEls = document.querySelectorAll('.reveal');
+/* REVEAL ON SCROLL - also watches elements added later (pricing re-renders on language switch) */
 const io = new IntersectionObserver((entries) => {
   entries.forEach(entry => { if(entry.isIntersecting){ entry.target.classList.add('is-visible'); io.unobserve(entry.target); } });
 }, {threshold:0.15});
-revealEls.forEach(el => io.observe(el));
+function watchReveals(root){
+  if(!root || (root.nodeType !== 1 && root.nodeType !== 9)) return;
+  if(root.classList && root.classList.contains('reveal') && !root.dataset.ioWatch){ root.dataset.ioWatch = '1'; io.observe(root); }
+  if(root.querySelectorAll){ root.querySelectorAll('.reveal:not([data-io-watch])').forEach(el => { el.dataset.ioWatch = '1'; io.observe(el); }); }
+}
+watchReveals(document);
+new MutationObserver(muts => {
+  for(const m of muts){ for(const n of m.addedNodes){ if(n.nodeType===1) watchReveals(n); } }
+}).observe(document.body, {childList:true, subtree:true});
 
 /* LESSON OF THE DAY - live from the shared platform data (daily-lesson.js) */
 function renderDailyLesson(){
@@ -1730,149 +2121,63 @@ function renderDailyLesson(){
   let pick;
   try{ pick = PEL_DAILY.featured(); }catch(e){ return; }
   if(!pick || !pick.lesson || !pick.academy) return;
-  const titleEl = document.getElementById('dailyStripTitle');
-  const subEl = document.getElementById('dailyStripSub');
-  const floatEl = document.getElementById('dailyLessonFloat');
-  const ctaEl = document.getElementById('dailyStripCta');
+  var ar = (function(){ try{ var p=JSON.parse(localStorage.getItem('pel_account_prefs')||'null'); return p&&p.lang==='ar'; }catch(e){ return document.documentElement.lang!=='en'; } })();
+  const lsTitle = document.getElementById('lsTitle');
+  const lsAcademy = document.getElementById('lsAcademy');
   const lesson = pick.lesson, ac = pick.academy;
-  if(titleEl) titleEl.innerHTML = `<span class="arabic">${lesson.ar}</span> · ${lesson.en}`;
-  if(subEl) subEl.innerHTML = `<span class="pill gold">${ac.en}</span><span class="pill">${ac.ar}</span>      <span class="pill">كل يوم درس جديد · New every day</span>`;
-  if(floatEl){
-    const t = floatEl.querySelector('.fc-text');
-    if(t) t.innerHTML = `<b>درس اليوم</b><span>${lesson.en} · ${ac.en}</span>`;
-  }
-  if(ctaEl) ctaEl.href = 'login.html';
+  if(lsTitle) lsTitle.textContent = ar ? lesson.ar : lesson.en;
+  if(lsAcademy) lsAcademy.textContent = ar ? ac.ar : ac.en;
 }
 renderDailyLesson();
 // daily-lesson.js is deferred, so if it hasn't arrived yet (it runs after
 // the inline script during parsing), render again once the page has loaded.
 window.addEventListener('load', renderDailyLesson);
+window.addEventListener('pel-lang-changed', renderDailyLesson);
+window.addEventListener('storage', function(e){ if(e.key==='pel_account_prefs') renderDailyLesson(); });
 
-/* HERO DASHBOARD ANIMATION (ring + bars) once visible */
-let heroAnimated = false;
-const heroObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if(entry.isIntersecting && !heroAnimated){
-      heroAnimated = true;
-      document.getElementById('heroRing').style.strokeDashoffset = 207 - (207*0.72);
-      document.querySelectorAll('.bar-fill').forEach(b => b.style.width = b.dataset.fill + '%');
-    }
-  });
-}, {threshold:0.3});
-heroObserver.observe(document.querySelector('.hero-visual'));
-
-/* COUNT UP STATS */
-const counters = document.querySelectorAll('[data-count]');
-const countObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if(entry.isIntersecting){
-      const el = entry.target;
-      const target = parseInt(el.dataset.count, 10);
-      const suffix = el.dataset.suffix || '';
-      const dur = 1800;
-      const start = performance.now();
-      function tick(now){
-        const p = Math.min((now-start)/dur, 1);
-        const eased = 1 - Math.pow(1-p, 3);
-        el.textContent = Math.floor(eased * target).toLocaleString() + suffix;
-        if(p < 1) requestAnimationFrame(tick);
-      }
-      requestAnimationFrame(tick);
-      countObserver.unobserve(el);
-    }
-  });
-}, {threshold:0.4});
-counters.forEach(c => countObserver.observe(c));
-
-/* PREVIEW TABS */
-const tabs = document.querySelectorAll('.preview-tab');
-const panels = document.querySelectorAll('.preview-panel');
-tabs.forEach(tab => tab.addEventListener('click', () => {
-  tabs.forEach(t=>t.classList.remove('active'));
-  panels.forEach(p=>p.classList.remove('active'));
-  tab.classList.add('active');
-  document.querySelector(`.preview-panel[data-panel="${tab.dataset.tab}"]`).classList.add('active');
-}));
-
-/* WAVE BARS GENERATION */
-function buildWave(id, count){
-  const el = document.getElementById(id);
-  if(!el) return;
-  for(let i=0;i<count;i++){
-    const bar = document.createElement('span');
-    const h = 20 + Math.random()*80;
-    bar.style.height = h + '%';
-    el.appendChild(bar);
-  }
-}
-buildWave('waveBars', 28);
-buildWave('waveBars2', 34);
-
-/* COURSE LIBRARY DATA */
-const courses = [
-  {name:'أساسيات اللغة', level:'مبتدئ', progress:100, premium:false},
-  {name:'المحادثة اليومية', level:'مبتدئ', progress:80, premium:false},
-  {name:'أكاديمية النطق الأمريكي', level:'متوسط', progress:45, premium:true},
-  {name:'القواعد بأسلوب مختلف', level:'كل المستويات', progress:60, premium:false},
-  {name:'إنجليزي العمل والأعمال', level:'متقدم', progress:0, premium:true},
-  {name:'إنجليزي السفر', level:'متوسط', progress:0, premium:false},
-  {name:'التحضير للمقابلات', level:'متقدم', progress:0, premium:true},
-  {name:'بناء المفردات', level:'كل المستويات', progress:70, premium:false},
-  {name:'مهارات الاستماع', level:'متوسط', progress:30, premium:false},
-  {name:'مهارات المحادثة', level:'متوسط', progress:55, premium:true},
-  {name:'التعبيرات والعبارات الأمريكية', level:'متوسط', progress:0, premium:true},
-  {name:'التحضير لاختبارات دولية', level:'متقدم', progress:0, premium:true},
-];
-const courseGrid = document.getElementById('courseGrid');
-courses.forEach(c => {
-  const card = document.createElement('div');
-  card.className = 'course-card reveal' + (c.premium ? ' premium' : '');
-  card.innerHTML = `
-    <span class="lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span>
-    <h4>${c.name}</h4>
-    <div class="lvl">${c.level}</div>
-    <div class="course-progress"><span style="width:${c.progress}%"></span></div>
-  `;
-  courseGrid.appendChild(card);
-  io.observe(card);
-});
-
-/* FAQ DATA */
+/* FAQ DATA - bilingual. DB copy (site_settings.faqs, editable in Admin >
+   Site Settings) is canonical; this built-in list is the offline fallback. */
 const faqs = [
-  {q:'لمين هذا البرنامج؟', a:'لأي طالب طموح، موظف، أو متقدم لجامعة يبغى يتكلم إنجليزي أمريكي طبيعي، مو بس يجتاز اختبار.'},
-  {q:'لازم يكون عندي أساس بالإنجليزي؟', a:'لا. اختبار تحديد المستوى يبني لك خطة من نقطة البداية اللي أنت فيها، من الصفر إلى الطلاقة.'},
-  {q:'المنهج إنجليزي أمريكي فعلاً؟', a:'إي والله. كل درس وتسجيل ودليل نطق مبني على الإنجليزية الأمريكية.'},
-  {q:'الشرح يكون بالعربي؟', a:'نعم. القواعد والمفردات تنشرح بالعربي أول، مع نطق مكتوب بجانب كل كلمة جديدة.'},
-  {q:'أقدر أدرس من الجوال؟', a:'أكيد. لوحة التحكم الخاصة فيك متجاوبة بالكامل، تكمل دروسك من أي مكان.'},
-  {q:'كم مدة وصولي للمنصة؟', a:'حسب الباقة اللي تختارها: شهري، 3 أشهر، أو 6 أشهر. طول فترة اشتراكك يبقى الوصول كامل لكل الدروس والتحديثات الجديدة.'},
-  {q:'كيف أترجم وأصحح كتابتي؟', a:'داخل المنصة ترجمة فورية مجانية بلا حدود لأي كلمة أو جملة، وورشة كتابة تصحح لك وتبين لك سبب كل خطأ بالعربي.'},
-  {q:'أقدر أتابع تقدمي؟', a:'نعم. لوحتك الخاصة تتابع تطور محادثتك واستماعك ومفرداتك أسبوع بعد أسبوع.'},
-  {q:'كم سعر الاشتراك؟', a:'فيه باقات منصة واضحة: شهري 79 ريال، 3 أشهر 199 ريال، و6 أشهر 329 ريال. هذا سعر وصول المنصة كاملة بكل الدروس والتمارين، والدروس المباشرة مع الاستاذ فراس لها ترتيب خاص حسب هدفك.'},
-  {q:'هل الباقات تشمل دروس مباشرة مع الاستاذ فراس؟', a:'لا. باقات المنصة تشمل وصول كامل للدروس والتمارين ولوحة التحكم. لو تبي دروس مباشرة (أونلاين) مع الاستاذ فراس، راسله على واتساب ويرتب لك خطة خاصة.'},
-  {q:'كيف أبدأ التسجيل؟', a:'راسلنا على واتساب، نرسل لك تفاصيل الدفع ونفعّل حسابك خلال وقت قصير.'},
+  {qAr:'لمين هذا البرنامج؟', aAr:'لاي طالب طموح، موظف، او متقدم لجامعة يبغى يتكلم انجليزي امريكي طبيعي، مو بس يجتاز اختبار.', qEn:'Who is this for?', aEn:'Any ambitious student, employee, or university applicant who wants to speak natural American English, not just pass a test.'},
+  {qAr:'لازم يكون عندي اساس بالانجليزي؟', aAr:'لا. اختبار تحديد المستوى يبني لك خطة من نقطة البداية اللي انت فيها، من الصفر الى الطلاقة.', qEn:'Do I need prior English?', aEn:'No. The placement test builds your plan from where you are now, from zero to fluency.'},
+  {qAr:'المنهج انجليزي امريكي فعلاً؟', aAr:'اي والله. كل درس وتسجيل ودليل نطق مبني على الانجليزية الامريكية.', qEn:'Is the curriculum really American English?', aEn:'Yes. Every lesson, recording and pronunciation guide is built on American English.'},
+  {qAr:'الشرح يكون بالعربي؟', aAr:'نعم. القواعد والمفردات تنشرح بالعربي اول، مع نطق مكتوب بجانب كل كلمة جديدة.', qEn:'Is explanation in Arabic?', aEn:'Yes. Grammar and vocabulary are explained in Arabic first, with transliteration next to each new word.'},
+  {qAr:'اقدر ادرس من الجوال؟', aAr:'اكيد. لوحة التحكم الخاصة فيك متجاوبة بالكامل، تكمل دروسك من اي مكان.', qEn:'Can I study on mobile?', aEn:'Absolutely. Your personal dashboard is fully responsive, continue from anywhere.'},
+  {qAr:'كم مدة وصولي للمنصة؟', aAr:'حسب الباقة اللي تختارها: 30 يوم، شهرين، او 3 اشهر. طول فترة اشتراكك يبقى الوصول كامل لكل الدروس والتحديثات الجديدة.', qEn:'How long is access?', aEn:'Depends on your plan: 30 days, 2 months, or 3 months. Full access to all lessons and updates for the entire period.'},
+  {qAr:'كيف اترجم واصحح كتابتي؟', aAr:'داخل المنصة ترجمة فورية مجانية بلا حدود لاي كلمة او جملة، وورشة كتابة تصحح لك وتبين لك سبب كل خطا بالعربي.', qEn:'How does translation and writing correction work?', aEn:'Unlimited free instant translation for any word or sentence, plus a writing workshop that corrects you and explains each mistake in Arabic.'},
+  {qAr:'اقدر اتابع تقدمي؟', aAr:'نعم. لوحتك الخاصة تتابع تطور محادثتك واستماعك ومفرداتك اسبوع بعد اسبوع.', qEn:'Can I track progress?', aEn:'Yes. Your private dashboard tracks speaking, listening and vocabulary week by week.'},
+  {qAr:'كم سعر الاشتراك؟', aAr:'فيه 3 باقات متوفرة الحين: 30 يوم 180 ريال، شهرين 230 ريال، و3 اشهر مكثف 449 ريال. باقة 6 اشهر بريميوم ترجع قريباً. اشتراكك يعطيك وصول كامل للمنصة، وكل الباقات تشمل حصصاً مباشرة مع الاستاذ فراس.', qEn:'How much?', aEn:'3 plans are available now: 30 days 180 SAR, 2 months 230 SAR, and intensive 3 months 449 SAR. The 6-month premium returns soon. Full platform access, plus live sessions with Tutor Firas on every plan.'},
+  {qAr:'هل الباقات تشمل دروس مباشرة مع الاستاذ فراس؟', aAr:'اي نعم. باقة 30 يوم تشمل 4 حصص مباشرة (حصة كل اسبوع)، وباقة الشهرين تشمل 6 حصص موزعة على مدى الشهرين، وباقة 3 اشهر تشمل 9 حصص ويمكن تزيد حسب تطورك. مواعيد الحصص تصلك كتنبيه داخل حسابك عشان تحضرها. لو تبي خطة خاصة اختلف، راسله على واتساب ويرتب لك.', qEn:'Do plans include live sessions with Tutor Firas?', aEn:'Yes, every plan does. The 30-day plan includes 4 live sessions (one per week); the 2-month plan includes 6 sessions spread across your two months; the 3-month plan includes 9 sessions with extras possible as you progress. Session times arrive as announcements in your account so you can join. Need something custom? Message on WhatsApp.'},
+  {qAr:'كيف ابدا التسجيل؟', aAr:'راسلنا على واتساب، نرسل لك تفاصيل الدفع ونفعّل حسابك خلال وقت قصير.', qEn:'How do I enroll?', aEn:'Message us on WhatsApp, we send payment details and activate your account shortly.'},
+  {qAr:'ايش يصير لما تنتهي باقاتي؟', aAr:'يبقى حسابك وكل تقدمك وشهاداتك محفوظة. بس يوقف الوصول للدروس. وقتها تقدر تجدد من لوحتك مباشرة، او تراسلنا واتساب ونفعل لك باقة جديدة.', qEn:'What happens when my plan ends?', aEn:'Your account, progress and certificates stay saved. Lesson access pauses. Renew from your dashboard or message us on WhatsApp.'},
 ];
 const faqList = document.getElementById('faqList');
-faqs.forEach((f,i) => {
-  const item = document.createElement('div');
-  item.className = 'faq-item';
-  item.innerHTML = `
-    <button class="faq-q"><span>${f.q}</span><span class="plus">+</span></button>
-    <div class="faq-a"><div class="faq-a-inner">${f.a}</div></div>
-  `;
-  faqList.appendChild(item);
-  const btn = item.querySelector('.faq-q');
-  const panel = item.querySelector('.faq-a');
-  btn.addEventListener('click', () => {
-    const isOpen = item.classList.contains('open');
-    faqList.querySelectorAll('.faq-item').forEach(other => {
-      other.classList.remove('open');
-      other.querySelector('.faq-a').style.maxHeight = null;
+function renderFaqs(){
+  var ar = (function(){ try{ var p=JSON.parse(localStorage.getItem('pel_account_prefs')||'null'); return p&&p.lang==='ar'; }catch(e){ return document.documentElement.lang==='ar'; } })();
+  var live = (window.PEL_SITE && window.PEL_SITE.faqs) || faqs;
+  faqList.innerHTML='';
+  live.forEach(function(f){
+    var q = ar ? f.qAr : f.qEn;
+    var a = ar ? f.aAr : f.aEn;
+    if(!q || !a) return;
+    var item = document.createElement('div');
+    item.className = 'faq-item';
+    item.innerHTML = '<button class="faq-q"><span>' + q + '</span><span class="plus">+</span></button><div class="faq-a"><div class="faq-a-inner">' + a + '</div></div>';
+    faqList.appendChild(item);
+    var btn = item.querySelector('.faq-q');
+    var panel = item.querySelector('.faq-a');
+    btn.addEventListener('click', function(){
+      var isOpen = item.classList.contains('open');
+      faqList.querySelectorAll('.faq-item').forEach(function(other){ other.classList.remove('open'); other.querySelector('.faq-a').style.maxHeight = null; });
+      if(!isOpen){ item.classList.add('open'); panel.style.maxHeight = panel.scrollHeight + 'px'; }
     });
-    if(!isOpen){
-      item.classList.add('open');
-      panel.style.maxHeight = panel.scrollHeight + 'px';
-    }
-  });  });
+  });
+  faqList.setAttribute('dir', ar?'rtl':'ltr');
+}
+renderFaqs();
+window.addEventListener('pel-lang-changed', renderFaqs);
+window.addEventListener('pel-site-settings', renderFaqs);
+window.addEventListener('storage', function(e){ if(e.key==='pel_account_prefs') renderFaqs(); });
 
 })();
 </script>
@@ -1895,6 +2200,81 @@ faqs.forEach((f,i) => {
       setTimeout(function(){ if(bar.parentNode) bar.parentNode.removeChild(bar); }, 400);
     });
   }catch(e){}
+})();
+</script>
+<script>
+/* Live content consumer - data arrives via pel-settings.js (window.PEL_SITE).
+   1) Announcement banner   2) WhatsApp number rewrite on static links. */
+(function(){
+  var bar = document.getElementById('siteBanner');
+  var DEFAULT_WA = '966557178070';
+
+  function currentLang(){
+    return (document.documentElement.getAttribute('lang') || 'ar').toLowerCase().indexOf('ar') === 0 ? 'ar' : 'en';
+  }
+
+  function renderBanner(){
+    if(!bar) return;
+    var data = window.PEL_SITE && window.PEL_SITE.banner;
+    if(!data || !data.active){ bar.classList.remove('show'); updateBannerOffset(); return; }
+    var text = currentLang() === 'ar' ? data.ar : data.en;
+    if(!text){ bar.classList.remove('show'); updateBannerOffset(); return; }
+    bar.textContent = '';
+    bar.appendChild(document.createTextNode(text));
+    if(data.link){
+      var a = document.createElement('a');
+      a.href = data.link;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.textContent = currentLang() === 'ar' ? 'تواصل معنا' : 'Contact us';
+      bar.appendChild(a);
+    }
+    bar.dir = (currentLang() === 'ar') ? 'rtl' : 'ltr';
+    bar.classList.add('show');
+    updateBannerOffset();
+  }
+
+  /* Keep the fixed header below the banner's REAL rendered height.
+     While the banner is in view the header starts under it; once it
+     scrolls out, the offset collapses to 0 and the nav returns to top. */
+  function updateBannerOffset(){
+    if(!bar) return;
+    var h = 0;
+    if(bar.classList.contains('show')){
+      h = Math.max(0, Math.round(bar.getBoundingClientRect().bottom));
+    }
+    document.documentElement.style.setProperty('--site-banner-h', h + 'px');
+  }
+  var offsetTick = false;
+  function queueOffset(){
+    if(offsetTick) return;
+    offsetTick = true;
+    requestAnimationFrame(function(){ offsetTick = false; updateBannerOffset(); });
+  }
+  window.addEventListener('scroll', queueOffset, { passive:true });
+  window.addEventListener('resize', queueOffset);
+  window.addEventListener('load', queueOffset);
+  updateBannerOffset();
+
+  /* Static <a href="https://wa.me/NUMBER..."> links across the page follow
+     the admin-controlled WhatsApp contact without touching markup. */
+  function rewriteWaLinks(){
+    var num = (window.PEL_SITE && window.PEL_SITE.whatsapp) || DEFAULT_WA;
+    document.querySelectorAll('a[href*="wa.me/"]').forEach(function(a){
+      try{
+        var url = new URL(a.href);
+        url.pathname = '/' + num;
+        a.setAttribute('href', url.toString());
+      }catch(e){
+        a.setAttribute('href', 'https://wa.me/' + num + (a.search || ''));
+      }
+    });
+  }
+
+  function renderAll(){ renderBanner(); rewriteWaLinks(); }
+  renderAll();
+  window.addEventListener('pel-site-settings', renderAll);
+  window.addEventListener('pel-lang-changed', function(){ renderBanner(); queueOffset(); });
 })();
 </script>
 </body>

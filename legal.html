@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PEL · سياسة الخصوصية والشروط</title>
-<meta name="description" content="سياسة الخصوصية والشروط والأحكام لمنصة Personalized English Lessons مع الاستاذ فراس.">
+<title>PEL، سياسة الخصوصية والشروط</title>
+<meta name="description" content="سياسة الخصوصية والشروط والاحكام لمنصة Personalized English Lessons مع الاستاذ فراس.">
 <meta name="robots" content="index, follow">
 <link rel="icon" type="image/svg+xml" href="brand/pel-favicon.svg?v=2">
 <link rel="icon" type="image/png" sizes="32x32" href="brand/favicon-32.png?v=2">
@@ -13,7 +13,7 @@
 <meta name="theme-color" content="#0E0E10">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;500;700&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
 <style>
 :root{
   --bg:#0E0E10;
@@ -107,8 +107,8 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
   color:var(--text-secondary); flex-shrink:0; transition:border-color .3s, color .3s, transform .3s;
 }
 .theme-toggle:hover{ border-color:var(--gold); color:var(--gold); transform:rotate(20deg); }
-
-/* page head */
+.lang-pill{ min-width:42px; height:42px; padding:0 12px; border-radius:14px; border:1px solid var(--border); background:transparent; color:var(--text-secondary); font-weight:700; font-size:.8rem; letter-spacing:.04em; display:flex; align-items:center; justify-content:center; transition:border-color .3s ease, color .3s ease; }
+.lang-pill:hover{ border-color:var(--gold); color:var(--gold); }
 main{ padding:90px 0 40px; }
 .page-head{ margin-bottom:64px; }
 .page-head h1{ font-size:clamp(2rem,4.4vw,3rem); margin-top:20px; }
@@ -187,6 +187,10 @@ footer{ padding:60px 0 40px; border-top:1px solid var(--border); margin-top:60px
 }
 .consent-btn:hover{ transform:translateY(-1px); box-shadow:var(--gold-glow); }
 
+/* bilingual content pairs: visibility follows html[lang] */
+html[lang="ar"] .t-en{ display:none !important; }
+html[lang="en"] .t-ar{ display:none !important; }
+
 a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-offset:3px; border-radius:6px; }
 </style>
 </head>
@@ -199,7 +203,8 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-of
       <img class="pel-logo pel-logo-light" src="brand/pel-wordmark-dark.svg" alt="PEL">
     </a>
     <div class="header-actions">
-      <a href="index.html" class="nav-pill">العودة للرئيسية</a>
+      <a href="index.html" class="nav-pill" id="legalHomeLink"><span class="t-ar">العودة للرييسية</span><span class="t-en">Back to Home</span></a>
+      <button class="lang-pill" id="legalLangBtn" aria-label="Switch language">EN</button>
       <button class="theme-toggle" id="themeToggle" aria-label="تبديل المظهر">
         <svg id="themeIcon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v2M12 19v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M3 12h2M19 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/><circle cx="12" cy="12" r="4.2"/></svg>
       </button>
@@ -209,107 +214,209 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-of
 
 <main class="container">
   <div class="page-head">
-    <span class="eyebrow">وثائق المنصة · Legal</span>
-    <h1>سياسة الخصوصية والشروط</h1>
-    <p class="updated">آخر تحديث: 18 أغسطس 2026</p>
+    <span class="eyebrow"><span class="t-ar">وثايق المنصة القانونية</span><span class="t-en">Platform legal documents</span></span>
+    <h1><span class="t-ar">سياسة الخصوصية والشروط</span><span class="t-en">Privacy Policy &amp; Terms</span></h1>
+    <p class="updated"><span class="t-ar">اخر تحديث: 18 اغسطس 2026</span><span class="t-en">Last updated: August 18, 2026</span></p>
     <div class="legal-nav">
-      <a href="#privacy">سياسة الخصوصية</a>
-      <a href="#terms">الشروط والأحكام</a>
+      <a href="#privacy"><span class="t-ar">سياسة الخصوصية</span><span class="t-en">Privacy Policy</span></a>
+      <a href="#terms"><span class="t-ar">الشروط والاحكام</span><span class="t-en">Terms &amp; Conditions</span></a>
     </div>
   </div>
 
   <section class="legal-section" id="privacy">
     <div class="legal-card">
-      <span class="eyebrow">قسم 1</span>
-      <h2>سياسة الخصوصية</h2>
-      <p class="intro">هذي الصفحة توضح لك وش نجمع من بياناتك، ليش نجمعها، وكيف نحميها. باختصار: نستخدم بياناتك عشان تشتغل المنصة لك بشكل صحيح، وما نبيع بياناتك لأي أحد.</p>
+      <span class="eyebrow"><span class="t-ar">قسم 1</span><span class="t-en">Section 1</span></span>
+      <h2><span class="t-ar">سياسة الخصوصية</span><span class="t-en">Privacy Policy</span></h2>
+      <p class="intro">
+        <span class="t-ar">هذي الصفحة توضح لك وش نجمع من بياناتك، ليش نجمعها، وكيف نحميها. باختصار: نستخدم بياناتك عشان تشتغل المنصة لك بشكل صحيح، وما نبيع بياناتك لاي احد.</span>
+        <span class="t-en">This page explains what data we collect, why we collect it, and how we protect it. In short: we use your data so the platform works properly for you, and we never sell your data to anyone.</span>
+      </p>
 
-      <h3>1. من نحن</h3>
-      <p>منصة <b>Personalized English Lessons</b> يديرها الأستاذ فراس. تقدر تتواصل معنا في أي وقت عبر واتساب <b>+966 55 717 8070</b> أو عبر البريد <b>personalizedenglishlessons@proton.me</b>.</p>
+      <h3><span class="t-ar">1. من نحن</span><span class="t-en">1. Who we are</span></h3>
+      <p>
+        <span class="t-ar">منصة <b>Personalized English Lessons</b> يديرها الاستاذ فراس. تقدر تتواصل معنا في اي وقت عبر واتساب <b>+966 55 717 8070</b> او عبر البريد <b>personalizedenglishlessons@proton.me</b>.</span>
+        <span class="t-en">The <b>Personalized English Lessons</b> platform is run by Tutor Firas. You can reach us anytime via WhatsApp at <b>+966 55 717 8070</b> or by email at <b>personalizedenglishlessons@proton.me</b>.</span>
+      </p>
 
-      <h3>2. وش نجمع من بياناتك</h3>
+      <h3><span class="t-ar">2. وش نجمع من بياناتك</span><span class="t-en">2. What we collect</span></h3>
       <ul>
-        <li><b>بيانات الحساب:</b> اسمك، بريدك الإلكتروني، وكلمة المرور. كلمة المرور محفوظة بشكل مشفر عن طريق خدمة الدخول الآمن (Supabase Auth)، وما نقدر نشوفها نحن.</li>
-        <li><b>بيانات التقدم والتعلم:</b> الدروس اللي تكملها، أيام الدراسة، نتائج المراجعة الذكية، الكلمات اللي تحفظها، ملاحظاتك، وكتابتك اللي ترسلها للمراجعة عشان تصحح لك.</li>
-        <li><b>الشهادات:</b> لما تكمل مسار كامل، نسجل شهادة باسمك مع رمز تحقق خاص فيها.</li>
-        <li><b>تفضيلات الجهاز:</b> المظهر (داكن أو فاتح) ولغة الواجهة تنحفظ على جهازك نفسه.</li>
-        <li><b>ما نجمع:</b> ما نطلب رقم بطاقتك ولا بيانات دفع داخل المنصة. الدفع والتفعيل يتم بالترتيب المباشر عبر واتساب.</li>
+        <li>
+          <span class="t-ar"><b>بيانات الحساب:</b> اسمك، بريدك الالكتروني، وكلمة المرور. كلمة المرور محفوظة بشكل مشفر عن طريق خدمة الدخول الامن (Supabase Auth)، وما نقدر نشوفها نحن.</span>
+          <span class="t-en"><b>Account data:</b> your name, email address, and password. The password is stored encrypted by our secure sign-in service (Supabase Auth); even we cannot see it.</span>
+        </li>
+        <li>
+          <span class="t-ar"><b>بيانات التقدم والتعلم:</b> الدروس اللي تكملها، ايام الدراسة، نتايج المراجعة الذكية، الكلمات اللي تحفظها، ملاحظاتك، وكتابتك اللي ترسلها للمراجعة عشان تصحح لك.</span>
+          <span class="t-en"><b>Learning &amp; progress data:</b> lessons you complete, study days, smart-review results, the vocabulary you save, your notes, and writing you submit for correction.</span>
+        </li>
+        <li>
+          <span class="t-ar"><b>الشهادات:</b> لما تكمل مسار كامل، نسجل شهادة باسمك مع رمز تحقق خاص فيها.</span>
+          <span class="t-en"><b>Certificates:</b> when you complete a full path, we record a certificate in your name with its own verification code.</span>
+        </li>
+        <li>
+          <span class="t-ar"><b>تفضيلات الجهاز:</b> المظهر (داكن او فاتح) ولغة الواجهة تنحفظ على جهازك نفسه.</span>
+          <span class="t-en"><b>Device preferences:</b> theme (dark or light) and interface language are saved on your device only.</span>
+        </li>
+        <li>
+          <span class="t-ar"><b>ما نجمع:</b> ما نطلب رقم بطاقتك ولا بيانات دفع داخل المنصة. الدفع والتفعيل يتم بالترتيب المباشر عبر واتساب.</span>
+          <span class="t-en"><b>What we never collect:</b> we never ask for your card number or any payment details inside the platform. Payment and activation are arranged directly over WhatsApp.</span>
+        </li>
       </ul>
 
-      <h3>3. ليش نستخدم بياناتك</h3>
+      <h3><span class="t-ar">3. ليش نستخدم بياناتك</span><span class="t-en">3. Why we use your data</span></h3>
       <ul>
-        <li>تشغيل المنصة: تسجيل الدخول، فتح الدروس، تتبع تقدمك ومستواك.</li>
-        <li>إصدار الشهادات ورمز التحقق الخاص فيها.</li>
-        <li>تحسين الدروس والمحتوى حسب طريقة تعلم الطلاب.</li>
-        <li>التواصل معك بخصوص اشتراكك أو تفعيل حسابك.</li>
+        <li>
+          <span class="t-ar">تشغيل المنصة: تسجيل الدخول، فتح الدروس، تتبع تقدمك ومستواك.</span>
+          <span class="t-en">Running the platform: signing you in, opening lessons, tracking your progress and level.</span>
+        </li>
+        <li>
+          <span class="t-ar">اصدار الشهادات ورمز التحقق الخاص فيها.</span>
+          <span class="t-en">Issuing certificates and their verification codes.</span>
+        </li>
+        <li>
+          <span class="t-ar">تحسين الدروس والمحتوى حسب طريقة تعلم الطلاب.</span>
+          <span class="t-en">Improving lessons and content based on how students learn.</span>
+        </li>
+        <li>
+          <span class="t-ar">التواصل معك بخصوص اشتراكك او تفعيل حسابك.</span>
+          <span class="t-en">Contacting you about your subscription or account activation.</span>
+        </li>
       </ul>
 
-      <h3>4. ما نبيع بياناتك</h3>
-      <p>ما نبيع بياناتك ولا نشاركها مع أي طرف ثالث لأغراض إعلانية. المنصة ما فيها إعلانات أصلًا. البيانات تبقى لخدمتك أنت فقط.</p>
+      <h3><span class="t-ar">4. ما نبيع بياناتك</span><span class="t-en">4. We do not sell your data</span></h3>
+      <p>
+        <span class="t-ar">ما نبيع بياناتك ولا نشاركها مع اي طرف ثالث لاغراض اعلانية. المنصة ما فيها اعلانات اصلًا. البيانات تبقى لخدمتك انت فقط.</span>
+        <span class="t-en">We do not sell your data or share it with any third party for advertising purposes. The platform has no ads at all. Your data exists only to serve you.</span>
+      </p>
 
-      <h3>5. وين تنحفظ بياناتك</h3>
-      <p>بياناتك تنحفظ على <b>Supabase</b>، وهي خدمة استضافة سحابية مؤمنة. أي تواصل عبر واتساب يخضع لسياسة الخصوصية الخاصة بتطبيق واتساب.</p>
+      <h3><span class="t-ar">5. وين تنحفظ بياناتك</span><span class="t-en">5. Where your data is stored</span></h3>
+      <p>
+        <span class="t-ar">بياناتك تنحفظ على <b>Supabase</b>، وهي خدمة استضافة سحابية مومنة. اي تواصل عبر واتساب يخضع لسياسة الخصوصية الخاصة بتطبيق واتساب.</span>
+        <span class="t-en">Your data is stored on <b>Supabase</b>, a trusted cloud hosting service. Any communication over WhatsApp is subject to WhatsApp's own privacy policy.</span>
+      </p>
 
-      <h3>6. حقوقك على بياناتك</h3>
+      <h3><span class="t-ar">6. حقوقك على بياناتك</span><span class="t-en">6. Your rights over your data</span></h3>
       <ul>
-        <li>تطلب نسخة من بياناتك في أي وقت.</li>
-        <li>تطلب حذف حسابك وبياناتك نهائيًا.</li>
-        <li>تعدل معلوماتك الشخصية من داخل المنصة.</li>
+        <li>
+          <span class="t-ar">تطلب نسخة من بياناتك في اي وقت.</span>
+          <span class="t-en">Request a copy of your data at any time.</span>
+        </li>
+        <li>
+          <span class="t-ar">تطلب حذف حسابك وبياناتك نهاييًا.</span>
+          <span class="t-en">Request permanent deletion of your account and data.</span>
+        </li>
+        <li>
+          <span class="t-ar">تعدل معلوماتك الشخصية من داخل المنصة.</span>
+          <span class="t-en">Edit your personal information inside the platform.</span>
+        </li>
       </ul>
-      <p>أي طلب من هذي ننفذه خلال فترة معقولة، وترسله لنا على واتساب أو البريد اللي فوق.</p>
+      <p>
+        <span class="t-ar">اي طلب من هذي ننفذه خلال فترة معقولة، وترسله لنا على واتساب او البريد اللي فوق.</span>
+        <span class="t-en">We action any of these requests within a reasonable time; send them to us on WhatsApp or the email above.</span>
+      </p>
 
-      <h3>7. الأطفال</h3>
-      <p>المنصة مو موجهة للأطفال تحت سن 13 سنة، وما نجمع بياناتهم عن قصد.</p>
+      <h3><span class="t-ar">7. الاطفال</span><span class="t-en">7. Children</span></h3>
+      <p>
+        <span class="t-ar">المنصة مو موجهة للاطفال تحت سن 13 سنة، وما نجمع بياناتهم عن قصد.</span>
+        <span class="t-en">The platform is not directed at children under 13, and we do not knowingly collect their data.</span>
+      </p>
 
-      <h3>8. التغييرات على هذي السياسة</h3>
-      <p>لو تغيرت السياسة، نحدّث هذي الصفحة ونغيّر تاريخ آخر تحديث. يكفي إنك تراجع الصفحة من وقت لثاني.</p>
+      <h3><span class="t-ar">8. التغييرات على هذي السياسة</span><span class="t-en">8. Changes to this policy</span></h3>
+      <p>
+        <span class="t-ar">لو تغيرت السياسة، نحدّث هذي الصفحة ونغيّر تاريخ اخر تحديث. يكفي انك تراجع الصفحة من وقت لثاني.</span>
+        <span class="t-en">If the policy changes, we update this page and the last-updated date. Reviewing the page from time to time is enough.</span>
+      </p>
     </div>
   </section>
 
   <section class="legal-section" id="terms">
     <div class="legal-card">
-      <span class="eyebrow">قسم 2</span>
-      <h2>الشروط والأحكام</h2>
-      <p class="intro">بما إنك تستخدم المنصة، فأنت موافق على هذي الشروط. اقرأها مرة، وأي سؤال راسلنا عليه.</p>
+      <span class="eyebrow"><span class="t-ar">قسم 2</span><span class="t-en">Section 2</span></span>
+      <h2><span class="t-ar">الشروط والاحكام</span><span class="t-en">Terms &amp; Conditions</span></h2>
+      <p class="intro">
+        <span class="t-ar">بما انك تستخدم المنصة، فانت موافق على هذي الشروط. اقراها مرة، واي سوال راسلنا عليه.</span>
+        <span class="t-en">By using the platform, you agree to these terms. Read them once, and message us with any question.</span>
+      </p>
 
-      <h3>1. الاشتراك والوصول</h3>
-      <p>المنصة باشتراك، وكل اشتراك يمنحك وصول كامل للدروس والتمارين ولوحة التحكم للمدة اللي تدفعها. الباقات الحالية: <b>شهري 79 ريال، 3 أشهر 199 ريال، و6 أشهر 329 ريال</b>. الأسعار ممكن تتغير مستقبلًا، والسعر اللي ينطبق عليك هو اللي كان ظاهر وقت اشتراكك.</p>
+      <h3><span class="t-ar">1. الاشتراك والوصول</span><span class="t-en">1. Subscription and access</span></h3>
+      <p>
+        <span class="t-ar">المنصة باشتراك، وكل اشتراك يمنحك وصول كامل للدروس والتمارين ولوحة التحكم للمدة اللي تدفعها. الباقات الحالية المتوفرة: <b>30 يوم 180 ريال، شهران 230 ريال، و3 اشهر مكثف 449 ريال</b>. باقة <b>6 اشهر بريميوم (799 ريال) ترجع قريباً وهي غير متوفرة للاشتراك حالياً</b>. الاسعار ممكن تتغير مستقبلًا، والسعر اللي ينطبق عليك هو اللي كان ظاهر وقت اشتراكك.</span>
+        <span class="t-en">The platform runs on subscription, and each subscription grants you full access to lessons, exercises, and your dashboard for the period you pay for. Plans currently available: <b>30 days 180 SAR, 2 months 230 SAR, and intensive 3 months 449 SAR</b>. The <b>premium 6-month plan (799 SAR) is returning soon and is not open for subscription at this time</b>. Prices may change in the future; the price that applies to you is the one shown at the time of your subscription.</span>
+      </p>
 
-      <h3>2. الدفع والتفعيل</h3>
-      <p>الدفع والتفعيل يتمان بالترتيب المباشر عبر واتساب. بعد تأكيد الدفع، نفعّل حسابك خلال وقت قصير. <b>ما فيه تجديد تلقائي</b>: لما تنتهي مدتك، تختار أنت إذا تبي تجدد أو لا.</p>
+      <h3><span class="t-ar">2. الدفع والتفعيل</span><span class="t-en">2. Payment and activation</span></h3>
+      <p>
+        <span class="t-ar">الدفع والتفعيل يتمان بالترتيب المباشر عبر واتساب. بعد تاكيد الدفع، نفعّل حسابك خلال وقت قصير. <b>ما فيه تجديد تلقايي</b>: لما تنتهي مدتك، تختار انت اذا تبي تجدد او لا.</span>
+        <span class="t-en">Payment and activation are arranged directly over WhatsApp. Once payment is confirmed, we activate your account within a short time. <b>There is no auto-renewal</b>: when your term ends, you choose whether to renew or not.</span>
+      </p>
 
-      <h3>3. غير المشمول في باقات المنصة</h3>
-      <p>باقات المنصة تشمل الدروس المسجلة والتمارين ولوحة التحكم. <b>الدروس المباشرة (أونلاين) مع الأستاذ فراس مو مشمولة</b> في هذي الباقات، ولها ترتيب خاص حسب هدفك وسعرها مختلف.</p>
+      <h3><span class="t-ar">3. الحصص المباشرة مع الاستاذ فراس</span><span class="t-en">3. Live sessions with Tutor Firas</span></h3>
+      <p>
+        <span class="t-ar">كل الباقات تشمل حصصاً مباشرة (اونلاين) مع الاستاذ فراس: باقة الـ<b>30 يوم تشمل 4 حصص</b> (حصة كل اسبوع)، وباقة <b>الشهرين تشمل 6 حصص</b> موزعة على طول مدة الشهرين، وباقة <b>3 اشهر تشمل 9 حصص</b> مع حصص اضافية ممكن تزيد حسب تطور الطالب. مواعيد الحصص تنزل كتنبيه داخل حسابك في المنصة عشان تحضرها.</span>
+        <span class="t-en">Every plan includes live online sessions with Tutor Firas: the <b>30-day plan includes 4 sessions</b> (one every week), the <b>2-month plan includes 6 sessions</b> spread across the two months, and the <b>3-month plan includes 9 sessions</b>, with extra sessions possible as the student progresses. Session times are posted as announcements inside your platform account so you can join.</span>
+      </p>
 
-      <h3>4. حسابك مسؤوليتك</h3>
+      <h3><span class="t-ar">4. حسابك مسووليتك</span><span class="t-en">4. Your account is your responsibility</span></h3>
       <ul>
-        <li>حسابك شخصي، وما تشاركه مع غيرك.</li>
-        <li>ما تشارك كلمة المرور مع أي أحد.</li>
-        <li>لو صار في المنصة نشاط غير طبيعي من حسابك، نخبرك فورًا.</li>
+        <li>
+          <span class="t-ar">حسابك شخصي، وما تشاركه مع غيرك.</span>
+          <span class="t-en">Your account is personal; do not share it with anyone.</span>
+        </li>
+        <li>
+          <span class="t-ar">ما تشارك كلمة المرور مع اي احد.</span>
+          <span class="t-en">Do not share your password with anyone.</span>
+        </li>
+        <li>
+          <span class="t-ar">لو صار في المنصة نشاط غير طبيعي من حسابك، نخبرك فورًا.</span>
+          <span class="t-en">If unusual activity happens on your account, we notify you immediately.</span>
+        </li>
       </ul>
 
-      <h3>5. استخدام المحتوى</h3>
-      <p>كل الدروس والمحتوى ملك للمنصة، واستخدامك لها شخصي للتعلم فقط. ما تقدر تعيد نشر الدروس ولا تبيعها ولا تشاركها في منصات ثانية.</p>
+      <h3><span class="t-ar">5. استخدام المحتوى</span><span class="t-en">5. Use of content</span></h3>
+      <p>
+        <span class="t-ar">كل الدروس والمحتوى ملك للمنصة، واستخدامك لها شخصي للتعلم فقط. ما تقدر تعيد نشر الدروس ولا تبيعها ولا تشاركها في منصات ثانية.</span>
+        <span class="t-en">All lessons and content belong to the platform, and your use of them is personal and for learning only. You may not republish the lessons, sell them, or share them on other platforms.</span>
+      </p>
 
-      <h3>6. الشهادات</h3>
-      <p>الشهادة تصدر لما تكمل مسارًا بنسبة 100%، وعليها رمز تحقق يثبت صحتها. الشهادة توثق إكمالك للدروس داخل المنصة، وهي مو شهادة رسمية من جهة خارجية ولا تعادل شهادة أكاديمية.</p>
+      <h3><span class="t-ar">6. الشهادات</span><span class="t-en">6. Certificates</span></h3>
+      <p>
+        <span class="t-ar">الشهادة تصدر لما تكمل مسارًا بنسبة 100%، وعليها رمز تحقق يثبت صحتها. الشهادة توثق اكمالك للدروس داخل المنصة، وهي مو شهادة رسمية من جهة خارجية ولا تعادل شهادة اكاديمية.</span>
+        <span class="t-en">A certificate is issued when you complete a path at 100%, carrying a verification code that proves its authenticity. The certificate documents your completion of the lessons inside the platform; it is not an official certificate from an external authority and is not equivalent to an academic credential.</span>
+      </p>
 
-      <h3>7. السلوك داخل المنصة</h3>
-      <p>ما تسيء استخدام المنصة، وما تحاول الوصول لحسابات غيرك أو التلاعب بنظام التقدم. الحسابات اللي تخالف هذي الشروط ممكن يتم تعليقها.</p>
+      <h3><span class="t-ar">7. السلوك داخل المنصة</span><span class="t-en">7. Conduct inside the platform</span></h3>
+      <p>
+        <span class="t-ar">ما تسي استخدام المنصة، وما تحاول الوصول لحسابات غيرك او التلاعب بنظام التقدم. الحسابات اللي تخالف هذي الشروط ممكن يتم تعليقها.</span>
+        <span class="t-en">Do not misuse the platform, attempt to access other people's accounts, or tamper with the progress system. Accounts that violate these terms may be suspended.</span>
+      </p>
 
-      <h3>8. الإلغاء والاسترداد</h3>
-      <p>لو طلبت الإلغاء قبل ما تستخدم الاشتراك فعليًا، راسلنا على واتساب وننظر في طلبك ونرد عليك حسب حالتك. بعد ما تبدأ تستخدم المنصة، الاسترداد يكون حسب الحالة وبالتنسيق معنا.</p>
+      <h3><span class="t-ar">8. الالغا والاسترداد</span><span class="t-en">8. Cancellation and refunds</span></h3>
+      <p>
+        <span class="t-ar">لو طلبت الالغا قبل ما تستخدم الاشتراك فعليًا، راسلنا على واتساب وننظر في طلبك ونرد عليك حسب حالتك. بعد ما تبدا تستخدم المنصة، الاسترداد يكون حسب الحالة وبالتنسيق معنا.</span>
+        <span class="t-en">If you request cancellation before actually using the subscription, message us on WhatsApp and we will review your request and respond according to your case. After you start using the platform, refunds are handled case by case in coordination with us.</span>
+      </p>
 
-      <h3>9. النتائج والحدود</h3>
-      <p>المنصة أداة تعليمية، والنتيجة تعتمد على اجتهادك ومتابعتك. ما نضمن نتائج محددة مثل اجتياز اختبار معين أو الوصول لمستوى محدد خلال مدة معينة.</p>
+      <h3><span class="t-ar">9. النتايج والحدود</span><span class="t-en">9. Results and limits</span></h3>
+      <p>
+        <span class="t-ar">المنصة اداة تعليمية، والنتيجة تعتمد على اجتهادك ومتابعتك. ما نضمن نتايج محددة مثل اجتياز اختبار معين او الوصول لمستوى محدد خلال مدة معينة.</span>
+        <span class="t-en">The platform is a learning tool, and results depend on your effort and consistency. We do not guarantee specific outcomes such as passing a particular test or reaching a specific level within a specific time.</span>
+      </p>
 
-      <h3>10. التعديلات على الشروط</h3>
-      <p>نقدر نعدل هذي الشروط من وقت لثاني، ونسويلك إشعار بالتحديث في الصفحة. استمرارك في استخدام المنصة بعد التحديث يعني موافقتك على الشروط الجديدة.</p>
+      <h3><span class="t-ar">10. التعديلات على الشروط</span><span class="t-en">10. Changes to these terms</span></h3>
+      <p>
+        <span class="t-ar">نقدر نعدل هذي الشروط من وقت لثاني، ونسويلك اشعار بالتحديث في الصفحة. استمرارك في استخدام المنصة بعد التحديث يعني موافقتك على الشروط الجديدة.</span>
+        <span class="t-en">We may update these terms from time to time, and we will note the update on this page. Continuing to use the platform after an update means you accept the new terms.</span>
+      </p>
 
-      <h3>11. تواصل معنا</h3>
-      <p>أي استفسار عن هذي الوثائق أو عن اشتراكك، راسلنا واتساب <b>+966 55 717 8070</b> أو على البريد <b>personalizedenglishlessons@proton.me</b>.</p>
+      <h3><span class="t-ar">11. تواصل معنا</span><span class="t-en">11. Contact us</span></h3>
+      <p>
+        <span class="t-ar">اي استفسار عن هذي الوثايق او عن اشتراكك، راسلنا واتساب <b>+966 55 717 8070</b> او على البريد <b>personalizedenglishlessons@proton.me</b>.</span>
+        <span class="t-en">Any question about these documents or about your subscription — message us on WhatsApp at <b>+966 55 717 8070</b> or by email at <b>personalizedenglishlessons@proton.me</b>.</span>
+      </p>
 
-      <div class="note"><b>ملاحظة:</b> استخدامك للمنصة يعني إنك قرأت وفهمت هذي السياسة والشروط. لو عندك سؤال قبل الاشتراك، اسألنا أول.</div>
+      <div class="note">
+        <span class="t-ar"><b>ملاحظة:</b> استخدامك للمنصة يعني انك قرات وفهمت هذي السياسة والشروط. لو عندك سوال قبل الاشتراك، اسالنا اول.</span>
+        <span class="t-en"><b>Note:</b> Using the platform means you have read and understood this policy and these terms. If you have a question before subscribing, ask us first.</span>
+      </div>
     </div>
   </section>
 </main>
@@ -318,30 +425,33 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-of
   <div class="container">
     <div class="footer-inner">
       <span class="footer-links">
-        <a href="index.html">الرئيسية</a>
-        <a href="index.html#pricing">الاشتراك</a>
-        <a href="login.html">دخول الطلاب</a>
-        <a href="https://wa.me/966557178070" target="_blank" rel="noopener">واتساب الأستاذ فراس</a>
+        <a href="index.html"><span class="t-ar">الرييسية</span><span class="t-en">Home</span></a>
+        <a href="index.html#pricing"><span class="t-ar">الاشتراك</span><span class="t-en">Pricing</span></a>
+        <a href="login.html"><span class="t-ar">دخول الطلاب</span><span class="t-en">Student Login</span></a>
+        <a href="https://wa.me/966557178070" target="_blank" rel="noopener"><span class="t-ar">واتساب الاستاذ فراس</span><span class="t-en">WhatsApp Tutor Firas</span></a>
       </span>
       <span style="display:inline-flex; align-items:center; gap:8px; font-size:.82rem; color:var(--text-muted);"><img class="pel-logo" src="brand/pel-wordmark.svg" alt="PEL" style="height:12px; width:auto;"><img class="pel-logo pel-logo-light" src="brand/pel-wordmark-dark.svg" alt="PEL" style="height:12px; width:auto;">Personalized English Lessons</span>
     </div>
-    <div class="footer-bottom">© 2026 Personalized English Lessons. جميع الحقوق محفوظة.</div>
+    <div class="footer-bottom">
+      <span class="t-ar">© 2026 Personalized English Lessons. جميع الحقوق محفوظة.</span>
+      <span class="t-en">© 2026 Personalized English Lessons. All rights reserved.</span>
+    </div>
   </div>
 </footer>
 
 <!-- consent notice bar (local-only storage disclosure, dismissible) -->
-<div class="consent-bar" id="consentBar" role="dialog" aria-label="إشعار الخصوصية">
+<div class="consent-bar" id="consentBar" role="dialog" aria-label="اشعار الخصوصية">
   <div class="consent-text">
-    <span class="arabic" style="display:block;">منصتنا تخزّن على جهازك فقط: المظهر، لغة الواجهة، وجلسة الدخول. ما نستخدم ملفات تتبع ولا نشارك بياناتك مع أي أحد.</span>
-    <span style="font-size:.76rem; color:var(--text-muted);">We store only your theme, language and sign-in session on this device. No tracking, no data sharing.</span>
+    <span class="t-ar" style="display:block;">منصتنا تخزّن على جهازك فقط: المظهر، لغة الواجهة، وجلسة الدخول. ما نستخدم ملفات تتبع ولا نشارك بياناتك مع اي احد.</span>
+    <span class="t-en" style="display:block;">We store only your theme, language, and sign-in session on this device. No tracking files, no data sharing with anyone.</span>
   </div>
   <div class="consent-actions">
-    <a href="#privacy" class="consent-link">سياسة الخصوصية · Privacy</a>
-    <button class="consent-btn" id="consentBtn">تمام، فهمت · Got it</button>
+    <a href="#privacy" class="consent-link"><span class="t-ar">سياسة الخصوصية</span><span class="t-en">Privacy Policy</span></a>
+    <button class="consent-btn" id="consentBtn"><span class="t-ar">تمام، فهمت</span><span class="t-en">Got it</span></button>
   </div>
 </div>
 
-<button class="back-to-top" id="backToTop" aria-label="العودة للأعلى">↑</button>
+<button class="back-to-top" id="backToTop" aria-label="العودة للاعلى">↑</button>
 
 <script>
 (function(){
@@ -358,6 +468,22 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-of
     backToTop.classList.toggle('show', window.scrollY > 500);
   }, {passive:true});
   backToTop.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+
+  /* Language - global pel_account_prefs, same as index/app/login */
+  function readLang(){ try{ var p=JSON.parse(localStorage.getItem('pel_account_prefs')||'null'); return p&&p.lang==='en'?'en':'ar'; }catch(e){ return 'ar'; } }
+  function applyLegalLang(lang){
+    lang = lang==='en'?'en':'ar';
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang==='ar'?'rtl':'ltr';
+    document.body.style.direction = lang==='ar'?'rtl':'ltr';
+    var btn=document.getElementById('legalLangBtn'); if(btn) btn.textContent = lang==='ar'?'EN':'ع';
+    try{ var p=JSON.parse(localStorage.getItem('pel_account_prefs')||'null')||{lang:'en',direction:'en'}; p.lang=lang; localStorage.setItem('pel_account_prefs', JSON.stringify(p)); }catch(e){}
+  }
+  var legalLangBtn=document.getElementById('legalLangBtn');
+  if(legalLangBtn) legalLangBtn.addEventListener('click', function(){ applyLegalLang(readLang()==='ar'?'en':'ar'); });
+  applyLegalLang(readLang());
+  window.addEventListener('storage', function(e){ if(e.key==='pel_account_prefs') applyLegalLang(readLang()); });
+  window.addEventListener('pel-lang-changed', function(){ applyLegalLang(readLang()); });
 
   /* Consent notice: dismissible and remembered on this device. Same flag key
      as index.html, so accepting on one page silences it on the other. */
