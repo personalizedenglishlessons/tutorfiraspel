@@ -14,9 +14,13 @@
   --sidebar-w:264px; --topbar-h:64px;
 }
 html[data-theme="light"]{
-  --bg:#FAF8F4; --surface:#FFFFFF; --card:#F5F2EC; --card-elevated:#FFFFFF;
-  --border:#E5DFD2; --text:#17171B; --text-secondary:#4B463D; --text-muted:#8C877C;
-  --pel-stem:#17171B; --pel-gold:#A88345;
+  --bg:#F3EBDC; --surface:#FBF6ED; --card:#EFE4D0; --card-elevated:#FFF9F0;
+  --border:#D8C8AA; --text:#2B2518; --text-secondary:#554B3B; --text-muted:#6D614F;
+  --gold:#7B5A22; --gold-soft:#A9864A; --bronze:#8A6A2E; --emerald:#2F745E;
+  --pel-stem:#2B2518; --pel-gold:#7B5A22;
+  --shadow-soft:0 18px 50px -24px rgba(70,52,23,.25);
+  --shadow-lift:0 30px 75px -28px rgba(70,52,23,.30);
+  --gold-glow:0 0 36px -12px rgba(123,90,34,.34);
 }
 *,*::before,*::after{box-sizing:border-box;}
 html,body{height:100%;}

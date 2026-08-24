@@ -315,19 +315,19 @@ var I = {
   'editLesson':{en:'Edit lesson', ar:'تعديل الدرس'},
   'titleEn':{en:'Title (English)', ar:'العنوان (انجليزي)'},
   'titleAr':{en:'Title (Arabic)', ar:'العنوان (عربي)'},
-  'minutesLabel':{en:'Minutes', ar:'الدقائق'},
+  'minutesLabel':{en:'Minutes', ar:'الدقايق'},
   'difficulty':{en:'Difficulty', ar:'الصعوبة'},
   'iconLabel':{en:'Icon', ar:'الايقونة'},
   'colorFrom':{en:'Gradient from', ar:'التدرج من'},
   'colorTo':{en:'Gradient to', ar:'التدرج الى'},
   'hidden':{en:'Hidden', ar:'مخفي'},
-  'show':{en:'Show', ar:'إظهار'},
-  'hide':{en:'Hide', ar:'إخفاء'},
-  'unlink':{en:'Remove', ar:'إزالة'},
-  'moveUp':{en:'Move up', ar:'لأعلى'},
-  'moveDown':{en:'Move down', ar:'لأسفل'},
+  'show':{en:'Show', ar:'اظهار'},
+  'hide':{en:'Hide', ar:'اخفا'},
+  'unlink':{en:'Remove', ar:'ازالة'},
+  'moveUp':{en:'Move up', ar:'لاعلى'},
+  'moveDown':{en:'Move down', ar:'لاسفل'},
   'academy':{en:'Academy', ar:'الاكاديمية'},
-  'confirmUnlink':{en:'Remove this lesson from this academy? Students lose access to it there.', ar:'إزالة هذا الدرس من الاكاديمية؟ الطلاب يفقدون الوصول له هنا.'},
+  'confirmUnlink':{en:'Remove this lesson from this academy? Students lose access to it there.', ar:'ازالة هذا الدرس من الاكاديمية؟ الطلاب يفقدون الوصول له هنا.'},
   'lessonSaved':{en:'Lesson saved.', ar:'تم حفظ الدرس.'},
   'curriculumUpdated':{en:'Curriculum updated.', ar:'تم تحديث المنهج.'},
   'select':{en:'Select', ar:'اختيار'},
@@ -631,12 +631,14 @@ var NAV = [
   ]},
   { label:'learning', items:[
     {id:'courses', en:'Courses', ar:'المسارات', icon:'book-open'},
+    {id:'questions', en:'Test Questions', ar:'بنك الاختبار', icon:'help-circle', perm:'learning.manage'},
     {id:'interventions', en:'Interventions', ar:'التدخلات', icon:'activity'},
   ]},
 { label:'operations', items:[
     {id:'classes', en:'Live Classes', ar:'الدروس المباشرة', icon:'video'},
     {id:'programs', en:'Programs', ar:'البرامج', icon:'credit-card'},
     {id:'plans', en:'Plans', ar:'الباقات', icon:'badge-check', perm:'subscriptions.manage'},
+    {id:'billing', en:'Billing & Index', ar:'الفوترة والبداية', icon:'wallet', perm:'subscriptions.manage'},
     {id:'settings', en:'Site Settings', ar:'اعدادات الموقع', icon:'settings', perm:'settings.manage'},
   ]},
   { label:'trust', items:[
@@ -687,7 +689,7 @@ function goTo(id, arg){
 /* ============================================================
    6. VIEW REGISTRY
    ============================================================ */
-var views = { overview, students, student, teachers, groups, groupDetail, courses, interventions, classes, programs, plans: plansView, announcements: announcementsView, settings: settingsView, certificates, audit: auditLog, roles, health, reports };
+var views = { overview, students, student, teachers, groups, groupDetail, courses, interventions, classes, programs, plans: plansView, billing: billingView, questions: questionsView, announcements: announcementsView, settings: settingsView, certificates, audit: auditLog, roles, health, reports };
 
 /* ============================================================
    7. OVERVIEW (Phase 10)
@@ -983,7 +985,7 @@ function render360(){
     '</div></div>' +
     '<div class="btn-row">' +
     '<button class="btn btn-outline btn-sm" id="s360Preview">' + esc(t('preview')) + '</button>' +
-    (hasPerm('students.manage') ? '<button class="btn btn-danger btn-sm" id="s360Delete">' + esc(lang === 'ar' ? 'حذف الطالب نهائياً' : 'Delete student permanently') + '</button>' : '') +
+    (hasPerm('students.manage') ? '<button class="btn btn-danger btn-sm" id="s360Delete">' + esc(lang === 'ar' ? 'حذف الطالب نهايياً' : 'Delete student permanently') + '</button>' : '') +
     '<button class="btn btn-ghost btn-sm" data-goback="">' + esc(t('back')) + '</button>' +
     '</div></div>';
 
@@ -997,9 +999,72 @@ var tabs = [
     return '<button class="tab' + (x[0] === s360Tab ? ' active' : '') + '" data-tab="' + x[0] + '">' + esc(x[1]) + '</button>';
   }).join('') + '</div>';
 
-  $('viewArea').innerHTML = pageHead(t('student360'), esc(p.full_name || '')) + header + tabHtml + '<div id="s360Body"></div>';
+  $('viewArea').innerHTML = pageHead(t('student360'), esc(p.full_name || '')) + header +
+    '<div class="card" id="s360Billing" style="margin-bottom:18px;">' + loadingBlock() + '</div>' +
+    tabHtml + '<div id="s360Body"></div>';
   renderTab(s360Tab);
   wireStudentLinks();
+
+  /* Billing & live-class credit ledger (manual WhatsApp payments). */
+  (async function(){
+    var host = $('s360Billing'); if(!host) return;
+    try{
+      var r = await rpc('admin_student_billing', { p_user_id: current360Uid });
+      if(!r.ok){ host.innerHTML = '<div class="notice">'+esc(t('errorGeneric'))+'</div>'; return; }
+      var b = (r.data && r.data.billing) || {};
+      var ledger = (r.data && r.data.ledger) || [];
+      var tierAr = b.tier==='exam_prep'?'التجهيز للاختبارات':(b.tier==='start_from_zero'?'ابد من الصفر':'-');
+      var trackAr = b.assessed_track==='exam_prep'?'متقدم':(b.assessed_track==='start_from_zero'?'مبتدي':'-');
+      host.innerHTML =
+        '<div class="section-title" style="margin-top:0;">'+(lang==='ar'?'الباقة والرصيد':'Plan & credits')+'</div>' +
+        '<div class="s360-meta" style="margin-bottom:10px;">' +
+          (b.tier?chip(esc(lang==='ar'?tierAr:b.tier),'gold'):'') +
+          (b.assessed_cefr_level?chip(esc((lang==='ar'?'مستوى ':'Level ')+b.assessed_cefr_level),''):'') +
+          (b.assessed_track?chip(esc((lang==='ar'?'المسار ':'Track ')+(lang==='ar'?trackAr:b.assessed_track)),'bronze'):'') +
+          (b.plan_duration_months?chip(esc(b.plan_duration_months+' '+(lang==='ar'?'اشهر':'mo')),''):'') +
+          chip(esc((b.live_class_credits||0)+' '+(lang==='ar'?'رصيد حصص':'class credits')),'green') +
+        '</div>' +
+        (hasPerm('students.write') ?
+        '<div class="reason-list" style="margin-bottom:10px;">' +
+          '<div class="reason-item" style="flex-wrap:wrap;gap:8px;align-items:center;">' +
+            '<div style="font-weight:700;min-width:110px;">'+esc(lang==='ar'?'تعديل الرصيد':'Adjust credits')+'</div>' +
+            '<input class="input" type="number" id="credDelta" style="width:90px;" placeholder="+1 / -1">' +
+            '<input class="input" id="credReason" style="flex:1;min-width:140px;" placeholder="'+esc(lang==='ar'?'السبب (دفع واتساب)':'Reason (WhatsApp payment)')+'">' +
+            '<button class="btn btn-gold btn-sm" data-cred-add="1">'+esc(lang==='ar'?'+ اضافة':'+ Add')+'</button>' +
+            '<button class="btn btn-outline btn-sm" data-cred-add="-1">'+esc(lang==='ar'?'- خصم':'- Deduct')+'</button>' +
+          '</div></div>' : '') +
+        '<div class="reason-list" id="credLedger">' +
+          (ledger.length ? ledger.map(function(l){
+            var d = l.delta>=0?'+'+l.delta:l.delta;
+            return '<div class="reason-item"><div style="flex:1;">'+esc(l.reason||'-')+'<div class="why">'+esc(fmtDate(l.created_at))+'</div></div>' +
+              '<b style="color:'+(l.delta>=0?'var(--green, #437A22)':'var(--danger,#c0392b)')+';">'+esc(d)+'</b>' +
+              '<span class="chip muted">'+esc(lang==='ar'?'الرصيد':'bal')+' '+esc(l.balance_after)+'</span></div>';
+          }).join('') : emptyBlock(lang==='ar'?'لا يوجد عمليات بعد':'No transactions yet')) +
+        '</div>';
+      // wire +/- buttons
+      host.querySelectorAll('[data-cred-add]').forEach(function(btn){
+        btn.addEventListener('click', async function(){
+          var dir = +btn.getAttribute('data-cred-add');
+          var delta = parseInt($('credDelta').value, 10);
+          if(!delta){ toast(lang==='ar'?'اكتب عدد':'Enter a number', true); return; }
+          var adj = delta * dir;
+          var reason = $('credReason').value.trim() || (lang==='ar'?'تعديل يدوي':'Manual adjustment');
+          var r2 = await rpc('admin_adjust_credits', { p_user_id: current360Uid, p_delta: adj, p_reason: reason });
+          if(!r2.ok){ toast(t('errorGeneric'), true); return; }
+          await audit('credit.adjust', 'student', current360Uid, { delta: adj, reason: reason });
+          toast(t('saved')); 
+          var r3 = await rpc('admin_student_billing', { p_user_id: current360Uid });
+          if(r3.ok){ b = r3.data.billing || {}; ledger = r3.data.ledger || []; }
+          // re-render credits chip + ledger
+          var chips = host.querySelector('.s360-meta');
+          if(chips){ var lastChip = chips.querySelector('.chip.green'); if(lastChip) lastChip.textContent = (b.live_class_credits||0)+' '+(lang==='ar'?'رصيد حصص':'class credits'); }
+          var led = $('credLedger');
+          if(led){ led.innerHTML = ledger.length ? ledger.map(function(l){ var d=l.delta>=0?'+'+l.delta:l.delta; return '<div class="reason-item"><div style="flex:1;">'+esc(l.reason||'-')+'<div class="why">'+esc(fmtDate(l.created_at))+'</div></div><b style="color:'+(l.delta>=0?'var(--green, #437A22)':'var(--danger,#c0392b)')+';">'+esc(d)+'</b><span class="chip muted">'+esc(lang==='ar'?'الرصيد':'bal')+' '+esc(l.balance_after)+'</span></div>'; }).join('') : emptyBlock(lang==='ar'?'لا يوجد عمليات بعد':'No transactions yet'); }
+          $('credDelta').value = '';
+        });
+      });
+    }catch(e){ host.innerHTML = '<div class="notice">'+esc(t('errorGeneric'))+'</div>'; }
+  })();
 
   $('s360Preview').addEventListener('click', renderPreview);
   /* Authoritative progression snapshot from the DB: academy, level,
@@ -1022,8 +1087,8 @@ var tabs = [
   var delBtn = $('s360Delete');
   if(delBtn){
     delBtn.addEventListener('click', async function(){
-      if(!confirm(lang === 'ar' ? 'سيتم حذف حساب الطالب وكل بياناته نهائياً (تبقى الشهادات فقط). متابعة؟' : 'This permanently deletes the student account and ALL their history (certificates are kept). Continue?')){ return; }
-      if(!confirm(lang === 'ar' ? 'تأكيد أخير: هذا الإجراء لا يمكن التراجع عنه.' : 'Final confirmation: this cannot be undone.')){ return; }
+      if(!confirm(lang === 'ar' ? 'سيتم حذف حساب الطالب وكل بياناته نهايياً (تبقى الشهادات فقط). متابعة؟' : 'This permanently deletes the student account and ALL their history (certificates are kept). Continue?')){ return; }
+      if(!confirm(lang === 'ar' ? 'تاكيد اخير: هذا الاجرا لا يمكن التراجع عنه.' : 'Final confirmation: this cannot be undone.')){ return; }
       delBtn.disabled = true;
       var r = await rpc('admin_student_delete', { p_user_id: current360Uid });
       if(!r.ok){ delBtn.disabled = false; toast((r.error && r.error.message) || t('permissionDenied'), true); return; }
@@ -1894,7 +1959,7 @@ async function courses(){
   $('viewArea').innerHTML = pageHead(t('courses'), lang === 'ar' ? 'المنهج الكامل - يوصل للطلاب فوراً' : 'The full catalog - reaches students instantly') +
     '<div class="kpi-grid">' +
       '<div class="kpi-card accent"><div class="k-label">' + esc(t('academyCount')) + '</div><div class="k-value">' + fmtN(activeAcads) + '</div></div>' +
-      '<div class="kpi-card"><div class="k-label">' + esc(lang === 'ar' ? 'إجمالي الدروس' : 'Total lessons') + '</div><div class="k-value">' + fmtN(totalLessons) + '</div></div>' +
+      '<div class="kpi-card"><div class="k-label">' + esc(lang === 'ar' ? 'اجمالي الدروس' : 'Total lessons') + '</div><div class="k-value">' + fmtN(totalLessons) + '</div></div>' +
     '</div>' +
     (canManage ? '<div class="btn-row" style="margin-bottom:16px;"><button class="btn btn-gold btn-sm" id="newLessonBtn"><i data-lucide="plus" width="15" height="15"></i> ' + esc(t('newLesson')) + '</button><button class="btn btn-outline btn-sm" id="newAcademyBtn">' + esc(t('newAcademy')) + '</button></div>' : '') +
     '<div style="display:grid; gap:14px;">' + cards + '</div>';
@@ -2329,6 +2394,257 @@ function subForm(prog){
     toast(t('saved'));
     programs();
   });
+}
+
+/* ============================================================
+   16B. BILLING & INDEX EDITOR (Plans pricing matrix + index copy)
+   --------------------------------------------------------------
+   Admin-editable subscription plans that appear on /index.html.
+   Writes to plan_pricing (public-read on index) and site_settings
+   (hero / pricing copy). No payment gateway - CTAs are WhatsApp.
+   ============================================================ */
+async function billingView(){
+  $('viewArea').innerHTML = pageHead(lang==='ar'?'الفوترة والبداية':'Billing & Index',
+    lang==='ar'?'عدل اسعار الباقات ونص الصفحة البداية - التغييرات توصل لـ /index فوراً':'Edit plan prices and index copy - changes reach /index immediately') + loadingBlock();
+  var c = client();
+  var [pp, ss] = await Promise.all([
+    c.from('plan_pricing').select('*').order('tier,duration_months'),
+    c.from('site_settings').select('key,value').in('key', ['hero_headline_ar','hero_headline_en','hero_sub_ar','hero_sub_en','pricing_note_ar','pricing_note_en','faqs'])
+  ]);
+  var rows = pp.data || [];
+  var kv = {}; (ss.data||[]).forEach(function(r){ kv[r.key] = r.value; });
+
+  // ---- pricing matrix ----
+  var tiers = [
+    {k:'start_from_zero', en:'Start From 0', ar:'ابد من الصفر'},
+    {k:'exam_prep', en:'Exam Prep', ar:'التجهيز للاختبارات'}
+  ];
+  var matrixHtml = '';
+  tiers.forEach(function(t){
+    matrixHtml += '<div class="section-title">'+esc(lang==='ar'?t.ar:t.en)+' <span class="why">('+esc(t.k)+')</span></div>';
+    matrixHtml += '<div class="card" style="margin-bottom:16px;"><div class="reason-list">';
+    [1,2,3].forEach(function(mo){
+      var r = rows.find(function(x){ return x.tier===t.k && x.duration_months===mo; }) || {tier:t.k, duration_months:mo, price:0, weekly_live_classes:0, featured:false, active:true};
+      matrixHtml += '<div class="reason-item" style="flex-wrap:wrap;gap:8px;">' +
+        '<div style="font-weight:700;min-width:90px;">'+esc(mo+' '+(lang==='ar'?'اشهر':'months'))+'</div>' +
+        '<label style="display:flex;align-items:center;gap:6px;font-size:.78rem;">'+esc(t('price'))+' <input class="input" type="number" style="width:90px" data-pp="price" data-tier="'+t.k+'" data-mo="'+mo+'" value="'+(r.price||0)+'"></label>' +
+        '<label style="display:flex;align-items:center;gap:6px;font-size:.78rem;">'+(lang==='ar'?'حصص اسبوعياً':'Weekly classes')+' <input class="input" type="number" style="width:70px" data-pp="weekly_live_classes" data-tier="'+t.k+'" data-mo="'+mo+'" value="'+(r.weekly_live_classes||0)+'"></label>' +
+        '<label style="display:flex;align-items:center;gap:6px;font-size:.78rem;"><input type="checkbox" data-pp="featured" data-tier="'+t.k+'" data-mo="'+mo+'" '+(r.featured?'checked':'')+'> '+(lang==='ar'?'مميزة':'Featured')+'</label>' +
+        '<label style="display:flex;align-items:center;gap:6px;font-size:.78rem;"><input type="checkbox" data-pp="active" data-tier="'+t.k+'" data-mo="'+mo+'" '+(r.active!==false?'checked':'')+'> '+(lang==='ar'?'متاحة':'Active')+'</label>' +
+        '</div>';
+    });
+    matrixHtml += '</div></div>';
+  });
+
+  // ---- index content ----
+  function val(k){ var v = kv[k]; return (v && typeof v === 'string') ? v : (v && v.ar ? v.ar : ''); }
+  var indexHtml = '<div class="section-title">'+(lang==='ar'?'نص الصفحة البداية':'Index copy')+'</div>' +
+    '<div class="card" style="margin-bottom:16px;"><div class="form-grid">' +
+    '<div class="field full"><label>'+(lang==='ar'?'عنوان البطل (عربي)':'Hero headline (AR)')+'</label><textarea class="input" rows="2" data-ix="hero_headline_ar">'+esc(val('hero_headline_ar'))+'</textarea></div>' +
+    '<div class="field full"><label>'+(lang==='ar'?'عنوان البطل (انجليزي)':'Hero headline (EN)')+'</label><textarea class="input" rows="2" data-ix="hero_headline_en">'+esc(val('hero_headline_en'))+'</textarea></div>' +
+    '<div class="field full"><label>'+(lang==='ar'?'العنوان الفرعي (عربي)':'Hero sub (AR)')+'</label><textarea class="input" rows="2" data-ix="hero_sub_ar">'+esc(val('hero_sub_ar'))+'</textarea></div>' +
+    '<div class="field full"><label>'+(lang==='ar'?'العنوان الفرعي (انجليزي)':'Hero sub (EN)')+'</label><textarea class="input" rows="2" data-ix="hero_sub_en">'+esc(val('hero_sub_en'))+'</textarea></div>' +
+    '<div class="field full"><label>'+(lang==='ar'?'ملاحظة الباقات (عربي)':'Pricing note (AR)')+'</label><textarea class="input" rows="2" data-ix="pricing_note_ar">'+esc(val('pricing_note_ar'))+'</textarea></div>' +
+    '<div class="field full"><label>'+(lang==='ar'?'ملاحظة الباقات (انجليزي)':'Pricing note (EN)')+'</label><textarea class="input" rows="2" data-ix="pricing_note_en">'+esc(val('pricing_note_en'))+'</textarea></div>' +
+    '</div></div>';
+
+  // ---- FAQ editor (site_settings.faqs = JSON array of {qEn,qAr,aEn,aAr}) ----
+  var faqArr = (function(){ try{ var v = kv['faqs']; return Array.isArray(v)?v:(typeof v==='string'?JSON.parse(v||'[]'):[]); }catch(e){ return []; } })();
+  if(!faqArr.length){ faqArr = [{qEn:'',qAr:'',aEn:'',aAr:''}]; }
+  function faqRowHtml(f, i){
+    return '<div class="card" style="margin-bottom:12px;" data-faq-row="'+i+'"><div class="form-grid">' +
+      '<div class="field full"><label>'+(lang==='ar'?'سوال (انجليزي)':'Question (EN)')+'</label><input class="input" data-faq="qEn" data-i="'+i+'" value="'+esc(f.qEn||'')+'"></div>' +
+      '<div class="field full"><label>'+(lang==='ar'?'سوال (عربي)':'Question (AR)')+'</label><input class="input" data-faq="qAr" data-i="'+i+'" value="'+esc(f.qAr||'')+'"></div>' +
+      '<div class="field full"><label>'+(lang==='ar'?'جواب (انجليزي)':'Answer (EN)')+'</label><textarea class="input" rows="2" data-faq="aEn" data-i="'+i+'">'+esc(f.aEn||'')+'</textarea></div>' +
+      '<div class="field full"><label>'+(lang==='ar'?'جواب (عربي)':'Answer (AR)')+'</label><textarea class="input" rows="2" data-faq="aAr" data-i="'+i+'">'+esc(f.aAr||'')+'</textarea></div>' +
+      '</div><div class="btn-row" style="margin-top:8px;"><button class="btn btn-ghost btn-sm" data-faq-del="'+i+'">'+esc(lang==='ar'?'حذف السوال':'Remove')+'</button></div></div>';
+  }
+  var faqHtml = '<div class="section-title">'+(lang==='ar'?'الاسيلة الشايعة':'FAQs (index)')+'</div>' +
+    '<div id="faqList">'+faqArr.map(faqRowHtml).join('')+'</div>' +
+    '<div class="btn-row" style="margin-bottom:8px;"><button class="btn btn-outline btn-sm" id="faqAdd">'+esc(lang==='ar'?'سوال جديد':'Add question')+'</button></div>';
+  indexHtml += faqHtml;
+
+  $('viewArea').innerHTML = pageHead(lang==='ar'?'الفوترة والبداية':'Billing & Index',
+    lang==='ar'?'عدل اسعار الباقات ونص الصفحة البداية':'Edit plan prices and index copy') +
+    '<div class="btn-row" style="margin-bottom:16px;"><button class="btn btn-gold btn-sm" id="ppSave">'+esc(t('save'))+'</button>' +
+    '<span class="why">'+(lang==='ar'?'الدفع عبر واتساب - ما في بوابة دفع':'WhatsApp checkout only - no payment gateway')+'</span></div>' +
+    matrixHtml + indexHtml;
+
+  // FAQ add/remove wiring
+  function faqMaxI(){ var m=-1; document.querySelectorAll('[data-faq-row]').forEach(function(r){ var i=+r.getAttribute('data-faq-row'); if(i>m)m=i; }); return m; }
+  var faqAddBtn = $('faqAdd');
+  if(faqAddBtn) faqAddBtn.addEventListener('click', function(){ var ni=faqMaxI()+1; var wrap=document.createElement('div'); wrap.innerHTML=faqRowHtml({qEn:'',qAr:'',aEn:'',aAr:''}, ni); var node=wrap.firstElementChild; $('faqList').appendChild(node); wireFaqRow(node); });
+  function wireFaqRow(node){
+    var del=node.querySelector('[data-faq-del]');
+    if(del) del.addEventListener('click', function(){ node.remove(); });
+  }
+  document.querySelectorAll('[data-faq-row]').forEach(wireFaqRow);
+
+  $('ppSave').addEventListener('click', async function(){
+    this.disabled = true; this.textContent = '...';
+    // pricing matrix
+    var cells = document.querySelectorAll('[data-pp]');
+    var byKey = {};
+    cells.forEach(function(inp){
+      var k = inp.dataset.tier + ':' + inp.dataset.mo;
+      (byKey[k] = byKey[k] || {tier:inp.dataset.tier, duration_months:+inp.dataset.mo});
+      var f = inp.dataset.pp;
+      if(f === 'price' || f === 'weekly_live_classes') byKey[k][f] = +inp.value || 0;
+      else byKey[k][f] = inp.checked;
+    });
+    var errs = 0;
+    for (var k in byKey){
+      var r = await c.from('plan_pricing').upsert(byKey[k], {onConflict:'tier,duration_months'});
+      if(r.error) errs++;
+    }
+    // index content
+    document.querySelectorAll('[data-ix]').forEach(function(ta){
+      var key = ta.dataset.ix, v = ta.value.trim();
+      c.from('site_settings').upsert({key:key, value:v}, {onConflict:'key'}).then(function(){}).catch(function(){ errs++; });
+    });
+    // FAQs (collect rows in DOM order, drop fully-blank ones)
+    var faqOut = [];
+    document.querySelectorAll('[data-faq-row]').forEach(function(row){
+      var get = function(f){ var el = row.querySelector('[data-faq="'+f+'"]'); return el ? (el.value||'').trim() : ''; };
+      var q = { qEn:get('qEn'), qAr:get('qAr'), aEn:get('aEn'), aAr:get('aAr') };
+      if(q.qEn||q.qAr||q.aEn||q.aAr) faqOut.push(q);
+    });
+    try{
+      var fr = await c.from('site_settings').upsert({key:'faqs', value:faqOut}, {onConflict:'key'});
+      if(fr.error) errs++;
+    }catch(e){ errs++; }
+    await audit('billing.update', 'plan_pricing', '', { cells: Object.keys(byKey).length });
+    this.disabled = false; this.textContent = esc(t('save'));
+    toast(errs ? (errs+' '+(lang==='ar'?'حقول لم تحفظ':'fields failed')) : t('saved'), !!errs);
+  });
+  loadIcons();
+}
+
+/* ============================================================
+   ASSESSMENT QUESTIONS CRUD (admin): full edit of the adaptive
+   placement-test question pool: list, add, edit, delete, toggle active.
+   RLS: admin read/write gated by learning.manage (aq_admin_write policy).
+   ============================================================ */
+async function questionsView(){
+  if(!hasPerm('learning.manage')){ $('viewArea').innerHTML = emptyBlock(lang==='ar'?'ما عندك صلاحية':'No access'); return; }
+  var title = lang==='ar'?'بنك الاختبار':'Assessment Questions';
+  var sub = lang==='ar'?'تعديل بنك الاختبار - التغييرات توصل للطلاب فوراً':'Edit the adaptive placement-test questions - changes reach students immediately';
+  $('viewArea').innerHTML = pageHead(title, sub) + loadingBlock();
+  var c = client();
+  var ROWS = [];
+  await loadList();
+
+  async function loadList(){
+    var r = await c.from('assessment_questions').select('*').order('tier,difficulty_rating,sort_order');
+    ROWS = r.data || [];
+    var addBtn = '<div class="btn-row" style="margin-bottom:16px;"><button class="btn btn-gold btn-sm" id="aqAdd">'+esc(lang==='ar'?'سوال جديد':'New question')+'</button>'+
+      '<span class="why">'+(lang==='ar'?'العدد: ':'Count: ')+ROWS.length+'</span></div>';
+    if(!ROWS.length){ $('viewArea').innerHTML = pageHead(title, sub) + addBtn + emptyBlock(lang==='ar'?'لا توجد اساله بعد':'No questions yet'); wire(); return; }
+    var tierLbl = function(t){ return t==='exam_prep'?(lang==='ar'?'تجهيز اختبارات':'Exam Prep'):(lang==='ar'?'البداية':'Beginner'); };
+    var rowsHtml = ROWS.map(function(q){
+      var opts = q.options || [];
+      var correctTxt = opts[q.correct_index] ? (opts[q.correct_index].en||'') : '';
+      return '<tr>'+
+        '<td style="padding:8px;vertical-align:top;"><b>'+esc(q.code)+'</b><br><span class="why">'+esc(q.skill_type||'')+'</span></td>'+
+        '<td style="padding:8px;vertical-align:top;">'+esc(tierLbl(q.tier))+'<br><span class="chip gold" style="font-size:.7rem">'+esc(q.level)+'</span> <span class="chip" style="font-size:.7rem">D'+esc(q.difficulty_rating)+'</span></td>'+
+        '<td style="padding:8px;vertical-align:top;max-width:360px;">'+esc(q.question_en)+'<br><span class="arabic why">'+esc(q.question_ar||'')+'</span><br><span class="why">✓ '+esc(correctTxt)+'</span></td>'+
+        '<td style="padding:8px;vertical-align:top;">'+(q.active!==false?'<span class="chip emerald" style="font-size:.7rem">'+esc(lang==='ar'?'متاح':'Active')+'</span>':'<span class="chip muted" style="font-size:.7rem">'+esc(lang==='ar'?'متوقف':'Off')+'</span>')+'</td>'+
+        '<td style="padding:8px;vertical-align:top;white-space:nowrap;">'+
+          '<button class="btn btn-ghost btn-sm" data-aq-edit="'+esc(q.id)+'">'+esc(t('edit'))+'</button> '+
+          '<button class="btn btn-outline btn-sm" data-aq-toggle="'+esc(q.id)+'">'+esc(lang==='ar'?'حالة':'Toggle')+'</button> '+
+          '<button class="btn btn-danger btn-sm" data-aq-del="'+esc(q.id)+'">'+esc(lang==='ar'?'حذف':'Delete')+'</button>'+
+        '</td></tr>';
+    }).join('');
+    $('viewArea').innerHTML = pageHead(title, sub) + addBtn +
+      '<div class="card" style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;"><thead><tr>'+
+      '<th style="text-align:right;padding:8px;">'+esc(lang==='ar'?'الكود':'Code')+'</th>'+
+      '<th style="text-align:right;padding:8px;">'+esc(lang==='ar'?'المستوى':'Level')+'</th>'+
+      '<th style="text-align:right;padding:8px;">'+esc(lang==='ar'?'السوال':'Question')+'</th>'+
+      '<th style="text-align:right;padding:8px;">'+esc(lang==='ar'?'الحالة':'Status')+'</th>'+
+      '<th style="text-align:right;padding:8px;">'+esc(lang==='ar'?'اجراات':'Actions')+'</th>'+
+      '</tr></thead><tbody>'+rowsHtml+'</tbody></table></div>';
+    wire();
+  }
+
+  function wire(){
+    loadIcons();
+    var addBtn = $('aqAdd'); if(addBtn) addBtn.addEventListener('click', function(){ questionModal(null); });
+    $('viewArea').querySelectorAll('[data-aq-edit]').forEach(function(b){ b.addEventListener('click', function(){ var q = ROWS.find(function(x){return x.id===b.getAttribute('data-aq-edit');}); questionModal(q||null); }); });
+    $('viewArea').querySelectorAll('[data-aq-toggle]').forEach(function(b){ b.addEventListener('click', function(){ toggleQ(b.getAttribute('data-aq-toggle')); }); });
+    $('viewArea').querySelectorAll('[data-aq-del]').forEach(function(b){ b.addEventListener('click', function(){ delQ(b.getAttribute('data-aq-del')); }); });
+  }
+
+  function toggleQ(id){
+    var q = ROWS.find(function(x){return x.id===id;}); if(!q) return;
+    c.from('assessment_questions').update({active: !q.active}).eq('id', id).then(function(r){
+      if(r.error){ toast(rpcErrMsg(r), true); return; }
+      audit('question.toggle','assessment_questions',q.code,{active:!q.active});
+      toast(t('saved')); loadList();
+    });
+  }
+  function delQ(id){
+    var q = ROWS.find(function(x){return x.id===id;});
+    if(!window.confirm(lang==='ar'?'حذف هذا السوال للابد؟':'Delete this question permanently?')) return;
+    c.from('assessment_questions').delete().eq('id', id).then(function(r){
+      if(r.error){ toast(rpcErrMsg(r), true); return; }
+      audit('question.delete','assessment_questions',q?q.code:id,{});
+      toast(t('saved')); loadList();
+    });
+  }
+
+  function questionModal(q){
+    var isEdit = !!q;
+    var o = q ? (q.options||[]) : [];
+    function opt(i, lng){ var x = o[i]||{}; return esc(x[lng]||''); }
+    var body = '<div class="form-grid">'+
+      '<div class="field"><label>'+esc(lang==='ar'?'الكود':'Code')+'</label><input class="input" id="qf_code" value="'+esc(q?q.code:'')+'" placeholder="q16"></div>'+
+      '<div class="field"><label>'+esc(lang==='ar'?'المسار':'Tier')+'</label><select class="input" id="qf_tier"><option value="beginner"'+(q&&q.tier==='beginner'?' selected':'')+'>Beginner</option><option value="exam_prep"'+(q&&q.tier==='exam_prep'?' selected':'')+'>Exam Prep</option></select></div>'+
+      '<div class="field"><label>'+esc(lang==='ar'?'المستوى':'Level')+'</label><select class="input" id="qf_level">'+['A1','A2','B1','B2','C1'].map(function(l){return '<option value="'+l+'"'+(q&&q.level===l?' selected':'')+'>'+l+'</option>';}).join('')+'</select></div>'+
+      '<div class="field"><label>'+esc(lang==='ar'?'الصعوبة':'Difficulty')+'</label><select class="input" id="qf_diff">'+[1,2,3,4,5].map(function(d){return '<option value="'+d+'"'+(q&&q.difficulty_rating===d?' selected':'')+'>'+d+'</option>';}).join('')+'</select></div>'+
+      '<div class="field"><label>'+esc(lang==='ar'?'النوع':'Skill')+'</label><select class="input" id="qf_skill">'+['grammar','vocab','reading','listening'].map(function(s){return '<option value="'+s+'"'+(q&&q.skill_type===s?' selected':'')+'>'+s+'</option>';}).join('')+'</select></div>'+
+      '<div class="field"><label><input type="checkbox" id="qf_active" '+(q?(q.active!==false?'checked':''):'checked')+'> '+esc(lang==='ar'?'متاح':'Active')+'</label></div>'+
+      '<div class="field full"><label>'+esc(lang==='ar'?'السوال (عربي)':'Question (AR)')+'</label><textarea class="input" rows="2" id="qf_qar">'+esc(q?(q.question_ar||''):'')+'</textarea></div>'+
+      '<div class="field full"><label>'+esc(lang==='ar'?'السوال (انجليزي)':'Question (EN)')+'</label><textarea class="input" rows="2" id="qf_qen">'+esc(q?(q.question_en||''):'')+'</textarea></div>'+
+      '<div class="field full"><div class="section-title" style="margin:8px 0;">'+esc(lang==='ar'?'الخيارات (4)':'Options (4)')+'</div></div>'+
+      [0,1,2,3].map(function(i){ return '<div class="field"><label>'+esc(lang==='ar'?'خيار '+(i+1)+' (عربي)':'Option '+(i+1)+' (AR)')+'</label><input class="input" id="qf_o'+i+'ar" value="'+opt(i,'ar')+'"></div><div class="field"><label>'+esc(lang==='ar'?'خيار '+(i+1)+' (انجليزي)':'Option '+(i+1)+' (EN)')+'</label><input class="input" id="qf_o'+i+'en" value="'+opt(i,'en')+'"></div>'; }).join('')+
+      '<div class="field full"><label>'+esc(lang==='ar'?'الاجابة الصحيحة':'Correct option')+'</label><select class="input" id="qf_correct">'+[0,1,2,3].map(function(i){return '<option value="'+i+'"'+(q&&q.correct_index===i?' selected':'')+'>Option '+(i+1)+'</option>';}).join('')+'</select></div>'+
+      '<div class="field full"><label>'+esc(lang==='ar'?'الترتيب':'Sort order')+'</label><input class="input" type="number" id="qf_sort" value="'+(q?(q.sort_order||0):0)+'"></div>'+
+      '</div>';
+    var scrim = modal((isEdit?(lang==='ar'?'تعديل سوال':'Edit question'):(lang==='ar'?'سوال جديد':'New question')), body, true,
+      '<button class="btn btn-gold btn-sm" id="qfSave">'+esc(t('save'))+'</button>');
+    $('qfSave').addEventListener('click', async function(){
+      var code = $('qf_code').value.trim();
+      if(!code){ toast(lang==='ar'?'الكود مطلوب':'Code required', true); return; }
+      if(!$('qf_qen').value.trim()){ toast(lang==='ar'?'نص السوال الانجليزي مطلوب':'English question text required', true); return; }
+      var opts = [0,1,2,3].map(function(i){ return { ar: $('qf_o'+i+'ar').value.trim(), en: $('qf_o'+i+'en').value.trim() }; });
+      if(!opts[$('qf_correct').value].en){ toast(lang==='ar'?'الاجابة الصحيحة ما تنشاف':'Correct option has no text', true); return; }
+      var row = {
+        code: code,
+        tier: $('qf_tier').value,
+        level: $('qf_level').value,
+        difficulty_rating: +$('qf_diff').value,
+        skill_type: $('qf_skill').value,
+        question_ar: $('qf_qar').value.trim(),
+        question_en: $('qf_qen').value.trim(),
+        options: opts,
+        correct_index: +$('qf_correct').value,
+        sort_order: +$('qf_sort').value||0,
+        active: $('qf_active').checked
+      };
+      this.disabled = true; this.textContent = '...';
+      // Edit existing row by id (so changing the code field updates in place
+      // instead of orphaning the old row); insert a brand-new row otherwise.
+      var r = isEdit
+        ? await c.from('assessment_questions').update(row).eq('id', q.id)
+        : await c.from('assessment_questions').insert(row);
+      this.disabled = false; this.textContent = esc(t('save'));
+      if(r.error){ toast(rpcErrMsg(r), true); return; }
+      await audit('question.upsert','assessment_questions',code,{tier:row.tier,level:row.level,difficulty:row.difficulty_rating});
+      closeModal(scrim);
+      toast(t('saved')); loadList();
+    });
+    loadIcons();
+  }
 }
 
 /* ============================================================
@@ -2856,7 +3172,7 @@ async function announcementsView(){
     b.addEventListener('click', async function(){
       var id = b.getAttribute('data-del');
       var a = window.__annRows[id] || {};
-      if(!confirm(lang === 'ar' ? 'حذف هذا الاعلان نهائياً؟' : 'Permanently delete this announcement?')){ return; }
+      if(!confirm(lang === 'ar' ? 'حذف هذا الاعلان نهايياً؟' : 'Permanently delete this announcement?')){ return; }
       var r = await rpc('admin_announcement_delete', { p_id: id });
       if(!r.ok){ toast((r.error && r.error.message) || t('permissionDenied'), true); return; }
       toast(lang === 'ar' ? 'تم حذف الاعلان.' : 'Announcement deleted.');
@@ -2973,7 +3289,7 @@ function editAnnouncementForm(a){
 
 async function settingsView(){
   var head = pageHead(lang === 'ar' ? 'اعدادات الموقع' : 'Site Settings',
-    lang === 'ar' ? 'شريط الاعلان الرئيسي، الاسيلة الشايعة، رقم الواتساب، وخيارات الموقع - التغييرات تظهر للزوار فوراً.' : 'Homepage banner, FAQs, WhatsApp number and site flags - changes go live for visitors instantly.');
+    lang === 'ar' ? 'شريط الاعلان الرييسي، الاسيلة الشايعة، رقم الواتساب، وخيارات الموقع - التغييرات تظهر للزوار فوراً.' : 'Homepage banner, FAQs, WhatsApp number and site flags - changes go live for visitors instantly.');
   $('viewArea').innerHTML = head + loadingBlock();
   var c = client();
   if(!c){ $('viewArea').innerHTML = errBlock('no client'); return; }
@@ -2998,7 +3314,7 @@ async function settingsView(){
 
   $('viewArea').innerHTML = head +
     '<div class="card" style="max-width:760px;">' +
-      '<div class="s360-meta" style="margin-top:0;"><span class="chip gold">' + esc(lang === 'ar' ? 'شريط الاعلان الرئيسي' : 'Homepage banner') + '</span></div>' +
+      '<div class="s360-meta" style="margin-top:0;"><span class="chip gold">' + esc(lang === 'ar' ? 'شريط الاعلان الرييسي' : 'Homepage banner') + '</span></div>' +
       '<div class="form-grid" style="margin-top:14px;">' +
         '<div class="field full">' + chk('stBannerActive', 'تشغيل الشريط', 'Banner enabled', b.active !== false) + '</div>' +
         '<div class="field full"><label>' + esc(lang === 'ar' ? 'النص بالعربي' : 'Arabic text') + '</label><textarea class="input" id="stBannerAr" rows="2" dir="rtl">' + esc(b.ar || '') + '</textarea></div>' +
@@ -3013,10 +3329,10 @@ async function settingsView(){
       '</div>' +
     '</div>' +
     '<div class="card" style="max-width:760px; margin-top:16px;">' +
-      '<div class="s360-meta" style="margin-top:0;"><span class="chip gold">' + esc(lang === 'ar' ? 'الاسيلة الشايعة — الصفحة الرئيسية' : 'Homepage FAQs') + '</span></div>' +
+      '<div class="s360-meta" style="margin-top:0;"><span class="chip gold">' + esc(lang === 'ar' ? 'الاسيلة الشايعة - الصفحة البداية' : 'Homepage FAQs') + '</span></div>' +
       '<p style="margin:10px 0 0; font-size:.76rem; color:var(--text-muted); line-height:1.7;">' +
         esc(lang === 'ar'
-          ? 'كل سطر = سؤال|جواب. لازم نفس عدد الاسطر بالعربي والانجليزي وبنفس الترتيب.'
+          ? 'كل سطر = سوال|جواب. لازم نفس عدد الاسطر بالعربي والانجليزي وبنفس الترتيب.'
           : 'One FAQ per line, format question|answer. Arabic and English must have the same number of lines in the same order.') +
       '</p>' +
       '<div class="form-grid" style="margin-top:12px;">' +
