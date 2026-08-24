@@ -21546,5 +21546,234 @@ if(window.lucide) lucide.createIcons();
 })();
 
 
-</script></body>
+</script>
+
+<!-- ============================================================
+     PEL · LIVE CLASSES VIEW  (self-contained: credits, request, history)
+     Builds on profiles.live_class_credits + the live_class_requests tables.
+     Reuses the shared anon key + localStorage session, so it sees the same
+     logged-in student as the main app. No mutation of the main IIFE.
+     Arabic = Saudi Southern/Abha dialect: no hamzas, no em-dashes.
+     ============================================================ -->
+<script>
+(function(){
+  const URL='https://lewoochehpiycocvfwtz.supabase.co';
+  const KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxld29vY2hlaHBpeWNvY3Zmd3R6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwNzQ3MzcsImV4cCI6MjA5OTY1MDczN30.sIWK6jwX7PW70fH0yPUuhOb25N1lBw2-Cvb3dtwDb9Y';
+  let _c=null;
+  function c(){ if(_c) return _c; if(window.supabase) _c=window.supabase.createClient(URL,KEY); return _c; }
+  function ar(){ try{ if(window.accountPrefs&&accountPrefs.lang==='ar') return true; if(document.documentElement.dir==='rtl') return true; }catch(e){} return false; }
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+  let OVER=null;
+
+  function pelStyle(){
+    if(document.getElementById('pel-lc-style')) return;
+    const st=document.createElement('style'); st.id='pel-lc-style';
+    st.textContent=`
+.pel-lc-view{max-width:980px;margin:0 auto;padding:8px 4px 60px}
+.pel-welcome{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,rgba(200,169,106,.14),rgba(200,169,106,.04));border:1px solid rgba(200,169,106,.4);border-radius:16px;padding:16px 18px;margin-bottom:22px}
+.pel-welcome-icon{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:rgba(200,169,106,.18);color:var(--gold);flex-shrink:0}
+.pel-welcome h3{font-size:1.08rem;margin:0 0 2px}
+.pel-welcome p{margin:0;font-size:.84rem;color:var(--text-secondary);line-height:1.6}
+.pel-welcome-btn{margin-left:auto;flex-shrink:0}
+.pel-lc-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:18px;flex-wrap:wrap}
+.pel-lc-head .view-title{font-size:1.6rem;letter-spacing:-.02em;margin:0}
+.pel-lc-head .view-sub{margin:4px 0 0;font-size:.88rem;color:var(--text-secondary)}
+.pel-credit-pill{display:flex;flex-direction:column;align-items:center;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:8px 22px;min-width:96px}
+.pel-credit-num{font-size:1.9rem;font-weight:800;color:var(--gold);line-height:1}
+.pel-credit-pill>span:last-child{font-size:.72rem;color:var(--text-muted);margin-top:3px;text-transform:uppercase;letter-spacing:.04em}
+.pel-svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:14px}
+@media(max-width:760px){.pel-svc-grid{grid-template-columns:1fr}}
+.pel-svc-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;position:relative;transition:transform .15s,border-color .15s}
+.pel-svc-card:hover{transform:translateY(-2px);border-color:rgba(200,169,106,.5)}
+.pel-svc-card.inperson{border-color:rgba(200,169,106,.45)}
+.pel-svc-cost{font-size:1.5rem;font-weight:800;color:var(--gold)}
+.pel-svc-cost span{font-size:.8rem;font-weight:600;color:var(--text-muted);margin-left:4px}
+.pel-svc-name{font-weight:700;margin-top:6px}
+.pel-svc-dur{font-size:.78rem;color:var(--text-muted);margin-top:2px}
+.pel-svc-desc{font-size:.82rem;color:var(--text-secondary);margin-top:8px;line-height:1.5}
+.pel-inperson-note{font-size:.82rem;color:var(--text-secondary);background:var(--card);border:1px dashed var(--border);border-radius:10px;padding:10px 14px;margin-bottom:18px}
+.pel-form-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:22px}
+.pel-form-card h3{margin:0 0 14px;font-size:1.1rem}
+.pel-field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.pel-field>span{font-size:.8rem;font-weight:600;color:var(--text-secondary)}
+.pel-field input,.pel-field select,.pel-field textarea{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--bg);color:var(--text);font-size:.92rem;font-family:inherit}
+.pel-field input:focus,.pel-field select:focus,.pel-field textarea:focus{outline:none;border-color:var(--gold)}
+.pel-form-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:6px;flex-wrap:wrap}
+.pel-form-foot #pelCost{font-size:.84rem;color:var(--text-secondary)}
+.pel-form-hint{font-size:.78rem;color:var(--text-muted);margin:8px 0 0;min-height:1.2em}
+.pel-req-card h3{margin:0 0 12px;font-size:1.1rem}
+.pel-req-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
+.pel-req-row:last-child{border-bottom:none}
+.pel-req-main{font-size:.88rem}
+.pel-req-meta{font-size:.76rem;color:var(--text-muted);margin-top:2px}
+.pel-req-note{font-size:.78rem;color:var(--text-secondary);margin-top:4px;font-style:italic}
+.pel-req-st{font-size:.74rem;font-weight:700;padding:4px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.03em;white-space:nowrap}
+.pel-req-st.pending{background:rgba(200,169,106,.16);color:var(--gold)}
+.pel-req-st.approved{background:rgba(76,175,80,.16);color:#4caf50}
+.pel-req-st.declined{background:rgba(244,67,54,.14);color:#f44336}
+.pel-req-st.cancelled{background:rgba(128,128,128,.16);color:var(--text-muted)}
+.pel-empty{color:var(--text-muted);font-size:.86rem;padding:18px 0;text-align:center}
+.pel-req-list{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:4px 16px}
+`;
+    document.head.appendChild(st);
+  }
+
+  function toast(msg,kind){
+    try{
+      let st=document.getElementById('toastStack'); const wrap=st||document.body;
+      const t=document.createElement('div');
+      t.className='toast '+(kind==='error'?'danger':kind==='ok'?'ok':'');
+      t.innerHTML='<span class="arabic">'+esc(msg.ar||msg.en||msg)+'</span>';
+      if(msg.en) t.innerHTML+='<span style="display:block;font-size:.82em;opacity:.85">'+esc(msg.en)+'</span>';
+      wrap.appendChild(t); t.classList.add('show');
+      setTimeout(()=>{ t.classList.remove('show'); setTimeout(()=>t.remove(),300); }, 4200);
+    }catch(e){}
+  }
+
+  function ensureShell(){
+    pelStyle();
+    const nav=document.getElementById('sidebarNav');
+    if(nav && !nav.querySelector('.side-link[data-view="liveClasses"]')){
+      const a=document.createElement('button');
+      a.className='side-link'; a.dataset.view='liveClasses';
+      a.innerHTML='<span class="side-icon"><i data-lucide="video" width="18" height="18"></i></span><span class="side-text-wrap"><span class="ar">حصص مباشرة</span><span class="en">Live Classes</span></span>';
+      const settings=nav.querySelector('.side-link[data-view="settings"]');
+      if(settings && settings.parentElement) settings.parentElement.appendChild(a);
+      else nav.appendChild(a);
+      if(window.lucide) lucide.createIcons({nodes:[a]});
+    }
+    let v=document.getElementById('view-liveClasses');
+    if(!v){
+      v=document.createElement('section'); v.className='view'; v.id='view-liveClasses';
+      const sv=document.getElementById('view-settings');
+      if(sv && sv.parentElement) sv.parentElement.insertBefore(v, sv);
+      else { const cc=document.querySelector('.content-cols'); if(cc) cc.appendChild(v); }
+    }
+  }
+
+  async function loadOverview(){
+    const cl=c(); if(!cl) return null;
+    try{ const { data, error } = await cl.rpc('student_live_class_overview'); if(error){ console.error('live_class_overview', error); return null; } OVER=data; return data; }
+    catch(e){ console.error(e); return null; }
+  }
+
+  const SVC_AR={group_online_40:'حصة جماعية اونلاين',private_online_40:'حصة خاصة اونلاين',in_person_40:'حصة حضورية'};
+  const ST_AR={pending:'قيد الانتظار',approved:'مقبولة',declined:'مرفوضة',cancelled:'ملغية'};
+  function fmtDate(d){ if(!d) return ''; try{ return new Date(d).toLocaleDateString(ar()?'ar-SA-u-ca-gregory-nu-latn':'en-US',{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}); }catch(e){ return String(d); } }
+
+  function render(){
+    const v=document.getElementById('view-liveClasses'); if(!v) return;
+    const d=OVER||{}; const credits=d.credits||0; const services=d.services||[]; const cities=d.cities||[]; const reqs=d.my_requests||[];
+    const A=ar();
+    const opts=services.map(s=>'<option value="'+esc(s.code)+'" data-cost="'+s.credit_cost+'" data-inperson="'+(s.requires_in_person_city?1:0)+'">'+esc(A?(s.label_ar||s.label_en):(s.label_en||s.label_ar))+' - '+s.credit_cost+' '+(A?'رصيد':'credits')+'</option>').join('');
+    const cityList=cities.map(c=>esc(c.city_name)).join(A?'، ':', ');
+    const inPersonNote = A ? 'الحصص الحضورية متوفرة حاليا في: ' : 'In-person classes are currently available in: ';
+
+    let welcome='';
+    if(!d.welcome_seen){
+      const hi = A ? 'اهلا وسهل بك في PEL' : 'Welcome to PEL';
+      const body = A ? 'كل دروسك ومتابعتك ورصيدك يحفظ هنا. خذ اختبار المستوى عشان نبداك من النقطة المناسبة لك، وادخل حصص مباشرة اونلاين وحضورية برصيد الحصص. اضغط تم ورج نشوفك.' : 'All your lessons, progress and live-class credits live here. Take the level test so we start you at the right point, and book live online or in-person classes with your credits. Tap done and lets go.';
+      welcome='<div class="pel-welcome"><div class="pel-welcome-icon"><i data-lucide="sparkles" width="22" height="22"></i></div><div><h3>'+esc(hi)+'</h3><p>'+esc(body)+'</p></div><button class="btn-gold pel-welcome-btn" data-welcome>تم</button></div>';
+    }
+
+    const cards=services.map(s=>{
+      return '<div class="pel-svc-card'+(s.requires_in_person_city?' inperson':'')+'">'+
+        '<div class="pel-svc-cost">'+s.credit_cost+'<span>'+(A?'رصيد':'credits')+'</span></div>'+
+        '<div class="pel-svc-name">'+esc(A?(s.label_ar||s.label_en):(s.label_en||s.label_ar))+'</div>'+
+        '<div class="pel-svc-dur">'+s.duration_minutes+' '+(A?'دقيقة':'min')+(s.requires_in_person_city?(' - '+(A?'حضوري':'in-person')):'')+'</div>'+
+        '<div class="pel-svc-desc">'+esc(A?(s.desc_ar||s.desc_en):(s.desc_en||s.desc_ar))+'</div>'+
+        '</div>';
+    }).join('');
+
+    const reqRows=reqs.length ? reqs.map(r=>{
+      const sv=services.find(x=>x.code===r.service_code)||{};
+      const nm=A?(sv.label_ar||sv.label_en||r.service_code):(sv.label_en||sv.label_ar||r.service_code);
+      const st='<span class="pel-req-st '+r.status+'">'+esc(A?(ST_AR[r.status]||r.status):r.status)+'</span>';
+      return '<div class="pel-req-row">'+
+        '<div class="pel-req-main"><b>'+esc(nm)+'</b> - '+r.credit_cost+' '+(A?'رصيد':'credits')+(r.city_raw?(' - '+esc(r.city_raw)):'')+'<div class="pel-req-meta">'+esc(fmtDate(r.created_at))+(r.preferred_times?(' - '+esc(r.preferred_times)):'')+'</div>'+(r.decision_note?'<div class="pel-req-note">'+esc(r.decision_note)+'</div>':'')+'</div>'+
+        st+'</div>';
+    }).join('') : '<div class="pel-empty">'+esc(A?'لسا ما طلبيت حصة. اختر نوع الحصة فوق واطلب.' : 'No live class requests yet. Pick a class type above and request one.')+'</div>';
+
+    v.innerHTML = '<div class="pel-lc-view">'+
+      welcome+
+      '<div class="pel-lc-head"><div><h2 class="view-title">'+esc(A?'حصص مباشرة':'Live Classes')+'</h2><p class="view-sub">'+esc(A?'رصيدك يصرف على حصص اونلاين وحضورية':'Spend your credits on online and in-person live classes')+'</p></div>'+
+      '<div class="pel-credit-pill"><span class="pel-credit-num" id="pelCreditNum">'+credits+'</span><span>'+(A?'رصيد متبقي':'credits left')+'</span></div></div>'+
+      '<div class="pel-svc-grid">'+cards+'</div>'+
+      (cities.length?('<div class="pel-inperson-note">'+esc(inPersonNote+cityList)+'</div>'):'')+
+      '<div class="pel-form-card"><h3>'+esc(A?'اطلب حصة':'Request a class')+'</h3>'+
+        '<label class="pel-field"><span>'+(esc(A?'نوع الحصة':'Class type'))+'</span><select id="pelSvc">'+opts+'</select></label>'+
+        '<div class="pel-row"><label class="pel-field"><span>'+(esc(A?'مدينتك':'Your city'))+'</span><input id="pelCity" type="text" placeholder="'+esc(A?'اكتب مدينتك':'Type your city')+'"></label></div>'+
+        '<label class="pel-field"><span>'+(esc(A?'اوقات مناسبة لك':'Preferred times'))+'</span><input id="pelTimes" type="text" placeholder="'+esc(A?'مثال: المسا، نهاية الاسبوع':'e.g. evenings, weekends')+'"></label>'+
+        '<label class="pel-field"><span>'+(esc(A?'ملاحظات':'Notes'))+'</span><textarea id="pelNotes" rows="2" placeholder="'+esc(A?'اي شي تبي المعلم يعرفه':'Anything you want the teacher to know')+'"></textarea></label>'+
+        '<div class="pel-form-foot"><span id="pelCost"></span><button class="btn-gold" id="pelSubmit" disabled>'+esc(A?'اطلب الحصة':'Request class')+'</button></div>'+
+        '<p class="pel-form-hint" id="pelHint"></p>'+
+      '</div>'+
+      '<div class="pel-req-card"><h3>'+(esc(A?'طلباتك':'Your requests'))+'</h3><div class="pel-req-list">'+reqRows+'</div></div>'+
+    '</div>';
+
+    if(window.lucide) lucide.createIcons({nodes:v.querySelectorAll('[data-lucide]')});
+    bindForm();
+    if(v.querySelector('[data-welcome]')) v.querySelector('[data-welcome]').addEventListener('click', markWelcome);
+  }
+
+  function bindForm(){
+    const v=document.getElementById('view-liveClasses'); if(!v) return;
+    const sel=v.querySelector('#pelSvc'); const city=v.querySelector('#pelCity');
+    const costEl=v.querySelector('#pelCost'); const hint=v.querySelector('#pelHint'); const btn=v.querySelector('#pelSubmit');
+    function refresh(){
+      if(!sel) return;
+      const opt=sel.options[sel.selectedIndex]; if(!opt) return;
+      const cost=+opt.dataset.cost; const inp=!!(+opt.dataset.inperson); const bal=OVER?OVER.credits:0; const A=ar();
+      costEl.textContent=(A?'التكلفة: ':'Cost: ')+cost+' '+(A?'رصيد':'credits')+' - '+(A?'رصيدك: ':'Balance: ')+bal;
+      const aff = bal>=cost;
+      btn.disabled=!aff;
+      if(inp){ city.style.display=''; city.required=true; hint.textContent = A ? 'الحصة الحضورية متوفرة في النماص فقط. اكتب مدينتك.' : 'In-person classes are available in Al Namas only. Type your city.'; }
+      else { city.style.display=''; city.required=false; hint.textContent=''; }
+      if(!aff) hint.textContent = A ? 'ما عندك رصيد كافي لهالحصة.' : 'You do not have enough credits for this class.';
+    }
+    sel && sel.addEventListener('change', refresh);
+    refresh();
+    btn && btn.addEventListener('click', submitRequest);
+  }
+
+  async function submitRequest(){
+    const v=document.getElementById('view-liveClasses'); if(!v) return;
+    const sel=v.querySelector('#pelSvc'); const city=v.querySelector('#pelCity'); const times=v.querySelector('#pelTimes'); const notes=v.querySelector('#pelNotes'); const btn=v.querySelector('#pelSubmit');
+    if(!sel) return;
+    const cl=c(); if(!cl){ toast({en:'Not ready yet',ar:'لسا جاهز'}); return; }
+    btn.disabled=true; const orig=btn.textContent; btn.textContent=ar()?'يرسل...':'Sending...';
+    try{
+      const { data, error } = await cl.rpc('request_live_class', { p_service_code:sel.value, p_city_raw:city.value||null, p_preferred_times:times.value||null, p_student_notes:notes.value||null });
+      if(error) throw error;
+      toast({en:'Request sent! '+data.credit_cost+' credits debited.', ar:'تم ارسال طلبك! خصم '+data.credit_cost+' رصيد.'}, 'ok');
+      city.value=''; times.value=''; notes.value='';
+      await loadOverview(); render();
+    }catch(e){
+      const msg=(e && e.message)||''; let ar2='ما قدرنا نرسل الطلب.'; let en2='Could not send request.';
+      if(/Insufficient|enough credits/i.test(msg)){ ar2='ما عندك رصيد كافي.'; en2='You do not have enough credits.'; }
+      else if(/not available in this city/i.test(msg)){ ar2='الحصص الحضورية مو متوفرة في مدينتك الحين.'; en2='In-person classes are not available in your city yet.'; }
+      else if(/need a city|require a city/i.test(msg)){ ar2='اكتب مدينتك للحصة الحضورية.'; en2='Type your city for in-person classes.'; }
+      toast({en:en2, ar:ar2}, 'error'); console.error('request_live_class', e);
+    }finally{ btn.disabled=false; btn.textContent=orig; }
+  }
+
+  async function markWelcome(){
+    const cl=c(); if(!cl) return;
+    try{ await cl.rpc('mark_welcome_seen'); }catch(e){}
+    if(OVER) OVER.welcome_seen=true; render();
+  }
+
+  function mount(){
+    ensureShell();
+    const target=document.getElementById('view-liveClasses'); if(!target) return;
+    const mo=new MutationObserver(()=>{ if(target.classList.contains('active')){ loadOverview().then(render); } });
+    mo.observe(target, {attributes:true, attributeFilter:['class']});
+    if(target.classList.contains('active')) loadOverview().then(render);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', mount);
+  else mount();
+  setTimeout(mount, 1200);
+})();
+</script>
+</body>
 </html>

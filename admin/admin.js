@@ -639,6 +639,7 @@ var NAV = [
     {id:'programs', en:'Programs', ar:'البرامج', icon:'credit-card'},
     {id:'plans', en:'Plans', ar:'الباقات', icon:'badge-check', perm:'subscriptions.manage'},
     {id:'billing', en:'Billing & Index', ar:'الفوترة والبداية', icon:'wallet', perm:'subscriptions.manage'},
+    {id:'liveClasses', en:'Class Requests', ar:'طلبات الحصص', icon:'ticket', perm:'subscriptions.manage'},
     {id:'settings', en:'Site Settings', ar:'اعدادات الموقع', icon:'settings', perm:'settings.manage'},
   ]},
   { label:'trust', items:[
@@ -689,7 +690,7 @@ function goTo(id, arg){
 /* ============================================================
    6. VIEW REGISTRY
    ============================================================ */
-var views = { overview, students, student, teachers, groups, groupDetail, courses, interventions, classes, programs, plans: plansView, billing: billingView, questions: questionsView, announcements: announcementsView, settings: settingsView, certificates, audit: auditLog, roles, health, reports };
+var views = { overview, students, student, teachers, groups, groupDetail, courses, interventions, classes, programs, plans: plansView, billing: billingView, liveClasses: liveClassesView, questions: questionsView, announcements: announcementsView, settings: settingsView, certificates, audit: auditLog, roles, health, reports };
 
 /* ============================================================
    7. OVERVIEW (Phase 10)
@@ -1033,6 +1034,20 @@ var tabs = [
             '<button class="btn btn-gold btn-sm" data-cred-add="1">'+esc(lang==='ar'?'+ اضافة':'+ Add')+'</button>' +
             '<button class="btn btn-outline btn-sm" data-cred-add="-1">'+esc(lang==='ar'?'- خصم':'- Deduct')+'</button>' +
           '</div></div>' : '') +
+        (hasPerm('subscriptions.manage') ?
+        '<div class="reason-list" style="margin-bottom:10px;">' +
+          '<div class="reason-item" style="flex-wrap:wrap;gap:8px;align-items:center;">' +
+            '<div style="font-weight:700;min-width:110px;">'+esc(lang==='ar'?'الخطة والمستوى':'Plan & level')+'</div>' +
+            '<select class="input" id="s360Tier" style="width:150px;">' +
+              '<option value="start_from_zero"'+(b.tier==='start_from_zero'?' selected':'')+'>'+esc(lang==='ar'?'ابد من الصفر':'Start From Zero')+'</option>' +
+              '<option value="exam_prep"'+(b.tier==='exam_prep'?' selected':'')+'>'+esc(lang==='ar'?'التجهيز للاختبارات':'Exam Prep')+'</option>' +
+            '</select>' +
+            '<select class="input" id="s360Level" style="width:90px;">' +
+              ['A1','A2','B1','B2','C1','C2'].map(function(l){ return '<option value="'+l+'"'+((b.assessed_cefr_level||'')===l?' selected':'')+'>'+l+'</option>'; }).join('') +
+            '</select>' +
+            '<button class="btn btn-gold btn-sm" id="s360PlanSave">'+esc(lang==='ar'?'حفظ':'Save')+'</button>' +
+            '<span style="font-size:.76rem;color:var(--text-muted);">'+esc(lang==='ar'?'يحدد الخطة والمستوى اللي تاخذ منه الدروس':'Sets the plan + level that drives their lessons')+'</span>' +
+          '</div></div>' : '') +
         '<div class="reason-list" id="credLedger">' +
           (ledger.length ? ledger.map(function(l){
             var d = l.delta>=0?'+'+l.delta:l.delta;
@@ -1062,6 +1077,18 @@ var tabs = [
           if(led){ led.innerHTML = ledger.length ? ledger.map(function(l){ var d=l.delta>=0?'+'+l.delta:l.delta; return '<div class="reason-item"><div style="flex:1;">'+esc(l.reason||'-')+'<div class="why">'+esc(fmtDate(l.created_at))+'</div></div><b style="color:'+(l.delta>=0?'var(--green, #437A22)':'var(--danger,#c0392b)')+';">'+esc(d)+'</b><span class="chip muted">'+esc(lang==='ar'?'الرصيد':'bal')+' '+esc(l.balance_after)+'</span></div>'; }).join('') : emptyBlock(lang==='ar'?'لا يوجد عمليات بعد':'No transactions yet'); }
           $('credDelta').value = '';
         });
+      });
+      // wire plan + CEFR level assignment (drives lesson routing)
+      var planBtn = $('s360PlanSave');
+      if(planBtn) planBtn.addEventListener('click', async function(){
+        var tier = $('s360Tier').value;
+        var level = $('s360Level').value;
+        planBtn.disabled = true; var orig = planBtn.textContent; planBtn.textContent = lang==='ar'?'...':'...';
+        var r4 = await rpc('admin_set_student_plan_level', { p_user_id: current360Uid, p_tier: tier, p_level: level });
+        planBtn.disabled = false; planBtn.textContent = orig;
+        if(!r4.ok){ var em = (r4.error && r4.error.message) || ''; toast(lang==='ar'?'ما قدرنا نحفظ الخطة والمستوى':'Could not save plan + level', true); console.error('admin_set_student_plan_level', em); return; }
+        await audit('student.set_plan_level', 'student', current360Uid, { tier: tier, level: level });
+        toast(lang==='ar'?'تم حفظ الخطة والمستوى':'Plan + level saved');
       });
     }catch(e){ host.innerHTML = '<div class="notice">'+esc(t('errorGeneric'))+'</div>'; }
   })();
@@ -3508,4 +3535,131 @@ var mm = $('mobileMenuBtn');
   });
   boot();
 });
+
+/* ============================================================
+   24b. LIVE CLASS REQUESTS  (student credit requests -> admin approve/decline + city manager)
+   ============================================================ */
+var LC_SVC = {
+  group_online_40:{en:'Group online (40m)', ar:'جماعية اونلاين (40د)'},
+  private_online_40:{en:'Private online (40m)', ar:'خاصة اونلاين (40د)'},
+  in_person_40:{en:'In-person (40m)', ar:'حضورية (40د)'}
+};
+var LC_ST = {pending:{en:'Pending',ar:'قيد الانتظار'},approved:{en:'Approved',ar:'مقبولة'},declined:{en:'Declined',ar:'مرفوضة'},cancelled:{en:'Cancelled',ar:'ملغية'}};
+function lcSvcLabel(code){ var m=LC_SVC[code]||{}; return lang==='ar'?(m.ar||code):(m.en||code); }
+function lcStLabel(st){ var m=LC_ST[st]||{en:st,ar:st}; return lang==='ar'?m.ar:m.en; }
+
+var lcState = { filter:'pending', cities:[], reqs:[] };
+
+async function liveClassesView(){
+  $('viewArea').innerHTML = pageHead(t('liveClasses')||'Class Requests', lang==='ar'?'طلبات الحصص المباشرة والرصيد':'Live class credit requests and cities') + loadingBlock();
+  await lcLoad();
+}
+
+async function lcLoad(){
+  var host = $('viewArea'); if(!host) return;
+  var r = await rpc('admin_live_class_requests', { p_status: lcState.filter==='pending' ? 'pending' : null });
+  var c = await rpc('admin_list_live_class_cities');
+  if(!r.ok){ host.innerHTML = pageHead('Class Requests', '') + errBlock(); return; }
+  lcState.reqs = r.data || [];
+  lcState.cities = (c.ok && c.data) ? c.data : [];
+  lcRender();
+}
+
+function lcRender(){
+  var host = $('viewArea'); if(!host) return;
+  var A = lang==='ar';
+  var reqs = lcState.reqs;
+  var pending = reqs.filter(function(r){ return r.status==='pending'; });
+  var filtBtn = function(val){ return '<button class="btn '+(lcState.filter===val?'btn-gold':'btn-outline')+' btn-sm" data-lc-filter="'+val+'">'+esc(val==='pending'?(A?'المعلقة':'Pending'):(A?'الكل':'All'))+' ('+(val==='pending'?pending.length:reqs.length)+')</button>'; };
+
+  var rows = reqs.length ? reqs.map(function(r){
+    var pend = r.status==='pending';
+    var stCls = r.status;
+    return '<div class="card lc-row" style="margin-bottom:12px;">'+
+      '<div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start;">'+
+        '<div style="flex:1;min-width:220px;">'+
+          '<div style="font-weight:700;">'+esc(lcSvcLabel(r.service_code))+' <span class="chip muted">'+esc(r.credit_cost+' '+(A?'رصيد':'credits'))+'</span></div>'+
+          '<div style="font-size:.82rem;color:var(--text-secondary);margin-top:3px;">'+esc(r.student_email||r.student_id)+'</div>'+
+          '<div style="font-size:.8rem;color:var(--text-muted);margin-top:4px;line-height:1.6;">'+
+            (r.city_raw?(esc((A?'المدينة: ':'City: ')+r.city_raw)+' - '):'')+
+            (r.preferred_times?esc((A?'الوقت المناسب: ':'Preferred: ')+r.preferred_times):'')+
+            (r.student_notes?('<br>'+(A?'ملاحظات: ':'Notes: ')+esc(r.student_notes)):'')+
+          '</div>'+
+          '<div style="font-size:.74rem;color:var(--text-muted);margin-top:6px;">'+esc(fmtDate(r.created_at))+(r.decision_note?(' - '+esc(r.decision_note)):'')+'</div>'+
+        '</div>'+
+        '<span class="chip lc-st '+stCls+'">'+esc(lcStLabel(r.status))+'</span>'+
+      '</div>'+
+      (pend ?
+        '<div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;align-items:center;">'+
+          '<input class="input" data-lc-note="'+esc(r.id)+'" style="flex:1;min-width:160px;" placeholder="'+esc(A?'ملاحظة القرار (اختياري)':'Decision note (optional)')+'">'+
+          '<button class="btn btn-gold btn-sm" data-lc-decide="'+esc(r.id)+'|1">'+esc(A?'قبول':'Approve')+'</button>'+
+          '<button class="btn btn-outline btn-sm" data-lc-decide="'+esc(r.id)+'|0">'+esc(A?'رفض':'Decline')+'</button>'+
+        '</div>' : '')+
+    '</div>';
+  }).join('') : '<div class="card" style="padding:24px;">'+emptyBlock(A?'لا توجد طلبات حاليا':'No requests right now')+'</div>';
+
+  var cityRows = lcState.cities.length ? lcState.cities.map(function(c){
+    return '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);">'+
+      '<span>'+esc(c.city_name)+' <span class="chip '+(c.in_person_available?'green':'muted')+'">'+esc(c.in_person_available?(A?'متوفرة':'Available'):(A?'متوقفة':'Off'))+'</span></span>'+
+      '<button class="btn btn-outline btn-sm" data-lc-city-toggle="'+esc(c.id)+'" data-on="'+(c.in_person_available?1:0)+'">'+esc(c.in_person_available?(A?'ايقاف':'Disable'):(A?'تفعيل':'Enable'))+'</button>'+
+    '</div>';
+  }).join('') : emptyBlock(A?'لا توجد مدن بعد':'No cities yet');
+
+  host.innerHTML = pageHead(A?'طلبات الحصص':'Class Requests', A?'رصيد الحصص وطلبات الحصص المباشرة':'Live class credit requests and cities') +
+    '<div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;">'+filtBtn('pending')+filtBtn('all')+'</div>'+
+    '<div class="section-title">'+esc(A?'الطلبات':'Requests')+'</div>'+
+    rows +
+    '<div class="section-title" style="margin-top:26px;">'+esc(A?'مدن الحصص الحضورية':'In-person cities')+'</div>'+
+    '<div class="card" style="padding:6px 16px;margin-bottom:14px;">'+cityRows+'</div>'+
+    '<div class="card" style="padding:16px;">'+
+      '<div style="font-weight:700;margin-bottom:8px;">'+esc(A?'اضف مدينة':'Add a city')+'</div>'+
+      '<div style="display:flex;gap:8px;flex-wrap:wrap;">'+
+        '<input class="input" id="lcCityName" style="flex:1;min-width:160px;" placeholder="'+esc(A?'اكتب اسم المدينة':'Type city name')+'">'+
+        '<label class="chip-input" style="display:flex;align-items:center;gap:6px;"><input type="checkbox" id="lcCityAvail" checked> '+esc(A?'متوفرة للحضور':'Available')+'</label>'+
+        '<button class="btn btn-gold btn-sm" id="lcCityAdd">'+esc(A?'اضافة':'Add city')+'</button>'+
+      '</div>'+
+      '<div style="font-size:.78rem;color:var(--text-muted);margin-top:8px;">'+esc(A?'اكتب اسم المدينة يدويا، مثل: النماص، ابها، جدة. الحصص الحضورية متوفرة حاليا في النماص فقط.':'Type the city name freely, e.g. Al Namas, Abha, Jeddah. In-person classes are currently available in Al Namas only.')+'</div>'+
+    '</div>';
+  lcWire();
+}
+
+function lcWire(){
+  var host = $('viewArea'); if(!host) return;
+  host.querySelectorAll('[data-lc-filter]').forEach(function(b){ b.addEventListener('click', function(){ lcState.filter = b.getAttribute('data-lc-filter'); lcRender(); }); });
+  host.querySelectorAll('[data-lc-decide]').forEach(function(b){ b.addEventListener('click', async function(){
+    var parts = b.getAttribute('data-lc-decide').split('|');
+    var id = parts[0]; var approve = parts[1] === '1';
+    var noteEl = host.querySelector('[data-lc-note="'+id+'"]');
+    var note = noteEl ? noteEl.value.trim() : '';
+    b.disabled = true; var orig = b.textContent; b.textContent = lang==='ar'?'...':'...';
+    var r = await rpc('admin_decide_live_class_request', { p_request_id:id, p_approve:approve, p_note:note });
+    b.disabled = false; b.textContent = orig;
+    if(!r.ok){ toast(lang==='ar'?(approve?'ما قدرنا نقبل الطلب':'ما قدرنا نرفض الطلب'):(approve?'Could not approve':'Could not decline'), true); return; }
+    await audit('liveclass.'+(approve?'approve':'decline'), 'live_class_request', id, { note:note });
+    toast(lang==='ar'?(approve?'تم قبول الطلب':'تم رفض الطلب')+(approve?'':' - تم ارجاع الرصيد'):(approve?'Request approved':'Request declined - credit refunded'));
+    await lcLoad();
+  }); });
+  host.querySelectorAll('[data-lc-city-toggle]').forEach(function(b){ b.addEventListener('click', async function(){
+    var id = b.getAttribute('data-lc-city-toggle');
+    var on = b.getAttribute('data-on') === '1';
+    var city = (lcState.cities.find(function(c){ return c.id === id; })||{}).city_name || '';
+    var r = await rpc('admin_manage_live_class_city', { p_city_name:city, p_available:!on });
+    if(!r.ok){ toast(lang==='ar'?'ما قدرنا نحدث المدينة':'Could not update city', true); return; }
+    await audit('liveclass.city.toggle', 'live_class_city', id, { city:city, available:!on });
+    await lcLoad();
+  }); });
+  var addBtn = $('lcCityAdd');
+  if(addBtn) addBtn.addEventListener('click', async function(){
+    var name = $('lcCityName').value.trim();
+    if(!name){ toast(lang==='ar'?'اكتب اسم المدينة':'Type a city name', true); return; }
+    var avail = $('lcCityAvail').checked;
+    var r = await rpc('admin_manage_live_class_city', { p_city_name:name, p_available:avail });
+    if(!r.ok){ toast(lang==='ar'?'ما قدرنا نضيف المدينة':'Could not add city', true); return; }
+    await audit('liveclass.city.add', 'live_class_city', null, { city:name, available:avail });
+    $('lcCityName').value = '';
+    toast(lang==='ar'?'تمت اضافة المدينة':'City added');
+    await lcLoad();
+  });
+}
+
 })();

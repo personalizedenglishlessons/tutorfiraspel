@@ -1,0 +1,3 @@
+# Supabase CLI local state (link, temp, credentials) - never commit
+.supabase/
+supabase/.temp/

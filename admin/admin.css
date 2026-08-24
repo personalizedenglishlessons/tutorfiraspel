@@ -292,3 +292,11 @@ table.tbl{ width:100%; border-collapse:collapse; font-size:.82rem; }
 #viewArea details.card > summary::-webkit-details-marker{ display:none; }
 #viewArea details.card > summary:hover{ background:rgba(200,169,106,.05); border-radius:14px; }
 #viewArea details.card[open] > summary{ margin-bottom:6px; }
+
+/* Live class request status chips */
+.chip.lc-st{ text-transform:uppercase; letter-spacing:.03em; font-size:.7rem; font-weight:700; }
+.chip.lc-st.pending{ background:rgba(200,169,106,.16); color:var(--gold, #c8a96a); }
+.chip.lc-st.approved{ background:rgba(67,122,34,.16); color:var(--green, #437A22); }
+.chip.lc-st.declined{ background:rgba(192,57,43,.14); color:var(--danger, #c0392b); }
+.chip.lc-st.cancelled{ background:rgba(128,128,128,.16); color:var(--text-muted, #8a8a8a); }
+.lc-row{ padding:14px 16px; }
