@@ -3625,7 +3625,7 @@ function lcRender(){
 
 function lcWire(){
   var host = $('viewArea'); if(!host) return;
-  host.querySelectorAll('[data-lc-filter]').forEach(function(b){ b.addEventListener('click', function(){ lcState.filter = b.getAttribute('data-lc-filter'); lcRender(); }); });
+  host.querySelectorAll('[data-lc-filter]').forEach(function(b){ b.addEventListener('click', function(){ lcState.filter = b.getAttribute('data-lc-filter'); lcLoad(); }); });
   host.querySelectorAll('[data-lc-decide]').forEach(function(b){ b.addEventListener('click', async function(){
     var parts = b.getAttribute('data-lc-decide').split('|');
     var id = parts[0]; var approve = parts[1] === '1';

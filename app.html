@@ -21761,10 +21761,50 @@ if(window.lucide) lucide.createIcons();
     const cl=c(); if(!cl) return;
     try{ await cl.rpc('mark_welcome_seen'); }catch(e){}
     if(OVER) OVER.welcome_seen=true; render();
+    dismissGlobalWelcome();
+  }
+
+  // Global first-visit welcome: a brand-new student lands on Home, not on
+  // Live Classes, so we surface the welcome banner at the top of Home too.
+  // Polls briefly for the session (the main app logs in async), fetches the
+  // overview once, and injects a dismissible banner if welcome_seen is null.
+  let _welcomeStarted=false;
+  function pelGlobalWelcome(){
+    if(_welcomeStarted) return; _welcomeStarted=true;
+    let tries=0;
+    const iv=setInterval(async ()=>{
+      tries++;
+      if(tries>40){ clearInterval(iv); return; } // ~30s window
+      const cl=c(); if(!cl) return;
+      let sess=null;
+      try{ const s=await cl.auth.getSession(); sess=s&&s.data&&s.data.session; }catch(e){}
+      if(!sess) return;
+      clearInterval(iv);
+      const d=await loadOverview();
+      if(d && !d.welcome_seen){ showGlobalWelcome(); }
+    }, 800);
+  }
+  function showGlobalWelcome(){
+    if(document.getElementById('pelGlobalWelcome')) return;
+    const A=ar();
+    const hi=A?'اهلا وسهل بك في PEL':'Welcome to PEL';
+    const body=A?'كل دروسك ومتابعتك ورصيدك يحفظ هنا. خذ اختبار المستوى عشان نبداك من النقطة المناسبة، وادخل حصص مباشرة اونلاين وحضورية برصيد الحصص. اضغط تم ورج نشوفك.':'All your lessons, progress and live-class credits live here. Take the level test so we start you at the right point, and book live online or in-person classes with your credits. Tap done and lets go.';
+    const el=document.createElement('div'); el.id='pelGlobalWelcome'; el.className='pel-welcome pel-global-welcome';
+    el.innerHTML='<div class="pel-welcome-icon"><i data-lucide="sparkles" width="22" height="22"></i></div><div><h3>'+esc(hi)+'</h3><p>'+esc(body)+'</p></div><button class="btn-gold pel-welcome-btn" data-welcome>تم</button>';
+    const home=document.getElementById('view-home');
+    if(home){ home.insertBefore(el, home.firstChild); }
+    else { const cc=document.querySelector('.content-cols'); if(cc) cc.insertBefore(el, cc.firstChild); else document.body.insertBefore(el, document.body.firstChild); }
+    if(window.lucide) lucide.createIcons({nodes:[el]});
+    el.querySelector('[data-welcome]').addEventListener('click', markWelcome);
+  }
+  function dismissGlobalWelcome(){
+    const el=document.getElementById('pelGlobalWelcome'); if(el) el.remove();
   }
 
   function mount(){
+    pelStyle();
     ensureShell();
+    pelGlobalWelcome();
     const target=document.getElementById('view-liveClasses'); if(!target) return;
     const mo=new MutationObserver(()=>{ if(target.classList.contains('active')){ loadOverview().then(render); } });
     mo.observe(target, {attributes:true, attributeFilter:['class']});
