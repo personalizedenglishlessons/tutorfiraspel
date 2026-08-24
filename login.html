@@ -41,12 +41,13 @@
   --ease: cubic-bezier(.16,.84,.32,1);
 }
 html[data-theme="light"]{
-  --bg:#FAF8F4; --surface:#FFFFFF; --card:#F5F2EC; --card-elevated:#FFFFFF;
-  --border:#E5DFD2; --text:#17171B; --text-secondary:#4B463D; --text-muted:#8C877C;
-  --pel-stem:#17171B; --pel-gold:#A88345;
-  --shadow-soft:0 20px 60px -25px rgba(30,25,15,0.18);
-  --shadow-lift:0 30px 90px -30px rgba(30,25,15,0.24);
-  --gold-glow:0 0 40px -10px rgba(168,131,69,0.35);
+  --bg:#F6F2EB; --surface:#FFFCF6; --card:#FFFFFF; --card-elevated:#FFFDF8;
+  --border:#E6DCC8; --text:#1A1712; --text-secondary:#4A4136; --text-muted:#6B6052;
+  --gold:#C8931C; --gold-soft:#E6C258; --bronze:#9A6E16;
+  --pel-stem:#1A1712; --pel-gold:#C8931C;
+  --shadow-soft:0 20px 55px -24px rgba(40,28,12,.20);
+  --shadow-lift:0 32px 80px -28px rgba(40,28,12,.26);
+  --gold-glow:0 0 40px -10px rgba(200,147,28,.34);
 }
 *,*::before,*::after{box-sizing:border-box;}
 html,body{height:100%;}
@@ -690,8 +691,8 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     el.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:9999;text-align:center;' +
       'padding:.55rem 1rem;font-size:.85rem;font-weight:600;background:#8f7030;color:#fff;';
     el.textContent = ar
-      ? 'المنصة بصيانة مجدولة حالياً — ممكن تواجه بطء مؤقت، جرب بعد شوي'
-      : 'Scheduled maintenance in progress — you may see temporary slowness, please try again shortly';
+      ? 'المنصة في صيانة الحين - ممكن يصير بطى بسيط، جرب بعد شوي'
+      : 'Scheduled maintenance in progress - you may see temporary slowness, please try again shortly';
     document.body.appendChild(el);
   }
   render();
@@ -709,7 +710,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
   let scrollRaf = 0;
   let trustedTopOrigin = null;
 
-  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // Allow entries like "https://*.preview.i.perplexity.ai" - the wildcard
   // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
   // across multiple labels.
   function matchesAllowedOrigin(origin) {
@@ -733,7 +734,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
   // real origin like https://www.perplexity.ai) we trust event.origin directly.
   // When event.origin is "null" (opaque broker srcdoc), we fall back to the
   // broker's stamped `parentOrigin` to identify the top window. The fallback
-  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // is claim-only - we rely on the browser's native `targetOrigin` enforcement
   // on the response path (see postToTrustedTop) to ensure replies can't be
   // delivered to anyone but the actual top window of that claimed origin.
   function getTrustedParentOrigin(event) {
@@ -746,7 +747,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
   // All responses go to window.top with targetOrigin = the allowlisted origin.
   // An attacker that iframes us inside their own null-origin broker can claim
   // any parentOrigin they like, but the browser will drop the reply whenever
-  // the real top's origin doesn't match — so the screenshot never leaves.
+  // the real top's origin doesn't match - so the screenshot never leaves.
   function postToTrustedTop(message) {
     if (!trustedTopOrigin) return;
     try {
@@ -760,7 +761,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     try {
       const computedStyle = getComputedStyle(original);
       // cssText on a computed style is the serialized declaration in modern
-      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // Chromium/Safari - a single read beats enumerating ~400 longhand
       // properties. Firefox returns "" here, so we fall back on empty.
       const serialized = computedStyle.cssText;
       if (serialized) {
@@ -802,7 +803,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
 
   // Cache resolved font URL -> data URI across captures. Fonts on a page
   // essentially never change, and a batch run emits multiple captures back to
-  // back — without this we'd refetch + re-base64 every time.
+  // back - without this we'd refetch + re-base64 every time.
   const fontDataUriCache = new Map();
   const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
 
@@ -958,7 +959,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
       stripExternal(clone);
 
       // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
-      // can resolve them — external font URLs aren't fetched during
+      // can resolve them - external font URLs aren't fetched during
       // foreignObject rendering, which would otherwise force a fallback face
       // and change text metrics.
       const inlinedFontCss = await buildInlinedFontCss();

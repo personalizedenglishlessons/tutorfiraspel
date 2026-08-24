@@ -2420,17 +2420,17 @@ async function billingView(){
     {k:'exam_prep', en:'Exam Prep', ar:'التجهيز للاختبارات'}
   ];
   var matrixHtml = '';
-  tiers.forEach(function(t){
-    matrixHtml += '<div class="section-title">'+esc(lang==='ar'?t.ar:t.en)+' <span class="why">('+esc(t.k)+')</span></div>';
+  tiers.forEach(function(tier){
+    matrixHtml += '<div class="section-title">'+esc(lang==='ar'?tier.ar:tier.en)+' <span class="why">('+esc(tier.k)+')</span></div>';
     matrixHtml += '<div class="card" style="margin-bottom:16px;"><div class="reason-list">';
     [1,2,3].forEach(function(mo){
-      var r = rows.find(function(x){ return x.tier===t.k && x.duration_months===mo; }) || {tier:t.k, duration_months:mo, price:0, weekly_live_classes:0, featured:false, active:true};
+      var r = rows.find(function(x){ return x.tier===tier.k && x.duration_months===mo; }) || {tier:tier.k, duration_months:mo, price:0, weekly_live_classes:0, featured:false, active:true};
       matrixHtml += '<div class="reason-item" style="flex-wrap:wrap;gap:8px;">' +
         '<div style="font-weight:700;min-width:90px;">'+esc(mo+' '+(lang==='ar'?'اشهر':'months'))+'</div>' +
-        '<label style="display:flex;align-items:center;gap:6px;font-size:.78rem;">'+esc(t('price'))+' <input class="input" type="number" style="width:90px" data-pp="price" data-tier="'+t.k+'" data-mo="'+mo+'" value="'+(r.price||0)+'"></label>' +
-        '<label style="display:flex;align-items:center;gap:6px;font-size:.78rem;">'+(lang==='ar'?'حصص اسبوعياً':'Weekly classes')+' <input class="input" type="number" style="width:70px" data-pp="weekly_live_classes" data-tier="'+t.k+'" data-mo="'+mo+'" value="'+(r.weekly_live_classes||0)+'"></label>' +
-        '<label style="display:flex;align-items:center;gap:6px;font-size:.78rem;"><input type="checkbox" data-pp="featured" data-tier="'+t.k+'" data-mo="'+mo+'" '+(r.featured?'checked':'')+'> '+(lang==='ar'?'مميزة':'Featured')+'</label>' +
-        '<label style="display:flex;align-items:center;gap:6px;font-size:.78rem;"><input type="checkbox" data-pp="active" data-tier="'+t.k+'" data-mo="'+mo+'" '+(r.active!==false?'checked':'')+'> '+(lang==='ar'?'متاحة':'Active')+'</label>' +
+        '<label style="display:flex;align-items:center;gap:6px;font-size:.78rem;">'+esc(t('price'))+' <input class="input" type="number" style="width:90px" data-pp="price" data-tier="'+tier.k+'" data-mo="'+mo+'" value="'+(r.price||0)+'"></label>' +
+        '<label style="display:flex;align-items:center;gap:6px;font-size:.78rem;">'+(lang==='ar'?'حصص اسبوعياً':'Weekly classes')+' <input class="input" type="number" style="width:70px" data-pp="weekly_live_classes" data-tier="'+tier.k+'" data-mo="'+mo+'" value="'+(r.weekly_live_classes||0)+'"></label>' +
+        '<label style="display:flex;align-items:center;gap:6px;font-size:.78rem;"><input type="checkbox" data-pp="featured" data-tier="'+tier.k+'" data-mo="'+mo+'" '+(r.featured?'checked':'')+'> '+(lang==='ar'?'مميزة':'Featured')+'</label>' +
+        '<label style="display:flex;align-items:center;gap:6px;font-size:.78rem;"><input type="checkbox" data-pp="active" data-tier="'+tier.k+'" data-mo="'+mo+'" '+(r.active!==false?'checked':'')+'> '+(lang==='ar'?'متاحة':'Active')+'</label>' +
         '</div>';
     });
     matrixHtml += '</div></div>';
@@ -2984,7 +2984,7 @@ async function plansView(){
   $('viewArea').innerHTML = pageHead(t('plans'), lang === 'ar' ? 'الباقات، الاشتراكات، وانتها الوصول - كل شي من الخادم.' : 'Plans, entitlements and expiring access - all server-side.') + loadingBlock();
   var [ov, prog] = await Promise.all([
     rpc('admin_plans_overview'),
-    client().from('programs').select('*').order('sort_order,created_at')
+    client().from('programs').select('*').eq('active', true).order('sort_order,created_at')
   ]);
   if(!ov.ok){ $('viewArea').innerHTML = errBlock(ov.error && ov.error.message); return; }
   var d = ov.data || {};
@@ -3107,7 +3107,7 @@ function savePlanForm(catalog){
       '<div class="field"><label>Name (EN)</label><input class="input" id="pgEn"></div>' +
       '<div class="field"><label>Name (AR)</label><input class="input" id="pgAr"></div>' +
       '<div class="field"><label>' + esc(t('durationDays')) + '</label><input class="input" type="number" id="pgDays" value="30"></div>' +
-      '<div class="field"><label>' + esc(t('price')) + '</label><input class="input" id="pgPrice" placeholder="180"></div>' +
+      '<div class="field"><label>' + esc(t('price')) + '</label><input class="input" id="pgPrice" placeholder="89"></div>' +
       '<div class="field"><label>' + esc(t('currency')) + '</label><input class="input" id="pgCur" value="SAR"></div>' +
       '<div class="field"><label>' + esc(t('weeklyLive')) + '</label><input class="input" type="number" id="pgWeekly" value="0"></div>' +
       '<div class="field"><label>' + esc(t('platformAccess')) + '</label><select class="input" id="pgAccess"><option value="true">Yes</option><option value="false">No</option></select></div>' +
