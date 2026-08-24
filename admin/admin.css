@@ -1,5 +1,5 @@
 /* ============================================================
-   PEL ADMIN — design system (reuses the student app tokens)
+   PEL ADMIN - design system (reuses the student app tokens)
    ============================================================ */
 :root{
   --bg:#0E0E10; --surface:#17171B; --card:#1E1F25; --card-elevated:#262833;
@@ -14,13 +14,14 @@
   --sidebar-w:264px; --topbar-h:64px;
 }
 html[data-theme="light"]{
-  --bg:#F3EBDC; --surface:#FBF6ED; --card:#EFE4D0; --card-elevated:#FFF9F0;
-  --border:#D8C8AA; --text:#2B2518; --text-secondary:#554B3B; --text-muted:#6D614F;
-  --gold:#7B5A22; --gold-soft:#A9864A; --bronze:#8A6A2E; --emerald:#2F745E;
-  --pel-stem:#2B2518; --pel-gold:#7B5A22;
-  --shadow-soft:0 18px 50px -24px rgba(70,52,23,.25);
-  --shadow-lift:0 30px 75px -28px rgba(70,52,23,.30);
-  --gold-glow:0 0 36px -12px rgba(123,90,34,.34);
+  --bg:#F6F2EB; --surface:#FFFCF6; --card:#FFFFFF; --card-elevated:#FFFDF8;
+  --border:#E6DCC8; --text:#1A1712; --text-secondary:#4A4136; --text-muted:#6B6052;
+  --gold:#C8931C; --gold-soft:#E6C258; --bronze:#9A6E16; --emerald:#2F745E;
+  --warning:#B07A2A; --danger:#C25C5C; --success:#2F8A57;
+  --pel-stem:#1A1712; --pel-gold:#C8931C;
+  --shadow-soft:0 20px 55px -24px rgba(40,28,12,.20);
+  --shadow-lift:0 32px 80px -28px rgba(40,28,12,.26);
+  --gold-glow:0 0 40px -10px rgba(200,147,28,.34);
 }
 *,*::before,*::after{box-sizing:border-box;}
 html,body{height:100%;}
