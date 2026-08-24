@@ -2482,6 +2482,8 @@ async function billingView(){
 
   $('ppSave').addEventListener('click', async function(){
     this.disabled = true; this.textContent = '...';
+    var errs = 0; var firstMsg = '';
+    function noteErr(e){ errs++; if(!firstMsg) firstMsg = String((e&&e.message)||e||'').slice(0,180); }
     // pricing matrix
     var cells = document.querySelectorAll('[data-pp]');
     var byKey = {};
@@ -2492,16 +2494,18 @@ async function billingView(){
       if(f === 'price' || f === 'weekly_live_classes') byKey[k][f] = +inp.value || 0;
       else byKey[k][f] = inp.checked;
     });
-    var errs = 0;
-    for (var k in byKey){
-      var r = await c.from('plan_pricing').upsert(byKey[k], {onConflict:'tier,duration_months'});
-      if(r.error) errs++;
-    }
-    // index content
-    document.querySelectorAll('[data-ix]').forEach(function(ta){
+    await Promise.all(Object.keys(byKey).map(function(k){
+      return c.from('plan_pricing').upsert(byKey[k], {onConflict:'tier,duration_months'}).then(function(r){
+        if(r.error){ console.error('plan_pricing save',byKey[k],r.error); noteErr(r.error); }
+      }).catch(function(e){ console.error('plan_pricing save',byKey[k],e); noteErr(e); });
+    }));
+    // index content (awaited so failures are counted accurately)
+    await Promise.all(Array.prototype.slice.call(document.querySelectorAll('[data-ix]')).map(function(ta){
       var key = ta.dataset.ix, v = ta.value.trim();
-      c.from('site_settings').upsert({key:key, value:v}, {onConflict:'key'}).then(function(){}).catch(function(){ errs++; });
-    });
+      return c.from('site_settings').upsert({key:key, value:v}, {onConflict:'key'}).then(function(r){
+        if(r.error){ console.error('site_settings save',key,r.error); noteErr(r.error); }
+      }).catch(function(e){ console.error('site_settings save',key,e); noteErr(e); });
+    }));
     // FAQs (collect rows in DOM order, drop fully-blank ones)
     var faqOut = [];
     document.querySelectorAll('[data-faq-row]').forEach(function(row){
@@ -2511,11 +2515,11 @@ async function billingView(){
     });
     try{
       var fr = await c.from('site_settings').upsert({key:'faqs', value:faqOut}, {onConflict:'key'});
-      if(fr.error) errs++;
-    }catch(e){ errs++; }
+      if(fr.error){ console.error('site_settings faqs save',fr.error); noteErr(fr.error); }
+    }catch(e){ console.error('site_settings faqs save',e); noteErr(e); }
     await audit('billing.update', 'plan_pricing', '', { cells: Object.keys(byKey).length });
     this.disabled = false; this.textContent = esc(t('save'));
-    toast(errs ? (errs+' '+(lang==='ar'?'حقول لم تحفظ':'fields failed')) : t('saved'), !!errs);
+    toast(errs ? (errs+' '+(lang==='ar'?'حقول لم تحفظ':'fields failed')+(firstMsg?': '+firstMsg:'')) : t('saved'), !!errs);
   });
   loadIcons();
 }
