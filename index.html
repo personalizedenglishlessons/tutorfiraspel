@@ -31,6 +31,7 @@
 <script src="lib/daily-lesson.js" defer></script>
 <script src="lib/pel-personalization.js" defer></script>
 <script src="lib/onboard.js" defer></script>
+<script src="lib/pel-assessment.js" defer></script>
 <style>
 :root{
   --bg:#0E0E10;
@@ -61,20 +62,26 @@
 }
 
 html[data-theme="light"]{
-  --bg:#FAF8F4;
-  --surface:#FFFFFF;
-  --card:#F5F2EC;
-  --card-elevated:#FFFFFF;
-  --border:#E5DFD2;
-  --text:#17171B;
-  --text-secondary:#4B463D;
-  --text-muted:#8C877C;
-  --pel-stem:#17171B;
-  --pel-gold:#A88345;
-  --shadow-soft: 0 20px 60px -25px rgba(30,25,15,0.18);
-  --shadow-lift: 0 30px 80px -30px rgba(30,25,15,0.22);
-  --gold-glow: 0 0 40px -10px rgba(168,131,69,0.35);
+  --bg:#F3EBDC;
+  --surface:#FBF6ED;
+  --card:#EFE4D0;
+  --card-elevated:#FFF9F0;
+  --border:#D8C8AA;
+  --text:#2B2518;
+  --text-secondary:#554B3B;
+  --text-muted:#6D614F;
+  --gold:#7B5A22;
+  --gold-soft:#A9864A;
+  --bronze:#8A6A2E;
+  --emerald:#2F745E;
+  --success:#2F8A57;
+  --pel-stem:#2B2518;
+  --pel-gold:#7B5A22;
+  --shadow-soft:0 18px 50px -24px rgba(70,52,23,.25);
+  --shadow-lift:0 30px 75px -28px rgba(70,52,23,.30);
+  --gold-glow:0 0 36px -12px rgba(123,90,34,.34);
 }
+html[data-theme="light"] .fcd-icon.pi{ color:#6D28B9; background:rgba(109,40,185,.14); }
 
 *,*::before,*::after{box-sizing:border-box;}
 html{scroll-behavior:smooth; overflow-x:hidden; scroll-padding-top:calc(var(--header-h) + var(--site-banner-h, 0px));}
@@ -215,7 +222,7 @@ header.scrolled{
 html[data-theme="light"] .pel-logo{ display:none; }
 html[data-theme="light"] .pel-logo-light{ display:inline-block; }
 .hero-eyebrow::before{ display:none; }
-.hero-eyebrow .pel-logo{ height:30px; width:auto; flex-shrink:0; }
+.hero-eyebrow .pel-logo, .hero-eyebrow .pel-logo-light{ height:30px; width:auto; flex-shrink:0; }
 .hero-eyebrow .pel-word{ font-family:'Fraunces',serif; font-weight:600; letter-spacing:.02em; font-size:1.05em; }
 .hero-eyebrow .pel-tag{ font-family:'Plus Jakarta Sans','Tajawal',sans-serif; font-size:.62em; letter-spacing:.26em; text-transform:uppercase; opacity:.55; margin-left:3px; }
 nav.primary-nav{ display:flex; align-items:center; gap:38px; }
@@ -1050,7 +1057,7 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-of
 .building p{ font-size:.92rem; color:var(--text-secondary); }
 .building .building-route{ font-size:.78rem; color:var(--text-muted); }
 
-/* - tasteful 3D, not vibe-coded - */
+/* - tasteful 3D, intentional treatment - */
 .hero-visual{ perspective:1400px; transform-style:preserve-3d; }
 .laptop{ transform-style:preserve-3d; transition:transform .6s var(--ease), box-shadow .6s var(--ease); }
 .price-card, #personalPreview .card, .outcome-grid .card{ transform-style:preserve-3d; transition:transform .4s var(--ease), box-shadow .4s var(--ease); }
@@ -1094,7 +1101,7 @@ section{ padding-top:80px; padding-bottom:80px; }
       <img class="pel-logo pel-logo-light" src="brand/pel-wordmark-dark.svg" alt="PEL">
     </a>
     <nav class="primary-nav">
-      <a href="#home">الرييسية</a>
+      <a href="#home">البداية</a>
       <a href="#personalPreview">خطتك</a>
       <a href="#pricing">الباقات</a>
       <a href="#liveTeaching">تعلم وممارسة</a>
@@ -1120,7 +1127,7 @@ section{ padding-top:80px; padding-bottom:80px; }
 </header>
 
 <div class="mobile-menu" id="mobileMenu" dir="rtl">
-  <a href="#home" class="mobile-nav-link">الرييسية</a>
+  <a href="#home" class="mobile-nav-link">البداية</a>
   <a href="#personalPreview" class="mobile-nav-link">خطتك</a>
   <a href="#pricing" class="mobile-nav-link">الباقات</a>
   <a href="#liveTeaching" class="mobile-nav-link">تعلم وممارسة</a>
@@ -1226,7 +1233,7 @@ section{ padding-top:80px; padding-bottom:80px; }
             <span class="ls-play"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h3l5 4V5z"/><path d="M16 9a5 5 0 0 1 0 6"/></svg></span>
             <div class="txt">
               <b>How much is this?</b>
-              <span class="say arabic">بكم هذا؟ · هاو ماتش إز ذس</span>
+              <span class="say arabic">بكم هذا؟ · هاو ماتش از ذس</span>
             </div>
           </div>
           <div class="ls-line reply">
@@ -1280,7 +1287,7 @@ section{ padding-top:80px; padding-bottom:80px; }
           <div style="padding-left:10px;"><div class="route-label">بعدها</div><div style="font-size:.9rem; margin-top:3px;">تسال زميلك عن مساعدة</div></div>
         </div>
         <div class="pp-route">
-          <div style="padding-left:10px;"><div class="route-label">بعدين</div><div style="font-size:.9rem; margin-top:3px;">اجتماعات، عملاء، مقابلات</div></div>
+          <div style="padding-left:10px;"><div class="route-label">بعدين</div><div style="font-size:.9rem; margin-top:3px;">اجتماعات، عملا، مقابلات</div></div>
         </div>
       </div>
     </div>
@@ -1293,12 +1300,12 @@ section{ padding-top:80px; padding-bottom:80px; }
 <section class="plan-home" id="planHome" style="display:none;" aria-label="Your learning plan"></section>
 
 <!-- PRICING - brought up for faster decision -->
-<section id="pricing" style="background:var(--surface); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+<section id="pricing" style="background:var(--surface); border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding-bottom:90px; scroll-margin-top:90px; scroll-margin-bottom:80px;">
   <div class="container">
     <div class="section-head center reveal" dir="rtl">
       <span class="eyebrow">باقات المنصة</span>
       <h2 class="arabic-h">وصول كامل للمنصة، بسعر واضح.</h2>
-      <p class="arabic">هذي الباقات تعطيك وصول كامل للمنصة، وبعضها يشمل حصصاً مباشرة (اونلاين) مع الاستاذ فراس اسبوعياً. الاشتراك يتم عبر واتساب مباشرة.</p>
+      <p class="arabic">عندنا مسارين: ابد من الصفر، والتجهيز للاختبارات. كل مسار فيه 3 باقات. بس باقة 3 اشهر للتجهيز للاختبارات هي اللي تشمل حصة مباشرة كل اسبوع. الاشتراك والدفع كله عن طريق واتساب، مافي دفع اونلاين.</p>
     </div>
     <div class="pricing-grid" id="pricingGrid" dir="rtl"></div>
     <p class="pricing-note arabic">
@@ -1343,72 +1350,105 @@ section{ padding-top:80px; padding-bottom:80px; }
 <script src="lib/pel-plans.js"></script>
 <script src="lib/pel-settings.js"></script>
 <script>
-/* PRICING - rendered from the single authoritative config (pel-plans.js). Bilingual, reacts to pel_account_prefs.lang */
+/* PRICING - rendered from the live plan_pricing matrix (admin-editable via
+   /admin.html > Plans). Two tiers (Start From 0 / Exam Prep) x 3 durations.
+   PEL_PLANS (static) stays as the first-paint fallback until PEL_PLANS_DB loads. */
 (function () {
   var grid = document.getElementById('pricingGrid');
-  if (!grid || !window.PEL_PLANS) return;
+  if (!grid) return;
   function getLang(){ try{ var p=JSON.parse(localStorage.getItem('pel_account_prefs')||'null'); return p&&p.lang==='ar'?'ar':'en'; }catch(e){ return document.documentElement.lang==='ar'?'ar':'en'; } }
-  /* Live availability: the admin Site Settings toggle overrides pel-plans.js
-     so flipping "6-Month plan available" in /admin.html re-opens this card
-     without a redeploy. Falls back to the static config until settings load. */
-  function planView(p){
-    if (p.code === 'plan-6m' && window.PEL_SITE && window.PEL_SITE.plan6mAvailable === true) {
-      var v = {};
-      for (var k in p) v[k] = p[k];
-      v.available = true;
-      v.badgeAr = 'متاح الان';
-      v.badgeEn = 'Back & available';
-      v.liveNoteAr = 'عدد الجلسات حسب تقدمك - والوقت يناسب جدولك';
-      v.liveNoteEn = 'Sessions added as you progress, scheduled around your time';
-      return v;
-    }
-    return p;
+  var TIERS = ['start_from_zero','exam_prep'];
+  function meta(t){
+    return t==='exam_prep' ? {
+      nameEn:'Exam Prep', nameAr:'التجهيز للاختبارات',
+      termEn:'Advanced - STEP, TOEFL, IELTS', termAr:'متقدم - STEP و TOEFL و IELTS',
+      descEn:'For advanced students targeting STEP, TOEFL and IELTS.', descAr:'للمتقدمين المستعدين لـ STEP و TOEFL و IELTS.',
+      featEn:['Exam prep tracks','Mock exam simulator questions','Targeted vocabulary modules','Instant translation & writing review'],
+      featAr:['مسارات التجهيز للاختبارات','اسيلة محاكاة للامتحان','وحدات مصطلحات مستهدفة','ترجمة فورية ومراجعة كتابة']
+    } : {
+      nameEn:'Start From 0', nameAr:'ابد من الصفر',
+      termEn:'Absolute beginner - first letter', termAr:'مبتدي من الصفر - اول حرف',
+      descEn:'For absolute beginners starting from scratch.', descAr:'للمبتديين من الصفر خطوة بخطوة.',
+      featEn:['Full dashboard & lesson access','Baseline non-advanced lessons','Daily real-world scenarios','Instant translation & Arabic support'],
+      featAr:['وصول كامل للوحة التحكم والدروس','دروس اساسية غير متقدمة','سيناريوهات يومية واقعية','ترجمة فورية وشرح بالعربي']
+    };
   }
+  function durLabel(m,ar){ return m===1?(ar?'شهر':'1 Month'):(m===2?(ar?'شهران':'2 Months'):(ar?'3 اشهر':'3 Months')); }
+  function contact(){ return (window.PEL_SITE && PEL_SITE.whatsapp) || (window.PEL_PLANS && PEL_PLANS.contact) || '966557178070'; }
+  function waLink(text){ return 'https://wa.me/'+contact()+'?text='+encodeURIComponent(text); }
+  function matrixRows(){
+    if(window.PEL_PLANS_DB && PEL_PLANS_DB.length) return PEL_PLANS_DB;
+    return [
+      {tier:'start_from_zero',duration_months:1,price:89,weekly_live_classes:0,featured:false},
+      {tier:'start_from_zero',duration_months:2,price:139,weekly_live_classes:0,featured:false},
+      {tier:'start_from_zero',duration_months:3,price:169,weekly_live_classes:0,featured:true},
+      {tier:'exam_prep',duration_months:1,price:89,weekly_live_classes:0,featured:false},
+      {tier:'exam_prep',duration_months:2,price:139,weekly_live_classes:0,featured:false},
+      {tier:'exam_prep',duration_months:3,price:169,weekly_live_classes:1,featured:true}
+    ];
+  }
+  if(!document.getElementById('pel-pricing-style')){ var st=document.createElement('style'); st.id='pel-pricing-style'; st.textContent='.pel-track{padding:34px;border:1px solid var(--border);border-radius:24px;background:linear-gradient(180deg,var(--surface),var(--card));}.pel-subgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch;}@media(max-width:980px){.pel-subgrid{grid-template-columns:1fr;max-width:440px;margin:0 auto;}}'; document.head.appendChild(st); }
   function renderPricing(){
     var ar = getLang()==='ar';
-    grid.setAttribute('dir', ar ? 'rtl' : 'ltr');
-    var plans = window.PEL_PLANS.plans.map(planView);
-    var stages = {
-      'plan-30d': {ar:'بداية', en:'Start'},
-      'plan-2m': {ar:'ابني عادتك', en:'Build the habit'},
-      'plan-3m': {ar:'ابني ثقتك', en:'Build confidence'},
-      'plan-6m': {ar:'تعمق', en:'Go deeper'}
-    };
+    grid.setAttribute('dir', ar?'rtl':'ltr');
+    grid.style.gridTemplateColumns = '1fr';
+    grid.style.gap = '0';
+    grid.style.maxWidth = '1180px';
+    grid.style.margin = '0 auto';
+    var rows = matrixRows();
     var html = '';
-    for (var i = 0; i < plans.length; i++) {
-      var p = plans[i];
-      var delay = i === 0 ? '' : ' reveal-delay-' + (i % 3 + 1);
-      var st = stages[p.code]||{ar:'',en:''};
-      html += '<div class="price-card reveal' + delay + (p.featured ? ' highlight' : '') + '">';
-      var badge = ar ? p.badgeAr : (p.badgeEn||p.badgeAr);
-      if (badge) html += '<span class="price-badge">' + badge + '</span>';
-      html += '<div style="font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); font-weight:700; margin-bottom:6px;">' + (ar?st.ar:st.en) + '</div>';
-      html += '<div class="price-name ' + (ar?'arabic-h':'') + '">' + (ar ? p.nameAr : p.nameEn) + '</div>';
-      html += '<div class="price-term">' + (ar ? (p.termAr) : (p.termEn)) + '</div>';
-      html += '<div class="price-desc ' + (ar?'arabic':'') + '" style="min-height:42px;">' + (ar ? p.liveNoteAr : p.liveNoteEn) + '</div>';
-      html += '<div class="price-value"><span class="amount">' + p.price + '<small>' + (ar?window.PEL_PLANS.currencyAr:window.PEL_PLANS.currency) + '</small></span><span class="per">/ ' + p.durationDays + (ar?' يوم':' days') + '</span></div>';
-      var perMonth = ar ? p.perMonthAr : (p.perMonthEn||p.perMonthAr);
-      if (perMonth) html += '<div class="price-save">' + perMonth + '</div>';
-      html += '<ul class="price-list">';
-      var feats = ar ? p.featuresAr : (p.featuresEn||p.featuresAr);
-      for (var f = 0; f < feats.length; f++) {
-        html += '<li class="' + (ar?'arabic':'') + '">' + feats[f] + '</li>';
+    for (var t=0; t<TIERS.length; t++){
+      var tier = TIERS[t]; var m = meta(tier);
+      var tierRows = rows.filter(function(r){ return r.tier===tier; }).sort(function(a,b){ return a.duration_months-b.duration_months; });
+      if(!tierRows.length) continue;
+      html += '<div class="pel-track reveal" style="margin-top:'+(t===0?'0':'34px')+'">';
+      html += '<div class="section-head" dir="'+(ar?'rtl':'ltr')+'" style="text-align:center;margin-bottom:24px;">';
+      html += '<span class="eyebrow">'+esc(m.termEn.split(' - ')[0])+'</span>';
+      html += '<h2 class="'+(ar?'arabic-h':'')+'" style="font-size:1.5rem;margin:8px 0;">'+(ar?m.nameAr:m.nameEn)+'</h2>';
+      html += '<p class="'+(ar?'arabic':'')+'" style="font-size:.88rem;color:var(--text-muted);max-width:560px;margin:0 auto;line-height:1.7;">'+(ar?m.descAr:m.descEn)+'</p></div>';
+      html += '<div class="pel-subgrid">';
+      for (var i=0; i<tierRows.length; i++){
+        var r = tierRows[i]; var dl = durLabel(r.duration_months, ar);
+        var pm = Math.round(r.price / r.duration_months);
+        html += '<div class="price-card reveal'+(r.featured?' highlight':'')+'">';
+        if(r.featured) html += '<span class="price-badge">'+(ar?'افضل قيمة':'Best value')+'</span>';
+        html += '<div class="price-term">'+esc(dl)+'</div>';
+        html += '<div class="price-value"><span class="amount">'+r.price+'<small>'+(ar?'ريال':'SAR')+'</small></span><span class="per">/ '+r.duration_months+(ar?' اشهر':' mo')+'</span></div>';
+        html += '<div class="price-save">'+(ar?'يعادل':'equiv.')+' '+pm+' '+(ar?'ريال شهرياً':'SAR / mo')+'</div>';
+        if(r.weekly_live_classes>0){
+          html += '<div style="margin:14px 0 0;padding:12px 14px;border:1px solid rgba(200,169,106,.35);border-radius:12px;background:rgba(200,169,106,.08);"><b style="color:var(--gold);font-size:.92rem;">'+(ar?'حصة مباشرة كل اسبوع':'1 live class / week')+'</b><br><span style="font-size:.74rem;color:var(--text-muted);">'+(ar?'مشمولة معك بهالباقة':'included with this package')+'</span></div>';
+        } else if(tier==='exam_prep'){
+          html += '<div style="margin:14px 0 0;font-size:.78rem;color:var(--text-muted);">'+(ar?'ما فيها حصص مباشرة بهالمدة':'No live classes at this duration')+'</div>';
+        } else {
+          html += '<div style="margin:14px 0 0;font-size:.78rem;color:var(--text-muted);">'+(ar?'الحصص المباشرة غير مشمولة':'Live classes not included')+'</div>';
+        }
+        html += '<ul class="price-list">';
+        var feats = ar?m.featAr:m.featEn;
+        for (var f=0; f<feats.length; f++) html += '<li class="'+(ar?'arabic':'')+'">'+esc(feats[f])+'</li>';
+        html += '</ul>';
+        var waText = ar ? ('السلام عليكم، ابي اشترك بباقة '+dl+' من خطة '+(tier==='exam_prep'?'التجهيز للاختبارات':'ابد من الصفر')+' بـ '+r.price+' ريال. وش طريقة الدفع؟') : ('Hello, I want the '+dl+' plan ('+tier+') at '+r.price+' SAR. How do I pay?');
+        html += '<a href="'+waLink(waText)+'" target="_blank" rel="noopener" class="'+(r.featured?'btn-gold':'btn-outline')+' magnetic" data-magnetic>'+(ar?'سجل عن طريق واتساب':'Enroll via WhatsApp')+'</a>';
+        html += '<div style="margin-top:10px;font-size:.72rem;color:var(--text-muted);text-align:center;">'+(ar?'التنشيط خلال دقايق بعد التاكيد اليدوي':'Activation within minutes after manual confirmation')+'</div>';
+        html += '</div>';
       }
-      html += '</ul>';
-      html += '<div class="price-excluded"><span class="x">✓</span><span class="' + (ar?'arabic':'') + '">' + (ar ? 'الدفع عبر واتساب - التنشيط خلال دقايق' : 'Pay via WhatsApp, activated in minutes') + '</span></div>';
-      if (p.available === false) {
-        html += '<a href="' + window.PEL_PLANS.waLink(p, ar?'ar':'en') + '" target="_blank" rel="noopener" class="btn-outline magnetic" data-magnetic style="opacity:.75;">' + (ar ? 'ابلغني لما تتوفر' : 'Notify me when live') + '</a>';
-      } else {
-        html += '<a href="' + window.PEL_PLANS.waLink(p, ar?'ar':'en') + '" target="_blank" rel="noopener" class="' + (p.featured ? 'btn-gold' : 'btn-outline') + ' magnetic" data-magnetic>' + (ar ? 'سجل الان' : 'Enroll Now') + '</a>';
-      }
-      html += '</div>';
+      html += '</div>'; // subgrid
+      html += '</div>'; // track panel
     }
+    // manual credit purchase callout
+    html += '<div style="margin-top:34px;padding:24px;border:1px dashed rgba(200,169,106,.4);border-radius:20px;text-align:center;background:rgba(200,169,106,.04);">';
+    html += '<div style="font-weight:700;font-size:1rem;">'+(ar?'تبغى حصص مباشرة اضافية؟':'Want extra live classes?')+'</div>';
+    html += '<p class="'+(ar?'arabic':'')+'" style="font-size:.86rem;color:var(--text-muted);margin:8px auto 16px;max-width:520px;line-height:1.7;">'+(ar?'اشتر رصيد حصص يدوياً عن طريق واتساب بعد تاكيد الدفع. مافي دفع اونلاين، كل شي يتم يدوياً.':'Buy class credits manually via WhatsApp after payment confirmation. No online payment, everything is processed manually.')+'</p>';
+    var credWa = ar ? 'السلام عليكم، ابي اشتري رصيد حصص مباشرة اضافية. وش المتوفر؟' : 'Hello, I want to buy extra live class credits. What is available?';
+    html += '<a href="'+waLink(credWa)+'" target="_blank" rel="noopener" class="btn-outline magnetic" data-magnetic>'+(ar?'اشتر رصيد حصص عن طريق واتساب':'Buy class credits via WhatsApp')+'</a>';
+    html += '</div>';
     grid.innerHTML = html;
   }
+  function esc(s){ return String(s==null?'':s).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];}); }
   renderPricing();
   window.addEventListener('pel-lang-changed', renderPricing);
   window.addEventListener('storage', function(e){ if(e.key==='pel_account_prefs') renderPricing(); });
-  window.addEventListener('pel-site-settings', function(){ renderPricing(); });
+  window.addEventListener('pel-site-settings', renderPricing);
+  window.addEventListener('pel-db-plans', renderPricing);
 })();
 </script>
 
@@ -1539,12 +1579,12 @@ function applyIndexLang(lang){
   if(btn) btn.textContent = lang==='ar' ? 'EN' : 'ع';
   // header nav
   var navMap = [
-    {sel:'.primary-nav a[href="#home"]', ar:'الرييسية', en:'Home'},
+    {sel:'.primary-nav a[href="#home"]', ar:'البداية', en:'Home'},
     {sel:'.primary-nav a[href="#personalPreview"]', ar:'خطتك', en:'Your plan'},
     {sel:'.primary-nav a[href="#pricing"]', ar:'الباقات', en:'Pricing'},
     {sel:'.primary-nav a[href="#liveTeaching"]', ar:'تعلم وممارسة', en:'Learn & practice'},
     {sel:'.primary-nav a[href="#faq"]', ar:'الاسيلة', en:'FAQ'},
-    {sel:'.mobile-menu a[href="#home"]', ar:'الرييسية', en:'Home'},
+    {sel:'.mobile-menu a[href="#home"]', ar:'البداية', en:'Home'},
     {sel:'.mobile-menu a[href="#personalPreview"]', ar:'خطتك', en:'Your plan'},
     {sel:'.mobile-menu a[href="#pricing"]', ar:'الباقات', en:'Pricing'},
     {sel:'.mobile-menu a[href="#liveTeaching"]', ar:'تعلم وممارسة', en:'Learn & practice'},
@@ -1568,9 +1608,9 @@ function applyIndexLang(lang){
   loginTexts.forEach(function(el){ el.textContent = lang==='ar' ? 'دخول الطلاب' : 'Student Login'; });
   // hero
   var heroH1=document.querySelector('.hero h1.arabic-h');
-  if(heroH1) heroH1.innerHTML = lang==='ar' ? 'انجليزي يشبه حياتك، <em>مو جمل تحفظها.</em>' : 'English that sounds like your life, <em>not a textbook.</em>';
+  if(heroH1){ var h1ar = (window.PEL_SITE && PEL_SITE.heroHeadline && PEL_SITE.heroHeadline.ar) ? PEL_SITE.heroHeadline.ar : 'انجليزي يشبه حياتك، <em>مو جمل تحفظها.</em>'; var h1en = (window.PEL_SITE && PEL_SITE.heroHeadline && PEL_SITE.heroHeadline.en) ? PEL_SITE.heroHeadline.en : 'English that sounds like your life, <em>not a textbook.</em>'; heroH1.innerHTML = lang==='ar' ? h1ar : h1en; }
   var heroSub=document.querySelector('.hero .hero-sub');
-  if(heroSub) heroSub.textContent = lang==='ar' ? 'قل لنا وش تبي الانجليزي لاجله، شغلك سفرك سوالفك اليومية، ونبني لك بداية على مقاسك بدروس من مواقف حقيقية وشرح واضح بالعربي' : 'Tell us what you need English for, work travel everyday talk. We will build your starting point from real situations, with clear Arabic support.';
+  if(heroSub){ var hsar = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.ar) ? PEL_SITE.heroSub.ar : 'قل لنا وش تبي الانجليزي لاجله، شغلك سفرك سوالفك اليومية، ونبني لك بداية على مقاسك بدروس من مواقف حقيقية وشرح واضح بالعربي'; var hsen = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.en) ? PEL_SITE.heroSub.en : 'Tell us what you need English for, work travel everyday talk. We will build your starting point from real situations, with clear Arabic support.'; heroSub.textContent = lang==='ar' ? hsar : hsen; }
   var pathHint=document.querySelector('.path-hint .arabic');
   if(pathHint) pathHint.textContent = lang==='ar' ? 'اسيلة خفيفة، نعرف مستواك وهدفك ونرجع لك بخطة على مقاس وقتك' : 'Quick questions, we learn your level and goal and return a plan that fits your time.';
   var pathHintEn=document.querySelector('.path-hint-en');
@@ -1625,7 +1665,7 @@ function applyIndexLang(lang){
   var ppH2=document.querySelector('#personalPreview h2');
   if(ppH2) ppH2.textContent = lang==='ar' ? 'قل لنا وش تبي، ونبني لك الطريق' : 'Tell us what you need, we build the path';
   var ppCols=document.querySelectorAll('#personalPreview .reveal > div');
-  var ppAr={say:'انت تقول', items:['ابي انجليزي للشغل','المحادثة صعبة علي','اقدر ادرس 20 دقيقة يوميا'], build:'PEL يبني', path:'انجليزي العمل', focus:'تركيزك: محادثة واستماع', todayL:'اليوم', todayV:'تبدا محادثة في الشغل', nextL:'بعدها', nextV:'تسال زميلك عن مساعدة', laterL:'بعدين', laterV:'اجتماعات، عملاء، مقابلات'};
+  var ppAr={say:'انت تقول', items:['ابي انجليزي للشغل','المحادثة صعبة علي','اقدر ادرس 20 دقيقة يوميا'], build:'PEL يبني', path:'انجليزي العمل', focus:'تركيزك: محادثة واستماع', todayL:'اليوم', todayV:'تبدا محادثة في الشغل', nextL:'بعدها', nextV:'تسال زميلك عن مساعدة', laterL:'بعدين', laterV:'اجتماعات، عملا، مقابلات'};
   var ppEn={say:'You tell PEL', items:['I need English for work','Speaking is hard for me','I can study 20 minutes a day'], build:'PEL builds', path:'Workplace English', focus:'Focus: speaking + listening', todayL:'Today', todayV:'Start a conversation at work', nextL:'Next', nextV:'Ask a coworker for help', laterL:'Later', laterV:'Meetings, customers, interviews'};
   var ppData = lang==='ar'?ppAr:ppEn;
   if(ppCols.length>=2){
@@ -1658,7 +1698,7 @@ function applyIndexLang(lang){
   var ppPathFocus=document.querySelector('#personalPreview .pp-build div[style*="font-size:.78rem"]');
   if(ppPathFocus) ppPathFocus.textContent = lang==='ar' ? 'تركيزك: محادثة واستماع' : 'Focus: speaking + listening';
   var ppRoutes=document.querySelectorAll('#personalPreview .pp-route');
-  var ppRouteAr=[{l:'اليوم',v:'تبدا محادثة في الشغل'},{l:'بعدها',v:'تسال زميلك عن مساعدة'},{l:'بعدين',v:'اجتماعات، عملاء، مقابلات'}];
+  var ppRouteAr=[{l:'اليوم',v:'تبدا محادثة في الشغل'},{l:'بعدها',v:'تسال زميلك عن مساعدة'},{l:'بعدين',v:'اجتماعات، عملا، مقابلات'}];
   var ppRouteEn=[{l:'Today',v:'Start a conversation at work'},{l:'Next',v:'Ask a coworker for help'},{l:'Later',v:'Meetings, customers, interviews'}];
   ppRoutes.forEach(function(r,i){ var arr=lang==='ar'?ppRouteAr:ppRouteEn; if(!arr[i])return; var lbl=r.querySelector('.route-label'); if(lbl) lbl.textContent=arr[i].l; var val=r.querySelector('div[style*="font-size:.9rem"]'); if(val) val.textContent=arr[i].v; });
   var ppBtn=document.querySelector('#personalPreview .btn-gold span');
@@ -1745,7 +1785,7 @@ function applyIndexLang(lang){
   var pricingHead=document.querySelector('#pricing .section-head h2');
   if(pricingHead) pricingHead.textContent = lang==='ar' ? 'وصول كامل للمنصة، بسعر واضح.' : 'Full platform access, clear pricing.';
   var pricingP=document.querySelector('#pricing .section-head p');
-  if(pricingP) pricingP.textContent = lang==='ar' ? 'هذي الباقات تعطيك وصول كامل للمنصة، وكل باقة تشمل حصصاً مباشرة (اونلاين) مع الاستاذ فراس. الاشتراك يتم عبر واتساب مباشرة.' : 'These plans give you full platform access - every plan includes live sessions with Tutor Firas. Enrollment via WhatsApp.';
+  if(pricingP) pricingP.textContent = lang==='ar' ? 'عندنا مسارين: ابد من الصفر، والتجهيز للاختبارات. كل مسار فيه 3 باقات. بس باقة 3 اشهر للتجهيز للاختبارات هي اللي تشمل حصة مباشرة كل اسبوع. الاشتراك والدفع كله عن طريق واتساب، مافي دفع اونلاين.' : 'Two tracks - Start From Zero and Exam Prep. Each has 3 plans. Only the 3-month exam-prep plan throws in a weekly live class. Signup and payment all happen over WhatsApp - no online payment.';
   var pricingNote=document.querySelector('.pricing-note');
   if(pricingNote) pricingNote.innerHTML = lang==='ar' ? '<b>ما تعرف اي باقة تناسبك؟</b> راسلنا واتساب، نتعرف على مستواك وهدفك، ونرجع لك بخطة وسعر يناسبك - او نخصص لك تدريباً فردياً اونلاين.' : '<b>Not sure which plan fits?</b> Message us on WhatsApp - we’ll assess your level and goal and recommend the right plan, or a private option.';
   // footer + remaining section heads (minimal bilingual to satisfy full-site requirement)
@@ -2146,8 +2186,8 @@ const faqs = [
   {qAr:'كم مدة وصولي للمنصة؟', aAr:'حسب الباقة اللي تختارها: 30 يوم، شهرين، او 3 اشهر. طول فترة اشتراكك يبقى الوصول كامل لكل الدروس والتحديثات الجديدة.', qEn:'How long is access?', aEn:'Depends on your plan: 30 days, 2 months, or 3 months. Full access to all lessons and updates for the entire period.'},
   {qAr:'كيف اترجم واصحح كتابتي؟', aAr:'داخل المنصة ترجمة فورية مجانية بلا حدود لاي كلمة او جملة، وورشة كتابة تصحح لك وتبين لك سبب كل خطا بالعربي.', qEn:'How does translation and writing correction work?', aEn:'Unlimited free instant translation for any word or sentence, plus a writing workshop that corrects you and explains each mistake in Arabic.'},
   {qAr:'اقدر اتابع تقدمي؟', aAr:'نعم. لوحتك الخاصة تتابع تطور محادثتك واستماعك ومفرداتك اسبوع بعد اسبوع.', qEn:'Can I track progress?', aEn:'Yes. Your private dashboard tracks speaking, listening and vocabulary week by week.'},
-  {qAr:'كم سعر الاشتراك؟', aAr:'فيه 3 باقات متوفرة الحين: 30 يوم 180 ريال، شهرين 230 ريال، و3 اشهر مكثف 449 ريال. باقة 6 اشهر بريميوم ترجع قريباً. اشتراكك يعطيك وصول كامل للمنصة، وكل الباقات تشمل حصصاً مباشرة مع الاستاذ فراس.', qEn:'How much?', aEn:'3 plans are available now: 30 days 180 SAR, 2 months 230 SAR, and intensive 3 months 449 SAR. The 6-month premium returns soon. Full platform access, plus live sessions with Tutor Firas on every plan.'},
-  {qAr:'هل الباقات تشمل دروس مباشرة مع الاستاذ فراس؟', aAr:'اي نعم. باقة 30 يوم تشمل 4 حصص مباشرة (حصة كل اسبوع)، وباقة الشهرين تشمل 6 حصص موزعة على مدى الشهرين، وباقة 3 اشهر تشمل 9 حصص ويمكن تزيد حسب تطورك. مواعيد الحصص تصلك كتنبيه داخل حسابك عشان تحضرها. لو تبي خطة خاصة اختلف، راسله على واتساب ويرتب لك.', qEn:'Do plans include live sessions with Tutor Firas?', aEn:'Yes, every plan does. The 30-day plan includes 4 live sessions (one per week); the 2-month plan includes 6 sessions spread across your two months; the 3-month plan includes 9 sessions with extras possible as you progress. Session times arrive as announcements in your account so you can join. Need something custom? Message on WhatsApp.'},
+  {qAr:'كم سعر الاشتراك؟', aAr:'فيه مسارين: ابد من الصفر، والتجهيز للاختبارات. كل مسار فيه 3 باقات: شهر 89 ريال، شهرين 139 ريال، و3 اشهر 169 ريال (افضل قيمة). الدفع عبر واتساب والتنشيط خلال دقايق.', qEn:'How much?', aEn:'Two tracks: Start From 0 and Exam Prep. Each has 3 plans: 1 month 89 SAR, 2 months 139 SAR, and 3 months 169 SAR (best value). Pay via WhatsApp, activated in minutes.'},
+  {qAr:'هل الباقات تشمل حصص مباشرة؟', aAr:'باقة 3 اشهر للتجهيز للاختبارات فقط هي اللي تشمل حصة مباشرة كل اسبوع. باقات الشهر والشهرين ما فيها حصص مباشرة. تبي حصص اضافية؟ اشتر رصيد حصص عن طريق واتساب.', qEn:'Do plans include live classes?', aEn:'Only the 3-Month Exam Prep package includes 1 live class per week. The 1-month and 2-month plans have no live classes. Want extra? Buy class credits via WhatsApp.'},
   {qAr:'كيف ابدا التسجيل؟', aAr:'راسلنا على واتساب، نرسل لك تفاصيل الدفع ونفعّل حسابك خلال وقت قصير.', qEn:'How do I enroll?', aEn:'Message us on WhatsApp, we send payment details and activate your account shortly.'},
   {qAr:'ايش يصير لما تنتهي باقاتي؟', aAr:'يبقى حسابك وكل تقدمك وشهاداتك محفوظة. بس يوقف الوصول للدروس. وقتها تقدر تجدد من لوحتك مباشرة، او تراسلنا واتساب ونفعل لك باقة جديدة.', qEn:'What happens when my plan ends?', aEn:'Your account, progress and certificates stay saved. Lesson access pauses. Renew from your dashboard or message us on WhatsApp.'},
 ];
@@ -2277,5 +2317,333 @@ window.addEventListener('storage', function(e){ if(e.key==='pel_account_prefs') 
   window.addEventListener('pel-lang-changed', function(){ renderBanner(); queueOffset(); });
 })();
 </script>
-</body>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://perplexity.localhost","http://localhost:1420","http://127.0.0.1:1420","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" - the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only - we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match - so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari - a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back - without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them - external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="position:relative;left:-${scrollX}px;top:-${scrollY}px">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
 </html>

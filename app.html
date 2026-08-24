@@ -43,12 +43,13 @@
   --translit-min:0.88rem; --translit-scale:1.05em;
 }
 html[data-theme="light"]{
-  --bg:#FAF8F4; --surface:#FFFFFF; --card:#F5F2EC; --card-elevated:#FFFFFF;
-  --border:#E5DFD2; --text:#17171B; --text-secondary:#4B463D; --text-muted:#8C877C;
-  --pel-stem:#17171B; --pel-gold:#A88345;
-  --shadow-soft:0 20px 60px -25px rgba(30,25,15,.18);
-  --shadow-lift:0 30px 90px -30px rgba(30,25,15,.24);
-  --gold-glow:0 0 40px -10px rgba(168,131,69,.35);
+  --bg:#F3EBDC; --surface:#FBF6ED; --card:#EFE4D0; --card-elevated:#FFF9F0;
+  --border:#D8C8AA; --text:#2B2518; --text-secondary:#554B3B; --text-muted:#6D614F;
+  --gold:#7B5A22; --gold-soft:#A9864A; --bronze:#8A6A2E; --emerald:#2F745E; --success:#2F8A57;
+  --pel-stem:#2B2518; --pel-gold:#7B5A22;
+  --shadow-soft:0 18px 50px -24px rgba(70,52,23,.25);
+  --shadow-lift:0 30px 75px -28px rgba(70,52,23,.30);
+  --gold-glow:0 0 36px -12px rgba(123,90,34,.34);
 }
 *,*::before,*::after{box-sizing:border-box;}
 html{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; text-rendering:optimizeLegibility; font-optical-sizing:auto; }
@@ -72,11 +73,11 @@ ul{list-style:none; margin:0; padding:0;}
   .arabic, [dir="rtl"]{ font-family:'Cairo','Tajawal',sans-serif; direction:rtl; line-height:1.95; letter-spacing:0; font-weight:400; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; unicode-bidi:isolate; }
   /* Bigger, more readable Arabic everywhere (captions, chips, body, sidebar).
      Uses a floor with !important so tiny inline sizes (0.68–0.78rem) are raised
-     to a readable minimum — but headings are excluded so large titles keep
+     to a readable minimum - but headings are excluded so large titles keep
      their own sizes and are never shrunk. */
   .arabic:not(h1):not(h2):not(h3):not(h4):not(h5){ font-size: max(var(--arabic-min), var(--arabic-scale)) !important; line-height: 1.85 !important; }
   [dir="ltr"] .arabic:not(h1):not(h2):not(h3):not(h4):not(h5){ font-size: max(var(--arabic-min), var(--arabic-scale)) !important; }
-  /* transliteration is Latin text shown small — readable floor too */
+  /* transliteration is Latin text shown small - readable floor too */
   .translit, .situation-translit, [data-translit]{ font-size: max(var(--translit-min), var(--translit-scale)) !important; line-height:1.7 !important; }
   /* Tight UI: keep Arabic compact so the enlarged global floor never breaks
      dock labels, sidebar micro-labels, or chips. These win on specificity. */
@@ -99,7 +100,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   display:flex; flex-direction:column; align-items:center; justify-content:center; gap:20px;
 }
 #authGate .ring{ display:flex; align-items:center; justify-content:center; animation:authPulse 1.6s var(--ease) infinite; }
-#authGate .ring .pel-logo{ height:40px; width:auto; }
+#authGate .ring .pel-logo, #authGate .ring .pel-logo-light{ height:40px; width:auto; }
 #authGate p{ font-family:'Fraunces',serif; color:var(--text-secondary); }
 @keyframes authPulse{ 0%,100%{ opacity:1; } 50%{ opacity:.5; } }
 
@@ -1072,8 +1073,8 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
 
   <!-- ================= MOBILE STUDY DOCK ================= -->
   <nav class="dock" id="studyDock" aria-label="Quick navigation">
-    <button class="dock-btn" data-view="home"><i data-lucide="home" width="21" height="21"></i><span>الرئيسية</span></button>
-    <button class="dock-btn" data-view="paths"><i data-lucide="layout-grid" width="21" height="21"></i><span>الأكاديميات</span></button>
+    <button class="dock-btn" data-view="home"><i data-lucide="home" width="21" height="21"></i><span>البداية</span></button>
+    <button class="dock-btn" data-view="paths"><i data-lucide="layout-grid" width="21" height="21"></i><span>الاكاديميات</span></button>
     <button class="dock-btn" data-view="lessonOfDay"><i data-lucide="sparkles" width="21" height="21"></i><span>اليوم</span></button>
     <button class="dock-btn" data-view="profile"><i data-lucide="user" width="21" height="21"></i><span>حسابي</span></button>
     <button class="dock-btn" id="dockMore"><i data-lucide="menu" width="21" height="21"></i><span>المزيد</span></button>
@@ -1160,7 +1161,7 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
         <!-- ================= LEARNING HOME ================= -->
         <section class="view active" id="view-home">
           <div class="page-head">
-            <span class="eyebrow"><span class="arabic" style="font-size:.95em;">الرييسية</span>، Learning Home</span>
+            <span class="eyebrow"><span class="arabic" style="font-size:.95em;">البداية</span>، Learning Home</span>
             <h1><span id="greetingArabic" class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">اهلاً بعودتك.</span><span id="greetingText">Welcome back.</span></h1>
             <p id="homeSubtitle"><span class="arabic" style="display:block; margin-bottom:4px;">درسك الجاي جاهز. كمل من وين وقفت.</span>Your next lesson is ready. Pick up where you left off.</p>
           </div>
@@ -1339,7 +1340,7 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
                   <option value="en" data-en="I'm learning English" data-ar="اتعلم الانجليزية">I'm learning English</option>
                   <option value="ar" data-en="I'm learning Saudi Arabian Arabic" data-ar="اتعلم اللهجة السعودية">I'm learning Saudi Arabian Arabic</option>
                 </select>
-                <p style="margin-top:8px; font-size:.76rem; color:var(--text-muted);"><span class="arabic" style="display:block;">هذا يحدد الدروس والتوصيات والصفحة الرييسية.</span>This drives the lessons, recommendations and home screen.</p>
+                <p style="margin-top:8px; font-size:.76rem; color:var(--text-muted);"><span class="arabic" style="display:block;">هذا يحدد الدروس والتوصيات والصفحة البداية.</span>This drives the lessons, recommendations and home screen.</p>
               </div>
             </div>
             <div class="card">
@@ -1470,7 +1471,7 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
   <div class="palette-box">
     <div class="palette-input-row">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-      <input type="text" id="paletteInput" placeholder="ابحث في الدروس والمفردات والقواعد والإعدادات... / Search lessons, vocabulary, grammar, settings...">
+      <input type="text" id="paletteInput" placeholder="ابحث في الدروس والمفردات والقواعد والاعدادات... / Search lessons, vocabulary, grammar, settings...">
       <span class="kbd">Esc</span>
     </div>
     <div class="palette-results" id="paletteResults"></div>
@@ -1895,11 +1896,11 @@ async function revealApp(user){
     { view: 'curriculum', en: 'Curriculum', ar: 'المنهج', icon: 'route', subEn: 'Your path', subAr: 'مسارك', minDone: 0 },
     { view: 'vocabulary', en: 'Vocabulary', ar: 'المفردات', icon: 'book-open', subEn: 'Saved words', subAr: 'كلماتك', minDone: 3 },
     { view: 'review', en: 'Smart Review', ar: 'المراجعة', icon: 'rotate-ccw', subEn: 'Due cards', subAr: 'بطاقات مستحقة', minDone: 4 },
-    { view: 'bookmarks', en: 'Bookmarks', ar: 'المفضلة', icon: 'bookmark', subEn: 'Marked lessons', subAr: 'دروس مؤشرة', minDone: 6 },
+    { view: 'bookmarks', en: 'Bookmarks', ar: 'المفضلة', icon: 'bookmark', subEn: 'Marked lessons', subAr: 'دروس موشرة', minDone: 6 },
     { view: 'pronunciation', en: 'Pronunciation', ar: 'النطق', icon: 'mic', subEn: 'Speak & score', subAr: 'انطق وسجل', minDone: 0 },
-    { view: 'grammar', en: 'Grammar', ar: 'القواعد', icon: 'spell-check', subEn: 'Fix mistakes', subAr: 'صحح الأخطاء', minDone: 0 },
+    { view: 'grammar', en: 'Grammar', ar: 'القواعد', icon: 'spell-check', subEn: 'Fix mistakes', subAr: 'صحح الاخطا', minDone: 0 },
     { view: 'listening', en: 'Listening', ar: 'الاستماع', icon: 'headphones', subEn: 'Hear & answer', subAr: 'اسمع وجاوب', minDone: 0 },
-    { view: 'reading', en: 'Reading', ar: 'القراءة', icon: 'book-text', subEn: 'Read passages', subAr: 'اقرأ النصوص', minDone: 0 },
+    { view: 'reading', en: 'Reading', ar: 'القرايه', icon: 'book-text', subEn: 'Read passages', subAr: 'اقرا النصوص', minDone: 0 },
     { view: 'writing', en: 'Writing', ar: 'الكتابة', icon: 'pen-line', subEn: 'Write & check', subAr: 'اكتب وتفحص', minDone: 0 },
     { view: 'speaking', en: 'Speaking', ar: 'المحادثة', icon: 'messages-square', subEn: 'Talk it out', subAr: 'تكلم', minDone: 0 }
   ];
@@ -1949,7 +1950,7 @@ async function revealApp(user){
     strip.querySelectorAll('.pel-dash-tool').forEach(function (b) {
       b.addEventListener('click', function () {
         if (b.classList.contains('locked')) {
-          try { if (typeof toast === 'function') toast(ar() ? '<span class="arabic">كمل دروس أكثر عشان يفتح</span>، Complete more lessons to unlock this tool.' : 'Complete more lessons to unlock this tool.'); } catch (e) {}
+          try { if (typeof toast === 'function') toast(ar() ? '<span class="arabic">كمل دروس اكثر عشان يفتح</span>، Complete more lessons to unlock this tool.' : 'Complete more lessons to unlock this tool.'); } catch (e) {}
           return;
         }
         go(b.getAttribute('data-view'));
@@ -2694,8 +2695,8 @@ function confettiBurst(){
    SIDEBAR NAVIGATION
    ============================================================ */
 const navGroups = [
-  { label:{en:'Start', ar:'ابدأ'}, items:[
-    {id:'home', en:'Learning Home', ar:'الرييسية', icon:'home'},
+  { label:{en:'Start', ar:'ابدا'}, items:[
+    {id:'home', en:'Learning Home', ar:'البداية', icon:'home'},
     {id:'home', en:'Continue Learning', ar:'كمل تعلمك', icon:'play-circle'},
   ]},
   { label:{en:'Your Path', ar:'مسارك'}, items:[
@@ -2703,7 +2704,7 @@ const navGroups = [
     {id:'lessonOfDay', en:'Lesson of the Day', ar:'درس اليوم', icon:'sparkles'},
   ]},
   { label:{en:'Skill Studios', ar:'الاستوديوهات'}, items:[
-    /* Skill studios unlock progressively — Duolingo-style: a new student
+    /* Skill studios unlock progressively - Duolingo-style: a new student
        sees one clear path, extras appear as they earn them. */
     {id:'vocabulary', en:'Vocabulary Vault', ar:'خزنة المفردات', icon:'book-open', minDone:3},
     {id:'review', en:'Smart Review', ar:'المراجعة الذكية', icon:'rotate-ccw', minDone:4},
@@ -2988,7 +2989,7 @@ quickActions.forEach(q => {
    ============================================================ */
 const paletteData = [
   {group:'Navigate', icon:'home', label:'Learning Home', view:'home'},
-  {group:'Navigate', icon:'route', label:'Learning Paths', view:'paths'},
+  {group:'Navigate', icon:'route', label:'Academies', view:'paths'},
   {group:'Navigate', icon:'book-open', label:'Vocabulary Vault', view:'vocabulary'},
   {group:'Navigate', icon:'spell-check', label:'Grammar Academy', view:'grammar'},
   {group:'Navigate', icon:'mic', label:'Pronunciation Studio', view:'pronunciation'},
@@ -3116,7 +3117,7 @@ if(ctxNoteAdd) ctxNoteAdd.addEventListener('click', () => {
 if(ctxNoteInput) ctxNoteInput.addEventListener('keydown', e => { if(e.key === 'Enter') ctxNoteAdd.click(); });
 renderCtxLists();
 
-/* quick translate, no AI anywhere here.
+/* quick translate, runs fully in-browser.
    1) meaning translation now calls Google Translate's public free
       endpoint directly (no API key, no LLM) for real accuracy.
    2) Arabic-letter transliteration of the English input is still fully
@@ -8662,7 +8663,7 @@ const SMART_FOLLOWUPS = [
    current beat, details collected, turn count). The engine follows
    the student's actual answers: short answers, imperfect English,
    unexpected information, questions, and "I don't understand" are
-   all understood and the scene continues naturally. No AI API, no
+   all understood and the scene continues naturally. No external API, no
    tokens, no storage brain: pure logic, free and unlimited.
    ============================================================ */
 function L(en, ar, translit){ return { en: en, ar: ar, translit: translit }; }
@@ -9724,7 +9725,7 @@ if(learnDirectionSelect){
 /* ============================================================
    INTERFACE LOCALIZATION ENGINE (single-language chrome)
    The interface chrome is authored bilingual, e.g.
-     <span class="arabic">الرييسية</span>، Learning Home
+     <span class="arabic">البداية</span>، Learning Home
    This engine collapses all chrome outside lesson content into
    the selected interface language, so the interface reads as one
    language. Learning content (the target language being taught,
@@ -13722,7 +13723,7 @@ function speak(text, onDone){
   window.speechSynthesis.speak(utter);
 }
 function canRecognize(){ return 'webkitSpeechRecognition' in window || 'SpeechRecognition' in window; }
-/* ---- pronunciation scoring (free, in-browser, no AI API) ----------------
+/* ---- pronunciation scoring (free, in-browser, no external API) ----------------
    The browser's SpeechRecognition only transcribes what it hears; it cannot
    judge true accent quality. So we score "speech match": how close the
    transcription is to the target using edit distance. A single-sound slip
@@ -13795,7 +13796,7 @@ function pronFeedback(heard, target){
         j:['/j/ as in jump','/ch/ as in chair'], k:['/k/ as in key','/g/ as in go'],
         g:['/g/ as in go','/k/ as in key'], z:['/z/ as in zoo','/s/ as in sun'] }[f];
       if(pair){
-        tipAr = `الفرق صوت واحد: قلت «${bestWord.heard}» (يبدأ بـ${pair[1]})، الصح «${bestWord.target}» (يبدأ بـ${pair[0]}). شد على الصوت الأول.`;
+        tipAr = `الفرق صوت واحد: قلت «${bestWord.heard}» (يبدا بـ${pair[1]})، الصح «${bestWord.target}» (يبدا بـ${pair[0]}). شد على الصوت الاول.`;
         tipEn = `One sound off: you said "${bestWord.heard}" (starts ${pair[1]}), target "${bestWord.target}" (starts ${pair[0]}). Emphasize the first sound.`;
       }
     }
@@ -13803,7 +13804,7 @@ function pronFeedback(heard, target){
   return { score: Math.round(Math.max(0, Math.min(0.97, score)) * 100), heard: h, closest: bestWord.heard, target, tipAr, tipEn };
 }
 /* ---- one shared recognition session app-wide: works the same way on
-   every mic button (Pronunciation Studio, Speaking Studio, ...). No AI
+   every mic button (Pronunciation Studio, Speaking Studio, ...). No external model
    involved anywhere in this file, recognition is the browser's own
    SpeechRecognition API, and scoring is plain local word-matching. ---- */
 let activeRec = null;
@@ -14651,7 +14652,7 @@ async function checkGrammar(text){
 /* ---- Lesson-facing wrapper around the free local grammar engine ---------
    Used by the lesson stage (pel_lesson_stage.js) so a student who types in a
    grammar_correction / free_response exercise gets the same genuine,
-   bilingual, no-API feedback as the Writing Workshop — compact form.
+   bilingual, no-API feedback as the Writing Workshop - compact form.
    Always free, always offline-capable (rule bank runs even if the compromise
    CDN fails). Returns {score,count,fixed}. */
 window.pelReviewWriting = async function(text, el, opts){
@@ -14675,7 +14676,7 @@ window.pelReviewWriting = async function(text, el, opts){
       </div>`).join('') : '';
   const verdict = found.length === 0
     ? (res.analyzed
-      ? `<p class="fb-verdict good"><span class="arabic">كتابتك سليمة، ما فيه اخطاء واضحة.</span> Your writing looks clean — no obvious errors found.</p>`
+      ? `<p class="fb-verdict good"><span class="arabic">كتابتك سليمة، ما فيه اخطا واضحة.</span> Your writing looks clean - no obvious errors found.</p>`
       : `<p class="fb-verdict warn"><span class="arabic">ما قدرت افحص كل النص، بس القواعد الاساسية شغالة.</span> Couldn't fully check, but the basic rules ran.</p>`)
     : `<p class="fb-verdict"><span class="arabic">لقيت ${found.length} ${found.length===1?'نقطة':'نقاط'} تستاهل تحسين${found.length>shown.length?' (اول '+shown.length+')':''}.</span> Found ${found.length} ${found.length===1?'point':'points'} to improve${found.length>shown.length?' (showing first '+shown.length+')':''}.</p>`;
   const better = found.length ? `<div class="fb-section"><h5 class="fb-section-title"><span class="arabic">النسخة المحسنة</span>، Better version</h5><div class="fb-fixed">${escapeHtml(fixed)}</div></div>` : '';
@@ -14683,7 +14684,7 @@ window.pelReviewWriting = async function(text, el, opts){
   // replying to): catches replies that are grammatically fine but wrong for
   // the situation, with a natural model reply. Free, offline, unlimited.
   const cf = (opts.botLine && typeof window.pelConversationFit==='function') ? window.pelConversationFit(text, opts.botLine) : null;
-  const convHtml = cf ? `<div class="fb-section"><h5 class="fb-section-title"><span class="arabic">ملاحظة المحادثة</span>، Conversation fit</h5><p class="arabic fb-ar" style="color:var(--gold-soft);">${escapeHtml(cf.ar)}</p><p class="fb-en">${escapeHtml(cf.en)}</p><div class="fb-fixed" style="margin-top:6px;"><b>${escapeHtml(cf.model.en)}</b> <span class="arabic" style="opacity:.8;">— ${escapeHtml(cf.model.ar)}</span></div></div>` : '';
+  const convHtml = cf ? `<div class="fb-section"><h5 class="fb-section-title"><span class="arabic">ملاحظة المحادثة</span>، Conversation fit</h5><p class="arabic fb-ar" style="color:var(--gold-soft);">${escapeHtml(cf.ar)}</p><p class="fb-en">${escapeHtml(cf.en)}</p><div class="fb-fixed" style="margin-top:6px;"><b>${escapeHtml(cf.model.en)}</b> <span class="arabic" style="opacity:.8;">- ${escapeHtml(cf.model.ar)}</span></div></div>` : '';
   const freeNote = '<span class="chip" style="background:rgba(67,122,34,.12);color:#7BBF45;border:1px solid rgba(67,122,34,.3);font-size:.68rem;"><span class="arabic">مراجعة محلية مجانية</span> · Free local feedback</span>';
   el.innerHTML = `<div class="feedback-block">
       <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
@@ -14715,7 +14716,7 @@ window.pelReviewWriting = async function(text, el, opts){
    CONVERSATIONAL FIT CHECKER - free, offline, unlimited.
    Catches replies that are grammatically fine but conversationally
    wrong for the situation (e.g. answering "no" to "how are you?").
-   Returns a contextual Arabic note + a natural model reply. No AI,
+   Returns a contextual Arabic note + a natural model reply. No external model,
    no API, nothing to rate-limit.
    ============================================================ */
 window.pelConversationFit = function(userText, botLine){
@@ -14742,12 +14743,12 @@ window.pelConversationFit = function(userText, botLine){
 
   // Natural model replies (free, canned for common situations).
   const models = {
-    wellbeing:{en:"I'm good, thanks. What about you?", ar:"أنا بخير الحمدلله. وأنت؟", tr:"آيم قود، ثانكس. وات أباوت يو؟"},
-    name:{en:"My name is F.", ar:"اسمي F.", tr:"ماي نيم از إف."},
-    occupation:{en:"I work as a teacher. And you?", ar:"أشتغل معلم. وأنت؟", tr:"آي وورك أز ا تيتشير. أند يو؟"},
-    quantity:{en:"About two hundred riyals.", ar:"حوالي ميتين ريال.", tr:"أباوت تو هندرد ريالز."},
-    info:{en:"It's near the clock tower.", ar:"قريب من برج الساعة.", tr:"إتس نير ذا كلوك تاور."},
-    general:{en:"I think so, thanks.", ar:"أعتقد كذا، شكراً.", tr:"آي ثينك سو، ثانكس."}
+    wellbeing:{en:"I'm good, thanks. What about you?", ar:"انا بخير الحمدلله. وانت؟", tr:"ايم قود، ثانكس. وات اباوت يو؟"},
+    name:{en:"My name is F.", ar:"اسمي F.", tr:"ماي نيم از اف."},
+    occupation:{en:"I work as a teacher. And you?", ar:"اشتغل معلم. وانت؟", tr:"اي وورك از ا تيتشير. اند يو؟"},
+    quantity:{en:"About two hundred riyals.", ar:"حوالي ميتين ريال.", tr:"اباوت تو هندرد ريالز."},
+    info:{en:"It's near the clock tower.", ar:"قريب من برج الساعة.", tr:"اتس نير ذا كلوك تاور."},
+    general:{en:"I think so, thanks.", ar:"اعتقد كذا، شكراً.", tr:"اي ثينك سو، ثانكس."}
   };
 
   // Decide whether the reply is conversationally off.
@@ -14756,27 +14757,27 @@ window.pelConversationFit = function(userText, botLine){
     const wbBad = /^(no|nope|no!+|no{2,}|never|nothing|none|nobody|bad|terrible|awful|worst|not good|not well|not great|no thanks?)(\s*!*)*$/i.test(low);
     if(wbBad || (isBare && /^(no|nope|never|nothing)/i.test(low))){
       off=true;
-      ar="السؤال يسأل عن أخبارك (how are you)، وردّك 'لا' ما يعتبر جواب. ما تقول 'لا' هنا لأن السائل يبي يعرف حالك — قول كيف حالك.";
-      en="They asked how you are — answering 'no' isn't an answer. Don't say 'no' here; tell them how you're doing.";
+      ar="السوال يسال عن اخبارك (how are you)، وردّك 'لا' ما يعتبر جواب. ما تقول 'لا' هنا لان السايل يبي يعرف حالك - قول كيف حالك.";
+      en="They asked how you are - answering 'no' isn't an answer. Don't say 'no' here; tell them how you're doing.";
     }
   } else if(type==='name' && (isBare || words.length<2)){
     off=true;
-    ar="السؤال عن اسمك — جاوب باسمك مو بـ 'لا' أو 'نعم'.";
-    en="They asked your name — answer with your name, not 'no' or 'yes'.";
+    ar="السوال عن اسمك - جاوب باسمك مو بـ 'لا' او 'نعم'.";
+    en="They asked your name - answer with your name, not 'no' or 'yes'.";
   } else if(type==='occupation' && (isBare || words.length<2)){
     off=true;
-    ar="السؤال عن شغلك — جاوب بعملك أو قول 'I'm a student'.";
-    en="They asked about your work — answer with your job or 'I'm a student'.";
+    ar="السوال عن شغلك - جاوب بعملك او قول 'I'm a student'.";
+    en="They asked about your work - answer with your job or 'I'm a student'.";
   } else if(type==='quantity' && isBare){
     off=true;
-    ar="السؤال يبي رقم/كمية — جاوب برقم.";
-    en="They asked for an amount — answer with a number.";
+    ar="السوال يبي رقم/كمية - جاوب برقم.";
+    en="They asked for an amount - answer with a number.";
   } else if(type==='yesno' && isBare){
     off=false; // bare yes/no to a yes/no question is fine.
   } else if(isQuestion && type!=='yesno' && isBare){
     off=true;
-    ar="جوابك قصير — السؤال يحتاج رد أكمل من كذا.";
-    en="Your answer is too short — the question needs a fuller reply.";
+    ar="جوابك قصير - السوال يحتاج رد اكمل من كذا.";
+    en="Your answer is too short - the question needs a fuller reply.";
   }
 
   if(!off) return null;
@@ -14785,7 +14786,7 @@ window.pelConversationFit = function(userText, botLine){
 };
 
 /* ============================================================
-   FREE TUTOR ENGINE - no AI, no tokens, unlimited forever.
+   FREE TUTOR ENGINE - local rules, no tokens, unlimited forever.
    Answers every student question with the same free building
    blocks as the quick translator: Google Translate's public
    endpoint (no API key), the local Arabic-letter transliterator,
@@ -15295,7 +15296,7 @@ const CORRECT_RULES = [
   { re:/\btheir (is|are|was|were|will be|might be|must be|should be)\b/gi, fix:'there $1', category:'word-choice',
     ar:'للتعبير عن الوجود نقول "there is/are" مو "their is".',
     en:'For existence, say "there is/are", not "their is/are".',
-    why_ar:'their = تبعهم (ملكية). there = فيه/يوجد. الخلط شائع.',
+    why_ar:'their = تبعهم (ملكية). there = فيه/يوجد. الخلط شايع.',
     why_en:'"their" = possessive (their car); "there" = existence (there is).',
     learn:{ ar:'there is a problem، their car.', en:'"there" = existence; "their" = possessive.' } },
   // there -> their: possession before a noun (there car, there house)
@@ -15779,12 +15780,27 @@ function wirePelPath(root){
 }
 function ar_switch_confirm_text(){
   return learningDirection() === 'ar'
-    ? 'تبديل المسار النشط؟ يبقى تقدمك محفوظاً ويمكنك الرجوع في أي وقت.'
+    ? 'تبديل المسار النشط؟ يبقى تقدمك محفوظاً ويمكنك الرجوع في اي وقت.'
     : 'Switch your active academy? All progress is kept and you can switch back anytime.';
 }
 function renderLibrary(){
   ['paths','academies'].forEach(vid => document.getElementById('view-'+vid).dataset.rendered='1');
   const el = document.getElementById('view-paths');
+  // Plan-tier gate: a student with no active subscription can preview academy
+  // titles but every lesson inside is locked until a plan is activated.
+  // This keeps the library browsable while enforcing plan-gated access.
+  const ar = accountPrefs.lang === 'ar';
+  const entitled = !!(subPlan && (subPlan.isAdmin || subPlan.canAccess));
+  const planGate = !entitled
+    ? `<div class="plan-gate" style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:16px 18px;margin-bottom:24px;border:1px solid rgba(200,169,106,.4);border-radius:16px;background:linear-gradient(90deg,rgba(200,169,106,.1),rgba(200,169,106,.02));">
+        <i data-lucide="lock" width="22" height="22" style="color:var(--gold);flex-shrink:0;"></i>
+        <div style="flex:1;min-width:200px;">
+          <div style="font-weight:700;font-size:.96rem;">${ar?'الدروس مقفلة':'Lessons are locked'}</div>
+          <div style="font-size:.82rem;color:var(--text-muted);margin-top:2px;">${ar?'فعّل خطة لفتح الدروس، تقدر تتصفح الاكاديميات الحين.':'Activate a plan to unlock lessons. You can browse academies now.'}</div>
+        </div>
+        <a href="${location.pathname.replace(/[^/]*$/,'')+'index.html'}#pricing" class="btn-gold magnetic" data-magnetic style="flex-shrink:0;">${ar?'اشترك الحين':'Subscribe now'}</a>
+      </div>`
+    : '';
   // Direction-aware library: Saudi Arabian Arabic academies lead for Saudi learners,
   // English academies lead otherwise. Nothing is hidden, just ordered.
   const dirPool = directionAcademies();
@@ -15794,6 +15810,7 @@ function renderLibrary(){
   const recommended = ordered.filter(a => a.progress === 0).slice(0,6);
   const categories = ['All', ...new Set(ordered.map(a => a.cat))];
   el.innerHTML = `
+    ${planGate}
     <div class="page-head">
       <span class="eyebrow"><span class="arabic" style="font-size:.95em;">الاكاديميات</span>، The Private Academy</span>
       <h1><span class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">كل الاكاديميات، في مكتبة واحدة.</span>Every academy, one library.</h1>
@@ -16061,7 +16078,7 @@ function renderLessonReader(container, academy, lesson){
     ${lesson.exercises && lesson.exercises.length ? `
     <div class="lesson-section">
       <h3><span class="arabic">تدريب</span>، Practice</h3>
-      <p class="lesson-section-sub"><span class="arabic" style="display:block;">بدل اختبار تقليدي: رتب، تهجأ، صحح، وترجم. كل تمرين يبني على الدرس.</span>Instead of a plain quiz: build, spell, fix and translate. Every exercise works the lesson.</p>
+      <p class="lesson-section-sub"><span class="arabic" style="display:block;">بدل اختبار تقليدي: رتب، تهجا، صحح، وترجم. كل تمرين يبني على الدرس.</span>Instead of a plain quiz: build, spell, fix and translate. Every exercise works the lesson.</p>
       <div id="wsPractice" style="display:grid; gap:14px; margin-top:14px;"></div>
     </div>` : ''}
 
@@ -16293,7 +16310,7 @@ function getPronCumulativeScore(){
 function pronGrade(score){ return score>=85?'A':score>=70?'B':score>=55?'C':'D'; }
 
 const PRON_DRILLS = [
-  { id:'greetings', title:'Greetings', ar:'التحيات', focusAr:'التحية والسؤال عن الحال',
+  { id:'greetings', title:'Greetings', ar:'التحيات', focusAr:'التحية والسوال عن الحال',
     levels:[
       { id:'words', type:'word', title:'Words', ar:'كلمات', weight:0.35, targets:[
         {en:'Hi',ar:'هاي'},{en:'Hello',ar:'هلو'},{en:'Thanks',ar:'شكرا'} ] },
@@ -16302,7 +16319,7 @@ const PRON_DRILLS = [
       { id:'sentences', type:'sentence', title:'Sentences', ar:'جمل كاملة', weight:0.35, targets:[
         {en:'Hi, how are you today?',ar:'هاي، كيف حالك اليوم؟'},{en:'I am good, thank you.',ar:'انا بخير، شكرا لك.'},{en:'Hello, nice to meet you.',ar:'هلو، تشرفت بمعرفتك.'} ] }
     ],
-    writingPrompt:{ ar:'اكتب محادثة قصيرة تبدأ بتحية وتسأل عن الحال، ثم رد على سؤال صديقك «how are you».', en:'Write a short greeting conversation: greet, ask how someone is, and reply to "how are you".' }
+    writingPrompt:{ ar:'اكتب محادثة قصيرة تبدا بتحية وتسال عن الحال، ثم رد على سوال صديقك «how are you».', en:'Write a short greeting conversation: greet, ask how someone is, and reply to "how are you".' }
   },
   { id:'classroom', title:'Classroom', ar:'الفصل', focusAr:'تعليمات الفصل والمتابعة',
     levels:[
@@ -16322,20 +16339,20 @@ const PRON_DRILLS = [
       { id:'phrases', type:'phrase', title:'Phrases', ar:'عبارات', weight:0.30, targets:[
         {en:'Bat and pat',ar:'مضرب ويربت'},{en:'Ship and sheep',ar:'سفينة وخروف'},{en:'Pat the dog',ar:'يربت على الكلب'} ] },
       { id:'sentences', type:'sentence', title:'Sentences', ar:'جمل كاملة', weight:0.35, targets:[
-        {en:'The bat hit the ball.',ar:'المضرب ضرب الكرة.'},{en:'The ship sailed away.',ar:'السفينة أبحرت بعيدا.'},{en:'I see a white sheep.',ar:'اشوف خروف ابيض.'} ] }
+        {en:'The bat hit the ball.',ar:'المضرب ضرب الكرة.'},{en:'The ship sailed away.',ar:'السفينة ابحرت بعيدا.'},{en:'I see a white sheep.',ar:'اشوف خروف ابيض.'} ] }
     ],
     writingPrompt:{ ar:'اكتب جملتين تفرق فيهما بين كلمتين متشابهتين بالصوت (مثل ship/sheep)، واستخدم القواعد النحوية الصحيحة.', en:'Write two sentences that contrast a minimal pair (e.g. ship/sheep), using correct grammar.' }
   },
   { id:'daily-sentences', title:'Daily sentences', ar:'جمل يومية', focusAr:'طلبات واحتياجات يومية',
     levels:[
       { id:'words', type:'word', title:'Words', ar:'كلمات', weight:0.35, targets:[
-        {en:'Water',ar:'ماء'},{en:'Help',ar:'مساعدة'},{en:'Need',ar:'احتاج'} ] },
+        {en:'Water',ar:'ما'},{en:'Help',ar:'مساعدة'},{en:'Need',ar:'احتاج'} ] },
       { id:'phrases', type:'phrase', title:'Phrases', ar:'عبارات', weight:0.30, targets:[
-        {en:'I want water',ar:'ابي ماء'},{en:'Can you help',ar:'تقدر تساعد'},{en:'I need help',ar:'احتاج مساعدة'} ] },
+        {en:'I want water',ar:'ابي ما'},{en:'Can you help',ar:'تقدر تساعد'},{en:'I need help',ar:'احتاج مساعدة'} ] },
       { id:'sentences', type:'sentence', title:'Sentences', ar:'جمل كاملة', weight:0.35, targets:[
-        {en:'I want some water, please.',ar:'ابي ماء من فضلك.'},{en:'Can you help me, please?',ar:'تقدر تساعدني من فضلك؟'},{en:'I need help right now.',ar:'احتاج مساعدة الحين.'} ] }
+        {en:'I want some water, please.',ar:'ابي ما من فضلك.'},{en:'Can you help me, please?',ar:'تقدر تساعدني من فضلك؟'},{en:'I need help right now.',ar:'احتاج مساعدة الحين.'} ] }
     ],
-    writingPrompt:{ ar:'اكتب طلبا مهذبا بالانجليزي لموقف يومي (مطعم، محل، شارع) مع استخدام please وكلمة سؤال صحيحة.', en:'Write a polite everyday request (restaurant, shop, street) using "please" and a correct question word.' }
+    writingPrompt:{ ar:'اكتب طلبا مهذبا بالانجليزي لموقف يومي (مطعم، محل، شارع) مع استخدام please وكلمة سوال صحيحة.', en:'Write a polite everyday request (restaurant, shop, street) using "please" and a correct question word.' }
   },
 ];
 function pronDrillNextPack(id){
@@ -16406,7 +16423,7 @@ function renderPronDrill(card, drill){
       const saved = setPronPackScore(drill.id, levelScores, final);
       const cum = getPronCumulativeScore();
       const nxt = pronDrillNextPack(drill.id);
-      const breakdown = drill.levels.map(lv=>`<span style="display:inline-block;margin:2px 4px;"><b>${lv.title}</b>: ${levelScores[lv.id]!=null?levelScores[lv.id]+'%':'—'}</span>`).join('');
+      const breakdown = drill.levels.map(lv=>`<span style="display:inline-block;margin:2px 4px;"><b>${lv.title}</b>: ${levelScores[lv.id]!=null?levelScores[lv.id]+'%':'-'}</span>`).join('');
       const prev = getPronPackScore(drill.id);
       card.innerHTML = `
         <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
@@ -16420,7 +16437,7 @@ function renderPronDrill(card, drill){
           <div style="margin-top:6px;font-size:.82rem;color:var(--text-muted);">${breakdown}</div>
           ${saved.best>final?`<div class="arabic" style="margin-top:4px;font-size:.78rem;color:var(--text-muted);">افضل نتيجة سابقة: ${saved.best}% (${saved.attempts} محاولات)</div>`:''}
           <div style="margin-top:10px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;align-items:center;">
-            <span class="chip" style="background:rgba(200,169,106,.14);color:var(--gold);border:1px solid rgba(200,169,106,.3);font-size:.74rem;"><span class="arabic">المجموع التراكمي</span> Cumulative: ${cum!=null?cum+'%':'—'}</span>
+            <span class="chip" style="background:rgba(200,169,106,.14);color:var(--gold);border:1px solid rgba(200,169,106,.3);font-size:.74rem;"><span class="arabic">المجموع التراكمي</span> Cumulative: ${cum!=null?cum+'%':'-'}</span>
             ${drill.writingPrompt?`<button class="btn-ghost" id="drill-wprompt"><i data-lucide="pen-line" width="15" height="15"></i> <span class="arabic">تمرين كتابة</span></button>`:''}
           </div>
           <div style="margin-top:14px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
@@ -16462,7 +16479,7 @@ function renderPronunciation(){
       <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;">
         <div><h3 style="font-size:1.1rem;"><span class="arabic">تدريب النطق المتدرج</span>، Leveled Pronunciation Drill</h3>
         <p style="font-size:.8rem;color:var(--text-muted);margin-top:4px;"><span class="arabic">كلمة ← عبارة ← جملة، مع درجة تراكمية عبر الباقات. مجاني تماما داخل المتصفح.</span> Word → phrase → sentence, with a cumulative score across packs. Fully free, in-browser.</p></div>
-        <span class="chip" id="pronCumChip" style="background:rgba(200,169,106,.14);color:var(--gold);border:1px solid rgba(200,169,106,.3);font-size:.74rem;"><span class="arabic">المجموع التراكمي</span>: <span id="pronCumVal">—</span></span>
+        <span class="chip" id="pronCumChip" style="background:rgba(200,169,106,.14);color:var(--gold);border:1px solid rgba(200,169,106,.3);font-size:.74rem;"><span class="arabic">المجموع التراكمي</span>: <span id="pronCumVal">-</span></span>
         <select id="pronDrillSelect" style="background:var(--card-elevated);color:var(--text);border:1px solid var(--border);border-radius:10px;padding:8px 12px;font-size:.85rem;"></select>
       </div>
       <div id="pronDrillBody" style="margin-top:18px;"></div>
@@ -16526,9 +16543,9 @@ function renderPronunciation(){
   });
   renderPractice(PRONUNCIATION_TOPICS[0].id);
   const cumVal = document.getElementById('pronCumVal');
-  if(cumVal){ const cv = getPronCumulativeScore(); cumVal.textContent = cv!=null?cv+'%':'—'; }
+  if(cumVal){ const cv = getPronCumulativeScore(); cumVal.textContent = cv!=null?cv+'%':'-'; }
   const drillSelect = document.getElementById('pronDrillSelect');
-  drillSelect.innerHTML = PRON_DRILLS.map(d => { const s = getPronPackScore(d.id); const tag = s&&s.best?` · ${s.best}%`:''; return `<option value="${d.id}">${d.title} — ${d.ar}${tag}</option>`; }).join('');
+  drillSelect.innerHTML = PRON_DRILLS.map(d => { const s = getPronPackScore(d.id); const tag = s&&s.best?` · ${s.best}%`:''; return `<option value="${d.id}">${d.title} - ${d.ar}${tag}</option>`; }).join('');
   const loadDrill = () => { const d = PRON_DRILLS.find(x => x.id === drillSelect.value); if(d) renderPronDrill(document.getElementById('pronDrillBody'), d); };
   drillSelect.addEventListener('change', loadDrill);
   loadDrill();
@@ -16603,7 +16620,7 @@ function renderSpeaking(){
     // Context-aware roleplay: the persona works through its scenario and
     // follows the student's actual answers (short answers, imperfect
     // English, unexpected information, questions, "I don't understand").
-    // Free and unlimited: no AI API, no tokens, no storage brain.
+    // Free and unlimited: no external API, no tokens, no storage brain.
     async function respondToStudent(userText){
       const myTurn = ++rpTurn;
       const fb = document.getElementById('roleplayFeedback');
@@ -16617,7 +16634,7 @@ function renderSpeaking(){
       if(cf){
         lines.splice(1,0,
           `<p style="margin-top:8px;font-size:.84rem;color:var(--gold-soft);background:rgba(200,169,106,.10);border:1px solid rgba(200,169,106,.35);border-radius:10px;padding:9px 12px;"><span class="arabic">ملاحظة المحادثة:</span> ${escapeHtml(cf.ar)}</p>`+
-          `<p style="margin-top:4px;font-size:.8rem;color:var(--text-secondary);"><span class="arabic">رد طبيعي:</span> <b>${escapeHtml(cf.model.en)}</b> <span class="arabic" style="opacity:.8;">— ${escapeHtml(cf.model.ar)}</span></p>`);
+          `<p style="margin-top:4px;font-size:.8rem;color:var(--text-secondary);"><span class="arabic">رد طبيعي:</span> <b>${escapeHtml(cf.model.en)}</b> <span class="arabic" style="opacity:.8;">- ${escapeHtml(cf.model.ar)}</span></p>`);
       }
       if(reply.meaningAr && reply.meaningAr !== userText && reply.meaningEn && reply.meaningEn !== userText){
         lines.push(`<p style="margin-top:6px; font-size:.8rem; color:var(--text-secondary);"><span class="arabic">معناها:</span> ${escapeHtml(reply.meaningEn)}، <span class="arabic">${escapeHtml(reply.meaningAr)}</span></p>`);
@@ -17370,14 +17387,14 @@ function renderActivePath(){
         <div style="font-weight:${L.state==='available'?'600':'400'}; font-size:.9rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(title)}</div>
         <div style="font-size:.72rem; color:var(--text-muted);">${isCk ? (uiAr?'اختبار المرحلة':'Stage checkpoint') : (uiAr ? `${L.minutes||5} دقيقة` : `${L.minutes||5} min`)}</div>
       </div>
-      <span style="font-size:.7rem; color:var(--text-muted); flex-shrink:0;">${L.state==='completed'?(uiAr?'مكتمل':'Done'):L.state==='available'?(uiAr?'ابدأ':'Start'):(uiAr?'مقفل':'Locked')}</span>
+      <span style="font-size:.7rem; color:var(--text-muted); flex-shrink:0;">${L.state==='completed'?(uiAr?'مكتمل':'Done'):L.state==='available'?(uiAr?'ابدا':'Start'):(uiAr?'مقفل':'Locked')}</span>
     </div>`;
   }).join('');
   const later = (st.route_stages || []).filter(s => s.id !== st.stage.id && s.state === 'locked').slice(0,3);
   const laterHtml = later.length ? `
     <div style="margin-top:16px; padding-top:14px; border-top:1px solid var(--border);">
       <div class="eyebrow" style="margin-bottom:4px;"><span class="arabic">${ar?'لاحقاً في رحلتك':'Later on your path'}</span>، ${ar?'Later':'لاحقاً'}</div>
-      <div style="font-size:.72rem; color:var(--text-muted); margin-bottom:6px;"><span class="arabic">${ar?'اضغط أي مسار لجعله مسارك النشط — تقدمك محفوظ.':'Tap an academy to make it your active path — your progress is kept.'}</span></div>
+      <div style="font-size:.72rem; color:var(--text-muted); margin-bottom:6px;"><span class="arabic">${ar?'اضغط اي مسار لجعله مسارك النشط - تقدمك محفوظ.':'Tap an academy to make it your active path - your progress is kept.'}</span></div>
       ${later.map(s => `<div data-switch-ac="${escapeHtml(s.id)}" role="button" tabindex="0" style="display:flex; align-items:center; gap:10px; padding:7px 8px; margin:2px -8px; border-radius:9px; cursor:pointer;">
         <i data-lucide="lock" width="13" height="13"></i>
         <span style="font-size:.84rem;">${escapeHtml(ar?(s.name_ar||s.name_en):(s.name_en||s.name_ar))}</span>
@@ -17404,7 +17421,7 @@ function renderActivePath(){
     e.stopPropagation();
     const id = el.getAttribute('data-switch-ac');
     const okGo = window.confirm(ar
-      ? 'تبديل المسار النشط؟ يبقى تقدمك محفوظاً ويمكنك الرجوع في أي وقت.'
+      ? 'تبديل المسار النشط؟ يبقى تقدمك محفوظاً ويمكنك الرجوع في اي وقت.'
       : 'Switch your active academy? All progress is kept and you can switch back anytime.');
     if(!okGo) return;
     el.style.opacity = '.45'; el.style.pointerEvents = 'none';
@@ -17433,7 +17450,7 @@ function c_rpc_effective_state(){
 }
 /* Guided mode: the app TEACHES. A new student goes straight into lesson 1
    of their chosen academy, and every finished lesson serves the next one
-   automatically — no dashboard hopping. The server always decides what
+   automatically - no dashboard hopping. The server always decides what
    comes next; the UI only follows. */
 function guidedMode(){ return lsGet('pel_guided', true) !== false; }
 async function startNextGuidedLesson(depth){
@@ -18294,7 +18311,7 @@ function renderPlanSettings(){
   const E = pelEngine();
   const plan = getPlan();
   if(!E || !plan || !plan.onboardingCompleted){
-    wrap.innerHTML = `<p style="font-size:.82rem; color:var(--text-muted); line-height:1.7;"><span class="arabic" style="display:block;">ما عندك خطة بعد. ابنها من الصفحة الرييسية عشان نفتح لك مسارك.</span>No plan yet - build one from the home page first.</p>`;
+    wrap.innerHTML = `<p style="font-size:.82rem; color:var(--text-muted); line-height:1.7;"><span class="arabic" style="display:block;">ما عندك خطة بعد. ابنها من الصفحة البداية عشان نفتح لك مسارك.</span>No plan yet - build one from the home page first.</p>`;
     return;
   }
   const p = plan.profile, r = plan.route;
@@ -18327,7 +18344,7 @@ function renderPlanSettings(){
     <p id="planEstPreview" style="margin-top:14px; font-size:.84rem; color:var(--gold-soft); font-weight:600;"></p>
     <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;">
       <button class="btn-gold" data-plan-save><span class="arabic">احفظ التغييرات</span>، Save changes</button>
-      <a class="btn-outline" href="index.html"><span class="arabic">ابني خطة جديدة</span>، Rebuild from questionnaire</a>
+      <a class="btn-outline" href="index.html#pricing"><span class="arabic">اختبر مستواك من جديد</span>، Retake the level test</a>
     </div>
     <p style="margin-top:10px; font-size:.74rem; color:var(--text-muted);"><span class="arabic">اعادة البنا تحافظ على الدروس المكتملة وتقيمك.</span>A rebuild keeps your completed lessons and progress.</p>`;
   preview();
@@ -18360,8 +18377,8 @@ function renderPlanView(){
       <div class="page-head">
         <span class="eyebrow"><span class="arabic" style="font-size:.95em;">خطتي</span>، My Plan</span>
         <h1><span class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">ما عندك خطة بعد.</span>No personalized plan yet.</h1>
-        <p><span class="arabic" style="display:block; margin-bottom:4px;">اجب على اسيلة قصيرة ونبني لك مسار على هدفك ومستواك ووقتك.</span>Answer a few quick questions and we build a route from your goals, level, and available time.</p>
-        <div style="margin-top:22px;"><a class="btn-gold" href="index.html"><span class="arabic">ابني خطتي</span>، Build my plan</a></div>
+        <p><span class="arabic" style="display:block; margin-bottom:4px;">اختبر مستواك على الصفحة البداية ونحدد لك الخطة المناسبة لمستواك وهدفك.</span>Take the level test on the homepage and we match you to the plan that fits your level and goal.</p>
+        <div style="margin-top:22px;"><a class="btn-gold" href="index.html#pricing"><span class="arabic">ابدا الاختبار</span>، Take the test</a></div>
       </div>`;
     return;
   }
@@ -18827,7 +18844,7 @@ function renderDashboardIntel(){
           en: 'how are you', ar: 'كيفك', translit: 'هاو ار يو', pos: 'phrase',
           ipa: '/haʊ ɑːr juː/',
           example: { en: 'Hi, how are you today?', ar: 'هلا، كيفك اليوم؟', translit: 'هاي، هاو ار يو توداي؟' },
-          usage: { en: 'A friendly check-in. Reply with "I am fine, thank you."', ar: 'سؤال ودّي. جاوب بـ "تمام، شكراً".' },
+          usage: { en: 'A friendly check-in. Reply with "I am fine, thank you."', ar: 'سوال ودّي. جاوب بـ "تمام، شكراً".' },
           sentences: [
             { en: 'How are you?', ar: 'كيفك؟', translit: 'هاو ار يو؟' },
             { en: 'How are you today?', ar: 'كيفك اليوم؟', translit: 'هاو ار يو توداي؟' },
@@ -18913,7 +18930,7 @@ function renderDashboardIntel(){
           en: 'available', ar: 'متاح', translit: 'افيلابول', pos: 'adjective',
           ipa: '/əˈveɪləbəl/',
           example: { en: 'Is the doctor available today?', ar: 'الدكتور متاح اليوم؟', translit: 'ايز ذا دوكتور افيلابول توداي؟' },
-          usage: { en: 'Free, not busy. Use it to ask about times.', ar: 'فاضي، مو مشغول. استخدمها تسأل عن الاوقات.' },
+          usage: { en: 'Free, not busy. Use it to ask about times.', ar: 'فاضي، مو مشغول. استخدمها تسال عن الاوقات.' },
           sentences: [
             { en: 'Are you available today?', ar: 'انت متاح اليوم؟', translit: 'ار يو افيلابول توداي؟' },
             { en: 'Is the doctor available today?', ar: 'الدكتور متاح اليوم؟', translit: 'ايز ذا دوكتور افيلابول توداي؟' },
@@ -18977,8 +18994,8 @@ function renderDashboardIntel(){
         {
           en: 'red', ar: 'احمر', translit: 'رد', pos: 'color',
           ipa: '/red/',
-          example: { en: 'The car is red.', ar: 'السيارة حمراء.', translit: 'ذا كار ايز رد.' },
-          usage: { en: 'A common color. Also used for the traffic light that means stop.', ar: 'لون شائع. كمان يستخدم للاشارة اللي تعني قف.' },
+          example: { en: 'The car is red.', ar: 'السيارة حمرا.', translit: 'ذا كار ايز رد.' },
+          usage: { en: 'A common color. Also used for the traffic light that means stop.', ar: 'لون شايع. كمان يستخدم للاشارة اللي تعني قف.' },
           sentences: [
             { en: 'Red.', ar: 'احمر.', translit: 'رد.' },
             { en: 'I like red.', ar: 'يعجبني الاحمر.', translit: 'اي لايك رد.' },
@@ -18988,8 +19005,8 @@ function renderDashboardIntel(){
         {
           en: 'blue', ar: 'ازرق', translit: 'بلو', pos: 'color',
           ipa: '/bluː/',
-          example: { en: 'The sky is blue.', ar: 'السماء زرقاء.', translit: 'ذا سكاي ايز بلو.' },
-          usage: { en: 'The color of the sky and the sea.', ar: 'لون السماء والبحر.' },
+          example: { en: 'The sky is blue.', ar: 'السما زرقا.', translit: 'ذا سكاي ايز بلو.' },
+          usage: { en: 'The color of the sky and the sea.', ar: 'لون السما والبحر.' },
           sentences: [
             { en: 'Blue.', ar: 'ازرق.', translit: 'بلو.' },
             { en: 'I like blue.', ar: 'يعجبني الازرق.', translit: 'اي لايك بلو.' },
@@ -19000,10 +19017,10 @@ function renderDashboardIntel(){
           en: 'green', ar: 'اخضر', translit: 'غرين', pos: 'color',
           ipa: '/ɡriːn/',
           example: { en: 'The grass is green.', ar: 'العشب اخضر.', translit: 'ذا غراس ايز غرين.' },
-          usage: { en: 'The color of plants and the go light.', ar: 'لون النباتات والاشارة الخضراء.' },
+          usage: { en: 'The color of plants and the go light.', ar: 'لون النباتات والاشارة الخضرا.' },
           sentences: [
             { en: 'Green.', ar: 'اخضر.', translit: 'غرين.' },
-            { en: 'Green light.', ar: 'اشارة خضراء.', translit: 'غرين لايت.' },
+            { en: 'Green light.', ar: 'اشارة خضرا.', translit: 'غرين لايت.' },
             { en: 'Do you like green?', ar: 'يعجبك الاخضر؟', translit: 'دو يو لايك غرين؟' },
           ],
         },
@@ -19060,7 +19077,7 @@ function renderDashboardIntel(){
       ],
     },
     'family-members': {
-      title: { en: 'Family', ar: 'العائلة' },
+      title: { en: 'Family', ar: 'العايلة' },
       items: [
         {
           en: 'mother', ar: 'امي', translit: 'ماذر', pos: 'family',
@@ -19129,21 +19146,21 @@ function renderDashboardIntel(){
           ],
         },
         {
-          en: 'late', ar: 'متأخر', translit: 'ليت', pos: 'adjective',
+          en: 'late', ar: 'متاخر', translit: 'ليت', pos: 'adjective',
           ipa: '/leɪt/',
-          example: { en: 'I am late.', ar: 'تأخرت.', translit: 'اي ام ليت.' },
+          example: { en: 'I am late.', ar: 'تاخرت.', translit: 'اي ام ليت.' },
           usage: { en: 'After the agreed time. The opposite is early.', ar: 'بعد الوقت المتفق عليه. العكس مبكر.' },
           sentences: [
-            { en: 'I am late.', ar: 'تأخرت.', translit: 'اي ام ليت.' },
-            { en: 'Are you late?', ar: 'متأخر؟', translit: 'ار يو ليت؟' },
-            { en: 'Sorry, I am late.', ar: 'المعذرة، تأخرت.', translit: 'سوري، اي ام ليت.' },
+            { en: 'I am late.', ar: 'تاخرت.', translit: 'اي ام ليت.' },
+            { en: 'Are you late?', ar: 'متاخر؟', translit: 'ار يو ليت؟' },
+            { en: 'Sorry, I am late.', ar: 'المعذرة، تاخرت.', translit: 'سوري، اي ام ليت.' },
           ],
         },
       ],
       dialogue: [
         { who: 'A', en: 'What time is it?', ar: 'كم الساعة؟', translit: 'وات تايم ايز ات؟' },
         { who: 'B', en: 'It is two o\'clock.', ar: 'الساعة اثنين.', translit: 'ات ايز تو اكلوك.' },
-        { who: 'A', en: 'I am late!', ar: 'تأخرت!', translit: 'اي ام ليت!' },
+        { who: 'A', en: 'I am late!', ar: 'تاخرت!', translit: 'اي ام ليت!' },
         { who: 'B', en: 'No, you are fine.', ar: 'لا، تمام.', translit: 'نو، يو ار فاين.' },
       ],
     },
@@ -19164,7 +19181,7 @@ function renderDashboardIntel(){
         {
           en: 'bread', ar: 'خبز', translit: 'بريد', pos: 'noun',
           ipa: '/bred/',
-          example: { en: 'I eat bread.', ar: 'آكل خبز.', translit: 'اي ايت بريد.' },
+          example: { en: 'I eat bread.', ar: 'اكل خبز.', translit: 'اي ايت بريد.' },
           usage: { en: 'A food made from flour, eaten every day.', ar: 'اكل من طحين، يتاكل كل يوم.' },
           sentences: [
             { en: 'Bread.', ar: 'خبز.', translit: 'بريد.' },
@@ -19176,7 +19193,7 @@ function renderDashboardIntel(){
           en: 'coffee', ar: 'قهوة', translit: 'كوفي', pos: 'noun',
           ipa: '/ˈkɔːfi/',
           example: { en: 'I drink coffee.', ar: 'اشرب قهوة.', translit: 'اي درينك كوفي.' },
-          usage: { en: 'A hot drink, very common in Saudi Arabia.', ar: 'مشروب حار، شائع بالسعودية.' },
+          usage: { en: 'A hot drink, very common in Saudi Arabia.', ar: 'مشروب حار، شايع بالسعودية.' },
           sentences: [
             { en: 'Coffee.', ar: 'قهوة.', translit: 'كوفي.' },
             { en: 'A cup of coffee.', ar: 'فنجان قهوة.', translit: 'ا كب اوف كوفي.' },
@@ -19224,7 +19241,7 @@ function renderDashboardIntel(){
           sentences: [
             { en: 'The teacher.', ar: 'المعلم.', translit: 'ذا تيتشر.' },
             { en: 'My teacher.', ar: 'معلمي.', translit: 'ماي تيتشر.' },
-            { en: 'Ask the teacher.', ar: 'اسأل المعلم.', translit: 'اسك ذا تيتشر.' },
+            { en: 'Ask the teacher.', ar: 'اسال المعلم.', translit: 'اسك ذا تيتشر.' },
           ],
         },
       ],
@@ -19236,13 +19253,13 @@ function renderDashboardIntel(){
       ],
     },
     'asking-directions': {
-      title: { en: 'Asking Directions', ar: 'السؤال عن الاتجاهات' },
+      title: { en: 'Asking Directions', ar: 'السوال عن الاتجاهات' },
       items: [
         {
           en: 'where', ar: 'وين', translit: 'وير', pos: 'question',
           ipa: '/wer/',
           example: { en: 'Where is the school?', ar: 'وين المدرسة؟', translit: 'وير ايز ذا سكول؟' },
-          usage: { en: 'Used to ask about a place.', ar: 'تسأل بها عن مكان.' },
+          usage: { en: 'Used to ask about a place.', ar: 'تسال بها عن مكان.' },
           sentences: [
             { en: 'Where?', ar: 'وين؟', translit: 'وير؟' },
             { en: 'Where are you?', ar: 'وين انت؟', translit: 'وير ار يو؟' },
@@ -19286,7 +19303,7 @@ function renderDashboardIntel(){
           en: 'how much', ar: 'كم', translit: 'هاو موتش', pos: 'phrase',
           ipa: '/haʊ mʌtʃ/',
           example: { en: 'How much is it?', ar: 'كم سعره؟', translit: 'هاو موتش ايز ات؟' },
-          usage: { en: 'Ask this to know the price.', ar: 'اسأل بها عشان تعرف السعر.' },
+          usage: { en: 'Ask this to know the price.', ar: 'اسال بها عشان تعرف السعر.' },
           sentences: [
             { en: 'How much?', ar: 'كم؟', translit: 'هاو موتش؟' },
             { en: 'How much is this?', ar: 'كم هذا؟', translit: 'هاو موتش ايز ذس؟' },
@@ -19338,13 +19355,13 @@ function renderDashboardIntel(){
           ],
         },
         {
-          en: 'eat', ar: 'آكل', translit: 'ايت', pos: 'verb',
+          en: 'eat', ar: 'اكل', translit: 'ايت', pos: 'verb',
           ipa: '/iːt/',
-          example: { en: 'I eat breakfast.', ar: 'آكل الفطار.', translit: 'اي ايت بريكفاست.' },
+          example: { en: 'I eat breakfast.', ar: 'اكل الفطار.', translit: 'اي ايت بريكفاست.' },
           usage: { en: 'To put food in your mouth. The opposite is drink.', ar: 'تحط اكل بفمك. العكس تشرب.' },
           sentences: [
-            { en: 'I eat.', ar: 'آكل.', translit: 'اي ايت.' },
-            { en: 'I eat rice.', ar: 'آكل رز.', translit: 'اي ايت رايس.' },
+            { en: 'I eat.', ar: 'اكل.', translit: 'اي ايت.' },
+            { en: 'I eat rice.', ar: 'اكل رز.', translit: 'اي ايت رايس.' },
             { en: 'Let\'s eat.', ar: 'يلا ناكل.', translit: 'لتس ايت.' },
           ],
         },
@@ -19456,7 +19473,7 @@ function renderDashboardIntel(){
       ],
     },
     'subject-pronouns': {
-      title: { en: 'Subject Pronouns', ar: 'ضمائر الفاعل' },
+      title: { en: 'Subject Pronouns', ar: 'ضماير الفاعل' },
       items: [
         {
           en: 'I', ar: 'انا', translit: 'اي', pos: 'pronoun',
@@ -19572,7 +19589,7 @@ function renderDashboardIntel(){
           en: 'these', ar: 'هذي', translit: 'ذيس', pos: 'pronoun',
           ipa: '/ðiːz/',
           example: { en: 'These are my books.', ar: 'هذي كتبي.', translit: 'ذيس ار ماي بوكس.' },
-          usage: { en: 'Plural of this, for close things.', ar: 'جمع هذا، لاشياء قريبة.' },
+          usage: { en: 'Plural of this, for close things.', ar: 'جمع هذا، لاشيا قريبة.' },
           sentences: [
             { en: 'These are mine.', ar: 'هذي حقي.', translit: 'ذيس ار ماين.' },
             { en: 'Are these yours?', ar: 'هذي حقك؟', translit: 'ار ذيس يورز؟' },
@@ -19594,7 +19611,7 @@ function renderDashboardIntel(){
           en: 'a', ar: 'واحد', translit: 'ا', pos: 'article',
           ipa: '/eɪ/',
           example: { en: 'I have a dog.', ar: 'عندي كلب.', translit: 'اي هاف ا دوغ.' },
-          usage: { en: 'Used before a word starting with a consonant sound.', ar: 'تستخدمها قبل كلمة تبدأ بصوت ساكن.' },
+          usage: { en: 'Used before a word starting with a consonant sound.', ar: 'تستخدمها قبل كلمة تبدا بصوت ساكن.' },
           sentences: [
             { en: 'A cat.', ar: 'قط.', translit: 'ا كات.' },
             { en: 'I have a car.', ar: 'عندي سيارة.', translit: 'اي هاف ا كار.' },
@@ -19605,7 +19622,7 @@ function renderDashboardIntel(){
           en: 'an', ar: 'واحد', translit: 'ان', pos: 'article',
           ipa: '/æn/',
           example: { en: 'I have an apple.', ar: 'عندي تفاحة.', translit: 'اي هاف ان ابل.' },
-          usage: { en: 'Used before a word starting with a vowel sound.', ar: 'تستخدمها قبل كلمة تبدأ بصوت متحرك.' },
+          usage: { en: 'Used before a word starting with a vowel sound.', ar: 'تستخدمها قبل كلمة تبدا بصوت متحرك.' },
           sentences: [
             { en: 'An egg.', ar: 'بيضة.', translit: 'ان اوق.' },
             { en: 'I have an orange.', ar: 'عندي برتقالة.', translit: 'اي هاف ان اورنج.' },
@@ -19676,7 +19693,7 @@ function renderDashboardIntel(){
       ],
     },
     'common-verbs': {
-      title: { en: 'Common Verbs', ar: 'افعال شائعة' },
+      title: { en: 'Common Verbs', ar: 'افعال شايعة' },
       items: [
         {
           en: 'go', ar: 'روح', translit: 'قو', pos: 'verb',
@@ -19748,7 +19765,7 @@ function renderDashboardIntel(){
           en: 'market', ar: 'سوق', translit: 'ماركت', pos: 'place',
           ipa: '/ˈmɑːrkɪt/',
           example: { en: 'I buy food at the market.', ar: 'اشتري اكل بالسوق.', translit: 'اي باي فود ات ذا ماركت.' },
-          usage: { en: 'Where you buy things.', ar: 'مكان تشتري فيه الاشياء.' },
+          usage: { en: 'Where you buy things.', ar: 'مكان تشتري فيه الاشيا.' },
           sentences: [
             { en: 'The market is busy.', ar: 'السوق مزدحم.', translit: 'ذا ماركت ايز بيزي.' },
             { en: 'I go to the market.', ar: 'اروح السوق.', translit: 'اي قو تو ذا ماركت.' },
@@ -19804,7 +19821,7 @@ function renderDashboardIntel(){
         { who: 'A', en: 'Do you have a car?', ar: 'عندك سيارة؟', translit: 'دو يو هاف ا كار؟' },
         { who: 'B', en: 'No, I take the bus. And you?', ar: 'لا، اركب الباص. وانت؟', translit: 'نو، اي تيك ذا باص. اند يو؟' },
         { who: 'A', en: 'I take the train. It is fast.', ar: 'اركب القطار. سريع.', translit: 'اي تيك ذا ترين. ات ايز فاست.' },
-        { who: 'B', en: 'The bus is slow but cheap.', ar: 'الباص بطيء بس رخيص.', translit: 'ذا باص ايز سلو بات تشيب.' },
+        { who: 'B', en: 'The bus is slow but cheap.', ar: 'الباص بطي بس رخيص.', translit: 'ذا باص ايز سلو بات تشيب.' },
       ],
     },
     'home-and-rooms': {
@@ -19866,14 +19883,14 @@ function renderDashboardIntel(){
           ],
         },
         {
-          en: 'shoes', ar: 'حذاء', translit: 'شوز', pos: 'clothing',
+          en: 'shoes', ar: 'حذا', translit: 'شوز', pos: 'clothing',
           ipa: '/ʃuːz/',
-          example: { en: 'My shoes are black.', ar: 'حذائي اسود.', translit: 'ماي شوز ار بلاك.' },
+          example: { en: 'My shoes are black.', ar: 'حذايي اسود.', translit: 'ماي شوز ار بلاك.' },
           usage: { en: 'You wear them on your feet.', ar: 'تلبسها برجليك.' },
           sentences: [
-            { en: 'I need new shoes.', ar: 'محتاج حذاء جديد.', translit: 'اي نيد نيو شوز.' },
-            { en: 'These shoes are old.', ar: 'هذا الحذاء قديم.', translit: 'ذيس شوز ار اولد.' },
-            { en: 'Where are my shoes?', ar: 'وين حذائي؟', translit: 'وير ار ماي شوز؟' },
+            { en: 'I need new shoes.', ar: 'محتاج حذا جديد.', translit: 'اي نيد نيو شوز.' },
+            { en: 'These shoes are old.', ar: 'هذا الحذا قديم.', translit: 'ذيس شوز ار اولد.' },
+            { en: 'Where are my shoes?', ar: 'وين حذايي؟', translit: 'وير ار ماي شوز؟' },
           ],
         },
         {
@@ -19890,19 +19907,19 @@ function renderDashboardIntel(){
       ],
       dialogue: [
         { who: 'A', en: 'Is this shirt new?', ar: 'هذا القميص جديد؟', translit: 'ايز ذس شيرت نيو؟' },
-        { who: 'B', en: 'Yes, and my shoes are new too.', ar: 'ايه، وحذائي جديد بعد.', translit: 'يس، اند ماي شوز ار نيو تو.' },
+        { who: 'B', en: 'Yes, and my shoes are new too.', ar: 'ايه، وحذايي جديد بعد.', translit: 'يس، اند ماي شوز ار نيو تو.' },
         { who: 'A', en: 'Where is your hat?', ar: 'وين قبعتك؟', translit: 'وير ايز يور هات؟' },
         { who: 'B', en: 'I do not have a hat.', ar: 'ما عندي قبعة.', translit: 'اي دو نات هاف ا هات.' },
       ],
     },
     'body-parts': {
-      title: { en: 'Body Parts', ar: 'اجزاء الجسم' },
+      title: { en: 'Body Parts', ar: 'اجزا الجسم' },
       items: [
         {
           en: 'head', ar: 'راس', translit: 'هيد', pos: 'body',
           ipa: '/hed/',
           example: { en: 'My head hurts.', ar: 'راسي يوجعني.', translit: 'ماي هيد هورتس.' },
-          usage: { en: 'The top part of your body.', ar: 'الجزء العلوي من جسمك.' },
+          usage: { en: 'The top part of your body.', ar: 'الجز العلوي من جسمك.' },
           sentences: [
             { en: 'I touch my head.', ar: 'المس راسي.', translit: 'اي تتش ماي هيد.' },
             { en: 'My head is hot.', ar: 'راسي حار.', translit: 'ماي هيد ايز هوت.' },
@@ -19913,7 +19930,7 @@ function renderDashboardIntel(){
           en: 'hand', ar: 'يد', translit: 'هاند', pos: 'body',
           ipa: '/hænd/',
           example: { en: 'I wash my hands.', ar: 'اغسل يدي.', translit: 'اي واش ماي هاندز.' },
-          usage: { en: 'You use it to hold things.', ar: 'تستخدمها تمسك الاشياء.' },
+          usage: { en: 'You use it to hold things.', ar: 'تستخدمها تمسك الاشيا.' },
           sentences: [
             { en: 'My hand is small.', ar: 'يدي صغيرة.', translit: 'ماي هاند ايز سمول.' },
             { en: 'Give me your hand.', ar: 'عطني يدك.', translit: 'جيف مي يور هاند.' },
@@ -19943,14 +19960,14 @@ function renderDashboardIntel(){
       title: { en: 'Hobbies and Likes', ar: 'الهوايات والاهتمامات' },
       items: [
         {
-          en: 'read', ar: 'اقرأ', translit: 'ريد', pos: 'verb',
+          en: 'read', ar: 'اقرا', translit: 'ريد', pos: 'verb',
           ipa: '/riːd/',
-          example: { en: 'I read books.', ar: 'اقرأ كتب.', translit: 'اي ريد بوكس.' },
+          example: { en: 'I read books.', ar: 'اقرا كتب.', translit: 'اي ريد بوكس.' },
           usage: { en: 'To look at words and understand them.', ar: 'تنظر للكلمات وتفهمها.' },
           sentences: [
-            { en: 'I read at night.', ar: 'اقرأ بالليل.', translit: 'اي ريد ات نايت.' },
-            { en: 'Do you read?', ar: 'تقرأ؟', translit: 'دو يو ريد؟' },
-            { en: 'I like to read.', ar: 'احب اقرأ.', translit: 'اي لايك تو ريد.' },
+            { en: 'I read at night.', ar: 'اقرا بالليل.', translit: 'اي ريد ات نايت.' },
+            { en: 'Do you read?', ar: 'تقرا؟', translit: 'دو يو ريد؟' },
+            { en: 'I like to read.', ar: 'احب اقرا.', translit: 'اي لايك تو ريد.' },
           ],
         },
         {
@@ -19972,13 +19989,13 @@ function renderDashboardIntel(){
           sentences: [
             { en: 'I like it.', ar: 'يعجبني.', translit: 'اي لايك ات.' },
             { en: 'Do you like it?', ar: 'يعجبك؟', translit: 'دو يو لايك ات؟' },
-            { en: 'I like to read.', ar: 'احب اقرأ.', translit: 'اي لايك تو ريد.' },
+            { en: 'I like to read.', ar: 'احب اقرا.', translit: 'اي لايك تو ريد.' },
           ],
         },
       ],
       dialogue: [
         { who: 'A', en: 'What do you like?', ar: 'وش يعجبك؟', translit: 'وات دو يو لايك؟' },
-        { who: 'B', en: 'I like to read books. And you?', ar: 'احب اقرأ كتب. وانت؟', translit: 'اي لايك تو ريد بوكس. اند يو؟' },
+        { who: 'B', en: 'I like to read books. And you?', ar: 'احب اقرا كتب. وانت؟', translit: 'اي لايك تو ريد بوكس. اند يو؟' },
         { who: 'A', en: 'I play football. Do you play?', ar: 'العب كرة. تلعب؟', translit: 'اي بلاي فوتبول. دو يو بلاي؟' },
         { who: 'B', en: 'No, but I like to watch.', ar: 'لا، بس احب اتفرج.', translit: 'نو، بات اي لايك تو واتش.' },
       ],
@@ -19994,7 +20011,7 @@ function renderDashboardIntel(){
           en: 'menu', ar: 'منيو', translit: 'مينيو', pos: 'noun',
           ipa: '/ˈmenjuː/',
           example: { en: 'Can I see the menu?', ar: 'ممكن اشوف المنيو؟', translit: 'كان اي سي ذا مينيو؟' },
-          usage: { en: 'The list of food and prices. Ask for it when you sit down.', ar: 'قائمة الاكل والاسعار. اطلبها اول ما تقعد.' },
+          usage: { en: 'The list of food and prices. Ask for it when you sit down.', ar: 'قايمة الاكل والاسعار. اطلبها اول ما تقعد.' },
           sentences: [
             { en: 'The menu, please.', ar: 'المنيو، لو سمحت.', translit: 'ذا مينيو، بليز.' },
             { en: 'Can I see the menu?', ar: 'ممكن اشوف المنيو؟', translit: 'كان اي سي ذا مينيو؟' },
@@ -20060,7 +20077,7 @@ function renderDashboardIntel(){
           en: 'luggage', ar: 'شنط', translit: 'لاقیج', pos: 'noun',
           ipa: '/ˈlʌɡɪdʒ/',
           example: { en: 'My luggage is heavy.', ar: 'شنطي ثقيلة.', translit: 'ماي لاگیج ايز هيفي.' },
-          usage: { en: 'Your bags and suitcases. Saudis say شنط for bags.', ar: 'حقائبك. السعوديين يقولون شنط.' },
+          usage: { en: 'Your bags and suitcases. Saudis say شنط for bags.', ar: 'حقايبك. السعوديين يقولون شنط.' },
           sentences: [
             { en: 'My luggage.', ar: 'شنطي.', translit: 'ماي لاگیج.' },
             { en: 'Where is my luggage?', ar: 'وين شنطي؟', translit: 'وير ايز ماي لاگیج؟' },
@@ -20126,7 +20143,7 @@ function renderDashboardIntel(){
           en: 'hot', ar: 'حار', translit: 'هات', pos: 'adjective',
           ipa: '/hɒt/',
           example: { en: 'It is hot today.', ar: 'الجو حار اليوم.', translit: 'ات ایز هات تودای.' },
-          usage: { en: 'High temperature. Very common in Saudi summer.', ar: 'حرارته عالية. شائع بصيف السعودية.' },
+          usage: { en: 'High temperature. Very common in Saudi summer.', ar: 'حرارته عالية. شايع بصيف السعودية.' },
           sentences: [
             { en: 'It is hot.', ar: 'حار.', translit: 'ات ایز هات.' },
             { en: 'Today is hot.', ar: 'اليوم حار.', translit: 'تودای ایز هات.' },
@@ -20170,7 +20187,7 @@ function renderDashboardIntel(){
           en: 'how are things', ar: 'وش اخبارك', translit: 'هاو ار ثینقز', pos: 'phrase',
           ipa: '/haʊ ɑːr θɪŋz/',
           example: { en: 'How are things with you?', ar: 'وش اخبارك؟', translit: 'هاو ار ثینقز وذ یو؟' },
-          usage: { en: 'A warm southern way to ask how someone is.', ar: 'طريقة جنوبية دافئة تسأل فيها عن حال الشخص.' },
+          usage: { en: 'A warm southern way to ask how someone is.', ar: 'طريقة جنوبية دافية تسال فيها عن حال الشخص.' },
           sentences: [
             { en: 'How are things?', ar: 'وش اخبارك؟', translit: 'هاو ار ثینقز؟' },
             { en: 'How are things at home?', ar: 'وش اخباركم بالبيت؟', translit: 'هاو ار ثینقز ات هوم؟' },
@@ -20257,7 +20274,7 @@ function renderDashboardIntel(){
      The path view / Supabase can mirror these to order lessons into a real progression. */
   const PEL_BEGINNER_PHASES = [
     { id:'phase-1', title:{en:'First Words', ar:'اول الكلمات'}, lessons:['greetings-goodbye','introducing-yourself','numbers-1-10','colors','days-and-months'] },
-    { id:'phase-2', title:{en:'People & Family', ar:'الناس والعائلة'}, lessons:['family-members','feelings-and-emotions','subject-pronouns','be-verb','this-and-that'] },
+    { id:'phase-2', title:{en:'People & Family', ar:'الناس والعايلة'}, lessons:['family-members','feelings-and-emotions','subject-pronouns','be-verb','this-and-that'] },
     { id:'phase-3', title:{en:'Everyday Words', ar:'كلمات يومية'}, lessons:['food-and-drinks','classroom-words','body-parts','clothes','home-and-rooms'] },
     { id:'phase-4', title:{en:'Out & About', ar:'بره ولاسواق'}, lessons:['asking-directions','places-in-town','transport','shopping-and-money','telling-time'] },
     { id:'phase-5', title:{en:'Actions & Routine', ar:'افعال وروتين'}, lessons:['common-verbs','singular-plural','a-an-the','daily-routine','weather-words'] },
@@ -20728,7 +20745,7 @@ body.pel-lesson-mode .sidebar,body.pel-lesson-mode .topbar,body.pel-lesson-mode 
     match(inner, act, ctx){
       const its=act.items; const en=shuffle(its); const ar=shuffle(its);
       let pickEn=null, pickAr=null, matched=0; const total=its.length;
-      inner.innerHTML = `<div class="pel-act-prompt">${L('Match the pairs','طابق الأزواج')}</div>
+      inner.innerHTML = `<div class="pel-act-prompt">${L('Match the pairs','طابق الازواج')}</div>
         <div class="pel-tiles" style="grid-template-columns:1fr 1fr;">
           <div id="pelMatchEn">${en.map((o,i)=>`<div class="pel-tile" data-en="${i}">${esc(o.en)}</div>`).join('')}</div>
           <div id="pelMatchAr">${ar.map((o,i)=>`<div class="pel-tile" data-ar="${i}"><span class="arabic">${esc(o.ar)}</span></div>`).join('')}</div>
@@ -20866,7 +20883,7 @@ body.pel-lesson-mode .sidebar,body.pel-lesson-mode .topbar,body.pel-lesson-mode 
     grammar_correction(inner, act, ctx){
       const it=act.item; const correct=it.sentences[0]||{en:it.example.en,ar:it.ar};
       const wrong=correct.en.replace(/^I /, 'I is ');
-      inner.innerHTML = `<div class="pel-act-prompt">${L('Fix the mistake','صحح الخطأ')}</div>
+      inner.innerHTML = `<div class="pel-act-prompt">${L('Fix the mistake','صحح الخطا')}</div>
         <div class="pel-act-en" style="font-size:1.5rem;">${esc(wrong)}</div>
         <input class="pel-input" id="pelGrIn" style="margin-top:16px;" placeholder="${L('Type the correct sentence...','اكتب الجملة الصحيحة...')}" autocomplete="off" autocapitalize="off" />
         <div class="pel-act-hint arabic">${esc(correct.ar)}</div>`;
@@ -20903,7 +20920,7 @@ body.pel-lesson-mode .sidebar,body.pel-lesson-mode .topbar,body.pel-lesson-mode 
     challenge(inner, act, ctx){
       const items=shuffle(act.items).slice(0,3); const it=items[0]; const pool=items;
       const opts=shuffle([it,...shuffle(pool.filter(x=>x.en!==it.en)).slice(0,3)]).slice(0,4); let sel=null;
-      const prompt = ar() ? `<span class="arabic">سؤال سريع: وش معنى <b>${esc(it.en)}</b>؟</span>` : `Quick check: what does <b>${esc(it.en)}</b> mean?`;
+      const prompt = ar() ? `<span class="arabic">سوال سريع: وش معنى <b>${esc(it.en)}</b>؟</span>` : `Quick check: what does <b>${esc(it.en)}</b> mean?`;
       inner.innerHTML = `<div class="pel-act-prompt">${prompt}</div>
         <div class="pel-options">${opts.map((o,i)=>`<button class="pel-option" data-i="${i}"><span class="o-en arabic">${esc(o.ar)}</span></button>`).join('')}</div>`;
       const btns=inner.querySelectorAll('.pel-option');
@@ -20922,7 +20939,7 @@ body.pel-lesson-mode .sidebar,body.pel-lesson-mode .topbar,body.pel-lesson-mode 
 
   const TYPE_LABELS_DEF = {
     learn:['Learn','تعلم'], learn_sentence:['Sentence','جملة'], recognize:['Recognize','تعرف'],
-    match:['Match','طابق'], arrange_words:['Build','رتب'], fill_blank:['Fill','املأ'],
+    match:['Match','طابق'], arrange_words:['Build','رتب'], fill_blank:['Fill','املا'],
     spell:['Spell','تهجى'], translate:['Translate','ترجم'], listen:['Listen','استمع'],
     identify_heard:['Identify','حدد'], pronunciation:['Pronounce','انطق'], speaking:['Speak','تحدث'],
     conversation_response:['Respond','رد'], complete_dialogue:['Dialogue','حوار'],
@@ -20935,9 +20952,9 @@ body.pel-lesson-mode .sidebar,body.pel-lesson-mode .topbar,body.pel-lesson-mode 
     spell:['Type the word','اكتب الكلمة'], translate:['Type the English','اكتب الانجليزي'],
     listen:['Press play','اضغط تشغيل'], identify_heard:['Pick what you heard','اختر اللي سمعته'],
     pronunciation:['Say it aloud','نطقها بصوت عالي'], speaking:['Say the sentence','نطق الجملة'],
-    conversation_response:['Pick the natural reply','اختر الرد الطبيعي'], complete_dialogue:['Fill the gap','املأ الفراغ'],
+    conversation_response:['Pick the natural reply','اختر الرد الطبيعي'], complete_dialogue:['Fill the gap','املا الفراغ'],
     grammar_correction:['Type the correct sentence','اكتب الجملة الصحيحة'], choose_natural_expression:['Pick the natural one','اختر الطبيعي'],
-    free_response:['Type your answer','اكتب جوابك'], review:['Recall','استرجع'], challenge:['Quick fire','سؤال سريع'],
+    free_response:['Type your answer','اكتب جوابك'], review:['Recall','استرجع'], challenge:['Quick fire','سوال سريع'],
   };
   function typeLabel(t){ const d=TYPE_LABELS_DEF[t]; return d?L(d[0],d[1]):t; }
   function promptLabel(t){ const d=PROMPTS_DEF[t]; return d?L(d[0],d[1]):''; }
@@ -21012,7 +21029,7 @@ body.pel-lesson-mode .sidebar,body.pel-lesson-mode .topbar,body.pel-lesson-mode 
   }
 
   function statusLabel(done){
-    return done ? L('Complete','تم') : L('Start','ابدأ');
+    return done ? L('Complete','تم') : L('Start','ابدا');
   }
 
   var VIEW_ID = 'curriculum';
@@ -21211,7 +21228,7 @@ if(window.lucide) lucide.createIcons();
   let scrollRaf = 0;
   let trustedTopOrigin = null;
 
-  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // Allow entries like "https://*.preview.i.perplexity.ai" - the wildcard
   // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
   // across multiple labels.
   function matchesAllowedOrigin(origin) {
@@ -21235,7 +21252,7 @@ if(window.lucide) lucide.createIcons();
   // real origin like https://www.perplexity.ai) we trust event.origin directly.
   // When event.origin is "null" (opaque broker srcdoc), we fall back to the
   // broker's stamped `parentOrigin` to identify the top window. The fallback
-  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // is claim-only - we rely on the browser's native `targetOrigin` enforcement
   // on the response path (see postToTrustedTop) to ensure replies can't be
   // delivered to anyone but the actual top window of that claimed origin.
   function getTrustedParentOrigin(event) {
@@ -21248,7 +21265,7 @@ if(window.lucide) lucide.createIcons();
   // All responses go to window.top with targetOrigin = the allowlisted origin.
   // An attacker that iframes us inside their own null-origin broker can claim
   // any parentOrigin they like, but the browser will drop the reply whenever
-  // the real top's origin doesn't match — so the screenshot never leaves.
+  // the real top's origin doesn't match - so the screenshot never leaves.
   function postToTrustedTop(message) {
     if (!trustedTopOrigin) return;
     try {
@@ -21262,7 +21279,7 @@ if(window.lucide) lucide.createIcons();
     try {
       const computedStyle = getComputedStyle(original);
       // cssText on a computed style is the serialized declaration in modern
-      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // Chromium/Safari - a single read beats enumerating ~400 longhand
       // properties. Firefox returns "" here, so we fall back on empty.
       const serialized = computedStyle.cssText;
       if (serialized) {
@@ -21304,7 +21321,7 @@ if(window.lucide) lucide.createIcons();
 
   // Cache resolved font URL -> data URI across captures. Fonts on a page
   // essentially never change, and a batch run emits multiple captures back to
-  // back — without this we'd refetch + re-base64 every time.
+  // back - without this we'd refetch + re-base64 every time.
   const fontDataUriCache = new Map();
   const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
 
@@ -21460,7 +21477,7 @@ if(window.lucide) lucide.createIcons();
       stripExternal(clone);
 
       // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
-      // can resolve them — external font URLs aren't fetched during
+      // can resolve them - external font URLs aren't fetched during
       // foreignObject rendering, which would otherwise force a fallback face
       // and change text metrics.
       const inlinedFontCss = await buildInlinedFontCss();
