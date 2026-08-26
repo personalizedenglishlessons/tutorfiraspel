@@ -1721,6 +1721,12 @@ async function ensureRouteAllows(academyId){
   if(!window.PEL_EFFECTIVE_STATE && typeof c_rpc_effective_state === 'function'){
     try{ await c_rpc_effective_state(); }catch(e){}
   }
+  // Fail closed: if a signed-in student's route state could not be loaded we
+  // cannot verify STEP isolation, so do not open the lesson.
+  if(!window.PEL_EFFECTIVE_STATE && typeof currentUser !== 'undefined' && currentUser && typeof client === 'function' && client()){
+    try{ toast('<span class="arabic">ما قدرنا نحمّل مسارك</span>، Could not load your plan. Please retry.'); }catch(e){}
+    return false;
+  }
   if(isStepStudent()){
     const ids = ((window.PEL_EFFECTIVE_STATE && window.PEL_EFFECTIVE_STATE.route_stages) || []).map(s => s.id).filter(Boolean);
     if(ids.length && ids.indexOf(academyId) === -1){
@@ -15897,7 +15903,11 @@ function renderLibrary(){
   // show a loading state instead of flashing the full non-STEP library.
   if(currentUser && client() && !window.PEL_EFFECTIVE_STATE){
     el.innerHTML = '<div class="empty-state" style="padding:90px 20px;text-align:center;"><h3 style="margin:0;"><span class="arabic" style="display:block;margin-bottom:4px;">نحمّل مسارك</span>Loading your plan...</h3></div>';
-    c_rpc_effective_state().then(() => renderLibrary()).catch(() => renderLibrary());
+    const failState = () => {
+      el.innerHTML = '<div class="empty-state" style="padding:90px 20px;text-align:center;"><h3 style="margin:0 0 8px;"><span class="arabic" style="display:block;margin-bottom:4px;">ما قدرنا نحمّل مسارك</span>Could not load your plan.</h3><button class="btn-outline" id="pelRetryRoute" style="margin-top:8px;">Retry</button></div>';
+      const b = document.getElementById('pelRetryRoute'); if(b) b.addEventListener('click', renderLibrary);
+    };
+    c_rpc_effective_state().then(ok => { if(ok && window.PEL_EFFECTIVE_STATE){ renderLibrary(); } else { failState(); } }).catch(failState);
     return;
   }
   // Plan-tier gate: a student with no active subscription can preview academy
