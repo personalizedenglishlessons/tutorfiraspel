@@ -1636,6 +1636,62 @@ async function persistStudentState(){
    the database (edited in Admin > Lessons). Falls back silently to the
    bundled static catalog when the RPC is unavailable. */
 let curriculumLoaded = false;
+/* Resolve an academy by id from the static ACADEMIES array first, then fall
+   back to the live DB catalog (PEL_ENGINE.dbAcademy) so DB-only academies
+   like step-exam-prep / b2-complete-course / c1-advanced-english /
+   c2-near-native render instead of blanking the workspace. The synthetic
+   object is also pushed into ACADEMIES so later list/card lookups resolve. */
+function resolveAcademyById(id){
+  if(!id) return null;
+  try{
+    const cached = ACADEMIES.find(a => a.id === id);
+    if(cached) return cached;
+  }catch(e){}
+  if(window.PEL_ENGINE && typeof PEL_ENGINE.dbAcademy === 'function'){
+    const dbAc = PEL_ENGINE.dbAcademy(id);
+    if(dbAc){
+      const synth = {
+        id: dbAc.id,
+        en: dbAc.name_en || dbAc.id,
+        ar: dbAc.name_ar || '',
+        translit: (typeof translitEn === 'function' ? translitEn(dbAc.name_en || dbAc.id) : ''),
+        cat: 'Course',
+        icon: dbAc.icon || 'book-open',
+        from: dbAc.color_from || '#C8A96A',
+        to: dbAc.color_to || '#A88345',
+        difficulty: dbAc.difficulty || (dbAc.level === 'STEP' ? 'Advanced' : 'Intermediate'),
+        duration: '6h',
+        lessons: (dbAc.lessons || []).length,
+        progress: 0
+      };
+      try{ if(Array.isArray(ACADEMIES) && !ACADEMIES.some(a => a.id === synth.id)) ACADEMIES.push(synth); }catch(e){}
+      return synth;
+    }
+  }
+  return null;
+}
+/* Merge live DB academies into the static ACADEMIES array (idempotent) so the
+   library/cards/workspace all resolve DB-only academies without touching every
+   call site. Only pushes academies not already present. */
+function mergeCurriculumAcademies(data){
+  if(!data || !Array.isArray(data.academies) || typeof ACADEMIES === 'undefined' || !Array.isArray(ACADEMIES)) return;
+  data.academies.forEach(dbAc => {
+    if(ACADEMIES.some(a => a.id === dbAc.id)) return;
+    ACADEMIES.push({
+      id: dbAc.id,
+      en: dbAc.name_en || dbAc.id,
+      ar: dbAc.name_ar || '',
+      translit: (typeof translitEn === 'function' ? translitEn(dbAc.name_en || dbAc.id) : ''),
+      cat: 'Course',
+      icon: dbAc.icon || 'book-open',
+      from: dbAc.color_from || '#C8A96A',
+      to: dbAc.color_to || '#A88345',
+      difficulty: dbAc.difficulty || (dbAc.level === 'STEP' ? 'Advanced' : 'Intermediate'),
+      duration: '6h',
+      lessons: (dbAc.lessons || []).length
+    });
+  });
+}
 async function loadCurriculum(){
   if(curriculumLoaded) return;
   const c = client();
@@ -1644,6 +1700,7 @@ async function loadCurriculum(){
     const { data, error } = await c.rpc('student_curriculum');
     if(!error && data && Array.isArray(data.academies) && data.academies.length){
       PEL_ENGINE.setCurriculumOverride(data);
+      mergeCurriculumAcademies(data);
       curriculumLoaded = true;
     }
   }catch(e){}
@@ -15861,28 +15918,42 @@ viewRenderers.academies = renderLibrary;
    ============================================================ */
 let wsState = { academyId:null, lessonId:null };
 function openAcademy(academyId){
-  const academy = ACADEMIES.find(a => a.id === academyId);
+  const academy = resolveAcademyById(academyId);
   if(!academy) return;
   const list = academyLessonList(academy);
   const firstUnlocked = list.find(l => !l.locked) || list[0];
   openLesson(academyId, firstUnlocked.id);
 }
-function openLesson(academyId, lessonId){
+async function openLesson(academyId, lessonId){
   if(subBlocked()){
     showRenewal();
     toast('<span class="arabic">جدّد باقتك للمتابعة</span>، Renew your plan to continue.');
     return;
   }
+  // Ensure the student's route/effective state is loaded before any STEP/route
+  // guard, otherwise the guard runs before dashboard state resolves.
+  if(!window.PEL_EFFECTIVE_STATE && typeof c_rpc_effective_state === 'function'){
+    try{ await c_rpc_effective_state(); }catch(e){}
+  }
   wsState = { academyId, lessonId };
+  // If the academy isn't resolved yet (curriculum RPC still loading / missed),
+  // load the curriculum once and retry so DB academies never render blank.
+  if(!resolveAcademyById(academyId) && typeof loadCurriculum === 'function'){
+    try{ await loadCurriculum(); }catch(e){}
+  }
   goToView('workspace');
   renderWorkspace();
 }
 function renderWorkspace(){
-  const academy = ACADEMIES.find(a => a.id === wsState.academyId);
-  if(!academy) return;
+  const academy = resolveAcademyById(wsState.academyId);
+  const el = document.getElementById('view-workspace');
+  if(!academy){
+    if(el) el.innerHTML = '<div class="empty-state" style="padding:60px 20px;text-align:center;"><i class="empty-icon" data-lucide="book-open"></i><h3>Lesson not available</h3><p><span class="arabic" style="display:block;margin-bottom:4px;">ما قدرنا نحمّل هذا الدرس</span>This academy could not be loaded. Return to the dashboard and try again.</p></div>';
+    if(window.lucide) lucide.createIcons();
+    return;
+  }
   const list = academyLessonList(academy);
   const lesson = getLesson(academy.id, wsState.lessonId);
-  const el = document.getElementById('view-workspace');
   el.innerHTML = `
     <div class="workspace-shell">
       <nav class="workspace-nav">
@@ -20422,7 +20493,7 @@ body.pel-lesson-mode .sidebar,body.pel-lesson-mode .topbar,body.pel-lesson-mode 
   function resolveAcademy(academyId, lessonId){
     try{
       if(typeof ACADEMIES==='undefined') return null;
-      let a = ACADEMIES.find(x=>x.id===academyId); if(a) return a;
+      let a = (typeof resolveAcademyById==='function') ? resolveAcademyById(academyId) : ACADEMIES.find(x=>x.id===academyId); if(a) return a;
       if(lessonId && typeof academyLessonList==='function'){
         for(const ac of ACADEMIES){ try{ if(academyLessonList(ac).some(l=>l.id===lessonId)) return ac; }catch(e){} }
       }
