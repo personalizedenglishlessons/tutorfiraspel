@@ -17679,8 +17679,11 @@ async function hydrateLearningState(user){
   }
 
   // Plan draft: only when there is NO assigned subscription. The assigned plan
-  // (PEL_SERVER_PLAN) always wins over the onboarding draft.
-  if(!window.PEL_SERVER_PLAN){
+  // (PEL_SERVER_PLAN) always wins over the onboarding draft. Guard on
+  // has_subscription too, in case hydrateServerPlan failed to synthesize a plan
+  // even though an active subscription exists.
+  const assignedExists = !!window.PEL_SERVER_PLAN || !!st.has_subscription;
+  if(!assignedExists){
     const srvDraft = st.plan_draft;
     if(srvDraft && srvDraft.onboardingCompleted){
       window.PEL_PROFILE_PLAN = srvDraft;          // server wins
@@ -18607,7 +18610,7 @@ function renderPlanSettings(){
     next.profile.weeklyFrequency = state.freqDays;
     next.estimate = E.estimateDuration(next.profile, next.route, { dailyMinutes: state.daily, weeklyFrequency: state.freqDays });
     lsSet('pel_plan', next);
-    persistPlanDraft(next);
+    if(!window.PEL_SERVER_PLAN && !(next && next.serverAssigned)) persistPlanDraft(next);
     syncPlanSnapshot();
     toast('<span class="arabic">تم تحديث خطتك</span>، Your plan was updated');
   });
