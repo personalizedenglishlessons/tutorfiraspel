@@ -63,7 +63,7 @@ LESSONS += [L("b2-pack2-01","Nuanced Opinions","الاراء المرموقة","
       {"t":"يضيف توازن قبل النقد","ok":True},{"t":"تنهي الجملة","ok":False},{"t":"تسأل سؤال","ok":False}]),
     TR("On the other hand, the cost is high.","من جهة ثانية التكلفة عالية",["من جهة ثانية التكلفة عالية","من جهة ثانية تكلفة عالية"]),
   ],
-  ["speaking","opinions"],["Express nuanced opinions politely"],["discussion","debate"],prereqs=["b2-complete-course"])),
+  ["speaking","opinions"],["Express nuanced opinions politely"],["discussion","debate"],prereqs=["b2-complete-course"]),
 
  L("b2-pack2-02","Advanced Conditionals","الشرط المتقدم","B2","b2-complete-course",
   [
@@ -85,7 +85,7 @@ LESSONS += [L("b2-pack2-01","Nuanced Opinions","الاراء المرموقة","
       {"t":"If I had known, I would have called","ok":True},{"t":"If it rains, I will go","ok":False},{"t":"If I were rich, I would travel","ok":False}]),
     TR("I would have helped you.","كنت ساعدتك",["كنت ساعدتك","كان ساعدتك"]),
   ],
-  ["grammar","conditionals"],["Use third and formal conditionals"],["writing","formal"],prereqs=["b2-pack2-01"])),
+  ["grammar","conditionals"],["Use third and formal conditionals"],["writing","formal"],prereqs=["b2-pack2-01"]),
 
  L("b2-pack2-03","Formal vs Informal Register","الرسمي مقابل العادي","B2","b2-complete-course",
   [
@@ -107,7 +107,7 @@ LESSONS += [L("b2-pack2-01","Nuanced Opinions","الاراء المرموقة","
       {"t":"I will purchase the items","ok":True},{"t":"I will buy the stuff","ok":False},{"t":"Gimme the things","ok":False}]),
     TR("The kids are playing.","العيايل يلعبون",["العيايل يلعبون","الاطفال يلعبون"]),
   ],
-  ["register","speaking"],["Match register to context"],["work","social"],prereqs=["b2-pack2-01"])),
+  ["register","speaking"],["Match register to context"],["work","social"],prereqs=["b2-pack2-01"]),
 
  L("b2-pack2-04","Reading Inference and Tone","الاستنتاج والنبرة","B2","b2-complete-course",
   [
@@ -129,7 +129,7 @@ LESSONS += [L("b2-pack2-01","Nuanced Opinions","الاراء المرموقة","
       {"t":"استنتاج من الادلة","ok":True},{"t":"نفس الكلمة","ok":False},{"t":"سؤال مباشر","ok":False}]),
     TR("The tone is sarcastic.","النبرة سخرية",["النبرة سخرية","النبرة فيها سخرية"]),
   ],
-  ["reading","tone"],["Infer meaning and tone"],["reading","exam"],prereqs=["b2-pack2-01"])),
+  ["reading","tone"],["Infer meaning and tone"],["reading","exam"],prereqs=["b2-pack2-01"])]
 
 # ===================== C1 ADVANCED ENGLISH =====================
 LESSONS += [L("c1-pack2-01","Advanced Collocations","التلازمات المتقدمة","C1","c1-advanced-english",
@@ -152,7 +152,7 @@ LESSONS += [L("c1-pack2-01","Advanced Collocations","التلازمات المت
       {"t":"make a decision","ok":True},{"t":"do a decision","ok":False},{"t":"take a decision","ok":True}]),
     TR("Take the cost into account.","خذ التكلفة بعين الاعتبار",["خذ التكلفة بعين الاعتبار","اعتبر التكلفة"]),
   ],
-  ["vocabulary","collocations"],["Use advanced collocations"],["writing","academic"],prereqs=["c1-advanced-english"])),
+  ["vocabulary","collocations"],["Use advanced collocations"],["writing","academic"],prereqs=["c1-advanced-english"]),
 
  L("c1-pack2-02","Discourse Markers and Cohesion","روابط الخطاب والترابط","C1","c1-advanced-english",
   [
@@ -174,7 +174,7 @@ LESSONS += [L("c1-pack2-01","Advanced Collocations","التلازمات المت
       {"t":"moreover","ok":True},{"t":"nevertheless","ok":False},{"t":"in contrast","ok":False}]),
     TR("It rained; nevertheless, we went.","ماطرت ومع ذلك رحنا",["ماطرت ومع ذلك رحنا","ماطرت ورحنا على الرغم من ذلك"]),
   ],
-  ["cohesion","writing"],["Link ideas with discourse markers"],["essay","academic"],prereqs=["c1-pack2-01"])),
+  ["cohesion","writing"],["Link ideas with discourse markers"],["essay","academic"],prereqs=["c1-pack2-01"]),
 
  L("c1-pack2-03","Critical Reading: Argument Analysis","قراءة نقدية: تحليل الحجة","C1","c1-advanced-english",
   [
@@ -196,7 +196,7 @@ LESSONS += [L("c1-pack2-01","Advanced Collocations","التلازمات المت
       {"t":"الافتراض الاول","ok":True},{"t":"النتيجة","ok":False},{"t":"الدليل","ok":False}]),
     TR("There is a flaw in the logic.","في خلل بالمنطق",["في خلل بالمنطق","في خطا بالمنطق"]),
   ],
-  ["critical-reading","analysis"],["Analyze and evaluate arguments"],["academic","exam"],prereqs=["c1-pack2-01"])),
+  ["critical-reading","analysis"],["Analyze and evaluate arguments"],["academic","exam"],prereqs=["c1-pack2-01"]),
 
  L("c1-pack2-04","Sophisticated Vocabulary in Context","مفردات راقية بالسياق","C1","c1-advanced-english",
   [
@@ -218,7 +218,7 @@ LESSONS += [L("c1-pack2-01","Advanced Collocations","التلازمات المت
       {"t":"ما يقدر يتجنب","ok":True},{"t":"نادر","ok":False},{"t":"غامض","ok":False}]),
     TR("The answer is ambiguous.","الجواب غامض",["الجواب غامض","الجواب غير واضح"]),
   ],
-  ["vocabulary","context"],["Use sophisticated words precisely"],["academic","reading"],prereqs=["c1-pack2-01"])),
+  ["vocabulary","context"],["Use sophisticated words precisely"],["academic","reading"],prereqs=["c1-pack2-01"])]
 
 # ===================== C2 NEAR-NATIVE =====================
 LESSONS += [L("c2-pack2-01","Idiomatic Mastery and Nuance","اتقان الاصطلاحات والظلال","C2","c2-near-native",
@@ -241,7 +241,7 @@ LESSONS += [L("c2-pack2-01","Idiomatic Mastery and Nuance","اتقان الاص�
       {"t":"يفهم المعنى الضمني","ok":True},{"t":"يقرا بسرعة","ok":False},{"t":"يكتب سطور","ok":False}]),
     TR("Technology is a double-edged sword.","التقنية سيف ذو حدين",["التقنية سيف ذو حدين","التكنولوجيا سيف ذو حدين"]),
   ],
-  ["idioms","nuance"],["Use idioms with precise nuance"],["advanced","debate"],prereqs=["c2-near-native"])),
+  ["idioms","nuance"],["Use idioms with precise nuance"],["advanced","debate"],prereqs=["c2-near-native"]),
 
  L("c2-pack2-02","Stylistic Control and Register","التحكم الاسلوبي والسجل","C2","c2-near-native",
   [
@@ -263,7 +263,7 @@ LESSONS += [L("c2-pack2-01","Idiomatic Mastery and Nuance","اتقان الاص�
       {"t":"موجز ومختصر","ok":True},{"t":"مطنب","ok":False},{"t":"غامض","ok":False}]),
     TR("His reply was terse.","ردة كان موجز",["ردة كان موجز","رده كان موجز"]),
   ],
-  ["style","register"],["Control style and register precisely"],["writing","rhetoric"],prereqs=["c2-pack2-01"])),
+  ["style","register"],["Control style and register precisely"],["writing","rhetoric"],prereqs=["c2-pack2-01"]),
 
  L("c2-pack2-03","Complex Syntax and Inversion","تركيب معقد والقلب","C2","c2-near-native",
   [
@@ -285,7 +285,7 @@ LESSONS += [L("c2-pack2-01","Idiomatic Mastery and Nuance","اتقان الاص�
       {"t":"Seldom have I seen such skill","ok":True},{"t":"I have seldom seen such skill","ok":False},{"t":"Such skill is rare","ok":False}]),
     TR("Not only did she sing, but she also danced.","ليست فقط غنت بل رقصت ايضا",["ليست فقط غنت بل رقصت ايضا","ليس فقط غنت بل رقصت ايضا"]),
   ],
-  ["syntax","grammar"],["Use inversion and complex structures"],["writing","formal"],prereqs=["c2-pack2-01"])),
+  ["syntax","grammar"],["Use inversion and complex structures"],["writing","formal"],prereqs=["c2-pack2-01"]),
 
  L("c2-pack2-04","Reading Between the Lines","فهم ما وراء النص","C2","c2-near-native",
   [
@@ -307,7 +307,7 @@ LESSONS += [L("c2-pack2-01","Idiomatic Mastery and Nuance","اتقان الاص�
       {"t":"معنى خفي كامن","ok":True},{"t":"النص الظاهر","ok":False},{"t":"العنوان","ok":False}]),
     TR("Don't take it at face value.","ما تاخذه على ظاهره",["ما تاخذه على ظاهره","لا تاخذه على ظاهره"]),
   ],
-  ["reading","inference"],["Detect implied meaning and subtext"],["literature","advanced"],prereqs=["c2-pack2-01"])),
+  ["reading","inference"],["Detect implied meaning and subtext"],["literature","advanced"],prereqs=["c2-pack2-01"])]
 
 # ===================== STEP EXAM PREP =====================
 LESSONS += [L("step-pack2-01","STEP Reading: Skimming Long Passages","ستيب قراءة: تصفح القطع الطويلة","STEP","step-exam-prep",
@@ -330,7 +330,7 @@ LESSONS += [L("step-pack2-01","STEP Reading: Skimming Long Passages","ستيب �
       {"t":"قراءة سريعة للفكرة العامة","ok":True},{"t":"قراءة كل كلمة ببطء","ok":False},{"t":"كتابة القطعة","ok":False}]),
     TR("Look for key words in the question.","ابحث عن الكلمات المفتاحية بالسؤال",["ابحث عن الكلمات المفتاحية بالسؤال","دور على الكلمات المفتاحية بالسؤال"]),
   ],
-  ["reading","exam-strategy"],["Skim long passages for the main idea"],["exam-prep","reading"],prereqs=["step-exam-prep"])),
+  ["reading","exam-strategy"],["Skim long passages for the main idea"],["exam-prep","reading"],prereqs=["step-exam-prep"]),
 
  L("step-pack2-02","STEP Grammar: Tense Consistency","ستيب قواعد: اتساق الازمنة","STEP","step-exam-prep",
   [
@@ -352,7 +352,7 @@ LESSONS += [L("step-pack2-01","STEP Reading: Skimming Long Passages","ستيب �
       {"t":"I have finished the work","ok":True},{"t":"I finished the work","ok":False},{"t":"I will finish the work","ok":False}]),
     TR("She worked yesterday.","اشتغلت امس",["اشتغلت امس","اشتغلت امبارح"]),
   ],
-  ["grammar","tenses"],["Keep tenses consistent in STEP items"],["exam-prep","grammar"],prereqs=["step-pack2-01"])),
+  ["grammar","tenses"],["Keep tenses consistent in STEP items"],["exam-prep","grammar"],prereqs=["step-pack2-01"]),
 
  L("step-pack2-03","STEP Vocabulary: Synonyms and Word Forms","ستيب مفردات: مرادفات وصيغ الكلمات","STEP","step-exam-prep",
   [
@@ -374,7 +374,7 @@ LESSONS += [L("step-pack2-01","STEP Reading: Skimming Long Passages","ستيب �
       {"t":"happy","ok":True},{"t":"sad","ok":False},{"t":"angry","ok":False}]),
     TR("Choose the word closest in meaning to large.","اختر الكلمة الاقرب معنى لـ large",["اختر الكلمة الاقرب معنى لـ large","اختار الكلمة الاقرب معنى لـ large"]),
   ],
-  ["vocabulary","exam-strategy"],["Match synonyms and word forms in STEP"],["exam-prep","vocabulary"],prereqs=["step-pack2-01"])),
+  ["vocabulary","exam-strategy"],["Match synonyms and word forms in STEP"],["exam-prep","vocabulary"],prereqs=["step-pack2-01"]),
 
  L("step-pack2-04","STEP Practice: Timed Error Recognition","ستيب تمرين: تمييز الاخطاء الموقوت","STEP","step-exam-prep",
   [
@@ -396,8 +396,7 @@ LESSONS += [L("step-pack2-01","STEP Reading: Skimming Long Passages","ستيب �
       {"t":"عشان تقلل الخيارات وتختار اسرع","ok":True},{"t":"عشان يختر عليك الوقت","ok":False},{"t":"عشان تستريح","ok":False}]),
     TR("Find the error in the sentence.","لقي الخطا بالجملة",["لقي الخطا بالجملة","جد الخطا بالجملة"]),
   ],
-  ["exam-strategy","error-recognition"],["Spot errors quickly under time pressure"],["exam-prep","practice"],prereqs=["step-pack2-01"])),
-]
+  ["exam-strategy","error-recognition"],["Spot errors quickly under time pressure"],["exam-prep","practice"],prereqs=["step-pack2-01"])]
 
 # ---------------- SQL builder + runner ----------------
 def lesson_sql(L):
@@ -477,7 +476,7 @@ if __name__ == "__main__":
         sql = "\n".join(lesson_sql(L) for L in batch)
         code, resp = run_sql(sql)
         n = len(batch)
-        if code == 200:
+        if code in (200, 201):
             ok += n; print(f"  batch {b//3+1}: OK ({n} lessons)")
         else:
             fail += n; print(f"  batch {b//3+1}: FAIL code={code}"); print("  resp:", resp[:800])
