@@ -909,7 +909,7 @@ async function loadStudents(st){
       '<td class="num"><span class="mobile-label">' + esc(t('streak')) + '</span>' + fmtN(s.streak) + 'd</td>' +
       '<td class="num"><span class="mobile-label">' + esc(t('progress')) + '</span>' + fmtN(s.completed_lessons) + '</td>' +
       '<td><span class="mobile-label">' + esc(t('lastActive')) + '</span>' + relTime(s.last_active) + '</td>' +
-      '<td><span class="mobile-label">' + esc(t('program')) + '</span>' + (s.program_name ? '<div style="font-weight:600;">' + esc(s.program_name) + '</div>' : '-') + (s.plan_status ? '<div style="margin-top:4px;">' + planStatusChip(s.plan_status) + (s.plan_days_left != null && ['active','expiring'].indexOf(s.plan_status) !== -1 ? ' <span style="font-size:.68rem; color:var(--text-muted);">' + esc(t('daysLeft').replace('%d', arNum(s.plan_days_left))) + '</span>' : '') + '</div>' : '') + '</td>' +
+      '<td><span class="mobile-label">' + esc(t('program')) + '</span>' + (s.program_name ? '<div style="font-weight:600;">' + esc(s.program_name) + '</div>' : '-') + (s.plan_status ? '<div style="margin-top:4px;">' + planStatusChip(s.plan_status) + (s.plan_days_left != null && ['active','expiring'].indexOf(s.plan_status) !== -1 ? ' <span style="font-size:.68rem; color:var(--text-muted);">' + esc(t('daysLeft').replace('%d', arNum(s.plan_days_left))) + '</span>' : '') + '</div>' : '<div style="margin-top:4px;"><span class="chip muted">' + esc(lang==='ar'?'لا توجد باقة':'No plan') + '</span></div>') + '</td>' +
       '<td><span class="mobile-label">' + esc(t('certs')) + '</span>' + fmtN(s.cert_count) + '</td>' +
       '<td><span class="mobile-label">' + esc(t('attention')) + '</span>' + attention + '</td>' +
       '</tr>';
