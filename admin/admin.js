@@ -705,7 +705,7 @@ var views = { overview, students, student, teachers, groups, groupDetail, course
 async function overview(){
 $('viewArea').innerHTML = pageHead(t('overview'), lang === 'ar' ? 'وش يصير الان؟ مين يحتاج انتباه؟' : 'What is happening? Who needs attention?') + loadingBlock();
   var [r, pov] = await Promise.all([ rpc('admin_overview'), rpc('admin_plans_overview') ]);
-  if(!r.ok){ $('viewArea').innerHTML = errBlock(); return; }
+  if(!r.ok){ $('viewArea').innerHTML = errBlock(rpcErrMsg(r)); return; }
   var d = r.data;
   var pv = pov.ok ? (pov.data || {}) : {};
   var tt = d.totals || {};
@@ -899,7 +899,7 @@ async function loadStudents(st){
     rpc('admin_students', { p_limit: 25, p_offset: st.page * 25, p_search: st.search || null, p_filters: filters, p_sort: st.sort }),
     rpc('admin_students_count', { p_search: st.search || null, p_filters: filters })
   ]);
-  if(!r.ok){ tbl.innerHTML = errBlock(); return; }
+  if(!r.ok){ tbl.innerHTML = errBlock(rpcErrMsg(r)); return; }
   var rows = r.data || [];
   var total = rn.ok ? rn.data : rows.length;
   var pages = Math.max(1, Math.ceil(total / 25));
@@ -1074,7 +1074,7 @@ var tabs = [
           var adj = delta * dir;
           var reason = $('credReason').value.trim() || (lang==='ar'?'تعديل يدوي':'Manual adjustment');
           var r2 = await rpc('admin_adjust_credits', { p_user_id: current360Uid, p_delta: adj, p_reason: reason });
-          if(!r2.ok){ toast(t('errorGeneric'), true); return; }
+          if(!r2.ok){ toast(rpcErrMsg(r2), true); return; }
           await audit('credit.adjust', 'student', current360Uid, { delta: adj, reason: reason });
           toast(t('saved')); 
           var r3 = await rpc('admin_student_billing', { p_user_id: current360Uid });
@@ -1560,7 +1560,7 @@ function overrideRec(){
     var academyId = parts.length === 2 ? parts[0] : rec.rec.academyId;
     var lessonId = parts.length === 2 ? parts[1] : repl;
     var r = await rpc('teacher_override', { p_user_id: current360Uid, p_original_academy_id: rec.rec.academyId, p_original_lesson_id: rec.rec.lessonId, p_replaced_academy_id: academyId, p_replaced_lesson_id: lessonId, p_reason: reason });
-    if(!r.ok){ toast(t('permissionDenied'), true); return; }
+    if(!r.ok){ toast(rpcErrMsg(r), true); return; }
     await audit('recommendation.override', 'student', current360Uid, { original: rec.rec.lessonId, replaced: lessonId });
     closeModal(s);
     toast(t('saved'));
@@ -1580,7 +1580,7 @@ async function saveIntervention(){
     user_id: current360Uid, type: type, title_en: titleEn, title_ar: titleAr || titleEn,
     reason_en: reasonEn, reason_ar: reasonAr, status: 'open', assignee_role: me.role, created_by: me.id
   });
-  if(error){ toast(t('permissionDenied'), true); return; }
+  if(error){ toast((error && (error.message || String(error))) || t('permissionDenied'), true); return; }
   await audit('intervention.assign', 'student', current360Uid, { type: type, title: titleEn });
   toast(t('saved'));
   reload360();
@@ -1590,7 +1590,7 @@ async function saveNote(){
   if(!body){ toast(t('required'), true); return; }
   var c = client();
   var { error } = await c.from('student_notes').insert({ user_id: current360Uid, author_user_id: me.id, category: 'note', body: body });
-  if(error){ toast(t('permissionDenied'), true); return; }
+  if(error){ toast((error && (error.message || String(error))) || t('permissionDenied'), true); return; }
   await audit('student.note', 'student', current360Uid, {});
   toast(t('saved'));
   reload360();
@@ -1604,7 +1604,7 @@ async function saveProfile(){
     enrollment_date: $('prEnr').value || null, notes: $('prNotes').value.trim(),
     updated_at: new Date().toISOString()
   });
-  if(error){ toast(t('permissionDenied'), true); return; }
+  if(error){ toast((error && (error.message || String(error))) || t('permissionDenied'), true); return; }
   await audit('student.edit', 'student', current360Uid, { status: $('prStatus').value });
   toast(t('saved'));
   reload360();
@@ -1622,7 +1622,7 @@ async function saveSnapshot(){
     user_id: current360Uid, snapshot_date: new Date().toISOString().slice(0,10),
     level: level, skill_scores: scores, xp: st.xp || 0, completed_lessons: completed.length
   });
-  if(error){ toast(t('permissionDenied'), true); return; }
+  if(error){ toast((error && (error.message || String(error))) || t('permissionDenied'), true); return; }
   await audit('student.snapshot', 'student', current360Uid, {});
   toast(t('snapshotSaved'));
   reload360();
@@ -1687,7 +1687,7 @@ function renderPreview(){
 async function teachers(){
   $('viewArea').innerHTML = pageHead(t('teachers'), '') + loadingBlock();
   var r = await rpc('admin_teachers');
-  if(!r.ok){ $('viewArea').innerHTML = errBlock(); return; }
+  if(!r.ok){ $('viewArea').innerHTML = errBlock(rpcErrMsg(r)); return; }
   var rows = r.data || [];
   var list = rows.map(function(x){
     return '<div class="reason-item"><span class="avatar-circle" style="width:30px; height:30px; font-size:.78rem;">' + esc((x.full_name||'?').charAt(0).toUpperCase()) + '</span>' +
@@ -1722,7 +1722,7 @@ async function teachers(){
 async function groups(){
   $('viewArea').innerHTML = pageHead(t('groups'), lang === 'ar' ? 'المجموعات والصفوف' : 'Groups and classes') + loadingBlock();
   var r = await rpc('admin_groups');
-  if(!r.ok){ $('viewArea').innerHTML = errBlock(); return; }
+  if(!r.ok){ $('viewArea').innerHTML = errBlock(rpcErrMsg(r)); return; }
   var rows = r.data || [];
 
   var cards = rows.map(function(g){
@@ -1880,7 +1880,7 @@ async function groupDetail(id){
     b.addEventListener('click', async function(){
       var uid = b.getAttribute('data-rm-member');
       var r = await rpc('admin_group_remove', { p_group_id: id, p_user_id: uid });
-      if(!r.ok){ toast(t('permissionDenied'), true); return; }
+      if(!r.ok){ toast(rpcErrMsg(r), true); return; }
       toast(t('saved'));
       groupDetail(id);
     });
@@ -1911,7 +1911,7 @@ function addMemberModal(groupId){
       if(q.length < 2){ results.innerHTML = ''; return; }
       results.innerHTML = loadingBlock();
       var r = await rpc('admin_students', { p_limit: 8, p_offset: 0, p_search: q, p_filters: {}, p_sort: 'name:asc' });
-      if(!r.ok){ results.innerHTML = errBlock(); return; }
+      if(!r.ok){ results.innerHTML = errBlock(rpcErrMsg(r)); return; }
       results.innerHTML = (r.data || []).map(function(st){
         return '<div class="reason-item"><div style="flex:1;"><div style="font-weight:600;">' + esc(st.full_name) + '</div><span class="why">' + esc(st.email || '') + '</span></div>' +
           '<button class="btn btn-gold btn-sm" data-pick="' + st.id + '">' + esc(t('addStudent')) + '</button></div>';
@@ -1995,7 +1995,7 @@ async function courses(){
     c.from('lesson_items').select('lesson_id'),
     c.from('lesson_exercises').select('lesson_id,type')
   ]);
-  if(res[0].error || res[1].error || res[2].error){ $('viewArea').innerHTML = errBlock(); return; }
+  if(res[0].error || res[1].error || res[2].error){ $('viewArea').innerHTML = errBlock(rpcErrMsg({error: res[0].error || res[1].error || res[2].error})); return; }
   _cur.academies = res[0].data || [];
   _cur.lessons = {};
   var itemCounts = {}, exCounts = {};
@@ -2195,7 +2195,7 @@ function lessonForm(academyId, lessonId){
 async function interventions(){
   $('viewArea').innerHTML = pageHead(t('interventions'), lang === 'ar' ? 'كل التدخلات' : 'All interventions') + loadingBlock();
   var r = await rpc('admin_interventions');
-  if(!r.ok){ $('viewArea').innerHTML = errBlock(); return; }
+  if(!r.ok){ $('viewArea').innerHTML = errBlock(rpcErrMsg(r)); return; }
   var rows = r.data || [];
   var html = rows.map(function(i){
     var s = statusChip(i.status);
@@ -2221,7 +2221,7 @@ async function classes(){
     rpc('admin_classes'),
     client().from('groups').select('id,name,status').eq('status','active')
   ]);
-  if(!r.ok){ $('viewArea').innerHTML = errBlock(); return; }
+  if(!r.ok){ $('viewArea').innerHTML = errBlock(rpcErrMsg(r)); return; }
   var rows = r.data || [];
   var groupsArr = (g.data || []);
 
@@ -2330,7 +2330,7 @@ function classStatusModal(classId){
   s.querySelector('[data-close]').addEventListener('click', function(){ closeModal(s); });
   $('csSave').addEventListener('click', async function(){
     var r = await rpc('admin_class_status', { p_class_id: classId, p_status: $('csSel').value });
-    if(!r.ok){ toast(t('permissionDenied'), true); return; }
+    if(!r.ok){ toast(rpcErrMsg(r), true); return; }
     closeModal(s);
     toast(t('saved'));
     classes();
@@ -2450,7 +2450,7 @@ function subForm(prog){
     if(!picked){ toast(t('required'), true); return; }
     var end = $('sfEnd').value || (new Date(Date.now() + 90*86400000).toISOString().slice(0,10));
     var r = await rpc('admin_subscription_add', { p_user_id: picked, p_program_id: $('sfProg').value, p_start_date: $('sfStart').value, p_end_date: end, p_sessions_used: 0 });
-    if(!r.ok){ toast(t('permissionDenied'), true); return; }
+    if(!r.ok){ toast(rpcErrMsg(r), true); return; }
     closeModal(s);
     toast(t('saved'));
     programs();
@@ -2719,7 +2719,7 @@ async function certificates(){
   $('viewArea').innerHTML = pageHead(t('certificates'), lang === 'ar' ? 'الشهادات والتحقق' : 'Certificates and verification') + loadingBlock();
   var c = client();
   var r = await c.from('certificates').select('id,cert_id,code,student_name,academy_en,academy_ar,level,program_name,completed_at,created_at,status,revoke_reason,user_id,verification_count').order('created_at',{ascending:false}).limit(200);
-  if(r.error){ $('viewArea').innerHTML = errBlock(); return; }
+  if(r.error){ $('viewArea').innerHTML = errBlock(rpcErrMsg(r)); return; }
   var rows = r.data || [];
   var html = rows.map(function(x){
     return '<div class="reason-item"><span class="badge-dot ' + (x.status === 'issued' ? 'green' : x.status === 'revoked' ? 'red' : 'gold') + '" style="margin-top:5px;"></span>' +
@@ -2920,7 +2920,7 @@ async function auditLog(){
   $('viewArea').innerHTML = pageHead(t('audit'), lang === 'ar' ? 'سجل كل اجراوات الادارة' : 'Full admin action history') + loadingBlock();
   var c = client();
   var r = await c.from('audit_log').select('id,actor_user_id,action,target_type,target_id,metadata,created_at').order('created_at',{ascending:false}).limit(300);
-  if(r.error){ $('viewArea').innerHTML = errBlock(); return; }
+  if(r.error){ $('viewArea').innerHTML = errBlock(rpcErrMsg(r)); return; }
   var rows = r.data || [];
   var html = rows.map(function(a){
     return '<div class="reason-item"><span class="badge-dot muted" style="margin-top:5px;"></span>' +
@@ -2940,7 +2940,7 @@ async function auditLog(){
 async function roles(){
   $('viewArea').innerHTML = pageHead(t('roles'), lang === 'ar' ? 'الفريق والادوار' : 'Team and roles') + loadingBlock();
   var r = await rpc('admin_team');
-  if(!r.ok){ $('viewArea').innerHTML = errBlock(); return; }
+  if(!r.ok){ $('viewArea').innerHTML = errBlock(rpcErrMsg(r)); return; }
   var rows = r.data || [];
   var html = rows.map(function(u){
     var isSelf = me.id === u.id;
@@ -2976,7 +2976,7 @@ async function roles(){
 async function health(){
   $('viewArea').innerHTML = pageHead(t('health'), lang === 'ar' ? 'فحوصات صحة النظام' : 'System health checks') + loadingBlock();
   var r = await rpc('system_health');
-  if(!r.ok){ $('viewArea').innerHTML = errBlock(); return; }
+  if(!r.ok){ $('viewArea').innerHTML = errBlock(rpcErrMsg(r)); return; }
   var checks = (r.data && r.data.checks) || [];
   var html = checks.map(function(c){
     var ok = (c.count || 0) === 0;
@@ -3012,7 +3012,7 @@ function reports(){
   async function load(){
     tbl.innerHTML = loadingBlock();
     var r = await rpc('admin_reports', { p_report: $('repSel').value, p_params: {} });
-    if(!r.ok){ tbl.innerHTML = errBlock(); return; }
+    if(!r.ok){ tbl.innerHTML = errBlock(rpcErrMsg(r)); return; }
   var rows = r.data || [];
   window.__annRows = {};
   rows.forEach(function(a){ window.__annRows[a.id] = a; });
@@ -3593,7 +3593,7 @@ async function lcLoad(){
   var host = $('viewArea'); if(!host) return;
   var r = await rpc('admin_live_class_requests', { p_status: lcState.filter==='pending' ? 'pending' : null });
   var c = await rpc('admin_list_live_class_cities');
-  if(!r.ok){ host.innerHTML = pageHead('Class Requests', '') + errBlock(); return; }
+  if(!r.ok){ host.innerHTML = pageHead('Class Requests', '') + errBlock(rpcErrMsg(r)); return; }
   lcState.reqs = r.data || [];
   lcState.cities = (c.ok && c.data) ? c.data : [];
   lcRender();
