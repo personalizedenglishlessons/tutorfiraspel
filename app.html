@@ -17791,7 +17791,7 @@ function renderContinueLearning(){
             : 'First step: complete your first lesson and your dashboard opens up.'));
     if(resumeBtn) resumeBtn.innerHTML = `<span class="arabic">ابدا درسك الاول</span>، Start Your First Lesson`;
     const estChip = document.getElementById('heroEstChip');
-    if(estChip && firstObj && firstObj.duration) estChip.innerHTML = `<span class="arabic">تقريبا ${firstObj.duration.replace(/\bmin\b/gi,'دقيقة').replace(/\bhr\b/gi,'ساعة')}</span>، Est. ${firstObj.duration}`;
+    if(estChip && firstObj && firstObj.duration) estChip.innerHTML = `<span class="arabic">تقريبا ${String(firstObj.duration).replace(/\bmin\b/gi,'دقيقة').replace(/\bhr\b/gi,'ساعة')}</span>، Est. ${firstObj.duration}`;
     if(card) card.style.display = 'none';
   }else{
     const planNext = hasPlan() ? nextFromPlan() : null;
@@ -17801,7 +17801,7 @@ function renderContinueLearning(){
       const next = nextLesson();
       const nextObj = next ? getLesson(next.academy, next.lesson) : null;
       const estChip = document.getElementById('heroEstChip');
-      if(estChip && nextObj && nextObj.duration) estChip.innerHTML = `<span class="arabic">تقريبا ${nextObj.duration.replace(/\bmin\b/gi,'دقيقة').replace(/\bhr\b/gi,'ساعة')}</span>، Est. ${nextObj.duration} remaining`;
+      if(estChip && nextObj && nextObj.duration) estChip.innerHTML = `<span class="arabic">تقريبا ${String(nextObj.duration).replace(/\bmin\b/gi,'دقيقة').replace(/\bhr\b/gi,'ساعة')}</span>، Est. ${nextObj.duration} remaining`;
       if(resumeText) resumeText.innerHTML = nextObj ? `<span class="arabic">${nextObj.ar}</span> · ${nextObj.title}` : `<span class="arabic">${inProgress.ar}</span> · ${inProgress.en}`;
       setHomeSubtitle(nextObj ? `كمل: ${nextObj.ar}.` : `كمل: ${inProgress.ar}.`, nextObj ? `Continue: ${nextObj.title}.` : `Continue: ${inProgress.en}.`);
       if(card) card.style.display = '';
