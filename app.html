@@ -13436,11 +13436,16 @@ function academyLessonList(academy){
   // Admin-curated DB catalog leads when loaded (Admin > Lessons is the
   // editor); the static mirror below is the offline fallback.
   const engine = window.PEL_ENGINE;
+  // DB curriculum leads when an override is loaded; the static mirror is the
+  // offline fallback. No hard 6-lesson cap: a full 22-lesson course shows in
+  // full and unlock scaling uses the real lesson count.
   let ids = (engine && engine.hasCurriculumOverride && engine.hasCurriculumOverride())
-    ? (engine.academyLessons(academy.id) || []).slice(0,6)
-    : (ACADEMY_LESSONS[academy.id] || []).slice(0,6);
+    ? (engine.academyLessons(academy.id) || [])
+    : (ACADEMY_LESSONS[academy.id] || []);
   if(!ids.length){
-    const idx = ACADEMIES.findIndex(a => a.id === academy.id);
+    // Truly missing academy: synthesize 6 from the title bank so the reader
+    // still has something to show.
+    const idx = Math.max(0, ACADEMIES.findIndex(a => a.id === academy.id));
     for(let i=0;i<6;i++){ ids.push(LESSON_TITLE_BANK[(idx + i) % LESSON_TITLE_BANK.length].id); }
   }
   // make sure the academy's flagship (if any) leads the list
@@ -13452,16 +13457,22 @@ function academyLessonList(academy){
   // Linear unlock, one lesson at a time: each completed lesson opens the
   // next. The old percentage-scaled formula deadlocked (lesson 3 needed 50%
   // progress, but 50% required completing lesson 3), which could never reach
-  // 100% and made certificates unearnable.
+  // 100% and made certificates unearnable. Scales to the real lesson count
+  // instead of a fixed 6.
   let doneCount = 0;
   completedLessons.forEach(k => { if(k.indexOf(academy.id + '::') === 0) doneCount++; });
-  const unlockedCount = Math.min(6, Math.max(1, doneCount + 1));
+  const unlockedCount = Math.min(ids.length, Math.max(1, doneCount + 1));
   const engineList = window.PEL_ENGINE;
   return ids.map((id, i) => {
-    const meta = { ...lessonMeta(id) };
-    // Prereq gate on top of linear unlock: a DB lesson with unmet
-    // prerequisites stays locked even if it is next in line.
+    // DB-only lessons have no static lessonMeta entry: fall back to the DB
+    // lesson title so nav links always carry an id + en label.
+    let meta = lessonMeta(id);
     const dbl = (engineList && engineList.dbLesson) ? engineList.dbLesson(id) : null;
+    if(dbl){
+      meta = Object.assign(meta ? { ...meta } : {}, { id: dbl.id, en: dbl.t, ar: dbl.a });
+    } else if(!meta){
+      meta = { id, en: id };
+    }
     if(dbl && dbl.prereqs && dbl.prereqs.length){
       const met = dbl.prereqs.every(p => [...completedLessons].some(k => k.endsWith('::' + p)));
       if(!met){ meta.locked = true; meta.waitingOn = dbl.prereqs[0]; }
