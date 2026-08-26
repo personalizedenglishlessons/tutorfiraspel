@@ -1660,6 +1660,7 @@ function resolveAcademyById(id){
         from: dbAc.color_from || '#C8A96A',
         to: dbAc.color_to || '#A88345',
         difficulty: dbAc.difficulty || (dbAc.level === 'STEP' ? 'Advanced' : 'Intermediate'),
+        level: dbAc.level,
         duration: '6h',
         lessons: (dbAc.lessons || []).length,
         progress: 0
@@ -1687,10 +1688,29 @@ function mergeCurriculumAcademies(data){
       from: dbAc.color_from || '#C8A96A',
       to: dbAc.color_to || '#A88345',
       difficulty: dbAc.difficulty || (dbAc.level === 'STEP' ? 'Advanced' : 'Intermediate'),
+      level: dbAc.level,
       duration: '6h',
       lessons: (dbAc.lessons || []).length
     });
   });
+}
+/* STEP route isolation for the library/academies grid: a STEP-plan student
+   only ever sees academies on their STEP route (the DB student_route already
+   enforces this server-side); non-STEP students never see STEP-level
+   academies so the merged DB step-exam-prep academy never leaks into a normal
+   learner's library. */
+function isStepStudent(){
+  const st = window.PEL_EFFECTIVE_STATE;
+  if(!st || !Array.isArray(st.route_stages) || !st.route_stages.length) return false;
+  return st.route_stages.some(s => s.id === 'step-exam-prep') ||
+         st.route_stages.every(s => (s.level || '').toUpperCase() === 'STEP');
+}
+function visibleLibraryAcademies(all){
+  if(isStepStudent()){
+    const routeIds = (window.PEL_EFFECTIVE_STATE.route_stages || []).map(s => s.id).filter(Boolean);
+    if(routeIds.length) return all.filter(a => routeIds.indexOf(a.id) !== -1);
+  }
+  return all.filter(a => a.id !== 'step-exam-prep' && (a.level || '').toUpperCase() !== 'STEP');
 }
 async function loadCurriculum(){
   if(curriculumLoaded) return;
@@ -15874,7 +15894,7 @@ function renderLibrary(){
   // English academies lead otherwise. Nothing is hidden, just ordered.
   const dirPool = directionAcademies();
   const otherPool = ACADEMIES.filter(a => !dirPool.includes(a));
-  const ordered = dirPool.concat(otherPool);
+  const ordered = visibleLibraryAcademies(dirPool.concat(otherPool));
   const inProgress = ordered.filter(a => a.progress > 0 && a.progress < 100).slice(0,6);
   const recommended = ordered.filter(a => a.progress === 0).slice(0,6);
   const categories = ['All', ...new Set(ordered.map(a => a.cat))];
