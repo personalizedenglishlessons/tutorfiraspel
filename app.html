@@ -13680,7 +13680,7 @@ function renderDbPractice(container, exercises){
 function getLesson(academyId, lessonId){
   const key = lessonKey(academyId, lessonId);
   if(FLAGSHIP_LESSONS[key]) return { ...FLAGSHIP_LESSONS[key], flagship:true };
-  const academy = ACADEMIES.find(a => a.id === academyId);
+  const academy = resolveAcademyById(academyId);
   // DB-driven curriculum lesson next: full trilingual items and exercises
   // straight from the admin-managed catalog.
   const engine = window.PEL_ENGINE;
@@ -13757,7 +13757,7 @@ function markLessonComplete(academyId, lessonId){
   // words come back for spaced recall instead of being forgotten.
   const reviewLesson = getLesson(academyId, lessonId);
   if(reviewLesson && reviewLesson.vocab){
-    const reviewAcademy = ACADEMIES.find(a => a.id === academyId);
+    const reviewAcademy = resolveAcademyById(academyId);
     reviewLesson.vocab.forEach(w => enqueueForReview(w, (reviewAcademy ? reviewAcademy.en + ' · ' : '') + reviewLesson.title));
   }
   syncAcademyProgress();
