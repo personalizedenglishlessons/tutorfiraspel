@@ -1712,6 +1712,24 @@ function visibleLibraryAcademies(all){
   }
   return all.filter(a => a.id !== 'step-exam-prep' && (a.level || '').toUpperCase() !== 'STEP');
 }
+/* Route guard for opening a lesson: a STEP-plan student may only open an
+   academy on their STEP route. Loads effective state first if it has not
+   resolved yet (e.g. a deep link before the dashboard loads). Non-STEP
+   students are never blocked here. */
+async function ensureRouteAllows(academyId){
+  if(typeof isStepStudent !== 'function') return true;
+  if(!window.PEL_EFFECTIVE_STATE && typeof c_rpc_effective_state === 'function'){
+    try{ await c_rpc_effective_state(); }catch(e){}
+  }
+  if(isStepStudent()){
+    const ids = ((window.PEL_EFFECTIVE_STATE && window.PEL_EFFECTIVE_STATE.route_stages) || []).map(s => s.id).filter(Boolean);
+    if(ids.length && ids.indexOf(academyId) === -1){
+      try{ toast('<span class="arabic">هذا الدرس خارج مسار STEP تبعك</span>، This lesson is outside your STEP plan.'); }catch(e){}
+      return false;
+    }
+  }
+  return true;
+}
 async function loadCurriculum(){
   if(curriculumLoaded) return;
   const c = client();
@@ -15875,6 +15893,13 @@ function ar_switch_confirm_text(){
 function renderLibrary(){
   ['paths','academies'].forEach(vid => document.getElementById('view-'+vid).dataset.rendered='1');
   const el = document.getElementById('view-paths');
+  // A STEP student's route is unknown until student_effective_state loads;
+  // show a loading state instead of flashing the full non-STEP library.
+  if(currentUser && client() && !window.PEL_EFFECTIVE_STATE){
+    el.innerHTML = '<div class="empty-state" style="padding:90px 20px;text-align:center;"><h3 style="margin:0;"><span class="arabic" style="display:block;margin-bottom:4px;">نحمّل مسارك</span>Loading your plan...</h3></div>';
+    c_rpc_effective_state().then(() => renderLibrary()).catch(() => renderLibrary());
+    return;
+  }
   // Plan-tier gate: a student with no active subscription can preview academy
   // titles but every lesson inside is locked until a plan is activated.
   // This keeps the library browsable while enforcing plan-gated access.
@@ -15961,11 +15986,10 @@ async function openLesson(academyId, lessonId){
     toast('<span class="arabic">جدّد باقتك للمتابعة</span>، Renew your plan to continue.');
     return;
   }
-  // Ensure the student's route/effective state is loaded before any STEP/route
-  // guard, otherwise the guard runs before dashboard state resolves.
-  if(!window.PEL_EFFECTIVE_STATE && typeof c_rpc_effective_state === 'function'){
-    try{ await c_rpc_effective_state(); }catch(e){}
-  }
+  // STEP route isolation: a STEP-plan student may only open an academy on
+  // their route. ensureRouteAllows loads effective state first if it has not
+  // resolved yet (e.g. a deep link before the dashboard loads).
+  if(typeof ensureRouteAllows === 'function' && !(await ensureRouteAllows(academyId))) return;
   wsState = { academyId, lessonId };
   // If the academy isn't resolved yet (curriculum RPC still loading / missed),
   // load the curriculum once and retry so DB academies never render blank.
@@ -21072,8 +21096,11 @@ body.pel-lesson-mode .sidebar,body.pel-lesson-mode .topbar,body.pel-lesson-mode 
   window.PEL_BEGINNER_LESSONS = PEL_BEGINNER;
   if(typeof openLesson==='function'){
     const _origOpenLesson = openLesson;
-    openLesson = function(academyId, lessonId){
+    openLesson = async function(academyId, lessonId){
       try{
+        // Route guard first, before the enhanced Stage path, so a STEP student
+        // can never open a non-STEP academy via Stage.open either.
+        if(typeof ensureRouteAllows === 'function' && !(await ensureRouteAllows(academyId))) return;
         if(typeof subBlocked==='function' && subBlocked()){ return _origOpenLesson(academyId, lessonId); }
         const ok = Stage.open(academyId, lessonId);
         if(ok) return;
