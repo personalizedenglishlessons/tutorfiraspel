@@ -192,6 +192,13 @@ var I = {
   'groupFull':{en:'Group is full', ar:'المجموعة ممتلية'},
   'moveFromWaitlist':{en:'Move into group', ar:'نقل للمجموعة'},
   'addStudent':{en:'Add student', ar:'اضافة طالب'},
+  'createStudent':{en:'Create student', ar:'انشاء طالب'},
+  'createStudentDesc':{en:'Create an account the student can sign in with. Set their name, email, and a password (min 8 chars).', ar:'انشئ حساب يقدر الطالب يدخل فيه. حدد اسمه، ايميله، وكلمة مرور (٨ احرف على الاقل).'},
+  'studentName':{en:'Full name', ar:'الاسم الكامل'},
+  'studentEmail':{en:'Email', ar:'البريد الالكتروني'},
+  'studentPassword':{en:'Password', ar:'كلمة المرور'},
+  'pwMinLen':{en:'At least 8 characters', ar:'٨ احرف على الاقل'},
+  'studentCreated':{en:'Student created. Share the email and password with them.', ar:'تم انشاء الطالب. شارك الايميل وكلمة المرور معه.'},
   'removeStudent':{en:'Remove', ar:'ازالة'},
   'assignTeacher':{en:'Assign teacher', ar:'اسناد معلم'},
   'schedule':{en:'Schedule', ar:'الجدول'},
@@ -817,6 +824,7 @@ function students(){
       '<div class="field" style="flex-direction:row; align-items:center; gap:7px;"><input type="checkbox" id="stAttention"' + (st.filters.needs_attention ? ' checked' : '') + '><label>' + esc(t('attentionLabel')) + '</label></div>' +
       '<button class="btn btn-gold btn-sm" id="stApply">' + esc(t('apply')) + '</button>' +
       '<button class="btn btn-ghost btn-sm" id="stReset">' + esc(t('reset')) + '</button>' +
+      (hasPerm('students.manage') ? '<button class="btn btn-gold btn-sm" id="stCreate">' + esc(t('createStudent')) + '</button>' : '') +
       '<div style="flex:1"></div>' +
       '<div class="field">' + sortSel(st.sort) + '</div>' +
     '</div>' +
@@ -827,7 +835,37 @@ function students(){
   $('stSearch').addEventListener('keydown', function(e){ if(e.key === 'Enter'){ st.search = this.value.trim(); st.page = 0; loadStudents(st); } });
   $('stApply').addEventListener('click', function(){ st.search = $('stSearch').value.trim(); st.filters.status = $('stStatus').value; st.filters.level = $('stLevel').value; st.filters.cert_status = $('stCert').value; st.filters.needs_attention = $('stAttention').checked; st.filters.entitlement = $('stEnt') ? $('stEnt').value : ''; st.filters.program_id = $('stProgram') ? $('stProgram').value : ''; st.filters.teacher_id = $('stTeacher') ? $('stTeacher').value : ''; st.filters.group_id = $('stGroup') ? $('stGroup').value : ''; st.page = 0; loadStudents(st); });
   $('stReset').addEventListener('click', function(){ st.search=''; st.filters = defaultStudentFilters(); st.page = 0; st.sort='last_active:desc'; students(); });
+  var stCreate = $('stCreate');
+  if(stCreate) stCreate.addEventListener('click', openCreateStudent);
   loadStudents(st);
+}
+
+function openCreateStudent(){
+  var s = modal(t('createStudent'),
+    '<p class="sub" style="margin-bottom:14px;">' + esc(t('createStudentDesc')) + '</p>' +
+    '<div class="form-grid">' +
+      '<div class="field full"><label>' + esc(t('studentName')) + '</label><input class="input" id="csName" autocomplete="off"></div>' +
+      '<div class="field"><label>' + esc(t('studentEmail')) + '</label><input class="input" type="email" id="csEmail" autocomplete="off"></div>' +
+      '<div class="field"><label>' + esc(t('studentPassword')) + '</label><input class="input" type="text" id="csPass" autocomplete="off" placeholder="' + esc(t('pwMinLen')) + '"></div>' +
+    '</div>' +
+    '<div class="btn-row"><button class="btn btn-gold btn-sm" id="csSave">' + esc(t('save')) + '</button><button class="btn btn-ghost btn-sm" data-close>' + esc(t('cancel')) + '</button></div>');
+  s.querySelector('[data-close]').addEventListener('click', function(){ closeModal(s); });
+  $('csSave').addEventListener('click', async function(){
+    var name = $('csName').value.trim();
+    var email = $('csEmail').value.trim();
+    var pass = $('csPass').value;
+    if(!name){ toast(t('studentName'), true); return; }
+    if(!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){ toast(t('studentEmail'), true); return; }
+    if(pass.length < 8){ toast(t('pwMinLen'), true); return; }
+    var btn = $('csSave'); btn.disabled = true;
+    var r = await rpc('admin_create_student', { p_email: email, p_password: pass, p_full_name: name });
+    if(!r.ok){ btn.disabled = false; toast((r.error && r.error.message) || t('permissionDenied'), true); return; }
+    closeModal(s); toast(t('studentCreated'));
+    // refresh the student list so the new row appears
+    students();
+    // open the new student's 360 panel
+    if(r.data && r.data.user_id){ try{ goTo('student', r.data.user_id); }catch(e){} }
+  });
 }
 function sel(id, label, options, value){
   var o = options.map(function(opt){
