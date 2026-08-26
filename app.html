@@ -1756,6 +1756,7 @@ async function revealApp(user){
   await Promise.race([loadCurriculum(), new Promise(r => setTimeout(r, 2500))]);
   await loadStudentState();
   await loadSubPlan();
+  await hydrateServerPlan(user);
   adoptVisitorPlan();
   // Restore this student's interface language + learning direction from
   // their account (synced via lsSet) before anything paints.
@@ -2425,6 +2426,7 @@ function renderAccessGate(){
 
 async function pelGateSignOut(){
   const c = client();
+  window.PEL_SERVER_PLAN = null;
   if(c){ try{ await c.auth.signOut(); }catch(e){} }
   clearUserLocalKeys();
   window.location.href = 'login.html';
@@ -2746,6 +2748,7 @@ window.addEventListener('load', async () => {
 
 document.getElementById('logoutBtn').addEventListener('click', async () => {
   const c = client();
+  window.PEL_SERVER_PLAN = null;
   if(c){ try{ await c.auth.signOut(); }catch(e){} }
   clearUserLocalKeys();
   window.location.href = 'login.html';
@@ -17585,6 +17588,61 @@ function c_rpc_effective_state(){
     return false;
   }).catch(() => false);
 }
+/* Hydrate a plan from the server so an admin-assigned subscription clears the
+   "No plan yet" gate without forcing onboarding. The server is authoritative:
+   an active subscription (can_access=true) means the student has a plan, and
+   their route comes from student_effective_state.route_stages + the DB
+   curriculum. localStorage pel_plan (from onboarding) is only a fallback. */
+async function hydrateServerPlan(user){
+  window.PEL_SERVER_PLAN = null;
+  if(!currentUser) return;
+  if(typeof loadCurriculum === 'function'){
+    try{ await Promise.race([loadCurriculum(), new Promise(r => setTimeout(r, 3000))]); }catch(e){}
+  }
+  const ok = await c_rpc_effective_state();
+  const st = window.PEL_EFFECTIVE_STATE;
+  if(!st || st.ok === false || !st.can_access) return;
+  const E = window.PEL_ENGINE;
+  const routeStages = st.route_stages || [];
+  const route = routeStages.map(s => {
+    const ids = (E && typeof E.academyLessons === 'function') ? E.academyLessons(s.id) : [];
+    const lvl = (s.level || 'A1').toUpperCase();
+    return {
+      key: s.id,
+      title: { en: s.name_en || s.id, ar: s.name_ar || s.id },
+      level: lvl,
+      theme: 'server',
+      units: [{ academyId: s.id, lessonIds: ids, level: lvl }]
+    };
+  });
+  const name = (user && user.user_metadata && user.user_metadata.full_name) ? user.user_metadata.full_name
+    : (user && user.email ? user.email.split('@')[0] : 'Student');
+  const dailyMinutes = 15, weeklyFrequency = 5;
+  const startLvl = ((st.level || 'A1') + '').toUpperCase();
+  const profile = {
+    interfaceLanguage: (typeof accountPrefs !== 'undefined' && accountPrefs && accountPrefs.lang) ? accountPrefs.lang : 'en',
+    learningLanguage: 'en', learningDirection: 'en',
+    primaryGoals: [], secondaryGoals: [], desiredAbilities: [], realLifeContexts: [],
+    selfReportedWeaknesses: [], selfReportedConfidence: 'basic-words', learningPreferences: [],
+    dailyMinutes, weeklyFrequency,
+    targetOutcome: null, targetLevel: 'C2', estimatedStartingLevel: startLvl,
+    recommendedFocus: ['Speaking'], deadline: null, placementScore: null,
+    onboardingCompleted: true, planVersion: 1, createdAt: new Date().toISOString(),
+    name
+  };
+  let estimate = null;
+  if(E && typeof E.estimateDuration === 'function'){
+    try{ estimate = E.estimateDuration(profile, route, { dailyMinutes, weeklyFrequency }); }catch(e){
+      estimate = { totalLessons: route.reduce(function(n,s){ return n + s.units.reduce(function(m,u){ return m + u.lessonIds.length; },0); },0), weeks:0, days:0, weeklyMinutes:0, dailyMinutes, weeklyFrequency, targetLevel:'C2' };
+    }
+  }
+  // Guard: never synthesize a blank plan. If the route is empty or has no
+  // lessons, leave PEL_SERVER_PLAN null so the student lands on onboarding /
+  // the placement test rather than a dead dashboard.
+  var totalLessons = route.reduce(function(n,s){ return n + s.units.reduce(function(m,u){ return m + (u.lessonIds||[]).length; },0); },0);
+  if(!route.length || totalLessons === 0) return;
+  window.PEL_SERVER_PLAN = { version:1, onboardingCompleted:true, serverAssigned:true, profile, route, estimate, createdAt:new Date().toISOString() };
+}
 /* Guided mode: the app TEACHES. A new student goes straight into lesson 1
    of their chosen academy, and every finished lesson serves the next one
    automatically - no dashboard hopping. The server always decides what
@@ -18398,7 +18456,7 @@ function dashBestWeekday(wdCount){
    (pel-personalization.js, loaded before this IIFE runs)
    ============================================================ */
 function pelEngine(){ return window.PEL_ENGINE || null; }
-function getPlan(){ return lsGet('pel_plan', null); }
+function getPlan(){ return window.PEL_SERVER_PLAN || lsGet('pel_plan', null); }
 function planCompletedLessons(){ return [...completedLessons]; }
 function adoptVisitorPlan(){
   // A visitor built a plan on the public index. On first login, adopt it
