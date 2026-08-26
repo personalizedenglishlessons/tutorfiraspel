@@ -17636,6 +17636,11 @@ async function hydrateServerPlan(user){
       estimate = { totalLessons: route.reduce(function(n,s){ return n + s.units.reduce(function(m,u){ return m + u.lessonIds.length; },0); },0), weeks:0, days:0, weeklyMinutes:0, dailyMinutes, weeklyFrequency, targetLevel:'C2' };
     }
   }
+  // Guard: never synthesize a blank plan. If the route is empty or has no
+  // lessons, leave PEL_SERVER_PLAN null so the student lands on onboarding /
+  // the placement test rather than a dead dashboard.
+  var totalLessons = route.reduce(function(n,s){ return n + s.units.reduce(function(m,u){ return m + (u.lessonIds||[]).length; },0); },0);
+  if(!route.length || totalLessons === 0) return;
   window.PEL_SERVER_PLAN = { version:1, onboardingCompleted:true, serverAssigned:true, profile, route, estimate, createdAt:new Date().toISOString() };
 }
 /* Guided mode: the app TEACHES. A new student goes straight into lesson 1
