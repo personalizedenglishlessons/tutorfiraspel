@@ -1020,7 +1020,7 @@ var tabs = [
     var host = $('s360Billing'); if(!host) return;
     try{
       var r = await rpc('admin_student_billing', { p_user_id: current360Uid });
-      if(!r.ok){ host.innerHTML = '<div class="notice">'+esc(t('errorGeneric'))+'</div>'; return; }
+      if(!r.ok){ host.innerHTML = '<div class="notice">'+esc(rpcErrMsg(r))+'</div>'; return; }
       var b = (r.data && r.data.billing) || {};
       var ledger = (r.data && r.data.ledger) || [];
       var tierAr = b.tier==='exam_prep'?'التجهيز للاختبارات':(b.tier==='start_from_zero'?'ابد من الصفر':'-');
@@ -1047,15 +1047,10 @@ var tabs = [
         '<div class="reason-list" style="margin-bottom:10px;">' +
           '<div class="reason-item" style="flex-wrap:wrap;gap:8px;align-items:center;">' +
             '<div style="font-weight:700;min-width:110px;">'+esc(lang==='ar'?'الخطة والمستوى':'Plan & level')+'</div>' +
-            '<select class="input" id="s360Tier" style="width:150px;">' +
-              '<option value="start_from_zero"'+(b.tier==='start_from_zero'?' selected':'')+'>'+esc(lang==='ar'?'ابد من الصفر':'Start From Zero')+'</option>' +
-              '<option value="exam_prep"'+(b.tier==='exam_prep'?' selected':'')+'>'+esc(lang==='ar'?'التجهيز للاختبارات':'Exam Prep')+'</option>' +
-            '</select>' +
-            '<select class="input" id="s360Level" style="width:90px;">' +
-              ['A1','A2','B1','B2','C1','C2'].map(function(l){ return '<option value="'+l+'"'+((b.assessed_cefr_level||'')===l?' selected':'')+'>'+l+'</option>'; }).join('') +
-            '</select>' +
-            '<button class="btn btn-gold btn-sm" id="s360PlanSave">'+esc(lang==='ar'?'حفظ':'Save')+'</button>' +
-            '<span style="font-size:.76rem;color:var(--text-muted);">'+esc(lang==='ar'?'يحدد الخطة والمستوى اللي تاخذ منه الدروس':'Sets the plan + level that drives their lessons')+'</span>' +
+            chip(esc(b.tier==='exam_prep'?(lang==='ar'?'التجهيز للاختبارات':'Exam Prep'):(lang==='ar'?'ابد من الصفر':'Start From Zero')), 'gold') +
+            chip(esc(b.assessed_cefr_level||'A1'), '') +
+            '<button class="btn btn-gold btn-sm" id="s360AssignPlan">'+esc(t('assignPlan'))+'</button>' +
+            '<span style="font-size:.76rem;color:var(--text-muted);">'+esc(lang==='ar'?'يحدد البرنامج + المدة + نوع الخطة + المستوى اللي تاخذ منه الدروس':'Sets program + duration + plan type + level that drives their lessons')+'</span>' +
           '</div></div>' : '') +
         '<div class="reason-list" id="credLedger">' +
           (ledger.length ? ledger.map(function(l){
@@ -1087,18 +1082,9 @@ var tabs = [
           $('credDelta').value = '';
         });
       });
-      // wire plan + CEFR level assignment (drives lesson routing)
-      var planBtn = $('s360PlanSave');
-      if(planBtn) planBtn.addEventListener('click', async function(){
-        var tier = $('s360Tier').value;
-        var level = $('s360Level').value;
-        planBtn.disabled = true; var orig = planBtn.textContent; planBtn.textContent = lang==='ar'?'...':'...';
-        var r4 = await rpc('admin_set_student_plan_level', { p_user_id: current360Uid, p_tier: tier, p_level: level });
-        planBtn.disabled = false; planBtn.textContent = orig;
-        if(!r4.ok){ var em = (r4.error && r4.error.message) || ''; toast(lang==='ar'?'ما قدرنا نحفظ الخطة والمستوى':'Could not save plan + level', true); console.error('admin_set_student_plan_level', em); return; }
-        await audit('student.set_plan_level', 'student', current360Uid, { tier: tier, level: level });
-        toast(lang==='ar'?'تم حفظ الخطة والمستوى':'Plan + level saved');
-      });
+      // ONE assign-plan button -> consolidated modal (program + dates + tier + level)
+      var assignPlanBtn = $('s360AssignPlan');
+      if(assignPlanBtn) assignPlanBtn.addEventListener('click', function(){ openAssignPlanModal(current360Uid, reload360, b.tier||'', b.assessed_cefr_level||''); });
     }catch(e){ host.innerHTML = '<div class="notice">'+esc(t('errorGeneric'))+'</div>'; }
   })();
 
@@ -3122,19 +3108,49 @@ async function plansView(){
   $('plAssignBtn').addEventListener('click', function(){ assignPlanForm(catalog); });
   $('plNewBtn').addEventListener('click', function(){ savePlanForm(catalog); });
 }
-function assignPlanForm(catalog){
-  var s = modal(t('assignPlan'), '' +
+/* ONE consolidated 'Assign plan' action per student: program + dates +
+   plan type (tier) + CEFR level, assigned together. Replaces the old
+   scattered buttons (s360PlanSave tier/level-only + p360Assign program-only). */
+async function openAssignPlanModal(uid, onDone, curTier, curLevel){
+  var c = client();
+  var pr = await c.from('programs').select('*').order('sort_order,created_at');
+  var catalog = pr.data || [];
+  if(!catalog.length){ toast(t('noData'), true); return; }
+  var ms = modal(t('assignPlan'), '' +
     '<div class="form-grid">' +
-      '<div class="field full"><label>' + esc(t('student')) + '</label><div class="search-wrap"><input class="input" id="apSearch" placeholder="' + esc(t('searchStudents')) + '"><div id="apResults"></div></div></div>' +
       '<div class="field full"><label>' + esc(t('choosePlan')) + '</label><select class="input" id="apProg">' +
-        catalog.map(function(x){ return '<option value="' + x.id + '" data-days="' + (x.duration_days || x.duration_months*30) + '">' + esc(x.name_en + ' - ' + x.price + ' ' + (x.currency||'SAR')) + '</option>'; }).join('') + '</select></div>' +
+        catalog.map(function(x){ return '<option value="' + x.id + '" data-days="' + (x.duration_days || (x.duration_months||0)*30) + '">' + esc(x.name_en + (x.price?(' - '+x.price+' '+(x.currency||'SAR')):'')) + '</option>'; }).join('') + '</select></div>' +
       '<div class="field"><label>' + esc(t('startDate')) + '</label><input class="input" type="date" id="apStart" value="' + new Date().toISOString().slice(0,10) + '"></div>' +
       '<div class="field"><label>' + esc(t('endDate')) + ' <span style="opacity:.6">(optional)</span></label><input class="input" type="date" id="apEnd"></div>' +
+      '<div class="field"><label>' + esc(lang==='ar'?'نوع الخطة':'Plan type') + '</label><select class="input" id="apTier">' +
+        '<option value="start_from_zero"' + (curTier==='exam_prep'?'':' selected') + '>' + esc(lang==='ar'?'ابد من الصفر':'Start From Zero') + '</option>' +
+        '<option value="exam_prep"' + (curTier==='exam_prep'?' selected':'') + '>' + esc(lang==='ar'?'التجهيز للاختبارات':'Exam Prep') + '</option>' +
+      '</select></div>' +
+      '<div class="field"><label>' + esc(lang==='ar'?'المستوى':'Level') + '</label><select class="input" id="apLevel">' +
+        ['A1','A2','B1','B2','C1','C2'].map(function(l){ return '<option value="'+l+'"'+(((curLevel||'A1')===l)?' selected':'')+'>'+l+'</option>'; }).join('') + '</select></div>' +
       '<div class="field full"><label>' + esc(t('reason')) + '</label><input class="input" id="apReason"></div>' +
     '</div>' +
-    '<div class="btn-row"><button class="btn btn-gold btn-sm" id="apSave">' + esc(t('save')) + '</button><button class="btn btn-ghost btn-sm" data-close>' + esc(t('cancel')) + '</button></div>');
+    '<div class="btn-row"><button class="btn btn-gold btn-sm" id="apSave">' + esc(t('save')) + '</button><button class="btn btn-ghost btn-sm" data-close>' + esc(t('cancel')) + '</button></div>' +
+    '<div class="sub" style="margin-top:8px;color:var(--text-muted);">' + esc(lang==='ar'?'يحدد البرنامج + المدة + نوع الخطة + المستوى اللي تاخذ منه الدروس':'Sets program + duration + plan type + level that drives their lessons') + '</div>');
+  ms.querySelector('[data-close]').addEventListener('click', function(){ closeModal(ms); });
+  $('apSave').addEventListener('click', async function(){
+    var btn = $('apSave'); btn.disabled = true; var orig = btn.textContent; btn.textContent = '...';
+    var end = $('apEnd').value || (function(){ var days = +($('apProg').options[$('apProg').selectedIndex].getAttribute('data-days')||30); var d = new Date($('apStart').value); d.setDate(d.getDate()+days); return d.toISOString().slice(0,10); })();
+    var r1 = await rpc('admin_assign_plan', { p_user_id: uid, p_program_id: $('apProg').value, p_start_date: $('apStart').value, p_end_date: end, p_reason: $('apReason').value.trim() || null });
+    if(!r1.ok){ btn.disabled = false; btn.textContent = orig; toast(rpcErrMsg(r1), true); return; }
+    var r2 = await rpc('admin_set_student_plan_level', { p_user_id: uid, p_tier: $('apTier').value, p_level: $('apLevel').value });
+    if(!r2.ok){ btn.disabled = false; btn.textContent = orig; toast(rpcErrMsg(r2), true); closeModal(ms); if(onDone) onDone(); return; }
+    await audit('student.assign_plan', 'student', uid, { program_id: $('apProg').value, tier: $('apTier').value, level: $('apLevel').value });
+    closeModal(ms); toast(t('planAssigned')); if(onDone) onDone();
+  });
+}
+function assignPlanForm(catalog){
+  /* Plans-overview entry: pick a student by search, then open the ONE
+     consolidated assign-plan modal (program + dates + tier + level). */
+  var s = modal(t('assignPlan'), '' +
+    '<div class="field full"><label>' + esc(t('student')) + '</label><div class="search-wrap"><input class="input" id="apSearch" placeholder="' + esc(t('searchStudents')) + '"><div id="apResults"></div></div></div>' +
+    '<div class="btn-row"><button class="btn btn-ghost btn-sm" data-close>' + esc(t('cancel')) + '</button></div>');
   s.querySelector('[data-close]').addEventListener('click', function(){ closeModal(s); });
-  var picked = null;
   var input = $('apSearch'), results = $('apResults');
   var timer = null;
   input.addEventListener('input', function(){
@@ -3143,27 +3159,21 @@ function assignPlanForm(catalog){
       var q = input.value.trim();
       if(q.length < 2){ results.innerHTML = ''; return; }
       var r = await rpc('admin_students', { p_limit: 6, p_offset: 0, p_search: q, p_filters: {}, p_sort: 'name:asc' });
-      if(!r.ok){ return; }
+      if(!r.ok){ results.innerHTML = '<div class="sub">'+esc(rpcErrMsg(r))+'</div>'; return; }
       results.innerHTML = (r.data || []).map(function(st){
         return '<div class="reason-item" style="margin-top:6px;"><div style="flex:1;"><div style="font-weight:600;">' + esc(st.full_name) + '</div><span class="why">' + esc(st.email || '') + '</span></div>' +
           '<button class="btn btn-gold btn-sm" data-pick="' + st.id + '">' + esc(t('select')) + '</button></div>';
       }).join('') || '';
       results.querySelectorAll('[data-pick]').forEach(function(b){
         b.addEventListener('click', function(){
-          picked = b.getAttribute('data-pick');
-          input.value = b.closest('.reason-item').querySelector('div').textContent.trim();
-          results.innerHTML = '';
+          var picked = b.getAttribute('data-pick');
+          closeModal(s);
+          openAssignPlanModal(picked, plansView);
         });
       });
     }, 350);
   });
-  $('apSave').addEventListener('click', async function(){
-    if(!picked){ toast(t('required'), true); return; }
-    var btn = $('apSave'); btn.disabled = true;
-    var r = await rpc('admin_assign_plan', { p_user_id: picked, p_program_id: $('apProg').value, p_start_date: $('apStart').value, p_end_date: $('apEnd').value || null, p_reason: $('apReason').value.trim() || null });
-    if(!r.ok){ btn.disabled = false; toast((r.error && r.error.message) || t('permissionDenied'), true); return; }
-    closeModal(s); toast(t('planAssigned')); plansView();
-  });
+  setTimeout(function(){ if(input) input.focus(); }, 50);
 }
 function savePlanForm(catalog){
   var s = modal(t('newPlan'), '' +
@@ -3476,7 +3486,6 @@ async function renderTabPlan(d){
   var actions = '';
   if(hasPerm('subscriptions.manage')){
     actions = '<div class="btn-row" style="margin-top:12px;">' +
-      '<button class="btn btn-gold btn-sm" id="p360Assign">' + esc(t('assignPlan')) + '</button>' +
       (has && ps.status !== 'suspended' && ps.status !== 'cancelled' ? '<button class="btn btn-outline btn-sm" id="p360Extend">' + esc(t('extendDays').replace('%d', 30)) + '</button>' : '') +
       (has && ps.status !== 'suspended' ? '<button class="btn btn-outline btn-sm" id="p360Suspend">' + esc(t('suspend')) + '</button>' : '') +
       (has && ps.status === 'suspended' ? '<button class="btn btn-outline btn-sm" id="p360React">' + esc(t('reactivate')) + '</button>' : '') +
@@ -3511,27 +3520,6 @@ async function renderTabPlan(d){
     '<div class="section-title">' + esc(t('recent')) + ' - ' + esc(t('liveClasses')) + '</div><div class="card"><div class="reason-list">' + recentC + '</div></div></div></div>';
   loadIcons();
 
-  var assignBtn = $('p360Assign');
-  if(assignBtn) assignBtn.addEventListener('click', async function(){
-    var c = client();
-    var pr = await c.from('programs').select('*').order('sort_order,created_at');
-    var catalog = pr.data || [];
-    var ms = modal(t('assignPlan'), '' +
-      '<div class="form-grid">' +
-        '<div class="field full"><label>' + esc(t('choosePlan')) + '</label><select class="input" id="p360Prog">' +
-          catalog.map(function(x){ return '<option value="' + x.id + '">' + esc(x.name_en + ' - ' + x.price + ' ' + (x.currency||'SAR')) + '</option>'; }).join('') + '</select></div>' +
-        '<div class="field"><label>' + esc(t('startDate')) + '</label><input class="input" type="date" id="p360Start" value="' + new Date().toISOString().slice(0,10) + '"></div>' +
-        '<div class="field"><label>' + esc(t('reason')) + '</label><input class="input" id="p360Reason"></div>' +
-      '</div>' +
-      '<div class="btn-row"><button class="btn btn-gold btn-sm" id="p360Save">' + esc(t('save')) + '</button><button class="btn btn-ghost btn-sm" data-close>' + esc(t('cancel')) + '</button></div>');
-    ms.querySelector('[data-close]').addEventListener('click', function(){ closeModal(ms); });
-    $('p360Save').addEventListener('click', async function(){
-      var btn = $('p360Save'); btn.disabled = true;
-      var rr = await rpc('admin_assign_plan', { p_user_id: uid, p_program_id: $('p360Prog').value, p_start_date: $('p360Start').value, p_reason: $('p360Reason').value.trim() || null });
-      if(!rr.ok){ btn.disabled = false; toast((rr.error && rr.error.message) || t('permissionDenied'), true); return; }
-      closeModal(ms); toast(t('planAssigned')); renderTabPlan(d);
-    });
-  });
   var extBtn = $('p360Extend');
   if(extBtn) extBtn.addEventListener('click', async function(){
     var rr = await rpc('admin_extend_plan', { p_user_id: uid, p_days: 30, p_reason: 'Extend +30' });
