@@ -192,6 +192,13 @@ var I = {
   'groupFull':{en:'Group is full', ar:'المجموعة ممتلية'},
   'moveFromWaitlist':{en:'Move into group', ar:'نقل للمجموعة'},
   'addStudent':{en:'Add student', ar:'اضافة طالب'},
+  'newStudent':{en:'New student', ar:'طالب جديد'},
+  'createStudentAccount':{en:'Create student account', ar:'انشاء حساب طالب'},
+  'password':{en:'Password', ar:'كلمة المرور'},
+  'passwordHint':{en:'At least 8 characters', ar:'٨ احرف على الاقل'},
+  'showPassword':{en:'Show', ar:'عرض'},
+  'hidePassword':{en:'Hide', ar:'اخفاء'},
+  'studentCreated':{en:'Student account created', ar:'تم انشاء حساب الطالب'},
   'removeStudent':{en:'Remove', ar:'ازالة'},
   'assignTeacher':{en:'Assign teacher', ar:'اسناد معلم'},
   'schedule':{en:'Schedule', ar:'الجدول'},
@@ -817,6 +824,7 @@ function students(){
       '<div class="field" style="flex-direction:row; align-items:center; gap:7px;"><input type="checkbox" id="stAttention"' + (st.filters.needs_attention ? ' checked' : '') + '><label>' + esc(t('attentionLabel')) + '</label></div>' +
       '<button class="btn btn-gold btn-sm" id="stApply">' + esc(t('apply')) + '</button>' +
       '<button class="btn btn-ghost btn-sm" id="stReset">' + esc(t('reset')) + '</button>' +
+      (hasPerm('students.write') ? '<button class="btn btn-gold btn-sm" id="stCreateBtn">' + esc(t('newStudent')) + '</button>' : '') +
       '<div style="flex:1"></div>' +
       '<div class="field">' + sortSel(st.sort) + '</div>' +
     '</div>' +
@@ -827,6 +835,7 @@ function students(){
   $('stSearch').addEventListener('keydown', function(e){ if(e.key === 'Enter'){ st.search = this.value.trim(); st.page = 0; loadStudents(st); } });
   $('stApply').addEventListener('click', function(){ st.search = $('stSearch').value.trim(); st.filters.status = $('stStatus').value; st.filters.level = $('stLevel').value; st.filters.cert_status = $('stCert').value; st.filters.needs_attention = $('stAttention').checked; st.filters.entitlement = $('stEnt') ? $('stEnt').value : ''; st.filters.program_id = $('stProgram') ? $('stProgram').value : ''; st.filters.teacher_id = $('stTeacher') ? $('stTeacher').value : ''; st.filters.group_id = $('stGroup') ? $('stGroup').value : ''; st.page = 0; loadStudents(st); });
   $('stReset').addEventListener('click', function(){ st.search=''; st.filters = defaultStudentFilters(); st.page = 0; st.sort='last_active:desc'; students(); });
+  var stc = $('stCreateBtn'); if(stc) stc.addEventListener('click', function(){ createStudentModal(st); });
   loadStudents(st);
 }
 function sel(id, label, options, value){
@@ -1917,6 +1926,31 @@ function addMemberModal(groupId){
         });
       });
     }, 350);
+  });
+}
+function createStudentModal(st){
+  var s = modal(t('newStudent'), '' +
+    '<div class="form-grid">' +
+    '<div class="field" style="grid-column:1/-1;"><label>' + esc(t('name')) + '</label><input class="input" id="csName" placeholder="' + esc(t('name')) + '"></div>' +
+    '<div class="field"><label>' + esc(t('email')) + '</label><input class="input" id="csEmail" type="email" placeholder="student@example.com"></div>' +
+    '<div class="field"><label>' + esc(t('password')) + '</label><div style="display:flex; gap:6px;"><input class="input" id="csPass" type="password" placeholder="\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022" style="flex:1;"><button type="button" class="btn btn-ghost btn-sm" id="csToggle" style="flex:0 0 auto;">' + esc(t('showPassword')) + '</button></div><span class="why">' + esc(t('passwordHint')) + '</span></div>' +
+    '</div>' +
+    '<div class="btn-row" style="margin-top:16px;"><button class="btn btn-gold btn-sm" id="csSave">' + esc(t('create')) + '</button><button class="btn btn-ghost btn-sm" data-close>' + esc(t('cancel')) + '</button></div>');
+  s.querySelector('[data-close]').addEventListener('click', function(){ closeModal(s); });
+  var tog = $('csToggle');
+  if(tog) tog.addEventListener('click', function(){ var inp = $('csPass'); var show = inp.type === 'password'; inp.type = show ? 'text' : 'password'; tog.textContent = show ? t('hidePassword') : t('showPassword'); });
+  var save = $('csSave');
+  if(save) save.addEventListener('click', async function(){
+    var name = $('csName').value.trim(), email = $('csEmail').value.trim(), pass = $('csPass').value;
+    if(!name || !email || !pass){ toast(t('required'), true); return; }
+    save.disabled = true; save.textContent = '\u2026';
+    var r = await rpc('admin_create_student', { p_email: email, p_password: pass, p_full_name: name });
+    save.disabled = false; save.textContent = t('create');
+    if(!r.ok){ toast((r.error && r.error.message) ? r.error.message : t('errorGeneric'), true); return; }
+    await audit('student.create', 'user', (r.data && r.data.user_id) || '', { email: email, full_name: name });
+    closeModal(s);
+    toast(t('studentCreated'));
+    st.page = 0; loadStudents(st);
   });
 }
 function assignTeacherModal(groupId){
