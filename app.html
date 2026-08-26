@@ -2662,7 +2662,9 @@ function showAnnouncementsModal(){
   window.__pelReport = function(stage, extra){
     try{
       const payload = Object.assign({ t: stage, at: Date.now() % 10000000 }, snap(), extra || {});
-      fetch('/__diag', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload), keepalive: true }).catch(() => {});
+      /* __diag telemetry endpoint is not deployed on static GitHub Pages
+         hosting (POST -> 405). Keep this side-effect free and silent. */
+      try{ if(typeof window.__pelDiag === 'function') window.__pelDiag(payload); }catch(e){}
     }catch(e){}
   };
   __pelReport('boot-start');
@@ -2717,12 +2719,24 @@ window.addEventListener('load', async () => {
     // retry before giving up, so a single hiccup never blocks anyone.
     await loadSubPlan();
     if(subPlan.rpcFailed !== false){
+      // The plan RPC failed. Most often this is a silently-expired session
+      // token: getSession() returns the stored (expired) JWT before the
+      // auto-refresh runs, so PostgREST rejects the call with 401. Force a
+      // refresh; if it yields a fresh session, retry the RPC before we
+      // ever declare the academy unreachable.
+      try{ const { data: r } = await c.auth.refreshSession(); if(r && r.session && r.session.user){ currentUser = r.session.user; } }catch(e){}
       await new Promise(r => setTimeout(r, 1500));
       await loadSubPlan();
     }
     if(subPlan.rpcFailed !== false){
+      // Still failing with a logged-in user? The session/token is unusable
+      // (expired, revoked, or corrupt in localStorage). Send the student to
+      // login so they can re-authenticate, instead of the dead-end
+      // "Can't reach the academy" gate.
       __pelReport('rpc-failed-auth-error');
-      authGateError();
+      try{ await c.auth.signOut(); }catch(e){}
+      clearUserLocalKeys();
+      window.location.href = 'login.html';
       return;
     }
     if(subBlocked()){
@@ -21810,7 +21824,12 @@ if(window.lucide) lucide.createIcons();
   const URL='https://lewoochehpiycocvfwtz.supabase.co';
   const KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxld29vY2hlaHBpeWNvY3Zmd3R6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwNzQ3MzcsImV4cCI6MjA5OTY1MDczN30.sIWK6jwX7PW70fH0yPUuhOb25N1lBw2-Cvb3dtwDb9Y';
   let _c=null;
-  function c(){ if(_c) return _c; if(window.supabase) _c=window.supabase.createClient(URL,KEY); return _c; }
+  // Reuse the single shared Supabase client from the main app (same URL/KEY)
+  // instead of creating a second GoTrueClient under the same storage key,
+  // which produced the "Multiple GoTrueClient instances" warning and could
+  // desync auth state. Falls back to creating one only if the shared
+  // client() helper is unavailable.
+  function c(){ if(_c) return _c; try{ if(typeof client==='function'){ _c=client(); if(_c) return _c; } }catch(e){} if(window.supabase) _c=window.supabase.createClient(URL,KEY); return _c; }
   function ar(){ try{ if(window.accountPrefs&&accountPrefs.lang==='ar') return true; if(document.documentElement.dir==='rtl') return true; }catch(e){} return false; }
   function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
   let OVER=null;
