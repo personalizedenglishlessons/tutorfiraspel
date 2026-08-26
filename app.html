@@ -1758,6 +1758,10 @@ async function revealApp(user){
   await loadSubPlan();
   await hydrateServerPlan(user);
   adoptVisitorPlan();
+  // Server is authoritative for the assessment result + onboarding plan draft.
+  // Loads from the DB so a student's placement + plan follow them across devices;
+  // migrates any visitor-built local copy up to the server on first login.
+  await hydrateLearningState(user);
   // Restore this student's interface language + learning direction from
   // their account (synced via lsSet) before anything paints.
   applyInterfaceLang(accountPrefs.lang || 'en');
@@ -17643,6 +17647,51 @@ async function hydrateServerPlan(user){
   if(!route.length || totalLessons === 0) return;
   window.PEL_SERVER_PLAN = { version:1, onboardingCompleted:true, serverAssigned:true, profile, route, estimate, createdAt:new Date().toISOString() };
 }
+/* Profile persistence: the server is authoritative for the assessment result
+   and the onboarding plan draft. On boot we load student_get_learning_state()
+   and let the server win over localStorage; if the server is empty but a
+   local copy exists (a visitor built it before logging in) we migrate it up
+   once. An assigned subscription (PEL_SERVER_PLAN) always takes priority over
+   the onboarding draft. */
+function persistPlanDraft(plan){
+  if(!plan || !currentUser || !client()) return;
+  try{ client().rpc('student_save_plan_draft', { p_draft: plan }).catch(function(){}); }catch(e){}
+}
+async function hydrateLearningState(user){
+  window.PEL_PROFILE_PLAN = null;
+  if(!currentUser || !client()) return;
+  let st = null;
+  try{ const r = await client().rpc('student_get_learning_state'); st = r.data; }catch(e){ return; }
+  if(!st || st.ok === false) return;
+
+  // Assessment: server wins, but a newer local retake (a visitor re-took the
+  // test before logging back in) is migrated up so it is not lost. Migration is
+  // skipped for students with an assigned subscription so their progression is
+  // never disturbed.
+  const srvAsm = st.assessment;
+  const localAsm = lsGet('pel_assessment', null);
+  const srvTime = (srvAsm && srvAsm.completedAt) ? Date.parse(srvAsm.completedAt) : 0;
+  const locTime = (localAsm && localAsm.completedAt) ? Date.parse(localAsm.completedAt) : 0;
+  if(srvAsm && Object.keys(srvAsm).length && srvTime >= locTime){
+    try{ localStorage.setItem('pel_assessment', JSON.stringify(srvAsm)); }catch(e){}
+  } else if(localAsm && localAsm.track && localAsm.level && locTime > srvTime && !window.PEL_SERVER_PLAN){
+    try{ client().rpc('student_save_assessment', { p_track: localAsm.track, p_level: localAsm.level, p_blob: localAsm }).catch(function(){}); }catch(e){}
+  }
+
+  // Plan draft: only when there is NO assigned subscription. The assigned plan
+  // (PEL_SERVER_PLAN) always wins over the onboarding draft.
+  if(!window.PEL_SERVER_PLAN){
+    const srvDraft = st.plan_draft;
+    if(srvDraft && srvDraft.onboardingCompleted){
+      window.PEL_PROFILE_PLAN = srvDraft;          // server wins
+      try{ lsSet('pel_plan', srvDraft); }catch(e){} // keep the cache in sync
+    } else {
+      // Migrate a visitor-built local plan up to the server (one time).
+      const localPlan = lsGet('pel_plan', null);
+      if(localPlan && localPlan.onboardingCompleted){ persistPlanDraft(localPlan); }
+    }
+  }
+}
 /* Guided mode: the app TEACHES. A new student goes straight into lesson 1
    of their chosen academy, and every finished lesson serves the next one
    automatically - no dashboard hopping. The server always decides what
@@ -18456,7 +18505,7 @@ function dashBestWeekday(wdCount){
    (pel-personalization.js, loaded before this IIFE runs)
    ============================================================ */
 function pelEngine(){ return window.PEL_ENGINE || null; }
-function getPlan(){ return window.PEL_SERVER_PLAN || lsGet('pel_plan', null); }
+function getPlan(){ return window.PEL_SERVER_PLAN || window.PEL_PROFILE_PLAN || lsGet('pel_plan', null); }
 function planCompletedLessons(){ return [...completedLessons]; }
 function adoptVisitorPlan(){
   // A visitor built a plan on the public index. On first login, adopt it
@@ -18558,6 +18607,7 @@ function renderPlanSettings(){
     next.profile.weeklyFrequency = state.freqDays;
     next.estimate = E.estimateDuration(next.profile, next.route, { dailyMinutes: state.daily, weeklyFrequency: state.freqDays });
     lsSet('pel_plan', next);
+    persistPlanDraft(next);
     syncPlanSnapshot();
     toast('<span class="arabic">تم تحديث خطتك</span>، Your plan was updated');
   });
