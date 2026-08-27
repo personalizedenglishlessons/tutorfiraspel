@@ -10055,8 +10055,24 @@ const ACADEMIES = [
   {id:'saudi-phone-calls', en:'Saudi Phone Calls', ar:'المكالمات بالسعودي', translit:'سعودي فون كولز', dir:'ar', cat:'Saudi Arabian Arabic', icon:'phone', from:'#262833', to:'#D8BD83', difficulty:'Intermediate', duration:'3h', lessons:10},
 ];
 function featuredLesson(){
-  // Lesson of the Day: a real lesson from a real academy, rotating daily.
-  // Honors the student's learning direction (Saudi Arabian Arabic vs English).
+  // Lesson of the Day: prefer a real lesson from the student's CURRENT guided
+  // stage (their granular skill start, e.g. a1-core-words) so the daily card
+  // matches their actual path instead of a rotating foundations bank. Only
+  // falls back to the rotating daily bank when there is no student state yet
+  // (logged-out / not loaded).
+  try{
+    const st = window.PEL_EFFECTIVE_STATE;
+    if(st && st.stage && st.lessons && st.lessons.length){
+      const L = st.lessons.find(x => x.state === 'available') || st.lessons[0];
+      if(L && L.id){
+        return { academy: st.stage.id, lesson: L.id,
+                 en: L.title_en || L.en || L.title || '',
+                 ar: L.title_ar || L.ar || '' };
+      }
+    }
+  }catch(e){ /* fall through to rotating bank */ }
+  // Rotating daily lesson (landing page / no state yet): a real lesson from a
+  // real academy, rotating daily. Honors the student's learning direction.
   // For the English direction we use the shared daily-lesson.js data, so the
   // landing page (index.html) and the app always show the same daily lesson.
   if(window.PEL_DAILY && learningDirection() !== 'ar'){
@@ -17436,6 +17452,7 @@ async function renderControlCenter(){
   try{ const { data } = await c.rpc('student_effective_state'); st = data; }catch(e){}
   if(!st || st.ok === false || !st.stage){ host.innerHTML = ''; return; }
   window.PEL_EFFECTIVE_STATE = st;
+  try{ if(typeof renderDailyGrid === 'function' && document.getElementById('dailyExperienceGrid')) renderDailyGrid(); }catch(e){}
   try{ syncFeatureGates(); }catch(e){}
   try{ if(document.getElementById('continueLearningBody')) renderContinueLearning(); }catch(e){}
   /* New student: pull them straight into lesson one of their chosen path. */
