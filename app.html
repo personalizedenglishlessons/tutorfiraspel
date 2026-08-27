@@ -16437,7 +16437,7 @@ function renderVocabulary(){
       if (!sb) return;
       const { data, error } = await sb.from('words')
         .select('en,ar,translit,example_en,example_ar,example_tr')
-        .eq('active', true).order('en');
+        .eq('active', true).eq('level', 'A0').order('en');
       if (error || !data || !data.length) return;
       const wrap = document.createElement('div');
       wrap.style.cssText = 'margin-top:30px;';
@@ -16465,6 +16465,50 @@ function renderVocabulary(){
             '<div class="arabic" style="font-size:.76rem;color:var(--gold-soft);margin-top:2px;">' + escapeHtml(exTr) + '</div>' : '') +
           '<div style="margin-top:auto;padding-top:10px;display:flex;justify-content:space-between;align-items:center;">' +
           '<span style="font-size:.7rem;color:var(--text-muted);"><span class="arabic">اسمع الكلمة</span></span>' +
+          '<button class="icon-btn speak-btn" data-speak="' + escapeHtml(v.en) + '" style="width:34px;height:34px;"><i data-lucide="volume-2" width="14" height="14"></i></button>' +
+          '</div></div>';
+      }).join('');
+      grid.querySelectorAll('.speak-btn').forEach(b => b.addEventListener('click', e => { e.stopPropagation(); speak(b.dataset.speak); }));
+      if (window.lucide) lucide.createIcons();
+    } catch (e) { /* fail silently */ }
+  })();
+  // Abha Expressions (عبارات أبها), niche phrasebook for the Arab community in
+  // Abha dialect. DB-backed (words where role='expression'). English phrase +
+  // نطق + Abha-dialect Arabic + context. No AI, rule-based translit fallback.
+  (async () => {
+    try {
+      const sb = window.supabase;
+      if (!sb) return;
+      const { data, error } = await sb.from('words')
+        .select('en,ar,translit,example_en,example_ar,example_tr')
+        .eq('active', true).eq('role', 'expression').order('en');
+      if (error || !data || !data.length) return;
+      const wrap = document.createElement('div');
+      wrap.style.cssText = 'margin-top:30px;';
+      wrap.innerHTML =
+        '<div class="page-head" style="margin-bottom:14px;">' +
+        '<span class="eyebrow"><span class="arabic" style="font-size:.95em;">عبارات أبها</span>، Abha Expressions</span>' +
+        '<h2><span class="arabic" style="display:block;font-size:.62em;font-weight:400;color:var(--text-secondary);margin-bottom:4px;">عبارات انجليزية يومية، بشرح بلهجة أبها.</span>Everyday English, explained in Abha dialect.</h2>' +
+        '</div><div class="grid grid-3" id="abhaExprGrid"></div>';
+      el.appendChild(wrap);
+      const grid = wrap.querySelector('#abhaExprGrid');
+      grid.innerHTML = data.map(v => {
+        let ar = v.ar;
+        if (typeof ar === 'string') { try { ar = JSON.parse(ar); } catch (e) { ar = [ar]; } }
+        ar = Array.isArray(ar) ? (ar[0] || '') : (ar || '');
+        const tr = v.translit || translitEn(v.en || '');
+        const cEn = v.example_en || '';
+        const cAr = v.example_ar || '';
+        const cTr = v.example_tr || (cEn ? translitEn(cEn) : '');
+        return '<div class="dbx-card" style="background:var(--card-elevated);border:1px solid var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;">' +
+          '<span class="chip gold" style="align-self:flex-start;">Expression</span>' +
+          '<h3 class="vocab-word" style="margin:8px 0 6px;">' + escapeHtml(v.en) + '</h3>' +
+          '<div class="arabic" style="font-size:.82rem;color:var(--text-muted);">' + escapeHtml(tr) + '</div>' +
+          '<div class="arabic" style="font-size:1.02rem;color:var(--gold-soft);margin-top:10px;">' + escapeHtml(ar) + '</div>' +
+          (cEn ? '<div style="margin-top:12px;font-size:.78rem;color:var(--text-muted);"><span class="arabic">الاستخدام</span>: ' + escapeHtml(cAr) + '</div>' +
+            '<div style="font-size:.76rem;margin-top:3px;">' + escapeHtml(cEn) + '</div>' +
+            '<div class="arabic" style="font-size:.74rem;color:var(--gold-soft);margin-top:2px;">' + escapeHtml(cTr) + '</div>' : '') +
+          '<div style="margin-top:auto;padding-top:10px;display:flex;justify-content:flex-end;">' +
           '<button class="icon-btn speak-btn" data-speak="' + escapeHtml(v.en) + '" style="width:34px;height:34px;"><i data-lucide="volume-2" width="14" height="14"></i></button>' +
           '</div></div>';
       }).join('');
