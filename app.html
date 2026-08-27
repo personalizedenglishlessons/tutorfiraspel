@@ -15750,7 +15750,7 @@ function renderQuiz(container, questions, keyPrefix){
       const otr = isObj ? (opt.tr || '') : '';
       const btn = document.createElement('button');
       btn.className = 'quiz-option';
-      btn.innerHTML = label + (otr ? '<span class="arabic" style="display:block;font-size:.8rem;color:var(--gold-soft);margin-top:3px;">' + otr + '</span>' : '');
+      btn.innerHTML = escapeHtml(label) + (otr ? '<span class="arabic" style="display:block;font-size:.8rem;color:var(--gold-soft);margin-top:3px;">' + escapeHtml(otr) + '</span>' : '');
       btn.addEventListener('click', () => {
         optWrap.querySelectorAll('.quiz-option').forEach((b,bi) => { b.disabled = true; if(bi===q.correct) b.classList.add('correct'); });
         if(i === q.correct){ correctCount++; }
@@ -16428,6 +16428,50 @@ function renderVocabulary(){
     el.querySelectorAll('.lib-filter').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); renderGrid();
   });
   renderGrid();
+  // A0 Pronunciation Cards, DB-backed (Supabase). Surfaces the foundational
+  // 153-word dictionary with نطق + meaning + example + speak. No AI, rule-based
+  // translit fallback. Anon can SELECT words (RLS allows it).
+  (async () => {
+    try {
+      const sb = window.supabase;
+      if (!sb) return;
+      const { data, error } = await sb.from('words')
+        .select('en,ar,translit,example_en,example_ar,example_tr')
+        .eq('active', true).order('en');
+      if (error || !data || !data.length) return;
+      const wrap = document.createElement('div');
+      wrap.style.cssText = 'margin-top:30px;';
+      wrap.innerHTML =
+        '<div class="page-head" style="margin-bottom:14px;">' +
+        '<span class="eyebrow"><span class="arabic" style="font-size:.95em;">بطاقات النطق</span>، A0 Pronunciation Cards</span>' +
+        '<h2><span class="arabic" style="display:block;font-size:.62em;font-weight:400;color:var(--text-secondary);margin-bottom:4px;">اساسيات لكل مبتدئ، بالنطق والمعنى والمثال.</span>Foundational words, with pronunciation.</h2>' +
+        '</div><div class="grid grid-3" id="a0VocabGrid"></div>';
+      el.appendChild(wrap);
+      const grid = wrap.querySelector('#a0VocabGrid');
+      grid.innerHTML = data.map(v => {
+        let ar = v.ar;
+        if (typeof ar === 'string') { try { ar = JSON.parse(ar); } catch (e) { ar = [ar]; } }
+        ar = Array.isArray(ar) ? (ar[0] || '') : (ar || '');
+        const tr = v.translit || translitEn(v.en || '');
+        const exEn = v.example_en || '';
+        const exAr = v.example_ar || '';
+        const exTr = v.example_tr || (exEn ? translitEn(exEn) : '');
+        return '<div class="dbx-card" style="background:var(--card-elevated);border:1px solid var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;">' +
+          '<h3 class="vocab-word" style="margin:0 0 6px;">' + escapeHtml(v.en) + '</h3>' +
+          '<div class="arabic" style="font-size:1.05rem;color:var(--gold-soft);">' + escapeHtml(ar) + '</div>' +
+          '<div class="arabic" style="font-size:.82rem;color:var(--text-muted);margin-top:2px;">' + escapeHtml(tr) + '</div>' +
+          (exEn ? '<div style="margin-top:12px;font-size:.84rem;">' + escapeHtml(exEn) + '</div>' +
+            '<div class="arabic" style="font-size:.78rem;color:var(--text-muted);margin-top:3px;">' + escapeHtml(exAr) + '</div>' +
+            '<div class="arabic" style="font-size:.76rem;color:var(--gold-soft);margin-top:2px;">' + escapeHtml(exTr) + '</div>' : '') +
+          '<div style="margin-top:auto;padding-top:10px;display:flex;justify-content:space-between;align-items:center;">' +
+          '<span style="font-size:.7rem;color:var(--text-muted);"><span class="arabic">اسمع الكلمة</span></span>' +
+          '<button class="icon-btn speak-btn" data-speak="' + escapeHtml(v.en) + '" style="width:34px;height:34px;"><i data-lucide="volume-2" width="14" height="14"></i></button>' +
+          '</div></div>';
+      }).join('');
+      grid.querySelectorAll('.speak-btn').forEach(b => b.addEventListener('click', e => { e.stopPropagation(); speak(b.dataset.speak); }));
+      if (window.lucide) lucide.createIcons();
+    } catch (e) { /* fail silently */ }
+  })();
 }
 viewRenderers.vocabulary = renderVocabulary;
 
