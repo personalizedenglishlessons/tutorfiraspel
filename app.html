@@ -21831,12 +21831,11 @@ if(window.lucide) lucide.createIcons();
   const URL='https://lewoochehpiycocvfwtz.supabase.co';
   const KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxld29vY2hlaHBpeWNvY3Zmd3R6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwNzQ3MzcsImV4cCI6MjA5OTY1MDczN30.sIWK6jwX7PW70fH0yPUuhOb25N1lBw2-Cvb3dtwDb9Y';
   let _c=null;
-  // Reuse the single shared Supabase client from the main app (same URL/KEY)
-  // instead of creating a second GoTrueClient under the same storage key,
-  // which produced the "Multiple GoTrueClient instances" warning and could
-  // desync auth state. Falls back to creating one only if the shared
-  // client() helper is unavailable.
-  function c(){ if(_c) return _c; try{ if(typeof client==='function'){ _c=client(); if(_c) return _c; } }catch(e){} if(window.supabase) _c=window.supabase.createClient(URL,KEY); return _c; }
+  // Reuse the single shared client() instance only. Never create a second
+  // GoTrueClient here — the previous fallback (window.supabase.createClient)
+  // was the source of the "Multiple GoTrueClient instances" warning. If the
+  // shared client isn't ready yet, return null; the polling interval retries.
+  function c(){ if(_c) return _c; try{ if(typeof client==='function'){ _c=client(); } }catch(e){} return _c; }
   function ar(){ try{ if(window.accountPrefs&&accountPrefs.lang==='ar') return true; if(document.documentElement.dir==='rtl') return true; }catch(e){} return false; }
   function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
   let OVER=null;
