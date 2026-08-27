@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="PEL">
+  <rect x="0" y="0" width="512" height="512" fill="#0E0E10"/>
+  <circle cx="256" cy="256" r="248" fill="none" stroke="#C8A96A" stroke-width="2" opacity="0.18"/>
+  <g transform="translate(66,66) scale(9.5)">
+    <path d="M2 4L6 4L6 36L2 36ZM6 4L11 4L15 8L6 8ZM15 8L15 12L11 16L11 8ZM6 12L11 12L11 16L6 16ZM17 4L21 4L21 36L17 36ZM21 4L25 4L29 8L21 8ZM21 18L24 18L28 22L21 22ZM21 32L25 32L29 36L21 36ZM31 4L35 4L35 32L31 32ZM31 32L34 32L38 36L31 36Z" fill="#C8A96A"/>
+  </g>
+</svg>
