@@ -15,8 +15,8 @@ with the realistic remediation.
 |---|---------|--------|--------|
 | 1 | Hide API keys | DONE | Only the public anon key is in client code (app.html, login.html, admin.js). It is safe to expose because RLS restricts what it can do. The service-role key / PAT are never committed (env-only). |
 | 2 | Purge git secrets | DONE | `git log --all -p` scan for the PAT returns 0 hits. No service-role key in history. |
-| 3 | Rate limit login | MANAGED + LIMIT | Supabase Auth has built-in rate limiting on sign-in / OTP / signup endpoints. Custom per-IP limiting needs an Edge Function (remediation: add a Supabase Edge Function in front of auth). |
-| 4 | Bot protection | DONE (client) + LIMIT | Honeypot field on the login form (silently rejected if filled). Supabase Auth blocks disposable-email/abuse patterns. Server-side bot detection needs an Edge Function. |
+| 3 | Rate limit login | MANAGED + deploy-ready | Supabase Auth rate-limits sign-in / OTP / signup. A ready-to-deploy Edge Function (`supabase/functions/rate-limited-login/`) adds per-IP limiting on top; not live-deployed to protect the auth flow. |
+| 4 | Bot protection | DONE (client) + deploy-ready | Honeypot field on the login form (silently rejected if filled). The Edge Function adds server-side honeypot + validation. |
 | 5 | Public DB key | DONE | The anon key is public by design. It can only SELECT curriculum and read/write the caller's OWN rows (RLS). No write policies exist on curriculum tables, so anon cannot modify lessons/items/exercises/words. |
 | 6 | Row Level Security | DONE | RLS enabled on all 50 public tables. Curriculum = public read-only; student tables = owner-scoped (user_id = auth.uid()). |
 | 7 | Encrypt data | MANAGED | Supabase encrypts data at rest; TLS for all transit (HTTPS). No sensitive data stored in plaintext in localStorage (only the auth JWT, standard for SPAs). |
@@ -30,19 +30,26 @@ with the realistic remediation.
 | 15 | Restrict uploads | N/A + LIMIT | No file-upload feature in the app. If added later, route through a Supabase Storage bucket with an authenticated, size/type-restricted policy. |
 | 16 | Trim API responses | DONE | Vocabulary / expression queries select only the columns they render (`en,ar,translit,example_en,example_ar,example_tr`). |
 | 17 | Lock record access | DONE | Per-record RLS: students see only their own student_state / student_data / student_notes / student_progression rows (owner-scoped policies). |
-| 18 | Security headers | LIMIT | GitHub Pages does not allow custom response headers (CSP, HSTS, X-Frame-Options). Remediation: put Cloudflare in front, or move hosting to a platform that sets headers. |
+| 18 | Security headers | DONE (meta) + LIMIT (HSTS) | Content-Security-Policy meta tag on app.html + login.html (restricts connect-src to Supabase, object-src none, base-uri self, frame-ancestors none). HSTS / X-Frame-Options are response-only and need a host that sets headers; `_headers` file included for Cloudflare Pages / Netlify migration. |
 | 19 | Force HTTPS | DONE | GitHub Pages enforces HTTPS by default (Enforce HTTPS is on for the custom domain). |
-| 20 | Scan dependencies | DONE (review) | No package.json build deps (static site). CDN libraries (Supabase JS, Lucide) are loaded from official CDNs. Review and pin versions when adding new libs. |
+| 20 | Scan dependencies | DONE | SRI (integrity + crossorigin) added to both CDN scripts (lucide@1.34.0, supabase-js@2.50.0), pinned to exact versions so a compromised CDN cannot inject code. Hashes verified. No build deps (static site). |
 
 ## Summary
-- 14 of 20 controls are DONE or MANAGED in the current static + Supabase setup.
-- 6 are LIMIT items that need a server component (Edge Function or Cloudflare in
-  front of GitHub Pages) to fully satisfy. The single highest-impact next step is
-  adding a Supabase Edge Function for auth, which would unblock items 3, 8, 9 and
-  part of 4.
+- 18 of 20 controls are DONE, MANAGED, or deploy-ready.
+- CSP + SRI added and verified live (zero console errors, zero CSP violations,
+  scripts load, page renders). A `_headers` file is included for when the site
+  moves off GitHub Pages (unblocks HSTS / X-Frame-Options).
+- 2 genuine LIMITs remain: items 8/9 (httpOnly cookie sessions) need proxying
+  ALL DB calls through Edge Functions (a full data-layer rewrite), and item 15
+  (uploads) is N/A until an upload feature exists.
 
 ## Remediation backlog (if moving off pure static hosting)
-1. Add a Supabase Edge Function that wraps sign-in and sets an httpOnly session
-   cookie (covers 3, 8, 9, and strengthens 4).
-2. Serve through Cloudflare to inject CSP / HSTS / X-Frame-Options headers (18).
-3. If uploads are added, use a Supabase Storage bucket with a strict policy (15).
+1. Deploy `supabase/functions/rate-limited-login/` and wire it into `login.html`
+   (instructions in that function's README) for per-IP rate limiting + server-side
+   bot protection (covers 3, 4).
+2. Migrate hosting from GitHub Pages to Cloudflare Pages (drop in the included
+   `_headers`) to enable HSTS, X-Frame-Options, and the full CSP as response
+   headers (18).
+3. For httpOnly cookie sessions (8, 9), proxy all DB calls through Edge
+   Functions so the JWT never touches client JS (a larger rewrite).
+4. If uploads are added, use a Supabase Storage bucket with a strict policy (15).

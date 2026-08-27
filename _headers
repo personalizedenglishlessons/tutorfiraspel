@@ -1,0 +1,13 @@
+# Security headers for Cloudflare Pages / Netlify (GitHub Pages ignores _headers).
+# Deploy this file at the repo root when migrating hosting off GitHub Pages.
+# These supplement the in-page CSP meta tag with response-only headers
+# (HSTS, X-Frame-Options) that a <meta> tag cannot enforce.
+
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://lewoochehpiycocvfwtz.supabase.co https://api.supabase.co wss://lewoochehpiycocvfwtz.supabase.co https://api.dictionaryapi.dev https://translate.googleapis.com; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none';
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  Cross-Origin-Opener-Policy: same-origin
