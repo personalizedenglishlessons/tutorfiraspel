@@ -414,6 +414,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
               <div class="caps-warning" id="loginCapsWarning">⚠ Caps Lock is on</div>
             </div>
 
+            <input type="text" name="website" id="loginWebsite" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;" aria-hidden="true">
             <div class="row-between">
               <label class="remember" id="rememberToggle">
                 <span class="checkbox" id="rememberCheckbox"></span> Remember me
@@ -635,6 +636,8 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
   e.preventDefault();
   const email = document.getElementById('loginEmail').value.trim();
   const password = document.getElementById('loginPassword').value;
+  const honeypot = document.getElementById('loginWebsite');
+  if(honeypot && honeypot.value){ return; } // honeypot tripped: likely a bot, silently ignore
   const emailOk = validateEmailField(document.getElementById('loginEmail'), document.getElementById('loginEmailField'), document.querySelector('#loginEmailField .field-hint'));
   if(!emailOk || password.length === 0){
     showMessage('login', 'Please enter a valid email and password.', 'error');
