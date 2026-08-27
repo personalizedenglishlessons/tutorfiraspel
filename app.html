@@ -3024,7 +3024,7 @@ function buildDailyItems(){
   const persona = SPEAKING_PERSONAS[dayIdx % SPEAKING_PERSONAS.length];
   const ac = ACADEMIES.find(a => a.id === feat.academy);
   return [
-    {icon:'sparkles', title:'<span class="arabic">درس اليوم</span>، Lesson of the Day', body: lesson.title, sub: `<span class="arabic">${ac ? (ac.ar||ac.en) : ''}، ${(lesson.duration||'').replace(/\bmin\b/i,'دقيقة')}</span>، ${ac ? ac.en : ''}، ${lesson.duration||''}`, view:'lessonOfDay'},
+    {icon:'sparkles', title:'<span class="arabic">درس اليوم</span>، Lesson of the Day', body: lesson.title, sub: `<span class="arabic">${ac ? (ac.ar||ac.en) : ''}، ${String(lesson.duration||'').replace(/\bmin\b/i,'دقيقة')}</span>، ${ac ? ac.en : ''}، ${lesson.duration||''}`, view:'lessonOfDay'},
     {icon:'book-open', title:'<span class="arabic">كلمة اليوم</span>، Word of the Day', body: word.en, sub: `${word.ar}، ${translitEn(word.en)}`, view:'vocabulary'},
     {icon:'quote', title:'<span class="arabic">عبارة اليوم</span>، Phrase of the Day', body: phrase.example ? phrase.example.en : phrase.en, sub: phrase.example ? phrase.example.ar : phrase.ar, view:'vocabulary'},
     {icon:'flag', title:'<span class="arabic">تلازم اليوم</span>، Collocation of the Day', body: word.collocations || word.en, sub: word.ar, view:'vocabulary'},
