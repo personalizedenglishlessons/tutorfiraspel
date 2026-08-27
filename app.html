@@ -8690,7 +8690,7 @@ function translitEn(text){
     }
     out += ar + (punct ? punct[0] : '');
   }
-  return out;
+  return out.replace(/\?/g, '؟');
 }
 // Keep the old names working (quick translate, pronunciation studio),
 // but route them through the same engine.
@@ -13606,12 +13606,15 @@ function dbToLesson(dbl, academy){
     flip = !flip;
     return { who: flip ? 'A' : 'B', en: i.en, ar: i.ar, translit: i.tr || translitEn(i.en) };
   });
-  const quiz = (dbl.exercises || []).filter(x => x.type === 'choose').map(x => ({
-    q: x.payload.question.en + '<div class="arabic" style="font-size:.8rem; font-weight:400; margin-top:4px;">' + x.payload.question.ar + '</div>',
-    options: x.payload.options.map(o => o.t),
+  const quiz = (dbl.exercises || []).filter(x => x.type === 'choose').map(x => {
+    const qtr = x.payload.question.tr || translitEn(x.payload.question.en || '');
+    return {
+    q: x.payload.question.en + '<div class="arabic" style="font-size:.8rem; font-weight:400; margin-top:4px;">' + x.payload.question.ar + '</div>' + (qtr ? '<div class="arabic translit" style="font-size:.76rem; color:var(--gold-soft); margin-top:3px;">' + qtr + '</div>' : ''),
+    options: x.payload.options.map(o => ({ t: o.t, tr: o.tr || translitEn(o.t || '') })),
     correct: x.payload.options.findIndex(o => o.ok),
     _hint: x.hint_ar ? { en: x.hint_en, ar: x.hint_ar } : null
-  }));
+    };
+  });
   return {
     db: true, flagship: false,
     id: dbl.id,
@@ -13673,8 +13676,8 @@ function renderDbPractice(container, exercises){
       return head('Fix the mistake', `
         <div style="font-size:.84rem; color:var(--text-muted); margin-bottom:10px;"><span class="arabic">${x.hint_ar || ''}</span>${x.hint_en ? '، ' + x.hint_en : ''}</div>
         <div class="dbx-tokens" style="display:grid; gap:8px; margin-bottom:12px;">
-          <button class="quiz-option dbx-pick" data-ok="wrong" style="text-align:left;">✕ ${p.wrong}</button>
-          <button class="quiz-option dbx-pick" data-ok="right" style="text-align:left;">${p.right}</button>
+          <div><button class="quiz-option dbx-pick" data-ok="wrong" style="text-align:left;">✕ ${p.wrong}</button><div class="arabic" style="font-size:.78rem;color:var(--gold-soft);margin-top:2px;">${p.wrong_tr || translitEn(p.wrong || '')}</div></div>
+          <div><button class="quiz-option dbx-pick" data-ok="right" style="text-align:left;">${p.right}</button><div class="arabic" style="font-size:.78rem;color:var(--gold-soft);margin-top:2px;">${p.right_tr || translitEn(p.right || '')}</div></div>
         </div>
         <div class="dbx-why" style="display:none; font-size:.8rem; color:var(--emerald);"></div>`);
     }
@@ -15742,8 +15745,12 @@ function renderQuiz(container, questions, keyPrefix){
       <div id="${keyPrefix}-options"></div>`;
     const optWrap = container.querySelector('#'+keyPrefix+'-options');
     q.options.forEach((opt,i) => {
+      const isObj = (opt && typeof opt === 'object');
+      const label = isObj ? opt.t : opt;
+      const otr = isObj ? (opt.tr || '') : '';
       const btn = document.createElement('button');
-      btn.className = 'quiz-option'; btn.textContent = opt;
+      btn.className = 'quiz-option';
+      btn.innerHTML = label + (otr ? '<span class="arabic" style="display:block;font-size:.8rem;color:var(--gold-soft);margin-top:3px;">' + otr + '</span>' : '');
       btn.addEventListener('click', () => {
         optWrap.querySelectorAll('.quiz-option').forEach((b,bi) => { b.disabled = true; if(bi===q.correct) b.classList.add('correct'); });
         if(i === q.correct){ correctCount++; }
