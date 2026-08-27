@@ -13484,6 +13484,15 @@ function genericLesson(bankItem, academy){
 }
 function lessonKey(academyId, lessonId){ return academyId + '::' + lessonId; }
 function nextLesson(){
+  // Prefer the student's current guided stage (granular path) when state is
+  // loaded, so Resume/Continue matches the DB route, not the hardcoded list.
+  try{
+    const st = window.PEL_EFFECTIVE_STATE;
+    if(st && st.stage && st.lessons && st.lessons.length){
+      const L = st.lessons.find(x => x.state === 'available');
+      if(L && L.id) return { academy: st.stage.id, lesson: L.id };
+    }
+  }catch(e){ /* fall through */ }
   // When a personalized plan exists, the next route lesson is the next
   // lesson. Otherwise resume where you left off: the in-progress academy
   // always comes first, so the hero and continue-learning cards match the
