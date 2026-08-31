@@ -16895,6 +16895,7 @@ function renderSpeaking(){
         <input type="text" id="roleplayTypedInput" placeholder="اكتب ردك... / Or type your reply..." style="flex:1; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:11px 14px; color:var(--text); font-size:.86rem;">
         <button class="btn-gold" id="roleplaySend"><span class="arabic">ارسال</span>، Send</button>
       </div>
+      <div id="roleplayMicHint" style="margin-top:6px; font-size:.74rem; color:var(--text-muted);"></div>
       <div id="roleplayFeedback" style="margin-top:14px;"></div>`;
     const chat = document.getElementById('roleplayChat');
     function addBubble(who, en, ar, translit, leadAr){
@@ -16990,6 +16991,17 @@ function renderSpeaking(){
         else{ toast(`<span class="arabic">${micErrorMessage(errorCode)}</span>`); }
       }, null, this);
     });
+    // On browsers without SpeechRecognition (e.g. iOS Safari) the mic button
+    // would look dead; surface a clear, persistent hint that typing works too.
+    const _micBtn = document.getElementById('roleplayMic');
+    const _micHint = document.getElementById('roleplayMicHint');
+    if(_micBtn && _micHint){
+      if(!canRecognize()){
+        _micBtn.title = L('Typing is available below','الكتابة متاحة تحت');
+        _micBtn.style.opacity = '.55';
+        _micHint.innerHTML = `<span class="arabic">المايك غير مدعوم على هذا المتصفح — اكتب ردك بالاسفل.</span>، Mic isn\'t supported on this browser — type your reply below.`;
+      }
+    }
     if(window.lucide) lucide.createIcons();
     rc.scrollIntoView({behavior:'smooth', block:'start'});
   }
