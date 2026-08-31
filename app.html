@@ -14022,9 +14022,14 @@ function micErrorMessage(code){
    Supabase function, and it only runs when the browser can't do it. ---- */
 const PEL_TRANSCRIBE_URL = 'https://lewoochehpiycocvfwtz.supabase.co/functions/v1/transcribe';
 async function pelTranscribeAudio(blob){
+  // Attach the student's JWT so the edge function can verify it (JWT verify
+  // stays ON in Supabase — the endpoint is not public). Falls back to the
+  // anon key if there's no session, which the function will reject with 401.
+  let auth = 'Bearer ' + SUPABASE_ANON_KEY;
+  try{ const c = client(); if(c){ const { data } = await c.auth.getSession(); if(data && data.session && data.session.access_token) auth = 'Bearer ' + data.session.access_token; } }catch(e){}
   const fd = new FormData();
   fd.append('audio', blob, 'speech.webm');
-  const r = await fetch(PEL_TRANSCRIBE_URL, { method:'POST', body: fd, signal: AbortSignal.timeout(20000) });
+  const r = await fetch(PEL_TRANSCRIBE_URL, { method:'POST', body: fd, headers:{ 'apikey': SUPABASE_ANON_KEY, 'Authorization': auth }, signal: AbortSignal.timeout(20000) });
   if(!r.ok){ const t = await r.text().catch(()=>''); throw new Error('transcribe '+r.status+' '+t.slice(0,120)); }
   const j = await r.json();
   if(!j || !j.text || !j.text.trim()) throw new Error('empty transcription');
