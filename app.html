@@ -8704,11 +8704,22 @@ async function googleTranslate(text, targetLang){
   // it works from the browser with no backend involved. It's the
   // unofficial endpoint the free "google-translate-api" tools use, so
   // treat it as best-effort: it can rate-limit or change without notice.
+  // On some mobile networks (and iOS Safari) this endpoint is blocked or
+  // CORS-restricted, so we cap each attempt with a timeout and retry once;
+  // callers fall back to the local phrase bank / vocab so the button never
+  // appears dead with a "connection not reachable" message.
   const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`;
-  const res = await fetch(url);
-  if(!res.ok) throw new Error('translate request failed');
-  const data = await res.json();
-  return (data[0] || []).map(chunk => chunk[0]).join('');
+  let lastErr = null;
+  for(let attempt = 0; attempt < 2; attempt++){
+    try{
+      const res = await fetch(url, { mode:'cors', credentials:'omit', signal: AbortSignal.timeout(8000) });
+      if(!res.ok) throw new Error('translate request failed: '+res.status);
+      const data = await res.json();
+      const out = (data[0] || []).map(chunk => chunk[0]).join('').trim();
+      if(out) return out;
+    }catch(e){ lastErr = e; }
+  }
+  throw lastErr || new Error('translate failed');
 }
 
 /* ============================================================
@@ -15722,6 +15733,12 @@ async function freeTranslate(text){
   }catch(e){ /* offline fallback below */ }
   const bank = phraseBank[text.toLowerCase().trim()];
   if(bank) return { ok:true, text: bank.ar, target:'ar', fromBank:true };
+  // Local vocabulary fallback so the translate button always responds,
+  // even on mobile networks where the public endpoint is blocked.
+  if(!isAr){
+    const v = (typeof findVocab==='function') ? findVocab(text) : null;
+    if(v && v.ar) return { ok:true, text: v.ar, target:'ar', fromBank:true };
+  }
   return { ok:false, text:text, target };
 }
 
@@ -20843,10 +20860,14 @@ body.pel-lesson-mode .sidebar,body.pel-lesson-mode .topbar,body.pel-lesson-mode 
       if(!items.length) items = null;
     }
     if(!items || !items.length){ items = PEL_STARTER_ITEMS.map(v=>({...v, sentences:(v.sentences||[]).map(s=>({en:s.en,ar:s.ar,translit:s.translit||tr(s.en)}))})); }
-    // ensure example + sentences exist
+    // ensure example + sentences exist. Previously this invented a broken
+    // "Do you know <word>?" sentence with empty Arabic when an item had no
+    // authored sentences — that leaked placeholder gibberish like
+    // "Do you know don't?". Now we reuse the item's own example so the
+    // sentence-based activities fall back gracefully with real content.
     items = items.map(it => {
       const ex = it.example && it.example.en ? it.example : { en: it.en, ar: it.ar, translit: it.translit };
-      const sents = (it.sentences && it.sentences.length) ? it.sentences : [ex, {en:'Do you '+(it.en.includes(' ')?'use ':'know ')+it.en+'?', ar:'', translit:''}];
+      const sents = (it.sentences && it.sentences.length) ? it.sentences : [ex];
       return {...it, example: ex, sentences: sents.map(s=>({en:s.en, ar:s.ar||it.ar, translit:s.translit||tr(s.en||'')}))};
     });
     return items;
@@ -21115,8 +21136,13 @@ body.pel-lesson-mode .sidebar,body.pel-lesson-mode .topbar,body.pel-lesson-mode 
       ctx.self.ready(ctx, L('Continue','متابعة'), ()=>ctx.self.next());
     },
     recognize(inner, act, ctx){
-      const it=act.item; const pool=act.pool.length>=3?act.pool:[...act.pool, ...PEL_STARTER_ITEMS].slice(0,4);
-      const opts = shuffle([it, ...shuffle(pool.filter(x=>x.en!==it.en)).slice(0,3)]).slice(0,4);
+      const it=act.item; const pool=act.pool.length>=3?act.pool:[...act.pool, ...PEL_STARTER_ITEMS];
+      // Distractors must be distinct from the answer AND from each other;
+      // padding with PEL_STARTER_ITEMS used to surface the same meaning twice
+      // (e.g. two "please" options next to "thank you").
+      const _distr=shuffle(pool.filter(x=>x&&x.en&&norm(x.en)!==norm(it.en))).slice(0,3);
+      const _seen=new Set(); const _dd=[]; for(const d of _distr){ const k=norm(d.en); if(!_seen.has(k)){ _seen.add(k); _dd.push(d); } }
+      const opts = shuffle([it, ..._dd]).slice(0,4);
       let sel=null;
       const prompt = ar() ? `<span class="arabic">وش معنى <b>${esc(it.en)}</b>؟</span>` : `What does <b>${esc(it.en)}</b> mean?`;
       inner.innerHTML = `<div class="pel-act-prompt">${prompt}</div>
@@ -21215,12 +21241,14 @@ body.pel-lesson-mode .sidebar,body.pel-lesson-mode .topbar,body.pel-lesson-mode 
       ctx.self.ready(ctx, L('Continue','متابعة'), ()=>ctx.self.next());
     },
     identify_heard(inner, act, ctx){
-      const it=act.item; const pool=act.pool.length>=3?act.pool:[...act.pool,...PEL_STARTER_ITEMS].slice(0,4);
-      const opts=shuffle([it,...shuffle(pool.filter(x=>x.en!==it.en)).slice(0,3)]).slice(0,4); let sel=null;
+      const it=act.item; const pool=act.pool.length>=3?act.pool:[...act.pool,...PEL_STARTER_ITEMS];
+      const _distr=shuffle(pool.filter(x=>x&&x.en&&norm(x.en)!==norm(it.en))).slice(0,3);
+      const _seen=new Set(); const _dd=[]; for(const d of _distr){ const k=norm(d.en); if(!_seen.has(k)){ _seen.add(k); _dd.push(d); } }
+      const opts=shuffle([it,..._dd]).slice(0,4); let sel=null;
       inner.innerHTML = `<div class="pel-act-prompt">${L('What did you hear?','وش سمعت؟')}</div>
         <button class="pel-act-play" id="pelIdPlay"><i data-lucide="volume-2" width="16" height="16"></i> ${L('Play again','شغل ثانية')}</button>
         <div class="pel-options" id="pelIdOpts" style="margin-top:16px;">${opts.map((o,i)=>`<button class="pel-option" data-i="${i}"><span class="o-en">${esc(o.en)}</span><span class="o-ar arabic">${esc(o.ar)}</span></button>`).join('')}</div>`;
-      $('#pelIdPlay').onclick=()=>play(it.example.en||it.en,'en-US');
+      $('#pelIdPlay').onclick=()=>play(it.en,'en-US');
       const btns=inner.querySelectorAll('.pel-option');
       btns.forEach(b=>b.onclick=()=>{ btns.forEach(x=>x.classList.remove('selected')); b.classList.add('selected'); sel=+b.dataset.i; });
       ctx.btn.disabled=true;
