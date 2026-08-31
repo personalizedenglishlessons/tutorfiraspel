@@ -14013,9 +14013,76 @@ function micErrorMessage(code){
   };
   return m[code] || 'فيه مشكلة بالمايك، تاكد من الصلاحية وحاول مرة اخرى.';
 }
+/* ---- backend transcription fallback for browsers with no
+   SpeechRecognition API (e.g. iOS Safari): record audio with
+   MediaRecorder, POST it to the Supabase /functions/v1/transcribe edge
+   function, then score the returned transcript locally with the same
+   wordMatchScore / pronFeedback engine. Keeps the app's "no opaque
+   external calls from the page" guarantee: the only hop is your own
+   Supabase function, and it only runs when the browser can't do it. ---- */
+const PEL_TRANSCRIBE_URL = 'https://lewoochehpiycocvfwtz.supabase.co/functions/v1/transcribe';
+async function pelTranscribeAudio(blob){
+  const fd = new FormData();
+  fd.append('audio', blob, 'speech.webm');
+  const r = await fetch(PEL_TRANSCRIBE_URL, { method:'POST', body: fd, signal: AbortSignal.timeout(20000) });
+  if(!r.ok){ const t = await r.text().catch(()=>''); throw new Error('transcribe '+r.status+' '+t.slice(0,120)); }
+  const j = await r.json();
+  if(!j || !j.text || !j.text.trim()) throw new Error('empty transcription');
+  return j.text.trim();
+}
+function pelRecordAudio(seconds){
+  return new Promise(resolve => {
+    if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || typeof MediaRecorder === 'undefined'){ resolve(null); return; }
+    let chunks = [];
+    navigator.mediaDevices.getUserMedia({ audio:{ echoCancellation:true, noiseSuppression:true } })
+      .then(stream => {
+        let mr;
+        try{ mr = new MediaRecorder(stream); }
+        catch(e){ stream.getTracks().forEach(t=>t.stop()); resolve(null); return; }
+        const stop = () => { try{ mr.state !== 'inactive' && mr.stop(); }catch(e){} };
+        mr.ondataavailable = e => { if(e.data && e.data.size) chunks.push(e.data); };
+        mr.onstop = () => { stream.getTracks().forEach(t=>t.stop()); resolve(chunks.length ? new Blob(chunks, { type: chunks[0].type || 'audio/webm' }) : null); };
+        mr.onerror = () => { stream.getTracks().forEach(t=>t.stop()); resolve(null); };
+        mr.start();
+        // Auto-stop after the allotted window. A few seconds is enough for a
+        // word or short sentence; the caller scales it by target length.
+        setTimeout(stop, Math.max(2000, Math.min(10000, (seconds||5)*1000)));
+      })
+      .catch(() => resolve(null));
+  });
+}
 function recordAndScore(onDone, targetText, btn, _retryCount){
   _retryCount = _retryCount || 0;
-  if(!canRecognize()){ toast('<span class="arabic">التعرف على الصوت غير مدعوم في هذا المتصفح</span>، Speech recognition is not supported in this browser.'); return; }
+  if(!canRecognize()){
+    // No in-browser SpeechRecognition (iOS Safari): fall back to MediaRecorder
+    // + the Supabase transcription function, then score locally.
+    if(typeof MediaRecorder === 'undefined' || !navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+      toast('<span class="arabic">التعرف على الصوت غير مدعوم في هذا المتصفح</span>، Speech recognition is not supported in this browser.');
+      return;
+    }
+    const secs = targetText ? Math.max(4, Math.min(9, targetText.split(' ').length + 2)) : 5;
+    if(btn) btn.classList.add('recording');
+    pelRecordAudio(secs).then(async blob => {
+      if(!blob){ if(btn) btn.classList.remove('recording'); onDone(null, null, 'no-speech'); return; }
+      try{
+        const heard = await pelTranscribeAudio(blob);
+        if(btn) btn.classList.remove('recording');
+        if(!heard){ onDone(null, null, 'no-speech'); return; }
+        const sc = targetText ? wordMatchScore(heard, targetText) : null;
+        onDone(heard, sc);
+      }catch(e){
+        if(btn) btn.classList.remove('recording');
+        // transcription_not_configured / network: tell the user clearly so it
+        // doesn't look like a generic "connection not reachable" mystery.
+        const msg = /transcription_not_configured|not configured/i.test(String(e))
+          ? L('Transcription backend not configured yet.','خدمة التفريغ الصوتي غير مهيأة بعد.')
+          : micErrorMessage('network');
+        toast('<span class="arabic">'+msg+'</span>');
+        onDone(null, null, 'network');
+      }
+    });
+    return;
+  }
   // Only one recognition session runs anywhere on the page at a time.
   if(activeRec) cleanupRecognition();
   if('speechSynthesis' in window) window.speechSynthesis.cancel();
