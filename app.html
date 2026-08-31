@@ -16474,8 +16474,47 @@ const CEFR_PATH_STYLE = `
 .cefr-lesson-en{font-weight:500;}
 .cefr-lesson-ar{font-size:.74rem;color:var(--text-muted);}
 .cefr-empty{font-size:.8rem;color:var(--text-muted);font-style:italic;padding:6px 0;}
+.cefr-skill-path{display:flex;flex-direction:column;gap:0;position:relative;}
+.cefr-skill{display:flex;gap:12px;align-items:flex-start;padding:7px 0;position:relative;}
+.cefr-skill+.cefr-skill::before{content:"";position:absolute;left:16px;top:-7px;height:14px;width:2px;background:var(--border);}
+.cefr-skill-node{flex-shrink:0;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(200,169,106,.16);color:var(--gold);border:1px solid rgba(200,169,106,.35);cursor:pointer;transition:transform .15s,background .2s;}
+.cefr-skill-node:hover:not(:disabled){transform:scale(1.06);background:rgba(200,169,106,.28);}
+.cefr-skill-node:disabled{cursor:not-allowed;opacity:.5;}
+.cefr-skill.complete .cefr-skill-node{background:rgba(76,175,80,.18);color:#4caf50;border-color:rgba(76,175,80,.4);}
+.cefr-skill.locked .cefr-skill-node{background:var(--card-elevated);color:var(--text-muted);border-color:var(--border);}
+.cefr-skill-body{flex:1;min-width:0;padding-top:3px;}
+.cefr-skill-title{font-size:.84rem;font-weight:600;line-height:1.2;margin-bottom:6px;}
+.cefr-skill-chips{display:flex;flex-wrap:wrap;gap:6px;}
+.cefr-chip{display:inline-flex;align-items:center;gap:5px;background:var(--card-elevated);border:1px solid var(--border);border-radius:8px;padding:5px 9px;cursor:pointer;font-size:.76rem;color:var(--text);transition:border-color .2s,background .2s;}
+.cefr-chip:hover:not(.locked){border-color:rgba(200,169,106,.5);}
+.cefr-chip.locked{opacity:.5;cursor:not-allowed;}
+.cefr-chip.done{border-color:rgba(76,175,80,.4);color:#4caf50;}
+.cefr-chip.done::before{content:"✓";font-weight:700;}
 @media(max-width:560px){.cefr-node{width:52px;height:52px;font-size:1.05rem;}.cefr-units{grid-template-columns:1fr;}}
 `;
+function academySkillGroups(list){
+  // Chunk a flat lesson list into Duolingo-style skills of 2 lessons each.
+  const groups=[];
+  for(let i=0;i<list.length;i+=2){ groups.push({ idx:groups.length, lessons:list.slice(i,i+2) }); }
+  return groups;
+}
+function skillTitle(sk){
+  const lead = sk.lessons && sk.lessons[0];
+  if(lead && lead.en){ const t=String(lead.en); return t.length>28 ? t.slice(0,27)+'…' : t; }
+  return 'Skill '+(sk.idx+1);
+}
+function skillStatus(ac, sk){
+  // Visual-only status derived from the existing linear lock + completion
+  // state. Never unlocks something academyLessonList already locked.
+  let allLocked=true, allDone=true;
+  for(const l of sk.lessons){
+    if(!l.locked) allLocked=false;
+    try{ if(!completedLessons.has(ac.id+'::'+l.id)) allDone=false; }catch(e){ allDone=false; }
+  }
+  if(allDone && sk.lessons.length) return 'complete';
+  if(allLocked) return 'locked';
+  return 'active';
+}
 function renderCefrPath(){
   const el = document.getElementById('view-cefr');
   if(!el) return;
@@ -16487,15 +16526,25 @@ function renderCefrPath(){
       const isArabicTrack = a.dir === 'ar';
       return learningAr ? isArabicTrack : !isArabicTrack;
     }).filter(a => academyCefr(a) === lvl.id);
-    const units = academies.map(ac => {
-      const list = academyLessonList(ac);
-      const lessonsHtml = list.slice(0, 8).map(l => `<button class="cefr-lesson ${l.locked?'locked':''}" data-academy="${ac.id}" data-lesson="${l.id}" ${l.locked?'disabled':''}><span><span class="cefr-lesson-en">${esc(l.en||l.id)}</span>${l.ar?`<span class="cefr-lesson-ar arabic"> · ${esc(l.ar)}</span>`:''}</span><i data-lucide="${l.locked?'lock':'play'}" width="13" height="13"></i></button>`).join('');
-      return `<div class="cefr-unit"><button class="cefr-unit-head" data-academy="${ac.id}"><span class="cefr-unit-icon"><i data-lucide="${ac.icon}" width="16" height="16"></i></span><span class="cefr-unit-title"><span>${esc(ac.en)}</span><span class="arabic" style="display:block;font-size:.82em;color:var(--text-muted);">${esc(ac.ar)}</span></span></button><div class="cefr-lessons">${lessonsHtml||`<div class=\"cefr-empty\">${L('Lessons coming soon.','دروس قريبا.')}</div>`}</div></div>`;
+        const units = academies.map((ac, uIdx) => {
+      const list = academyLessonList(ac).slice(0, 8);
+      const skills = academySkillGroups(list);
+      const skillsHtml = skills.map(sk => {
+        const status = skillStatus(ac, sk);
+        const firstOpen = sk.lessons.find(l => !l.locked) || sk.lessons[0];
+        const chipsHtml = sk.lessons.map(l => {
+          let done=false; try{ done=completedLessons.has(ac.id+'::'+l.id); }catch(e){}
+          return `<button class="cefr-chip ${l.locked?'locked':''} ${done?'done':''}" data-academy="${ac.id}" data-lesson="${l.id}" ${l.locked?'disabled':''}><span class="cefr-lesson-en">${esc(l.en||l.id)}</span></button>`;
+        }).join('');
+        return `<div class="cefr-skill ${status}"><button class="cefr-skill-node" data-academy="${ac.id}" data-lesson="${firstOpen?firstOpen.id:''}" ${status==='locked'?'disabled':''}><i data-lucide="${status==='complete'?'crown':status==='locked'?'lock':'play'}" width="15" height="15"></i></button><div class="cefr-skill-body"><div class="cefr-skill-title">${esc(skillTitle(sk))}</div><div class="cefr-skill-chips">${chipsHtml}</div></div></div>`;
+      }).join('');
+      return `<div class="cefr-unit"><button class="cefr-unit-head" data-academy="${ac.id}"><span class="cefr-unit-icon"><i data-lucide="${ac.icon}" width="16" height="16"></i></span><span class="cefr-unit-title"><span>${L('Unit','وحدة')} ${uIdx+1}: ${esc(ac.en)}</span><span class="arabic" style="display:block;font-size:.82em;color:var(--text-muted);">${esc(ac.ar)}</span></span></button><div class="cefr-skill-path">${skillsHtml||`<div class="cefr-empty">${L('Lessons coming soon.','دروس قريبا.')}</div>`}</div></div>`;
     }).join('');
     return `<div class="cefr-level"><div class="cefr-node" style="background:${lvl.color};">${lvl.id}</div><div class="cefr-level-body"><div class="cefr-level-title"><h3>${isAr?esc(lvl.ar):esc(lvl.en)}</h3><span class="lvl">${lvl.id}</span></div><p class="cefr-level-desc">${isAr?esc(lvl.descAr):esc(lvl.descEn)}</p><div class="cefr-units">${units||`<div class=\"cefr-empty\">${L('Content for this level is coming.','محتوى هذا المستوى قادم.')}</div>`}</div></div></div>`;
   }).join('');
   el.innerHTML = `<div class="page-head"><span class="eyebrow"><span class="arabic" style="font-size:.95em;">المستويات</span>، CEFR Levels (A1–C2)</span><h1><span class="arabic" style="display:block;font-size:.62em;font-weight:400;color:var(--text-secondary);margin-bottom:4px;">مسار واحد واضح من المبتدئ الى الاتقان.</span>One clear path, Beginner to Mastery.</h1><p><span class="arabic" style="display:block;margin-bottom:4px;">ستة مستويات معترف بها عالميا، كل واحد يبني على اللي قبله.</span>Six internationally recognized levels, each one building on the last.</p></div><div class="cefr-path">${levelsHtml}</div>`;
-  el.querySelectorAll('.cefr-lesson:not(.locked)').forEach(b => { b.onclick = () => { if(typeof openLesson==='function') openLesson(b.dataset.academy, b.dataset.lesson); }; });
+  el.querySelectorAll('.cefr-chip:not(.locked)').forEach(b => { b.onclick = () => { if(typeof openLesson==='function') openLesson(b.dataset.academy, b.dataset.lesson); }; });
+  el.querySelectorAll('.cefr-skill-node:not([disabled])').forEach(b => { b.onclick = () => { if(b.dataset.lesson && typeof openLesson==='function') openLesson(b.dataset.academy, b.dataset.lesson); }; });
   el.querySelectorAll('.cefr-unit-head').forEach(h => { h.onclick = () => { const ac=resolveAcademyById(h.dataset.academy); if(!ac) return; const first=(academyLessonList(ac)[0]||{}); if(first.id && typeof openLesson==='function') openLesson(h.dataset.academy, first.id); }; });
   if(window.lucide) lucide.createIcons();
 }
