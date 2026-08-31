@@ -60,6 +60,17 @@ inner_start = 1
 inner_end = len(vb_text) - 1  # position of closing ]
 
 # ---- parse existing entries within VOCAB_BANK only ----
+def unesc(s):
+    # reverse JS single-quote string escapes so bank values match DATA values
+    out = []
+    i = 0
+    while i < len(s):
+        if s[i] == '\\' and i + 1 < len(s):
+            out.append(s[i + 1]); i += 2
+        else:
+            out.append(s[i]); i += 1
+    return ''.join(out)
+
 def parse_entries(text):
     out = []
     idx = -1
@@ -80,7 +91,7 @@ def parse_entries(text):
         idx += 1
         em = re.search(r"en:'((?:[^'\\]|\\.)*)'", entry)
         cm = re.search(r"category:'((?:[^'\\]|\\.)*)'", entry)
-        out.append((idx, em.group(1) if em else '', cm.group(1) if cm else ''))
+        out.append((idx, unesc(em.group(1)) if em else '', unesc(cm.group(1)) if cm else ''))
         i = text.find('{en:', j + 1)
     return out
 
