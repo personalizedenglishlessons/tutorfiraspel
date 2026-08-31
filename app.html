@@ -9672,13 +9672,19 @@ document.getElementById('qtBtn').addEventListener('click', async () => {
       resultEl.innerHTML = `${escapeHtml(translated)}<div class="arabic" style="margin-top:4px; font-size:.85em; color:var(--text-muted);">${escapeHtml(translit)}</div>${extra}`;
     }
   }catch(e){
-    // offline fallback: local phrase bank + transliteration only, no translation
+    // offline / CORS-blocked fallback (common on iOS Safari + some mobile
+    // networks): never show a dead "connection not reachable" state.
+    // Try the local phrase bank first; otherwise show the Arabic-letter
+    // transliteration as a best-effort result with a clear note.
     const found = phraseBank[raw.toLowerCase()];
-    const translit = isArabicInput ? '' : transliterateText(raw);
     if(found){
-      resultEl.innerHTML = `${escapeHtml(found.ar)}<div class="arabic" style="margin-top:4px; font-size:.85em; color:var(--text-muted);">${escapeHtml(translit)}</div>`;
+      resultEl.innerHTML = `${escapeHtml(found.ar)}<div class="arabic" style="margin-top:4px; font-size:.85em; color:var(--text-muted);">${escapeHtml(transliterateText(raw))}</div>`;
     }else{
-      resultEl.innerHTML = `<div class="arabic" style="font-size:.82em; color:var(--text-muted);">تعذر الوصول لخدمة الترجمة الان${!isArabicInput ? '، بس هذا تقريب للنطق بالعربي' : ''}:</div>${!isArabicInput ? `<div class="arabic" style="margin-top:4px;">${escapeHtml(translit)}</div>` : ''}`;
+      const translit = transliterateText(raw);
+      const note = isArabicInput
+        ? 'تعذر الاتصال بخدمة الترجمة، هذا تقريب للنطق بالعربي:'
+        : 'تعذر الاتصال بخدمة الترجمة، هذا النطق بالعربي:';
+      resultEl.innerHTML = `<div class="arabic" style="font-size:.82em; color:var(--text-muted);">${escapeHtml(note)}</div><div class="arabic" style="margin-top:4px; font-size:1.05em;">${escapeHtml(translit)}</div>`;
     }
   }
 });
@@ -21742,21 +21748,26 @@ body.pel-lesson-mode .sidebar,body.pel-lesson-mode .topbar,body.pel-lesson-mode 
     },
     listen(inner, act, ctx){
       const it=act.item;
+      const audioText = (it.example && it.example.en) ? it.example.en : it.en;
       inner.innerHTML = `<div class="pel-act-prompt">${L('Listen carefully','انصح باهتمام')}</div>
         <button class="pel-act-play" id="pelLsnPlay" style="font-size:1.1rem;padding:16px 26px;"><i data-lucide="volume-2" width="20" height="20"></i> ${L('Play','تشغيل')}</button>
         <div class="pel-act-hint">${L('Tap play and listen. You will identify it next.','اضغط تشغيل واصغي. بتحددها بعد.')}</div>`;
-      $('#pelLsnPlay').onclick=()=>play(it.example.en||it.en,'en-US');
+      $('#pelLsnPlay').onclick=()=>play(audioText,'en-US');
       ctx.self.ready(ctx, L('Continue','متابعة'), ()=>ctx.self.next());
     },
     identify_heard(inner, act, ctx){
       const it=act.item; const pool=act.pool.length>=3?act.pool:[...act.pool,...PEL_STARTER_ITEMS];
+      // Replay EXACTLY what the listen step played (the example sentence),
+      // not just the single headword — otherwise the audio and the word
+      // options disagree and the exercise feels broken.
+      const audioText = (it.example && it.example.en) ? it.example.en : it.en;
       const _distr=shuffle(pool.filter(x=>x&&x.en&&norm(x.en)!==norm(it.en))).slice(0,3);
       const _seen=new Set(); const _dd=[]; for(const d of _distr){ const k=norm(d.en); if(!_seen.has(k)){ _seen.add(k); _dd.push(d); } }
       const opts=shuffle([it,..._dd]).slice(0,4); let sel=null;
       inner.innerHTML = `<div class="pel-act-prompt">${L('What did you hear?','وش سمعت؟')}</div>
         <button class="pel-act-play" id="pelIdPlay"><i data-lucide="volume-2" width="16" height="16"></i> ${L('Play again','شغل ثانية')}</button>
         <div class="pel-options" id="pelIdOpts" style="margin-top:16px;">${opts.map((o,i)=>`<button class="pel-option" data-i="${i}"><span class="o-en">${esc(o.en)}</span><span class="o-ar arabic">${esc(o.ar)}</span></button>`).join('')}</div>`;
-      $('#pelIdPlay').onclick=()=>play(it.en,'en-US');
+      $('#pelIdPlay').onclick=()=>play(audioText,'en-US');
       const btns=inner.querySelectorAll('.pel-option');
       btns.forEach(b=>b.onclick=()=>{ btns.forEach(x=>x.classList.remove('selected')); b.classList.add('selected'); sel=+b.dataset.i; });
       ctx.btn.disabled=true;
