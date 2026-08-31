@@ -13886,13 +13886,18 @@ function renderDbPractice(container, exercises){
   if(!container) return;
   const norm = s => String(s || '').toLowerCase().replace(/[’']/g, "'").replace(/[^a-z0-9'\u0600-\u06FF ]/g, '').replace(/\s+/g, ' ').trim();
   container.innerHTML = exercises.map((x, xi) => {
-    const head = (label, bodyHtml) => `
+    const head = (label, bodyHtml, sayText) => `
       <div class="dbx-card" data-xi="${xi}" style="background:var(--card-elevated); border:1px solid var(--border); border-radius:14px; padding:18px;">
         <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:10px;">
           <span class="chip gold">${label}</span>
           <span class="dbx-result" style="font-size:.78rem; min-width:20px;"></span>
         </div>
         ${bodyHtml}
+        ${sayText ? `<div class="dbx-say" style="margin-top:12px; padding-top:12px; border-top:1px dashed var(--border); display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+          <button class="mic-record-btn dbx-say-btn" data-say="${escapeHtml(sayText)}" title="Say it" type="button"><i data-lucide="mic" width="18" height="18"></i></button>
+          <span class="arabic" style="font-size:.78rem; color:var(--text-muted);">انطقها</span>
+          <span class="dbx-say-fb" style="font-size:.78rem; color:var(--gold-soft); flex:1; min-width:120px;"></span>
+        </div>` : ''}
       </div>`;
     if(x.type === 'order'){
       const tokensShuffled = x.payload.tokens.slice();
@@ -13908,7 +13913,7 @@ function renderDbPractice(container, exercises){
         <div class="dbx-tokens" style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px;">
           ${tokensShuffled.map(t => `<button class="quiz-option dbx-token" style="padding:5px 11px;">${t}</button>`).join('')}
         </div>
-        <button class="btn-outline dbx-check"><span class="arabic">تحقق</span>، Check</button>`);
+        <button class="btn-outline dbx-check"><span class="arabic">تحقق</span>، Check</button>`, x.payload.answer);
     }
     if(x.type === 'spell'){
       return head('Spell it', `
@@ -13918,7 +13923,7 @@ function renderDbPractice(container, exercises){
         <div class="dbx-tokens" style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px;">
           ${x.payload.options.map(t => `<button class="quiz-option dbx-token" style="padding:5px 11px;">${t}</button>`).join('')}
         </div>
-        <button class="btn-outline dbx-check"><span class="arabic">تحقق</span>، Check</button>`);
+        <button class="btn-outline dbx-check"><span class="arabic">تحقق</span>، Check</button>`, x.payload.answer);
     }
     if(x.type === 'correct'){
       const p = x.payload;
@@ -13928,7 +13933,7 @@ function renderDbPractice(container, exercises){
           <div><button class="quiz-option dbx-pick" data-ok="wrong" style="text-align:left;">✕ ${p.wrong}</button><div class="arabic" style="font-size:.78rem;color:var(--gold-soft);margin-top:2px;">${p.wrong_tr || translitEn(p.wrong || '')}</div></div>
           <div><button class="quiz-option dbx-pick" data-ok="right" style="text-align:left;">${p.right}</button><div class="arabic" style="font-size:.78rem;color:var(--gold-soft);margin-top:2px;">${p.right_tr || translitEn(p.right || '')}</div></div>
         </div>
-        <div class="dbx-why" style="display:none; font-size:.8rem; color:var(--emerald);"></div>`);
+        <div class="dbx-why" style="display:none; font-size:.8rem; color:var(--emerald);"></div>`, p.right);
     }
     if(x.type === 'translate'){
       const p = x.payload;
@@ -13937,7 +13942,7 @@ function renderDbPractice(container, exercises){
         <div style="font-size:.98rem; margin-bottom:10px;" class="${srcIsEn ? '' : 'arabic'}">${p.source}<div class="${srcIsEn ? 'arabic' : ''}" style="font-size:.82rem; color:var(--gold-soft); margin-top:4px;">${srcIsEn ? (p.source_tr || '') : ''}</div></div>
         <input class="dbx-input" type="text" placeholder="${srcIsEn ? 'اكتب بالعربي...' : 'Type in English...'}" style="width:100%; background:var(--card); border:1px solid var(--border); border-radius:10px; padding:10px 12px; color:var(--text); font-size:.92rem; margin-bottom:10px;">
         <button class="btn-outline dbx-check"><span class="arabic">تحقق</span>، Check</button>
-        <div class="dbx-reveal" style="display:none; font-size:.82rem; color:var(--gold-soft); margin-top:8px;"></div>`);
+        <div class="dbx-reveal" style="display:none; font-size:.82rem; color:var(--gold-soft); margin-top:8px;"></div>`, p.source);
     }
     return '';
   }).join('');
@@ -13951,6 +13956,22 @@ function renderDbPractice(container, exercises){
       resultEl.textContent = ok ? '✓' : '✗';
       resultEl.style.color = ok ? 'var(--success)' : '#D25C5C';
       if(ok && window.confettiBurst) confettiBurst();
+    }
+    // Optional "say it" mic button on every exercise card (speech scoring in every stage).
+    const sayBtn = card.querySelector('.dbx-say-btn');
+    if(sayBtn){
+      sayBtn.addEventListener('click', function(){
+        if(this.classList.contains('recording')) return;
+        const fb = card.querySelector('.dbx-say-fb'); if(!fb) return;
+        fb.innerHTML = '<span class="arabic">جاري الاستماع...</span> Listening...';
+        const tgt = this.dataset.say || '';
+        recordAndScore((heard, score, err) => {
+          if(heard === null){ fb.innerHTML = '<span class="arabic">' + (micErrorMessage(err)||'') + '</span>'; return; }
+          const pf = (typeof pronFeedback === 'function') ? pronFeedback(heard, tgt) : null;
+          const tip = (pf && pf.tipAr) ? ' <span class="arabic" style="color:var(--gold);">💡 '+pf.tipAr+'</span>' : '';
+          fb.innerHTML = '🗣️ <span class="arabic">سمعت</span> "' + escapeHtml(heard) + '" (' + score + '%)' + tip;
+        }, tgt, this);
+      });
     }
     card.querySelectorAll('.dbx-token').forEach(tok => tok.addEventListener('click', () => {
       if(answerEl.dataset.done === '1') return;
