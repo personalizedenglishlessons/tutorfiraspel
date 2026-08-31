@@ -170,12 +170,16 @@ body.ui-en .t-ar{ display:none !important; }
     <!-- verified -->
     <div class="state" id="st-ok">
       <div class="verified-badge"><span class="t-ar">موثقة</span><span class="t-en">Verified</span></div>
-      <div id="okCertWrap" class="cert-preview" style="display:none;"></div>
+      <div id="okVerifyCard" class="verify-card" style="margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:12px 24px;text-align:start;"></div>
       <div id="okIdCheck" style="margin-top:14px; display:none; font-size:.76rem; line-height:1.7;"></div>
       <div class="genuine">
         <span class="t-ar" style="display:block;">هذه الشهادة اصلية وموثقة من الاكاديمية.</span>
         <span class="t-en" style="display:block;">This certificate is genuine and issued by Personalized English Lessons.</span>
       </div>
+      <button class="btn-ghost" id="okToggleCert" aria-expanded="false" style="margin-top:18px;">
+        <span class="t-ar">عرض الشهادة كاملة</span><span class="t-en">View full certificate</span>
+      </button>
+      <div id="okCertWrap" class="cert-preview" style="display:none;margin-top:14px;"></div>
     </div>
 
     <!-- not found -->
@@ -304,8 +308,23 @@ async function lookup(code){
     }
     const row = data[0];
     const wrap = document.getElementById('okCertWrap');
-    wrap.style.display = 'block';
     PEL_CERT_INJECT_STYLE();
+    // Verification card leads: the key facts front-and-center, so a QR
+    // scanner sees a clear "genuine" card instead of a full certificate
+    // reproduction. The full certificate is rendered below, collapsed.
+    const eV = function(s){ return String(s==null?'':s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); };
+    const fmtIssue = function(d){ if(!d) return ''; try{ var x=new Date(d); if(isNaN(x)) return String(d); return x.toLocaleDateString('en-US',{day:'numeric',month:'long',year:'numeric'}); }catch(e){ return String(d); } };
+    const fact = function(label, val){ return val ? '<div><div style="font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-soft);">'+label+'</div><div style="font-size:1rem;font-weight:600;margin-top:3px;">'+eV(val)+'</div></div>' : ''; };
+    const vCard = document.getElementById('okVerifyCard');
+    if(vCard){
+      vCard.innerHTML =
+        fact('Student', row.student_name) +
+        fact('Academy', row.academy_en + (row.academy_ar ? ' · ' + row.academy_ar : '')) +
+        fact('Level', row.level || '') +
+        fact('Issued', fmtIssue(row.issue_date || row.completed_at)) +
+        fact('Certificate ID', row.cert_id) +
+        fact('Code', clean);
+    }
     wrap.innerHTML = PEL_CERT_SHEET({
       name: row.student_name,
       academyEn: row.academy_en,
@@ -318,15 +337,10 @@ async function lookup(code){
       code: clean,
       verifyUrl: 'https://personalizedenglishlessons.github.io/tutorfiraspel/verify.html?code=' + encodeURIComponent(clean)
     });
-    PEL_CERT_FIT(wrap);
-    const sheet = wrap.querySelector('.cert-sheet');
-    if(sheet){
-      const maxW = wrap.clientWidth - 2;
-      const scale = Math.min(1, maxW / (sheet.offsetWidth || maxW));
-      sheet.style.transformOrigin = 'top center';
-      sheet.style.transform = 'scale(' + scale + ')';
-      sheet.style.marginBottom = (-(sheet.offsetHeight * (1 - scale))) + 'px';
-    }
+    // Full certificate stays collapsed until the learner taps "View full
+    // certificate"; we (re)fit it then so the scale is correct.
+    const toggle = document.getElementById('okToggleCert');
+    if(toggle){ toggle.onclick = function(){ var open = wrap.style.display === 'block'; wrap.style.display = open ? 'none' : 'block'; toggle.setAttribute('aria-expanded', String(!open)); if(!open){ PEL_CERT_FIT(wrap); } }; }
     const idCheck = document.getElementById('okIdCheck');
     if(validCertNumber(row.cert_id)){
       idCheck.style.display = 'block';
