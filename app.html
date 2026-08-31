@@ -14036,6 +14036,47 @@ function micErrorMessage(code){
    wordMatchScore / pronFeedback engine. Keeps the app's "no opaque
    external calls from the page" guarantee: the only hop is your own
    Supabase function, and it only runs when the browser can't do it. ---- */
+/* ---- keyless in-browser speech engine (NO API key, NO limits). ----
+   Used on browsers without SpeechRecognition (iOS Safari). Loads
+   transformers.js + the whisper-base.en model lazily on first use, then
+   runs transcription fully on-device. It is heavy on first run (the model
+   downloads once and is cached) and may not work on every iPhone; any
+   failure throws and the caller falls back to typed input. Nothing leaves
+   the device, so the app keeps its no-opaque-external-calls guarantee. */
+let pelWhisperPipe = null, pelWhisperLoading = null;
+async function pelWhisperEnsure(onProgress){
+  if(pelWhisperPipe) return pelWhisperPipe;
+  if(pelWhisperLoading) return pelWhisperLoading;
+  pelWhisperLoading = (async () => {
+    const mod = await import('https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.0.0/dist/transformers.min.js');
+    const { pipeline } = mod;
+    pelWhisperPipe = await pipeline('automatic-speech-recognition', 'onnx-community/whisper-base.en', { language:'en', task:'transcribe' });
+    return pelWhisperPipe;
+  })();
+  return pelWhisperLoading;
+}
+async function pelWhisperTranscribe(blob){
+  const asr = await pelWhisperEnsure();
+  const arrBuf = await blob.arrayBuffer();
+  const Ctx = window.AudioContext || window.webkitAudioContext;
+  const ctx = new Ctx();
+  let decoded;
+  try{ decoded = await ctx.decodeAudioData(arrBuf.slice(0)); }
+  finally{ try{ ctx.close(); }catch(e){} }
+  const pcm = decoded.getChannelData(0);
+  let input;
+  if(decoded.sampleRate === 16000){ input = Float32Array.from(pcm); }
+  else{
+    const ratio = 16000 / decoded.sampleRate;
+    const n = Math.max(1, Math.floor(pcm.length * ratio));
+    input = new Float32Array(n);
+    for(let i=0;i<n;i++){ input[i] = pcm[Math.floor(i/ratio)] || 0; }
+  }
+  const out = await asr(input);
+  const text = (out && out.text) ? String(out.text).trim() : '';
+  if(!text) throw new Error('empty whisper transcription');
+  return text;
+}
 const PEL_TRANSCRIBE_URL = 'https://lewoochehpiycocvfwtz.supabase.co/functions/v1/transcribe';
 async function pelTranscribeAudio(blob){
   // Attach the student's JWT so the edge function can verify it (JWT verify
@@ -14083,20 +14124,28 @@ function recordAndScore(onDone, targetText, btn, _retryCount){
     }
     const secs = targetText ? Math.max(4, Math.min(9, targetText.split(' ').length + 2)) : 5;
     if(btn) btn.classList.add('recording');
+    if(!pelWhisperPipe && typeof toast === 'function'){
+      toast('<span class="arabic">جاري تجهيز محرك الصوت اول مرة...</span>، Loading speech engine (first time only)...');
+    }
     pelRecordAudio(secs).then(async blob => {
       if(!blob){ if(btn) btn.classList.remove('recording'); onDone(null, null, 'no-speech'); return; }
       try{
-        const heard = await pelTranscribeAudio(blob);
+        // Keyless first: on-device Whisper (no API key, no limits). If it
+        // can't load/run, fall back to the Supabase transcription function
+        // (only works if a key was ever configured), else fail clearly.
+        let heard = null;
+        try{ heard = await pelWhisperTranscribe(blob); }
+        catch(we){ heard = await pelTranscribeAudio(blob); }
         if(btn) btn.classList.remove('recording');
         if(!heard){ onDone(null, null, 'no-speech'); return; }
         const sc = targetText ? wordMatchScore(heard, targetText) : null;
         onDone(heard, sc);
       }catch(e){
         if(btn) btn.classList.remove('recording');
-        // transcription_not_configured / network: tell the user clearly so it
-        // doesn't look like a generic "connection not reachable" mystery.
-        const msg = /transcription_not_configured|not configured/i.test(String(e))
-          ? L('Transcription backend not configured yet.','خدمة التفريغ الصوتي غير مهيأة بعد.')
+        // Whisper unavailable AND backend not configured: point the learner to
+        // the typed input so the mic never looks silently broken.
+        const msg = /transcription_not_configured|not configured|empty whisper/i.test(String(e))
+          ? L('Speech engine unavailable — type your answer below.','محرك الصوت غير متاح — اكتب اجابتك بالاسفل.')
           : micErrorMessage('network');
         toast('<span class="arabic">'+msg+'</span>');
         onDone(null, null, 'network');
