@@ -1,0 +1,50 @@
+PEL lesson content audit — 2026-08-31T01:33:29.462Z
+Source: app.html (22482 lines)
+Total findings: 121
+
+## leak (120)
+  L14246: example: span,
+  L10411: {q:'"For here or to go?" وش تسال عنه؟، "For here or to go?" is asking about...', options:['Payment method','Where you will drink it','The si
+  L10650: {q:'"Usually" وين نضعه؟، Where does "usually" go?', options:['Before the main verb','At the end always','After the object'], correct:0},
+  L10686: {q:'"Long time no see" معناها:، "Long time no see" means:', options:['We have not seen each other in a while','I cannot see well','See you n
+  L10723: {q:'"Would you mind..." بعدها شنو؟، "Would you mind" is followed by:', options:['The -ing form','The infinitive with to','The past tense'], 
+  L10777: {q:'"Turn right" معناها:، "Turn right" means:', options:['لف يمين','لف يسار','امشي مستقيم'], correct:0},
+  L10795: {q:'"How much" نستخدمها مع:، "How much" is used with:', options:['Money and uncountable nouns','Countable objects only','People'], correct:0
+  L10813: {q:'"Carry-on" شنو؟، A carry-on is...', ar:'', options:['Hand luggage you take on the plane','Checked luggage','A passport holder'], correct
+  L10830: {q:'"Please take out your laptop" معناها:، "Please take out your laptop" means:', options:['اخرج اللابتوب من الشنطة','اشحن اللابتوب','اقفل ا
+  L10849: {q:'"Connection" بالمطار تعني:، "Connection" at the airport means:', options:['رحلة ربط','بوابة','مطار'], correct:0},
+  L10867: {q:'"Complimentary breakfast" معناها:، "Complimentary breakfast" means:', options:['فطور مجاني','فطور مدفوع','فطور متاخر'], correct:0},
+  L10940: {q:'"A side salad" تعني:، "A side salad" means:', options:['سلطة جانبية','سلطة كبيرة','سلطة فواكه'], correct:0},
+  L10994: {q:'"Hot or iced?" معناها:، "Hot or iced?" asks about:', options:['Temperature','Size','Milk type'], correct:0},
+  L11012: {q:'"Extra shot" معناها:، "Extra shot" means:', options:['شوت قهوة زيادة','اكثر حليب','اقل سكر'], correct:0},
+  L11030: {q:'"Urgent" معناها:، "Urgent" means:', options:['عاجل','عادي','متاخر'], correct:0},
+  L11048: {q:'"Shortness of breath" معناها:، "Shortness of breath" means:', options:['ضيق تنفس','صداع','حرارة'], correct:0},
+  L11084: {q:'"Fainted" معناها:، "Fainted" means:', options:['غاب عن الوعي','نام','تعب'], correct:0},
+  L11120: {q:'"On sale" معناها:، "On sale" means:', options:['عليه خصم','مستعمل','جديد'], correct:0},
+  L11138: {q:'"Exchange" هنا معناها:، "Exchange" here means:', options:['استبدال','خصم','شحن'], correct:0},
+  L11174: {q:'"Regular" بالبنزين معناها:، "Regular" at the pump means:', options:['بنزين عادي','سوبر','ديزل'], correct:0},
+  L11192: {q:'"Stay in the left lane" معناها:، "Stay in the left lane" means:', options:['كن بالمسار الايسر','انعطف يسار','توقف يسار'], correct:0},
+  L11228: {q:'"Keep pressure on the wound" معناها:، It means:', options:['خلك ضاغط على الجرح','سخن الجرح','نظف الجرح'], correct:0},
+  L11247: {q:'"First item on the agenda" معناها:، It means:', options:['اول بند بالجدول','اخر بند','اجتماع ملغي'], correct:0},
+  L11265: {q:'"Minutes" بالاجتماع تعني:، "The minutes" of a meeting means:', options:['المحضر المكتوب','الدقايق الزمنية','الحضور'], correct:0},
+  L11319: {q:'"They look off" معناها:، "They look off" means:', options:['شكلها غلط','شكلها تمام','شكلها جديدة'], correct:0},
+  L11337: {q:'"Solid" بالتقييم معناها:، "Solid" in feedback means:', options:['قوي وممتاز','ضعيف','قديم'], correct:0},
+  L11355: {q:'"Currently" معناها:، "Currently" means:', options:['حاليًا','سابقًا','قريبًا'], correct:0},
+  L11373: {q:'"Public speaking" معناها:، "Public speaking" means:', options:['الكلام امام الجمهور','الكتابة','الاستماع'], correct:0},
+  L11463: {q:'"Word family" تعني:، A word family means:', options:['الكلمة وتصريفاتها','اهل الكلمة','مرادفات فقط'], correct:0},
+  L11535: {q:'"Gonna" هي اختصار:، "Gonna" is short for:', options:['going to','got to','want to'], correct:0},
+  L11536: {q:'"Wanna" معناها:، "Wanna" means:', options:['want to','will not','went to'], correct:0},
+  L11554: {q:'"Boarding now" معناها:، "Boarding now" means:', options:['الصعود بدا الحين','تاخر الرحلة','تم الالغا'], correct:0},
+  L11590: {q:'"By Friday" معناها:، "By Friday" means:', options:['قبل الجمعة','يوم الجمعة بعد الدوام','اي يوم'], correct:0},
+  L11607: {q:'"Out of order" معناها:، "Out of order" means:', options:['عطلان','مفتوح','جديد'], correct:0},
+  L11608: {q:'"Employees only" معناها:، "Employees only" means:', options:['للموظفين فقط','للجميع','مغلق'], correct:0},
+  L11626: {q:'"Thanks in advance" معناها:، "Thanks in advance" means:', options:['شكرًا مقدمًا','شكرًا لاحقًا','لا شكر على واجب'], correct:0},
+  L11644: {q:'"The usual place" معناها:، "The usual place" means:', options:['المكان المعتاد','مكان جديد','اي مكان'], correct:0},
+  L11661: {q:'"Awesome" معناها:، "Awesome" means:', options:['خرافي وممتاز','سي','ممل'], correct:0},
+  L11679: {q:'"Break the ice" معناها:، "Break the ice" means:', options:['يكسر الجمود','يكسر الجليد حرفيًا','يبرد المكان'], correct:0},
+  L11680: {q:'"A piece of cake" تعني:، "A piece of cake" means:', options:['شي سهل','شي لذيذ','شي حلو'], correct:0},
+  ... +80 more
+
+## generic-fallback (1)
+  L13809: return { ...genericLesson(bankItem, academy), flagship:false };
+
