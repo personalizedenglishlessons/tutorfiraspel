@@ -17072,13 +17072,22 @@ function renderSpeaking(){
       <div id="roleplayMicHint" style="margin-top:6px; font-size:.74rem; color:var(--text-muted);"></div>
       <div id="roleplayFeedback" style="margin-top:14px;"></div>`;
     const chat = document.getElementById('roleplayChat');
-    function addBubble(who, en, ar, translit, leadAr){
+    function addBubble(who, en, ar, translit, leadAr, raw){
       const div = document.createElement('div');
       div.className = 'chat-bubble ' + (who==='them' ? 'them' : 'me');
-      if(leadAr && ar){
-        div.innerHTML = `${ar}${en?`<div style="margin-top:6px; font-size:.8rem; opacity:.85;">${en}</div>`:''}${translit?`<div class="arabic" style="font-size:.7rem; opacity:.6;">${translit}</div>`:''}`;
+      // Single escape boundary: every bubble text is escaped here unless the
+      // caller passes raw:true (only the typing-dots indicator uses that).
+      // This prevents <span / :span / markup leaks from smart replies,
+      // persona openers, transliterations or dictionary lookups ever reaching
+      // the chat as garbled visible text.
+      const esc = (s) => raw ? String(s==null?'':s) : escapeHtml(String(s==null?'':s));
+      const E = esc(en);
+      const A = ar ? esc(ar) : '';
+      const T = translit ? esc(translit) : '';
+      if(leadAr && A){
+        div.innerHTML = `${A}${E?`<div style="margin-top:6px; font-size:.8rem; opacity:.85;">${E}</div>`:''}${T?`<div class="arabic" style="font-size:.7rem; opacity:.6;">${T}</div>`:''}`;
       }else{
-        div.innerHTML = `${en}${ar?`<div class="arabic" style="margin-top:6px; font-size:.8rem; opacity:.85;">${ar}</div>`:''}${translit?`<div class="arabic" style="font-size:.7rem; opacity:.6;">${translit}</div>`:''}`;
+        div.innerHTML = `${E}${A?`<div class="arabic" style="margin-top:6px; font-size:.8rem; opacity:.85;">${A}</div>`:''}${T?`<div class="arabic" style="font-size:.7rem; opacity:.6;">${T}</div>`:''}`;
       }
       chat.appendChild(div); chat.scrollTop = chat.scrollHeight;
       return div;
@@ -17102,7 +17111,7 @@ function renderSpeaking(){
     async function respondToStudent(userText){
       const myTurn = ++rpTurn;
       const fb = document.getElementById('roleplayFeedback');
-      const thinking = addBubble('them', '<span class="typing-dots">•••</span>', '', '');
+      const thinking = addBubble('them', '<span class="typing-dots">•••</span>', '', '', false, true);
       const reply = await smartReply(userText, persona, rpState);
       if(myTurn !== rpTurn){ thinking.remove(); return; } // a newer message superseded this one
       // Conversational fit: catch replies that are grammatically fine but
@@ -17148,20 +17157,20 @@ function renderSpeaking(){
       });
       fb.innerHTML = `<div class="card-elevated" style="padding:14px 16px; border-radius:12px;">${lines.join('')}</div>`;
       thinking.remove();
-      addBubble('them', escapeHtml(reply.en), escapeHtml(reply.ar), escapeHtml(translitEn(reply.en)), reply.leadAr);
+      addBubble('them', reply.en, reply.ar, translitEn(reply.en), reply.leadAr);
       lastBotLine = reply.en;
       speak(reply.leadAr ? reply.ar : reply.en);
     }
     document.getElementById('roleplaySend').addEventListener('click', () => {
       const val = document.getElementById('roleplayTypedInput').value.trim();
       if(!val) return;
-      addBubble('me', escapeHtml(val));
+      addBubble('me', val);
       document.getElementById('roleplayTypedInput').value = '';
       respondToStudent(val);
     });
     document.getElementById('roleplayMic').addEventListener('click', function(){
       recordAndScore((heard, score, errorCode) => {
-        if(heard){ addBubble('me', escapeHtml(heard)); respondToStudent(heard); }
+        if(heard){ addBubble('me', heard); respondToStudent(heard); }
         else{ toast(`<span class="arabic">${micErrorMessage(errorCode)}</span>`); }
       }, null, this);
     });
