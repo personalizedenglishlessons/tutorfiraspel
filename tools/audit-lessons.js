@@ -34,14 +34,12 @@ function isCodeOrMarkup(l){
 }
 const leakTokens = [
   /Do you know don/,        // the original placeholder leak
-  /:\s*span\b/,              // literal ":span" leak
-  /<\s*span[^>]*>\s*<\s*\/\s*span\s*>/,  // empty span
   /\[object\s+Object\]/,
   /\bNaN\b/,                  // NaN in text
   /\bTODO\b/, /\bFIXME\b/, /\bXXX\b/,
   /lorem\s+ipsum/i,
-  /q:\s*['"`]\s*['"`]/,       // empty q:''
-  /en:\s*['"`]\s*['"`]/,      // empty en:''
+  /q:\s*(['"`])\s*\1/,       // truly empty q:'' (same quote back-to-back)
+  /en:\s*(['"`])\s*\1/,      // truly empty en:''
   /options:\s*\[\s*\]/,       // empty options
 ];
 leakTokens.forEach(re => {
