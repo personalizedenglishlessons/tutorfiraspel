@@ -21691,6 +21691,44 @@ body.pel-lesson-mode .sidebar,body.pel-lesson-mode .topbar,body.pel-lesson-mode 
     }
     ctx.self.ready(ctx, L('I said it','نطقتها'), ()=>ctx.self.mark(ctx,true));
   }
+  /* attachSay — optional "say it" mic on any stage card. Appends a mic
+     button + score feedback, reusing the app-wide recordAndScore +
+     pronFeedback engine. Additive: it never gates the stage's own Check
+     logic, so speech is practice-with-a-score, not a pass/fail gate —
+     same pattern as the dbx-say-btn on DB-practice cards. No-op when the
+     browser has no speech recognition, so stages stay usable everywhere. */
+  function attachSay(inner, targetText){
+    if(!targetText || !canRecognize()) return;
+    const row = document.createElement('div');
+    row.className = 'pel-mic-row pel-attach-say';
+    row.style.cssText = 'margin-top:14px; padding-top:12px; border-top:1px dashed var(--border); display:flex; align-items:center; gap:10px; flex-wrap:wrap;';
+    row.innerHTML = `<button class="pel-act-play pel-mic-btn pel-say-btn" type="button" style="background:rgba(210,92,92,.16); border-color:rgba(210,92,92,.4); color:var(--danger);"><i data-lucide="mic" width="16" height="16"></i> ${L('Say it','انطقها')}</button>
+      <span class="pel-say-fb" style="font-size:.8rem; color:var(--gold-soft); flex:1; min-width:120px;"></span>`;
+    inner.appendChild(row);
+    const btn = row.querySelector('.pel-say-btn');
+    const fb = row.querySelector('.pel-say-fb');
+    btn.onclick = function(){
+      if(this.classList.contains('recording')) return;
+      this.classList.add('recording');
+      fb.innerHTML = '<span class="arabic">جاري الاستماع...</span> '+L('Listening...','استمع...');
+      const self = this;
+      recordAndScore((heard, score, err) => {
+        self.classList.remove('recording');
+        if(heard === null || err){
+          fb.innerHTML = '<span class="arabic">'+(typeof micErrorMessage==='function'?esc(micErrorMessage(err)):L('Mic error','خطأ بالمايك'))+'</span>';
+          return;
+        }
+        const pf = (typeof pronFeedback==='function') ? pronFeedback(heard, targetText) : {score};
+        const sc = (pf.score != null ? pf.score : score);
+        const ok = sc != null && sc >= 60;
+        const tip = ar() ? pf.tipAr : pf.tipEn;
+        fb.innerHTML = '<b style="color:'+(ok?'var(--success)':'var(--gold)')+';">'+(sc!=null?sc:'—')+'% '+(ok?'✓':'×')+'</b>'
+          + (heard?' <span class="pel-act-hint">'+L('Heard','سمعت')+': '+esc(heard)+'</span>':'')
+          + (tip?' <span class="pel-act-hint arabic">'+esc(tip)+'</span>':'');
+      }, targetText, btn);
+    };
+    if(window.lucide) lucide.createIcons();
+  }
   const RENDERERS = {
     learn(inner, act, ctx){
       const it=act.item;
@@ -21707,6 +21745,7 @@ body.pel-lesson-mode .sidebar,body.pel-lesson-mode .topbar,body.pel-lesson-mode 
         ${usageHtml(it.usage)}
         <button class="pel-act-play" id="pelLearnPlay"><i data-lucide="volume-2" width="16" height="16"></i> ${L('Hear it','اسمعها')}</button>`;
       $('#pelLearnPlay').onclick = ()=>play(it.en,'en-US');
+      attachSay(inner, it.en);
       ctx.self.ready(ctx, L('Got it','فهمت'), ()=>ctx.self.next());
     },
     learn_sentence(inner, act, ctx){
@@ -21717,6 +21756,7 @@ body.pel-lesson-mode .sidebar,body.pel-lesson-mode .topbar,body.pel-lesson-mode 
         <div class="pel-act-ar arabic">${esc(s.ar)}</div>
         <button class="pel-act-play" id="pelSenPlay"><i data-lucide="volume-2" width="16" height="16"></i> ${L('Hear it','اسمعها')}</button>`;
       $('#pelSenPlay').onclick = ()=>play(s.en,'en-US');
+      attachSay(inner, s.en);
       ctx.self.ready(ctx, L('Continue','متابعة'), ()=>ctx.self.next());
     },
     recognize(inner, act, ctx){
@@ -21737,6 +21777,7 @@ body.pel-lesson-mode .sidebar,body.pel-lesson-mode .topbar,body.pel-lesson-mode 
         ctx.btn.disabled=false;
       });
       ctx.btn.disabled=true;
+      attachSay(inner, it.en);
       ctx.self.ready(ctx, L('Check','تحقق'), ()=>{
         const correct = opts[sel] && opts[sel].en===it.en;
         btns.forEach((b,i)=>{ b.classList.remove('selected'); if(opts[i].en===it.en) b.classList.add('correct'); else if(i===sel) b.classList.add('wrong'); });
@@ -21777,6 +21818,7 @@ body.pel-lesson-mode .sidebar,body.pel-lesson-mode .topbar,body.pel-lesson-mode 
       };
       const addTokenBack=(tok)=>{ const i=tokens.indexOf(tok); const btn=document.createElement('button'); btn.className='pel-token'; btn.dataset.i=i; btn.textContent=tok; btn.onclick=()=>{ if(btn.disabled)return; btn.remove(); placed.push(tok); renderDrop(); }; tk.appendChild(btn); };
       tk.querySelectorAll('.pel-token').forEach(b=>b.onclick=()=>{ b.remove(); placed.push(tokens[+b.dataset.i]); renderDrop(); });
+      attachSay(inner, s.en);
       ctx.self.ready(ctx, L('Check','تحقق'), ()=>{
         const built = placed.join(' ').toLowerCase().replace(/\s+/g,' ').trim();
         const target = s.en.replace(/[.?!]/g,'').toLowerCase().replace(/\s+/g,' ').trim();
@@ -21795,6 +21837,7 @@ body.pel-lesson-mode .sidebar,body.pel-lesson-mode .topbar,body.pel-lesson-mode 
         <div class="pel-options" style="margin-top:18px;">${distractors.map((o,i)=>`<button class="pel-option" data-i="${i}"><span class="o-en">${esc(o)}</span></button>`).join('')}</div>`;
       const btns=inner.querySelectorAll('.pel-option'); const slot=$('#pelFillSlot'); let sel=null;
       btns.forEach(b=>b.onclick=()=>{ btns.forEach(x=>x.classList.remove('selected')); b.classList.add('selected'); sel=b.textContent.trim(); slot.textContent=sel; });
+      attachSay(inner, target);
       ctx.self.ready(ctx, L('Check','تحقق'), ()=>{ btns.forEach((b,i)=>{ if(b.textContent.trim()===target) b.classList.add('correct'); else if(b.textContent.trim()===sel) b.classList.add('wrong'); }); ctx.self.mark(ctx, norm(sel)===norm(target)); });
     },
     spell(inner, act, ctx){
@@ -21805,6 +21848,7 @@ body.pel-lesson-mode .sidebar,body.pel-lesson-mode .topbar,body.pel-lesson-mode 
         <input class="pel-input" id="pelSpellIn" style="margin-top:16px;" placeholder="${L('Type the word...','اكتب الكلمة...')}" autocomplete="off" autocapitalize="off" />`;
       const inp=$('#pelSpellIn'); setTimeout(()=>inp.focus(),50);
       inp.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); ctx.btn.click(); } });
+      attachSay(inner, it.en);
       ctx.self.ready(ctx, L('Check','تحقق'), ()=>ctx.self.mark(ctx, norm(inp.value)===norm(it.en)));
     },
     translate(inner, act, ctx){
@@ -21814,6 +21858,7 @@ body.pel-lesson-mode .sidebar,body.pel-lesson-mode .topbar,body.pel-lesson-mode 
         <input class="pel-input" id="pelTrIn" style="margin-top:16px;" placeholder="${L('Type in English...','اكتب بالانجليزي...')}" autocomplete="off" autocapitalize="off" />`;
       const inp=$('#pelTrIn'); setTimeout(()=>inp.focus(),50);
       inp.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); ctx.btn.click(); } });
+      attachSay(inner, it.en);
       ctx.self.ready(ctx, L('Check','تحقق'), ()=>ctx.self.mark(ctx, norm(inp.value)===norm(it.en)));
     },
     listen(inner, act, ctx){
@@ -21823,6 +21868,7 @@ body.pel-lesson-mode .sidebar,body.pel-lesson-mode .topbar,body.pel-lesson-mode 
         <button class="pel-act-play" id="pelLsnPlay" style="font-size:1.1rem;padding:16px 26px;"><i data-lucide="volume-2" width="20" height="20"></i> ${L('Play','تشغيل')}</button>
         <div class="pel-act-hint">${L('Tap play and listen. You will identify it next.','اضغط تشغيل واصغي. بتحددها بعد.')}</div>`;
       $('#pelLsnPlay').onclick=()=>play(audioText,'en-US');
+      attachSay(inner, audioText);
       ctx.self.ready(ctx, L('Continue','متابعة'), ()=>ctx.self.next());
     },
     identify_heard(inner, act, ctx){
@@ -21840,6 +21886,7 @@ body.pel-lesson-mode .sidebar,body.pel-lesson-mode .topbar,body.pel-lesson-mode 
       $('#pelIdPlay').onclick=()=>play(audioText,'en-US');
       const btns=inner.querySelectorAll('.pel-option');
       btns.forEach(b=>b.onclick=()=>{ btns.forEach(x=>x.classList.remove('selected')); b.classList.add('selected'); sel=+b.dataset.i; });
+      attachSay(inner, audioText);
       ctx.btn.disabled=true;
       ctx.self.ready(ctx, L('Check','تحقق'), ()=>{ const correct=opts[sel]&&opts[sel].en===it.en; btns.forEach((b,i)=>{ if(opts[i].en===it.en)b.classList.add('correct'); else if(i===sel)b.classList.add('wrong'); }); ctx.self.mark(ctx,correct); });
     },
@@ -21873,6 +21920,7 @@ body.pel-lesson-mode .sidebar,body.pel-lesson-mode .topbar,body.pel-lesson-mode 
       const btns=inner.querySelectorAll('.pel-option');
       btns.forEach(b=>b.onclick=()=>{ btns.forEach(x=>x.classList.remove('selected')); b.classList.add('selected'); sel=b.textContent.trim(); });
       ctx.btn.disabled=true;
+      attachSay(inner, reply.en);
       ctx.self.ready(ctx, L('Check','تحقق'), ()=>{ const correct=norm(sel)===norm(reply.en); btns.forEach(b=>{ if(norm(b.textContent)===norm(reply.en))b.classList.add('correct'); else if(norm(b.textContent)===norm(sel))b.classList.add('wrong'); }); ctx.self.mark(ctx,correct); });
     },
     complete_dialogue(inner, act, ctx){
@@ -21885,6 +21933,7 @@ body.pel-lesson-mode .sidebar,body.pel-lesson-mode .topbar,body.pel-lesson-mode 
       const btns=inner.querySelectorAll('.pel-option');
       btns.forEach(b=>b.onclick=()=>{ btns.forEach(x=>x.classList.remove('selected')); b.classList.add('selected'); sel=b.textContent.trim(); });
       ctx.btn.disabled=true;
+      attachSay(inner, target && target.en);
       ctx.self.ready(ctx, L('Check','تحقق'), ()=>{ const correct=norm(sel)===norm(target.en); btns.forEach(b=>{ if(norm(b.textContent)===norm(target.en))b.classList.add('correct'); else if(norm(b.textContent)===norm(sel))b.classList.add('wrong'); }); ctx.self.mark(ctx,correct); });
     },
     grammar_correction(inner, act, ctx){
@@ -21896,6 +21945,7 @@ body.pel-lesson-mode .sidebar,body.pel-lesson-mode .topbar,body.pel-lesson-mode 
         <div class="pel-act-hint arabic">${esc(correct.ar)}</div>`;
       const inp=$('#pelGrIn'); setTimeout(()=>inp.focus(),50);
       inp.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); ctx.btn.click(); } });
+      attachSay(inner, correct.en);
       ctx.self.ready(ctx, L('Check','تحقق'), ()=>ctx.self.mark(ctx, norm(inp.value)===norm(correct.en)));
     },
     choose_natural_expression(inner, act, ctx){
@@ -21907,6 +21957,7 @@ body.pel-lesson-mode .sidebar,body.pel-lesson-mode .topbar,body.pel-lesson-mode 
       const btns=inner.querySelectorAll('.pel-option');
       btns.forEach(b=>b.onclick=()=>{ btns.forEach(x=>x.classList.remove('selected')); b.classList.add('selected'); sel=+b.dataset.i; });
       ctx.btn.disabled=true;
+      attachSay(inner, opts && opts[correctIdx]);
       ctx.self.ready(ctx, L('Check','تحقق'), ()=>{ const correct=sel===correctIdx; btns.forEach((b,i)=>{ if(i===correctIdx)b.classList.add('correct'); else if(i===sel)b.classList.add('wrong'); }); ctx.self.mark(ctx,correct); });
     },
     free_response(inner, act, ctx){
@@ -21916,6 +21967,7 @@ body.pel-lesson-mode .sidebar,body.pel-lesson-mode .topbar,body.pel-lesson-mode 
         <div class="pel-act-ar arabic">${esc(it.example.ar)}</div>
         <textarea class="pel-input" id="pelFrIn" style="margin-top:16px;min-height:90px;" placeholder="${L('Write in English...','اكتب بالانجليزي...')}"></textarea>`;
       const inp=$('#pelFrIn'); setTimeout(()=>inp.focus(),50);
+      attachSay(inner, it.example && it.example.en);
       ctx.self.ready(ctx, L('Done','تم'), ()=>ctx.self.mark(ctx, inp.value.trim().length>2));
     },
     review(inner, act, ctx){
@@ -21933,6 +21985,7 @@ body.pel-lesson-mode .sidebar,body.pel-lesson-mode .topbar,body.pel-lesson-mode 
       const btns=inner.querySelectorAll('.pel-option');
       btns.forEach(b=>b.onclick=()=>{ btns.forEach(x=>x.classList.remove('selected')); b.classList.add('selected'); sel=+b.dataset.i; });
       ctx.btn.disabled=true;
+      attachSay(inner, it.en);
       ctx.self.ready(ctx, L('Check','تحقق'), ()=>{ const correct=opts[sel]&&opts[sel].en===it.en; btns.forEach((b,i)=>{ if(opts[i].en===it.en)b.classList.add('correct'); else if(i===sel)b.classList.add('wrong'); }); ctx.self.mark(ctx,correct); });
     },
   };
