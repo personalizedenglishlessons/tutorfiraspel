@@ -21107,6 +21107,53 @@ body.pel-lesson-mode .sidebar,body.pel-lesson-mode .topbar,body.pel-lesson-mode 
   };
 
   /* ---- 6. ACTIVITY RENDERERS ---- */
+  // Shared card for the speaking/pronunciation activities: it reuses the
+  // app-wide mic engine (recordAndScore + pronFeedback) so the student gets
+  // a real pronunciation score + a minimal-pair tip inside a lesson, not
+  // just a self-mark button. On browsers without SpeechRecognition (e.g. iOS
+  // Safari) it gracefully falls back to the self-mark with a clear note.
+  function micSpeakingCard(inner, ctx, o){
+    const supported = canRecognize();
+    inner.innerHTML = `<div class="pel-act-prompt">${o.prompt}</div>
+      <div class="pel-act-en">${esc(o.en)}</div>
+      ${o.translit?`<div class="pel-act-translit">${esc(o.translit)}</div>`:''}
+      ${o.ar?`<div class="pel-act-ar arabic">${esc(o.ar)}</div>`:''}
+      <div class="pel-mic-row" style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="pel-act-play" id="pelMcPlay"><i data-lucide="volume-2" width="16" height="16"></i> ${L('Hear it','اسمعها')}</button>
+        <button class="pel-act-play pel-mic-btn" id="pelMcMic" style="background:rgba(210,92,92,.16); border-color:rgba(210,92,92,.4); color:var(--danger);"><i data-lucide="mic" width="16" height="16"></i> ${L('Speak','تحدث')}</button>
+      </div>
+      <div class="pel-mic-feedback" id="pelMcFb" style="margin-top:14px;"></div>`;
+    const fb = $('#pelMcFb');
+    $('#pelMcPlay').onclick=()=>play(o.playText||o.en,'en-US');
+    const micBtn = $('#pelMcMic');
+    if(!supported){
+      micBtn.style.display='none';
+      fb.innerHTML = `<div class="pel-act-hint">${L('Mic not supported on this browser. Say it aloud, then mark yourself.','المايك غير مدعوم في هذا المتصفح. نطقها بصوت عالي ثم قيّم نفسك.')}</div>`;
+    } else if(micBtn){
+      micBtn.onclick = ()=>{
+        if(typeof recordAndScore !== 'function'){ ctx.self.ready(ctx, L('I said it','نطقتها'), ()=>ctx.self.mark(ctx,true)); return; }
+        micBtn.classList.add('recording');
+        fb.innerHTML = `<div class="pel-act-hint">${L('Listening...','استمع...')}</div>`;
+        recordAndScore((heard, score, err)=>{
+          micBtn.classList.remove('recording');
+          if(err){
+            fb.innerHTML = `<div class="pel-act-hint" style="color:var(--danger);">${typeof micErrorMessage==='function'?esc(micErrorMessage(err)):L('Mic error','خطأ بالمايك')}</div>`;
+            ctx.self.ready(ctx, L('Try again','حاول ثانية'), ()=>ctx.self.render());
+            return;
+          }
+          const pf = (typeof pronFeedback==='function') ? pronFeedback(heard, o.target) : {score};
+          const sc = (pf.score != null ? pf.score : score);
+          const ok = sc != null && sc >= 60;
+          const tip = ar() ? pf.tipAr : pf.tipEn;
+          fb.innerHTML = `<div style="font-size:1.25rem; font-weight:700; color:${ok?'var(--success)':'var(--gold)'};">${sc!=null?sc:'—'}% ${ok?'✓':'×'}</div>`
+            + (heard?`<div class="pel-act-hint">${L('Heard','سمعت')}: ${esc(heard)}</div>`:'')
+            + (tip?`<div class="pel-act-hint arabic">${esc(tip)}</div>`:'');
+          ctx.self.mark(ctx, ok);
+        }, o.target, micBtn);
+      };
+    }
+    ctx.self.ready(ctx, L('I said it','نطقتها'), ()=>ctx.self.mark(ctx,true));
+  }
   const RENDERERS = {
     learn(inner, act, ctx){
       const it=act.item;
@@ -21256,24 +21303,19 @@ body.pel-lesson-mode .sidebar,body.pel-lesson-mode .topbar,body.pel-lesson-mode 
     },
     pronunciation(inner, act, ctx){
       const it=act.item;
-      inner.innerHTML = `<div class="pel-act-prompt">${L('Repeat aloud','كرر بصوت عالي')}</div>
-        <div class="pel-act-en">${esc(it.en)}</div>
-        <div class="pel-act-translit">${esc(it.translit)}</div>
-        <div class="pel-act-ar arabic">${esc(it.ar)}</div>
-        <button class="pel-act-play" id="pelProPlay"><i data-lucide="volume-2" width="16" height="16"></i> ${L('Hear it','اسمعها')}</button>
-        <div class="pel-act-hint">${L('Say it out loud, then mark yourself.','نطقها بصوت عالي، بعدها قيّم نفسك.')}</div>`;
-      $('#pelProPlay').onclick=()=>play(it.en,'en-US');
-      ctx.self.ready(ctx, L('I said it','نطقتها'), ()=>ctx.self.mark(ctx,true));
+      micSpeakingCard(inner, ctx, {
+        prompt: L('Repeat aloud','كرر بصوت عالي'),
+        en: it.en, translit: it.translit, ar: it.ar,
+        target: it.en, playText: it.en
+      });
     },
     speaking(inner, act, ctx){
       const s=act.sentence;
-      inner.innerHTML = `<div class="pel-act-prompt">${L('Say the sentence','نطق الجملة')}</div>
-        <div class="pel-act-en">${esc(s.en)}</div>
-        <div class="pel-act-translit">${esc(s.translit)}</div>
-        <div class="pel-act-ar arabic">${esc(s.ar)}</div>
-        <button class="pel-act-play" id="pelSpkPlay"><i data-lucide="volume-2" width="16" height="16"></i> ${L('Hear it','اسمعها')}</button>`;
-      $('#pelSpkPlay').onclick=()=>play(s.en,'en-US');
-      ctx.self.ready(ctx, L('I said it','نطقتها'), ()=>ctx.self.mark(ctx,true));
+      micSpeakingCard(inner, ctx, {
+        prompt: L('Say the sentence','نطق الجملة'),
+        en: s.en, translit: s.translit, ar: s.ar,
+        target: s.en, playText: s.en
+      });
     },
     conversation_response(inner, act, ctx){
       const conv=act.conv; const i=act.idx; const line=conv[i]; const reply=conv[i+1];
