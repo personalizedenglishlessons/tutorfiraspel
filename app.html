@@ -21563,7 +21563,11 @@ body.pel-lesson-mode .sidebar,body.pel-lesson-mode .topbar,body.pel-lesson-mode 
     },
     conversation_response(inner, act, ctx){
       const conv=act.conv; const i=act.idx; const line=conv[i]; const reply=conv[i+1];
-      const distractors=shuffle(conv.filter((c,j)=>j!==i+1).map(c=>c.en)).slice(0,2);
+      // Defensive guard: if the conversation is too short to have a next line
+      // (e.g. a 2-line dialogue with idx:1), reply is undefined and
+      // reply.en would throw and freeze the lesson. Skip cleanly instead.
+      if(!line || !reply){ ctx.self.next && ctx.self.next(); return; }
+      const distractors=shuffle(conv.filter((c,j)=>j!==i+1).map(c=>c.en).filter(e=>e&&norm(e)!==norm(reply.en))).slice(0,2);
       const opts=shuffle([reply.en, ...distractors]); let sel=null;
       inner.innerHTML = `<div class="pel-act-prompt">${L('Reply naturally','رد بشكل طبيعي')}</div>
         <div class="pel-conv"><div class="pel-conv-line ${line.who}"><div>${esc(line.en)}</div><div class="tr arabic">${esc(line.ar)}</div></div></div>
