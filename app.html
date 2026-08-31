@@ -16732,6 +16732,22 @@ function renderLessonReader(container, academy, lesson){
     <div style="margin-top:8px; font-size:1.05rem; color:var(--gold-soft);">${lesson.title}</div>
     <div class="arabic" style="margin-top:2px; font-size:.86rem; color:var(--text-muted);">${lesson.dir === 'ar' ? lesson.translit : translitEn(lesson.title)}</div>
 
+    <div class="pel-dash-tools-wrap" style="margin-top:18px;">
+      <div class="eyebrow" style="margin:2px 2px 8px;"><span class="arabic">ادوات الدرس</span>، Lesson Tools</div>
+      <div class="pel-dash-strip">${[
+        {view:'pronunciation',icon:'mic',ar:'النطق',en:'Pronunciation',why:'تدرب على نطق كلمات الدرس'},
+        {view:'grammar',icon:'spell-check',ar:'القواعد',en:'Grammar',why:'افهم تركيب الجمل في الدرس'},
+        {view:'vocabulary',icon:'book-open',ar:'المفردات',en:'Vocabulary',why:'كل كلمات الدرس'},
+        {view:'review',icon:'rotate-ccw',ar:'المراجعة',en:'Review',why:'ثبت الكلمات اللي اخذتها'},
+        {view:'listening',icon:'headphones',ar:'الاستماع',en:'Listening',why:'اسمع وجاوب'},
+        {view:'reading',icon:'book-text',ar:'القرايه',en:'Reading',why:'اقرا وتدرب'},
+        {view:'writing',icon:'pen-line',ar:'الكتابة',en:'Writing',why:'اكتب جملة'},
+        {view:'speaking',icon:'messages-square',ar:'المحادثة',en:'Speaking',why:'تكلم بصوتك'},
+        {view:'bookmarks',icon:'bookmark',ar:'المفضلة',en:'Bookmarks',why:'دروسك المحفوظة'}
+      ].map(function(t){return '<button class="pel-dash-tool" data-lt-view="'+t.view+'"><span class="td-ico">'+svgIcon(t.icon,18)+'</span><span class="td-t">'+L(t.en,t.ar)+'</span><span class="td-s"><span class="arabic">'+t.why+'</span></span></button>';}).join('')}</div>
+      <p style="font-size:.74rem;color:var(--text-muted);margin:8px 2px 0;"><span class="arabic">استخدم كل اداة مع هذا الدرس</span>، Use any tool with this lesson.</p>
+    </div>
+
     <div class="lesson-section">
       <h3><span class="arabic">المفردات</span>، Vocabulary</h3>
       <p class="lesson-section-sub"><span class="arabic" style="display:block;">كل كلمة تتضمن معناها بالعربية الفصحى ونطقها.</span>Every word includes its Arabic (MSA) meaning and pronunciation.</p>
@@ -16851,6 +16867,11 @@ function renderLessonReader(container, academy, lesson){
   if(lesson.quiz && lesson.quiz.length) renderQuiz(document.getElementById('lessonQuizWrap'), lesson.quiz, 'lq');
   if(lesson.exercises && lesson.exercises.length) renderDbPractice(document.getElementById('wsPractice'), lesson.exercises);
   container.querySelectorAll('[data-speak]').forEach(btn => btn.addEventListener('click', () => speak(btn.dataset.speak)));
+  container.querySelectorAll('[data-lt-view]').forEach(btn => btn.addEventListener('click', () => {
+    window.__pelVocab = lesson.vocab || [];
+    window.__pelActiveLessonTool = { academyId: academy.id, lessonId: lesson.id, lessonTitle: lesson.title, academyEn: academy.en };
+    goToView(btn.dataset.ltView);
+  }));
   const goReviewBtn = container.querySelector('#goToReviewFromLesson');
   if(goReviewBtn) goReviewBtn.addEventListener('click', () => goToView('review'));
   const lessonReviewNudgeBtn = container.querySelector('#lessonReviewNudgeBtn');
