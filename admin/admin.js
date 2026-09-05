@@ -815,7 +815,7 @@ function students(){
     '<div class="filter-bar">' +
       '<div class="search-wrap"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><input class="input" id="stSearch" placeholder="' + esc(t('searchPlaceholder')) + '" value="' + esc(st.search) + '"></div>' +
       sel('stStatus', t('status'), [['',''],['new','new'],['active','active'],['stalled','stalled'],['inactive','inactive'],['suspended','suspended']], st.filters.status) +
-      sel('stLevel', t('level'), [['',''],['A1','A1'],['A2','A2'],['B1','B1'],['B2','B2'],['C1','C1']], st.filters.level) +
+      sel('stLevel', t('level'), [['',''],['A0','A0'],['A1','A1'],['A2','A2'],['B1','B1'],['B2','B2'],['C1','C1']], st.filters.level) +
       '<div class="field" id="stProgramWrap"></div>' +
       '<div class="field" id="stTeacherWrap"></div>' +
       '<div class="field" id="stGroupWrap"></div>' +
@@ -1116,7 +1116,7 @@ var tabs = [
       if(!r.ok){ delBtn.disabled = false; toast((r.error && r.error.message) || t('permissionDenied'), true); return; }
       toast(lang === 'ar' ? 'تم حذف الطالب. تبقت شهاداته للتحقق.' : 'Student deleted. Certificates remain verifiable.');
       current360 = null; current360Uid = null;
-      if(typeof studentsView === 'function'){ studentsView(); } else { location.reload(); }
+      if(typeof students === 'function'){ students(); } else { location.reload(); }
     });
   }
   document.querySelectorAll('[data-tab]').forEach(function(b){
@@ -2116,7 +2116,7 @@ function academyForm(academyId){
           return '<option' + (a && a.difficulty === d ? ' selected' : '') + '>' + d + '</option>';
         }).join('') + '</select></div>' +
       '<div class="field"><label>' + esc(t('level')) + '</label><select class="input" id="acLevel">' +
-        ['A1','A2','B1','B2','C1'].map(function(v){
+        ['A0','A1','A2','B1','B2','C1'].map(function(v){
           return '<option' + (a && a.level === v ? ' selected' : '') + '>' + v + '</option>';
         }).join('') + '</select></div>' +
       '<div class="field"><label>' + esc(t('colorFrom')) + '</label><input class="input" type="color" id="acFrom" value="' + esc(a ? (a.color_from || '#C8A96A') : '#C8A96A') + '"></div>' +
@@ -2455,7 +2455,7 @@ async function billingView(){
     lang==='ar'?'عدل اسعار الباقات ونص الصفحة البداية - التغييرات توصل لـ /index فوراً':'Edit plan prices and index copy - changes reach /index immediately') + loadingBlock();
   var c = client();
   var [pp, ss] = await Promise.all([
-    c.from('plan_pricing').select('*').order('tier,duration_months'),
+    c.from('plan_pricing').select('*').order('tier').order('duration_months'),
     c.from('site_settings').select('key,value').in('key', ['hero_headline_ar','hero_headline_en','hero_sub_ar','hero_sub_en','pricing_note_ar','pricing_note_en','faqs'])
   ]);
   var rows = pp.data || [];
@@ -2586,7 +2586,7 @@ async function questionsView(){
   await loadList();
 
   async function loadList(){
-    var r = await c.from('assessment_questions').select('*').order('tier,difficulty_rating,sort_order');
+    var r = await c.from('assessment_questions').select('*').order('tier').order('difficulty_rating').order('sort_order');
     ROWS = r.data || [];
     var addBtn = '<div class="btn-row" style="margin-bottom:16px;"><button class="btn btn-gold btn-sm" id="aqAdd">'+esc(lang==='ar'?'سوال جديد':'New question')+'</button>'+
       '<span class="why">'+(lang==='ar'?'العدد: ':'Count: ')+ROWS.length+'</span></div>';
@@ -2650,7 +2650,7 @@ async function questionsView(){
     var body = '<div class="form-grid">'+
       '<div class="field"><label>'+esc(lang==='ar'?'الكود':'Code')+'</label><input class="input" id="qf_code" value="'+esc(q?q.code:'')+'" placeholder="q16"></div>'+
       '<div class="field"><label>'+esc(lang==='ar'?'المسار':'Tier')+'</label><select class="input" id="qf_tier"><option value="beginner"'+(q&&q.tier==='beginner'?' selected':'')+'>Beginner</option><option value="exam_prep"'+(q&&q.tier==='exam_prep'?' selected':'')+'>Exam Prep</option></select></div>'+
-      '<div class="field"><label>'+esc(lang==='ar'?'المستوى':'Level')+'</label><select class="input" id="qf_level">'+['A1','A2','B1','B2','C1'].map(function(l){return '<option value="'+l+'"'+(q&&q.level===l?' selected':'')+'>'+l+'</option>';}).join('')+'</select></div>'+
+      '<div class="field"><label>'+esc(lang==='ar'?'المستوى':'Level')+'</label><select class="input" id="qf_level">'+['A0','A1','A2','B1','B2','C1'].map(function(l){return '<option value="'+l+'"'+(q&&q.level===l?' selected':'')+'>'+l+'</option>';}).join('')+'</select></div>'+
       '<div class="field"><label>'+esc(lang==='ar'?'الصعوبة':'Difficulty')+'</label><select class="input" id="qf_diff">'+[1,2,3,4,5].map(function(d){return '<option value="'+d+'"'+(q&&q.difficulty_rating===d?' selected':'')+'>'+d+'</option>';}).join('')+'</select></div>'+
       '<div class="field"><label>'+esc(lang==='ar'?'النوع':'Skill')+'</label><select class="input" id="qf_skill">'+['grammar','vocab','reading','listening'].map(function(s){return '<option value="'+s+'"'+(q&&q.skill_type===s?' selected':'')+'>'+s+'</option>';}).join('')+'</select></div>'+
       '<div class="field"><label><input type="checkbox" id="qf_active" '+(q?(q.active!==false?'checked':''):'checked')+'> '+esc(lang==='ar'?'متاح':'Active')+'</label></div>'+
@@ -3035,7 +3035,7 @@ async function plansView(){
   $('viewArea').innerHTML = pageHead(t('plans'), lang === 'ar' ? 'الباقات، الاشتراكات، وانتها الوصول - كل شي من الخادم.' : 'Plans, entitlements and expiring access - all server-side.') + loadingBlock();
   var [ov, prog] = await Promise.all([
     rpc('admin_plans_overview'),
-    client().from('programs').select('*').eq('active', true).order('sort_order,created_at')
+    client().from('programs').select('*').eq('active', true).order('sort_order').order('created_at')
   ]);
   if(!ov.ok){ $('viewArea').innerHTML = errBlock(ov.error && ov.error.message); return; }
   var d = ov.data || {};
@@ -3113,7 +3113,7 @@ async function plansView(){
    scattered buttons (s360PlanSave tier/level-only + p360Assign program-only). */
 async function openAssignPlanModal(uid, onDone, curTier, curLevel){
   var c = client();
-  var pr = await c.from('programs').select('*').order('sort_order,created_at');
+  var pr = await c.from('programs').select('*').order('sort_order').order('created_at');
   var catalog = pr.data || [];
   if(!catalog.length){ toast(t('noData'), true); return; }
   var ms = modal(t('assignPlan'), '' +
@@ -3127,7 +3127,7 @@ async function openAssignPlanModal(uid, onDone, curTier, curLevel){
         '<option value="exam_prep"' + (curTier==='exam_prep'?' selected':'') + '>' + esc(lang==='ar'?'التجهيز للاختبارات':'Exam Prep') + '</option>' +
       '</select></div>' +
       '<div class="field"><label>' + esc(lang==='ar'?'المستوى':'Level') + '</label><select class="input" id="apLevel">' +
-        ['A1','A2','B1','B2','C1','C2'].map(function(l){ return '<option value="'+l+'"'+(((curLevel||'A1')===l)?' selected':'')+'>'+l+'</option>'; }).join('') + '</select></div>' +
+        ['A0','A1','A2','B1','B2','C1','C2'].map(function(l){ return '<option value="'+l+'"'+(((curLevel||'A1')===l)?' selected':'')+'>'+l+'</option>'; }).join('') + '</select></div>' +
       '<div class="field full"><label>' + esc(t('reason')) + '</label><input class="input" id="apReason"></div>' +
     '</div>' +
     '<div class="btn-row"><button class="btn btn-gold btn-sm" id="apSave">' + esc(t('save')) + '</button><button class="btn btn-ghost btn-sm" data-close>' + esc(t('cancel')) + '</button></div>' +
