@@ -2844,7 +2844,7 @@ const navGroups = [
   ]},
   { label:{en:'Your Path', ar:'مسارك'}, items:[
     {id:'paths', en:'Academies', ar:'الاكاديميات', icon:'layout-grid'},
-    {id:'cefr', en:'Levels (A1–C2)', ar:'المستويات', icon:'trending-up'},
+    {id:'cefr', en:'Levels (A0–C2)', ar:'المستويات', icon:'trending-up'},
     {id:'lessonOfDay', en:'Lesson of the Day', ar:'درس اليوم', icon:'sparkles'},
   ]},
   { label:{en:'Skill Studios', ar:'الاستوديوهات'}, items:[
@@ -16377,6 +16377,15 @@ function renderLibrary(){
   const categories = ['All', ...new Set(ordered.map(a => a.cat))];
   el.innerHTML = `
     ${planGate}
+    ${isFirstTimeStudent() ? `<div class="beginner-banner" style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:20px 22px;margin-bottom:24px;border:1px solid rgba(63,140,114,.4);border-radius:16px;background:linear-gradient(135deg,rgba(63,140,114,.12),rgba(63,140,114,.03));">
+      <span style="font-size:2rem;flex-shrink:0;">👋</span>
+      <div style="flex:1;min-width:200px;">
+        <div style="font-weight:700;font-size:1.05rem;">${ar?'اهلا بك! ابدا من هنا':'Welcome! Start Here'}</div>
+        <div style="font-size:.86rem;color:var(--text-muted);margin-top:4px;line-height:1.6;">${ar?'لو ما تعرف انجليزي ابدا، ابد بـ A0 (من الصفر): الحروف، الاصوات، والكلمات الاساسية. لو تعرف شوي، ابد بـ A1.':'If you know almost no English, start at A0 (Absolute Beginner): letters, sounds, and survival words. If you know a little, start at A1.'}</div>
+      </div>
+      <button class="btn-gold" id="beginnerStartBtn" style="flex-shrink:0;">${ar?'ابدا من A0':'Start at A0'}</button>
+      <button class="btn-outline" id="beginnerA1Btn" style="flex-shrink:0;">${ar?'ابدا من A1':'Start at A1'}</button>
+    </div>` : ''}
     <div class="page-head">
       <span class="eyebrow"><span class="arabic" style="font-size:.95em;">الاكاديميات</span>، The Private Academy</span>
       <h1><span class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">كل الاكاديميات، في مكتبة واحدة.</span>Every academy, one library.</h1>
@@ -16416,6 +16425,11 @@ function renderLibrary(){
   });
   wireAcademyCards(el);
   renderGrid();
+  // Wire beginner start buttons for first-time students
+  const a0Btn = document.getElementById('beginnerStartBtn');
+  if(a0Btn) a0Btn.addEventListener('click', () => goToView('cefr'));
+  const a1Btn = document.getElementById('beginnerA1Btn');
+  if(a1Btn) a1Btn.addEventListener('click', () => goToView('cefr'));
 }
 viewRenderers.plan = renderPlanView;
 /* ============================================================
@@ -16424,6 +16438,7 @@ viewRenderers.plan = renderPlanView;
    levels so the student always sees one clear, structured path.
    ============================================================ */
 const CEFR_LEVELS = [
+  { id:'A0', en:'Absolute Beginner',  ar:'من الصفر',       color:'#2F745E', descEn:'First sounds, letters and the most essential survival words.', descAr:'الاصوات والحروف الاولى واهم كلمات البقاء.' },
   { id:'A1', en:'Beginner',         ar:'مبتدئ',        color:'#3F8C72', descEn:'Greetings, the alphabet, numbers and basic questions.', descAr:'التحيات، الحروف، الارقام والاسئلة البسيطة.' },
   { id:'A2', en:'Elementary',       ar:'مبتدئ متقدم',  color:'#5BA88A', descEn:'Survival English for travel, food, shopping and hotels.', descAr:'انجليزي البقاء للسفر والاكل والتسوق والفنادق.' },
   { id:'B1', en:'Intermediate',     ar:'متوسط',        color:'#C8A96A', descEn:'Real conversations, opinions and everyday fluency.', descAr:'محادثات حقيقية واراء وطلاقة يومية.' },
@@ -16432,6 +16447,7 @@ const CEFR_LEVELS = [
   { id:'C2', en:'Mastery',          ar:'اتقان',        color:'#343744', descEn:'Near-native fluency across every domain.', descAr:'طلاقة شبه اصلية في كل المجالات.' },
 ];
 const ACADEMY_CEFR = {
+  'a0-sentence-building':'A0','a0-question-words':'A0','a0-spelling-sounds':'A0','a0-error-clinic':'A0','a0-social-english':'A0',
   'english-foundations':'A1',
   'everyday-english':'A2','airport-english':'A2','restaurant-english':'A2','coffee-shop-english':'A2',
   'hotel-english':'A2','shopping-english':'A2','driving-english':'A2',
@@ -16448,7 +16464,7 @@ function cefrFromDifficulty(d){
   if(d==='Beginner') return 'A1';
   if(d==='Intermediate') return 'B1';
   if(d==='Advanced') return 'C1';
-  return 'B1';
+  return 'A1';
 }
 function academyCefr(a){ return ACADEMY_CEFR[a.id] || cefrFromDifficulty(a.difficulty); }
 const CEFR_PATH_STYLE = `
@@ -16495,7 +16511,7 @@ function renderCefrPath(){
     }).join('');
     return `<div class="cefr-level"><div class="cefr-node" style="background:${lvl.color};">${lvl.id}</div><div class="cefr-level-body"><div class="cefr-level-title"><h3>${isAr?esc(lvl.ar):esc(lvl.en)}</h3><span class="lvl">${lvl.id}</span></div><p class="cefr-level-desc">${isAr?esc(lvl.descAr):esc(lvl.descEn)}</p><div class="cefr-units">${units||`<div class=\"cefr-empty\">${L('Content for this level is coming.','محتوى هذا المستوى قادم.')}</div>`}</div></div></div>`;
   }).join('');
-  el.innerHTML = `<div class="page-head"><span class="eyebrow"><span class="arabic" style="font-size:.95em;">المستويات</span>، CEFR Levels (A1–C2)</span><h1><span class="arabic" style="display:block;font-size:.62em;font-weight:400;color:var(--text-secondary);margin-bottom:4px;">مسار واحد واضح من المبتدئ الى الاتقان.</span>One clear path, Beginner to Mastery.</h1><p><span class="arabic" style="display:block;margin-bottom:4px;">ستة مستويات معترف بها عالميا، كل واحد يبني على اللي قبله.</span>Six internationally recognized levels, each one building on the last.</p></div><div class="cefr-path">${levelsHtml}</div>`;
+  el.innerHTML = `<div class="page-head"><span class="eyebrow"><span class="arabic" style="font-size:.95em;">المستويات</span>، CEFR Levels (A0–C2)</span><h1><span class="arabic" style="display:block;font-size:.62em;font-weight:400;color:var(--text-secondary);margin-bottom:4px;">مسار واحد واضح من الصفر الى الاتقان.</span>One clear path, Zero to Mastery.</h1><p><span class="arabic" style="display:block;margin-bottom:4px;">سبعة مستويات معترف بها عالميا، كل واحد يبني على اللي قبله.</span>Seven internationally recognized levels, each one building on the last.</p></div><div class="cefr-path">${levelsHtml}</div>`;
   el.querySelectorAll('.cefr-lesson:not(.locked)').forEach(b => { b.onclick = () => { if(typeof openLesson==='function') openLesson(b.dataset.academy, b.dataset.lesson); }; });
   el.querySelectorAll('.cefr-unit-head').forEach(h => { h.onclick = () => { const ac=resolveAcademyById(h.dataset.academy); if(!ac) return; const first=(academyLessonList(ac)[0]||{}); if(first.id && typeof openLesson==='function') openLesson(h.dataset.academy, first.id); }; });
   if(window.lucide) lucide.createIcons();
