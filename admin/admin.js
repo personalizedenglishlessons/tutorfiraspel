@@ -1064,22 +1064,41 @@ var tabs = [
       host.querySelectorAll('[data-cred-add]').forEach(function(btn){
         btn.addEventListener('click', async function(){
           var dir = +btn.getAttribute('data-cred-add');
-          var delta = parseInt($('credDelta').value, 10);
-          if(!delta){ toast(lang==='ar'?'اكتب عدد':'Enter a number', true); return; }
+          var deltaInput = $('credDelta');
+          var delta = parseInt(deltaInput.value, 10);
+          if(!delta || isNaN(delta)){ toast(lang==='ar'?'اكتب عدد صحيح':'Enter a valid number', true); deltaInput.focus(); return; }
           var adj = delta * dir;
-          var reason = $('credReason').value.trim() || (lang==='ar'?'تعديل يدوي':'Manual adjustment');
-          var r2 = await rpc('admin_adjust_credits', { p_user_id: current360Uid, p_delta: adj, p_reason: reason });
-          if(!r2.ok){ toast(rpcErrMsg(r2), true); return; }
-          await audit('credit.adjust', 'student', current360Uid, { delta: adj, reason: reason });
-          toast(t('saved')); 
-          var r3 = await rpc('admin_student_billing', { p_user_id: current360Uid });
-          if(r3.ok){ b = r3.data.billing || {}; ledger = r3.data.ledger || []; }
-          // re-render credits chip + ledger
-          var chips = host.querySelector('.s360-meta');
-          if(chips){ var lastChip = chips.querySelector('.chip.green'); if(lastChip) lastChip.textContent = (b.live_class_credits||0)+' '+(lang==='ar'?'رصيد حصص':'class credits'); }
-          var led = $('credLedger');
-          if(led){ led.innerHTML = ledger.length ? ledger.map(function(l){ var d=l.delta>=0?'+'+l.delta:l.delta; return '<div class="reason-item"><div style="flex:1;">'+esc(l.reason||'-')+'<div class="why">'+esc(fmtDate(l.created_at))+'</div></div><b style="color:'+(l.delta>=0?'var(--green, #437A22)':'var(--danger,#c0392b)')+';">'+esc(d)+'</b><span class="chip muted">'+esc(lang==='ar'?'الرصيد':'bal')+' '+esc(l.balance_after)+'</span></div>'; }).join('') : emptyBlock(lang==='ar'?'لا يوجد عمليات بعد':'No transactions yet'); }
-          $('credDelta').value = '';
+          var reasonInput = $('credReason');
+          var reason = reasonInput.value.trim() || (lang==='ar'?'تعديل يدوي':'Manual adjustment');
+          // Disable buttons and show loading state
+          var allBtns = host.querySelectorAll('[data-cred-add]');
+          allBtns.forEach(function(b){ b.disabled = true; });
+          var origText = btn.textContent;
+          btn.textContent = '...';
+          try{
+            var r2 = await rpc('admin_adjust_credits', { p_user_id: current360Uid, p_delta: adj, p_reason: reason });
+            if(!r2.ok){ toast(rpcErrMsg(r2), true); return; }
+            await audit('credit.adjust', 'student', current360Uid, { delta: adj, reason: reason });
+            toast(t('saved'));
+            // Re-fetch billing data to reflect the new balance
+            var r3 = await rpc('admin_student_billing', { p_user_id: current360Uid });
+            if(r3.ok && r3.data){ b = r3.data.billing || {}; ledger = r3.data.ledger || []; }
+            // Re-render the entire billing section to ensure UI is fresh
+            var tierAr2 = b.tier==='exam_prep'?'التجهيز للاختبارات':(b.tier==='start_from_zero'?'ابد من الصفر':'-');
+            var trackAr2 = b.assessed_track==='exam_prep'?'متقدم':(b.assessed_track==='start_from_zero'?'مبتدي':'-');
+            // Update credits chip
+            var chips = host.querySelector('.s360-meta');
+            if(chips){ var lastChip = chips.querySelector('.chip.green'); if(lastChip) lastChip.textContent = (b.live_class_credits||0)+' '+(lang==='ar'?'رصيد حصص':'class credits'); }
+            // Update ledger
+            var led = $('credLedger');
+            if(led){ led.innerHTML = ledger.length ? ledger.map(function(l){ var d=l.delta>=0?'+'+l.delta:l.delta; return '<div class="reason-item"><div style="flex:1;">'+esc(l.reason||'-')+'<div class="why">'+esc(fmtDate(l.created_at))+'</div></div><b style="color:'+(l.delta>=0?'var(--green, #437A22)':'var(--danger,#c0392b)')+';">'+esc(d)+'</b><span class="chip muted">'+esc(lang==='ar'?'الرصيد':'bal')+' '+esc(l.balance_after)+'</span></div>'; }).join('') : emptyBlock(lang==='ar'?'لا يوجد عمليات بعد':'No transactions yet'); }
+            deltaInput.value = '';
+            reasonInput.value = '';
+          }catch(e){ toast(lang==='ar'?'خطا غير متوقع':'Unexpected error', true); }
+          finally{
+            allBtns.forEach(function(b){ b.disabled = false; });
+            btn.textContent = origText;
+          }
         });
       });
       // ONE assign-plan button -> consolidated modal (program + dates + tier + level)
