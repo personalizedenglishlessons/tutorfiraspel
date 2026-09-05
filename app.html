@@ -1638,6 +1638,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const pill = document.getElementById('topbarCredits');
   if(pill) pill.addEventListener('click', () => { if(typeof goToView === 'function') goToView('liveClasses'); });
 });
+// Periodic refresh so admin credit adjustments appear without page reload
+setInterval(() => { if(typeof currentUser !== 'undefined' && currentUser) refreshCredits(); }, 60000);
 
 async function loadStudentState(){
   // Source of truth is Supabase, keyed by auth.uid(), never localStorage,
@@ -22769,7 +22771,10 @@ if(window.lucide) lucide.createIcons();
 
   async function loadOverview(){
     const cl=c(); if(!cl) return null;
-    try{ const { data, error } = await cl.rpc('student_live_class_overview'); if(error){ console.error('live_class_overview', error); return null; } OVER=data; return data; }
+    try{ const { data, error } = await cl.rpc('student_live_class_overview'); if(error){ console.error('live_class_overview', error); return null; } OVER=data; 
+      // Sync topbar credits pill with the overview data
+      if(data && typeof data.credits !== 'undefined'){ _pelCredits = data.credits; const pill=document.getElementById('topbarCredits'); const num=document.getElementById('topCreditsNum'); if(pill && num){ num.textContent = _pelCredits; pill.style.display = _pelCredits > 0 ? '' : 'none'; } const pc=document.getElementById('profileCreditsNum'); if(pc) pc.textContent = _pelCredits; }
+      return data; }
     catch(e){ console.error(e); return null; }
   }
 
