@@ -21388,9 +21388,9 @@ body.pel-lesson-mode .sidebar,body.pel-lesson-mode .topbar,body.pel-lesson-mode 
       if(it.sentences[1]) seq.push({ type:'learn_sentence', item:it, sentence:it.sentences[1], skill:'vocabulary' });
     });
 
-    // 2. Recognize (multiple choice en -> ar) — test ALL items, not just main[0]
+    // 2. Recognize (multiple choice en -> ar) — test first 2 items
     if(main.length >= 2){
-      main.forEach((it, i) => {
+      main.slice(0, 2).forEach((it) => {
         seq.push({ type:'recognize', item:it, pool:main, skill:'vocabulary' });
       });
     }
@@ -21400,32 +21400,31 @@ body.pel-lesson-mode .sidebar,body.pel-lesson-mode .topbar,body.pel-lesson-mode 
       seq.push({ type:'match', items:shuffle(items).slice(0, Math.min(5, items.length)), skill:'vocabulary' });
     }
 
-    // 4. Build sentences (arrange words) — distribute across items
-    main.forEach((it, i) => {
-      const target = it.sentences[0] || {en:it.en, ar:it.ar, translit:it.translit};
-      seq.push({ type:'arrange_words', sentence:target, skill:'grammar' });
-    });
+    // 4. Build a sentence (arrange words) — one item
+    const arrangeItem = main[0];
+    const arrangeTarget = (arrangeItem && arrangeItem.sentences[0]) || {en:items[0].en, ar:items[0].ar, translit:items[0].translit};
+    seq.push({ type:'arrange_words', sentence:arrangeTarget, skill:'grammar' });
 
-    // 5. Fill the missing word — use main[1] instead of always main[0]
+    // 5. Fill the missing word — use main[1]
     const fbItem = main[1] || main[0] || items[0];
     seq.push({ type:'fill_blank', item:fbItem, sentence:(fbItem.sentences[1]||fbItem.sentences[0]||{en:fbItem.en,ar:fbItem.ar,translit:fbItem.translit}), skill:'grammar' });
 
-    // 6. Spell the word — use main[2] to practice a different item
+    // 6. Spell the word — use main[2]
     const spellItem = main[2] || main[0] || items[0];
     seq.push({ type:'spell', item:spellItem, skill:'spelling' });
 
     // 7. Translate ar -> en — use main[1]
     seq.push({ type:'translate', item:fbItem, skill:'translation' });
 
-    // 8. Listen + identify — use main[2] for variety
+    // 8. Listen + identify — use main[2]
     const listenItem = main[2] || main[0] || items[0];
     seq.push({ type:'listen', item:listenItem, skill:'listening' });
     seq.push({ type:'identify_heard', item:listenItem, pool:main, skill:'listening' });
 
-    // 9. Pronunciation — use main[0] (first word is most important)
+    // 9. Pronunciation — use main[0]
     seq.push({ type:'pronunciation', item:main[0]||items[0], skill:'pronunciation' });
 
-    // 10. Speaking (say the sentence) — use main[1]'s sentence for variety
+    // 10. Speaking — use main[1]'s sentence
     const speakItem = main[1] || main[0] || items[0];
     seq.push({ type:'speaking', sentence:(speakItem.sentences[1]||speakItem.sentences[0]||{en:speakItem.en,ar:speakItem.ar,translit:speakItem.translit}), skill:'speaking' });
 
