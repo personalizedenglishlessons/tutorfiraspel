@@ -1117,6 +1117,7 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
       <div class="topbar-spacer"></div>
 
       <div class="topbar-actions">
+        <div class="pill-stat hide-mid" id="topbarCredits" title="رصيد الحصص المباشرة، Live class credits" style="cursor:pointer;display:none;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> <b id="topCreditsNum">0</b> <span class="arabic">رصيد</span> credits</div>
         <div class="pill-stat hide-mid" title="نقاط الخبرة، XP"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4z"/></svg> <b id="topXp">0</b> <span class="arabic">نقطة</span> XP</div>
         <div class="pill-stat hide-mid" title="سلسلة الايام، Day streak"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z"/></svg> <b id="topStreak">0</b> <span class="arabic">يوم</span> streak</div>
 
@@ -1608,6 +1609,36 @@ function clearStudentState(){
   renderReviewStrip();
   renderDashboardIntel();
 }
+/* ============================================================
+   CREDITS — global loader for topbar pill + profile display
+   Fetches from student_live_class_overview RPC and updates the
+   topbar pill, so credits given by admin are immediately visible.
+   ============================================================ */
+let _pelCredits = 0;
+async function refreshCredits(){
+  const cl = client(); if(!cl || !currentUser) return;
+  try{
+    const { data, error } = await cl.rpc('student_live_class_overview');
+    if(!error && data){
+      _pelCredits = data.credits || 0;
+      const pill = document.getElementById('topbarCredits');
+      const num = document.getElementById('topCreditsNum');
+      if(pill && num){
+        num.textContent = _pelCredits;
+        pill.style.display = _pelCredits > 0 ? '' : 'none';
+      }
+      // Update profile page if it's rendered
+      const pc = document.getElementById('profileCreditsNum');
+      if(pc) pc.textContent = _pelCredits;
+    }
+  }catch(e){ /* credits RPC may not exist yet */ }
+}
+// Click the topbar credits pill to go to the Live Classes view
+document.addEventListener('DOMContentLoaded', () => {
+  const pill = document.getElementById('topbarCredits');
+  if(pill) pill.addEventListener('click', () => { if(typeof goToView === 'function') goToView('liveClasses'); });
+});
+
 async function loadStudentState(){
   // Source of truth is Supabase, keyed by auth.uid(), never localStorage,
   // never a hardcoded default beyond the one-time row this creates for a
@@ -1780,6 +1811,8 @@ async function revealApp(user){
   applyInterfaceLang(accountPrefs.lang || 'en');
   renderHomeForDirection();
   renderControlCenter();
+  // Load credits for topbar pill + profile display
+  refreshCredits();
   document.getElementById('authGate').style.display = 'none';
   document.getElementById('appShell').style.display = 'flex';
   document.body.classList.add('ready');
@@ -18585,6 +18618,19 @@ function renderProfile(){
     <div class="eyebrow" style="margin-bottom:14px;"><span class="arabic">الاحصاييات</span>، Statistics</div>
     <div class="grid" style="grid-template-columns:repeat(6,1fr); margin-bottom:30px;" id="profileStatsGrid"></div>
 
+    <div class="card card-elevated" style="display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin-bottom:30px;">
+      <div style="display:flex;align-items:center;gap:14px;">
+        <div style="width:48px;height:48px;border-radius:14px;background:rgba(200,169,106,.12);border:1px solid rgba(200,169,106,.25);display:flex;align-items:center;justify-content:center;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <div>
+          <div style="font-size:1.6rem;font-weight:800;color:var(--gold);" id="profileCreditsNum">—</div>
+          <div style="font-size:.78rem;color:var(--text-muted);"><span class="arabic">رصيد الحصص المباشرة</span>، Live class credits</div>
+        </div>
+      </div>
+      <button class="btn-outline" id="profileBookClassBtn" style="margin-inline-start:auto;"><span class="arabic">احجز حصة</span>، Book a class</button>
+    </div>
+
     <div class="grid grid-2" style="align-items:start; margin-bottom:30px;">
       <div class="card">
         <h3 style="font-size:1.05rem; margin-bottom:6px;"><span class="arabic">هدف التعلم</span>، Learning Goal</h3>
@@ -18618,6 +18664,12 @@ function renderProfile(){
 
   document.getElementById('profileAvatarInitial').textContent = document.getElementById('avatarInitial').textContent || '';
   document.getElementById('profileNameDisplay').textContent = document.getElementById('userNameLabel').textContent || 'Student';
+
+  // Load credits into the profile card
+  refreshCredits();
+  // Wire up the Book a class button
+  const bookBtn = document.getElementById('profileBookClassBtn');
+  if(bookBtn) bookBtn.addEventListener('click', () => { if(typeof goToView === 'function') goToView('liveClasses'); });
 
   const vocabLearnedCount = bookmarks.filter(b => b.type === 'vocab').length;
   const estHoursStudied = Math.round((completedLessons.size * 12 / 60) * 10) / 10; // ~12 min/lesson estimate
@@ -22877,6 +22929,95 @@ if(window.lucide) lucide.createIcons();
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', mount);
   else mount();
   setTimeout(mount, 1200);
+})();
+</script>
+
+<!-- Floating Draggable Translation Toggle Button -->
+<style>
+#pelTransFab{position:fixed;z-index:9800;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-soft));color:#171412;border:none;box-shadow:0 4px 16px rgba(0,0,0,.35);cursor:grab;display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:800;user-select:none;touch-action:none;transition:box-shadow .2s,transform .15s;}
+#pelTransFab:active{cursor:grabbing;transform:scale(1.08);box-shadow:0 6px 24px rgba(0,0,0,.45);}
+#pelTransFab.on{background:linear-gradient(135deg,#42a36a,#2d7a4e);color:#fff;}
+#pelTransFab.hide-translit{background:linear-gradient(135deg,var(--card-elevated),var(--card));color:var(--text-muted);border:1px solid var(--border);}
+#pelTransFab .fab-label{position:absolute;bottom:-22px;left:50%;transform:translateX(-50%);font-size:.6rem;white-space:nowrap;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:.03em;pointer-events:none;}
+body.pel-translit-hidden .pel-act-translit,body.pel-translit-hidden .ex-tr,body.pel-translit-hidden .situation-translit,body.pel-translit-hidden .pel-translit-fab-text{display:none !important;}
+</style>
+<script>
+(function(){
+  function mountFab(){
+    if(document.getElementById('pelTransFab')) return;
+    const fab=document.createElement('button');
+    fab.id='pelTransFab';
+    fab.className='on';
+    fab.innerHTML='ع<sub style="font-size:.5em;">EN</sub>';
+    fab.title='Drag to move. Click to toggle transliteration.';
+    const label=document.createElement('span'); label.className='fab-label'; label.textContent='Translit';
+    fab.appendChild(label);
+
+    // Position: bottom-right by default, but remember last position
+    const savedPos=lsGet('pel_fab_pos',null);
+    if(savedPos){ fab.style.left=savedPos.x+'px'; fab.style.top=savedPos.y+'px'; }
+    else{ fab.style.right='20px'; fab.style.bottom='80px'; }
+
+    document.body.appendChild(fab);
+
+    // --- Drag logic (mouse + touch) ---
+    let dragging=false, moved=false, sx=0, sy=0, fx=0, fy=0;
+    function onDown(e){
+      dragging=true; moved=false;
+      const t=e.touches?e.touches[0]:e;
+      sx=t.clientX; sy=t.clientY;
+      const r=fab.getBoundingClientRect();
+      fx=r.left; fy=r.top;
+      fab.style.right='auto'; fab.style.bottom='auto';
+      e.preventDefault();
+    }
+    function onMove(e){
+      if(!dragging) return;
+      const t=e.touches?e.touches[0]:e;
+      const dx=t.clientX-sx, dy=t.clientY-sy;
+      if(Math.abs(dx)>4||Math.abs(dy)>4) moved=true;
+      let nx=fx+dx, ny=fy+dy;
+      // Clamp to viewport
+      const maxX=window.innerWidth-52, maxY=window.innerHeight-52;
+      nx=Math.max(4,Math.min(maxX,nx)); ny=Math.max(4,Math.min(maxY,ny));
+      fab.style.left=nx+'px'; fab.style.top=ny+'px';
+      e.preventDefault();
+    }
+    function onUp(e){
+      if(!dragging) return;
+      dragging=false;
+      if(moved){
+        // Save position
+        const r=fab.getBoundingClientRect();
+        lsSet('pel_fab_pos',{x:r.left,y:r.top});
+      } else {
+        // Click: toggle transliteration visibility
+        toggleTranslit();
+      }
+      e.preventDefault();
+    }
+    function toggleTranslit(){
+      const hidden=document.body.classList.toggle('pel-translit-hidden');
+      fab.classList.toggle('on',!hidden);
+      fab.classList.toggle('hide-translit',hidden);
+      label.textContent=hidden?'Hidden':'Translit';
+      // Save preference
+      lsSet('pel_translit_hidden',hidden);
+    }
+    // Restore saved preference
+    if(lsGet('pel_translit_hidden',false)){ toggleTranslit(); }
+
+    fab.addEventListener('mousedown',onDown);
+    fab.addEventListener('touchstart',onDown,{passive:false});
+    document.addEventListener('mousemove',onMove);
+    document.addEventListener('touchmove',onMove,{passive:false});
+    document.addEventListener('mouseup',onUp);
+    document.addEventListener('touchend',onUp);
+    document.addEventListener('touchcancel',onUp);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',mountFab);
+  else mountFab();
+  setTimeout(mountFab,1500);
 })();
 </script>
 </body>
