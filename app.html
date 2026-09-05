@@ -13644,6 +13644,11 @@ const ACADEMY_LESSONS = {
   'saudi-travel': ['sa-travel-booking','sa-travel-airport','sa-travel-hotel','sa-travel-directions','sa-travel-lost','sa-travel-flight-delay'],
   'saudi-mosque-etiquette': ['sa-mosque-greeting','sa-mosque-wudu','sa-mosque-time','sa-mosque-after-prayer','sa-mosque-eid','sa-mosque-ramadan'],
   'saudi-phone-calls': ['sa-phone-answer','sa-phone-wrong-number','sa-phone-message','sa-phone-callback','sa-phone-busy','sa-phone-end'],
+  'a0-sentence-building': ['be-verb','this-and-that','a-an-the','singular-plural','subject-pronouns','common-verbs'],
+  'a0-question-words': ['greetings-goodbye','introducing-yourself','daily-routine','telling-time','shopping-and-money','asking-directions'],
+  'a0-spelling-sounds': ['colors','days-and-months','family-members','body-parts','clothes','home-and-rooms'],
+  'a0-error-clinic': ['common-verbs','feelings-and-emotions','classroom-words','food-and-drinks','weather-words','places-in-town'],
+  'a0-social-english': ['greetings-goodbye','introducing-yourself','hobbies-likes','doctor-appointment','at-the-restaurant','at-the-market'],
 };
 function lessonMeta(id){
   const lib = LESSON_LIBRARY[id];
@@ -13696,20 +13701,24 @@ const PEL_ACADEMY_VOCAB = {
 };
 function genericLesson(bankItem, academy){
   const _m = PEL_ACADEMY_VOCAB[academy.id];
-  let v1, v2;
+  let v1, v2, v3;
   if(_m && _m.length){
     v1 = VOCAB_BANK[_m[bankItem.id.length % _m.length]];
     v2 = VOCAB_BANK[_m[(bankItem.id.length + 1) % _m.length]];
+    v3 = VOCAB_BANK[_m[(bankItem.id.length + 2) % _m.length]];
   } else {
     v1 = VOCAB_BANK[(bankItem.id.length * 3) % VOCAB_BANK.length];
     v2 = VOCAB_BANK[(bankItem.id.length * 7 + 2) % VOCAB_BANK.length];
+    v3 = VOCAB_BANK[(bankItem.id.length * 5 + 4) % VOCAB_BANK.length];
   }
   const g = GRAMMAR_TOPICS[bankItem.id.length % GRAMMAR_TOPICS.length];
   const ex = bankItem.example || { en:'I need some help with this, please.', ar:'ابي مساعدة بهذا لو سمحت.', translit:'اي نيد سم هيلب وذ ذيس، بليز.' };
+  const vocab = [v1, v2].filter(Boolean);
+  if(v3) vocab.push(v3);
   return {
     title:bankItem.en, ar:bankItem.ar, translit:bankItem.translit,
     difficulty:academy.difficulty, duration:(6 + (bankItem.id.length % 6)) + ' min',
-    vocab:[v1, v2],
+    vocab:vocab,
     grammar:g,
     conversation:[
       {who:'A', en:ex.en, ar:ex.ar, translit:ex.translit},
@@ -13720,6 +13729,7 @@ function genericLesson(bankItem, academy){
     quiz:[
       {q:'كيف تطلب مساعدة بادب؟، How do you ask for help politely?', options:['Excuse me, could you help me with this?','Help me now.','You must help.'], correct:0},
       {q:'وش الرد المهذب على المساعدة؟، A polite reply after help is:', options:['Thank you, I really appreciate it.','Give me more.','Okay, bye.'], correct:1},
+      {q:v1 ? ('وش معنى ' + (v1.en || '') + '؟، What does "' + (v1.en || '') + '" mean?') : 'كيف ترد؟، How do you respond?', options:v1 ? [v1.ar || v1.en || 'A', (v2 && v2.ar) || 'B', (v3 && v3.ar) || 'C'] : ['Yes','No','Maybe'], correct:0},
     ],
     summary:'A practical ' + academy.en + ' lesson around "' + bankItem.en + '," with the phrases you actually need in that situation.',
     takeaway:'جرب تستخدم عبارة واحدة من هذا الدرس في موقف حقيقي اليوم.',
