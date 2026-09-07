@@ -14101,15 +14101,19 @@ function toggleBookmark(type, id, label, sub){
 }
 function markLessonComplete(academyId, lessonId){
   const key = lessonKey(academyId, lessonId);
-  if(completedLessons.has(key)) return;
+  // Return the server-authoritative progression promise so the Stage's
+  // "Next lesson" button can await the DB route before navigating, instead of
+  // guessing the next lesson from the same-academy list.
+  if(completedLessons.has(key)) return Promise.resolve(window.PEL_EFFECTIVE_STATE || null);
   completedLessons.add(key); persistStudentState();
   // Database-authoritative progression: the server validates, records,
   // advances stage/level and returns the new effective state. Local state
   // above is only an offline mirror; the DB is the source of truth.
+  let rpcPromise = Promise.resolve(null);
   try{
     const c = client();
     if(c && currentUser){
-      c.rpc('complete_activity', { p_lesson_id: lessonId })
+      rpcPromise = c.rpc('complete_activity', { p_lesson_id: lessonId })
         .then(({ data, error }) => {
           if(!error && data && data.ok !== false){
             window.PEL_EFFECTIVE_STATE = data;
@@ -14117,7 +14121,8 @@ function markLessonComplete(academyId, lessonId){
             // Guided mode: serve the next lesson without leaving the flow.
             if(guidedMode()) setTimeout(() => { startNextGuidedLesson(); }, 1400);
           }
-        }).catch(()=>{});
+          return data;
+        }).catch(()=>null);
     }
   }catch(e){}
   const compDates = lsGet('pel_completion_dates', {});
@@ -14143,6 +14148,7 @@ function markLessonComplete(academyId, lessonId){
   renderDashboardIntel();
   const completedTitle = (reviewLesson && reviewLesson.title) ? reviewLesson.title : 'this lesson';
   toast(`<span class="arabic">اكتمل الدرس: ${completedTitle}</span>، Lesson complete: ${completedTitle}`); confettiBurst();
+  return rpcPromise;
 }
 function defaultStudentStats(){ return { xp: 0, streak: 0, longestStreak: 0, lastStudyDate: null }; }
 function saveStudentStats(){ persistStudentState(); }
@@ -21653,12 +21659,24 @@ body.pel-lesson-mode .sidebar,body.pel-lesson-mode .topbar,body.pel-lesson-mode 
           <button class="pel-act-primary ghost" id="pelDoneHome">${L('Back to path','ارجع للمسار')}</button>
         </div></div>`;
       // record progression (server-authoritative via existing path)
-      try{ if(typeof markLessonComplete==='function') markLessonComplete(s.academyId, s.lessonId); }catch(e){}
+      try{ if(typeof markLessonComplete==='function') s.completionPromise = markLessonComplete(s.academyId, s.lessonId); }catch(e){}
       s.done=true;
       const next = $('#pelDoneNext'); const home = $('#pelDoneHome');
       home.onclick = ()=>{ this.close(); try{ if(typeof goToView==='function') goToView('home'); }catch(e){} };
-      next.onclick = ()=>{
-        // open the next unlocked lesson if available
+      next.onclick = async ()=>{
+        // Wait for the server to record completion + return the new route,
+        // so "Next lesson" follows the plan/level-guided path (nextLesson),
+        // not just the next lesson in the same academy.
+        try{ if(s.completionPromise && typeof s.completionPromise.then==='function'){ await s.completionPromise; } }catch(e){}
+        try{
+          if(typeof nextLesson==='function'){
+            const routed = nextLesson();
+            if(routed && !(routed.academy===s.academyId && routed.lesson===s.lessonId)){
+              this.close(); openLesson(routed.academy, routed.lesson); return;
+            }
+          }
+        }catch(e){}
+        // Fallback: next unlocked lesson in the same academy.
         try{
           if(typeof academyLessonList==='function' && typeof openLesson==='function'){
             const list = academyLessonList(s.academy);
