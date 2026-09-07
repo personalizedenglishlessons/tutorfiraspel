@@ -21494,12 +21494,19 @@ body.pel-lesson-mode .sidebar,body.pel-lesson-mode .topbar,body.pel-lesson-mode 
       seq.push({ type:'complete_dialogue', conv, gap:3, pool:main, skill:'grammar' });
     }
 
-    // 13. Grammar correction or choose natural
+    // 13. Grammar correction or choose natural.
+    // Prefer an authored DB `correct` exercise (it carries a wrong/right pair
+    // plus a bilingual why-explanation) over a synthetically broken sentence.
+    const correctExercise = (Array.isArray(lesson.exercises) ? lesson.exercises : [])
+      .find(x => x && x.type === 'correct' && x.payload && x.payload.wrong && x.payload.right);
     if(quiz.length){
       seq.push({ type:'choose_natural_expression', quiz, skill:'grammar' });
+    }else if(correctExercise){
+      seq.push({ type:'grammar_correction', exercise:correctExercise, skill:'grammar' });
     }else{
       const grItem = main[2] || main[0] || items[0];
-      seq.push({ type:'grammar_correction', item:grItem, skill:'grammar' });
+      const pair = makeSafeCorrectionPair(grItem);
+      if(pair) seq.push({ type:'grammar_correction', pair, skill:'grammar' });
     }
 
     // 14. Free response
@@ -21961,15 +21968,39 @@ body.pel-lesson-mode .sidebar,body.pel-lesson-mode .topbar,body.pel-lesson-mode 
       ctx.self.ready(ctx, L('Check','تحقق'), ()=>{ const correct=norm(sel)===norm(target.en); btns.forEach(b=>{ if(norm(b.textContent)===norm(target.en))b.classList.add('correct'); else if(norm(b.textContent)===norm(sel))b.classList.add('wrong'); }); ctx.self.mark(ctx,correct); });
     },
     grammar_correction(inner, act, ctx){
-      const it=act.item; const correct=it.sentences[0]||{en:it.example.en,ar:it.ar};
-      const wrong=correct.en.replace(/^I /, 'I is ');
+      // Authored DB `correct` exercise: show the wrong sentence, ask the
+      // student to type the right one, then reveal the bilingual why so they
+      // understand the rule (not just the answer).
+      if(act.exercise && act.exercise.payload){
+        const p=act.exercise.payload;
+        const whyEn = p.why_en || act.exercise.hint_en || '';
+        const whyAr = p.why_ar || act.exercise.hint_ar || '';
+        inner.innerHTML = `<div class="pel-act-prompt">${L('Fix the mistake','صحح الخطا')}</div>
+          <div class="pel-act-en" style="font-size:1.4rem;">✕ ${esc(p.wrong)}</div>
+          ${p.wrong_tr?`<div class="pel-act-translit arabic">${esc(p.wrong_tr)}</div>`:''}
+          <input class="pel-input" id="pelGrIn" style="margin-top:16px;" placeholder="${L('Type the correct sentence...','اكتب الجملة الصحيحة...')}" autocomplete="off" autocapitalize="off" />
+          <div id="pelGrWhy" class="pel-reveal" style="opacity:0;max-height:0;overflow:hidden;"></div>`;
+        const inp=$('#pelGrIn'); setTimeout(()=>inp.focus(),50);
+        inp.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); ctx.btn.click(); } });
+        ctx.self.ready(ctx, L('Check','تحقق'), ()=>{
+          const ok = norm(inp.value)===norm(p.right);
+          if(ok){
+            const why=$('#pelGrWhy');
+            if(why){ why.innerHTML = `${whyEn?`<div class="pel-act-hint">${esc(whyEn)}</div>`:''}${whyAr?`<div class="pel-act-hint arabic">${esc(whyAr)}</div>`:''}`; why.style.opacity='1'; why.style.maxHeight='320px'; }
+          }
+          ctx.self.mark(ctx, ok);
+        });
+        return;
+      }
+      // Safe fallback: only when we can build a non-trivial wrong/right pair.
+      const pair=act.pair;
+      if(!pair){ ctx.self.next(); return; }
       inner.innerHTML = `<div class="pel-act-prompt">${L('Fix the mistake','صحح الخطا')}</div>
-        <div class="pel-act-en" style="font-size:1.5rem;">${esc(wrong)}</div>
-        <input class="pel-input" id="pelGrIn" style="margin-top:16px;" placeholder="${L('Type the correct sentence...','اكتب الجملة الصحيحة...')}" autocomplete="off" autocapitalize="off" />
-        <div class="pel-act-hint arabic">${esc(correct.ar)}</div>`;
+        <div class="pel-act-en" style="font-size:1.4rem;">✕ ${esc(pair.wrong)}</div>
+        <input class="pel-input" id="pelGrIn" style="margin-top:16px;" placeholder="${L('Type the correct sentence...','اكتب الجملة الصحيحة...')}" autocomplete="off" autocapitalize="off" />`;
       const inp=$('#pelGrIn'); setTimeout(()=>inp.focus(),50);
       inp.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); ctx.btn.click(); } });
-      ctx.self.ready(ctx, L('Check','تحقق'), ()=>ctx.self.mark(ctx, norm(inp.value)===norm(correct.en)));
+      ctx.self.ready(ctx, L('Check','تحقق'), ()=>ctx.self.mark(ctx, norm(inp.value)===norm(pair.right)));
     },
     choose_natural_expression(inner, act, ctx){
       const q=act.quiz[0]; const opts=(q.options||[]);
@@ -22059,6 +22090,24 @@ body.pel-lesson-mode .sidebar,body.pel-lesson-mode .topbar,body.pel-lesson-mode 
   // or a DB object {t,tr,ok} (from lesson_exercises choose rows).
   function optText(o){ return (typeof o==='string') ? o : ((o && (o.t||o.text||o.en||o.label))||''); }
   function optSub(o){ return (typeof o==='string') ? '' : ((o && (o.tr||o.translit||o.ar))||''); }
+  // Build a non-trivial wrong/right pair ONLY when the source sentence begins
+  // with a pronoun + be (I am / You are / He is ...). The student sees the
+  // grammatically-wrong version and must type the correct one. Never returns
+  // a no-op pair, so we never show a 'fix' that is already correct.
+  function makeSafeCorrectionPair(it){
+    const ex = (it && it.example && it.example.en) ? it.example : null;
+    const correct = (it && it.sentences && it.sentences[0]) || ex || (it && it.en ? {en:it.en, ar:it.ar} : null);
+    if(!correct || !correct.en) return null;
+    const m = /^(\s*)(I am|You are|He is|She is|It is|We are|They are)\b/i.exec(correct.en);
+    if(!m) return null;
+    const be = m[2].toLowerCase();
+    const swap = {'i am':'i is','you are':'you is','he is':'he are','she is':'she are','it is':'it are','we are':'we is','they are':'they is'}[be];
+    if(!swap) return null;
+    const lead = m[1]||'';
+    const wrong = correct.en.replace(m[0], lead + swap.charAt(0).toUpperCase() + swap.slice(1));
+    if(wrong.toLowerCase() === correct.en.toLowerCase()) return null;
+    return { wrong, right: correct.en, ar: correct.ar };
+  }
 
   const TYPE_LABELS_DEF = {
     learn:['Learn','تعلم'], learn_sentence:['Sentence','جملة'], recognize:['Recognize','تعرف'],
