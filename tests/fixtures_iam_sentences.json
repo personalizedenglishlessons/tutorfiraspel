@@ -1,0 +1,164 @@
+{
+  "lesson": {
+    "id": "i-am-sentences",
+    "title_en": "I am: your first English sentence",
+    "title_ar": "اي ام: اول جملة انجليزية لك",
+    "level": "A0",
+    "kind": "core"
+  },
+  "items": [
+    {
+      "idx": 0,
+      "kind": "word",
+      "en": "I",
+      "ar": "انا",
+      "tr": "اي",
+      "example_en": null,
+      "example_ar": null,
+      "note_en": null
+    },
+    {
+      "idx": 1,
+      "kind": "word",
+      "en": "am",
+      "ar": "اكون مع انا",
+      "tr": "ام",
+      "example_en": null,
+      "example_ar": null,
+      "note_en": null
+    },
+    {
+      "idx": 2,
+      "kind": "explain",
+      "en": "English order: subject then verb. I + am.",
+      "ar": "بالانجليزي: الفاعل بعدين الفعل. اي + ام",
+      "tr": "انجلش اوردر: سابجيكت ذين ڤيرب. اي + ام.",
+      "example_en": null,
+      "example_ar": null,
+      "note_en": null
+    },
+    {
+      "idx": 3,
+      "kind": "sentence",
+      "en": "I am fine.",
+      "ar": "انا زين.",
+      "tr": "اي ام فاين",
+      "example_en": null,
+      "example_ar": null,
+      "note_en": null
+    },
+    {
+      "idx": 4,
+      "kind": "sentence",
+      "en": "I am ready.",
+      "ar": "انا جاهز.",
+      "tr": "اي ام ريدي",
+      "example_en": null,
+      "example_ar": null,
+      "note_en": null
+    },
+    {
+      "idx": 5,
+      "kind": "sentence",
+      "en": "I am tired.",
+      "ar": "انا تعبان.",
+      "tr": "اي ام تايرد",
+      "example_en": null,
+      "example_ar": null,
+      "note_en": null
+    },
+    {
+      "idx": 6,
+      "kind": "sentence",
+      "en": "I am happy today.",
+      "ar": "انا فرحان اليوم.",
+      "tr": "اي ام هابي توداي",
+      "example_en": null,
+      "example_ar": null,
+      "note_en": null
+    }
+  ],
+  "exercises": [
+    {
+      "idx": 0,
+      "type": "order",
+      "payload": {
+        "ar": "انا جاهز",
+        "hint": {
+          "ar": "الفاعل اول شي وبعدين الفعل.",
+          "en": "Subject first, verb second."
+        },
+        "type": "order",
+        "answer": [
+          "I",
+          "am",
+          "ready"
+        ],
+        "prompt": {
+          "en": "Build it: I am ready.",
+          "tr": "بلد ات: اي ام ريدي"
+        },
+        "tokens": [
+          "I",
+          "am",
+          "ready"
+        ]
+      },
+      "hint_en": "Subject first, verb second.",
+      "hint_ar": "الفاعل اول شي وبعدين الفعل.",
+      "hint_tr": null
+    },
+    {
+      "idx": 1,
+      "type": "choose",
+      "payload": {
+        "hint": {
+          "ar": "مع هي نستخدم از.",
+          "en": "he / she / it takes is."
+        },
+        "type": "choose",
+        "options": [
+          {
+            "t": "am",
+            "ok": false,
+            "tr": "ام"
+          },
+          {
+            "t": "is",
+            "ok": true,
+            "tr": "از"
+          },
+          {
+            "t": "are",
+            "ok": false,
+            "tr": "ار"
+          }
+        ],
+        "question": {
+          "ar": "هي تعبانة",
+          "en": "She ___ tired.",
+          "tr": "شي ___ تايرد."
+        }
+      },
+      "hint_en": "he / she / it takes is.",
+      "hint_ar": "مع هي نستخدم از.",
+      "hint_tr": null
+    },
+    {
+      "idx": 2,
+      "type": "translate",
+      "payload": {
+        "dir": "en-ar",
+        "type": "translate",
+        "accept": [
+          "انا جوعان"
+        ],
+        "answer": "انا جوعان",
+        "source": "I am hungry."
+      },
+      "hint_en": null,
+      "hint_ar": null,
+      "hint_tr": null
+    }
+  ]
+}
