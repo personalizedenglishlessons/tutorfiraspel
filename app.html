@@ -21906,8 +21906,11 @@ body.pel-lesson-mode .sidebar,body.pel-lesson-mode .topbar,body.pel-lesson-mode 
       inner.innerHTML = `<div class="pel-act-prompt">${L('Listen carefully','انصح باهتمام')}</div>
         <button class="pel-act-play" id="pelLsnPlay" style="font-size:1.1rem;padding:16px 26px;"><i data-lucide="volume-2" width="20" height="20"></i> ${L('Play','تشغيل')}</button>
         <div class="pel-act-hint">${L('Tap play and listen. You will identify it next.','اضغط تشغيل واصغي. بتحددها بعد.')}</div>`;
-      $('#pelLsnPlay').onclick=()=>play(it.example.en||it.en,'en-US');
-      ctx.self.ready(ctx, L('Continue','متابعة'), ()=>ctx.self.next());
+      // Gate Continue on actually hearing the audio: a student cannot skip
+      // listening without pressing Play first.
+      ctx.btn.disabled=true;
+      ctx.self.ready(ctx, L('Play first','شغل الصوت أولاً'), ()=>{});
+      $('#pelLsnPlay').onclick=()=>{ play(it.example.en||it.en,'en-US'); ctx.self.ready(ctx, L('Continue','متابعة'), ()=>ctx.self.next()); };
     },
     identify_heard(inner, act, ctx){
       const it=act.item; const pool=act.pool.length>=3?act.pool:[...act.pool,...PEL_STARTER_ITEMS];
