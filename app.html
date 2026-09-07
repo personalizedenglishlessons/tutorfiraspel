@@ -21500,19 +21500,21 @@ body.pel-lesson-mode .sidebar,body.pel-lesson-mode .topbar,body.pel-lesson-mode 
       seq.push({ type:'complete_dialogue', conv, gap:3, pool:main, skill:'grammar' });
     }
 
-    // 13. Grammar correction or choose natural.
-    // Prefer an authored DB `correct` exercise (it carries a wrong/right pair
-    // plus a bilingual why-explanation) over a synthetically broken sentence.
+    // 13. Grammar + natural-expression practice.
+    // Use BOTH when the lesson has them: a `correct` exercise (wrong/right
+    // pair + bilingual why) and a `choose` quiz. 82 lessons have both and were
+    // previously dropping the authored `correct` exercise because choose won.
     const correctExercise = (Array.isArray(lesson.exercises) ? lesson.exercises : [])
       .find(x => x && x.type === 'correct' && x.payload && x.payload.wrong && x.payload.right);
-    if(quiz.length){
-      seq.push({ type:'choose_natural_expression', quiz, skill:'grammar' });
-    }else if(correctExercise){
+    if(correctExercise){
       seq.push({ type:'grammar_correction', exercise:correctExercise, skill:'grammar' });
     }else{
       const grItem = main[2] || main[0] || items[0];
       const pair = makeSafeCorrectionPair(grItem);
       if(pair) seq.push({ type:'grammar_correction', pair, skill:'grammar' });
+    }
+    if(quiz.length){
+      seq.push({ type:'choose_natural_expression', quiz, skill:'grammar' });
     }
 
     // 14. Free response
