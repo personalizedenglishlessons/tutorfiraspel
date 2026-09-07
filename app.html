@@ -22043,12 +22043,37 @@ body.pel-lesson-mode .sidebar,body.pel-lesson-mode .topbar,body.pel-lesson-mode 
     },
     free_response(inner, act, ctx){
       const it=act.item;
-      inner.innerHTML = `<div class="pel-act-prompt">${L('Write your own answer','اكتب جوابك')}</div>
-        <div class="pel-act-en">${esc(it.example.en)}</div>
-        <div class="pel-act-ar arabic">${esc(it.example.ar)}</div>
-        <textarea class="pel-input" id="pelFrIn" style="margin-top:16px;min-height:90px;" placeholder="${L('Write in English...','اكتب بالانجليزي...')}"></textarea>`;
+      // Production from meaning: show the Arabic + the target word to use,
+      // HIDE the English model so the student must produce it themselves.
+      // Reveal the model only after they write, for self-comparison.
+      let revealed = false;
+      const prompt = ar() ? `اكتب جملة بالانجليزي تستخدم كلمة <b>${esc(it.en)}</b>` : `Write a sentence in English using <b>${esc(it.en)}</b>`;
+      inner.innerHTML = `<div class="pel-act-prompt">${prompt}</div>
+        <div class="pel-act-ar arabic" style="font-size:1.4rem;">${esc(it.ar)}</div>
+        ${it.translit?`<div class="pel-act-hint arabic">${esc(it.translit)}</div>`:''}
+        <textarea class="pel-input" id="pelFrIn" style="margin-top:16px;min-height:90px;" placeholder="${L('Write your own sentence...','اكتب جملتك...')}" autocomplete="off" autocapitalize="off"></textarea>
+        <div id="pelFrReveal" class="pel-reveal" style="opacity:0;max-height:0;overflow:hidden;"></div>`;
       const inp=$('#pelFrIn'); setTimeout(()=>inp.focus(),50);
-      ctx.self.ready(ctx, L('Done','تم'), ()=>ctx.self.mark(ctx, inp.value.trim().length>2));
+      const revealModel = () => {
+        if(revealed) return; revealed = true;
+        const r = inner.querySelector('#pelFrReveal');
+        if(r && it.example && it.example.en){
+          r.innerHTML = `<div class="pel-act-hint">${L('Model answer','جواب نموذجي')}</div>
+            <div class="pel-act-en">${esc(it.example.en)}</div>
+            ${it.example.ar?`<div class="pel-act-ar arabic">${esc(it.example.ar)}</div>`:''}`;
+          r.style.opacity='1'; r.style.maxHeight='320px';
+        }
+      };
+      ctx.self.ready(ctx, L('Done','تم'), ()=>{
+        const v = inp.value.trim();
+        // Meaningful check: must actually use the target word and write a
+        // real sentence (3+ words), not just tap through with 3 characters.
+        const usesTarget = norm(v).indexOf(norm(it.en)) !== -1;
+        const wordCount = v.split(/\s+/).filter(Boolean).length;
+        const ok = usesTarget && wordCount >= 3;
+        revealModel();
+        ctx.self.mark(ctx, ok);
+      });
     },
     review(inner, act, ctx){
       // Active recall: show English, hide Arabic. Student must try to
@@ -23031,6 +23056,12 @@ body.pel-translit-hidden .pel-act-translit,body.pel-translit-hidden .ex-tr,body.
 </style>
 <script>
 (function(){
+  // Self-contained localStorage helpers. The main app defines lsGet/lsSet
+  // inside its own IIFE scope, so they are not visible here; redefining them
+  // locally avoids a ReferenceError that broke the transliteration FAB on
+  // every page load.
+  function lsGet(key, fallback){ try{ return JSON.parse(localStorage.getItem(key)) ?? fallback; }catch(e){ return fallback; } }
+  function lsSet(key, val){ try{ localStorage.setItem(key, JSON.stringify(val)); }catch(e){} }
   function mountFab(){
     if(document.getElementById('pelTransFab')) return;
     const fab=document.createElement('button');
