@@ -21972,11 +21972,16 @@ body.pel-lesson-mode .sidebar,body.pel-lesson-mode .topbar,body.pel-lesson-mode 
       ctx.self.ready(ctx, L('Check','تحقق'), ()=>ctx.self.mark(ctx, norm(inp.value)===norm(correct.en)));
     },
     choose_natural_expression(inner, act, ctx){
-      const q=act.quiz[0]; const opts=(q.options||[]); const correctIdx=q.correct;
+      const q=act.quiz[0]; const opts=(q.options||[]);
+      // DB choose exercises map options to objects {t,tr,ok}; authored ones
+      // use plain strings with a numeric `correct`. Support both so we never
+      // render "[object Object]" for the 319 DB lessons that have a quiz.
+      let correctIdx = (typeof q.correct === 'number') ? q.correct : opts.findIndex(o => (typeof o==='object' && o && o.ok));
+      if(correctIdx < 0) correctIdx = 0;
       let sel=null;
       inner.innerHTML = `<div class="pel-act-prompt">${L('Choose the natural one','اختر الطبيعي')}</div>
         <div style="font-size:1.1rem;margin-bottom:14px;">${q.q}</div>
-        <div class="pel-options">${opts.map((o,i)=>`<button class="pel-option" data-i="${i}"><span class="o-en">${esc(o)}</span></button>`).join('')}</div>`;
+        <div class="pel-options">${opts.map((o,i)=>`<button class="pel-option" data-i="${i}"><span class="o-en">${esc(optText(o))}</span>${optSub(o)?`<span class="o-ar arabic">${esc(optSub(o))}</span>`:''}</button>`).join('')}</div>`;
       const btns=inner.querySelectorAll('.pel-option');
       btns.forEach(b=>b.onclick=()=>{ btns.forEach(x=>x.classList.remove('selected')); b.classList.add('selected'); sel=+b.dataset.i; });
       ctx.btn.disabled=true;
@@ -22050,6 +22055,10 @@ body.pel-lesson-mode .sidebar,body.pel-lesson-mode .topbar,body.pel-lesson-mode 
     const pool = (lesson.vocab||[]).map(v=>v.en).filter(e=>e&&norm(e)!==norm(it.en));
     return pool.length?pool:['yes','no','today','tomorrow'];
   }
+  // Resolve a quiz option's visible text whether it is a plain string (authored)
+  // or a DB object {t,tr,ok} (from lesson_exercises choose rows).
+  function optText(o){ return (typeof o==='string') ? o : ((o && (o.t||o.text||o.en||o.label))||''); }
+  function optSub(o){ return (typeof o==='string') ? '' : ((o && (o.tr||o.translit||o.ar))||''); }
 
   const TYPE_LABELS_DEF = {
     learn:['Learn','تعلم'], learn_sentence:['Sentence','جملة'], recognize:['Recognize','تعرف'],
