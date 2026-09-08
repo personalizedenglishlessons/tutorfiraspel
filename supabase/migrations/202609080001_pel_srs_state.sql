@@ -39,3 +39,7 @@ create policy "own srs rows delete" on public.pel_srs_state
 
 create index if not exists pel_srs_state_due_idx
   on public.pel_srs_state (user_id, due_at);
+
+-- Grants: RLS policies alone do not confer table privileges; the
+-- authenticated role (the student's supabase-js session) needs them.
+grant select, insert, update, delete on public.pel_srs_state to authenticated;
