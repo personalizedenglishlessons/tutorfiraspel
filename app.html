@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://lewoochehpiycocvfwtz.supabase.co https://api.supabase.co wss://lewoochehpiycocvfwtz.supabase.co https://api.dictionaryapi.dev https://translate.googleapis.com; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none';">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://lewoochehpiycocvfwtz.supabase.co https://api.supabase.co wss://lewoochehpiycocvfwtz.supabase.co https://api.dictionaryapi.dev https://translate.googleapis.com https://unpkg.com; base-uri 'self'; form-action 'self'; object-src 'none';">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PEL · Learning Home</title>
 <meta name="robots" content="noindex">
@@ -16118,8 +16118,13 @@ function renderCefrPath(){
   const el = document.getElementById('view-cefr');
   if(!el) return;
   if(!document.getElementById('cefrPathStyle')){ const s=document.createElement('style'); s.id='cefrPathStyle'; s.textContent=CEFR_PATH_STYLE; document.head.appendChild(s); }
+  // Scope note: ar()/L() live in the main app IIFE and lib factories (out of
+  // scope in this block) and this block's L() is a vocab builder — so use
+  // local helpers instead. accountPrefs IS in scope here (top-level let).
+  const isAr = (accountPrefs && accountPrefs.lang==='ar') || document.documentElement.dir==='rtl';
+  const esc = (s) => escapeHtml(String(s==null?'':s));
+  const L = (en, arTxt) => isAr ? arTxt : en;
   const learningAr = learningDirection()==='ar';
-  const isAr = ar();
   const levelsHtml = CEFR_LEVELS.map((lvl) => {
     const academies = ACADEMIES.filter(a => {
       const isArabicTrack = a.dir === 'ar';
