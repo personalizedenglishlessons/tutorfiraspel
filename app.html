@@ -1522,6 +1522,11 @@ function client(){
   if(window.supabase) supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   return supabase;
 }
+/* Bridge the shared client to satellite modules (live classes etc.) that
+   live OUTSIDE this IIFE — `client` is scoped here and was never visible to
+   them, which silently broke the Live Classes view (0 credits, dead تم
+   button) since it was written. */
+window.pelSupabaseClient = function(){ return client(); };
 
 /* Persist a student feedback event (roleplay / writing review) to Supabase so
    the teacher can review conversation-fit notes, grammar issues and scores.
@@ -19734,9 +19739,11 @@ if(window.lucide) lucide.createIcons();
   let _c=null;
   // Reuse the single shared client() instance only. Never create a second
   // GoTrueClient here — the previous fallback (window.supabase.createClient)
-  // was the source of the "Multiple GoTrueClient instances" warning. If the
-  // shared client isn't ready yet, return null; the polling interval retries.
-  function c(){ if(_c) return _c; try{ if(typeof client==='function'){ _c=client(); } }catch(e){} return _c; }
+  // was the source of the "Multiple GoTrueClient instances" warning. The
+  // shared client() is scoped inside the main app IIFE, so it is bridged to
+  // window.pelSupabaseClient there; `typeof client` alone is always
+  // 'undefined' from this block.
+  function c(){ if(_c) return _c; try{ if(typeof window.pelSupabaseClient==='function'){ _c=window.pelSupabaseClient(); } else if(typeof client==='function'){ _c=client(); } }catch(e){} return _c; }
   function ar(){ try{ if(window.accountPrefs&&accountPrefs.lang==='ar') return true; if(document.documentElement.dir==='rtl') return true; }catch(e){} return false; }
   function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
   let OVER=null;
