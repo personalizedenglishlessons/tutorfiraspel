@@ -13534,7 +13534,7 @@ function renderDbPractice(container, exercises){
       return head('Fix the mistake', `
         <div style="font-size:.84rem; color:var(--text-muted); margin-bottom:10px;"><span class="arabic">${x.hint_ar || ''}</span>${x.hint_en ? '، ' + x.hint_en : ''}</div>
         <div class="dbx-tokens" style="display:grid; gap:8px; margin-bottom:12px;">
-          <div><button class="quiz-option dbx-pick" data-ok="wrong" style="text-align:left;">✕ ${p.wrong}</button><div class="arabic" style="font-size:.78rem;color:var(--gold-soft);margin-top:2px;">${p.wrong_tr || translitEn(p.wrong || '')}</div></div>
+          <div><button class="quiz-option dbx-pick" data-ok="wrong" style="text-align:left;">${p.wrong}</button><div class="arabic" style="font-size:.78rem;color:var(--gold-soft);margin-top:2px;">${p.wrong_tr || translitEn(p.wrong || '')}</div></div>
           <div><button class="quiz-option dbx-pick" data-ok="right" style="text-align:left;">${p.right}</button><div class="arabic" style="font-size:.78rem;color:var(--gold-soft);margin-top:2px;">${p.right_tr || translitEn(p.right || '')}</div></div>
         </div>
         <div class="dbx-why" style="display:none; font-size:.8rem; color:var(--emerald);"></div>`);
@@ -19990,99 +19990,5 @@ if(window.lucide) lucide.createIcons();
 })();
 </script>
 
-<!-- Floating Draggable Translation Toggle Button -->
-<style>
-#pelTransFab{position:fixed;z-index:9800;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-soft));color:#171412;border:none;box-shadow:0 4px 16px rgba(0,0,0,.35);cursor:grab;display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:800;user-select:none;touch-action:none;transition:box-shadow .2s,transform .15s;}
-#pelTransFab:active{cursor:grabbing;transform:scale(1.08);box-shadow:0 6px 24px rgba(0,0,0,.45);}
-#pelTransFab.on{background:linear-gradient(135deg,#42a36a,#2d7a4e);color:#fff;}
-#pelTransFab.hide-translit{background:linear-gradient(135deg,var(--card-elevated),var(--card));color:var(--text-muted);border:1px solid var(--border);}
-#pelTransFab .fab-label{position:absolute;bottom:-22px;left:50%;transform:translateX(-50%);font-size:.6rem;white-space:nowrap;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:.03em;pointer-events:none;}
-body.pel-translit-hidden .pel-act-translit,body.pel-translit-hidden .ex-tr,body.pel-translit-hidden .situation-translit,body.pel-translit-hidden .pel-translit-fab-text,body.pel-translit-hidden .translit,body.pel-translit-hidden [data-translit],body.pel-translit-hidden .pel-act-hint,body.pel-translit-hidden .o-ar{display:none !important;}
-</style>
-<script>
-(function(){
-  // Self-contained localStorage helpers. The main app defines lsGet/lsSet
-  // inside its own IIFE scope, so they are not visible here; redefining them
-  // locally avoids a ReferenceError that broke the transliteration FAB on
-  // every page load.
-  function lsGet(key, fallback){ try{ return JSON.parse(localStorage.getItem(key)) ?? fallback; }catch(e){ return fallback; } }
-  function lsSet(key, val){ try{ localStorage.setItem(key, JSON.stringify(val)); }catch(e){} }
-  function mountFab(){
-    if(document.getElementById('pelTransFab')) return;
-    const fab=document.createElement('button');
-    fab.id='pelTransFab';
-    fab.className='on';
-    fab.innerHTML='ع<sub style="font-size:.5em;">EN</sub>';
-    fab.title='Drag to move. Click to toggle transliteration.';
-    const label=document.createElement('span'); label.className='fab-label'; label.textContent='Translit';
-    fab.appendChild(label);
-
-    // Position: bottom-right by default, but remember last position
-    const savedPos=lsGet('pel_fab_pos',null);
-    if(savedPos){ fab.style.left=savedPos.x+'px'; fab.style.top=savedPos.y+'px'; }
-    else{ fab.style.right='20px'; fab.style.bottom='80px'; }
-
-    document.body.appendChild(fab);
-
-    // --- Drag logic (mouse + touch) ---
-    let dragging=false, moved=false, sx=0, sy=0, fx=0, fy=0;
-    function onDown(e){
-      dragging=true; moved=false;
-      const t=e.touches?e.touches[0]:e;
-      sx=t.clientX; sy=t.clientY;
-      const r=fab.getBoundingClientRect();
-      fx=r.left; fy=r.top;
-      fab.style.right='auto'; fab.style.bottom='auto';
-      e.preventDefault();
-    }
-    function onMove(e){
-      if(!dragging) return;
-      const t=e.touches?e.touches[0]:e;
-      const dx=t.clientX-sx, dy=t.clientY-sy;
-      if(Math.abs(dx)>4||Math.abs(dy)>4) moved=true;
-      let nx=fx+dx, ny=fy+dy;
-      // Clamp to viewport
-      const maxX=window.innerWidth-52, maxY=window.innerHeight-52;
-      nx=Math.max(4,Math.min(maxX,nx)); ny=Math.max(4,Math.min(maxY,ny));
-      fab.style.left=nx+'px'; fab.style.top=ny+'px';
-      e.preventDefault();
-    }
-    function onUp(e){
-      if(!dragging) return;
-      dragging=false;
-      if(moved){
-        // Save position
-        const r=fab.getBoundingClientRect();
-        lsSet('pel_fab_pos',{x:r.left,y:r.top});
-      } else {
-        // Click: toggle transliteration visibility
-        toggleTranslit();
-      }
-      e.preventDefault();
-    }
-    function toggleTranslit(){
-      const hidden=document.body.classList.toggle('pel-translit-hidden');
-      fab.classList.toggle('on',!hidden);
-      fab.classList.toggle('hide-translit',hidden);
-      label.textContent=hidden?'Hidden':'Translit';
-      // Save preference
-      lsSet('pel_translit_hidden',hidden);
-    }
-    // Restore saved preference
-    if(lsGet('pel_translit_hidden',false)){ toggleTranslit(); }
-
-    fab.addEventListener('mousedown',onDown);
-    fab.addEventListener('touchstart',onDown,{passive:false});
-    document.addEventListener('mousemove',onMove);
-    document.addEventListener('touchmove',onMove,{passive:false});
-    document.addEventListener('mouseup',onUp);
-    document.addEventListener('touchend',onUp);
-    document.addEventListener('touchcancel',onUp);
-  }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',mountFab);
-  else mountFab();
-  setTimeout(mountFab,1500);
-})();
-</script>
 </body>
 </html>

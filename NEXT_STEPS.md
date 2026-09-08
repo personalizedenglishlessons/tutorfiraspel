@@ -1,6 +1,27 @@
 # NEXT STEPS — pick up here
 
-Last updated: 2026-09-08 (after commits `81944a5` refactor + this session's features).
+## ✅ DONE (2026-09-08): "translit leaks the answers" — see git commit "fix: stop leaking answers"
+
+Rule now enforced app-wide: **no secondary-language clue inside any graded
+option before the student answers**; translit/Arabic appear in teaching screens,
+explicit hints, or the post-check reveal only. Shipped:
+
+1. `recognize`: options show the Arabic meaning ONLY; after Check, the correct
+   button reveals "word · transliteration".
+2. `identify_heard`: English-only options; Arabic meaning revealed on the
+   correct option after Check.
+3. `choose_natural_expression`: no subtitles during selection; the correct
+   option gains its Arabic/translit subtitle in the reveal.
+4. `db_correct` ("Fix the mistake" in app.html): removed the literal ✕ that was
+   printed on the WRONG option before answering (worst leak found).
+5. Translit FAB deleted entirely (CSS + drag/toggle IIFE + pel-translit-hidden
+   rule; orphaned localStorage keys left alone). Deliberately kept: learn/concept
+   translits (teaching), fill_blank on-demand hint, dbx option translits (both
+   options show theirs — doesn't reveal which is right), vocab reference lists.
+
+---
+
+Last updated: 2026-09-08 (after commits `81944a5` refactor, `be21987`+`4a070e4` missing-elements).
 Read this + `AUDIT_REPORT.md` first. Run `node tests/test_buildsequence_iam.js` before
 and after any stage change — it loads the REAL `lib/pel_lesson_stage.js`.
 
