@@ -62,10 +62,13 @@
 
 ## Fix Priority
 
-1. Fix `learn` activity → progressive reveal (intro → audio → meaning)
-2. Fix `review` activity → active recall (hide Arabic, test, reveal)
-3. Fix `buildSequence` → distribute activities across ALL vocab items
-4. Fix `pronunciation` → use speech recognition instead of self-assessment
-5. Fix `recognize` → add gap between learning and testing
-6. Fix `listen` → require student action
-7. Fix `arrange_words` → hide Arabic hint
+STATUS (2026-09-08): items 1-7 are DONE and verified (see NEXT_STEPS.md).
+Kept for history:
+
+1. ~~Fix `learn` activity → progressive reveal~~ DONE (Show meaning button)
+2. ~~Fix `review` activity → active recall~~ DONE (I knew it / Forgot + SRS)
+3. ~~Fix `buildSequence` → distribute across ALL vocab items~~ DONE (main[0..2])
+4. ~~Fix `pronunciation` → use speech recognition~~ DONE (recordAndScore + pronFeedback)
+5. ~~Fix `recognize` → add gap between learning and testing~~ DONE (learn → recognize ordering + dedup distractors)
+6. ~~Fix `listen` → require student action~~ DONE (gated on Play; superseded by listening_dictation)
+7. ~~Fix `arrange_words` → hide Arabic hint~~ DONE (Show hint button)

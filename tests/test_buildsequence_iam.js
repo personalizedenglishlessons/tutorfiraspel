@@ -98,6 +98,22 @@ const checks = {
   grammar_correction_has_real_wrong: !seq.some(a=>a.type==='grammar_correction' && !a.wrong),
   // regression guard for the sentence-fallback fix: no invented "Do you know X?" sentences
   no_invented_do_you_know_sentences: !buildItems(lesson).some(it => it.sentences.some(s => /^Do you (know|use) /.test(s.en))),
+  // ---- missing elements ----
+  dictation_present_with_real_sentence: seq.some(a=>a.type==='listening_dictation' && a.sentence && a.sentence.en && a.sentence.en.split(/\s+/).length>=2),
+  guided_production_present: seq.some(a=>a.type==='guided_production'),
+  guided_production_before_free_response: seq.findIndex(a=>a.type==='guided_production') < seq.findIndex(a=>a.type==='free_response') && seq.findIndex(a=>a.type==='free_response')>=0,
+  all_activities_mode_tagged: seq.every(a=>a.mode==='recognition' || a.mode==='production'),
+  production_majority_present: seq.filter(a=>a.mode==='production').length >= 8,
+  srs_scheduling_works: (() => {
+    // record a recall + a miss: the item must be scheduled in the FUTURE
+    // (reset interval = 1 day), so it must NOT appear in the due list now.
+    const it = { en:'hello', ar:'\u0647\u0644\u0627', translit:'\u0647\u0644\u0648' };
+    api.srsRecord(it, true);
+    api.srsRecord(it, true);
+    api.srsRecord(it, false);
+    const due = api.srsDueList(10);
+    return Array.isArray(due) && !due.some(x => x.en === 'hello');
+  })(),
 };
 console.log('\nCHECKS:');
 let pass = true;
