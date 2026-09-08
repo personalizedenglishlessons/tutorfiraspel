@@ -31,6 +31,14 @@ helpers inside the function. If another view renderer ever throws 'X is not defi
 check which script block it lives in (block A = app.html lines ~1490-19387) and whether
 the helper is actually in that block's top-level scope — the stage/dash factories'
 helpers do NOT leak.
+
+NOTE on `ba65868`: the Live Classes module could never see the shared supabase
+client (scoped inside the main app IIFE). It now uses window.pelSupabaseClient
+(bridged from inside the main IIFE right after client()). Any NEW satellite module
+must go through window.pelSupabaseClient — never `typeof client`, and never
+create a second GoTrueClient. Related known gap: ACADEMY_CEFR maps five a0-*
+academy ids that were never added to ACADEMIES, so the A0 level on the Levels
+(A0-C2) view shows 'Content for this level is coming' until those lessons exist.
 Read this + `AUDIT_REPORT.md` first. Run `node tests/test_buildsequence_iam.js` before
 and after any stage change — it loads the REAL `lib/pel_lesson_stage.js`.
 
