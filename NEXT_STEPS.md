@@ -21,7 +21,16 @@ explicit hints, or the post-check reveal only. Shipped:
 
 ---
 
-Last updated: 2026-09-08 (after commits `81944a5` refactor, `be21987`+`4a070e4` missing-elements).
+Last updated: 2026-09-08 (after commits `81944a5` refactor, `be21987`+`4a070e4` missing-elements,
+`70e2b7c` answer-leak fixes, `90af3db` CEFR view crash + CSP cleanup).
+
+NOTE on `90af3db`: the CEFR path view had been broken since it was written —
+renderCefrPath called ar()/esc() that only existed inside the old dashboard/stage
+IIFEs (never in its scope) and its L() resolved to a vocab builder. Fixed with local
+helpers inside the function. If another view renderer ever throws 'X is not defined',
+check which script block it lives in (block A = app.html lines ~1490-19387) and whether
+the helper is actually in that block's top-level scope — the stage/dash factories'
+helpers do NOT leak.
 Read this + `AUDIT_REPORT.md` first. Run `node tests/test_buildsequence_iam.js` before
 and after any stage change — it loads the REAL `lib/pel_lesson_stage.js`.
 
