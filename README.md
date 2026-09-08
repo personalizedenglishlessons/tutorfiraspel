@@ -46,14 +46,20 @@ embedded in the app source.
 See [`supabase/schema-notes.md`](supabase/schema-notes.md) for the tables, RLS, and
 how lessons / certificates / feedback are read.
 
-## Optional stage modules (`lib/pel_lesson_stage.js` etc.)
+## Stage modules (`lib/pel_lesson_stage.js` etc.) — SINGLE SOURCE OF TRUTH
 
-`app.html` already defines `PEL_LESSON_STAGE`, `PEL_CURRICULUM_PATH`, and
-`PEL_DASH_LIFE` inline (with guards so an external module can take precedence if loaded).
-The three `lib/pel_*.js` modules are enhanced mirrors kept for a future refactor that
-extracts app.html's inline logic. They are **not** force-loaded today to avoid
-double-definition/guard conflicts; the app is fully functional via the inline fallbacks
-(which include the Supabase feedback wiring).
+`lib/pel_lesson_stage.js`, `lib/pel_dashboard_life.js`, and
+`lib/pel_curriculum_path.js` ARE the live engine — loaded as synchronous
+scripts in `app.html` (no longer optional mirrors). The stage and dashboard
+modules are **factories** (`window.PEL_STAGE_FACTORY(deps)` /
+`window.PEL_DASH_LIFE_FACTORY(deps)`): `app.html` calls them inside its main
+script and injects the app helpers they need (`getLesson`, `markLessonComplete`,
+`ACADEMIES`, `toast`, ... plus getters for mutable state like `accountPrefs`).
+`lib/pel_curriculum_path.js` is self-contained and wires itself.
+
+**Never paste engine code back into `app.html`** — edit the lib module and the
+whole app picks it up. `tests/test_buildsequence_iam.js` loads the REAL
+factory file (not hand-copies) so it always tests the shipped code.
 
 ## Certificate printing
 
