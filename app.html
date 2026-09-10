@@ -1811,6 +1811,11 @@ async function revealApp(user){
   // Curriculum before anything that builds routes/plans from lesson lists.
   await Promise.race([loadCurriculum(), new Promise(r => setTimeout(r, 2500))]);
   await loadStudentState();
+  // Mirror the spaced-repetition schedule from/to pel_srs_state (cross-device
+  // continuity). Fire-and-forget: local-first play works even if this fails.
+  try{ if(window.PEL_STAGE_API && typeof window.PEL_STAGE_API.srsSync === 'function'){
+    window.PEL_STAGE_API.srsSync();
+  } }catch(e){}
   await loadSubPlan();
   await hydrateServerPlan(user);
   adoptVisitorPlan();
@@ -19350,9 +19355,16 @@ function renderDashboardIntel(){
       pronFeedback, recordAndScore, resolveAcademyById, speak, subBlocked, toast,
       translitEn,
       accountPrefs: function(){ return accountPrefs; },
-      openLesson: openLesson
+      openLesson: openLesson,
+      // SRS server sync (pel_srs_state): the stage engine guards these —
+      // no user / no client just means local-only scheduling.
+      supabase: function(){ try{ return client(); }catch(e){ return null; } },
+      userId: function(){ return currentUser && currentUser.id; }
     };
     const __pelStageApi = window.PEL_STAGE_FACTORY(__pelStageDeps);
+    /* Exposed so revealApp (login hook, earlier in this block) can trigger
+       the SRS pull/push without reaching into this if-block's scope. */
+    window.PEL_STAGE_API = __pelStageApi;
     const Stage = __pelStageApi.Stage;
     window.PEL_LESSON_STAGE = Stage;
     window.PEL_BEGINNER_PHASES = __pelStageApi.PEL_BEGINNER_PHASES;
