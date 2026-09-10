@@ -171,14 +171,23 @@ and after any stage change — it loads the REAL `lib/pel_lesson_stage.js`.
 
 ## Next, in priority order
 
-1. **Consider lib cache-busters** (`?v=<sha>` on the `lib/*.js` script tags in
-   app.html) so users never run a stale engine after a deploy — see the CDN
-   lag gotcha above.
-2. **Content**: the transliteration/phase content pipelines
+1. **Content**: the transliteration/phase content pipelines
    (`tools/translit_phase*`, `tools/phase4_ielts`, `tools/phase5_abha`) suggest
    a phase 6 was planned — check with Tutor Firas what content comes next.
-3. **Live Classes**: client bridge landed (`ba65868`) but end-to-end class
+2. **Live Classes**: client bridge landed (`ba65868`) but end-to-end class
    scheduling/attendance flow is still unverified in a browser.
+
+## ✅ DONE (2026-09-10): lib cache-busters (`c0d4642`)
+
+All same-origin `<script src>` tags in app/index/admin/login/verify.html now
+ carry `?v=<sha256[:8]>` of the file's content (admin/admin.js included; CDN
+ and SRI-tagged scripts untouched). `tools/bust_lib_cache.py` is idempotent
+ — **run `python3 tools/bust_lib_cache.py` before committing any lib/*.js
+ change** and include the HTML diff in the same commit, or students keep the
+ stale engine for up to 10 min (Pages max-age=600). Verified live: served
+ app.html carries the ?v= tags and the busted stage URL returns the current
+ code. Stray junk files accidentally committed with it were removed in
+ `a390491`.
 
 ## Environment notes (for the next session)
 
