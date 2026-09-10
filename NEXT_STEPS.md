@@ -1,5 +1,82 @@
 # NEXT STEPS — pick up here
 
+## ✅ DONE (2026-09-10, later session): QA + A0 fix + fallback removal + analytics + e2e
+
+All four items from the previous "Next, in priority order" list are DONE and
+pushed. Commits: `d1c5d6e` (A0 academies), `fef45e4` (fallback removal),
+`0deaa27` (analytics persist + surface), this breadcrumb commit (QA results).
+
+1. **Browser QA complete** (happy path + gate): 20-activity lesson
+   `a1pos-have-has` run end-to-end in a real browser — done screen showed
+   "Recognition: 5/5 · Production: 10/10", SRS rows landed in `pel_srs_state`,
+   completion recorded server-side. Gate verified on a second run with 5
+   deliberate first-attempt production failures (prodFirst 4/10 < 0.6) →
+   "Almost there" screen, no server completion, Practice again resets fresh.
+   Cross-device SRS verified: cleared localStorage → reload → rows re-seeded
+   from server.
+2. **A0 gap fixed** (`d1c5d6e`): five a0-* academies added to the ACADEMIES
+   const in app.html with DB-mirrored metadata (sentence-building, question
+   words, spelling-sounds, error-clinic, social-english). A0 level on the
+   Levels view now populates (43 active a0 lessons in DB).
+3. **Generic-fallback lesson removed** (`fef45e4`): getLesson now returns null
+   instead of fabricating a generic lesson; renderWorkspace shows a bilingual
+   "Lesson not available" empty state; static ACADEMY_LESSONS a0 entries now
+   list REAL DB lesson ids. `tools/audit-lessons.js` → 0 findings.
+4. **Recognition-vs-Production analytics** (`0deaa27`): `lesson_progress` gained
+   rec_ok/rec_total/prod_ok/prod_total/prod_first_ok; `complete_activity`
+   accepts `p_stats` jsonb (latest stats win, score keeps best); stage
+   renderDone passes real counters through markLessonComplete →
+   rpc('complete_activity', {p_lesson_id, p_stats}); `admin_student_360`
+   returns `lesson_stats` {totals, recent[12]}; admin Learning tab renders a
+   "Recognition vs Production" card + recent lessons list (badge green ≥ 60%
+   first-try). Migration file: `supabase/migrations/202609100001_lesson_progress_stats.sql`
+   (also applied LIVE).
+5. **E2E verified with real data**: browser completed A0 lesson
+   `i-am-sentences` (rec 5/5 · prod 11/11 · first 11/11) and the EXACT stats
+   landed in `lesson_progress` via the real client RPC; `admin_student_360`
+   returns correct totals + recent rows. QA coverage in this session also
+   completed have-to-obligation, a1tn-numbers-1-10, a1tn-telling-time,
+   a1tn-days, a1tn-months, a1tn-money from the browser.
+
+### Gotchas learned this session (READ BEFORE TESTING)
+
+- **GitHub Pages CDN lag on lib/*.js**: `<script src="lib/...">` has no
+  cache-buster and Pages sends max-age=600. During QA the browser kept the
+  pre-analytics `pel_lesson_stage.js` for ~10 min after push, which made
+  completions record with all-zero stats (old lib never passed p_stats).
+  Symptom: rows land but rec/prod = 0/0. Fix for testing: hard-reload with
+  cache disabled. Consider adding `?v=<sha>` busters to the lib script tags
+  in a future commit.
+- **PostgREST schema-cache window**: right after CREATE OR REPLACE FUNCTION,
+  browser RPCs to that function may silently fail (supabase-js swallows the
+  error; the completion promise resolves null). Waits itself out in a few
+  minutes. Don't e2e-test an RPC immediately after replacing it.
+- **markLessonComplete is an early-return no-op** if the lesson is already in
+  the local completedLessons set (restored from server state) — during QA a
+  re-run of a lesson the server already knew produced no RPC. Not a bug, but
+  it looks like one.
+- **QA-driver notes** (driver lives OUTSIDE the repo at the session workspace,
+  `/home/user/workspace/qa_driver.js` — rewrite from this breadcrumb if lost):
+  handles concept/learn, learn_sentence, listen, review, pronunciation,
+  db_order/arrange_words, inputs, options, challenge, match (brute-force
+  pairing via `#pelMatchEn/#pelMatchAr .pel-tile`), and quiz-format
+  `choose_natural_expression` (match DOM options to `a.quiz[i].options`
+  by `t+tr` text, pick `options[correct]`). Supabase-js does NOT go through
+  window.fetch — patching it captures nothing; use CDP Network events
+  (drain_events) to trace RPCs. Long runs exceed the CDP evaluate timeout —
+  poll `PEL_LESSON_STAGE.state` instead of assuming a wedge.
+
+### QA artifacts on the test account (intentional, known)
+
+- Student `testmail1@gmail.com` (user id 1d68ead7-7ef4-407a-9138-a171fa693272)
+  now has 9 lesson_progress rows; its route advanced to a1-time-numbers.
+  Stats were repaired via SQL to match the real runs (5/5, 10/10, first 8 for
+  have-to-obligation etc.). One earlier probe row (a1pos-my-your 1/1, 2/2)
+  was a REST probe with dummy-but-plausible stats.
+- `qa.agent@tutorfiraspel.test` was deleted (cascade) after QA.
+
+---
+
 ## ✅ DONE (2026-09-10): SRS server sync + mastery-gated completion
 
 1. **SRS server sync is LIVE** (commit `bc3a1a2`): `srsRecord()` now stamps
@@ -94,28 +171,14 @@ and after any stage change — it loads the REAL `lib/pel_lesson_stage.js`.
 
 ## Next, in priority order
 
-1. **Browser QA** of the newer activities AND the two 2026-09-10 features (the
-   integration test proves sequencing, not rendering): run
-   `python3 -m http.server 8080`, open a lesson, check `listening_dictation`
-   (TTS auto-plays, Enter submits), `guided_production` (blanking regex on
-   real sentences), the done-screen Recognition/Production line, plus:
-   (a) answer enough production items wrong (< 60%) and confirm the "Almost
-   there" gate appears, Practice again re-runs fresh, Back to path exits;
-   (b) log in on a second browser profile and confirm due SRS items follow
-   the account (check `pel_srs_state` rows exist after a lesson).
-   Follow `tests/smoke-checklist.md`.
-2. **Admin analytics**: surface Recognition-vs-Production per student (data
-   tracked per lesson in stage state; server-side persistence would go in
-   `pel_student_feedback_events`-style rows or `learning_snapshots`). NOTE:
-   the mastery gate means completion itself now signals >= 60% production —
-   per-activity detail is still only local until this is built.
-3. **Content**: `tools/audit-lessons.js` still reports 1 generic-fallback lesson
-   (`tools/audit-report.txt`); the transliteration/phase content pipelines
-   (`tools/translit_phase*`, `tools/phase4_ielts`, `tools/phase5_abha`) suggest a
-   phase 6 was planned — check with Tutor Firas what content comes next.
-4. **A0 gap**: ACADEMY_CEFR maps five a0-* academy ids that were never added to
-   ACADEMIES, so the A0 level on the Levels (A0-C2) view shows 'Content for
-   this level is coming' until those lessons exist.
+1. **Consider lib cache-busters** (`?v=<sha>` on the `lib/*.js` script tags in
+   app.html) so users never run a stale engine after a deploy — see the CDN
+   lag gotcha above.
+2. **Content**: the transliteration/phase content pipelines
+   (`tools/translit_phase*`, `tools/phase4_ielts`, `tools/phase5_abha`) suggest
+   a phase 6 was planned — check with Tutor Firas what content comes next.
+3. **Live Classes**: client bridge landed (`ba65868`) but end-to-end class
+   scheduling/attendance flow is still unverified in a browser.
 
 ## Environment notes (for the next session)
 
