@@ -108,6 +108,8 @@ while ((m = optRe.exec(src)) !== null){
 
 /* ---------- 3. genericLesson fallback references ---------- */
 lines.forEach((l, i) => {
+  const t = l.trim();
+  if (t.startsWith('//') || t.startsWith('*')) return; // comments, not call sites
   if (/genericLesson\b/.test(l) && !/function genericLesson|genericLesson\s*=/.test(l)){
     add('generic-fallback', i + 1, l.trim().slice(0, 120));
   }
