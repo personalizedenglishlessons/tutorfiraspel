@@ -155,6 +155,9 @@ img{max-width:100%; display:block;}
 }
 .arabic-h em{ font-style:normal; color:var(--gold); font-weight:700; }
 [dir="rtl"]{ text-align:right; font-family:'Tajawal', 'Cairo', sans-serif; }
+/* honor explicit dir even on .arabic/.arabic-h (enables clean English rendering) */
+.arabic[dir="ltr"], .arabic-h[dir="ltr"], .hero-sub[dir="ltr"]{ direction:ltr; unicode-bidi:isolate; }
+[dir="ltr"]{ text-align:left; }
 
 /* reveal */
 .reveal{ opacity:0; transform:translateY(28px); transition:opacity 1s var(--ease), transform 1s var(--ease); }
