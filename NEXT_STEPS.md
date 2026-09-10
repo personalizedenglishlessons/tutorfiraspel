@@ -1,5 +1,27 @@
 # NEXT STEPS — pick up here
 
+## ✅ DONE (2026-09-10): SRS server sync + mastery-gated completion
+
+1. **SRS server sync is LIVE** (commit `bc3a1a2`): `srsRecord()` now stamps
+   `r.ts` and fire-and-forget upserts each answer to `pel_srs_state`
+   (onConflict `user_id,en`); `srsSync()` (exported on the factory API) pulls
+   ALL rows for the user (limit 2000), merges last-write-wins by
+   `ts`/`updated_at`, then pushes the merged map back up in 200-row batches
+   (idempotent — creates local-only rows server-side). app.html injects
+   `supabase()`/`userId()` into the stage deps and calls
+   `window.PEL_STAGE_API.srsSync()` in `revealApp()` right after
+   `loadStudentState()`. Signed-out play stays purely local (guards hold in
+   tests). Legacy local rows without `ts` LOSE to the server on first sync —
+   deliberate first-sync behavior.
+2. **Mastery-gated completion** (commit `ba16665`, audit item 5 closed):
+   with >= 3 production activities, >= 60% eventual-correct is required to
+   complete. `mark()` upgrades ok counters on retry success (`okTracked`
+   flag; totals stay once-per-activity). Gated lessons get an "Almost there"
+   screen — Practice again (fresh state via Stage.open) or Back to path;
+   no XP / markLessonComplete / server progression when gated.
+
+---
+
 ## ✅ DONE (2026-09-08): "translit leaks the answers" — see git commit "fix: stop leaking answers"
 
 Rule now enforced app-wide: **no secondary-language clue inside any graded
@@ -21,8 +43,10 @@ explicit hints, or the post-check reveal only. Shipped:
 
 ---
 
-Last updated: 2026-09-08 (after commits `81944a5` refactor, `be21987`+`4a070e4` missing-elements,
-`70e2b7c` answer-leak fixes, `90af3db` CEFR view crash + CSP cleanup).
+Last updated: 2026-09-10 (after `bc3a1a2` SRS server sync, `ba16665` mastery-gated
+completion; earlier: `81944a5` refactor, `be21987`+`4a070e4` missing-elements,
+`70e2b7c` answer-leak fixes, `90af3db` CEFR view crash + CSP cleanup, `ba65868`
+Live Classes client bridge).
 
 NOTE on `90af3db`: the CEFR path view had been broken since it was written —
 renderCefrPath called ar()/esc() that only existed inside the old dashboard/stage
@@ -68,34 +92,48 @@ and after any stage change — it loads the REAL `lib/pel_lesson_stage.js`.
 
 ## Next, in priority order
 
-1. **Wire SRS server sync** (the only half-done piece): push `srsRecord()` updates
-   to `pel_srs_state` and seed `srsDueList()` from it on login (Supabase client is
-   already available in app.html; pattern: same as `pel_student_feedback_events`
-   writes). Local-first stays the fallback.
-2. **Browser QA** of the new activities (the integration test proves sequencing,
-   not rendering): run `python3 -m http.server 8080`, open a lesson, check
-   `listening_dictation` (TTS auto-plays, Enter submits), `guided_production`
-   (blanking regex on real sentences), and the done-screen Recognition/Production
-   line. Follow `tests/smoke-checklist.md`.
-3. **Mastery-gated completion** (audit item 5, still open): `markLessonComplete`
-   fires on activity completion with no mastery check. The rec/prod stats now
-   exist on stage state — gate completion on e.g. Production >= 60%.
-4. **Admin analytics**: surface Recognition-vs-Production per student (data now
-   tracked per lesson; server-side persistence would go in
-   `pel_student_feedback_events`-style rows or `learning_snapshots`).
-5. **Content**: `tools/audit-lessons.js` still reports 1 generic-fallback lesson
+1. **Browser QA** of the newer activities AND the two 2026-09-10 features (the
+   integration test proves sequencing, not rendering): run
+   `python3 -m http.server 8080`, open a lesson, check `listening_dictation`
+   (TTS auto-plays, Enter submits), `guided_production` (blanking regex on
+   real sentences), the done-screen Recognition/Production line, plus:
+   (a) answer enough production items wrong (< 60%) and confirm the "Almost
+   there" gate appears, Practice again re-runs fresh, Back to path exits;
+   (b) log in on a second browser profile and confirm due SRS items follow
+   the account (check `pel_srs_state` rows exist after a lesson).
+   Follow `tests/smoke-checklist.md`.
+2. **Admin analytics**: surface Recognition-vs-Production per student (data
+   tracked per lesson in stage state; server-side persistence would go in
+   `pel_student_feedback_events`-style rows or `learning_snapshots`). NOTE:
+   the mastery gate means completion itself now signals >= 60% production —
+   per-activity detail is still only local until this is built.
+3. **Content**: `tools/audit-lessons.js` still reports 1 generic-fallback lesson
    (`tools/audit-report.txt`); the transliteration/phase content pipelines
    (`tools/translit_phase*`, `tools/phase4_ielts`, `tools/phase5_abha`) suggest a
    phase 6 was planned — check with Tutor Firas what content comes next.
+4. **A0 gap**: ACADEMY_CEFR maps five a0-* academy ids that were never added to
+   ACADEMIES, so the A0 level on the Levels (A0-C2) view shows 'Content for
+   this level is coming' until those lessons exist.
 
 ## Environment notes (for the next session)
 
-- GitHub: push via `git push` (credential proxy already configured); GitHub Pages
+- GitHub: clone with `gh repo clone tutorfiraspel repo`; **pushing needs the
+  session's GitHub credential injection on the push command** — plain
+  `git push` without it fails with 'could not read Username'. GitHub Pages
   serves main automatically. Verify with:
   `gh api repos/personalizedenglishlessons/tutorfiraspel/pages --jq .status`
 - Supabase: full postgres access via `python3 tools/sql.py "SQL"` (needs
-  `SUPABASE_PAT` env var; project ref `lewoochehpiycocvfwtz`).
+  `SUPABASE_PAT` env var; project ref `lewoochehpiycocvfwtz`). The user
+  supplies the PAT per session on request — NEVER commit it anywhere (repo
+  is public). `pel_srs_state` exists and is live (0 rows as of 2026-09-10,
+  RLS own-rows, granted to authenticated).
 - Tests: `node tests/test_buildsequence_iam.js` (13 checks, loads the real
   factory + real DB fixture `tests/fixtures_iam_sentences.json`).
 - Syntax gate (smoke checklist): `node --check` every `lib/*.js` + all inline
-  `<script>` blocks in `app.html`.
+  `<script>` blocks in `app.html` (3 blocks, extract with the python regex in
+  the 2026-09-10 session or equivalent).
+- Session workflow (user's standing instruction): commit + push EVERY finished
+  piece immediately, and update this file + commit it as a breadcrumb so the
+  next session can pick up. Conventional breadcrumb commit:
+  `docs: NEXT_STEPS breadcrumb for <feature> (<sha>)`.
+- Usage is tight: batch reads, no redundant calls, no brute-force retries.
