@@ -155,9 +155,8 @@ img{max-width:100%; display:block;}
 }
 .arabic-h em{ font-style:normal; color:var(--gold); font-weight:700; }
 [dir="rtl"]{ text-align:right; font-family:'Tajawal', 'Cairo', sans-serif; }
-/* honor explicit dir even on .arabic/.arabic-h (enables clean English rendering) */
-.arabic[dir="ltr"], .arabic-h[dir="ltr"], .hero-sub[dir="ltr"]{ direction:ltr; unicode-bidi:isolate; }
-[dir="ltr"]{ text-align:left; }
+/* explicit dir always wins over the arabic class defaults (clean EN rendering) */
+.arabic[dir="ltr"], .arabic-h[dir="ltr"], .hero-sub[dir="ltr"], .section-head [dir="ltr"]{ direction:ltr; unicode-bidi:isolate; text-align:left; }
 
 /* reveal */
 .reveal{ opacity:0; transform:translateY(28px); transition:opacity 1s var(--ease), transform 1s var(--ease); }
@@ -1151,7 +1150,7 @@ section{ padding-top:80px; padding-bottom:80px; }
   <div class="container hero-grid">
     <div class="reveal is-visible">
        <span class="eyebrow hero-eyebrow" dir="ltr" style="justify-content:flex-start;"><span class="pel-tag">Personalized English Lessons</span></span>
-      <h1 class="arabic-h" dir="rtl" style="margin-top:18px; font-size:clamp(2.2rem,5vw,3.6rem); line-height:1.15;">انجليزي يشبه حياتك، <em>مو جمل تحفظها.</em></h1>
+      <h1 class="arabic-h" dir="rtl" style="margin-top:18px; font-size:clamp(2.2rem,5vw,3.6rem); line-height:1.15;">انجليزي يشبه حياتك، <em>مو جمل تحفظها</em></h1>
       <p class="arabic hero-sub" dir="rtl" style="font-size:1.05rem; max-width:560px; margin-top:14px; line-height:1.8;">قل لنا وش تبي الانجليزي لاجله، شغلك سفرك سوالفك اليومية، ونبني لك بداية على مقاسك بدروس من مواقف حقيقية وشرح واضح بالعربي</p>
       <div class="hero-cta-row" style="margin-top:26px; gap:12px; flex-wrap:wrap; align-items:center;">
         <button class="btn-gold magnetic" data-open-path id="heroPathCta" style="padding:14px 28px; font-size:.95rem;">
@@ -1166,7 +1165,7 @@ section{ padding-top:80px; padding-bottom:80px; }
       </div>
       <div class="path-hint" dir="rtl" style="margin-top:14px;">
         <span class="arabic">اسيلة خفيفة، نعرف مستواك وهدفك ونرجع لك بخطة على مقاس وقتك</span>
-        <span class="path-hint-en" dir="ltr" style="display:none;">Quick questions, we learn your level and goal and return a plan that fits your time.</span>
+        <span class="path-hint-en" dir="ltr" style="display:none;">Quick questions, we learn your level and goal and return a plan that fits your time</span>
       </div>
       <div class="trust-row" dir="rtl" style="margin-top:18px; gap:10px 18px;">
         <div class="trust-item"><span class="dot"></span>منهج امريكي اصلي</div>
@@ -1574,6 +1573,13 @@ themeToggle.addEventListener('click', () => {
 function readLangPrefs(){ try{ var p=JSON.parse(localStorage.getItem('pel_account_prefs')||'null'); return p&&p.lang==='ar'?'ar':'en'; }catch(e){ return 'ar'; } }
 function saveLangPrefs(lang){ try{ var p=JSON.parse(localStorage.getItem('pel_account_prefs')||'null')||{lang:'en',direction:'en'}; p.lang=lang; localStorage.setItem('pel_account_prefs', JSON.stringify(p)); }catch(e){} }
 function applyIndexLang(lang){
+  // single helper: sets copy + dir + lang together so punctuation never flips
+  function setLang(el, ar, en){
+    if(!el) return;
+    el.innerHTML = lang==='ar' ? ar : en;
+    el.setAttribute('dir', lang==='ar'?'rtl':'ltr');
+    el.setAttribute('lang', lang==='ar'?'ar':'en');
+  }
   lang = lang==='ar'?'ar':'en';
   root.lang = lang;
   root.dir = lang==='ar'?'rtl':'ltr';
@@ -1605,20 +1611,20 @@ function applyIndexLang(lang){
     {sel:'.proof .section-head h2', ar:'انجليزي تستخدمه برا التطبيق', en:'English you use outside the app'},
     {sel:'.proof .section-head p', ar:'مو درجات وشهادات بس، مواقف حقيقية تصير اسهل يوم بعد يوم', en:'Not just scores and certificates, real situations that get easier day by day'}
   ];
-  heads.forEach(function(h){ var el=document.querySelector(h.sel); if(el){ el.textContent = lang==='ar'?h.ar:h.en; el.setAttribute('dir', lang==='ar'?'rtl':'ltr'); } });
+  heads.forEach(function(h){ var el=document.querySelector(h.sel); if(el) setLang(el, h.ar, h.en); });
   var pathBtns=document.querySelectorAll('[data-open-path] span');
   pathBtns.forEach(function(el){ el.textContent = lang==='ar' ? 'اعرف بدايتي' : 'Find my starting point'; });
   var loginTexts=document.querySelectorAll('.login-text');
   loginTexts.forEach(function(el){ el.textContent = lang==='ar' ? 'دخول الطلاب' : 'Student Login'; });
   // hero
   var heroH1=document.querySelector('.hero h1.arabic-h');
-  if(heroH1){ var h1ar = (window.PEL_SITE && PEL_SITE.heroHeadline && PEL_SITE.heroHeadline.ar) ? PEL_SITE.heroHeadline.ar : 'انجليزي يشبه حياتك، <em>مو جمل تحفظها.</em>'; var h1en = (window.PEL_SITE && PEL_SITE.heroHeadline && PEL_SITE.heroHeadline.en) ? PEL_SITE.heroHeadline.en : 'English that sounds like your life, <em>not a textbook.</em>'; heroH1.innerHTML = lang==='ar' ? h1ar : h1en; heroH1.setAttribute('dir', lang==='ar'?'rtl':'ltr'); }
+  if(heroH1){ var h1ar = (window.PEL_SITE && PEL_SITE.heroHeadline && PEL_SITE.heroHeadline.ar) ? PEL_SITE.heroHeadline.ar : 'انجليزي يشبه حياتك، <em>مو جمل تحفظها</em>'; var h1en = (window.PEL_SITE && PEL_SITE.heroHeadline && PEL_SITE.heroHeadline.en) ? PEL_SITE.heroHeadline.en : 'English that sounds like your life, <em>not a textbook</em>'; setLang(heroH1, h1ar, h1en); }
   var heroSub=document.querySelector('.hero .hero-sub');
-  if(heroSub){ var hsar = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.ar) ? PEL_SITE.heroSub.ar : 'قل لنا وش تبي الانجليزي لاجله، شغلك سفرك سوالفك اليومية، ونبني لك بداية على مقاسك بدروس من مواقف حقيقية وشرح واضح بالعربي'; var hsen = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.en) ? PEL_SITE.heroSub.en : 'Tell us what you need English for, work travel everyday talk. We will build your starting point from real situations, with clear Arabic support.'; heroSub.textContent = lang==='ar' ? hsar : hsen; heroSub.setAttribute('dir', lang==='ar'?'rtl':'ltr'); }
+  if(heroSub){ var hsar = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.ar) ? PEL_SITE.heroSub.ar : 'قل لنا وش تبي الانجليزي لاجله، شغلك سفرك سوالفك اليومية، ونبني لك بداية على مقاسك بدروس من مواقف حقيقية وشرح واضح بالعربي'; var hsen = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.en) ? PEL_SITE.heroSub.en : 'Tell us what you need English for - work travel everyday talk. We build your starting point from real situations, with clear Arabic support'; setLang(heroSub, hsar, hsen); }
   var pathHint=document.querySelector('.path-hint .arabic');
-  if(pathHint){ pathHint.textContent = lang==='ar' ? 'اسيلة خفيفة، نعرف مستواك وهدفك ونرجع لك بخطة على مقاس وقتك' : 'Quick questions, we learn your level and goal and return a plan that fits your time.'; pathHint.setAttribute('dir', lang==='ar'?'rtl':'ltr'); }
+  if(pathHint) setLang(pathHint, 'اسيلة خفيفة، نعرف مستواك وهدفك ونرجع لك بخطة على مقاس وقتك', 'Quick questions, we learn your level and goal and return a plan that fits your time');
   var pathHintEn=document.querySelector('.path-hint-en');
-  if(pathHintEn) pathHintEn.textContent = lang==='ar' ? '' : 'Quick questions, we learn your level and goal and return a plan that fits your time.';
+  if(pathHintEn) pathHintEn.textContent = lang==='ar' ? '' : 'Quick questions, we learn your level and goal and return a plan that fits your time';
   var trustItems=document.querySelectorAll('.trust-item');
   var trustAr=['منهج امريكي اصلي','شرح عربي لكل درس','ترجمة فورية بلا حدود','لوحة تتابع تقدمك'];
   var trustEn=['Authentic American curriculum','Arabic explained every lesson','Unlimited instant translation','Progress tracking dashboard'];
@@ -1787,11 +1793,11 @@ function applyIndexLang(lang){
   });
   // pricing header
   var pricingHead=document.querySelector('#pricing .section-head h2');
-  if(pricingHead){ pricingHead.textContent = lang==='ar' ? 'وصول كامل للمنصة، بسعر واضح.' : 'Full platform access, clear pricing.'; pricingHead.setAttribute('dir', lang==='ar'?'rtl':'ltr'); }
+  if(pricingHead) setLang(pricingHead, 'وصول كامل للمنصة، بسعر واضح', 'Full platform access, clear pricing');
   var pricingP=document.querySelector('#pricing .section-head p');
-  if(pricingP){ pricingP.textContent = lang==='ar' ? 'عندنا مسارين: ابد من الصفر، والتجهيز للاختبارات. كل مسار فيه 3 باقات، وكل الباقات فيها حصص مباشرة مع الاستاذ فراس: باقات ابد من الصفر تشمل حصة كل اسبوع، وباقات التجهيز تشمل من حصة الى 3 حصص اسبوعية حسب المدة. الاشتراك والدفع كله عن طريق واتساب، مافي دفع اونلاين.' : 'Two tracks - Start From Zero and Exam Prep. Each has 3 plans, and every plan includes live classes with Tutor Firas: Start From Zero plans include 1 class a week, Exam Prep plans include 1 to 3 classes a week depending on duration. Signup and payment all happen over WhatsApp - no online payment.'; pricingP.setAttribute('dir', lang==='ar'?'rtl':'ltr'); }
+  if(pricingP) setLang(pricingP, 'عندنا مسارين: ابد من الصفر، والتجهيز للاختبارات. كل مسار فيه 3 باقات، وكل الباقات فيها حصص مباشرة مع الاستاذ فراس: باقات ابد من الصفر تشمل حصة كل اسبوع، وباقات التجهيز تشمل من حصة الى 3 حصص اسبوعية حسب المدة. الاشتراك والدفع كله عن طريق واتساب، مافي دفع اونلاين', 'Two tracks - Start From Zero and Exam Prep. Each has 3 plans, and every plan includes live classes with Tutor Firas: Start From Zero plans include 1 class a week, Exam Prep plans include 1 to 3 classes a week depending on duration. Signup and payment all happen over WhatsApp, no online payment');
   var pricingNote=document.querySelector('.pricing-note');
-  if(pricingNote) pricingNote.innerHTML = lang==='ar' ? '<b>ما تعرف اي باقة تناسبك؟</b> راسلنا واتساب، نتعرف على مستواك وهدفك، ونرجع لك بخطة وسعر يناسبك - او نخصص لك تدريباً فردياً اونلاين.' : '<b>Not sure which plan fits?</b> Message us on WhatsApp - we’ll assess your level and goal and recommend the right plan, or a private option.';
+  if(pricingNote) pricingNote.innerHTML = lang==='ar' ? '<b>ما تعرف اي باقة تناسبك؟</b> راسلنا واتساب، نتعرف على مستواك وهدفك، ونرجع لك بخطة وسعر يناسبك - او نخصص لك تدريباً فردياً اونلاين' : '<b>Not sure which plan fits?</b> Message us on WhatsApp - we’ll assess your level and goal and recommend the right plan, or a private option';
   // footer + remaining section heads (minimal bilingual to satisfy full-site requirement)
   var footerBrandP=document.querySelector('.footer-brand p.arabic');
   if(footerBrandP) footerBrandP.textContent = lang==='ar' ? 'اكاديمية خاصة لكل ناطق بالعربية يرفض انه يتكلم مثل كتاب مدرسي. مبنية حول معلم واحد، وصوت واحد، وخطة واحدة في كل مرة.' : 'A private academy for Arabic speakers who refuse to sound like a textbook. Built around one teacher, one voice, one plan at a time.';
@@ -1845,35 +1851,31 @@ function applyIndexLang(lang){
     {sel:'[data-tab="tutor"]', ar:'مراجعة الكتابة', en:'Writing review'}
   ];
   previewTabsMap.forEach(function(m){ var el=document.querySelector('.preview-tabs '+m.sel); if(el) el.textContent=m[lang]; });
-  // remaining section heads
+  // remaining section heads (setLang keeps dir in sync)
   var moreHeads=[
-    {sel:'#features .section-head h2', ar:'اكاديمية مبنية على صوتك، مو على منهج جاهز.', en:'An academy built around your voice, not a ready curriculum.'},
-    {sel:'#features .section-head p', ar:'كل جز من المنصة يخدم هدف واحد: تنتقل من التردد للطلاقة، محادثة صادقة بعد محادثة.', en:'Every part of the platform serves one goal: move you from hesitation to fluency, one honest conversation at a time.'},
-    {sel:'#curriculum .section-head h2', ar:'منصة مصممة مثل معلم خاص، ومبنية مثل برنامج احترافي.', en:'A platform designed like a private tutor, built like pro software.'},
-    {sel:'#curriculum .section-head p', ar:'كل اداة يحتاجها طالب جاد، مرتبة حول لوحة تحكم خاصة فيك.', en:'Every tool a serious learner needs, organized around your personal dashboard.'},
-    {sel:'.course-section .section-head h2', ar:'مسارات متعددة، وخطة واحدة مبنية على مقاسك.', en:'Multiple paths, one plan built for you.'},
-    {sel:'.course-section .section-head p', ar:'التفاصيل الكاملة تفتح بعد التسجيل. هذي لمحة بسيطة عن الاتجاه العام.', en:'Full details unlock after enrollment. This is a brief overview.'},
-    {sel:'#timeline .section-head h2', ar:'كيف تسير رحلتك معنا.', en:'How your journey goes with us.'},
+    {sel:'.course-section .section-head h2', ar:'مسارات متعددة، وخطة واحدة مبنية على مقاسك', en:'Multiple paths, one plan built for you'},
+    {sel:'.course-section .section-head p', ar:'التفاصيل الكاملة تفتح بعد التسجيل. هذي لمحة بسيطة عن الاتجاه العام', en:'Full details unlock after enrollment. This is a brief overview'},
+    {sel:'#timeline .section-head h2', ar:'كيف تسير رحلتك معنا', en:'How your journey goes with us'},
     {sel:'#stories .section-head h2', ar:'اسمع منهم', en:'Hear from them'},
-    {sel:'.lesson-preview-head h2', ar:'لمحة عن شكل الدرس، مو الدرس نفسه.', en:'A glimpse of a lesson, not the lesson itself.'}
+    {sel:'.lesson-preview-head h2', ar:'لمحة عن شكل الدرس، مو الدرس نفسه', en:'A glimpse of a lesson, not the lesson itself'}
   ];
-  moreHeads.forEach(function(h){ var el=document.querySelector(h.sel); if(el && h.ar) el.textContent = lang==='ar'?h.ar:h.en; });
+  moreHeads.forEach(function(h){ var el=document.querySelector(h.sel); if(el && h.ar) setLang(el, h.ar, h.en); });
   // timeline steps
   var tStepsAr=[
-    {t:'التسجيل',d:'تنضم للاكاديمية وتتعرف على معلمك الخاص.'},
-    {t:'تحديد المستوى',d:'تسوي اختبار قصير يحدد مستواك الحقيقي.'},
-    {t:'خطتك الخاصة',d:'تتابع خطة مبنية على اهدافك انت بالضبط.'},
-    {t:'التمرين اليومي',d:'تتمرن يومياً بمحادثات وتمارين تناسب مستواك بالضبط.'},
-    {t:'بنا الثقة',d:'تتحول الاجابات الصحيحة لمحادثة طبيعية.'},
-    {t:'الطلاقة',d:'تتكلم انجليزي بدون ما تترجم بالراس.'}
+    {t:'التسجيل',d:'تنضم للاكاديمية وتتعرف على معلمك الخاص'},
+    {t:'تحديد المستوى',d:'تسوي اختبار قصير يحدد مستواك الحقيقي'},
+    {t:'خطتك الخاصة',d:'تتابع خطة مبنية على اهدافك انت بالضبط'},
+    {t:'التمرين اليومي',d:'تتمرن يومياً بمحادثات وتمارين تناسب مستواك بالضبط'},
+    {t:'بنا الثقة',d:'تتحول الاجابات الصحيحة لمحادثة طبيعية'},
+    {t:'الطلاقة',d:'تتكلم انجليزي بدون ما تترجم بالراس'}
   ];
   var tStepsEn=[
-    {t:'Enroll',d:'Join the academy and meet your private teacher.'},
-    {t:'Placement',d:'Short check that finds your real level.'},
-    {t:'Your personal plan',d:'Follow a plan built exactly around your goals.'},
-    {t:'Daily practice',d:'Practice daily with conversations at your level.'},
-    {t:'Build confidence',d:'Correct answers become natural speech.'},
-    {t:'Fluency',d:'Speak without translating in your head.'}
+    {t:'Enroll',d:'Join the academy and meet your private teacher'},
+    {t:'Placement',d:'Short check that finds your real level'},
+    {t:'Your personal plan',d:'Follow a plan built exactly around your goals'},
+    {t:'Daily practice',d:'Practice daily with conversations at your level'},
+    {t:'Build confidence',d:'Correct answers become natural speech'},
+    {t:'Fluency',d:'Speak without translating in your head'}
   ];
   document.querySelectorAll('.timeline-step').forEach(function(step,i){
     var data = lang==='ar'?tStepsAr[i]:tStepsEn[i];
