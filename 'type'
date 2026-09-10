@@ -1,4 +1,0 @@
-{
-  "error": 400,
-  "msg": "{\"message\":\"Failed to run sql query: ERROR:  42601: syntax error at or near \\\"\\\\\\\"\\nLINE 1: select activities->0->>\\\\type' as t0, activities- as t1, activities- as t2 from public.lessons where id = \\\\i-am-sentences';\\n                               ^\\n\"}"
-}
