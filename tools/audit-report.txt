@@ -1,7 +1,4 @@
-PEL lesson content audit — 2026-08-31T01:39:18.124Z
-Source: app.html (22579 lines)
-Total findings: 1
-
-## generic-fallback (1)
-  L13853: return { ...genericLesson(bankItem, academy), flagship:false };
+PEL lesson content audit — 2026-09-10T19:50:05.111Z
+Source: app.html (20001 lines)
+Total findings: 0
 
