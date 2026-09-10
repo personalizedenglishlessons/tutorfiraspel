@@ -235,6 +235,13 @@ var I = {
   'stage':{en:'Stage', ar:'المرحلة'},
   'totalLessons':{en:'Total lessons', ar:'اجمالي الدروس'},
   'completedCount':{en:'Completed lessons', ar:'الدروس المنجزة'},
+  'recVsProd':{en:'Recognition vs Production', ar:'الاسترجاع مقابل الإنتاج'},
+  'recVsProdHint':{en:'First-try production is the mastery signal — how often the student can USE the language, not just recognize it.', ar:'الإنتاج من أول محاولة هو مؤشر الإتقان — قدرة الطالب على استخدام اللغة، وليس التعرف عليها فقط.'},
+  'recognition':{en:'Recognition', ar:'الاسترجاع'},
+  'production':{en:'Production (eventual)', ar:'الإنتاج (بعد المحاولات)'},
+  'productionFirst':{en:'Production (first try)', ar:'الإنتاج (أول محاولة)'},
+  'recentLessons':{en:'Recent lessons', ar:'أحدث الدروس'},
+  'noStatsYet':{en:'No exercise stats recorded yet. They appear after the first lesson completion.', ar:'لا توجد إحصائيات بعد. تظهر بعد إكمال أول درس.'},
   'lastStudy':{en:'Last study day', ar:'اخر يوم دراسة'},
   'longestStreak':{en:'Longest streak', ar:'اطول استمرار'},
   'permissionDenied':{en:'Permission denied.', ar:'صلاحية مرفوضة.'},
@@ -1233,6 +1240,39 @@ function renderTabLearning(plan, st, kv, d){
     return '<div class="kv-item"><div class="kv-label">' + s[0] + '</div><div class="kv-value">' + s[1] + '</div></div>';
   }).join('');
 
+  // Recognition vs Production analytics (from lesson_progress via
+  // admin_student_360 'lesson_stats'). First-try production is the mastery
+  // signal — the same rule the lesson-stage completion gate uses.
+  var ls = d.lesson_stats || {};
+  var tot = ls.totals || {};
+  var hasStats = (tot.rec_total || 0) + (tot.prod_total || 0) > 0;
+  var recPct = tot.rec_total ? Math.round(100 * tot.rec_ok / tot.rec_total) : 0;
+  var prodPct = tot.prod_total ? Math.round(100 * tot.prod_ok / tot.prod_total) : 0;
+  var prodFirstPct = tot.prod_total ? Math.round(100 * tot.prod_first_ok / tot.prod_total) : 0;
+  function statBar(label, pct, ok, total){
+    return '<div class="bar-row"><div class="bar-label">' + esc(label) + '</div>' +
+      '<div class="bar-track"><div class="bar-fill" style="width:' + pct + '%"></div></div>' +
+      '<div class="bar-val">' + fmtN(ok) + '/' + fmtN(total) + ' · ' + fmtN(pct) + '%</div></div>';
+  }
+  var recProdHtml = hasStats
+    ? '<div class="section-title">' + esc(t('recVsProd')) + '</div><div class="card">' +
+      '<div class="sub" style="margin-bottom:10px;">' + esc(t('recVsProdHint')) + '</div>' +
+      statBar(t('recognition'), recPct, tot.rec_ok || 0, tot.rec_total || 0) +
+      statBar(t('production'), prodPct, tot.prod_ok || 0, tot.prod_total || 0) +
+      statBar(t('productionFirst'), prodFirstPct, tot.prod_first_ok || 0, tot.prod_total || 0) +
+      '</div>' +
+      '<div class="section-title">' + esc(t('recentLessons')) + '</div><div class="card"><div class="reason-list">' +
+      (ls.recent || []).map(function(r){
+        var rPct = r.rec_total ? Math.round(100 * r.rec_ok / r.rec_total) : 0;
+        var pPct = r.prod_total ? Math.round(100 * r.prod_first_ok / r.prod_total) : 0;
+        var title = (lang === 'ar' && r.title_ar) ? r.title_ar : (r.title || r.lesson_id);
+        return '<div class="reason-item"><span class="badge-dot ' + (pPct >= 60 ? 'green' : 'warn') + '" style="margin-top:5px;"></span><div><div>' + esc(title) + '</div>' +
+          '<span class="why">' + esc(t('recognition')) + ' ' + arNum(rPct) + '% · ' + esc(t('productionFirst')) + ' ' + arNum(pPct) + '% · ' + fmtDate(r.completed_at) + '</span></div></div>';
+      }).join('') + '</div></div>'
+    : (completed.length
+        ? '<div class="section-title">' + esc(t('recVsProd')) + '</div><div class="card"><div class="sub">' + esc(t('noStatsYet')) + '</div></div>'
+        : '');
+
   var attention = (d.attendance || []).filter(function(a){ return a.status === 'absent'; });
   var concern = [];
   if(health.difficulty) concern.push(health.difficulty.txt);
@@ -1256,6 +1296,7 @@ function renderTabLearning(plan, st, kv, d){
 
   return '<div class="card"><div class="kv-list">' + statsHtml + '</div>' +
     '<div style="margin-top:16px;"><div class="bar-row"><div class="bar-label">' + esc(t('progress')) + '</div><div class="bar-track"><div class="bar-fill" style="width:' + progPct + '%"></div></div><div class="bar-val">' + fmtN(progPct) + '%</div></div></div></div>' +
+    recProdHtml +
     '<div class="section-title">' + esc(t('currentConcern')) + '</div><div class="card"><div class="reason-list">' +
     (concern.length ? concern.map(function(c){ return '<div class="reason-item"><span class="badge-dot warn" style="margin-top:5px;"></span><div>' + esc(c) + '</div></div>'; }).join('') : '<div class="sub">' + esc(t('noData')) + '</div>') +
     '</div></div>' +

@@ -13652,7 +13652,7 @@ function toggleBookmark(type, id, label, sub){
   persistStudentState();
   if(viewRenderers.bookmarks) { document.getElementById('view-bookmarks').dataset.rendered=''; if(document.getElementById('view-bookmarks').classList.contains('active')) viewRenderers.bookmarks(); }
 }
-function markLessonComplete(academyId, lessonId){
+function markLessonComplete(academyId, lessonId, stats){
   const key = lessonKey(academyId, lessonId);
   // Return the server-authoritative progression promise so the Stage's
   // "Next lesson" button can await the DB route before navigating, instead of
@@ -13662,11 +13662,13 @@ function markLessonComplete(academyId, lessonId){
   // Database-authoritative progression: the server validates, records,
   // advances stage/level and returns the new effective state. Local state
   // above is only an offline mirror; the DB is the source of truth.
+  // `stats` (Recognition vs Production counters from the lesson stage) is
+  // persisted to lesson_progress for admin analytics.
   let rpcPromise = Promise.resolve(null);
   try{
     const c = client();
     if(c && currentUser){
-      rpcPromise = c.rpc('complete_activity', { p_lesson_id: lessonId })
+      rpcPromise = c.rpc('complete_activity', { p_lesson_id: lessonId, p_stats: stats || null })
         .then(({ data, error }) => {
           if(!error && data && data.ok !== false){
             window.PEL_EFFECTIVE_STATE = data;
