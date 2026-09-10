@@ -1602,18 +1602,18 @@ function applyIndexLang(lang){
     {sel:'.proof .section-head h2', ar:'انجليزي تستخدمه برا التطبيق', en:'English you use outside the app'},
     {sel:'.proof .section-head p', ar:'مو درجات وشهادات بس، مواقف حقيقية تصير اسهل يوم بعد يوم', en:'Not just scores and certificates, real situations that get easier day by day'}
   ];
-  heads.forEach(function(h){ var el=document.querySelector(h.sel); if(el) el.textContent = lang==='ar'?h.ar:h.en; });
+  heads.forEach(function(h){ var el=document.querySelector(h.sel); if(el){ el.textContent = lang==='ar'?h.ar:h.en; el.setAttribute('dir', lang==='ar'?'rtl':'ltr'); } });
   var pathBtns=document.querySelectorAll('[data-open-path] span');
   pathBtns.forEach(function(el){ el.textContent = lang==='ar' ? 'اعرف بدايتي' : 'Find my starting point'; });
   var loginTexts=document.querySelectorAll('.login-text');
   loginTexts.forEach(function(el){ el.textContent = lang==='ar' ? 'دخول الطلاب' : 'Student Login'; });
   // hero
   var heroH1=document.querySelector('.hero h1.arabic-h');
-  if(heroH1){ var h1ar = (window.PEL_SITE && PEL_SITE.heroHeadline && PEL_SITE.heroHeadline.ar) ? PEL_SITE.heroHeadline.ar : 'انجليزي يشبه حياتك، <em>مو جمل تحفظها.</em>'; var h1en = (window.PEL_SITE && PEL_SITE.heroHeadline && PEL_SITE.heroHeadline.en) ? PEL_SITE.heroHeadline.en : 'English that sounds like your life, <em>not a textbook.</em>'; heroH1.innerHTML = lang==='ar' ? h1ar : h1en; }
+  if(heroH1){ var h1ar = (window.PEL_SITE && PEL_SITE.heroHeadline && PEL_SITE.heroHeadline.ar) ? PEL_SITE.heroHeadline.ar : 'انجليزي يشبه حياتك، <em>مو جمل تحفظها.</em>'; var h1en = (window.PEL_SITE && PEL_SITE.heroHeadline && PEL_SITE.heroHeadline.en) ? PEL_SITE.heroHeadline.en : 'English that sounds like your life, <em>not a textbook.</em>'; heroH1.innerHTML = lang==='ar' ? h1ar : h1en; heroH1.setAttribute('dir', lang==='ar'?'rtl':'ltr'); }
   var heroSub=document.querySelector('.hero .hero-sub');
-  if(heroSub){ var hsar = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.ar) ? PEL_SITE.heroSub.ar : 'قل لنا وش تبي الانجليزي لاجله، شغلك سفرك سوالفك اليومية، ونبني لك بداية على مقاسك بدروس من مواقف حقيقية وشرح واضح بالعربي'; var hsen = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.en) ? PEL_SITE.heroSub.en : 'Tell us what you need English for, work travel everyday talk. We will build your starting point from real situations, with clear Arabic support.'; heroSub.textContent = lang==='ar' ? hsar : hsen; }
+  if(heroSub){ var hsar = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.ar) ? PEL_SITE.heroSub.ar : 'قل لنا وش تبي الانجليزي لاجله، شغلك سفرك سوالفك اليومية، ونبني لك بداية على مقاسك بدروس من مواقف حقيقية وشرح واضح بالعربي'; var hsen = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.en) ? PEL_SITE.heroSub.en : 'Tell us what you need English for, work travel everyday talk. We will build your starting point from real situations, with clear Arabic support.'; heroSub.textContent = lang==='ar' ? hsar : hsen; heroSub.setAttribute('dir', lang==='ar'?'rtl':'ltr'); }
   var pathHint=document.querySelector('.path-hint .arabic');
-  if(pathHint) pathHint.textContent = lang==='ar' ? 'اسيلة خفيفة، نعرف مستواك وهدفك ونرجع لك بخطة على مقاس وقتك' : 'Quick questions, we learn your level and goal and return a plan that fits your time.';
+  if(pathHint){ pathHint.textContent = lang==='ar' ? 'اسيلة خفيفة، نعرف مستواك وهدفك ونرجع لك بخطة على مقاس وقتك' : 'Quick questions, we learn your level and goal and return a plan that fits your time.'; pathHint.setAttribute('dir', lang==='ar'?'rtl':'ltr'); }
   var pathHintEn=document.querySelector('.path-hint-en');
   if(pathHintEn) pathHintEn.textContent = lang==='ar' ? '' : 'Quick questions, we learn your level and goal and return a plan that fits your time.';
   var trustItems=document.querySelectorAll('.trust-item');
@@ -1784,9 +1784,9 @@ function applyIndexLang(lang){
   });
   // pricing header
   var pricingHead=document.querySelector('#pricing .section-head h2');
-  if(pricingHead) pricingHead.textContent = lang==='ar' ? 'وصول كامل للمنصة، بسعر واضح.' : 'Full platform access, clear pricing.';
+  if(pricingHead){ pricingHead.textContent = lang==='ar' ? 'وصول كامل للمنصة، بسعر واضح.' : 'Full platform access, clear pricing.'; pricingHead.setAttribute('dir', lang==='ar'?'rtl':'ltr'); }
   var pricingP=document.querySelector('#pricing .section-head p');
-  if(pricingP) pricingP.textContent = lang==='ar' ? 'عندنا مسارين: ابد من الصفر، والتجهيز للاختبارات. كل مسار فيه 3 باقات، وكل الباقات فيها حصص مباشرة مع الاستاذ فراس: باقات ابد من الصفر تشمل حصة كل اسبوع، وباقات التجهيز تشمل من حصة الى 3 حصص اسبوعية حسب المدة. الاشتراك والدفع كله عن طريق واتساب، مافي دفع اونلاين.' : 'Two tracks - Start From Zero and Exam Prep. Each has 3 plans, and every plan includes live classes with Tutor Firas: Start From Zero plans include 1 class a week, Exam Prep plans include 1 to 3 classes a week depending on duration. Signup and payment all happen over WhatsApp - no online payment.';
+  if(pricingP){ pricingP.textContent = lang==='ar' ? 'عندنا مسارين: ابد من الصفر، والتجهيز للاختبارات. كل مسار فيه 3 باقات، وكل الباقات فيها حصص مباشرة مع الاستاذ فراس: باقات ابد من الصفر تشمل حصة كل اسبوع، وباقات التجهيز تشمل من حصة الى 3 حصص اسبوعية حسب المدة. الاشتراك والدفع كله عن طريق واتساب، مافي دفع اونلاين.' : 'Two tracks - Start From Zero and Exam Prep. Each has 3 plans, and every plan includes live classes with Tutor Firas: Start From Zero plans include 1 class a week, Exam Prep plans include 1 to 3 classes a week depending on duration. Signup and payment all happen over WhatsApp - no online payment.'; pricingP.setAttribute('dir', lang==='ar'?'rtl':'ltr'); }
   var pricingNote=document.querySelector('.pricing-note');
   if(pricingNote) pricingNote.innerHTML = lang==='ar' ? '<b>ما تعرف اي باقة تناسبك؟</b> راسلنا واتساب، نتعرف على مستواك وهدفك، ونرجع لك بخطة وسعر يناسبك - او نخصص لك تدريباً فردياً اونلاين.' : '<b>Not sure which plan fits?</b> Message us on WhatsApp - we’ll assess your level and goal and recommend the right plan, or a private option.';
   // footer + remaining section heads (minimal bilingual to satisfy full-site requirement)
