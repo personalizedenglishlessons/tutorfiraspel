@@ -31,7 +31,7 @@
 <script src="lib/daily-lesson.js?v=ab0b373a" defer></script>
 <script src="lib/pel-personalization.js?v=992f67ed" defer></script>
 <script src="lib/onboard.js?v=d7ed7a27" defer></script>
-<script src="lib/pel-assessment.js?v=7e09e975" defer></script>
+<script src="lib/pel-assessment.js?v=f204dc69" defer></script>
 <style>
 :root{
   --bg:#0E0E10;
@@ -1306,7 +1306,7 @@ section{ padding-top:80px; padding-bottom:80px; }
     <div class="section-head center reveal" dir="rtl">
       <span class="eyebrow">باقات المنصة</span>
       <h2 class="arabic-h">وصول كامل للمنصة، بسعر واضح.</h2>
-      <p class="arabic">عندنا مسارين: ابد من الصفر، والتجهيز للاختبارات. كل مسار فيه 3 باقات. بس باقة 3 اشهر للتجهيز للاختبارات هي اللي تشمل حصة مباشرة كل اسبوع. الاشتراك والدفع كله عن طريق واتساب، مافي دفع اونلاين.</p>
+      <p class="arabic">عندنا مسارين: ابد من الصفر، والتجهيز للاختبارات. كل مسار فيه 3 باقات، وكل الباقات فيها حصص مباشرة مع الاستاذ فراس: باقات ابد من الصفر تشمل حصة كل اسبوع، وباقات التجهيز تشمل من حصة الى 3 حصص اسبوعية حسب المدة. الاشتراك والدفع كله عن طريق واتساب، مافي دفع اونلاين.</p>
     </div>
     <div class="pricing-grid" id="pricingGrid" dir="rtl"></div>
     <p class="pricing-note arabic">
@@ -1348,7 +1348,7 @@ section{ padding-top:80px; padding-bottom:80px; }
   </div>
 </section>
 
-<script src="lib/pel-plans.js?v=ad1d1c18"></script>
+<script src="lib/pel-plans.js?v=9df345ce"></script>
 <script src="lib/pel-settings.js?v=efc52be5"></script>
 <script>
 /* PRICING - rendered from the live plan_pricing matrix (admin-editable via
@@ -1380,12 +1380,12 @@ section{ padding-top:80px; padding-bottom:80px; }
   function matrixRows(){
     if(window.PEL_PLANS_DB && PEL_PLANS_DB.length) return PEL_PLANS_DB;
     return [
-      {tier:'start_from_zero',duration_months:1,price:89,weekly_live_classes:0,featured:false},
-      {tier:'start_from_zero',duration_months:2,price:139,weekly_live_classes:0,featured:false},
-      {tier:'start_from_zero',duration_months:3,price:169,weekly_live_classes:0,featured:true},
-      {tier:'exam_prep',duration_months:1,price:89,weekly_live_classes:0,featured:false},
-      {tier:'exam_prep',duration_months:2,price:139,weekly_live_classes:0,featured:false},
-      {tier:'exam_prep',duration_months:3,price:169,weekly_live_classes:1,featured:true}
+      {tier:'start_from_zero',duration_months:1,price:230,weekly_live_classes:1,featured:false},
+      {tier:'start_from_zero',duration_months:2,price:450,weekly_live_classes:1,featured:false},
+      {tier:'start_from_zero',duration_months:3,price:750,weekly_live_classes:1,featured:true},
+      {tier:'exam_prep',duration_months:1,price:1000,weekly_live_classes:1,featured:false},
+      {tier:'exam_prep',duration_months:2,price:1300,weekly_live_classes:2,featured:false},
+      {tier:'exam_prep',duration_months:3,price:2200,weekly_live_classes:3,featured:true}
     ];
   }
   if(!document.getElementById('pel-pricing-style')){ var st=document.createElement('style'); st.id='pel-pricing-style'; st.textContent='.pel-track{padding:34px;border:1px solid var(--border);border-radius:24px;background:linear-gradient(180deg,var(--surface),var(--card));}.pel-subgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch;}@media(max-width:980px){.pel-subgrid{grid-template-columns:1fr;max-width:440px;margin:0 auto;}}'; document.head.appendChild(st); }
@@ -1417,7 +1417,7 @@ section{ padding-top:80px; padding-bottom:80px; }
         html += '<div class="price-value"><span class="amount">'+r.price+'<small>'+(ar?'ريال':'SAR')+'</small></span><span class="per">/ '+r.duration_months+(ar?' اشهر':' mo')+'</span></div>';
         html += '<div class="price-save">'+(ar?'يعادل':'equiv.')+' '+pm+' '+(ar?'ريال شهرياً':'SAR / mo')+'</div>';
         if(r.weekly_live_classes>0){
-          html += '<div style="margin:14px 0 0;padding:12px 14px;border:1px solid rgba(200,169,106,.35);border-radius:12px;background:rgba(200,169,106,.08);"><b style="color:var(--gold);font-size:.92rem;">'+(ar?'حصة مباشرة كل اسبوع':'1 live class / week')+'</b><br><span style="font-size:.74rem;color:var(--text-muted);">'+(ar?'مشمولة معك بهالباقة':'included with this package')+'</span></div>';
+          html += '<div style="margin:14px 0 0;padding:12px 14px;border:1px solid rgba(200,169,106,.35);border-radius:12px;background:rgba(200,169,106,.08);"><b style="color:var(--gold);font-size:.92rem;">'+r.weekly_live_classes+' '+(ar?'حصص مباشرة كل اسبوع':'live classes / week')+'</b><br><span style="font-size:.74rem;color:var(--text-muted);">'+(ar?'مشمولة معك بهالباقة':'included with this package')+'</span></div>';
         } else if(tier==='exam_prep'){
           html += '<div style="margin:14px 0 0;font-size:.78rem;color:var(--text-muted);">'+(ar?'ما فيها حصص مباشرة بهالمدة':'No live classes at this duration')+'</div>';
         } else {
@@ -1786,7 +1786,7 @@ function applyIndexLang(lang){
   var pricingHead=document.querySelector('#pricing .section-head h2');
   if(pricingHead) pricingHead.textContent = lang==='ar' ? 'وصول كامل للمنصة، بسعر واضح.' : 'Full platform access, clear pricing.';
   var pricingP=document.querySelector('#pricing .section-head p');
-  if(pricingP) pricingP.textContent = lang==='ar' ? 'عندنا مسارين: ابد من الصفر، والتجهيز للاختبارات. كل مسار فيه 3 باقات. بس باقة 3 اشهر للتجهيز للاختبارات هي اللي تشمل حصة مباشرة كل اسبوع. الاشتراك والدفع كله عن طريق واتساب، مافي دفع اونلاين.' : 'Two tracks - Start From Zero and Exam Prep. Each has 3 plans. Only the 3-month exam-prep plan throws in a weekly live class. Signup and payment all happen over WhatsApp - no online payment.';
+  if(pricingP) pricingP.textContent = lang==='ar' ? 'عندنا مسارين: ابد من الصفر، والتجهيز للاختبارات. كل مسار فيه 3 باقات، وكل الباقات فيها حصص مباشرة مع الاستاذ فراس: باقات ابد من الصفر تشمل حصة كل اسبوع، وباقات التجهيز تشمل من حصة الى 3 حصص اسبوعية حسب المدة. الاشتراك والدفع كله عن طريق واتساب، مافي دفع اونلاين.' : 'Two tracks - Start From Zero and Exam Prep. Each has 3 plans, and every plan includes live classes with Tutor Firas: Start From Zero plans include 1 class a week, Exam Prep plans include 1 to 3 classes a week depending on duration. Signup and payment all happen over WhatsApp - no online payment.';
   var pricingNote=document.querySelector('.pricing-note');
   if(pricingNote) pricingNote.innerHTML = lang==='ar' ? '<b>ما تعرف اي باقة تناسبك؟</b> راسلنا واتساب، نتعرف على مستواك وهدفك، ونرجع لك بخطة وسعر يناسبك - او نخصص لك تدريباً فردياً اونلاين.' : '<b>Not sure which plan fits?</b> Message us on WhatsApp - we’ll assess your level and goal and recommend the right plan, or a private option.';
   // footer + remaining section heads (minimal bilingual to satisfy full-site requirement)
@@ -2187,8 +2187,8 @@ const faqs = [
   {qAr:'كم مدة وصولي للمنصة؟', aAr:'حسب الباقة اللي تختارها: 30 يوم، شهرين، او 3 اشهر. طول فترة اشتراكك يبقى الوصول كامل لكل الدروس والتحديثات الجديدة.', qEn:'How long is access?', aEn:'Depends on your plan: 30 days, 2 months, or 3 months. Full access to all lessons and updates for the entire period.'},
   {qAr:'كيف اترجم واصحح كتابتي؟', aAr:'داخل المنصة ترجمة فورية مجانية بلا حدود لاي كلمة او جملة، وورشة كتابة تصحح لك وتبين لك سبب كل خطا بالعربي.', qEn:'How does translation and writing correction work?', aEn:'Unlimited free instant translation for any word or sentence, plus a writing workshop that corrects you and explains each mistake in Arabic.'},
   {qAr:'اقدر اتابع تقدمي؟', aAr:'نعم. لوحتك الخاصة تتابع تطور محادثتك واستماعك ومفرداتك اسبوع بعد اسبوع.', qEn:'Can I track progress?', aEn:'Yes. Your private dashboard tracks speaking, listening and vocabulary week by week.'},
-  {qAr:'كم سعر الاشتراك؟', aAr:'فيه مسارين: ابد من الصفر، والتجهيز للاختبارات. كل مسار فيه 3 باقات: شهر 89 ريال، شهرين 139 ريال، و3 اشهر 169 ريال (افضل قيمة). الدفع عبر واتساب والتنشيط خلال دقايق.', qEn:'How much?', aEn:'Two tracks: Start From 0 and Exam Prep. Each has 3 plans: 1 month 89 SAR, 2 months 139 SAR, and 3 months 169 SAR (best value). Pay via WhatsApp, activated in minutes.'},
-  {qAr:'هل الباقات تشمل حصص مباشرة؟', aAr:'باقة 3 اشهر للتجهيز للاختبارات فقط هي اللي تشمل حصة مباشرة كل اسبوع. باقات الشهر والشهرين ما فيها حصص مباشرة. تبي حصص اضافية؟ اشتر رصيد حصص عن طريق واتساب.', qEn:'Do plans include live classes?', aEn:'Only the 3-Month Exam Prep package includes 1 live class per week. The 1-month and 2-month plans have no live classes. Want extra? Buy class credits via WhatsApp.'},
+  {qAr:'كم سعر الاشتراك؟', aAr:'فيه مسارين: ابد من الصفر (شهر 230 ريال، شهرين 450 ريال، 3 اشهر 750 ريال، وكل باقة تشمل حصة مباشرة كل اسبوع)، والتجهيز للاختبارات (شهر 1000 ريال، شهرين 1300 ريال بحصتين اسبوعية، و3 اشهر 2200 ريال بـ3 حصص اسبوعية). الدفع عبر واتساب والتنشيط خلال دقايق.', qEn:'How much?', aEn:'Two tracks: Start From 0 (1 month 230 SAR, 2 months 450 SAR, 3 months 750 SAR - every plan includes 1 live class a week) and Exam Prep (1 month 1000 SAR, 2 months 1300 SAR with 2 classes a week, 3 months 2200 SAR with 3 classes a week). Pay via WhatsApp, activated in minutes.'},
+  {qAr:'هل الباقات تشمل حصص مباشرة؟', aAr:'كل الباقات تشمل حصص مباشرة مع الاستاذ فراس: باقات ابد من الصفر تشمل حصة كل اسبوع، وباقات التجهيز للاختبارات تشمل حصة اسبوعية في باقة الشهر، وحصتين في الشهرين، و3 حصص في باقة الـ3 اشهر. تبي حصص اضافية؟ اشتر رصيد حصص عن طريق واتساب.', qEn:'Do plans include live classes?', aEn:'Every plan includes live classes with Tutor Firas: Start From Zero plans include 1 class a week, and Exam Prep plans include 1, 2 or 3 classes a week depending on duration. Want extra? Buy class credits via WhatsApp.'},
   {qAr:'كيف ابدا التسجيل؟', aAr:'راسلنا على واتساب، نرسل لك تفاصيل الدفع ونفعّل حسابك خلال وقت قصير.', qEn:'How do I enroll?', aEn:'Message us on WhatsApp, we send payment details and activate your account shortly.'},
   {qAr:'ايش يصير لما تنتهي باقاتي؟', aAr:'يبقى حسابك وكل تقدمك وشهاداتك محفوظة. بس يوقف الوصول للدروس. وقتها تقدر تجدد من لوحتك مباشرة، او تراسلنا واتساب ونفعل لك باقة جديدة.', qEn:'What happens when my plan ends?', aEn:'Your account, progress and certificates stay saved. Lesson access pauses. Renew from your dashboard or message us on WhatsApp.'},
 ];

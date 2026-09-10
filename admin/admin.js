@@ -3242,7 +3242,7 @@ function savePlanForm(catalog){
       '<div class="field"><label>Name (EN)</label><input class="input" id="pgEn"></div>' +
       '<div class="field"><label>Name (AR)</label><input class="input" id="pgAr"></div>' +
       '<div class="field"><label>' + esc(t('durationDays')) + '</label><input class="input" type="number" id="pgDays" value="30"></div>' +
-      '<div class="field"><label>' + esc(t('price')) + '</label><input class="input" id="pgPrice" placeholder="89"></div>' +
+      '<div class="field"><label>' + esc(t('price')) + '</label><input class="input" id="pgPrice" placeholder="230"></div>' +
       '<div class="field"><label>' + esc(t('currency')) + '</label><input class="input" id="pgCur" value="SAR"></div>' +
       '<div class="field"><label>' + esc(t('weeklyLive')) + '</label><input class="input" type="number" id="pgWeekly" value="0"></div>' +
       '<div class="field"><label>' + esc(t('platformAccess')) + '</label><select class="input" id="pgAccess"><option value="true">Yes</option><option value="false">No</option></select></div>' +
