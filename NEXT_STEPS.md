@@ -13,12 +13,14 @@
    `loadStudentState()`. Signed-out play stays purely local (guards hold in
    tests). Legacy local rows without `ts` LOSE to the server on first sync —
    deliberate first-sync behavior.
-2. **Mastery-gated completion** (commit `ba16665`, audit item 5 closed):
-   with >= 3 production activities, >= 60% eventual-correct is required to
-   complete. `mark()` upgrades ok counters on retry success (`okTracked`
-   flag; totals stay once-per-activity). Gated lessons get an "Almost there"
-   screen — Practice again (fresh state via Stage.open) or Back to path;
-   no XP / markLessonComplete / server progression when gated.
+2. **Mastery-gated completion** (commits `ba16665` + fixup, audit item 5
+   closed): with >= 3 production activities, >= 60% FIRST-ATTEMPT correct
+   (`prodFirstOk`) is required to complete. `mark()` keeps eventual-correct
+   counters (`prodOk`/`recOk`) for the done-screen display only — retry
+   successes deliberately do NOT feed the gate, or re-clicking until green
+   would void it. Gated lessons get an "Almost there" screen — Practice
+   again (fresh state via Stage.open, first attempts count anew) or Back to
+   path; no XP / markLessonComplete / server progression when gated.
 
 ---
 
