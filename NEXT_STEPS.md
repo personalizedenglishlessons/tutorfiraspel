@@ -1,6 +1,6 @@
 # NEXT STEPS — pick up here
 
-## ✅ DONE (2026-09-12): Per-activity progress persistence + curriculum view fix + dashboard undefined (`0824c8a` + pending commit)
+## ✅ DONE (2026-09-12): Per-activity progress persistence + curriculum view fix + dashboard undefined (`0824c8a` + `cdcacbb`)
 
 ### 1. Per-activity stage position save/restore (CRITICAL — was the user's #1 ask)
 
