@@ -1,5 +1,25 @@
 # NEXT STEPS — pick up here
 
+## ✅ DONE (2026-09-12): Deep audit round 3 — 3 more engine bugs (`2bf630a`)
+
+Continued auditing `lib/pel_lesson_stage.js` renderers and found/fixed:
+
+1. **conversation_response question leak** — the distractor filter
+   `j!==i+1` only excluded the reply line, not the question line at
+   index `i`. The question text appeared as a distractor option.
+   Fixed to `j!==i && j!==i+1`.
+2. **listen Continue gate bypassed** — `ready()` re-enables the primary
+   button, overriding `ctx.btn.disabled=true`. Student could click
+   Continue without pressing Play (free pass). Re-gated with
+   `ctx.btn.disabled = !played;` after `ready()`, matching the pattern
+   `listening_dictation` already uses.
+3. **identify_heard no distractor dedup** — unlike `recognize`, the
+   `identify_heard` renderer didn't deduplicate distractors by `norm()`,
+   so duplicate meanings could appear as separate options. Added the
+   same `_seen`/`_dd` dedup pattern.
+
+All 13 tests pass, syntax OK, cache-busted to `?v=98de389b`.
+
 ## ✅ DONE (2026-09-12): Deep audit round 2 — 3 more engine bugs (`cc91c1b`)
 
 Continued auditing `lib/pel_lesson_stage.js` and found/fixed:
