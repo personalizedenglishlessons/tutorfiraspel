@@ -22,7 +22,7 @@
 <script src="lib/pel-settings.js?v=efc52be5" defer></script>
 <script src="lib/cert-qr.js?v=a43f19f9" defer></script>
 <script src="lib/cert-sheet.js?v=2bb6195d" defer></script>
-<script src="lib/pel_lesson_stage.js?v=98de389b"></script>
+<script src="lib/pel_lesson_stage.js?v=d9803447"></script>
 <script src="lib/pel_dashboard_life.js?v=ed676701"></script>
 <script src="lib/pel_curriculum_path.js?v=b97575ec"></script>
 <style>
@@ -1881,7 +1881,7 @@ function authGateError(){
    logout / sign-out so one student's history can never bleed into another
    account on the same device when the remote table isn't available. */
 function clearUserLocalKeys(){
-  ['pel_study_days','pel_completion_dates','pel_notif_prefs','pel_cert_codes','pel_review_queue','pel_writing_misses','pel_review_days','pel_grammar_endpoint','pel_plan','pel_plan_draft','pel_plan_snapshot'].forEach(k => { try{ localStorage.removeItem(k); }catch(e){} });
+  ['pel_study_days','pel_completion_dates','pel_notif_prefs','pel_cert_codes','pel_review_queue','pel_writing_misses','pel_review_days','pel_grammar_endpoint','pel_plan','pel_plan_draft','pel_plan_snapshot','pel_stage_pos'].forEach(k => { try{ localStorage.removeItem(k); }catch(e){} });
   // Per-user namespaced keys from any account: never let one student's
   // codes or history bleed into another account on the same device.
   try{
@@ -19350,7 +19350,7 @@ function renderDashboardIntel(){
       ACADEMIES, academyLessonList, canRecognize, ensureRouteAllows, escapeHtml,
       getLesson, goToView, markLessonComplete, micErrorMessage, nextLesson,
       pronFeedback, recordAndScore, resolveAcademyById, speak, subBlocked, toast,
-      translitEn,
+      translitEn, lsSet,
       accountPrefs: function(){ return accountPrefs; },
       openLesson: openLesson,
       // SRS server sync (pel_srs_state): the stage engine guards these —

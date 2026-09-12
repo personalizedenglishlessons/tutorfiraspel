@@ -1,5 +1,123 @@
 # NEXT STEPS — pick up here
 
+## ✅ DONE (2026-09-12): Per-activity progress persistence + curriculum view fix + dashboard undefined (`0824c8a` + pending commit)
+
+### 1. Per-activity stage position save/restore (CRITICAL — was the user's #1 ask)
+
+**Problem**: The lesson stage engine stored the current activity index (`Stage.state.idx`)
+only in memory. When a student closed the browser, navigated away, or reloaded
+mid-lesson, all in-lesson progress was lost — they restarted from activity 1
+every time. Only lesson completion (mastery met) was persisted to Supabase.
+
+**Fix** (in `lib/pel_lesson_stage.js`):
+- Added `saveStagePos()` / `loadStagePos()` / `clearStagePos()` functions.
+- `Stage.next()` calls `saveStagePos()` after incrementing `idx` — saves
+  `{a:academyId, l:lessonId, i:idx, ts:Date.now()}` to localStorage key
+  `pel_stage_pos` AND fire-and-forget upserts to `student_data` table via
+  the injected `lsSet` dep (so it syncs across devices).
+- `Stage.open()` calls `loadStagePos(academyId, lessonId)` and restores
+  `this.state.idx` if a saved position exists for the same lesson.
+- `renderDone()` (mastery met) calls `clearStagePos()` so the next open
+  starts fresh.
+- `pel_stage_pos` added to `clearUserLocalKeys()` in app.html so it's
+  cleared on logout (no cross-account bleed).
+- `lsSet` added to the stage engine deps in app.html.
+
+**What IS saved per-activity**: the activity cursor (which step you're on).
+**What is NOT saved per-activity**: SRS word recall (saved separately via
+`srsRecord` on every answer), recognition/production counters (reset on
+re-open — only counted fresh per lesson attempt for the mastery gate).
+
+**NOT YET LIVE-TESTED**: the browser smoke test to verify reload resumes at
+the same activity was interrupted. This is the FIRST thing to do next — see
+"NEXT STEPS" below.
+
+### 2. Curriculum view was blank (`0824c8a` — pushed)
+
+**Problem**: `pel_curriculum_path.js` runs in global scope before app.html's
+IIFE creates `viewRenderers`. Its attempt to register
+`viewRenderers['curriculum'] = render` silently failed (`typeof viewRenderers`
+was `undefined`). The sidebar showed "Curriculum" but clicking it showed a
+blank center area.
+
+**Fix**: Added registration from inside the IIFE where `viewRenderers` is in
+scope:
+```javascript
+if(window.PEL_CURRICULUM_PATH && window.PEL_CURRICULUM_PATH.render){
+  viewRenderers['curriculum'] = window.PEL_CURRICULUM_PATH.render;
+}
+```
+
+### 3. Dashboard "undefined" skill names (`0824c8a` — pushed)
+
+**Problem**: `dashSkillData()` returns objects with `.key` (e.g. 'Speaking'),
+but `dashFocusRec()` used `weak.en` (undefined). Dashboard showed
+"Practice undefined" and "You have not practiced undefined this week."
+
+**Fix**: Changed `weak.en` → `weak.key` in 3 places in `dashFocusRec()`.
+
+Cache-busted: `?v=d9803447`. Tests: 13/13 PASS. Syntax: OK.
+
+---
+
+## 🔜 NEXT STEPS (do these in order)
+
+### Step 1: LIVE-TEST the stage position save/restore (PRIORITY)
+
+The code is committed but NOT yet verified in a browser. Do this:
+
+1. Log in as `testmail1@gmail.com` / `namas123`
+2. Open the "Was and Were" lesson (Past Simple academy)
+3. Click through 3-4 activities (concept → learn → recognize → etc.)
+4. Hard-reload the page (bypass GitHub Pages cache)
+5. Re-open the lesson — verify it resumes at activity 4, not activity 1
+6. If it doesn't resume: check `localStorage.getItem('pel_stage_pos')` in
+   the browser console. The save may be failing silently.
+7. Also verify: completing a lesson clears the saved position (open →
+   starts from activity 1 again).
+8. Cross-device: query `student_data` table for the `pel_stage_pos` key
+   to confirm the Supabase sync landed:
+   `python3 tools/sql.py "SELECT key, value FROM student_data WHERE user_id='1d68ead7-7ef4-407a-9138-a171fa693272' AND key='pel_stage_pos'"`
+
+### Step 2: Continue the deep smoke test for Arabic students
+
+The user asked for a full smoke test. So far covered:
+- ✅ Login works (testmail1@gmail.com)
+- ✅ Curriculum data loads (346 lessons, 53 academies via RPC)
+- ✅ Lesson stage engine runs (19 activities, concept card renders)
+- ✅ Dashboard renders (with undefined bug now fixed)
+- ✅ Curriculum view (was blank, now fixed)
+- ❌ NOT TESTED: Arabic mode toggle (RTL layout, translations)
+- ❌ NOT TESTED: Lesson stage end-to-end in Arabic mode
+- ❌ NOT TESTED: All sidebar navigation items
+- ❌ NOT TESTED: Study tools (Vocabulary Vault, Smart Review, Grammar, etc.)
+- ❌ NOT TESTED: iPad/mobile responsive (fixed in `53a8557` but not verified)
+- ❌ NOT TESTED: SRS server sync (was verified in a prior session)
+
+### Step 3: Merge the 4 feature/fix branches
+
+Still unmerged (from prior sessions):
+- `feat/admin-create-student` — admin can create student accounts
+- `fix/client-academy-resolver` — fail-closed route guard, library rerender loop
+- `fix/lesson-engine-phase1` — study tools + speech scoring in lesson structure
+- `fix/server-plan-profile` — true-zero placement track, no-plan badge, plan hardening
+
+Review each branch, merge if still relevant, resolve conflicts, push to main.
+
+### Step 4: Other known issues to check
+
+- **GitHub Pages cache lag**: `app.html` itself is cached for 10 min
+  (max-age=600). When testing fixes, use hard-reload (bypass cache) or wait.
+- **`pel_stage_pos` in `student_data`**: the `lsSet` function upserts
+  `{user_id, key, value}` where `value` is the JSON-serialized position.
+  Verify the `student_data` table accepts JSON values in the `value` column.
+- **Mastery gate interaction**: if a student resumes mid-lesson and the
+  production counters were reset, the mastery gate may behave differently
+  (counts only activities completed in this session). This is by design —
+  the gate judges first-attempt production per lesson attempt.
+
+---
+
 ## ✅ DONE (2026-09-12): Deep audit round 3 — 3 more engine bugs (`2bf630a`)
 
 Continued auditing `lib/pel_lesson_stage.js` renderers and found/fixed:
