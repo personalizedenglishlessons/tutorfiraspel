@@ -1,5 +1,32 @@
 # NEXT STEPS — pick up here
 
+## ✅ DONE (2026-09-12): Lesson stage engine bugfixes (`ad884b2`)
+
+Smoke-tested the lesson structure engine (`lib/pel_lesson_stage.js`).
+Found and fixed 7 issues:
+
+1. **textContent → innerHTML** for L() in learn + learn_sentence
+   renderers — in Arabic mode, the `<span class="arabic">` tags showed
+   as literal text instead of rendering. Now uses innerHTML.
+2. **Duplicated Arabic** in free_response review button — had hardcoded
+   Arabic span always visible + L() call. Arabic showed in English mode,
+   duplicated in Arabic mode. Now uses L() only.
+3. **Hardcoded Arabic** in free_response toast — always showed Arabic
+   regardless of language mode. Now uses L().
+4. **Academy name in breadcrumb** always showed Arabic span — now only
+   shows Arabic when ar() is true (Arabic UI mode).
+5. **Challenge: missing English reveal** after answering — recognize
+   reveals English + translit on correct option, challenge didn't. Now
+   consistent.
+6. **Challenge: small pool** (3 items → only 3 options) — padded with
+   PEL_STARTER_ITEMS for 4 options, matching recognize. Deduped by norm().
+7. **CSS: .o-en forced direction:ltr** on Arabic text in recognize/
+   challenge options. Added `.o-en.arabic{direction:rtl}` override.
+
+Cache-busted: `?v=ad6c6d31`. Tests: 13/13 PASS.
+
+---
+
 ## ✅ DONE (2026-09-12): iPad/tablet/mobile responsive fix (`53a8557`)
 
 Systematic cross-device fix across all 6 pages (app, index, admin,
