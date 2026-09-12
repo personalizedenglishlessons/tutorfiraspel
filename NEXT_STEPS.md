@@ -1,5 +1,25 @@
 # NEXT STEPS — pick up here
 
+## ✅ DONE (2026-09-12): Deep audit round 2 — 3 more engine bugs (`cc91c1b`)
+
+Continued auditing `lib/pel_lesson_stage.js` and found/fixed:
+
+1. **db_translate Arabic answer checking (CRITICAL)** — `norm()` strips
+   Arabic characters (only keeps `a-z0-9`), so Arabic answers normalized
+   to `''` and `'' === ''` was always true. Student could type anything
+   (or nothing) and it was marked correct. Affected all 289 translate
+   exercises in the DB. Added `normAny()` with Unicode property escapes
+   `\p{L}\p{N}` that keeps Arabic letters. Used in `db_translate` answer
+   checking only (other renderers use `norm()` for English text).
+2. **concept variable shadowing** — `const ar = n.ar` shadowed the `ar()`
+   function. `L()` still worked (captures `ar` from factory scope), but
+   calling `ar()` inside `concept` would throw. Renamed to `arText`.
+3. **db_correct why explanation** — the bilingual "why" was only shown
+   when the student answered correctly. Now shown regardless of
+   correctness (most valuable when wrong).
+
+All 13 tests pass, syntax OK, cache-busted to `?v=15bdf9b8`.
+
 ## ✅ DONE (2026-09-12): Lesson stage engine bugfixes (`ad884b2`)
 
 Smoke-tested the lesson structure engine (`lib/pel_lesson_stage.js`).
