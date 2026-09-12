@@ -1,424 +1,250 @@
 # NEXT STEPS — pick up here
 
-## ✅ DONE (2026-09-12): Per-activity progress persistence + curriculum view fix + dashboard undefined (`0824c8a` + `cdcacbb`)
+## ✅ DONE: v1 stage position persistence (commits `cdcacbb`, `9bee3ee`)
 
-### 1. Per-activity stage position save/restore (CRITICAL — was the user's #1 ask)
+Saves `{a:academyId, l:lessonId, i:idx, ts}` to localStorage + Supabase `student_data`.
+Restores position on reload. LIVE-TESTED: advanced 3 activities, reloaded, resumed at 3/19.
+DB sync confirmed. Cleared on lesson completion and logout.
 
-**Problem**: The lesson stage engine stored the current activity index (`Stage.state.idx`)
-only in memory. When a student closed the browser, navigated away, or reloaded
-mid-lesson, all in-lesson progress was lost — they restarted from activity 1
-every time. Only lesson completion (mastery met) was persisted to Supabase.
+## ✅ SHIPPED (NOT FULLY VERIFIED): v2 full per-activity session persistence
 
-**Fix** (in `lib/pel_lesson_stage.js`):
-- Added `saveStagePos()` / `loadStagePos()` / `clearStagePos()` functions.
-- `Stage.next()` calls `saveStagePos()` after incrementing `idx` — saves
-  `{a:academyId, l:lessonId, i:idx, ts:Date.now()}` to localStorage key
-  `pel_stage_pos` AND fire-and-forget upserts to `student_data` table via
-  the injected `lsSet` dep (so it syncs across devices).
-- `Stage.open()` calls `loadStagePos(academyId, lessonId)` and restores
-  `this.state.idx` if a saved position exists for the same lesson.
-- `renderDone()` (mastery met) calls `clearStagePos()` so the next open
-  starts fresh.
-- `pel_stage_pos` added to `clearUserLocalKeys()` in app.html so it's
-  cleared on logout (no cross-account bleed).
-- DB sync uses `srsSupabase()`/`srsUserId()` directly (same pattern as SRS sync).
+Commits: `dbc94d8`, `fa7c7db`, `052bfe4` (all pushed to main).
 
-**LIVE-TESTED (2026-09-12)**: Verified in browser — advanced 3 activities,
-reloaded, lesson resumed at activity 3/19 (not 1/19). DB sync confirmed:
-`student_data` table has `pel_stage_pos` with correct academy/lesson/idx.
+### What v2 does
+Upgrades `pel_stage_pos` from cursor-only (v1) to full session save/restore (v2):
+- `saveStageSession()` saves position + stats + per-activity interaction state
+- `captureActivityDOM()` scans the stage for selections, typed text, reveals,
+  played state, ordered tokens, matched pairs, correct/wrong highlights
+- `applySavedSession()` restores stats + per-activity flags (counted/okTracked)
+  WITHOUT calling mark() so the mastery gate stays honest
+- `restoreActivityDOM()` re-selects options, fills inputs, shows feedback + button
+- Delegated click+input listener on stage body saves on EVERY interaction
+  (throttled 500ms to avoid spamming DB)
+- Backward compatible: v1 sessions load fine (no acts/stats)
 
-### Fix for jsonb restore bug (`9bee3ee`)
+### What IS verified working (live-tested 2026-09-12)
+- ✅ Position restore across reload (idx=3 → reload → idx=3)
+- ✅ Stats restore (recTotal=1, recOk=1 preserved — mastery gate integrity)
+- ✅ Per-activity flags restore (counted=true, okTracked=true)
+- ✅ Feedback + button restore ("✓ Correct" + "Continue" painted without mark())
+- ✅ DB sync confirmed (student_data has pel_stage_pos with v:2 format)
+- ✅ v2 save captures: checked, correct, selected (data-i), counted, okTracked, stats
+- ✅ 13/13 tests pass, syntax OK
 
-The initial implementation used `lsSet` which stored objects as jsonb in
-`student_data`. On restore, the object was written to localStorage as
-`[object Object]`, breaking the resume. Fixed by:
-- Using `srsSupabase()`/`srsUserId()` directly for the DB upsert (not `lsSet`)
-- Storing the JSON string (not object) in the upsert
-- Fixed the `student_data` restore code to stringify jsonb objects
-- `loadStagePos` handles `[object Object]`, `null`, and double-stringified values
-- Removed `lsSet` from stage deps (no longer needed)
+### ❌ BLOCKERS — next AI must fix these in order
 
-**What IS saved per-activity**: the activity cursor (which step you're on).
-**What is NOT saved per-activity**: SRS word recall (saved separately via
-`srsRecord` on every answer), recognition/production counters (reset on
-re-open — only counted fresh per lesson attempt for the mastery gate).
+#### Blocker 1: Unstable answer keys (CRITICAL)
+**Problem**: `captureActivityDOM()` captures selected options by `data-i` (the option
+index). But option order is SHUFFLED on every render. So `selected:["0"]` on one
+load might restore the WRONG option on the next load.
 
-### 2. Curriculum view was blank (`0824c8a` — pushed)
+**Fix**: Add stable `data-choice-key` attributes to option buttons in each renderer.
+For `recognize`: `data-choice-key="${esc(o.en)}"` (the English word is stable).
+Apply to all multiple-choice renderers: recognize, challenge, identify_heard,
+choose_natural_expression, conversation_response, complete_dialogue, db_correct.
+Then update `captureActivityDOM()` and `restoreActivityDOM()` to use
+`data-choice-key` instead of `data-i`.
 
-**Problem**: `pel_curriculum_path.js` runs in global scope before app.html's
-IIFE creates `viewRenderers`. Its attempt to register
-`viewRenderers['curriculum'] = render` silently failed (`typeof viewRenderers`
-was `undefined`). The sidebar showed "Curriculum" but clicking it showed a
-blank center area.
+#### Blocker 2: Ledger merging drops previous activity state
+**Problem**: `saveStageSession()` rebuilds `acts = {}` from scratch every save.
+It captures the CURRENT activity's DOM state + per-activity flags from `s.seq`.
+But if activity 3 had a saved `correctOpts` and the student is now on activity 4,
+the save drops activity 3's `correctOpts` (only keeps `counted`/`okTracked`).
 
-**Fix**: Added registration from inside the IIFE where `viewRenderers` is in
-scope:
+**Fix**: Load the existing saved session, merge the new capture into the existing
+`acts` map (don't rebuild from scratch). Only patch the current activity's DOM
+state + update counted/okTracked flags for all activities.
+
+#### Blocker 3: Pre-check restore doesn't update renderer closure state
+**Problem**: Adding `.selected` class via `restoreActivityDOM()` visually highlights
+the option, but renderers like `recognize` store the selection in a closure variable
+(`sel`). After restore, clicking Check may still behave as if nothing is selected
+because `sel` is null.
+
+**Fix options**:
+A. Refactor Check handlers to read `inner.querySelector('.pel-option.selected')`
+   at check time instead of relying on closure variables.
+B. OR: Implement renderer-specific restore that sets the closure variable.
+Option A is cleaner — search for `sel=` in each renderer and replace with
+DOM lookup.
+
+#### Blocker 4: correctOpts not captured (debug needed)
+**Problem**: When the student checks a correct answer, the recognize renderer adds
+`.correct` class to the right option BEFORE calling `mark()`. The `saveStageSession()`
+inside `mark()` calls `captureActivityDOM()` which should find `.pel-option.correct`
+elements. But the saved data has `checked:true, correct:true` but NO `correctOpts`.
+
+**Debug steps** (MUST use clean state — see below):
+1. SQL delete: `DELETE FROM student_data WHERE key='pel_stage_pos' AND user_id='1d68ead7-7ef4-407a-9138-a171fa693272'`
+2. Clear localStorage: `localStorage.removeItem('pel_stage_pos')`
+3. Load `app.html?clean=<timestamp>` (cache-busting URL)
+4. Log in, open lesson, advance to recognize (4/19)
+5. Verify fresh state: `Stage.state.checked === false`, button says "Check",
+   feedback is empty (no "✓ Correct")
+6. Select correct option, click Check
+7. Check DOM: does `.pel-option.correct` exist?
+8. Check saved: does `acts['3'].correctOpts` exist?
+9. If DOM has `.correct` but saved lacks `correctOpts` → fix capture timing/selector
+10. If DOM has no `.correct` → the check handler didn't run (Check click issue)
+
+**Possible cause**: The throttled save (500ms after click) might fire AFTER the
+renderer re-renders (e.g., on "Try again"), clearing the `.correct` class.
+Or the `.correct` selector in `captureActivityDOM()` doesn't match the actual
+class name used by the renderer.
+
+**Debug snippet** (run in browser console after selecting + checking):
 ```javascript
-if(window.PEL_CURRICULUM_PATH && window.PEL_CURRICULUM_PATH.render){
-  viewRenderers['curriculum'] = window.PEL_CURRICULUM_PATH.render;
-}
+const stage = document.getElementById('pelLessonStage');
+const s = window.PEL_LESSON_STAGE.state;
+const idx = s.idx;
+const opt = [...stage.querySelectorAll('.pel-option')].find(el => el.textContent.trim() === 'كان');
+opt.click();
+const btn = stage.querySelector('#pelStgBtn');
+btn.click();
+const afterCheck = {
+  checked: s.checked, correct: s.correct,
+  stats: { recTotal: s.recTotal, recOk: s.recOk },
+  options: [...stage.querySelectorAll('.pel-option')].map(el => ({
+    text: el.textContent.trim().slice(0,30), cls: el.className, i: el.dataset.i
+  })),
+  saved: JSON.parse(localStorage.getItem('pel_stage_pos'))?.acts?.[String(idx)],
+};
+return afterCheck;
 ```
-
-### 3. Dashboard "undefined" skill names (`0824c8a` — pushed)
-
-**Problem**: `dashSkillData()` returns objects with `.key` (e.g. 'Speaking'),
-but `dashFocusRec()` used `weak.en` (undefined). Dashboard showed
-"Practice undefined" and "You have not practiced undefined this week."
-
-**Fix**: Changed `weak.en` → `weak.key` in 3 places in `dashFocusRec()`.
-
-Cache-busted: `?v=d9803447`. Tests: 13/13 PASS. Syntax: OK.
+Interpretation:
+- `checked: false` → Check click didn't fire, don't debug persistence yet
+- DOM has `.correct` but saved lacks `correctOpts` → fix capture selector
+- Saved has numeric `selected:["0"]` → fix stable keying (Blocker 1)
 
 ---
 
-## 🔜 NEXT STEPS (do these in order)
+## 🔜 SMOKE TEST — continue after v2 blockers are fixed
 
-### Step 1: ✅ DONE — Stage position save/restore is LIVE-TESTED and working
-
-Verified: advance 3 activities → reload → resume at activity 3/19.
-DB sync confirmed in `student_data` table.
-
-### Step 2: Continue the deep smoke test for Arabic students
-
-The user asked for a full smoke test. So far covered:
-- ✅ Login works (testmail1@gmail.com)
+### Verified working
+- ✅ Login works (testmail1@gmail.com / namas123)
 - ✅ Curriculum data loads (346 lessons, 53 academies via RPC)
 - ✅ Lesson stage engine runs (19 activities, concept card renders)
-- ✅ Dashboard renders (with undefined bug now fixed)
-- ✅ Curriculum view (was blank, now fixed)
-- ❌ NOT TESTED: Arabic mode toggle (RTL layout, translations)
-- ❌ NOT TESTED: Lesson stage end-to-end in Arabic mode
-- ❌ NOT TESTED: All sidebar navigation items
-- ❌ NOT TESTED: Study tools (Vocabulary Vault, Smart Review, Grammar, etc.)
-- ❌ NOT TESTED: iPad/mobile responsive (fixed in `53a8557` but not verified)
-- ❌ NOT TESTED: SRS server sync (was verified in a prior session)
+- ✅ Dashboard renders (undefined bug fixed in `0824c8a`)
+- ✅ Curriculum view (was blank, fixed in `0824c8a`)
+- ✅ Stage position saves per-activity and resumes on reload
+- ✅ DB sync confirmed (student_data has pel_stage_pos)
+- ✅ Stats + per-activity flags restore across reload
+- ✅ Feedback + button restore across reload
 
-### Step 3: Merge the 4 feature/fix branches
+### NOT YET TESTED
+- ❌ Arabic mode toggle (RTL layout, translations)
+- ❌ Lesson stage end-to-end in Arabic mode
+- ❌ All sidebar navigation items
+- ❌ Study tools (Vocabulary Vault, Smart Review, Grammar, etc.)
+- ❌ iPad/mobile responsive (fixed in `53a8557` but not verified)
+- ❌ Completing a lesson clears saved position
+- ❌ Selection restore after reload (blocked by Blocker 1+3)
+- ❌ Wrong answer → reload → "Try again" state restored
+- ❌ Typed text restore after reload (input renderers)
+- ❌ Cross-device sync (position saved on one device, restored on another)
 
-Still unmerged (from prior sessions):
+---
+
+## 🔧 TECHNICAL DETAILS
+
+### Commits this session (all pushed)
+| Commit | Description |
+|--------|-------------|
+| `53a8557` | fix(responsive): iPad/tablet/mobile viewport + touch + backdrop-filter |
+| `73c92a5` | docs: NEXT_STEPS breadcrumb for iPad responsive fix |
+| `ad884b2` | fix(stage): Arabic span leaks + textContent bug + challenge improvements (7 bugs) |
+| `d98eb60` | docs: NEXT_STEPS breadcrumb for round 1 |
+| `cc91c1b` | fix(stage): Arabic translate answer checking + concept var shadow + db_correct why (3 bugs) |
+| `67a3c53` | docs: NEXT_STEPS breadcrumb for round 2 |
+| `2bf630a` | fix(stage): conversation_response question leak + listen gate bypass + identify_heard dedup (3 bugs) |
+| `93b1068` | docs: NEXT_STEPS breadcrumb for round 3 |
+| `0824c8a` | fix(app): curriculum view blank + dashboard 'undefined' skill names |
+| `cdcacbb` | feat(stage): per-activity progress persistence + curriculum view fix |
+| `6eece2f` | docs: NEXT_STEPS breadcrumb for stage position persistence |
+| `9bee3ee` | fix(stage): use direct Supabase upsert for stage pos + fix jsonb restore |
+| `d8b0436` | docs: NEXT_STEPS breadcrumb — stage position persistence LIVE-TESTED |
+| `dbc94d8` | feat(stage): full per-activity session persistence (v2) — every click saved |
+| `fa7c7db` | fix(stage): restore selected options by data-i/text — v2 session restore |
+| `052bfe4` | fix(stage): capture+restore correct/wrong option highlights after check |
+
+### Latest lib cache buster
+`pel_lesson_stage.js?v=ad49790f`
+
+### Key files
+- `lib/pel_lesson_stage.js` — Stage engine, ~3550 lines. Contains:
+  - `saveStageSession()` / `saveStagePos()` (line ~2498) — full v2 save
+  - `captureActivityDOM()` (line ~2453) — scans DOM for interaction state
+  - `applySavedSession()` (line ~2556) — restores stats + per-activity flags
+  - `restoreActivityDOM()` (line ~2592) — restores selections, text, feedback
+  - `clearStagePos()` (line ~2642) — clears localStorage + Supabase
+  - `Stage.mark()` (line ~2306) — calls `saveStageSession()` after updating counters
+  - `Stage.next()` (line ~2342) — calls `saveStagePos()` (alias for `saveStageSession`)
+  - `Stage.open()` (line ~2234) — calls `applySavedSession(saved)` to restore state
+  - `Stage.render()` (line ~2278) — calls `restoreActivityDOM()` after renderer paints
+  - Delegated click+input listener (line ~2219) — throttled 500ms save on every interaction
+- `lib/pel-personalization.js` — PEL_ENGINE (setCurriculumOverride, dbLesson, etc.)
+- `lib/pel_curriculum_path.js` — Curriculum view (self-wiring)
+- `app.html` — Main SPA (~20016 lines)
+- `tools/bust_lib_cache.py` — MUST run before committing lib/*.js changes
+- `tools/sql.py` — Supabase DB query (needs `SUPABASE_PAT` env var)
+- `tests/test_buildsequence_iam.js` — 13-check test suite
+
+### v2 session format
+```json
+{
+  "v": 2,
+  "a": "a2-past-simple",
+  "l": "a2past-was-were",
+  "i": 3,
+  "ts": 1789240995120,
+  "stats": { "recTotal": 1, "recOk": 1, "prodTotal": 0, "prodOk": 0, "prodFirstOk": 0 },
+  "acts": {
+    "3": {
+      "type": "recognize",
+      "mode": "recognition",
+      "checked": true,
+      "correct": true,
+      "selected": ["0"],
+      "counted": true,
+      "okTracked": true
+    }
+  }
+}
+```
+
+### Testing setup
+- **Student account**: testmail1@gmail.com / namas123
+- **User ID**: `1d68ead7-7ef4-407a-9138-a171fa693272`
+- **Lesson**: Past Simple academy → "Was and Were" (19 activities)
+- **Supabase PAT**: `<ask_user>` (NEVER commit — repo is public)
+- **Live URL**: https://personalizedenglishlessons.github.io/tutorfiraspel/app.html
+- **Cache-busting URL**: `app.html?fresh=<timestamp>` (GitHub Pages caches app.html for 10 min)
+
+### Clean test procedure (MUST follow before testing v2 restore)
+1. `export SUPABASE_PAT=<ask_user> && python3 tools/sql.py "DELETE FROM student_data WHERE key='pel_stage_pos' AND user_id='1d68ead7-...'"` 
+2. Load `app.html?clean=<timestamp>` in browser
+3. `localStorage.removeItem('pel_stage_pos')` in console
+4. Log in, open lesson, advance to recognize
+5. Verify: `Stage.state.checked === false`, button says "Check", feedback is empty
+6. Only THEN start testing selection → check → reload → restore
+
+### Standing workflow
+- Commit + push EVERY finished piece immediately
+- Update NEXT_STEPS.md as a breadcrumb after every commit
+- Run `python3 tools/bust_lib_cache.py` before committing any lib/*.js change
+- Run `node --check lib/pel_lesson_stage.js` before committing
+- Run `node tests/test_buildsequence_iam.js` — must be 13/13 PASS
+- Usage is tight: batch reads, no redundant calls, no brute-force retries
+
+### 4 Feature/Fix Branches (not yet merged)
 - `feat/admin-create-student` — admin can create student accounts
 - `fix/client-academy-resolver` — fail-closed route guard, library rerender loop
 - `fix/lesson-engine-phase1` — study tools + speech scoring in lesson structure
 - `fix/server-plan-profile` — true-zero placement track, no-plan badge, plan hardening
 
-Review each branch, merge if still relevant, resolve conflicts, push to main.
-
-### Step 4: Other known issues to check
-
-- **GitHub Pages cache lag**: `app.html` itself is cached for 10 min
-  (max-age=600). When testing fixes, use hard-reload (bypass cache) or wait.
-- **`pel_stage_pos` in `student_data`**: the `lsSet` function upserts
-  `{user_id, key, value}` where `value` is the JSON-serialized position.
-  Verify the `student_data` table accepts JSON values in the `value` column.
-- **Mastery gate interaction**: if a student resumes mid-lesson and the
-  production counters were reset, the mastery gate may behave differently
-  (counts only activities completed in this session). This is by design —
-  the gate judges first-attempt production per lesson attempt.
-
----
-
-## ✅ DONE (2026-09-12): Deep audit round 3 — 3 more engine bugs (`2bf630a`)
-
-Continued auditing `lib/pel_lesson_stage.js` renderers and found/fixed:
-
-1. **conversation_response question leak** — the distractor filter
-   `j!==i+1` only excluded the reply line, not the question line at
-   index `i`. The question text appeared as a distractor option.
-   Fixed to `j!==i && j!==i+1`.
-2. **listen Continue gate bypassed** — `ready()` re-enables the primary
-   button, overriding `ctx.btn.disabled=true`. Student could click
-   Continue without pressing Play (free pass). Re-gated with
-   `ctx.btn.disabled = !played;` after `ready()`, matching the pattern
-   `listening_dictation` already uses.
-3. **identify_heard no distractor dedup** — unlike `recognize`, the
-   `identify_heard` renderer didn't deduplicate distractors by `norm()`,
-   so duplicate meanings could appear as separate options. Added the
-   same `_seen`/`_dd` dedup pattern.
-
-All 13 tests pass, syntax OK, cache-busted to `?v=98de389b`.
-
-## ✅ DONE (2026-09-12): Deep audit round 2 — 3 more engine bugs (`cc91c1b`)
-
-Continued auditing `lib/pel_lesson_stage.js` and found/fixed:
-
-1. **db_translate Arabic answer checking (CRITICAL)** — `norm()` strips
-   Arabic characters (only keeps `a-z0-9`), so Arabic answers normalized
-   to `''` and `'' === ''` was always true. Student could type anything
-   (or nothing) and it was marked correct. Affected all 289 translate
-   exercises in the DB. Added `normAny()` with Unicode property escapes
-   `\p{L}\p{N}` that keeps Arabic letters. Used in `db_translate` answer
-   checking only (other renderers use `norm()` for English text).
-2. **concept variable shadowing** — `const ar = n.ar` shadowed the `ar()`
-   function. `L()` still worked (captures `ar` from factory scope), but
-   calling `ar()` inside `concept` would throw. Renamed to `arText`.
-3. **db_correct why explanation** — the bilingual "why" was only shown
-   when the student answered correctly. Now shown regardless of
-   correctness (most valuable when wrong).
-
-All 13 tests pass, syntax OK, cache-busted to `?v=15bdf9b8`.
-
-## ✅ DONE (2026-09-12): Lesson stage engine bugfixes (`ad884b2`)
-
-Smoke-tested the lesson structure engine (`lib/pel_lesson_stage.js`).
-Found and fixed 7 issues:
-
-1. **textContent → innerHTML** for L() in learn + learn_sentence
-   renderers — in Arabic mode, the `<span class="arabic">` tags showed
-   as literal text instead of rendering. Now uses innerHTML.
-2. **Duplicated Arabic** in free_response review button — had hardcoded
-   Arabic span always visible + L() call. Arabic showed in English mode,
-   duplicated in Arabic mode. Now uses L() only.
-3. **Hardcoded Arabic** in free_response toast — always showed Arabic
-   regardless of language mode. Now uses L().
-4. **Academy name in breadcrumb** always showed Arabic span — now only
-   shows Arabic when ar() is true (Arabic UI mode).
-5. **Challenge: missing English reveal** after answering — recognize
-   reveals English + translit on correct option, challenge didn't. Now
-   consistent.
-6. **Challenge: small pool** (3 items → only 3 options) — padded with
-   PEL_STARTER_ITEMS for 4 options, matching recognize. Deduped by norm().
-7. **CSS: .o-en forced direction:ltr** on Arabic text in recognize/
-   challenge options. Added `.o-en.arabic{direction:rtl}` override.
-
-Cache-busted: `?v=ad6c6d31`. Tests: 13/13 PASS.
-
----
-
-## ✅ DONE (2026-09-12): iPad/tablet/mobile responsive fix (`53a8557`)
-
-Systematic cross-device fix across all 6 pages (app, index, admin,
-login, verify, admin.css). The iPad screen was glitchy because of
-10 separate issues, all now fixed:
-
-1. **100vh → 100dvh** (with fallback) on sidebar, app-shell,
-   context-panel, workspace-shell, auth-shell, admin modal — iOS/iPadOS
-   address bar was cutting off content.
-2. **-webkit-backdrop-filter** added to ALL backdrop-filter declarations
-   (app.html had 7 missing, admin.css 3, login 2, verify 1) — blur now
-   renders on Safari/iPad.
-3. **-webkit-tap-highlight-color: transparent** — removes gray tap flash.
-4. **touch-action: manipulation** — kills 300ms double-tap zoom delay.
-5. **overscroll-behavior** — prevents scroll chaining in modals/sidebar.
-6. **-webkit-overflow-scrolling: touch** — momentum scrolling on iOS.
-7. **viewport-fit=cover** — safe-area inset support for notch devices.
-8. **@media(hover:none) blocks** — neutralizes transform-based hover
-   effects stuck after tap (the main visual glitch on iPad).
-9. **height:100% → min-height:100%** — prevents viewport clipping.
-10. **overflow-wrap:anywhere** on workspace-center — prevents text overflow.
-
-Tests: all 12 lib/*.js pass `node --check`, both app.html inline blocks
-pass, `test_buildsequence_iam.js` 13/13 PASS.
-
----
-
-## ✅ DONE (2026-09-10, later session): QA + A0 fix + fallback removal + analytics + e2e
-
-All four items from the previous "Next, in priority order" list are DONE and
-pushed. Commits: `d1c5d6e` (A0 academies), `fef45e4` (fallback removal),
-`0deaa27` (analytics persist + surface), this breadcrumb commit (QA results).
-
-1. **Browser QA complete** (happy path + gate): 20-activity lesson
-   `a1pos-have-has` run end-to-end in a real browser — done screen showed
-   "Recognition: 5/5 · Production: 10/10", SRS rows landed in `pel_srs_state`,
-   completion recorded server-side. Gate verified on a second run with 5
-   deliberate first-attempt production failures (prodFirst 4/10 < 0.6) →
-   "Almost there" screen, no server completion, Practice again resets fresh.
-   Cross-device SRS verified: cleared localStorage → reload → rows re-seeded
-   from server.
-2. **A0 gap fixed** (`d1c5d6e`): five a0-* academies added to the ACADEMIES
-   const in app.html with DB-mirrored metadata (sentence-building, question
-   words, spelling-sounds, error-clinic, social-english). A0 level on the
-   Levels view now populates (43 active a0 lessons in DB).
-3. **Generic-fallback lesson removed** (`fef45e4`): getLesson now returns null
-   instead of fabricating a generic lesson; renderWorkspace shows a bilingual
-   "Lesson not available" empty state; static ACADEMY_LESSONS a0 entries now
-   list REAL DB lesson ids. `tools/audit-lessons.js` → 0 findings.
-4. **Recognition-vs-Production analytics** (`0deaa27`): `lesson_progress` gained
-   rec_ok/rec_total/prod_ok/prod_total/prod_first_ok; `complete_activity`
-   accepts `p_stats` jsonb (latest stats win, score keeps best); stage
-   renderDone passes real counters through markLessonComplete →
-   rpc('complete_activity', {p_lesson_id, p_stats}); `admin_student_360`
-   returns `lesson_stats` {totals, recent[12]}; admin Learning tab renders a
-   "Recognition vs Production" card + recent lessons list (badge green ≥ 60%
-   first-try). Migration file: `supabase/migrations/202609100001_lesson_progress_stats.sql`
-   (also applied LIVE).
-5. **E2E verified with real data**: browser completed A0 lesson
-   `i-am-sentences` (rec 5/5 · prod 11/11 · first 11/11) and the EXACT stats
-   landed in `lesson_progress` via the real client RPC; `admin_student_360`
-   returns correct totals + recent rows. QA coverage in this session also
-   completed have-to-obligation, a1tn-numbers-1-10, a1tn-telling-time,
-   a1tn-days, a1tn-months, a1tn-money from the browser.
-
-### Gotchas learned this session (READ BEFORE TESTING)
-
-- **GitHub Pages CDN lag on lib/*.js**: `<script src="lib/...">` has no
-  cache-buster and Pages sends max-age=600. During QA the browser kept the
-  pre-analytics `pel_lesson_stage.js` for ~10 min after push, which made
-  completions record with all-zero stats (old lib never passed p_stats).
-  Symptom: rows land but rec/prod = 0/0. Fix for testing: hard-reload with
-  cache disabled. Consider adding `?v=<sha>` busters to the lib script tags
-  in a future commit.
-- **PostgREST schema-cache window**: right after CREATE OR REPLACE FUNCTION,
-  browser RPCs to that function may silently fail (supabase-js swallows the
-  error; the completion promise resolves null). Waits itself out in a few
-  minutes. Don't e2e-test an RPC immediately after replacing it.
-- **markLessonComplete is an early-return no-op** if the lesson is already in
-  the local completedLessons set (restored from server state) — during QA a
-  re-run of a lesson the server already knew produced no RPC. Not a bug, but
-  it looks like one.
-- **QA-driver notes** (driver lives OUTSIDE the repo at the session workspace,
-  `/home/user/workspace/qa_driver.js` — rewrite from this breadcrumb if lost):
-  handles concept/learn, learn_sentence, listen, review, pronunciation,
-  db_order/arrange_words, inputs, options, challenge, match (brute-force
-  pairing via `#pelMatchEn/#pelMatchAr .pel-tile`), and quiz-format
-  `choose_natural_expression` (match DOM options to `a.quiz[i].options`
-  by `t+tr` text, pick `options[correct]`). Supabase-js does NOT go through
-  window.fetch — patching it captures nothing; use CDP Network events
-  (drain_events) to trace RPCs. Long runs exceed the CDP evaluate timeout —
-  poll `PEL_LESSON_STAGE.state` instead of assuming a wedge.
-
-### QA artifacts on the test account (intentional, known)
-
-- Student `testmail1@gmail.com` (user id 1d68ead7-7ef4-407a-9138-a171fa693272)
-  now has 9 lesson_progress rows; its route advanced to a1-time-numbers.
-  Stats were repaired via SQL to match the real runs (5/5, 10/10, first 8 for
-  have-to-obligation etc.). One earlier probe row (a1pos-my-your 1/1, 2/2)
-  was a REST probe with dummy-but-plausible stats.
-- `qa.agent@tutorfiraspel.test` was deleted (cascade) after QA.
-
----
-
-## ✅ DONE (2026-09-10): SRS server sync + mastery-gated completion
-
-1. **SRS server sync is LIVE** (commit `bc3a1a2`): `srsRecord()` now stamps
-   `r.ts` and fire-and-forget upserts each answer to `pel_srs_state`
-   (onConflict `user_id,en`); `srsSync()` (exported on the factory API) pulls
-   ALL rows for the user (limit 2000), merges last-write-wins by
-   `ts`/`updated_at`, then pushes the merged map back up in 200-row batches
-   (idempotent — creates local-only rows server-side). app.html injects
-   `supabase()`/`userId()` into the stage deps and calls
-   `window.PEL_STAGE_API.srsSync()` in `revealApp()` right after
-   `loadStudentState()`. Signed-out play stays purely local (guards hold in
-   tests). Legacy local rows without `ts` LOSE to the server on first sync —
-   deliberate first-sync behavior.
-2. **Mastery-gated completion** (commits `ba16665` + fixup, audit item 5
-   closed): with >= 3 production activities, >= 60% FIRST-ATTEMPT correct
-   (`prodFirstOk`) is required to complete. `mark()` keeps eventual-correct
-   counters (`prodOk`/`recOk`) for the done-screen display only — retry
-   successes deliberately do NOT feed the gate, or re-clicking until green
-   would void it. Gated lessons get an "Almost there" screen — Practice
-   again (fresh state via Stage.open, first attempts count anew) or Back to
-   path; no XP / markLessonComplete / server progression when gated.
-
----
-
-## ✅ DONE (2026-09-08): "translit leaks the answers" — see git commit "fix: stop leaking answers"
-
-Rule now enforced app-wide: **no secondary-language clue inside any graded
-option before the student answers**; translit/Arabic appear in teaching screens,
-explicit hints, or the post-check reveal only. Shipped:
-
-1. `recognize`: options show the Arabic meaning ONLY; after Check, the correct
-   button reveals "word · transliteration".
-2. `identify_heard`: English-only options; Arabic meaning revealed on the
-   correct option after Check.
-3. `choose_natural_expression`: no subtitles during selection; the correct
-   option gains its Arabic/translit subtitle in the reveal.
-4. `db_correct` ("Fix the mistake" in app.html): removed the literal ✕ that was
-   printed on the WRONG option before answering (worst leak found).
-5. Translit FAB deleted entirely (CSS + drag/toggle IIFE + pel-translit-hidden
-   rule; orphaned localStorage keys left alone). Deliberately kept: learn/concept
-   translits (teaching), fill_blank on-demand hint, dbx option translits (both
-   options show theirs — doesn't reveal which is right), vocab reference lists.
-
----
-
-Last updated: 2026-09-10 (after `bc3a1a2` SRS server sync, `ba16665` mastery-gated
-completion; earlier: `81944a5` refactor, `be21987`+`4a070e4` missing-elements,
-`70e2b7c` answer-leak fixes, `90af3db` CEFR view crash + CSP cleanup, `ba65868`
-Live Classes client bridge).
-
-NOTE on `90af3db`: the CEFR path view had been broken since it was written —
-renderCefrPath called ar()/esc() that only existed inside the old dashboard/stage
-IIFEs (never in its scope) and its L() resolved to a vocab builder. Fixed with local
-helpers inside the function. If another view renderer ever throws 'X is not defined',
-check which script block it lives in (block A = app.html lines ~1490-19387) and whether
-the helper is actually in that block's top-level scope — the stage/dash factories'
-helpers do NOT leak.
-
-NOTE on `ba65868`: the Live Classes module could never see the shared supabase
-client (scoped inside the main app IIFE). It now uses window.pelSupabaseClient
-(bridged from inside the main IIFE right after client()). Any NEW satellite module
-must go through window.pelSupabaseClient — never `typeof client`, and never
-create a second GoTrueClient. Related known gap: ACADEMY_CEFR maps five a0-*
-academy ids that were never added to ACADEMIES, so the A0 level on the Levels
-(A0-C2) view shows 'Content for this level is coming' until those lessons exist.
-Read this + `AUDIT_REPORT.md` first. Run `node tests/test_buildsequence_iam.js` before
-and after any stage change — it loads the REAL `lib/pel_lesson_stage.js`.
-
-## What just shipped (2026-09-08 session)
-
-1. **Single source of truth refactor** — `app.html` no longer contains the stage
-   engine. It loads `lib/pel_lesson_stage.js` + `lib/pel_dashboard_life.js` as
-   dependency-injected factories (`PEL_STAGE_FACTORY(deps)` / `PEL_DASH_LIFE_FACTORY(deps)`),
-   and `lib/pel_curriculum_path.js` (self-wiring). All app-only fixes were ported
-   into the lib first, so nothing was lost. **Edit the lib, never paste engine code
-   back into app.html.**
-2. **Audit "missing elements" — all closed** in `lib/pel_lesson_stage.js`:
-   - Spaced repetition (SM-2-lite): `srsRecord()` / `srsDueList()`, localStorage
-     key `pel_srs_v1`. The `review` activity resurfaces due items from previous
-     lessons (most overdue first) and feeds answers back into the schedule.
-   - `listening_dictation` activity: hear a sentence, type it; scored by word
-     similarity (>= 0.75 passes). Picks the best real sentence (item sentences,
-     then dialogue lines — never a bare word).
-   - `guided_production` activity: Arabic meaning + English sentence with the key
-     word blanked + small word bank. Sits between controlled practice and
-     `free_response`.
-   - Recognition vs production: every activity is tagged `mode`, tracked once per
-     activity in `mark()`, and reported on the done screen
-     (Recognition X/Y · Production X/Y).
-3. **Supabase**: migration `202609080001_pel_srs_state.sql` applied LIVE — table
-   `pel_srs_state` (+4 RLS policies + due index) is ready for server-side SRS sync.
-
-## Next, in priority order
-
-1. **Content**: the transliteration/phase content pipelines
-   (`tools/translit_phase*`, `tools/phase4_ielts`, `tools/phase5_abha`) suggest
-   a phase 6 was planned — check with Tutor Firas what content comes next.
-2. **Live Classes**: client bridge landed (`ba65868`) but end-to-end class
-   scheduling/attendance flow is still unverified in a browser.
-
-## ✅ DONE (2026-09-10): lib cache-busters (`c0d4642`)
-
-All same-origin `<script src>` tags in app/index/admin/login/verify.html now
- carry `?v=<sha256[:8]>` of the file's content (admin/admin.js included; CDN
- and SRI-tagged scripts untouched). `tools/bust_lib_cache.py` is idempotent
- — **run `python3 tools/bust_lib_cache.py` before committing any lib/*.js
- change** and include the HTML diff in the same commit, or students keep the
- stale engine for up to 10 min (Pages max-age=600). Verified live: served
- app.html carries the ?v= tags and the busted stage URL returns the current
- code. Stray junk files accidentally committed with it were removed in
- `a390491`.
-
-## Environment notes (for the next session)
-
-- GitHub: clone with `gh repo clone tutorfiraspel repo`; **pushing needs the
-  session's GitHub credential injection on the push command** — plain
-  `git push` without it fails with 'could not read Username'. GitHub Pages
-  serves main automatically. Verify with:
-  `gh api repos/personalizedenglishlessons/tutorfiraspel/pages --jq .status`
-- Supabase: full postgres access via `python3 tools/sql.py "SQL"` (needs
-  `SUPABASE_PAT` env var; project ref `lewoochehpiycocvfwtz`). The user
-  supplies the PAT per session on request — NEVER commit it anywhere (repo
-  is public). `pel_srs_state` exists and is live (0 rows as of 2026-09-10,
-  RLS own-rows, granted to authenticated).
-- Tests: `node tests/test_buildsequence_iam.js` (13 checks, loads the real
-  factory + real DB fixture `tests/fixtures_iam_sentences.json`).
-- Syntax gate (smoke checklist): `node --check` every `lib/*.js` + all inline
-  `<script>` blocks in `app.html` (3 blocks, extract with the python regex in
-  the 2026-09-10 session or equivalent).
-- Session workflow (user's standing instruction): commit + push EVERY finished
-  piece immediately, and update this file + commit it as a breadcrumb so the
-  next session can pick up. Conventional breadcrumb commit:
-  `docs: NEXT_STEPS breadcrumb for <feature> (<sha>)`.
-- Usage is tight: batch reads, no redundant calls, no brute-force retries.
+### All bugs fixed across all sessions (18 total)
+1-7. Round 1 (`ad884b2`): Arabic span leaks, textContent bugs, challenge improvements
+8-10. Round 2 (`cc91c1b`): Arabic translate answer checking, concept var shadow, db_correct why
+11-13. Round 3 (`2bf630a`): conversation_response leak, listen gate bypass, identify_heard dedup
+14-16. This session (`0824c8a` + `cdcacbb` + `9bee3ee`): curriculum blank, dashboard undefined, stage position persistence
+17-18. v2 session persistence (`dbc94d8` + `fa7c7db` + `052bfe4`): full per-activity state save/restore
