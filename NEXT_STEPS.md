@@ -1,5 +1,32 @@
 # NEXT STEPS — pick up here
 
+## ✅ DONE (2026-09-12): iPad/tablet/mobile responsive fix (`53a8557`)
+
+Systematic cross-device fix across all 6 pages (app, index, admin,
+login, verify, admin.css). The iPad screen was glitchy because of
+10 separate issues, all now fixed:
+
+1. **100vh → 100dvh** (with fallback) on sidebar, app-shell,
+   context-panel, workspace-shell, auth-shell, admin modal — iOS/iPadOS
+   address bar was cutting off content.
+2. **-webkit-backdrop-filter** added to ALL backdrop-filter declarations
+   (app.html had 7 missing, admin.css 3, login 2, verify 1) — blur now
+   renders on Safari/iPad.
+3. **-webkit-tap-highlight-color: transparent** — removes gray tap flash.
+4. **touch-action: manipulation** — kills 300ms double-tap zoom delay.
+5. **overscroll-behavior** — prevents scroll chaining in modals/sidebar.
+6. **-webkit-overflow-scrolling: touch** — momentum scrolling on iOS.
+7. **viewport-fit=cover** — safe-area inset support for notch devices.
+8. **@media(hover:none) blocks** — neutralizes transform-based hover
+   effects stuck after tap (the main visual glitch on iPad).
+9. **height:100% → min-height:100%** — prevents viewport clipping.
+10. **overflow-wrap:anywhere** on workspace-center — prevents text overflow.
+
+Tests: all 12 lib/*.js pass `node --check`, both app.html inline blocks
+pass, `test_buildsequence_iam.js` 13/13 PASS.
+
+---
+
 ## ✅ DONE (2026-09-10, later session): QA + A0 fix + fallback removal + analytics + e2e
 
 All four items from the previous "Next, in priority order" list are DONE and
