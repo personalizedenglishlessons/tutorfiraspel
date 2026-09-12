@@ -2501,6 +2501,12 @@ const comingSoonCopy = {
   profile:{title:'Profile', ar:'الملف الشخصي', desc:'Your goals, strengths, weak areas and full learning roadmap.'},
 };
 const viewRenderers = {};
+// pel_curriculum_path.js runs in the global scope before this IIFE, so
+// it cannot reach this local viewRenderers. Register its render function
+// here so goToView('curriculum') actually renders the roadmap.
+if(window.PEL_CURRICULUM_PATH && window.PEL_CURRICULUM_PATH.render){
+  viewRenderers['curriculum'] = window.PEL_CURRICULUM_PATH.render;
+}
 
 const sidebarNav = document.getElementById('sidebarNav');
 navGroups.forEach(group => {
@@ -19070,13 +19076,13 @@ function dashRecommendation(){
     || tracked.sort((a,b) => a.score - b.score)[0];
   if(weak && weak.score < 60){
     return { view: weak.view, ctaAr:'تدرب عليها', ctaEn:'Practice it',
-      titleAr:`تدرب على ${weak.ar}`, titleEn:`Practice ${weak.en}`,
+      titleAr:`تدرب على ${weak.ar}`, titleEn:`Practice ${weak.key}`,
       whyAr: weak.week === 0
         ? `ما تدربت على ${weak.ar} هذا الاسبوع.`
         : `${weak.ar} اضعف مهارة عندك الحين (${weak.score}%).`,
       whyEn: weak.week === 0
-        ? `You have not practiced ${weak.en} this week.`
-        : `${weak.en} is your weakest skill right now (${weak.score}%).` };
+        ? `You have not practiced ${weak.key} this week.`
+        : `${weak.key} is your weakest skill right now (${weak.score}%).` };
   }
   const inProgress = directionAcademies().find(a => a.progress > 0 && a.progress < 100);
   if(inProgress){
