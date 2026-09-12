@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://lewoochehpiycocvfwtz.supabase.co https://api.supabase.co wss://lewoochehpiycocvfwtz.supabase.co https://api.dictionaryapi.dev https://translate.googleapis.com; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none';">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>PEL، Personalized English Lessons، دخول الطلاب</title>
 <meta name="description" content="Sign in to your dashboard. Enrolled students only.">
 <meta name="robots" content="noindex">
@@ -51,14 +51,16 @@ html[data-theme="light"]{
   --gold-glow:0 0 40px -10px rgba(200,147,28,.34);
 }
 *,*::before,*::after{box-sizing:border-box;}
-html,body{height:100%;}
+html,body{min-height:100%;}
+html{ -webkit-tap-highlight-color:transparent; }
 body{
   margin:0; background:var(--bg); color:var(--text);
   font-family:'Plus Jakarta Sans', sans-serif;
   -webkit-font-smoothing:antialiased;
   transition:background .5s var(--ease), color .5s var(--ease);
-  overflow-x:hidden;
+  overflow-x:hidden; overscroll-behavior:none;
 }
+button,a,[role=button],input,select,textarea{ touch-action:manipulation; }
 h1,h2,h3{ font-family:'Fraunces', serif; font-weight:500; line-height:1.1; letter-spacing:0; margin:0; }
 p{margin:0;}
 a{color:inherit;}
@@ -107,7 +109,7 @@ button{font-family:inherit; cursor:pointer;}
   position:fixed; top:26px; right:26px; z-index:50;
   width:46px; height:46px; border-radius:50%;
   background:color-mix(in srgb, var(--card) 70%, transparent);
-  backdrop-filter:blur(12px);
+  backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
   border:1px solid var(--border); color:var(--text-secondary);
   display:flex; align-items:center; justify-content:center;
   transition:border-color .3s ease, color .3s ease, transform .3s ease;
@@ -119,7 +121,7 @@ button{font-family:inherit; cursor:pointer;}
   position:fixed; top:26px; right:82px; z-index:50;
   min-width:46px; height:46px; padding:0 12px; border-radius:14px;
   background:color-mix(in srgb, var(--card) 70%, transparent);
-  backdrop-filter:blur(12px);
+  backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
   border:1px solid var(--border); color:var(--text-secondary);
   font-weight:700; font-size:.8rem; letter-spacing:.04em;
   display:flex; align-items:center; justify-content:center;
@@ -147,7 +149,7 @@ body.ui-ar .divider-line{ direction:ltr; }
 
 /* ===== layout ===== */
 .auth-shell{
-  position:relative; z-index:2; min-height:100vh;
+  position:relative; z-index:2; min-height:100vh; min-height:100dvh;
   display:grid; grid-template-columns:1.05fr .95fr;
 }
 @media(max-width:980px){ .auth-shell{ grid-template-columns:1fr; } }

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Certificate Verification | PEL</title>
 <script>(function(){try{var t=localStorage.getItem('pel-theme')||'dark';document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 <meta name="description" content="Verify a Personalized English Lessons certificate of completion.">
@@ -35,15 +35,17 @@ html[data-theme="light"]{
   --gold-glow:0 0 40px -10px rgba(200,147,28,.34);
 }
 *,*::before,*::after{ box-sizing:border-box; }
-html,body{ height:100%; }
+html,body{ height:100%; min-height:100%; }
+html{ -webkit-tap-highlight-color:transparent; }
 body{
   margin:0; background:
     radial-gradient(1000px 500px at 80% -10%, rgba(200,169,106,.09), transparent 60%),
     radial-gradient(800px 400px at 10% 110%, rgba(63,140,114,.07), transparent 60%),
     var(--bg);
   color:var(--text); font-family:'Plus Jakarta Sans',sans-serif; -webkit-font-smoothing:antialiased;
-  display:flex; flex-direction:column; min-height:100%;
+  display:flex; flex-direction:column; min-height:100%; overscroll-behavior:none;
 }
+button,a,[role=button],input,select,textarea{ touch-action:manipulation; }
 h1,h2,h3{ font-family:'Fraunces',serif; font-weight:500; line-height:1.15; letter-spacing:0; margin:0; }
 p{ margin:0; }
 a{ color:var(--gold); text-decoration:none; }
@@ -123,7 +125,7 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
   position:fixed; top:22px; right:22px; z-index:60;
   min-width:46px; height:46px; padding:0 12px; border-radius:14px;
   background:color-mix(in srgb, var(--card-elevated) 80%, transparent);
-  backdrop-filter:blur(12px);
+  backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
   border:1px solid var(--border); color:var(--text-secondary);
   font-weight:700; font-size:.8rem; letter-spacing:.04em;
   display:flex; align-items:center; justify-content:center;

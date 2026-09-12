@@ -2,7 +2,7 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>PEL، Personalized English Lessons، تعلم الانجليزية الامريكية بثقة</title>
 <link rel="canonical" href="index.html">
 <link rel="icon" type="image/svg+xml" href="brand/pel-favicon.svg?v=2">
@@ -86,7 +86,7 @@ html[data-theme="light"] .mini-icon.pi{ color:#6D28B9; background:rgba(109,40,18
 html[data-theme="light"] .hero-preview{ background:linear-gradient(150deg, rgba(255,255,255,.7), rgba(255,255,255,.35)); border-color:rgba(0,0,0,.07); box-shadow:0 32px 80px -44px rgba(40,28,12,.35); }
 
 *,*::before,*::after{box-sizing:border-box;}
-html{scroll-behavior:smooth; overflow-x:hidden; scroll-padding-top:calc(var(--header-h) + var(--site-banner-h, 0px));}
+html{scroll-behavior:smooth; overflow-x:hidden; scroll-padding-top:calc(var(--header-h) + var(--site-banner-h, 0px)); -webkit-tap-highlight-color:transparent; }
 body{
   margin:0;
   background:var(--bg);
@@ -94,8 +94,10 @@ body{
   font-family:'Plus Jakarta Sans', 'Tajawal', sans-serif;
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;
+  overscroll-behavior:none;
   transition:background .5s var(--ease), color .5s var(--ease);
 }
+button,a,[role=button],input,select,textarea{ touch-action:manipulation; }
 h1,h2,h3,h4{
   font-family:'Fraunces', serif;
   font-weight:500;
@@ -195,6 +197,12 @@ img{max-width:100%; display:block;}
 }
 .cursor-ring.hover{ width:56px; height:56px; border-color:var(--gold); }
 @media(hover:none), (max-width:900px){ .cursor-dot,.cursor-ring{display:none;} }
+/* Touch devices: neutralize transform-based hover effects that get stuck after tap */
+@media(hover:none){
+  .mini:hover,.btn-gold:hover,.btn-outline:hover{
+    transform:none !important; box-shadow:none !important;
+  }
+}
 
 /* ===== header ===== */
 header{
@@ -928,7 +936,7 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-of
 /* onboarding overlay */
 .onboard{ position:fixed; inset:0; z-index:3000; display:flex; align-items:center; justify-content:center; padding:24px; opacity:0; pointer-events:none; transition:opacity .35s var(--ease); }
 .onboard.show{ opacity:1; pointer-events:all; }
-.onboard-scrim{ position:absolute; inset:0; background:rgba(8,8,10,.78); backdrop-filter:blur(10px); }
+.onboard-scrim{ position:absolute; inset:0; background:rgba(8,8,10,.78); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); }
 .onboard-card{
   position:relative; width:100%; max-width:640px; max-height:90vh; overflow:hidden;
   background:var(--surface); border:1px solid var(--border); border-radius:26px;
