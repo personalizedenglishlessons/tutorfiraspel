@@ -21,16 +21,27 @@ every time. Only lesson completion (mastery met) was persisted to Supabase.
   starts fresh.
 - `pel_stage_pos` added to `clearUserLocalKeys()` in app.html so it's
   cleared on logout (no cross-account bleed).
-- `lsSet` added to the stage engine deps in app.html.
+- DB sync uses `srsSupabase()`/`srsUserId()` directly (same pattern as SRS sync).
+
+**LIVE-TESTED (2026-09-12)**: Verified in browser — advanced 3 activities,
+reloaded, lesson resumed at activity 3/19 (not 1/19). DB sync confirmed:
+`student_data` table has `pel_stage_pos` with correct academy/lesson/idx.
+
+### Fix for jsonb restore bug (`9bee3ee`)
+
+The initial implementation used `lsSet` which stored objects as jsonb in
+`student_data`. On restore, the object was written to localStorage as
+`[object Object]`, breaking the resume. Fixed by:
+- Using `srsSupabase()`/`srsUserId()` directly for the DB upsert (not `lsSet`)
+- Storing the JSON string (not object) in the upsert
+- Fixed the `student_data` restore code to stringify jsonb objects
+- `loadStagePos` handles `[object Object]`, `null`, and double-stringified values
+- Removed `lsSet` from stage deps (no longer needed)
 
 **What IS saved per-activity**: the activity cursor (which step you're on).
 **What is NOT saved per-activity**: SRS word recall (saved separately via
 `srsRecord` on every answer), recognition/production counters (reset on
 re-open — only counted fresh per lesson attempt for the mastery gate).
-
-**NOT YET LIVE-TESTED**: the browser smoke test to verify reload resumes at
-the same activity was interrupted. This is the FIRST thing to do next — see
-"NEXT STEPS" below.
 
 ### 2. Curriculum view was blank (`0824c8a` — pushed)
 
@@ -62,22 +73,10 @@ Cache-busted: `?v=d9803447`. Tests: 13/13 PASS. Syntax: OK.
 
 ## 🔜 NEXT STEPS (do these in order)
 
-### Step 1: LIVE-TEST the stage position save/restore (PRIORITY)
+### Step 1: ✅ DONE — Stage position save/restore is LIVE-TESTED and working
 
-The code is committed but NOT yet verified in a browser. Do this:
-
-1. Log in as `testmail1@gmail.com` / `namas123`
-2. Open the "Was and Were" lesson (Past Simple academy)
-3. Click through 3-4 activities (concept → learn → recognize → etc.)
-4. Hard-reload the page (bypass GitHub Pages cache)
-5. Re-open the lesson — verify it resumes at activity 4, not activity 1
-6. If it doesn't resume: check `localStorage.getItem('pel_stage_pos')` in
-   the browser console. The save may be failing silently.
-7. Also verify: completing a lesson clears the saved position (open →
-   starts from activity 1 again).
-8. Cross-device: query `student_data` table for the `pel_stage_pos` key
-   to confirm the Supabase sync landed:
-   `python3 tools/sql.py "SELECT key, value FROM student_data WHERE user_id='1d68ead7-7ef4-407a-9138-a171fa693272' AND key='pel_stage_pos'"`
+Verified: advance 3 activities → reload → resume at activity 3/19.
+DB sync confirmed in `student_data` table.
 
 ### Step 2: Continue the deep smoke test for Arabic students
 
