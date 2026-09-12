@@ -22,7 +22,7 @@
 <script src="lib/pel-settings.js?v=efc52be5" defer></script>
 <script src="lib/cert-qr.js?v=a43f19f9" defer></script>
 <script src="lib/cert-sheet.js?v=2bb6195d" defer></script>
-<script src="lib/pel_lesson_stage.js?v=d9803447"></script>
+<script src="lib/pel_lesson_stage.js?v=0629781a"></script>
 <script src="lib/pel_dashboard_life.js?v=ed676701"></script>
 <script src="lib/pel_curriculum_path.js?v=b97575ec"></script>
 <style>
@@ -1673,7 +1673,7 @@ async function loadStudentState(){
   // leftover from another account or a fabricated default.
   try{
     const { data: kv } = await c.from('student_data').select('key,value').eq('user_id', currentUser.id);
-    if(kv){ kv.forEach(row => { try{ localStorage.setItem(row.key, row.value); }catch(e){} }); }
+    if(kv){ kv.forEach(row => { try{ localStorage.setItem(row.key, typeof row.value === 'string' ? row.value : JSON.stringify(row.value)); }catch(e){} }); }
   }catch(e){ /* student_data table may not exist yet - local copy stands */ }
   const { data, error } = await c.from('student_state').select('*').eq('user_id', currentUser.id).maybeSingle();
   if(data){ applyStudentStateRow(data); return; }
@@ -19350,7 +19350,7 @@ function renderDashboardIntel(){
       ACADEMIES, academyLessonList, canRecognize, ensureRouteAllows, escapeHtml,
       getLesson, goToView, markLessonComplete, micErrorMessage, nextLesson,
       pronFeedback, recordAndScore, resolveAcademyById, speak, subBlocked, toast,
-      translitEn, lsSet,
+      translitEn,
       accountPrefs: function(){ return accountPrefs; },
       openLesson: openLesson,
       // SRS server sync (pel_srs_state): the stage engine guards these —
