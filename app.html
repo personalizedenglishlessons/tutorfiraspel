@@ -13478,7 +13478,7 @@ function dbToLesson(dbl, academy){
     const qAr = q.ar || '';
     const qtr = q.tr || translitEn(qEn);
     return {
-    q: qEn + (qAr ? '<div class="arabic" style="font-size:.8rem; font-weight:400; margin-top:4px;">' + qAr + '</div>' : '') + (qtr ? '<div class="arabic translit" style="font-size:.76rem; color:var(--gold-soft); margin-top:3px;">' + qtr + '</div>' : ''),
+    q: escapeHtml(qEn) + (qAr ? '<div class="arabic" style="font-size:.8rem; font-weight:400; margin-top:4px;">' + escapeHtml(qAr) + '</div>' : '') + (qtr ? '<div class="arabic translit" style="font-size:.76rem; color:var(--gold-soft); margin-top:3px;">' + escapeHtml(qtr) + '</div>' : ''),
     qEn: qEn, qAr: qAr, qTr: qtr,
     options: (p.options||[]).map(o => ({ t: o.t||'', tr: o.tr || translitEn(o.t || '') })),
     correct: (p.options||[]).findIndex(o => o.ok),
@@ -13529,7 +13529,7 @@ function renderDbPractice(container, exercises){
         ${pr.ar ? `<div class="arabic" style="font-size:.78rem; color:var(--text-muted); margin-bottom:10px;">${esc(pr.ar)}</div>` : ''}
         <div class="dbx-answer" style="min-height:38px; border:1px dashed var(--border); border-radius:10px; padding:7px 9px; margin-bottom:10px; display:flex; flex-wrap:wrap; gap:6px;"></div>
         <div class="dbx-tokens" style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px;">
-          ${tokensShuffled.map(t => `<button class="quiz-option dbx-token" style="padding:5px 11px;">${t}</button>`).join('')}
+          ${tokensShuffled.map(t => `<button class="quiz-option dbx-token" style="padding:5px 11px;">${esc(t||'')}</button>`).join('')}
         </div>
         <button class="btn-outline dbx-check"><span class="arabic">تحقق</span>، Check</button>`);
     }
