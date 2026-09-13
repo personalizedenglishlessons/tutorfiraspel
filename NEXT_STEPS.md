@@ -1,5 +1,73 @@
 # NEXT STEPS — pick up here
 
+## ✅ DONE: Teach-before-test + null bug fix + auto-advance (this session)
+
+### Bug: "null" in choose_natural_expression question (FIXED)
+`dbToLesson()` in `app.html` concatenated `x.payload.question.ar` directly into
+HTML. When the DB quiz question had no Arabic translation, it rendered the
+literal string "null". Fixed by guarding with `(qAr ? ... : '')`. Also added
+`qEn`, `qAr`, `qTr` fields to the quiz object so the teaching panel can show
+the question text with Arabic translation and transliteration.
+
+### Feature: Teach-before-test panel (ADDED)
+Every practice activity now shows a **teaching panel** first, with:
+- Key vocabulary from the current activity (English + translit + Arabic)
+- Additional lesson vocabulary (up to 5 words)
+- Grammar rules (Saudi Arabic explanation + English rule + DB notes)
+- Audio button to hear the key words
+- "Start practicing" button that reveals the actual activity
+
+The panel appears once per activity (tracked via `act._taught` flag). Teaching
+activities (concept, concept_examples, learn, learn_sentence) do NOT get the
+panel — they ARE the teaching. On retry (wrong answer → Try again), the panel
+is skipped because `act._taught` is already true.
+
+New functions in `lib/pel_lesson_stage.js`:
+- `TEACH_BEFORE` — set of activity types that get the teaching panel
+- `extractActivityVocab(act)` — extracts vocabulary from any activity type
+- `buildTeachHtml(act)` — builds the teaching panel HTML
+
+`Stage.render()` modified: if the activity is a practice type and hasn't been
+taught yet, it renders the teaching panel first. When the student clicks
+"Start practicing", the actual renderer is called.
+
+### Feature: Auto-advance after lesson completion (ADDED)
+`renderDone()` now auto-advances to the next lesson after a 5-second countdown.
+The countdown is shown on the completion screen and cancels on any click.
+
+### Verification status
+- ✅ `node --check lib/pel_lesson_stage.js` — syntax OK
+- ✅ `node tests/test_buildsequence_iam.js` — 13/13 PASS
+- ✅ `node tests/test_teaching_flow.js` — 31/31 PASS
+- ✅ Cache buster: `?v=87cec61d`
+- ❌ NOT YET LIVE-TESTED: teaching panel rendering in browser
+- ❌ NOT YET LIVE-TESTED: auto-advance after completion
+- ❌ NOT YET LIVE-TESTED: null bug fix (choose_natural_expression with null ar)
+
+### Clean test procedure
+1. Load `app.html?fresh=<timestamp>` (GitHub Pages caches for 10 min)
+2. Log in (testmail1@gmail.com / namas123)
+3. Open a lesson with quiz questions (e.g., Past Simple → Was and Were)
+4. Advance to `choose_natural_expression` activity
+5. Verify: NO "null" text appears; Arabic translation shows if available
+6. Verify: teaching panel appears before EVERY practice activity
+7. Verify: teaching panel shows vocabulary with Arabic + translit
+8. Verify: "Start practicing" button reveals the actual activity
+9. Complete all activities → verify auto-advance countdown appears
+10. Verify: clicking any button cancels the auto-advance
+
+### Standing TODO
+- **Merge feature branches** (deferred — focus was on bug fixes):
+  - `feat/admin-create-student` — conflicts in `admin/admin.js`
+  - `fix/lesson-engine-phase1` — conflicts in `app.html`
+- **Live-test** all three fixes in browser
+- **DB quiz questions**: ensure all DB choose exercises have Arabic translations
+  (the null bug occurred because `question.ar` was null in the DB)
+- Consider adding grammar-specific Arabic teaching content (e.g., demonstrative
+  pronouns: this/that/these/those = ذس/ذات/ذيز/ذوز for near/far, singular/plural)
+
+---
+
 ## ✅ DONE: v2 session persistence blockers 1-4 fixed (commit `268711e`)
 
 ### Blocker 1: Unstable answer keys — FIXED

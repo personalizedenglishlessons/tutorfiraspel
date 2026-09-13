@@ -22,7 +22,7 @@
 <script src="lib/pel-settings.js?v=efc52be5" defer></script>
 <script src="lib/cert-qr.js?v=a43f19f9" defer></script>
 <script src="lib/cert-sheet.js?v=2bb6195d" defer></script>
-<script src="lib/pel_lesson_stage.js?v=edec9e67"></script>
+<script src="lib/pel_lesson_stage.js?v=87cec61d"></script>
 <script src="lib/pel_dashboard_life.js?v=ed676701"></script>
 <script src="lib/pel_curriculum_path.js?v=b97575ec"></script>
 <style>
@@ -13471,9 +13471,12 @@ function dbToLesson(dbl, academy){
     en: i.en, ar: i.ar, translit: i.tr || translitEn(i.en)
   }));
   const quiz = (dbl.exercises || []).filter(x => x.type === 'choose').map(x => {
-    const qtr = x.payload.question.tr || translitEn(x.payload.question.en || '');
+    const qEn = x.payload.question.en || '';
+    const qAr = x.payload.question.ar || '';
+    const qtr = x.payload.question.tr || translitEn(qEn);
     return {
-    q: x.payload.question.en + '<div class="arabic" style="font-size:.8rem; font-weight:400; margin-top:4px;">' + x.payload.question.ar + '</div>' + (qtr ? '<div class="arabic translit" style="font-size:.76rem; color:var(--gold-soft); margin-top:3px;">' + qtr + '</div>' : ''),
+    q: qEn + (qAr ? '<div class="arabic" style="font-size:.8rem; font-weight:400; margin-top:4px;">' + qAr + '</div>' : '') + (qtr ? '<div class="arabic translit" style="font-size:.76rem; color:var(--gold-soft); margin-top:3px;">' + qtr + '</div>' : ''),
+    qEn: qEn, qAr: qAr, qTr: qtr,
     options: x.payload.options.map(o => ({ t: o.t, tr: o.tr || translitEn(o.t || '') })),
     correct: x.payload.options.findIndex(o => o.ok),
     _hint: x.hint_ar ? { en: x.hint_en, ar: x.hint_ar } : null
