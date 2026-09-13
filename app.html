@@ -16349,7 +16349,7 @@ function renderLessonReader(container, academy, lesson){
           <div class="triplet-card" style="display:flex; justify-content:space-between; align-items:center; gap:14px;">
             <div style="flex:1;"><b style="font-family:'Cairo','Tajawal',sans-serif; font-size:1.05rem; direction:rtl; text-align:right; display:block;">${escapeHtml(v.ar||'')}</b>
               <div style="margin-top:2px; color:var(--text-muted); font-size:.8rem;">${escapeHtml(v.translit||'')} · ${escapeHtml(v.en||'')}</div>
-              ${v.tip ? `<div style="margin-top:6px; font-size:.78rem; color:var(--text-secondary); line-height:1.6;">💡 ${v.tip}</div>` : ''}
+              ${v.tip ? `<div style="margin-top:6px; font-size:.78rem; color:var(--text-secondary); line-height:1.6;">💡 ${escapeHtml(v.tip||'')}</div>` : ''}
             </div>
             <button class="icon-btn speak-btn" data-speak="${escapeHtml(v.ar||'')}" aria-label="Listen"><i data-lucide="volume-2" width="15" height="15"></i></button>
           </div>` : `
@@ -16422,12 +16422,12 @@ function renderLessonReader(container, academy, lesson){
 
     <div class="lesson-section" style="background:var(--card); border-radius:16px; padding:20px;">
       <h3 style="font-size:1.02rem;"><span class="arabic">ملخص الدرس</span>، Lesson Summary</h3>
-      <div style="display:flex;align-items:flex-start;gap:8px;margin-top:10px;"><p style="flex:1;font-size:.88rem; color:var(--text-secondary); line-height:1.7;">${lesson.summary}</p><button class="icon-btn speak-btn" data-speak="${lesson.summary}" aria-label="Listen" style="flex-shrink:0;width:28px;height:28px;"><i data-lucide="volume-2" width="13" height="13"></i></button></div>
+      <div style="display:flex;align-items:flex-start;gap:8px;margin-top:10px;"><p style="flex:1;font-size:.88rem; color:var(--text-secondary); line-height:1.7;">${escapeHtml(lesson.summary||'')}</p><button class="icon-btn speak-btn" data-speak="${escapeHtml(lesson.summary||'')}" aria-label="Listen" style="flex-shrink:0;width:28px;height:28px;"><i data-lucide="volume-2" width="13" height="13"></i></button></div>
     </div>
     ${lesson.takeaway ? `
     <div class="lesson-section" style="background:rgba(200,169,106,.06); border:1px solid rgba(200,169,106,.25); border-radius:16px; padding:20px;">
       <h3 style="font-size:1.02rem;"><span class="arabic">خذها معك</span>، Takeaway</h3>
-      <p class="arabic" style="margin-top:10px; font-size:.92rem; color:var(--text-secondary); line-height:1.8;">${lesson.takeaway}</p>
+      <p class="arabic" style="margin-top:10px; font-size:.92rem; color:var(--text-secondary); line-height:1.8;">${escapeHtml(lesson.takeaway||'')}</p>
     </div>` : ''}
 
     <div class="lesson-actions-row">
@@ -16439,7 +16439,7 @@ function renderLessonReader(container, academy, lesson){
     <div class="lesson-section" style="background:rgba(63,140,114,.08); border:1px solid rgba(63,140,114,.3); border-radius:16px; padding:20px; margin-top:22px;">
       <h3 style="font-size:1.02rem;"><span class="arabic">الدرس الجاي</span>، Up Next</h3>
       <p style="margin-top:8px; font-size:.92rem; font-family:'Fraunces',serif;">${escapeHtml(nextItem.en||'')}</p>
-      <p class="arabic" style="margin-top:2px; font-size:.84rem; color:var(--text-secondary);">${nextItem.ar || ''}</p>
+      <p class="arabic" style="margin-top:2px; font-size:.84rem; color:var(--text-secondary);">${escapeHtml(nextItem.ar || '')}</p>
       <p style="margin-top:6px; font-size:.76rem; color:var(--text-muted);"><span class="arabic">خطوة وحدة تفتح الدرس الجاي.</span>One step opens the next lesson.</p>
       <button class="btn-gold" id="lessonNextBtn" style="margin-top:14px;"><span class="arabic">ابدا الدرس الجاي</span>، Start Next Lesson</button>
     </div>` : done && !nextItem ? `
@@ -19241,7 +19241,7 @@ function renderFocusCard(){
       <p style="margin-top:5px; font-size:.95rem; font-weight:600;">${rec.titleAr ? `<span class="arabic">${escapeHtml(rec.titleAr)}</span> · ` : ''}${escapeHtml(rec.titleEn)}</p>
       <p style="font-size:.78rem; color:var(--text-muted); margin-top:3px; line-height:1.6;"><span class="arabic">${escapeHtml(rec.whyAr)}</span> · ${escapeHtml(rec.whyEn)}</p>
     </div>
-    <button class="btn-gold" data-goto-view="${rec.view}" style="white-space:nowrap;"><span class="arabic">${rec.ctaAr}</span> · ${rec.ctaEn}</button>
+    <button class="btn-gold" data-goto-view="${escapeHtml(rec.view||'')}" style="white-space:nowrap;"><span class="arabic">${escapeHtml(rec.ctaAr||'')}</span> · ${escapeHtml(rec.ctaEn||'')}</button>
   </div>`;
   const body = document.getElementById('focusBody');
   if(body) body.innerHTML = html;
