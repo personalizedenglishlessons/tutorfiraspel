@@ -1262,35 +1262,12 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
             </div>
           </div>
 
-          <!-- DAILY EXPERIENCE -->
-          <div class="eyebrow" style="margin-bottom:14px;"><span class="arabic">تعلم اليوم</span>، Today's Learning</div>
-          <div class="grid grid-4" style="margin-bottom:34px;" id="dailyExperienceGrid"></div>
+          <!-- DAILY EXPERIENCE + QUICK ACTIONS removed: tools integrated into lessons, not scattered on home page -->
+          <!-- OLD: dailyExperienceGrid + quickActionsGrid were here, linking to Vocabulary Vault, Grammar, Writing, Speaking, etc. -->
 
-          <!-- QUICK ACTIONS -->
-          <div class="eyebrow" style="margin-bottom:14px;"><span class="arabic">اجراوات سريعة</span>، Quick Actions</div>
-          <div class="grid grid-4" style="margin-bottom:34px;" id="quickActionsGrid"></div>
-
-          <!-- LEARNING PROGRESS -->
+          <!-- LEARNING PROGRESS (simplified: removed 4 redundant rings, kept stats + skill bars) -->
           <div class="eyebrow" style="margin-bottom:14px;"><span class="arabic">تقدمك</span>، Your Progress</div>
-          <div class="card" style="display:flex; gap:36px; flex-wrap:wrap; align-items:center; justify-content:space-between;">
-            <div style="display:flex; gap:30px; flex-wrap:wrap;">
-              <div style="text-align:center;">
-                <div class="ring-wrap small"><svg viewBox="0 0 64 64"><circle class="track" cx="32" cy="32" r="26"></circle><circle class="prog" id="overallCompletionRing" cx="32" cy="32" r="26" stroke-dasharray="163" style="stroke-dashoffset:163;"></circle></svg><div class="ring-center"><b id="overallCompletionPct">0%</b></div></div>
-                <span style="font-size:.72rem; color:var(--text-muted); display:block; margin-top:8px;"><span class="arabic">الاكمال الكلي</span>، Overall Completion</span>
-              </div>
-              <div style="text-align:center;">
-                <div class="ring-wrap small"><svg viewBox="0 0 64 64"><circle class="track" cx="32" cy="32" r="26"></circle><circle class="prog" id="heroTodayRing" cx="32" cy="32" r="26" stroke-dasharray="163" style="stroke-dashoffset:163; stroke:var(--emerald);"></circle></svg><div class="ring-center"><b id="heroTodayPct">0%</b></div></div>
-                <span style="font-size:.72rem; color:var(--text-muted); display:block; margin-top:8px;"><span class="arabic">هدف اليوم</span>، Today's Goal</span>
-              </div>
-              <div style="text-align:center;">
-                <div class="ring-wrap small"><svg viewBox="0 0 64 64"><circle class="track" cx="32" cy="32" r="26"></circle><circle class="prog" id="heroWeeklyRing" cx="32" cy="32" r="26" stroke-dasharray="163" style="stroke-dashoffset:163;"></circle></svg><div class="ring-center"><b id="heroWeeklyPct">0%</b></div></div>
-                <span style="font-size:.72rem; color:var(--text-muted); display:block; margin-top:8px;"><span class="arabic">هدف الاسبوع</span>، Weekly Goal</span>
-              </div>
-              <div style="text-align:center;">
-                <div class="ring-wrap small"><svg viewBox="0 0 64 64"><circle class="track" cx="32" cy="32" r="26"></circle><circle class="prog" id="heroMonthlyRing" cx="32" cy="32" r="26" stroke-dasharray="163" style="stroke-dashoffset:163;"></circle></svg><div class="ring-center"><b id="heroMonthlyPct">0%</b></div></div>
-                <span style="font-size:.72rem; color:var(--text-muted); display:block; margin-top:8px;"><span class="arabic">هدف الشهر</span>، Monthly Goal</span>
-              </div>
-            </div>
+          <div class="card" style="display:flex; gap:28px; flex-wrap:wrap; align-items:center;">
             <div style="display:flex; gap:28px; flex-wrap:wrap;">
               <div><b id="heroStreakNum" style="font-family:'Fraunces',serif; font-size:1.4rem; color:var(--gold);">0</b><span style="display:block; font-size:.72rem; color:var(--text-muted);"><span class="arabic">سلسلة الايام</span>، Day streak</span></div>
               <div><b id="heroLessonsNum" style="font-family:'Fraunces',serif; font-size:1.4rem;">0</b><span style="display:block; font-size:.72rem; color:var(--text-muted);"><span class="arabic">دروس مكتملة</span>، Lessons completed</span></div>
@@ -1299,7 +1276,6 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
             </div>
             <div id="levelBlock" style="flex-basis:100%;"></div>
             <div id="skillBars" style="flex-basis:100%; margin-top:20px; padding-top:20px; border-top:1px solid var(--border); display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:14px;"></div>
-            <div id="statStories" style="flex-basis:100%; display:flex; gap:26px; flex-wrap:wrap; margin-top:18px;"></div>
           </div>
         </section>
 
@@ -1602,7 +1578,7 @@ function applyStudentStateRow(row){
   renderNotifications();
   renderUpcomingLesson();
   renderContinueLearning();
-  renderDailyGrid();
+  // renderDailyGrid(); // removed — tools integrated into lessons, not scattered on home
   renderReviewStrip();
   renderDashboardIntel();
   const topXp = document.getElementById('topXp');
@@ -1624,7 +1600,7 @@ function clearStudentState(){
   renderNotifications();
   renderUpcomingLesson();
   renderContinueLearning();
-  renderDailyGrid();
+  // renderDailyGrid(); // removed — tools integrated into lessons, not scattered on home
   renderReviewStrip();
   renderDashboardIntel();
 }
@@ -2655,7 +2631,7 @@ setTimeout(animateHomeRings, 300);
 /* ============================================================
    DAILY EXPERIENCE + QUICK ACTIONS
    ============================================================ */
-const dailyGrid = document.getElementById('dailyExperienceGrid');
+const dailyGrid = null; // removed from DOM — tools now live inside lessons
 function buildDailyItems(){
   // Every tile below is sourced from this app's real lesson/vocab/grammar/
   // speaking banks, rotating daily - no hardcoded filler.
@@ -2678,22 +2654,7 @@ function buildDailyItems(){
     {icon:'pen-line', title:'<span class="arabic">تحدي الكتابة</span>، Writing Challenge', body: escapeHtml(WRITING_PROMPTS[dayIdx % WRITING_PROMPTS.length].title||''), sub:'<span class="arabic">كتابة 5 دقايق</span>، A 5 minute writing task', view:'writing'},
   ];
 }
-function renderDailyGrid(){
-  const dailyItems = buildDailyItems();
-  dailyGrid.innerHTML = '';
-  dailyItems.forEach(d => {
-    const card = document.createElement('div');
-    card.className = 'card hoverable';
-    card.dataset.view = d.view;
-    card.innerHTML = `
-      <div class="tile-icon" style="margin-bottom:16px;"><i data-lucide="${d.icon}" width="18" height="18"></i></div>
-      <span class="chip" style="margin-bottom:10px; display:inline-block;">${d.title}</span>
-      <h4 style="font-size:1.02rem;">${d.body}</h4>
-      <p style="margin-top:8px; font-size:.78rem; color:var(--text-muted);">${d.sub}</p>`;
-    dailyGrid.appendChild(card);
-  });
-  if(window.lucide) lucide.createIcons();
-}
+function renderDailyGrid(){ /* removed — tools integrated into lessons */ }
 function renderReviewBadge(){
   // A small count on the Smart Review sidebar item: due words are visible
   // before the student even clicks, so nothing waits to be discovered.
@@ -2735,28 +2696,8 @@ function renderReviewStrip(){
   }
 }
 
-const quickActions = [
-  // 'resume' resolves to the student's actual next lesson (the in-progress
-  // academy's next unlocked lesson), never a fixed default.
-  {icon:'play-circle', label:'<span class="arabic">كمل تعلمك</span>، Continue Learning', view:'resume'},
-  {icon:'message-circle', label:'<span class="arabic">تمرن على المحادثة</span>، Practice Speaking', view:'speaking'},
-  {icon:'book-open', label:'<span class="arabic">راجع المفردات</span>، Review Vocabulary', view:'vocabulary'},
-  // The daily quiz pulls real questions from lessons the student has
-  // completed, so it reviews what they actually learned today.
-  {icon:'check-circle', label:'<span class="arabic">اختبار اليوم</span>، Daily Quiz', view:'dailyQuiz'},
-  {icon:'calendar-days', label:'<span class="arabic">تقويم الدراسة</span>، Study Calendar', view:'calendar'},
-  {icon:'bookmark', label:'<span class="arabic">المفضلة</span>، Bookmarks', view:'bookmarks'},
-  {icon:'layout-grid', label:'<span class="arabic">تصفح الاكاديميات</span>، Browse Academies', view:'paths'},
-];
-const qaGrid = document.getElementById('quickActionsGrid');
-quickActions.forEach(q => {
-  const card = document.createElement('button');
-  card.className = 'card hoverable';
-  card.style.textAlign = 'left';
-  if(q.view) card.dataset.view = q.view;
-  card.innerHTML = `<div class="tile-icon tile-icon-sm" style="margin-bottom:14px;"><i data-lucide="${q.icon}" width="17" height="17"></i></div><span style="font-size:.86rem; font-weight:600;">${q.label}</span>`;
-  qaGrid.appendChild(card);
-});
+const quickActions = []; // removed — tools integrated into lessons
+const qaGrid = null;
 
 /* ============================================================
    COMMAND PALETTE
@@ -13734,7 +13675,7 @@ function markLessonComplete(academyId, lessonId, stats){
   renderNotifications();
   renderUpcomingLesson();
   renderContinueLearning();
-  renderDailyGrid();
+  // renderDailyGrid(); // removed — tools integrated into lessons, not scattered on home
   renderReviewStrip();
   renderDashboardIntel();
   const completedTitle = (reviewLesson && reviewLesson.title) ? reviewLesson.title : 'this lesson';
