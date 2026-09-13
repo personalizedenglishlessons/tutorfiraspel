@@ -17784,7 +17784,7 @@ function renderHomeForDirection(){
     heroLevelChip: document.getElementById('heroLevelChip'),
   };
   if(els.homeSubtitle) els.homeSubtitle.innerHTML = `<span class="arabic" style="display:block; margin-bottom:4px;">درسك الجاي جاهز. كمل من وين وقفت.</span>Your next ${dirLabelEn} lesson is ready. Pick up where you left off.`;
-  if(els.heroLevelChip && !isFirstTimeStudent() && !hasPlan()) els.heroLevelChip.innerHTML = `<span class="arabic">مستوى ${levelInfo().level}، ${levelInfo().ar}</span>، Level ${levelInfo().level}، ${levelInfo().en}`;
+  if(els.heroLevelChip && !isFirstTimeStudent() && !hasPlan()) els.heroLevelChip.innerHTML = `<span class="arabic">مستوى ${levelInfo().level}، ${escapeHtml(levelInfo().ar||'')}</span>، Level ${levelInfo().level}، ${escapeHtml(levelInfo().en||'')}`;
   if(els.heroResumeTitle && !isFirstTimeStudent() && !hasPlan()) els.heroResumeTitle.innerHTML = `<span class="arabic" style="display:block; font-size:.7em; font-weight:400; color:var(--text-secondary); margin-bottom:2px;">كمل من حيث توقفت</span>Resume where you left off`;
   if(els.heroResumeText && !isFirstTimeStudent() && !hasPlan()) els.heroResumeText.innerHTML = `<span class="arabic">كمل على وتيرتك، ولا تنسى مراجعة كلماتك.</span>Keep your pace, and do not forget your word reviews.`;
   if(els.heroResumeBtn && !isFirstTimeStudent() && !hasPlan()) els.heroResumeBtn.innerHTML = `<span class="arabic">كمل التعلم</span>، Resume Learning`;
@@ -18326,7 +18326,7 @@ function renderProfile(){
   ].map(a => `
     <div class="roadmap-node ${a.state}">
       <div class="roadmap-dot">${a.state==='done' ? '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l6 6L20 6"/></svg>' : ''}</div>
-      <h4>${a.en} <span class="arabic" style="font-size:.85em; font-weight:400;">${a.ar}</span></h4>
+      <h4>${escapeHtml(a.en||'')} <span class="arabic" style="font-size:.85em; font-weight:400;">${escapeHtml(a.ar||'')}</span></h4>
       <p>${a.state==='done' ? '<span class="arabic">مكتمل</span>، Completed' : a.state==='current' ? '<span class="arabic">قيد التقدم</span>، '+a.progress+'% complete' : '<span class="arabic">قادم</span>، Upcoming'}</p>
     </div>`).join('');
   document.getElementById('profileRoadmap').innerHTML = roadmapHtml;
@@ -18351,8 +18351,8 @@ function renderAchievements(){
   document.getElementById('achievementsGrid').innerHTML = ACHIEVEMENTS.map(a => `
     <div class="card badge-card${a.earned ? '' : ' locked'}" data-badge="${a.id}">
       <div class="badge-icon-wrap"><i data-lucide="${a.earned ? a.icon : 'lock'}" width="26" height="26"></i></div>
-      <h4>${a.en}</h4>
-      <p class="arabic">${a.ar}</p>
+      <h4>${escapeHtml(a.en||'')}</h4>
+      <p class="arabic">${escapeHtml(a.ar||'')}</p>
       <div class="bd-date">${a.earned ? '<span class="arabic">تم الحصول عليها</span>، Earned' : '<span class="arabic">لم تُحصَّل بعد</span>، Not yet earned'}</div>
     </div>`).join('');
   document.getElementById('achievementsGrid').addEventListener('click', e => {
@@ -18382,8 +18382,8 @@ function renderCertificates(){
     <div class="card cert-card hoverable">
       <div class="cert-top">
         <span class="chip gold"><span class="arabic">موثقة</span>، Verified</span>
-        <h3 style="margin-top:12px; font-size:1.05rem;">${c.en}</h3>
-        <p class="arabic" style="margin-top:4px; font-size:.9rem; color:var(--text-secondary);">${c.ar}</p>
+        <h3 style="margin-top:12px; font-size:1.05rem;">${escapeHtml(c.en||'')}</h3>
+        <p class="arabic" style="margin-top:4px; font-size:.9rem; color:var(--text-secondary);">${escapeHtml(c.ar||'')}</p>
         <div class="cert-seal"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="6"/><path d="M9 13l-2 8 5-3 5 3-2-8"/></svg></div>
       </div>
       <div class="cert-body">
@@ -18902,7 +18902,7 @@ function renderPlanSettings(){
     <div style="margin-top:16px;">
       <label style="display:block; font-size:.78rem; font-weight:600; color:var(--text-secondary); margin-bottom:8px;"><span class="arabic">الايام بالاسبوع</span>، Days per week</label>
       <select id="planFreqSelect" style="width:100%; max-width:240px; padding:10px 12px; border-radius:10px; background:var(--card-elevated); border:1px solid var(--border); color:var(--text);">
-        ${freqOpts.map(f => `<option value="${f.days}" ${f.days === state.freqDays ? 'selected' : ''}>${f.en} · ${f.ar}</option>`).join('')}
+        ${freqOpts.map(f => `<option value="${f.days}" ${f.days === state.freqDays ? 'selected' : ''}>${escapeHtml(f.en||'')} · ${escapeHtml(f.ar||'')}</option>`).join('')}
       </select>
     </div>
     <p id="planEstPreview" style="margin-top:14px; font-size:.84rem; color:var(--gold-soft); font-weight:600;"></p>
@@ -19088,8 +19088,8 @@ function dashRecommendation(){
     const cat = LEARN_CATEGORIES[top] || { en: top, ar: top };
     return { view:'writing', ctaAr:'افتح ورشة الكتابة', ctaEn:'Open the writing workshop',
       titleAr:'اصلح اخطا كتابتك', titleEn:'Fix your writing mistakes',
-      whyAr:`"${cat.ar}" رجعت معك ${misses[top]} مرات. تدرب عليها الحين.`,
-      whyEn:`"${cat.en}" has come back ${misses[top]} time${misses[top] === 1 ? '' : 's'}. Practice it now.` };
+      whyAr:`"${escapeHtml(cat.ar||'')}" رجعت معك ${misses[top]} مرات. تدرب عليها الحين.`,
+      whyEn:`"${escapeHtml(cat.en||'')}" has come back ${misses[top]} time${misses[top] === 1 ? '' : 's'}. Practice it now.` };
   }
   const skills = dashSkillData();
   const tracked = skills.filter(s => s.score != null);
@@ -19097,10 +19097,10 @@ function dashRecommendation(){
     || tracked.sort((a,b) => a.score - b.score)[0];
   if(weak && weak.score < 60){
     return { view: weak.view, ctaAr:'تدرب عليها', ctaEn:'Practice it',
-      titleAr:`تدرب على ${weak.ar}`, titleEn:`Practice ${weak.key}`,
+      titleAr:`تدرب على ${escapeHtml(weak.ar||'')}`, titleEn:`Practice ${escapeHtml(weak.key||'')}`,
       whyAr: weak.week === 0
-        ? `ما تدربت على ${weak.ar} هذا الاسبوع.`
-        : `${weak.ar} اضعف مهارة عندك الحين (${weak.score}%).`,
+        ? `ما تدربت على ${escapeHtml(weak.ar||'')} هذا الاسبوع.`
+        : `${escapeHtml(weak.ar||'')} اضعف مهارة عندك الحين (${weak.score||0}%).`,
       whyEn: weak.week === 0
         ? `You have not practiced ${weak.key} this week.`
         : `${weak.key} is your weakest skill right now (${weak.score}%).` };
@@ -19109,8 +19109,8 @@ function dashRecommendation(){
   if(inProgress){
     return { view:'resume', ctaAr:'كمل الدرس', ctaEn:'Continue the lesson',
       titleAr: inProgress.ar, titleEn: inProgress.en,
-      whyAr:`انت مكمل ${inProgress.progress}% من ${inProgress.ar}. الدرس الجاي مفتوح.`,
-      whyEn:`You are ${inProgress.progress}% through ${inProgress.en}. Your next lesson is unlocked.` };
+      whyAr:`انت مكمل ${inProgress.progress||0}% من ${escapeHtml(inProgress.ar||'')}. الدرس الجاي مفتوح.`,
+      whyEn:`You are ${inProgress.progress||0}% through ${escapeHtml(inProgress.en||'')}. Your next lesson is unlocked.` };
   }
   return { view:'lessonOfDay', ctaAr:'افتح درس اليوم', ctaEn:'Open the lesson of the day',
     titleAr:'درس اليوم', titleEn:'Lesson of the day',
@@ -19286,7 +19286,7 @@ function renderSkillBars(){
         </div>
         <div style="display:flex; align-items:center; gap:12px;">
           <div style="height:7px; border-radius:6px; background:var(--card-elevated); border:1px solid var(--border); overflow:hidden; flex:1;"><span style="display:block; height:100%; width:${s.score == null ? 0 : Math.min(100, s.score)}%; background:linear-gradient(90deg, var(--gold), var(--gold-soft)); border-radius:6px;"></span></div>
-          <span class="chip" style="white-space:nowrap; ${chips[st.cls]}">${st.en} <span class="arabic">${st.ar}</span></span>
+          <span class="chip" style="white-space:nowrap; ${chips[st.cls]}">${escapeHtml(st.en||'')} <span class="arabic">${escapeHtml(st.ar||'')}</span></span>
         </div>
       </button>`;
     }).join('');
@@ -19310,7 +19310,7 @@ function renderStatStories(){
     { ar: nextDue ? `اقرب كلمة جاهزة بعد ${nextDue} ${nextDue === 1 ? 'يوم' : 'ايام'}` : due > 0 ? `${due} جاهزة الحين` : 'قايمة المراجعة فاضية',
       en: nextDue ? `Next review word in ${nextDue}d` : due > 0 ? `${due} due right now` : 'Review queue is clear' },
   ];
-  el.innerHTML = stories.map(s => `<div style="flex:1; min-width:150px; font-size:.74rem; color:var(--text-muted); line-height:1.5;"><span class="arabic" style="display:block;">${s.ar}</span>${s.en}</div>`).join('');
+  el.innerHTML = stories.map(s => `<div style="flex:1; min-width:150px; font-size:.74rem; color:var(--text-muted); line-height:1.5;"><span class="arabic" style="display:block;">${escapeHtml(s.ar||'')}</span>${escapeHtml(s.en||'')}</div>`).join('');
 }
 function renderLevelBlock(){
   const el = document.getElementById('levelBlock');
