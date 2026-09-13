@@ -13471,14 +13471,16 @@ function dbToLesson(dbl, academy){
     en: i.en, ar: i.ar, translit: i.tr || translitEn(i.en)
   }));
   const quiz = (dbl.exercises || []).filter(x => x.type === 'choose').map(x => {
-    const qEn = x.payload.question.en || '';
-    const qAr = x.payload.question.ar || '';
-    const qtr = x.payload.question.tr || translitEn(qEn);
+    const p = x.payload || {};
+    const q = p.question || {};
+    const qEn = q.en || '';
+    const qAr = q.ar || '';
+    const qtr = q.tr || translitEn(qEn);
     return {
     q: qEn + (qAr ? '<div class="arabic" style="font-size:.8rem; font-weight:400; margin-top:4px;">' + qAr + '</div>' : '') + (qtr ? '<div class="arabic translit" style="font-size:.76rem; color:var(--gold-soft); margin-top:3px;">' + qtr + '</div>' : ''),
     qEn: qEn, qAr: qAr, qTr: qtr,
-    options: x.payload.options.map(o => ({ t: o.t, tr: o.tr || translitEn(o.t || '') })),
-    correct: x.payload.options.findIndex(o => o.ok),
+    options: (p.options||[]).map(o => ({ t: o.t||'', tr: o.tr || translitEn(o.t || '') })),
+    correct: (p.options||[]).findIndex(o => o.ok),
     _hint: x.hint_ar ? { en: x.hint_en, ar: x.hint_ar } : null
     };
   });
@@ -13513,15 +13515,17 @@ function renderDbPractice(container, exercises){
         ${bodyHtml}
       </div>`;
     if(x.type === 'order'){
-      const tokensShuffled = x.payload.tokens.slice();
+      const p = x.payload || {};
+      const tokensShuffled = (p.tokens||[]).slice();
       for(let i = tokensShuffled.length - 1; i > 0; i--){
         const j = (i * 7 + xi * 13) % (i + 1);
         const t = tokensShuffled[i]; tokensShuffled[i] = tokensShuffled[j]; tokensShuffled[j] = t;
       }
+      const pr = p.prompt || {};
       return head('Build the sentence', `
-        <div style="font-size:.95rem; margin-bottom:6px;">${x.payload.prompt.en}</div>
-        <div class="arabic" style="font-size:.82rem; color:var(--gold-soft); margin-bottom:${x.payload.prompt.ar ? '4px' : '10px'};">${x.payload.prompt.tr}</div>
-        ${x.payload.prompt.ar ? `<div class="arabic" style="font-size:.78rem; color:var(--text-muted); margin-bottom:10px;">${x.payload.prompt.ar}</div>` : ''}
+        <div style="font-size:.95rem; margin-bottom:6px;">${esc(pr.en||'')}</div>
+        <div class="arabic" style="font-size:.82rem; color:var(--gold-soft); margin-bottom:${pr.ar ? '4px' : '10px'};">${esc(pr.tr||'')}</div>
+        ${pr.ar ? `<div class="arabic" style="font-size:.78rem; color:var(--text-muted); margin-bottom:10px;">${esc(pr.ar)}</div>` : ''}
         <div class="dbx-answer" style="min-height:38px; border:1px dashed var(--border); border-radius:10px; padding:7px 9px; margin-bottom:10px; display:flex; flex-wrap:wrap; gap:6px;"></div>
         <div class="dbx-tokens" style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px;">
           ${tokensShuffled.map(t => `<button class="quiz-option dbx-token" style="padding:5px 11px;">${t}</button>`).join('')}
@@ -13529,30 +13533,33 @@ function renderDbPractice(container, exercises){
         <button class="btn-outline dbx-check"><span class="arabic">تحقق</span>، Check</button>`);
     }
     if(x.type === 'spell'){
+      const p = x.payload || {};
       return head('Spell it', `
-        <div style="font-size:1.15rem; font-family:'Fraunces',serif; letter-spacing:.35em; margin-bottom:4px;">${x.payload.display}</div>
-        <div style="font-size:.8rem; color:var(--text-muted); margin-bottom:10px;"><span class="arabic">المعنى</span>: ${x.payload.meaning} · <span class="arabic">${x.payload.translit}</span></div>
+        <div style="font-size:1.15rem; font-family:'Fraunces',serif; letter-spacing:.35em; margin-bottom:4px;">${esc(p.display||'')}</div>
+        <div style="font-size:.8rem; color:var(--text-muted); margin-bottom:10px;"><span class="arabic">المعنى</span>: ${esc(p.meaning||'')} · <span class="arabic">${esc(p.translit||'')}</span></div>
         <div class="dbx-answer" style="font-family:'Fraunces',serif; min-height:34px; border:1px dashed var(--border); border-radius:10px; padding:6px 9px; margin-bottom:10px; letter-spacing:.3em;"></div>
         <div class="dbx-tokens" style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px;">
-          ${x.payload.options.map(t => `<button class="quiz-option dbx-token" style="padding:5px 11px;">${t}</button>`).join('')}
+          ${(p.options||[]).map(t => `<button class="quiz-option dbx-token" style="padding:5px 11px;">${esc(t)}</button>`).join('')}
         </div>
         <button class="btn-outline dbx-check"><span class="arabic">تحقق</span>، Check</button>`);
     }
     if(x.type === 'correct'){
-      const p = x.payload;
+      const p = x.payload || {};
+      const wrong = p.wrong||'';
+      const right = p.right||'';
       return head('Fix the mistake', `
-        <div style="font-size:.84rem; color:var(--text-muted); margin-bottom:10px;"><span class="arabic">${x.hint_ar || ''}</span>${x.hint_en ? '، ' + x.hint_en : ''}</div>
+        <div style="font-size:.84rem; color:var(--text-muted); margin-bottom:10px;"><span class="arabic">${esc(x.hint_ar || '')}</span>${x.hint_en ? '، ' + esc(x.hint_en) : ''}</div>
         <div class="dbx-tokens" style="display:grid; gap:8px; margin-bottom:12px;">
-          <div><button class="quiz-option dbx-pick" data-ok="wrong" style="text-align:left;">${p.wrong}</button><div class="arabic" style="font-size:.78rem;color:var(--gold-soft);margin-top:2px;">${p.wrong_tr || translitEn(p.wrong || '')}</div></div>
-          <div><button class="quiz-option dbx-pick" data-ok="right" style="text-align:left;">${p.right}</button><div class="arabic" style="font-size:.78rem;color:var(--gold-soft);margin-top:2px;">${p.right_tr || translitEn(p.right || '')}</div></div>
+          <div><button class="quiz-option dbx-pick" data-ok="wrong" style="text-align:left;">${esc(wrong)}</button><div class="arabic" style="font-size:.78rem;color:var(--gold-soft);margin-top:2px;">${esc(p.wrong_tr || translitEn(wrong))}</div></div>
+          <div><button class="quiz-option dbx-pick" data-ok="right" style="text-align:left;">${esc(right)}</button><div class="arabic" style="font-size:.78rem;color:var(--gold-soft);margin-top:2px;">${esc(p.right_tr || translitEn(right))}</div></div>
         </div>
         <div class="dbx-why" style="display:none; font-size:.8rem; color:var(--emerald);"></div>`);
     }
     if(x.type === 'translate'){
-      const p = x.payload;
+      const p = x.payload || {};
       const srcIsEn = p.dir !== 'ar2en';
       return head(srcIsEn ? 'Say it in Arabic' : 'Say it in English', `
-        <div style="font-size:.98rem; margin-bottom:10px;" class="${srcIsEn ? '' : 'arabic'}">${p.source}<div class="${srcIsEn ? 'arabic' : ''}" style="font-size:.82rem; color:var(--gold-soft); margin-top:4px;">${srcIsEn ? (p.source_tr || '') : ''}</div></div>
+        <div style="font-size:.98rem; margin-bottom:10px;" class="${srcIsEn ? '' : 'arabic'}">${esc(p.source||'')}<div class="${srcIsEn ? 'arabic' : ''}" style="font-size:.82rem; color:var(--gold-soft); margin-top:4px;">${srcIsEn ? esc(p.source_tr || '') : ''}</div></div>
         <input class="dbx-input" type="text" placeholder="${srcIsEn ? 'اكتب بالعربي...' : 'Type in English...'}" style="width:100%; background:var(--card); border:1px solid var(--border); border-radius:10px; padding:10px 12px; color:var(--text); font-size:.92rem; margin-bottom:10px;">
         <button class="btn-outline dbx-check"><span class="arabic">تحقق</span>، Check</button>
         <div class="dbx-reveal" style="display:none; font-size:.82rem; color:var(--gold-soft); margin-top:8px;"></div>`);
@@ -13586,14 +13593,15 @@ function renderDbPractice(container, exercises){
     const checkBtn = card.querySelector('.dbx-check');
     if(checkBtn) checkBtn.addEventListener('click', () => {
       if(answerEl.dataset.done === '1') return;
+      const p = x.payload || {};
       let ok = false, reveal = '';
-      if(x.type === 'order'){ ok = norm(picked.map(t => t.textContent).join(' ')) === norm(x.payload.answer); reveal = x.payload.answer; }
-      else if(x.type === 'spell'){ ok = norm(picked.map(t => t.textContent).join('')) === norm(x.payload.answer); reveal = x.payload.answer; }
+      if(x.type === 'order'){ ok = norm(picked.map(t => t.textContent).join(' ')) === norm(p.answer||''); reveal = p.answer||''; }
+      else if(x.type === 'spell'){ ok = norm(picked.map(t => t.textContent).join('')) === norm(p.answer||''); reveal = p.answer||''; }
       else if(x.type === 'translate'){
         const inp = card.querySelector('.dbx-input');
-        const accepted = [x.payload.answer].concat(Array.isArray(x.payload.accept) ? x.payload.accept : []).map(norm);
+        const accepted = [p.answer].concat(Array.isArray(p.accept) ? p.accept : []).map(norm);
         ok = accepted.indexOf(norm(inp.value)) !== -1;
-        reveal = x.payload.answer;
+        reveal = p.answer||'';
       }
       answerEl.dataset.done = '1';
       mark(ok);
@@ -13617,7 +13625,8 @@ function renderDbPractice(container, exercises){
         else if(b === btn) b.classList.add('incorrect');
       });
       const why = card.querySelector('.dbx-why');
-      if(why){ why.style.display = 'block'; why.textContent = x.payload.why_en + '، ' + x.payload.why_ar; }
+      const pp = x.payload || {};
+      if(why){ why.style.display = 'block'; why.textContent = (pp.why_en||'') + '، ' + (pp.why_ar||''); }
       mark(ok);
     }));
   });
