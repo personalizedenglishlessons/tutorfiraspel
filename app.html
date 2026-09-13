@@ -18078,8 +18078,8 @@ function renderContinueLearning(){
       const nextObj = next ? getLesson(next.academy, next.lesson) : null;
       const estChip = document.getElementById('heroEstChip');
       if(estChip && nextObj && nextObj.duration) estChip.innerHTML = `<span class="arabic">تقريبا ${String(nextObj.duration).replace(/\bmin\b/gi,'دقيقة').replace(/\bhr\b/gi,'ساعة')}</span>، Est. ${nextObj.duration} remaining`;
-      if(resumeText) resumeText.innerHTML = nextObj ? `<span class="arabic">${nextObj.ar}</span> · ${nextObj.title}` : `<span class="arabic">${inProgress.ar}</span> · ${inProgress.en}`;
-      setHomeSubtitle(nextObj ? `كمل: ${nextObj.ar}.` : `كمل: ${inProgress.ar}.`, nextObj ? `Continue: ${nextObj.title}.` : `Continue: ${inProgress.en}.`);
+      if(resumeText) resumeText.innerHTML = nextObj ? `<span class="arabic">${escapeHtml(nextObj.ar||'')}</span> · ${escapeHtml(nextObj.title||'')}` : `<span class="arabic">${escapeHtml(inProgress.ar||'')}</span> · ${escapeHtml(inProgress.en||'')}`;
+      setHomeSubtitle(nextObj ? `كمل: ${nextObj.ar||''}.` : `كمل: ${inProgress.ar||''}.`, nextObj ? `Continue: ${nextObj.title||''}.` : `Continue: ${inProgress.en||''}.`);
       if(card) card.style.display = '';
       if(body) body.innerHTML = `
         <span class="chip emerald">${inProgress.en}</span>
