@@ -22,7 +22,7 @@
 <script src="lib/pel-settings.js?v=efc52be5" defer></script>
 <script src="lib/cert-qr.js?v=a43f19f9" defer></script>
 <script src="lib/cert-sheet.js?v=5df6f54c" defer></script>
-<script src="lib/pel_lesson_stage.js?v=46deaa44"></script>
+<script src="lib/pel_lesson_stage.js?v=53060093"></script>
 <script src="lib/pel_dashboard_life.js?v=ed676701"></script>
 <script src="lib/pel_curriculum_path.js?v=b97575ec"></script>
 <style>
@@ -1578,7 +1578,6 @@ function applyStudentStateRow(row){
   renderNotifications();
   renderUpcomingLesson();
   renderContinueLearning();
-  // renderDailyGrid(); // removed — tools integrated into lessons, not scattered on home
   renderReviewStrip();
   renderDashboardIntel();
   const topXp = document.getElementById('topXp');
@@ -1600,7 +1599,6 @@ function clearStudentState(){
   renderNotifications();
   renderUpcomingLesson();
   renderContinueLearning();
-  // renderDailyGrid(); // removed — tools integrated into lessons, not scattered on home
   renderReviewStrip();
   renderDashboardIntel();
 }
@@ -1634,7 +1632,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if(pill) pill.addEventListener('click', () => { if(typeof goToView === 'function') goToView('liveClasses'); });
 });
 // Periodic refresh so admin credit adjustments appear without page reload
-setInterval(() => { if(typeof currentUser !== 'undefined' && currentUser) refreshCredits(); }, 60000);
+setInterval(() => { if(typeof currentUser !== 'undefined' && currentUser && !document.hidden) refreshCredits(); }, 60000);
 
 async function loadStudentState(){
   // Source of truth is Supabase, keyed by auth.uid(), never localStorage,
@@ -2456,7 +2454,7 @@ const navGroups = [
     {id:'pronunciation', en:'Pronunciation Studio', ar:'استوديو النطق', icon:'mic', minDone:8},
     {id:'speaking', en:'Speaking Studio', ar:'استوديو المحادثة', icon:'message-circle', minDone:12},
     {id:'listening', en:'Listening Lounge', ar:'ركن الاستماع', icon:'headphones', minDone:16},
-    {id:'reading', en:'Reading Corner', ar:'ركن القراوة', icon:'book', minDone:20},
+    {id:'reading', en:'Reading Corner', ar:'ركن القراءة', icon:'book', minDone:20},
     {id:'writing', en:'Writing Workshop', ar:'ورشة الكتابة', icon:'pen-line', minDone:24},
   ]},
   { label:{en:'Progress', ar:'تقدمك'}, items:[
@@ -2631,7 +2629,6 @@ setTimeout(animateHomeRings, 300);
 /* ============================================================
    DAILY EXPERIENCE + QUICK ACTIONS
    ============================================================ */
-const dailyGrid = null; // removed from DOM — tools now live inside lessons
 function buildDailyItems(){
   // Every tile below is sourced from this app's real lesson/vocab/grammar/
   // speaking banks, rotating daily - no hardcoded filler.
@@ -2654,7 +2651,6 @@ function buildDailyItems(){
     {icon:'pen-line', title:'<span class="arabic">تحدي الكتابة</span>، Writing Challenge', body: escapeHtml(WRITING_PROMPTS[dayIdx % WRITING_PROMPTS.length].title||''), sub:'<span class="arabic">كتابة 5 دقايق</span>، A 5 minute writing task', view:'writing'},
   ];
 }
-function renderDailyGrid(){ /* removed — tools integrated into lessons */ }
 function renderReviewBadge(){
   // A small count on the Smart Review sidebar item: due words are visible
   // before the student even clicks, so nothing waits to be discovered.
@@ -2696,8 +2692,6 @@ function renderReviewStrip(){
   }
 }
 
-const quickActions = []; // removed — tools integrated into lessons
-const qaGrid = null;
 
 /* ============================================================
    COMMAND PALETTE
@@ -9633,7 +9627,7 @@ const ACADEMIES = [
   {id:'vocabulary-vault', en:'Vocabulary Vault', ar:'خزنة المفردات', translit:'فوكابيولري فولت', cat:'Skills', icon:'book-open', from:'#A88345', to:'#C8A96A', difficulty:'All Levels', duration:'10h', lessons:48},
   {id:'grammar-academy', en:'Grammar Academy', ar:'اكاديمية القواعد', translit:'جرامر اكاديمي', cat:'Skills', icon:'spell-check', from:'#343744', to:'#262833', difficulty:'All Levels', duration:'9h', lessons:40},
   {id:'listening-lounge', en:'Listening Lounge', ar:'ركن الاستماع', translit:'ليسننج لاونج', cat:'Skills', icon:'headphones', from:'#3F8C72', to:'#17171B', difficulty:'Intermediate', duration:'6h', lessons:26},
-  {id:'reading-corner', en:'Reading Corner', ar:'ركن القراوة', translit:'ريدنج كورنر', cat:'Skills', icon:'book', from:'#C8A96A', to:'#17171B', difficulty:'Intermediate', duration:'6h', lessons:27},
+  {id:'reading-corner', en:'Reading Corner', ar:'ركن القراءة', translit:'ريدنج كورنر', cat:'Skills', icon:'book', from:'#C8A96A', to:'#17171B', difficulty:'Intermediate', duration:'6h', lessons:27},
   {id:'writing-workshop', en:'Writing Workshop', ar:'ورشة الكتابة', translit:'رايتنج ووركشوب', cat:'Skills', icon:'pen-line', from:'#A88345', to:'#17171B', difficulty:'Advanced', duration:'7h', lessons:22},
   {id:'travel-english', en:'Travel English', ar:'انجليزي السفر', translit:'ترافل انجلش', cat:'Situational', icon:'plane', from:'#3F8C72', to:'#C8A96A', difficulty:'Intermediate', duration:'5h', lessons:20},
   {id:'business-english', en:'Business English', ar:'انجليزي الاعمال', translit:'بزنس انجلش', cat:'Career', icon:'briefcase', from:'#343744', to:'#C8A96A', difficulty:'Advanced', duration:'8h', lessons:34},
@@ -13702,7 +13696,6 @@ function markLessonComplete(academyId, lessonId, stats){
   renderNotifications();
   renderUpcomingLesson();
   renderContinueLearning();
-  // renderDailyGrid(); // removed — tools integrated into lessons, not scattered on home
   renderReviewStrip();
   renderDashboardIntel();
   const completedTitle = (reviewLesson && reviewLesson.title) ? reviewLesson.title : 'this lesson';
@@ -17241,7 +17234,7 @@ function renderReading(){
   el.dataset.rendered = '1';
   el.innerHTML = `
     <div class="page-head">
-      <span class="eyebrow"><span class="arabic" style="font-size:.95em;">ركن القراوة</span>، Reading Corner</span>
+      <span class="eyebrow"><span class="arabic" style="font-size:.95em;">ركن القراءة</span>، Reading Corner</span>
       <h1><span class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">مقالات قصيرة، مصممة لتطور حقيقي.</span>Short articles, built for real growth.</h1>
       <p><span class="arabic" style="display:block; margin-bottom:4px;">كل مقال يتضمن مفردات وملاحظة قواعدية واختبار. موقّت لتتبع سرعة قراوتك.</span>Every article includes vocabulary, a grammar note, and a quiz. Timed, so you can track your reading speed.</p>
     </div>
@@ -17660,7 +17653,7 @@ const SKILL_SCORES = [
   {en:'Speaking', ar:'المحادثة', academyId:'speaking-studio'},
   {en:'Pronunciation', ar:'النطق', academyId:'american-accent-lab'},
   {en:'Listening', ar:'الاستماع', academyId:'listening-lounge'},
-  {en:'Reading', ar:'القراوة', academyId:'reading-corner'},
+  {en:'Reading', ar:'القراءة', academyId:'reading-corner'},
   {en:'Writing', ar:'الكتابة', academyId:'writing-workshop'},
 ];
 
@@ -17750,7 +17743,6 @@ async function renderControlCenter(){
   try{ const { data } = await c.rpc('student_effective_state'); st = data; }catch(e){}
   if(!st || st.ok === false || !st.stage){ host.innerHTML = ''; return; }
   window.PEL_EFFECTIVE_STATE = st;
-  try{ if(typeof renderDailyGrid === 'function' && document.getElementById('dailyExperienceGrid')) renderDailyGrid(); }catch(e){}
   try{ syncFeatureGates(); }catch(e){}
   try{ if(document.getElementById('continueLearningBody')) renderContinueLearning(); }catch(e){}
   /* New student: pull them straight into lesson one of their chosen path. */

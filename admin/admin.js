@@ -194,7 +194,6 @@ var I = {
   'addStudent':{en:'Add student', ar:'اضافة طالب'},
   'createStudent':{en:'Create student', ar:'انشاء طالب'},
   'createStudentDesc':{en:'Create an account the student can sign in with. Set their name, email, and a password (min 8 chars).', ar:'انشئ حساب يقدر الطالب يدخل فيه. حدد اسمه، ايميله، وكلمة مرور (٨ احرف على الاقل).'},
-  'studentName':{en:'Full name', ar:'الاسم الكامل'},
   'studentEmail':{en:'Email', ar:'البريد الالكتروني'},
   'studentPassword':{en:'Password', ar:'كلمة المرور'},
   'pwMinLen':{en:'At least 8 characters', ar:'٨ احرف على الاقل'},
@@ -308,7 +307,7 @@ var I = {
   'report_atrisk':{en:'At-risk students', ar:'الطلاب المعرضون للخطر'},
   'atRisk':{en:'At risk', ar:'معرض للخطر'},
   'openGroup':{en:'Open group', ar:'فتح المجموعة'},
-  'studentName':{en:'Student', ar:'الطالب'},
+  'studentCol':{en:'Student', ar:'الطالب'},
   'activePrograms':{en:'Active programs', ar:'البرامج النشطة'},
   'totalSubscriptions':{en:'Subscriptions', ar:'الاشتراكات'},
   'weeks':{en:'%d w', ar:'%d اسابيع'},
@@ -867,6 +866,8 @@ function openCreateStudent(){
     var btn = $('csSave'); btn.disabled = true;
     var r = await rpc('admin_create_student', { p_email: email, p_password: pass, p_full_name: name });
     if(!r.ok){ btn.disabled = false; toast((r.error && r.error.message) || t('permissionDenied'), true); return; }
+    // Audit trail: log the student creation action
+    try{ await audit('student.create', 'user', (r.data && r.data.user_id) || '', { email: email, full_name: name }); }catch(e){}
     closeModal(s); toast(t('studentCreated'));
     // refresh the student list so the new row appears
     students();
@@ -1070,7 +1071,7 @@ var tabs = [
           (b.plan_duration_months?chip(esc(b.plan_duration_months+' '+(lang==='ar'?'اشهر':'mo')),''):'') +
           chip(esc((b.live_class_credits||0)+' '+(lang==='ar'?'رصيد حصص':'class credits')),'green') +
         '</div>' +
-        (hasPerm('students.write') ?
+        (hasPerm('students.manage') ?
         '<div class="reason-list" style="margin-bottom:10px;">' +
           '<div class="reason-item" style="flex-wrap:wrap;gap:8px;align-items:center;">' +
             '<div style="font-weight:700;min-width:110px;">'+esc(lang==='ar'?'تعديل الرصيد':'Adjust credits')+'</div>' +
@@ -1230,7 +1231,7 @@ function renderTabProfile(p, d){
   }).join('');
 
   var editable = '';
-  if(hasPerm('students.write')){
+  if(hasPerm('students.manage')){
     editable = '<div class="card" style="margin-top:18px;"><h3>' + esc(t('edit')) + '</h3><div class="form-grid" style="margin-top:12px;">' +
       '<div class="field"><label>' + esc(t('phone')) + '</label><input class="input" id="prPhone" value="' + esc(p.phone || '') + '"></div>' +
       '<div class="field"><label>' + esc(t('whatsapp')) + '</label><input class="input" id="prWhatsapp" value="' + esc(p.whatsapp || '') + '"></div>' +
@@ -1316,7 +1317,7 @@ function renderTabLearning(plan, st, kv, d){
     }catch(e){}
   }
 
-  var snapshotBtn = hasPerm('students.write') ? '<button class="btn btn-outline btn-sm" id="snapBtn">' + esc(t('takeSnapshot')) + '</button>' : '';
+  var snapshotBtn = hasPerm('students.manage') ? '<button class="btn btn-outline btn-sm" id="snapBtn">' + esc(t('takeSnapshot')) + '</button>' : '';
   var snapshots = (d.snapshots || []).slice(0, 8).map(function(s){
     var scores = s.skill_scores || {};
     var parts = Object.keys(scores).slice(0,4).map(function(k){ return esc(k) + ' ' + arNum(scores[k]); }).join(' · ');
@@ -1563,7 +1564,7 @@ function renderTabNotes(d){
   }).join('') || '<div class="sub">' + esc(t('noNotes')) + '</div>';
 
   var form = '';
-  if(hasPerm('students.write')){
+  if(hasPerm('students.manage')){
     form = '<div class="card" style="margin-top:16px;"><h3>' + esc(t('addNote')) + '</h3>' +
       '<div class="field" style="margin-top:10px;"><textarea class="input" id="noteBody" rows="3" placeholder="' + esc(t('noteBody')) + '"></textarea></div>' +
       '<div class="btn-row" style="margin-top:12px;"><button class="btn btn-gold btn-sm" id="noteSave">' + esc(t('addNote')) + '</button></div></div>';
