@@ -71,48 +71,71 @@ padding, conversation line width, and font sizes.
 
 ### NEXT: Live-test pronunciation hints + teaching flow (commit pending)
 
-#### Bug G: Fake dialogue from standalone sentences — FIXED (commit `85f1352`)
-#### Bug H: Substring matching false positives — FIXED (commit `85f1352`)
+#### Bug G: Fake dialogue — FIXED (commit `85f1352`)
+#### Bug H: Substring matching — FIXED (commit `85f1352`)
+#### Feature I: Pronunciation hints v1 — ADDED (commit `7d17bb8`)
+#### Feature J: Teach-before-practice — ADDED (commit `7d17bb8`)
+#### Feature K: Challenge/review taught items only — ADDED (commit `7d17bb8`)
 
-#### Feature I: Pronunciation hints for Arabic speakers — ADDED (this commit)
-Arabic students break English words into wrong syllables based on the Arabic
-translit (e.g., "tired" → "ty-rid"). Added a PRON_HINTS map with 22 common
-trap words showing:
-- Number of syllables/beats
-- How to say it correctly (Arabic)
-- What NOT to say (the common mistake)
-Shown inside existing `learn` and `pronunciation` activities as a small
-"نصيحة النطق" (Pronunciation tip) box. Not a separate module — only appears
-for words with a known trap. Words covered: tired, the, this, that, these,
-those, thought, through, would, should, could, water, better, father, mother,
-brother, daughter, important, comfortable, every, different, interesting,
-restaurant.
+#### Feature I-v2: Expanded pronunciation hints (this commit)
+- Expanded from 22 to ~50 trap words covering: TH sounds, P vs B, V vs F,
+  consonant clusters (sp/st/sk/sm/str), CH sound, diphthongs, R/L clusters,
+  silent letters (kn/wr/wh/h), multi-syllable traps.
+- Fixed `those`: now uses ذوز (voiced TH) not دوز (D).
+- Added pattern-based fallbacks for words not in exact map:
+  - STR cluster, generic s+stop clusters, ph→F, silent kn, silent wr, -tion→شن
+  - STR pattern placed before generic s+stop for better matching.
+- pronunciationHint() now accepts item objects (supports future DB fields:
+  pron_hint_ar, avoid_ar, beats) — DB-authored hints override hardcoded map.
+- Callers pass `it` (object) not `it.en` (string) so DB fields work.
 
-#### Feature J: Teach-before-practice invariant — ADDED (this commit)
-Every concept is now taught with examples before any practice:
-1. Concept card (the rule)
-2. Concept examples (real sentences showing the pattern) — NEW activity
-3. Learn word + meaning
-4. Learn word in sentence
-5. THEN testing begins
+#### Feature J-v2: Improved teaching flow (this commit)
+- concept_examples pool expanded: now includes DB sentence items + vocab
+  examples + DB exercise target sentences (order/translate answers).
+- concept_examples dead-click fixed: last example advances immediately.
+- match activity now uses taughtItems only (was using ALL items).
+- `pronunciationHint` exported from factory for testing.
 
-`concept_examples` renderer shows 2-3 example sentences with progressive
-reveal (English + audio → Arabic meaning).
-
-#### Feature K: Challenge/review only test taught items — ADDED (this commit)
-`taughtItems` tracks what was actually taught in learn/learn_sentence.
-`challenge` and `review` now only use taught items — previously tested ALL
-items including ones the student never saw.
+#### Regression tests added (tests/test_teaching_flow.js)
+31 checks covering:
+- pronunciationHint: tired, three, those (ذوز not دوز), DB field override,
+  pattern fallbacks (school, photo, know), no false positives (cat)
+- Teaching flow: concept_examples before practice, learn before practice,
+  match uses taught items, fake dialogue filtered, vocab-only skips
+  production activities, challenge/review use taught items
 
 ### Verification status (updated)
 - ✅ `node --check` — syntax OK
 - ✅ `node tests/test_buildsequence_iam.js` — 13/13 PASS
-- ✅ concept_examples activity appears in sequence (position 2)
-- ✅ learn_sentence for both main items (positions 4, 6)
-- ✅ challenge uses taughtItems (not all items)
+- ✅ `node tests/test_teaching_flow.js` — 31/31 PASS
+- ✅ Cache buster — `?v=fbf858e5`
 - ❌ NOT YET LIVE-TESTED: pronunciation hints rendering
 - ❌ NOT YET LIVE-TESTED: concept_examples activity
-- ❌ NOT YET LIVE-TESTED: taughtItems filtering in challenge/review
+- ❌ NOT YET LIVE-TESTED: match using taughtItems
+
+### Teaching flow (final)
+1. concept (rule)
+2. concept_examples (real sentences from unified pool)
+3. learn (word + meaning + pronunciation hint)
+4. learn_sentence (word in context)
+5. recognize (MC quiz — taught items only)
+6. match (taught items only)
+7. arrange_words / db_order
+8. fill_blank
+9. spell / db_spell
+10. translate / db_translate
+11. listen + identify_heard
+12. listening_dictation
+13. pronunciation (+ pronunciation hint)
+14. speaking
+15. conversation_response (real dialogues only)
+16. complete_dialogue (real dialogues only)
+17. grammar_correction / db_correct
+18. choose_natural_expression
+19. guided_production
+20. free_response
+21. review (taught items only)
+22. challenge (taught items only)
 
 ## ✅ DONE: v1 stage position persistence (commits `cdcacbb`, `9bee3ee`)
 
