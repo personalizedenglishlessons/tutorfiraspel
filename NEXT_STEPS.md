@@ -1,6 +1,6 @@
 # NEXT STEPS — pick up here
 
-## ✅ DONE: v2 session persistence blockers 1-4 fixed (commit pending)
+## ✅ DONE: v2 session persistence blockers 1-4 fixed (commit `268711e`)
 
 ### Blocker 1: Unstable answer keys — FIXED
 Added stable `data-choice-key` attributes to ALL 9 multiple-choice renderers:
@@ -68,6 +68,44 @@ padding, conversation line width, and font sizes.
 7. Verify saved: `JSON.parse(localStorage.getItem('pel_stage_pos'))?.acts?.['3']?.correctOpts`
 8. Reload — verify selection + correct highlight restored
 9. In Arabic mode: verify no HTML leaks in input placeholders
+
+### NEXT: Live-test the teaching flow fixes (commit pending)
+
+#### Bug D: Activities don't teach before testing — FIXED
+The `learn_sentence` activity was only added when `it.sentences[1]` existed.
+DB lessons often have vocab items with 0-1 sentences, so the student never saw
+the word in context before being tested. Now falls back to `sentences[0]` when
+it's a real multi-word sentence. Sequence now shows: concept → learn word →
+learn word in sentence → THEN test.
+
+#### Bug E: Vocab items missing sentence context from DB — FIXED
+DB lessons store example sentences as separate `kind: 'sentence'` items (mapped
+to conversation by dbToLesson), not attached to vocab items. This left vocab
+items with one-word "sentences". Now `buildSequence` matches vocab items with
+conversation sentences that contain the vocab word.
+
+#### Bug F: Nonsensical activities generated for thin lessons — FIXED
+- `fill_blank`: Now skipped if sentence < 3 words or target word not in sentence
+  (was `Math.max(0, -1)` silently blanking the first word)
+- `arrange_words`: Now skipped if sentence < 3 words (arranging 1 word is
+  meaningless)
+- `speaking`: Now skipped if sentence < 2 words
+- `guided_production`: Now skipped if sentence < 3 words
+
+### DB DATA ISSUE (not code — needs content fix)
+The `this-that-these-those` lesson has vocab items with descriptive Arabic
+meanings (e.g. "these" → "هذولي للقريب الجمع") instead of simple translations.
+This is a DB content issue, not a code bug. Consider updating lesson_items
+in Supabase to use simpler Arabic: "these" → "هذي" or "هولاء".
+
+### Verification status (updated)
+- ✅ `node --check` — syntax OK
+- ✅ `node tests/test_buildsequence_iam.js` — 13/13 PASS
+- ✅ Cache buster — `?v=1c5b96ec`
+- ✅ learn_sentence now shown for both main items (was 1, now 2)
+- ❌ NOT YET LIVE-TESTED: teaching flow (concept → learn → learn_sentence → test)
+- ❌ NOT YET LIVE-TESTED: conversation-matching (these/those lesson)
+- ❌ NOT YET LIVE-TESTED: activity guards (fill_blank/arrange_words skipped for thin lessons)
 
 ## ✅ DONE: v1 stage position persistence (commits `cdcacbb`, `9bee3ee`)
 
