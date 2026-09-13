@@ -1,5 +1,57 @@
 # NEXT STEPS — pick up here
 
+## ✅ DONE: Comprehensive audit fixes (commit f8ffd81)
+
+### Critical bugs fixed
+1. **Duplicate `studentName` i18n key** — was defined 3x in admin.js, last def
+   won (showed "Student" instead of "Full name" on create-student form).
+   Renamed reports key to `studentCol`, removed duplicate.
+2. **Missing audit trail** in `openCreateStudent()` — added `audit()` call after
+   successful RPC, restoring accountability lost during merge.
+3. **Permission inconsistency** — standardized all student mutations to
+   `students.manage` (was split across `students.manage` + `students.write`).
+
+### Dead code removed
+- `createStudentModal()` (already removed in prior commit)
+- `renderStatStories()` call + function (already removed in prior commit)
+- 3 dead `setRing()` calls for removed progress rings (already done)
+- `quickActions` and `qaGrid` empty stubs
+- `renderDailyGrid()` empty function + all callers (including 3 commented-out)
+- `dailyGrid` null constant
+- Duplicate `studentName` i18n definition
+
+### Minor fixes
+- Arabic typo: `القراوة` → `القراءة` (Reading Corner) in 4 locations
+- Auto-advance timer now clears on `Stage.close()` (prevents detached DOM fire)
+- Credit refresh `setInterval` skips when tab hidden (`document.hidden`)
+- CSS hover states added for `pel-tool-link` buttons
+
+### Feature branches merged
+- `feat/admin-create-student` (commit 28d2692) — admin can create student accounts
+- `fix/lesson-engine-phase1` (commit a7429e5) — CEFR Duolingo-style nesting,
+  speech scoring, study tools in lessons
+- `fix/client-academy-resolver` — already contained in main (0 commits ahead)
+- `fix/server-plan-profile` — already contained in main (0 commits ahead)
+
+### Arabic translations completed (commit 974ead7)
+- 30 choose exercises + 126 order exercises now have Arabic translations
+- All 1,255 lesson_exercises have Arabic translations (0 missing)
+
+### Audit items NOT yet fixed (lower priority)
+- `liveClasses` view relies on MutationObserver instead of viewRenderer (works
+  but fragile — brief blank flash on navigation)
+- `comingSoonCopy` entries for views that now have renderers (dead code, harmless)
+- 120 empty catch blocks across codebase (would need individual review)
+- Fire-and-forget SRS upserts with no error visibility
+- Duplicate `student_live_class_overview` RPC calls (refreshCredits + loadOverview)
+- 7 `console.error` statements in production code
+- Hardcoded Supabase URL/anon key in 5 locations (centralize to single config)
+- `data-goto` vs `data-goto-view` naming inconsistency in curriculum_path.js
+- 10,858 lines with hamza characters (large cleanup, Saudi dialect preference)
+- 24 em dashes in code comments (not user-facing, harmless)
+
+---
+
 ## ✅ DONE: Home page consolidation + lesson tool integration (commits dc329c6, 76e8007, 035e135)
 
 ### Duplicate CTA fix (commit dc329c6)
