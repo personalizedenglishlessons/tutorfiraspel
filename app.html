@@ -22,7 +22,7 @@
 <script src="lib/pel-settings.js?v=efc52be5" defer></script>
 <script src="lib/cert-qr.js?v=a43f19f9" defer></script>
 <script src="lib/cert-sheet.js?v=5df6f54c" defer></script>
-<script src="lib/pel_lesson_stage.js?v=53060093"></script>
+<script src="lib/pel_lesson_stage.js?v=1c4283bf"></script>
 <script src="lib/pel_dashboard_life.js?v=ed676701"></script>
 <script src="lib/pel_curriculum_path.js?v=b97575ec"></script>
 <style>
@@ -1797,7 +1797,7 @@ async function revealApp(user){
   // Mirror the spaced-repetition schedule from/to pel_srs_state (cross-device
   // continuity). Fire-and-forget: local-first play works even if this fails.
   try{ if(window.PEL_STAGE_API && typeof window.PEL_STAGE_API.srsSync === 'function'){
-    window.PEL_STAGE_API.srsSync();
+    window.PEL_STAGE_API.srsSync().catch(function(e){ console.warn('[PEL] SRS sync failed:', e.message||e); });
   } }catch(e){}
   await loadSubPlan();
   await hydrateServerPlan(user);
@@ -2468,12 +2468,7 @@ const navGroups = [
     {id:'settings', en:'Settings', ar:'الاعدادات', icon:'settings'},
   ]},
 ];
-const comingSoonCopy = {
-  achievements:{title:'Achievements', ar:'الانجازات', desc:'Streaks, milestones and mastery badges, designed to feel earned, not gamified.'},
-  certificates:{title:'Certificates', ar:'الشهادات', desc:'Beautiful certificates of completion for every academy you finish.'},
-  calendar:{title:'Study Calendar', ar:'تقويم الدراسة', desc:'Your full study history, laid out month by month.'},
-  profile:{title:'Profile', ar:'الملف الشخصي', desc:'Your goals, strengths, weak areas and full learning roadmap.'},
-};
+const comingSoonCopy = {}; // all views now have renderers; kept as fallback for future views
 const viewRenderers = {};
 // pel_curriculum_path.js runs in the global scope before this IIFE, so
 // it cannot reach this local viewRenderers. Register its render function
@@ -20044,6 +20039,12 @@ if(window.lucide) lucide.createIcons();
     ensureShell();
     pelGlobalWelcome();
     const target=document.getElementById('view-liveClasses'); if(!target) return;
+    // Register as a proper viewRenderer so goToView calls it directly
+    // (instead of relying on MutationObserver which causes a blank flash)
+    if(typeof viewRenderers !== 'undefined'){
+      viewRenderers['liveClasses'] = function(){ loadOverview().then(render); };
+    }
+    // Keep MutationObserver as fallback for edge cases
     const mo=new MutationObserver(()=>{ if(target.classList.contains('active')){ loadOverview().then(render); } });
     mo.observe(target, {attributes:true, attributeFilter:['class']});
     if(target.classList.contains('active')) loadOverview().then(render);
