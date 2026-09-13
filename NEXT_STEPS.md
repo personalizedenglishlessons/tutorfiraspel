@@ -1,5 +1,74 @@
 # NEXT STEPS — pick up here
 
+## ✅ DONE: v2 session persistence blockers 1-4 fixed (commit pending)
+
+### Blocker 1: Unstable answer keys — FIXED
+Added stable `data-choice-key` attributes to ALL 9 multiple-choice renderers:
+recognize, identify_heard, challenge, fill_blank, conversation_response,
+complete_dialogue, choose_natural_expression, guided_production, db_correct.
+Vocab-object renderers key on `o.en`; string renderers key on the string itself.
+`captureActivityDOM()` and `restoreActivityDOM()` now use a `choiceKey()` helper
+that prefers `data-choice-key` then text content — never `data-i` (unstable index).
+
+### Blocker 2: Ledger merging — FIXED
+`saveStageSession()` now loads the existing saved session and merges into the
+existing `acts` map instead of rebuilding from scratch. Stale DOM-state keys
+(selected, typed, correctOpts, wrongOpts, checked, correct, etc.) are cleaned
+for the current activity before merging, so a re-render (Try again) doesn't
+leave ghost highlights. Previous activities' state is preserved.
+
+### Blocker 3: Closure state not updated on restore — FIXED
+All 9 check handlers now read `sel` from the DOM at check time instead of
+relying on closure variables. Index-based renderers use
+`[...btns].indexOf(selectedBtn)`; text-based renderers use `textContent.trim()`;
+db_correct uses `dataset.ok`. `restoreActivityDOM()` now enables the Check
+button when selections/typed text are restored (pre-check state) and dispatches
+an `input` event for typed-input renderers so their validation fires.
+
+### Blocker 4: correctOpts not captured — FIXED (consequence of Blockers 1+2)
+The merge in `saveStageSession()` preserves `correctOpts` captured by `mark()`'s
+synchronous save, even when the throttled 500ms save fires after a re-render.
+Stable `data-choice-key` ensures restore matches the correct option across shuffles.
+
+### BONUS BUG FIXES (same commit)
+
+#### Bug A: L() breaks HTML attributes in Arabic mode — CRITICAL FIX
+`L()` returns `<span class="arabic">...</span>` in Arabic mode. When used inside
+HTML attributes (placeholder, data-ph), the `"` in `class="arabic"` closes the
+attribute, leaking raw HTML into the page. This broke spell, translate,
+grammar_correction, listening_dictation, free_response, db_spell, db_translate
+inputs, and arrange_words/db_order drop zones. Added `Lt()` text-only helper
+and replaced all 9 attribute usages.
+
+#### Bug B: fill_blank shows no sentence context — FIXED
+When `fbItem.sentences` is empty, the fallback was `{en: fbItem.en}` (just the
+word). Now falls back to `fbItem.example` first. Renderer also falls back to
+`it.example.en` if the sentence has no `.en`.
+
+#### Bug C: iPad/tablet responsive — IMPROVED
+Added `@media(max-width:900px)` breakpoint for tablet sizes with adjusted
+padding, conversation line width, and font sizes.
+
+### Verification status
+- ✅ `node --check lib/pel_lesson_stage.js` — syntax OK
+- ✅ `node tests/test_buildsequence_iam.js` — 13/13 PASS
+- ✅ Cache buster run — `app.html` updated to `?v=4d175721`
+- ❌ NOT YET LIVE-TESTED: selection restore after reload (needs browser test)
+- ❌ NOT YET LIVE-TESTED: correctOpts restore after reload
+- ❌ NOT YET LIVE-TESTED: Arabic mode L() fix (needs browser test in Arabic)
+- ❌ NOT YET LIVE-TESTED: iPad/tablet responsive
+
+### Clean test procedure (MUST follow before testing v2 restore)
+1. `export SUPABASE_PAT=sbp_... && python3 tools/sql.py "DELETE FROM student_data WHERE key='pel_stage_pos' AND user_id='1d68ead7-7ef4-407a-9138-a171fa693272'"`
+2. Load `app.html?clean=<timestamp>` in browser
+3. `localStorage.removeItem('pel_stage_pos')` in console
+4. Log in (testmail1@gmail.com / namas123), open lesson, advance to recognize
+5. Verify: `Stage.state.checked === false`, button says "Check", feedback empty
+6. Select correct option, click Check
+7. Verify saved: `JSON.parse(localStorage.getItem('pel_stage_pos'))?.acts?.['3']?.correctOpts`
+8. Reload — verify selection + correct highlight restored
+9. In Arabic mode: verify no HTML leaks in input placeholders
+
 ## ✅ DONE: v1 stage position persistence (commits `cdcacbb`, `9bee3ee`)
 
 Saves `{a:academyId, l:lessonId, i:idx, ts}` to localStorage + Supabase `student_data`.
