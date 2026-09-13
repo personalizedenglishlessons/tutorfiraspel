@@ -9243,13 +9243,19 @@ document.getElementById('qtBtn').addEventListener('click', async () => {
       resultEl.innerHTML = `${escapeHtml(translated)}<div class="arabic" style="margin-top:4px; font-size:.85em; color:var(--text-muted);">${escapeHtml(translit)}</div>${extra}`;
     }
   }catch(e){
-    // offline fallback: local phrase bank + transliteration only, no translation
+    // offline / CORS-blocked fallback (common on iOS Safari + some mobile
+    // networks): never show a dead "connection not reachable" state.
+    // Try the local phrase bank first; otherwise show the Arabic-letter
+    // transliteration as a best-effort result with a clear note.
     const found = phraseBank[raw.toLowerCase()];
-    const translit = isArabicInput ? '' : transliterateText(raw);
     if(found){
-      resultEl.innerHTML = `${escapeHtml(found.ar)}<div class="arabic" style="margin-top:4px; font-size:.85em; color:var(--text-muted);">${escapeHtml(translit)}</div>`;
+      resultEl.innerHTML = `${escapeHtml(found.ar)}<div class="arabic" style="margin-top:4px; font-size:.85em; color:var(--text-muted);">${escapeHtml(transliterateText(raw))}</div>`;
     }else{
-      resultEl.innerHTML = `<div class="arabic" style="font-size:.82em; color:var(--text-muted);">تعذر الوصول لخدمة الترجمة الان${!isArabicInput ? '، بس هذا تقريب للنطق بالعربي' : ''}:</div>${!isArabicInput ? `<div class="arabic" style="margin-top:4px;">${escapeHtml(translit)}</div>` : ''}`;
+      const translit = transliterateText(raw);
+      const note = isArabicInput
+        ? 'تعذر الاتصال بخدمة الترجمة، هذا تقريب للنطق بالعربي:'
+        : 'تعذر الاتصال بخدمة الترجمة، هذا النطق بالعربي:';
+      resultEl.innerHTML = `<div class="arabic" style="font-size:.82em; color:var(--text-muted);">${escapeHtml(note)}</div><div class="arabic" style="margin-top:4px; font-size:1.05em;">${escapeHtml(translit)}</div>`;
     }
   }
 });
@@ -13448,13 +13454,18 @@ function renderDbPractice(container, exercises){
   if(!container) return;
   const norm = s => String(s || '').toLowerCase().replace(/[’']/g, "'").replace(/[^a-z0-9'\u0600-\u06FF ]/g, '').replace(/\s+/g, ' ').trim();
   container.innerHTML = exercises.map((x, xi) => {
-    const head = (label, bodyHtml) => `
+    const head = (label, bodyHtml, sayText) => `
       <div class="dbx-card" data-xi="${xi}" style="background:var(--card-elevated); border:1px solid var(--border); border-radius:14px; padding:18px;">
         <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:10px;">
           <span class="chip gold">${label}</span>
           <span class="dbx-result" style="font-size:.78rem; min-width:20px;"></span>
         </div>
         ${bodyHtml}
+        ${sayText ? `<div class="dbx-say" style="margin-top:12px; padding-top:12px; border-top:1px dashed var(--border); display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+          <button class="mic-record-btn dbx-say-btn" data-say="${escapeHtml(sayText)}" title="Say it" type="button"><i data-lucide="mic" width="18" height="18"></i></button>
+          <span class="arabic" style="font-size:.78rem; color:var(--text-muted);">انطقها</span>
+          <span class="dbx-say-fb" style="font-size:.78rem; color:var(--gold-soft); flex:1; min-width:120px;"></span>
+        </div>` : ''}
       </div>`;
     if(x.type === 'order'){
       const p = x.payload || {};
@@ -13472,7 +13483,7 @@ function renderDbPractice(container, exercises){
         <div class="dbx-tokens" style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px;">
           ${tokensShuffled.map(t => `<button class="quiz-option dbx-token" style="padding:5px 11px;">${esc(t||'')}</button>`).join('')}
         </div>
-        <button class="btn-outline dbx-check"><span class="arabic">تحقق</span>، Check</button>`);
+        <button class="btn-outline dbx-check"><span class="arabic">تحقق</span>، Check</button>`, x.payload.answer);
     }
     if(x.type === 'spell'){
       const p = x.payload || {};
@@ -13483,7 +13494,7 @@ function renderDbPractice(container, exercises){
         <div class="dbx-tokens" style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px;">
           ${(p.options||[]).map(t => `<button class="quiz-option dbx-token" style="padding:5px 11px;">${esc(t)}</button>`).join('')}
         </div>
-        <button class="btn-outline dbx-check"><span class="arabic">تحقق</span>، Check</button>`);
+        <button class="btn-outline dbx-check"><span class="arabic">تحقق</span>، Check</button>`, x.payload.answer);
     }
     if(x.type === 'correct'){
       const p = x.payload || {};
@@ -13495,7 +13506,7 @@ function renderDbPractice(container, exercises){
           <div><button class="quiz-option dbx-pick" data-ok="wrong" style="text-align:left;">${esc(wrong)}</button><div class="arabic" style="font-size:.78rem;color:var(--gold-soft);margin-top:2px;">${esc(p.wrong_tr || translitEn(wrong))}</div></div>
           <div><button class="quiz-option dbx-pick" data-ok="right" style="text-align:left;">${esc(right)}</button><div class="arabic" style="font-size:.78rem;color:var(--gold-soft);margin-top:2px;">${esc(p.right_tr || translitEn(right))}</div></div>
         </div>
-        <div class="dbx-why" style="display:none; font-size:.8rem; color:var(--emerald);"></div>`);
+        <div class="dbx-why" style="display:none; font-size:.8rem; color:var(--emerald);"></div>`, p.right);
     }
     if(x.type === 'translate'){
       const p = x.payload || {};
@@ -13504,7 +13515,7 @@ function renderDbPractice(container, exercises){
         <div style="font-size:.98rem; margin-bottom:10px;" class="${srcIsEn ? '' : 'arabic'}">${esc(p.source||'')}<div class="${srcIsEn ? 'arabic' : ''}" style="font-size:.82rem; color:var(--gold-soft); margin-top:4px;">${srcIsEn ? esc(p.source_tr || '') : ''}</div></div>
         <input class="dbx-input" type="text" placeholder="${srcIsEn ? 'اكتب بالعربي...' : 'Type in English...'}" style="width:100%; background:var(--card); border:1px solid var(--border); border-radius:10px; padding:10px 12px; color:var(--text); font-size:.92rem; margin-bottom:10px;">
         <button class="btn-outline dbx-check"><span class="arabic">تحقق</span>، Check</button>
-        <div class="dbx-reveal" style="display:none; font-size:.82rem; color:var(--gold-soft); margin-top:8px;"></div>`);
+        <div class="dbx-reveal" style="display:none; font-size:.82rem; color:var(--gold-soft); margin-top:8px;"></div>`, p.source);
     }
     return '';
   }).join('');
@@ -13518,6 +13529,22 @@ function renderDbPractice(container, exercises){
       resultEl.textContent = ok ? '✓' : '✗';
       resultEl.style.color = ok ? 'var(--success)' : '#D25C5C';
       if(ok && window.confettiBurst) confettiBurst();
+    }
+    // Optional "say it" mic button on every exercise card (speech scoring in every stage).
+    const sayBtn = card.querySelector('.dbx-say-btn');
+    if(sayBtn){
+      sayBtn.addEventListener('click', function(){
+        if(this.classList.contains('recording')) return;
+        const fb = card.querySelector('.dbx-say-fb'); if(!fb) return;
+        fb.innerHTML = '<span class="arabic">جاري الاستماع...</span> Listening...';
+        const tgt = this.dataset.say || '';
+        recordAndScore((heard, score, err) => {
+          if(heard === null){ fb.innerHTML = '<span class="arabic">' + (micErrorMessage(err)||'') + '</span>'; return; }
+          const pf = (typeof pronFeedback === 'function') ? pronFeedback(heard, tgt) : null;
+          const tip = (pf && pf.tipAr) ? ' <span class="arabic" style="color:var(--gold);">💡 '+pf.tipAr+'</span>' : '';
+          fb.innerHTML = '🗣️ <span class="arabic">سمعت</span> "' + escapeHtml(heard) + '" (' + score + '%)' + tip;
+        }, tgt, this);
+      });
     }
     card.querySelectorAll('.dbx-token').forEach(tok => tok.addEventListener('click', () => {
       if(answerEl.dataset.done === '1') return;
@@ -16076,8 +16103,47 @@ const CEFR_PATH_STYLE = `
 .cefr-lesson-en{font-weight:500;}
 .cefr-lesson-ar{font-size:.74rem;color:var(--text-muted);}
 .cefr-empty{font-size:.8rem;color:var(--text-muted);font-style:italic;padding:6px 0;}
+.cefr-skill-path{display:flex;flex-direction:column;gap:0;position:relative;}
+.cefr-skill{display:flex;gap:12px;align-items:flex-start;padding:7px 0;position:relative;}
+.cefr-skill+.cefr-skill::before{content:"";position:absolute;left:16px;top:-7px;height:14px;width:2px;background:var(--border);}
+.cefr-skill-node{flex-shrink:0;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(200,169,106,.16);color:var(--gold);border:1px solid rgba(200,169,106,.35);cursor:pointer;transition:transform .15s,background .2s;}
+.cefr-skill-node:hover:not(:disabled){transform:scale(1.06);background:rgba(200,169,106,.28);}
+.cefr-skill-node:disabled{cursor:not-allowed;opacity:.5;}
+.cefr-skill.complete .cefr-skill-node{background:rgba(76,175,80,.18);color:#4caf50;border-color:rgba(76,175,80,.4);}
+.cefr-skill.locked .cefr-skill-node{background:var(--card-elevated);color:var(--text-muted);border-color:var(--border);}
+.cefr-skill-body{flex:1;min-width:0;padding-top:3px;}
+.cefr-skill-title{font-size:.84rem;font-weight:600;line-height:1.2;margin-bottom:6px;}
+.cefr-skill-chips{display:flex;flex-wrap:wrap;gap:6px;}
+.cefr-chip{display:inline-flex;align-items:center;gap:5px;background:var(--card-elevated);border:1px solid var(--border);border-radius:8px;padding:5px 9px;cursor:pointer;font-size:.76rem;color:var(--text);transition:border-color .2s,background .2s;}
+.cefr-chip:hover:not(.locked){border-color:rgba(200,169,106,.5);}
+.cefr-chip.locked{opacity:.5;cursor:not-allowed;}
+.cefr-chip.done{border-color:rgba(76,175,80,.4);color:#4caf50;}
+.cefr-chip.done::before{content:"✓";font-weight:700;}
 @media(max-width:560px){.cefr-node{width:52px;height:52px;font-size:1.05rem;}.cefr-units{grid-template-columns:1fr;}}
 `;
+function academySkillGroups(list){
+  // Chunk a flat lesson list into Duolingo-style skills of 2 lessons each.
+  const groups=[];
+  for(let i=0;i<list.length;i+=2){ groups.push({ idx:groups.length, lessons:list.slice(i,i+2) }); }
+  return groups;
+}
+function skillTitle(sk){
+  const lead = sk.lessons && sk.lessons[0];
+  if(lead && lead.en){ const t=String(lead.en); return t.length>28 ? t.slice(0,27)+'…' : t; }
+  return 'Skill '+(sk.idx+1);
+}
+function skillStatus(ac, sk){
+  // Visual-only status derived from the existing linear lock + completion
+  // state. Never unlocks something academyLessonList already locked.
+  let allLocked=true, allDone=true;
+  for(const l of sk.lessons){
+    if(!l.locked) allLocked=false;
+    try{ if(!completedLessons.has(ac.id+'::'+l.id)) allDone=false; }catch(e){ allDone=false; }
+  }
+  if(allDone && sk.lessons.length) return 'complete';
+  if(allLocked) return 'locked';
+  return 'active';
+}
 function renderCefrPath(){
   const el = document.getElementById('view-cefr');
   if(!el) return;
@@ -16094,15 +16160,25 @@ function renderCefrPath(){
       const isArabicTrack = a.dir === 'ar';
       return learningAr ? isArabicTrack : !isArabicTrack;
     }).filter(a => academyCefr(a) === lvl.id);
-    const units = academies.map(ac => {
-      const list = academyLessonList(ac);
-      const lessonsHtml = list.slice(0, 8).map(l => `<button class="cefr-lesson ${l.locked?'locked':''}" data-academy="${ac.id}" data-lesson="${l.id}" ${l.locked?'disabled':''}><span><span class="cefr-lesson-en">${esc(l.en||l.id)}</span>${l.ar?`<span class="cefr-lesson-ar arabic"> · ${esc(l.ar)}</span>`:''}</span><i data-lucide="${l.locked?'lock':'play'}" width="13" height="13"></i></button>`).join('');
-      return `<div class="cefr-unit"><button class="cefr-unit-head" data-academy="${ac.id}"><span class="cefr-unit-icon"><i data-lucide="${ac.icon}" width="16" height="16"></i></span><span class="cefr-unit-title"><span>${esc(ac.en)}</span><span class="arabic" style="display:block;font-size:.82em;color:var(--text-muted);">${esc(ac.ar)}</span></span></button><div class="cefr-lessons">${lessonsHtml||`<div class=\"cefr-empty\">${L('Lessons coming soon.','دروس قريبا.')}</div>`}</div></div>`;
+        const units = academies.map((ac, uIdx) => {
+      const list = academyLessonList(ac).slice(0, 8);
+      const skills = academySkillGroups(list);
+      const skillsHtml = skills.map(sk => {
+        const status = skillStatus(ac, sk);
+        const firstOpen = sk.lessons.find(l => !l.locked) || sk.lessons[0];
+        const chipsHtml = sk.lessons.map(l => {
+          let done=false; try{ done=completedLessons.has(ac.id+'::'+l.id); }catch(e){}
+          return `<button class="cefr-chip ${l.locked?'locked':''} ${done?'done':''}" data-academy="${ac.id}" data-lesson="${l.id}" ${l.locked?'disabled':''}><span class="cefr-lesson-en">${esc(l.en||l.id)}</span></button>`;
+        }).join('');
+        return `<div class="cefr-skill ${status}"><button class="cefr-skill-node" data-academy="${ac.id}" data-lesson="${firstOpen?firstOpen.id:''}" ${status==='locked'?'disabled':''}><i data-lucide="${status==='complete'?'crown':status==='locked'?'lock':'play'}" width="15" height="15"></i></button><div class="cefr-skill-body"><div class="cefr-skill-title">${esc(skillTitle(sk))}</div><div class="cefr-skill-chips">${chipsHtml}</div></div></div>`;
+      }).join('');
+      return `<div class="cefr-unit"><button class="cefr-unit-head" data-academy="${ac.id}"><span class="cefr-unit-icon"><i data-lucide="${ac.icon}" width="16" height="16"></i></span><span class="cefr-unit-title"><span>${L('Unit','وحدة')} ${uIdx+1}: ${esc(ac.en)}</span><span class="arabic" style="display:block;font-size:.82em;color:var(--text-muted);">${esc(ac.ar)}</span></span></button><div class="cefr-skill-path">${skillsHtml||`<div class="cefr-empty">${L('Lessons coming soon.','دروس قريبا.')}</div>`}</div></div>`;
     }).join('');
     return `<div class="cefr-level"><div class="cefr-node" style="background:${lvl.color};">${lvl.id}</div><div class="cefr-level-body"><div class="cefr-level-title"><h3>${isAr?esc(lvl.ar):esc(lvl.en)}</h3><span class="lvl">${lvl.id}</span></div><p class="cefr-level-desc">${isAr?esc(lvl.descAr):esc(lvl.descEn)}</p><div class="cefr-units">${units||`<div class=\"cefr-empty\">${L('Content for this level is coming.','محتوى هذا المستوى قادم.')}</div>`}</div></div></div>`;
   }).join('');
-  el.innerHTML = `<div class="page-head"><span class="eyebrow"><span class="arabic" style="font-size:.95em;">المستويات</span>، CEFR Levels (A0–C2)</span><h1><span class="arabic" style="display:block;font-size:.62em;font-weight:400;color:var(--text-secondary);margin-bottom:4px;">مسار واحد واضح من الصفر الى الاتقان.</span>One clear path, Zero to Mastery.</h1><p><span class="arabic" style="display:block;margin-bottom:4px;">سبعة مستويات معترف بها عالميا، كل واحد يبني على اللي قبله.</span>Seven internationally recognized levels, each one building on the last.</p></div><div class="cefr-path">${levelsHtml}</div>`;
-  el.querySelectorAll('.cefr-lesson:not(.locked)').forEach(b => { b.onclick = () => { if(typeof openLesson==='function') openLesson(b.dataset.academy, b.dataset.lesson); }; });
+  el.innerHTML = `<div class="page-head"><span class="eyebrow"><span class="arabic" style="font-size:.95em;">المستويات</span>، CEFR Levels (A1–C2)</span><h1><span class="arabic" style="display:block;font-size:.62em;font-weight:400;color:var(--text-secondary);margin-bottom:4px;">مسار واحد واضح من المبتدئ الى الاتقان.</span>One clear path, Beginner to Mastery.</h1><p><span class="arabic" style="display:block;margin-bottom:4px;">ستة مستويات معترف بها عالميا، كل واحد يبني على اللي قبله.</span>Six internationally recognized levels, each one building on the last.</p></div><div class="cefr-path">${levelsHtml}</div>`;
+  el.querySelectorAll('.cefr-chip:not(.locked)').forEach(b => { b.onclick = () => { if(typeof openLesson==='function') openLesson(b.dataset.academy, b.dataset.lesson); }; });
+  el.querySelectorAll('.cefr-skill-node:not([disabled])').forEach(b => { b.onclick = () => { if(b.dataset.lesson && typeof openLesson==='function') openLesson(b.dataset.academy, b.dataset.lesson); }; });
   el.querySelectorAll('.cefr-unit-head').forEach(h => { h.onclick = () => { const ac=resolveAcademyById(h.dataset.academy); if(!ac) return; const first=(academyLessonList(ac)[0]||{}); if(first.id && typeof openLesson==='function') openLesson(h.dataset.academy, first.id); }; });
   if(window.lucide) lucide.createIcons();
 }
@@ -16274,6 +16350,22 @@ function renderLessonReader(container, academy, lesson){
     <div style="margin-top:8px; font-size:1.05rem; color:var(--gold-soft); display:flex; align-items:center; gap:8px;">${escapeHtml(lesson.title||'')}<button class="icon-btn speak-btn" data-speak="${escapeHtml(lesson.title||'')}" aria-label="Listen" style="width:30px;height:30px;flex-shrink:0;"><i data-lucide="volume-2" width="14" height="14"></i></button></div>
     <div class="arabic" style="margin-top:2px; font-size:.86rem; color:var(--text-muted);">${escapeHtml(lesson.dir === 'ar' ? (lesson.translit||'') : translitEn(lesson.title||''))}</div>
 
+    <div class="pel-dash-tools-wrap" style="margin-top:18px;">
+      <div class="eyebrow" style="margin:2px 2px 8px;"><span class="arabic">ادوات الدرس</span>، Lesson Tools</div>
+      <div class="pel-dash-strip">${[
+        {view:'pronunciation',icon:'mic',ar:'النطق',en:'Pronunciation',why:'تدرب على نطق كلمات الدرس'},
+        {view:'grammar',icon:'spell-check',ar:'القواعد',en:'Grammar',why:'افهم تركيب الجمل في الدرس'},
+        {view:'vocabulary',icon:'book-open',ar:'المفردات',en:'Vocabulary',why:'كل كلمات الدرس'},
+        {view:'review',icon:'rotate-ccw',ar:'المراجعة',en:'Review',why:'ثبت الكلمات اللي اخذتها'},
+        {view:'listening',icon:'headphones',ar:'الاستماع',en:'Listening',why:'اسمع وجاوب'},
+        {view:'reading',icon:'book-text',ar:'القرايه',en:'Reading',why:'اقرا وتدرب'},
+        {view:'writing',icon:'pen-line',ar:'الكتابة',en:'Writing',why:'اكتب جملة'},
+        {view:'speaking',icon:'messages-square',ar:'المحادثة',en:'Speaking',why:'تكلم بصوتك'},
+        {view:'bookmarks',icon:'bookmark',ar:'المفضلة',en:'Bookmarks',why:'دروسك المحفوظة'}
+      ].map(function(t){return '<button class="pel-dash-tool" data-lt-view="'+t.view+'"><span class="td-ico">'+svgIcon(t.icon,18)+'</span><span class="td-t">'+L(t.en,t.ar)+'</span><span class="td-s"><span class="arabic">'+t.why+'</span></span></button>';}).join('')}</div>
+      <p style="font-size:.74rem;color:var(--text-muted);margin:8px 2px 0;"><span class="arabic">استخدم كل اداة مع هذا الدرس</span>، Use any tool with this lesson.</p>
+    </div>
+
     <div class="lesson-section">
       <h3><span class="arabic">المفردات</span>، Vocabulary</h3>
       <p class="lesson-section-sub"><span class="arabic" style="display:block;">كل كلمة تتضمن معناها بالعربية الفصحى ونطقها.</span>Every word includes its Arabic (MSA) meaning and pronunciation.</p>
@@ -16393,6 +16485,11 @@ function renderLessonReader(container, academy, lesson){
   if(lesson.quiz && lesson.quiz.length) renderQuiz(document.getElementById('lessonQuizWrap'), lesson.quiz, 'lq');
   if(lesson.exercises && lesson.exercises.length) renderDbPractice(document.getElementById('wsPractice'), lesson.exercises);
   container.querySelectorAll('[data-speak]').forEach(btn => btn.addEventListener('click', () => speak(btn.dataset.speak)));
+  container.querySelectorAll('[data-lt-view]').forEach(btn => btn.addEventListener('click', () => {
+    window.__pelVocab = lesson.vocab || [];
+    window.__pelActiveLessonTool = { academyId: academy.id, lessonId: lesson.id, lessonTitle: lesson.title, academyEn: academy.en };
+    goToView(btn.dataset.ltView);
+  }));
   const goReviewBtn = container.querySelector('#goToReviewFromLesson');
   if(goReviewBtn) goReviewBtn.addEventListener('click', () => goToView('review'));
   const lessonReviewNudgeBtn = container.querySelector('#lessonReviewNudgeBtn');
