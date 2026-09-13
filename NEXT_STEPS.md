@@ -1,5 +1,66 @@
 # NEXT STEPS — pick up here
 
+## ✅ DONE: Home page consolidation + lesson tool integration (commits dc329c6, 76e8007, 035e135)
+
+### Duplicate CTA fix (commit dc329c6)
+- **Problem**: Home page showed two cards with "Start Lesson" buttons — the hero
+  card (welcome/first lesson) AND the continue learning card (lesson path).
+  Both had 0% progress rings. This happened because `renderActivePath()` ran
+  after `renderContinueLearning()`, leaving the hero card populated with
+  first-time text while the continue learning card showed the lesson path.
+- **Fix**: When `renderActivePath()` returns true, it now hides the hero card.
+  When it returns false, `renderContinueLearning()` shows the hero card as the
+  primary CTA. Added `continueLearningLabel` ID to toggle the section header.
+
+### Scattered tools removed from home page (commit 76e8007)
+- **Removed**: Daily Experience grid (8 tiles linking to Vocabulary, Pronunciation,
+  Speaking, Grammar, Writing) and Quick Actions grid (7 tiles with duplicate
+  navigation). Also removed 4 redundant progress rings (Overall/Today/Weekly/
+  Monthly — duplicated the hero card ring and continue learning progress bar).
+  Removed statStories section.
+- **Kept**: Hero card (primary CTA), announcements+live classes, smart review
+  strip (contextual), continue learning card (lesson path), progress stats
+  (streak/lessons/hours/review days), skill bars, level block.
+- Tools (Vocabulary Vault, Smart Review, Grammar Academy, Writing Workshop) are
+  still accessible via sidebar navigation.
+
+### Contextual tool links in lesson completion (commit 035e135)
+- Added three contextual tool buttons to the lesson completion screen:
+  - "Review words" → Smart Review (spaced repetition)
+  - "Vocabulary" → Vocabulary Vault
+  - "Grammar" → Grammar Academy
+- Students now discover tools naturally after finishing a lesson, instead of
+  having to find them scattered on the home page.
+- Cache buster updated: `pel_lesson_stage.js?v=97574306`
+
+### Verification status
+- All 44 tests pass (13 buildsequence + 31 teaching flow)
+- NOT YET LIVE-TESTED in browser: duplicate CTA fix, home page consolidation,
+  lesson completion tool links
+
+### Breadcrumbs for next session
+1. **Live-test all changes in browser**: Load `app.html?fresh=<timestamp>`,
+   log in, verify:
+   - Only ONE lesson CTA card shows (not two)
+   - Home page is shorter (no Daily Experience or Quick Actions grids)
+   - Progress section has stats but no rings
+   - Complete a lesson → see Review/Vocabulary/Grammar tool links
+2. **Remaining Arabic translation gaps** (from previous session):
+   - 30 choose exercises with English-only questions
+   - 126 order exercises with English-only prompts (pattern: "Build it: [sentence]"
+     → Arabic: "رتب: [sentence_ar]")
+3. **Merge 4 feature branches** (still deferred):
+   - `feat/admin-create-student` — conflicts in admin/admin.js
+   - `fix/client-academy-resolver` — fail-closed route guard
+   - `fix/lesson-engine-phase1` — study tools + speech scoring
+   - `fix/server-plan-profile` — true-zero placement track
+4. **Admin panel hamza cleanup** (622 lines, low priority)
+5. **Consider**: Moving Smart Review, Vocabulary, and Grammar tools even deeper
+   into the lesson flow (e.g., vocabulary cards in lessons could link directly
+   to the Vocabulary Vault for that word)
+
+---
+
 ## ✅ DONE: escapeHtml TypeError fix + auth_rate_limit migration + Arabic question split (this session)
 
 ### Bug: escapeHtml crash on non-string input (FIXED)
