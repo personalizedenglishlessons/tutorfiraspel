@@ -16,15 +16,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;500;700&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
 <script src="https://unpkg.com/lucide@1.34.0/dist/umd/lucide.js" integrity="sha384-frWQkjuw7X/yo4G2C2YnAAbkHHi7uBnMwf577mOjXDG0me9gl8Yrdyu1BhvS7WX5" crossorigin="anonymous" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.50.0/dist/umd/supabase.js" integrity="sha384-K0oxqktRvaThvYgGL4G+OK2Ih6VS6Uyu7j3+7WJgp/uWM0Yv6Xi4YEiw0BB+mPfi" crossorigin="anonymous" defer></script>
-<script src="lib/daily-lesson.js?v=ab0b373a" defer></script>
-<script src="lib/pel-personalization.js?v=3c4594b8" defer></script>
-<script src="lib/pel-plans.js?v=9df345ce" defer></script>
+<script src="lib/daily-lesson.js?v=867bb077" defer></script>
+<script src="lib/pel-personalization.js?v=f9e31668" defer></script>
+<script src="lib/pel-plans.js?v=739c223f" defer></script>
 <script src="lib/pel-settings.js?v=efc52be5" defer></script>
 <script src="lib/cert-qr.js?v=a43f19f9" defer></script>
 <script src="lib/cert-sheet.js?v=5278e935" defer></script>
 <script src="lib/pel_config.js?v=e4857dea"></script>
-<script src="lib/pel_lesson_stage.js?v=88a5cf7f"></script>
-<script src="lib/pel_dashboard_life.js?v=ed676701"></script>
+<script src="lib/pel_lesson_stage.js?v=2ed42aeb"></script>
+<script src="lib/pel_dashboard_life.js?v=0992d9ee"></script>
 <script src="lib/pel_curriculum_path.js?v=f17afc34"></script>
 <style>
 /* ============================================================
@@ -1637,7 +1637,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if(pill) pill.addEventListener('click', () => { if(typeof goToView === 'function') goToView('liveClasses'); });
 });
 // Periodic refresh so admin credit adjustments appear without page reload
-setInterval(() => { if(typeof currentUser !== 'undefined' && currentUser && !document.hidden) refreshCredits(); }, 60000);
+const _creditsIntervalId = setInterval(() => { if(typeof currentUser !== 'undefined' && currentUser && !document.hidden) refreshCredits(); }, 60000);
 
 async function loadStudentState(){
   // Source of truth is Supabase, keyed by auth.uid(), never localStorage,
@@ -2045,6 +2045,7 @@ function renderAccessGate(){
 }
 
 async function pelGateSignOut(){
+  clearInterval(_creditsIntervalId);
   const c = client();
   window.PEL_SERVER_PLAN = null;
   if(c){ try{ await c.auth.signOut(); }catch(e){ console.warn('[PEL] auth signOut failed:', e.message||e); } }
@@ -2632,7 +2633,7 @@ setTimeout(animateHomeRings, 300);
 function buildDailyItems(){
   // Every tile below is sourced from this app's real lesson/vocab/grammar/
   // speaking banks, rotating daily - no hardcoded filler.
-  const dayIdx = Math.floor(Date.now() / 86400000);
+  const _d = new Date(); const dayIdx = parseInt(new Intl.DateTimeFormat('en-CA', {timeZone:'Asia/Riyadh'}).format(_d).replace(/-/g,'')) % 100000;
   const feat = featuredLesson();
   const lesson = getLesson(feat.academy, feat.lesson) || {title:feat.en, ar:feat.ar, duration:'6 min'};
   const word = VOCAB_BANK[dayIdx % VOCAB_BANK.length];
@@ -2725,7 +2726,7 @@ function renderPalette(query){
   // Keep the daily entries in sync with the real daily rotation, never
   // stale hardcoded labels.
   try{
-    const dayIdx = Math.floor(Date.now() / 86400000);
+    const _d = new Date(); const dayIdx = parseInt(new Intl.DateTimeFormat('en-CA', {timeZone:'Asia/Riyadh'}).format(_d).replace(/-/g,'')) % 100000;
     const feat = featuredLesson();
     const word = VOCAB_BANK[dayIdx % VOCAB_BANK.length];
     const le = paletteData.find(e => e.label === 'Lesson of the Day'); if(le) le.label = 'Lesson of the Day: ' + feat.en;
@@ -8518,7 +8519,7 @@ const RP_SCRIPTS = {
         yes: { next: 3, reply: L('Good to know, I will avoid those.', 'تمام عرفت، رح اتجنبها.', 'قود تو نو، اي ويل اڤويد ذوز.') },
         no: { next: 3, reply: L('Good.', 'ممتاز.', 'قود.') },
         info: { next: 3, reply: L('I will make a note of that.', 'رح اسجل هذا.', 'اي ويل ميك ا نوت اوف ذات.') } },
-      { key:'plan', expect:'any', ask: L('I will prescribe something for you. Take it twice a day. Any questions?', 'بوصف لك دوا. خذه مرتين باليوم. عندك اسيلة؟', 'اي ويل پريسكرايب سمثنق فور يو. تيك ات توايس ا داي. اني كوستشنز؟'),
+      { key:'plan', expect:'any', ask: L('I will prescribe something for you. Take it twice a day. Any questions?', 'بوصف لك دوا. خذه مرتين باليوم. عندك اساله؟', 'اي ويل پريسكرايب سمثنق فور يو. تيك ات توايس ا داي. اني كوستشنز؟'),
         any: { next: 'wrap', reply: L('Take care and rest well. Come back if it does not get better.', 'خل بالك وارتاح زين. ارجع اذا ما تحسنت.', 'تيك كير اند ريست ويل. کام باك اف ات داز نوت قيت بيتر.') } },
       { key:'wrap', wrap: L('Get well soon.', 'الف سلامة.', 'قيت ويل سون.') }
     ],
@@ -8568,7 +8569,7 @@ const RP_SCRIPTS = {
   'teacher': {
     role: 'Teacher', studentRole: 'student',
     steps: [
-      { key:'questions', expect:'yesno', ask: L("Do you have any questions about today's lesson?", 'عندك اسيلة على درس اليوم؟', 'دو يو هاف اني كوستشنز اباوت تودييز لسن؟'),
+      { key:'questions', expect:'yesno', ask: L("Do you have any questions about today's lesson?", 'عندك اساله على درس اليوم؟', 'دو يو هاف اني كوستشنز اباوت تودييز لسن؟'),
         yes: { next: 1, reply: L('Go ahead, what is your question?', 'تفضل، وش سوالك؟', 'قو اهيد، وات از يور كوستشن؟') },
         no: { next: 2, reply: L('Great. Let us review the key words. Repeat after me.', 'ممتاز. خلنا نراجع الكلمات المهمة. كرر وراي.', 'قريت. ليت اس ريفيو ذا كي ووردز. ريپيت افتير مي.') } },
       { key:'question', expect:'open', ask: L('What is your question?', 'وش سوالك؟', 'وات از يور كوستشن؟'),
@@ -8728,8 +8729,8 @@ const RP_SCRIPTS = {
     role: 'Tour Guide', studentRole: 'tourist',
     steps: [
       { key:'start', expect:'open', ask: L('Welcome everyone. We start the tour in ten minutes.', 'حياكم جميعا. نبدا الجولة بعد عشر دقايق.', 'ويلكم اڤري ون. وي ستارت ذا تور ان تن مينتس.'),
-        any: { next: 1, reply: L('Our first stop is the old town. Any questions before we start?', 'اول محطة لنا البلدة القديمة. عندكم اسيلة قبل ما نبدا؟', 'اور فيرست ستد از ذي اولد تاون. اني كوستشنز بيفور وي ستارت؟') } },
-      { key:'questions', expect:'yesno', ask: L('Any questions before we start?', 'عندكم اسيلة قبل ما نبدا؟', 'اني كوستشنز بيفور وي ستارت؟'),
+        any: { next: 1, reply: L('Our first stop is the old town. Any questions before we start?', 'اول محطة لنا البلدة القديمة. عندكم اساله قبل ما نبدا؟', 'اور فيرست ستد از ذي اولد تاون. اني كوستشنز بيفور وي ستارت؟') } },
+      { key:'questions', expect:'yesno', ask: L('Any questions before we start?', 'عندكم اساله قبل ما نبدا؟', 'اني كوستشنز بيفور وي ستارت؟'),
         yes: { next: 2, reply: L('Go ahead, what would you like to know?', 'تفضلوا، وش تحبون تعرفون؟', 'قو اهيد، وات وود يو لايك تو نو؟') },
         no: { next: 'wrap', reply: L('Alright, follow me then.', 'طيب، اتبعوني.', 'اولرايت، فولو مي ذين.') },
         info: { next: 2, reply: L('Sure, what would you like to ask?', 'اكيد، وش تحب تسال؟', 'شور، وات وود يو لايك تو اسك؟') } },
@@ -8870,7 +8871,7 @@ const RP_ALT = {
     'why.any': L('You were speeding a little. A warning this time, drive safely.', 'كنت مسرع شوي. تحذير هالمرة، قود بحذر.', 'يو ور سپيدنق ا ليتل. ا وورنينق ذيس تايم، درايڤ سيفلي.')
   },
   'tour-guide': {
-    'start.any': L('Perfect. Our first stop is the old town. Questions before we go?', 'ممتاز. اول محطة البلدة القديمة. اسيلة قبل ما ننطلق؟', 'بيرفكت. اور فيرست ستد از ذي اولد تاون. كوستشنز بيفور وي قو؟'),
+    'start.any': L('Perfect. Our first stop is the old town. Questions before we go?', 'ممتاز. اول محطة البلدة القديمة. اساله قبل ما ننطلق؟', 'بيرفكت. اور فيرست ستد از ذي اولد تاون. كوستشنز بيفور وي قو؟'),
     'questions.yes': L('Go on, what do you want to know?', 'تفضل، وش تبي تعرف؟', 'قو اون، وات دو يو وانت تو نو؟'),
     'questions.no': L('Perfect, follow me then.', 'ممتاز، اتبعوني.', 'بيرفكت، فولو مي ذين.'),
     'questions.info': L('Sure, what would you like to ask?', 'اكيد، وش تحب تسال؟', 'شور، وات وود يو لايك تو اسك؟'),
@@ -9688,7 +9689,7 @@ function featuredLesson(){
       if(f && f.lesson && f.academy) return {academy: f.academy.id, lesson: f.lesson.id, en: f.lesson.en, ar: f.lesson.ar};
     }catch(e){ /* fall through to the local pick below */ }
   }
-  const dayIdx = Math.floor(Date.now() / 86400000);
+  const _d = new Date(); const dayIdx = parseInt(new Intl.DateTimeFormat('en-CA', {timeZone:'Asia/Riyadh'}).format(_d).replace(/-/g,'')) % 100000;
   const pool = directionAcademies();
   const academy = pool[dayIdx % pool.length];
   const ai = pool.indexOf(academy);
@@ -9765,7 +9766,7 @@ const VOCAB_BANK = [
 {en:'Fluency', ipa:'/ˈfluːənsi/', ar:'طلاقة، سلاسة في الكلام', translit:'فلونسي', example:{en:'Her fluency in English improved fast.', ar:'تحسّنت طلاقتها في الانجليزية بسرعة.', translit:'هر فلونسي ان انجلش امبروفد فاست.'}, synonyms:'smoothness, flow', antonyms:'hesitation, stumbling', family:'fluent, fluently', collocations:'speak with fluency, build fluency', category:'Speaking Studio', difficulty:'Intermediate', tip:'Fluency is about flow, not perfect grammar.', mistake:'Stopping at every small mistake kills fluency.'},
 {en:'Pronunciation', ipa:'/prəˌnʌnsiˈeɪʃən/', ar:'النطق، طريقة لفظ الكلمات', translit:'برنانسييهيشِن', example:{en:'His pronunciation is very clear.', ar:'نطقه واضح جدًا.', translit:'هيز برنانسييهيشِن از فيري كلير.'}, synonyms:'articulation, diction', antonyms:'mispronunciation', family:'pronounce, pronounced', collocations:'clear pronunciation, improve pronunciation', category:'Speaking Studio', difficulty:'Intermediate', tip:'The word itself has no "o" after the "n."', mistake:'Spelling it "pronounciation."'},
 {en:'Pause', ipa:'/pɔːz/', ar:'وقفة، توقف قصير', translit:'بوز', example:{en:'Take a short pause to breathe.', ar:'خذ وقفة قصيرة لتتنفس.', translit:'تيك ا شورت بوز تو بريث.'}, synonyms:'break, stop', antonyms:'continue, rush', family:'pause, paused, pausing', collocations:'take a pause, pause for effect', category:'Speaking Studio', difficulty:'Intermediate', tip:'A pause adds power to your words.', mistake:'Filling every pause with "um" and "uh."'},
-{en:'Hesitate', ipa:'/ˈhezɪteɪt/', ar:'يتردد، يتوقف غير متاكد', translit:'هزيتيت', example:{en:'Don\'t hesitate to ask questions.', ar:'لا تتردد في طرح الاسيلة.', translit:'دونت هزيتيت تو اسك كويستشنز.'}, synonyms:'waver, falter', antonyms:'decide, act', family:'hesitation, hesitantly', collocations:'hesitate to, hesitate before', category:'Speaking Studio', difficulty:'Intermediate', tip:'Confidence grows when you speak anyway.', mistake:'Saying "hestitate" and dropping a syllable.'},
+{en:'Hesitate', ipa:'/ˈhezɪteɪt/', ar:'يتردد، يتوقف غير متاكد', translit:'هزيتيت', example:{en:'Don\'t hesitate to ask questions.', ar:'لا تتردد في طرح الاساله.', translit:'دونت هزيتيت تو اسك كويستشنز.'}, synonyms:'waver, falter', antonyms:'decide, act', family:'hesitation, hesitantly', collocations:'hesitate to, hesitate before', category:'Speaking Studio', difficulty:'Intermediate', tip:'Confidence grows when you speak anyway.', mistake:'Saying "hestitate" and dropping a syllable.'},
 {en:'Express', ipa:'/ɪkˈsprɛs/', ar:'يعبّر، يوضّح', translit:'اكسبريس', example:{en:'Express your idea simply.', ar:'عبّر عن فكرتك ببساطة.', translit:'اكسبريس يور ايديا سيمبلي.'}, synonyms:'convey, state', antonyms:'hide, suppress', family:'expression, expressive', collocations:'express yourself, express an opinion', category:'Speaking Studio', difficulty:'Intermediate', tip:'Simple words express ideas best.', mistake:'Saying "I am express" instead of "I express."'},
 {en:'Vowel', ipa:'/ˈvaʊəl/', ar:'حرف متحرك (مثل a, e, i)', translit:'فاويل', example:{en:'The word "beat" has a long vowel.', ar:'كلمة "beat" بها حرف متحرك طويل.', translit:'ذا وورد بيت هاز ا لونق فاويل.'}, synonyms:'vowel sound', antonyms:'consonant', family:'vowel, vowelled', collocations:'long vowel, short vowel', category:'American Accent Lab', difficulty:'Intermediate', tip:'American vowels are often longer when stressed.', mistake:'Confusing short "i" with long "ee."'},
 {en:'Consonant', ipa:'/ˈkɒnsənənt/', ar:'حرف ساكن (مثل b, c, d)', translit:'كونسوننت', example:{en:'"B" is a consonant letter.', ar:'حرف "B" حرف ساكن.', translit:'بي از ا كونسوننت ليتر.'}, synonyms:'consonant sound', antonyms:'vowel', family:'consonant, consonantal', collocations:'voiced consonant, double consonant', category:'American Accent Lab', difficulty:'Intermediate', tip:'Consonants carry rhythm, vowels carry melody.', mistake:'Pronouncing silent consonants like the "k" in "knee."'},
@@ -9885,13 +9886,13 @@ const GRAMMAR_TOPICS = [
   {id:'subject-verb', title:'Subject-Verb Agreement', rule:'Singular subjects take singular verbs, plural subjects take plural verbs.', saudi:'لازم الفعل يتوافق مع الفاعل، لو الفاعل مفرد الفعل يضاف له s في المضارع.', wrong:'She go to work every day.', right:'She goes to work every day.', mistakes:['Forgetting the "s" with he/she/it in present simple.','Using "is" with plural subjects: "the students is here."']},
   {id:'prepositions-time', title:'Prepositions of Time: In, On, At', rule:'Use "in" for months and years, "on" for days and dates, "at" for exact times.', saudi:'in للشهور والسنين، on للايام والتواريخ، at للوقت بالضبط زي الساعة.', wrong:'I will call you in Monday at 3pm... on 3pm.', right:'I will call you on Monday at 3pm.', mistakes:['Saying "in Monday" instead of "on Monday."', "Saying \"on 5 o'clock\" instead of \"at 5 o'clock.\""]},
   {id:'comparatives', title:'Comparatives and Superlatives', rule:'Add "-er" for short adjectives and "more" for longer ones. Use "-est" or "most" for superlatives.', saudi:'للصفات القصيرة نزيد er، وللصفات الطويلة نستخدم more قبلها.', wrong:'This hotel is more good than that one.', right:'This hotel is better than that one.', mistakes:['Saying "more good" instead of "better."','Doubling comparison: "more better" or "most best."']},
-  {id:'question-formation', title:'Question Formation', rule:'Most questions need an auxiliary verb (do, does, did, is, are) before the subject.', saudi:'الاسيلة الانجليزية تحتاج فعل مساعد قبل الفاعل، وهذا مختلف عن ترتيب الجملة العربية.', wrong:'You like coffee?', right:'Do you like coffee?', mistakes:['Forgetting the auxiliary verb "do/does" in questions.','Using statement word order with a question mark only.']},
+  {id:'question-formation', title:'Question Formation', rule:'Most questions need an auxiliary verb (do, does, did, is, are) before the subject.', saudi:'الاساله الانجليزية تحتاج فعل مساعد قبل الفاعل، وهذا مختلف عن ترتيب الجملة العربية.', wrong:'You like coffee?', right:'Do you like coffee?', mistakes:['Forgetting the auxiliary verb "do/does" in questions.','Using statement word order with a question mark only.']},
   {id:'present-simple', title:'Present Simple', rule:'Use present simple for habits, routines, and facts. Add -s to the verb with he, she, it.', saudi:'المضارع البسيط للاشيا اللي تسويها باستمرار ولحقايق ثابتة. مع he/she/it يضاف s للفعل.', wrong:'He work every day.', right:'He works every day.', mistakes:['Forgetting the -s with he/she/it.','Using present simple for something happening right now: "I work now" instead of "I am working now."']},
   {id:'past-simple', title:'Past Simple', rule:'Use past simple for finished actions with a clear past time. Regular verbs end in -ed, irregular verbs change form.', saudi:'الماضي البسيط للاشيا اللي خلصت ووقتها محدد. الافعال العادية تزيد ed والافعال الشاذة تتغير.', wrong:'I didn\'t went to work yesterday.', right:'I didn\'t go to work yesterday.', mistakes:['Using the past form after "didn\'t": "I didn\'t went."','Saying "I am agree" instead of "I agree" in past discussions.']},
   {id:'future-plans', title:'Future: Will vs Going To', rule:'Use "going to" for plans and intentions you already decided, "will" for decisions made at the moment of speaking and promises.', saudi:'going to للخطط اللي قررتها من قبل، و will للقرار اللي تاخذه لحظتها او لوعد.', wrong:'I will travel to Jeddah next week, I bought the tickets.', right:'I am going to travel to Jeddah next week, I bought the tickets.', mistakes:['Using "will" for a plan you already made, where "going to" fits better.','Saying "I will going to" by mixing both forms.']},
   {id:'prepositions-place', title:'Prepositions of Place: In, On, At', rule:'Use "at" for a specific point, "on" for a surface, "in" for an enclosed space.', saudi:'at لنقطة محددة (عند الباب)، on لسطح (فوق الطاولة)، in لمكان مغلق (داخل السيارة).', wrong:'I am waiting on the bus stop.', right:'I am waiting at the bus stop.', mistakes:['Using "on" for locations that take "at" (bus stop, the door).','Using "in" for streets: "I live in King Street" instead of "on King Street."']},
   {id:'countable-uncountable', title:'Countable and Uncountable Nouns', rule:'Countable nouns have plurals and use a/an and many. Uncountable nouns (water, advice, money) have no plural and use much.', saudi:'الاسما المعدودة لها جمع، وغير المعدودة مثل الما والنصايح والفلوس ما لها جمع.', wrong:'I need an advice from you.', right:'I need some advice from you.', mistakes:['Saying "an advice" or "advices", advice is uncountable.','Saying "informations" instead of "information."']},
-  {id:'some-any', title:'Some and Any', rule:'Use "some" in positive sentences and offers, "any" in negatives and most questions.', saudi:'some للجمل المثبتة والعروض، و any للنفي ومع اغلب الاسيلة.', wrong:'I do not have some money.', right:'I do not have any money.', mistakes:['Using "some" in negatives: "I do not have some money."','Using "any" in a positive statement: "I have any questions."']},
+  {id:'some-any', title:'Some and Any', rule:'Use "some" in positive sentences and offers, "any" in negatives and most questions.', saudi:'some للجمل المثبتة والعروض، و any للنفي ومع اغلب الاساله.', wrong:'I do not have some money.', right:'I do not have any money.', mistakes:['Using "some" in negatives: "I do not have some money."','Using "any" in a positive statement: "I have any questions."']},
   {id:'modal-verbs', title:'Modal Verbs: Can, Must, Should', rule:'Can is ability, must is strong obligation, should is advice. Modals never take -s and are followed by the base verb.', saudi:'can للقدرة، must للواجب القوي، should للنصيحة. بعدهم الفعل ما يتغير ابدًا.', wrong:'He can to drive a car.', right:'He can drive a car.', mistakes:['Putting "to" after a modal: "can to go."','Adding -s: "he cans" instead of "he can."']},
   {id:'conditionals', title:'Conditionals: If Sentences', rule:'First conditional (if + present, will) is for real future situations: "If it rains, I will stay home."', saudi:'الجملة الشرطية الاولى للمواقف الحقيقية بالمستقبل: لو جت ظروفها، بيصير الشي.', wrong:'If it will rain, I will stay home.', right:'If it rains, I will stay home.', mistakes:['Using "will" inside the if clause: "If it will rain."','Mixing tenses: "If I will have time, I call you."']},
   {id:'gerunds', title:'Gerunds After Verbs', rule:'After certain verbs (enjoy, mind, finish, suggest) use the -ing form, not the infinitive.', saudi:'بعض الافعال بعدها لازم -ing مثل enjoy و finish و mind.', wrong:'I enjoy to watch movies.', right:'I enjoy watching movies.', mistakes:['Saying "enjoy to do" instead of "enjoy doing."','Using "to" after "mind": "Do you mind to wait?" instead of "Do you mind waiting?"']},
@@ -9979,7 +9980,7 @@ const SPEAKING_PERSONAS = [
   {id:'doctor', title:'Doctor', icon:'stethoscope', opener:{en:'What symptoms have you been having?', ar:'وش الاعراض اللي عندك؟', translit:'وات سمبتمز هاف يو بين هافينج؟'}},
   {id:'cashier', title:'Cashier', icon:'shopping-bag', opener:{en:'Did you find everything you needed?', ar:'لقيت كل اللي تبيه؟', translit:'ديد يو فايند اڤري ثينج يو نيدد؟'}},
   {id:'manager', title:'Manager', icon:'briefcase', opener:{en:"Let's go over your progress this month.", ar:'خلنا نراجع تقدمك هذا الشهر.', translit:'ليتس قو اوڤر يور بروقرس ذيس مانث.'}},
-  {id:'teacher', title:'Teacher', icon:'graduation-cap', opener:{en:"Do you have any questions about today's lesson?", ar:'عندك اسيلة على درس اليوم؟', translit:'دو يو هاف اني كوستشنز اباوت تودييز لسن؟'}},
+  {id:'teacher', title:'Teacher', icon:'graduation-cap', opener:{en:"Do you have any questions about today's lesson?", ar:'عندك اساله على درس اليوم؟', translit:'دو يو هاف اني كوستشنز اباوت تودييز لسن؟'}},
   {id:'friend', title:'Friend', icon:'smile', opener:{en:'Hey, long time no see, how have you been?', ar:'هلا والله، من زمان، اخبارك؟', translit:'هاي، لونق تايم نو سي، هاو هاف يو بين؟'}},
   {id:'customer', title:'Customer', icon:'user', opener:{en:'Excuse me, can you help me find something?', ar:'لو سمحت، تقدر تساعدني الاقي شي؟', translit:'اكسكيوز مي، كان يو هيلب مي فايند سمثنق؟'}},
   {id:'receptionist-clinic', title:'Clinic Receptionist', icon:'clipboard', opener:{en:'Do you have an appointment today?', ar:'عندك موعد اليوم؟', translit:'دو يو هاف ان ابوينتمنت تودي؟'}},
@@ -10095,7 +10096,7 @@ const FLAGSHIP_LESSONS = {
     title:'Meeting Someone New', ar:'التعرف على شخص جديد', translit:'ميتنج سام ون نيو',
     difficulty:'Beginner', duration:'7 min',
     vocab:[VOCAB_BANK[8], VOCAB_BANK[8]],
-    grammar:{title:'Question Formation', rule:'Most questions need an auxiliary verb before the subject.', saudi:'الاسيلة الانجليزية تحتاج فعل مساعد قبل الفاعل.', wrong:'You from Riyadh?', right:'Are you from Riyadh?', mistakes:['Dropping "are/do" at the start of a question.']},
+    grammar:{title:'Question Formation', rule:'Most questions need an auxiliary verb before the subject.', saudi:'الاساله الانجليزية تحتاج فعل مساعد قبل الفاعل.', wrong:'You from Riyadh?', right:'Are you from Riyadh?', mistakes:['Dropping "are/do" at the start of a question.']},
     conversation:[
       {who:'A', en:"Hi, I don't think we've met. I'm Sarah.", ar:'هلا، ما اتذكر اننا اتعرفنا. انا سارة.', translit:'هاي، اي دونت ثينك ويڤ مِت. ايم سارة.'},
       {who:'B', en:"Nice to meet you, Sarah. I'm Faisal.", ar:'فرصة سعيدة يا سارة. انا فيصل.', translit:'نايس تو ميت يو، سارة. ايم فيصل.'},
@@ -10276,7 +10277,7 @@ const LESSON_LIBRARY = {
     takeaway:'احفظ رقمك واسمك الكامل بترتيب انجليزي، وجرب تنطقهم قدام احد اليوم.',
   },
   'basic-questions': {
-    title:'Basic Questions With What, Where, When', ar:'الاسيلة الاساسية: وش، وين، متى', translit:'بيسك كوستشنز وذ وات، وير، وين',
+    title:'Basic Questions With What, Where, When', ar:'الاساله الاساسية: وش، وين، متى', translit:'بيسك كوستشنز وذ وات، وير، وين',
     duration:'8 min', difficulty:'Beginner',
     vocab:[VOCAB_BANK[13], VOCAB_BANK[2]],
     grammar:{title:'WH- Question Order', rule:'A WH- question starts with the question word, then the auxiliary, then the subject: Where are you? What do you do?', saudi:'ترتيب السوال: كلمة الاستفهام، ثم الفعل المساعد، ثم الفاعل. مو مثل العربي اللي يبدا بالفاعل.', wrong:'You are from where?', right:'Where are you from?', mistakes:['Putting the question word at the end in English, it stays at the start.','Forgetting the auxiliary: "Where you live?" instead of "Where do you live?"']},
@@ -11128,7 +11129,7 @@ const LESSON_LIBRARY = {
     title:'Past Simple Mastery', ar:'اتقان الماضي البسيط', translit:'پاست سمپل ماستري',
     duration:'9 min', difficulty:'Intermediate',
     vocab:[VOCAB_BANK[6], VOCAB_BANK[5]],
-    grammar:{title:'Did + Base Form', rule:'In questions and negatives, use did + the base form: Did you go? I did not go.', saudi:'بالاسيلة والنفي: did + الفعل بدون تصريف.', wrong:'Did you went to the meeting?', right:'Did you go to the meeting?', mistakes:['Using the past form after "did": "did you went."','Forgetting the -ed on regular verbs in statements.']},
+    grammar:{title:'Did + Base Form', rule:'In questions and negatives, use did + the base form: Did you go? I did not go.', saudi:'بالاساله والنفي: did + الفعل بدون تصريف.', wrong:'Did you went to the meeting?', right:'Did you go to the meeting?', mistakes:['Using the past form after "did": "did you went."','Forgetting the -ed on regular verbs in statements.']},
     conversation:[
       {who:'A', en:'Did you go to the workshop yesterday?', ar:'رحت الورشة امس؟', translit:'ديد يو قو تو ذا ووركشوب يستردي؟'},
       {who:'B', en:'No, I did not. I had a family thing.', ar:'لا، ما رحت. كان عندي التزام عايلي.', translit:'نو، اي ديد نات. اي هاد ا فاميلي ثينق.'},
@@ -11656,7 +11657,7 @@ const LESSON_LIBRARY = {
       {en:'What do you do?', ar:'وش تشتغل؟', translit:'wesh tashtaghel?', tip:'Literally "what do you work?", the natural small talk opener.'},
       {en:'Welcome', ar:'اهلا وسهلا', translit:'ahlan wa sahlan', tip:'The classic welcome, still very much alive.'},
     ],
-    grammar:{title:'First-meeting flow', rule:'The Saudi first-meeting order: name, where are you from, what do you do. Questions come fast and are friendly, not nosey.', saudi:'اول ما تتعرف: الاسم، ثم من وين، ثم وش تشتغل. اسيلة سريعة وودية.', wrong:'Answer only with your name and stay quiet.', right:'"Ismi Omar, ana min Jeddah, ashtaghel muhandis." (I am Omar, from Jeddah, I work as an engineer.)', mistakes:['Treating the rapid questions as rude, they are how Saudis get to know you.','Answering "where are you from" with just the country, the city is expected.']},
+    grammar:{title:'First-meeting flow', rule:'The Saudi first-meeting order: name, where are you from, what do you do. Questions come fast and are friendly, not nosey.', saudi:'اول ما تتعرف: الاسم، ثم من وين، ثم وش تشتغل. اساله سريعة وودية.', wrong:'Answer only with your name and stay quiet.', right:'"Ismi Omar, ana min Jeddah, ashtaghel muhandis." (I am Omar, from Jeddah, I work as an engineer.)', mistakes:['Treating the rapid questions as rude, they are how Saudis get to know you.','Answering "where are you from" with just the country, the city is expected.']},
     conversation:[
       {who:'A', ar:'نورتنا، وش اسمك؟', translit:'nawwartna, wesh ismak?', en:'Welcome, what is your name?'},
       {who:'B', ar:'اسمي احمد.', translit:'ismi ahmed', en:'My name is Ahmed.'},
@@ -12216,7 +12217,7 @@ const LESSON_LIBRARY = {
       {en:'Is it urgent?', ar:'مستعجل؟', translit:'mustaajil?', tip:'Check the priority.'},
       {en:'I need more time', ar:'ابي وقت اكثر', translit:'abi waqt akthar', tip:'The honest extension ask.'},
     ],
-    grammar:{title:'The deadline ask', rule:'Deadline talk in Saudi offices is direct: mata akher mawid, mustaajil, and the commitment bakhallisah.', saudi:'اسيلة المواعيد: متى اخر موعد؟ مستعجل؟ باخلصه.', wrong:'Avoid asking and miss the deadline silently.', right:'"Mata akher mawid? Mustaajil aw mumkin baad?‏" (When is the deadline? Urgent or can it wait?)', mistakes:['Saying yes to everything then missing it, better to ask for time.','Using formal "almawid alnihai" everywhere, akher mawid is natural.']},
+    grammar:{title:'The deadline ask', rule:'Deadline talk in Saudi offices is direct: mata akher mawid, mustaajil, and the commitment bakhallisah.', saudi:'اساله المواعيد: متى اخر موعد؟ مستعجل؟ باخلصه.', wrong:'Avoid asking and miss the deadline silently.', right:'"Mata akher mawid? Mustaajil aw mumkin baad?‏" (When is the deadline? Urgent or can it wait?)', mistakes:['Saying yes to everything then missing it, better to ask for time.','Using formal "almawid alnihai" everywhere, akher mawid is natural.']},
     conversation:[
       {who:'Manager', ar:'التقرير متى يخلص؟', translit:'altaqreer mata ykhalas?', en:'When will the report be done?'},
       {who:'You', ar:'باخلصه بكرة ان شا الله.', translit:'bakhallisah bukra inshallah', en:'I will finish it tomorrow God willing.'},
@@ -12726,7 +12727,7 @@ const LESSON_LIBRARY = {
       {en:'To the right', ar:'يمين', translit:'yameen', tip:'Right turn.'},
       {en:'To the left', ar:'يسار', translit:'yasaar', tip:'Left turn.'},
     ],
-    grammar:{title:'Asking with wen', rule:'Directions start with wen (where) + the place, then follow gudaam, yameen, yasaar.', saudi:'الاسيلة: وين + المكان، والجواب: قدام، يمين، يسار.', wrong:'Use the formal ayna for where, wen is the word.', right:'"Wen assooq alkabeer?" (Where is the big souq?)', mistakes:['Forgetting to confirm with a repeat, huna? (here?) helps.','Asking without a reference point, name a landmark.']},
+    grammar:{title:'Asking with wen', rule:'Directions start with wen (where) + the place, then follow gudaam, yameen, yasaar.', saudi:'الاساله: وين + المكان، والجواب: قدام، يمين، يسار.', wrong:'Use the formal ayna for where, wen is the word.', right:'"Wen assooq alkabeer?" (Where is the big souq?)', mistakes:['Forgetting to confirm with a repeat, huna? (here?) helps.','Asking without a reference point, name a landmark.']},
     conversation:[
       {who:'You', ar:'عفوا، وين اقرب صيدلية؟', translit:'afwan, wen aqrab saydaliya?', en:'Excuse me, where is the nearest pharmacy?'},
       {who:'Local', ar:'قم قدام، ولف يمين.', translit:'gum gudaam, wa lif yameen', en:'Go straight, then turn right.'},
@@ -13668,14 +13669,17 @@ function markLessonComplete(academyId, lessonId, stats){
     if(c && currentUser){
       rpcPromise = c.rpc('complete_activity', { p_lesson_id: lessonId, p_stats: stats || null })
         .then(({ data, error }) => {
-          if(!error && data && data.ok !== false){
-            window.PEL_EFFECTIVE_STATE = data;
-            document.dispatchEvent(new CustomEvent('pel-progress-updated', { detail:data }));
-            // Guided mode: serve the next lesson without leaving the flow.
-            if(guidedMode()) setTimeout(() => { startNextGuidedLesson(); }, 1400);
+          if(error || !data || data.ok === false){
+            // Roll back local state if server didn't record the completion
+            completedLessons.delete(key); persistStudentState(); syncAcademyProgress();
+            return null;
           }
+          window.PEL_EFFECTIVE_STATE = data;
+          document.dispatchEvent(new CustomEvent('pel-progress-updated', { detail:data }));
+          // Guided mode: serve the next lesson without leaving the flow.
+          if(guidedMode()) setTimeout(() => { startNextGuidedLesson(); }, 1400);
           return data;
-        }).catch(()=>null);
+        }).catch(()=>{ completedLessons.delete(key); persistStudentState(); syncAcademyProgress(); return null; });
     }
   }catch(e){}
   const compDates = lsGet('pel_completion_dates', {});
@@ -13741,7 +13745,7 @@ function speak(text, onDone){
   const voices = window.speechSynthesis.getVoices().filter(v => v.lang.startsWith('en'));
   const voiceSel = document.getElementById('voiceSelect');
   if(voiceSel && voices[voiceSel.value]) utter.voice = voices[voiceSel.value];
-  if(typeof onDone === 'function'){ utter.onend = onDone; utter.onerror = onDone; }
+  if(typeof onDone === 'function'){ let _spoken = false; const _wrap = () => { if(_spoken) return; _spoken = true; onDone(); }; utter.onend = _wrap; utter.onerror = _wrap; }
   window.speechSynthesis.speak(utter);
 }
 function canRecognize(){ return 'webkitSpeechRecognition' in window || 'SpeechRecognition' in window; }
@@ -15751,7 +15755,7 @@ function renderQuiz(container, questions, keyPrefix){
     const perfect = correctCount === questions.length;
     const verdictAr = perfect
       ? 'جاوبت على الكل صح، بدون غلطة.'
-      : (correctCount >= Math.ceil(questions.length/2) ? 'جاوبت على الاغلبية صح، راجع اللي فاتك.' : 'راجع الدرس مرة ثانية، الاسيلة نفسها بتظهر لك.');
+      : (correctCount >= Math.ceil(questions.length/2) ? 'جاوبت على الاغلبية صح، راجع اللي فاتك.' : 'راجع الدرس مرة ثانية، الاساله نفسها بتظهر لك.');
     const verdictEn = perfect
       ? 'You answered every question correctly, no misses.'
       : (correctCount >= Math.ceil(questions.length/2) ? 'You got most right, review the ones you missed.' : 'Review the lesson again, the same questions will come back.');
@@ -15779,7 +15783,7 @@ function openDailyQuiz(){
   const body = document.getElementById('dailyQuizBody');
   // Gather quizzes from this account's completed lessons (deterministic
   // daily rotation so the same quiz lasts all day, then rotates).
-  const dayIdx = Math.floor(Date.now() / 86400000);
+  const _d = new Date(); const dayIdx = parseInt(new Intl.DateTimeFormat('en-CA', {timeZone:'Asia/Riyadh'}).format(_d).replace(/-/g,'')) % 100000;
   const pool = [];
   let fromCompleted = false;
   completedLessons.forEach(k => {
@@ -15800,7 +15804,7 @@ function openDailyQuiz(){
     ? pool.flatMap(p => p.questions.map(q => ({ ...q, source: p.lesson.title })))
     : [];
   if(questions.length === 0){
-    body.innerHTML = `<div class="empty-state"><i class="empty-icon" data-lucide="clipboard-list"></i><h3><span class="arabic" style="display:block; font-size:.8em; font-weight:400; color:var(--text-muted); margin-bottom:4px;">ما فيه اسيلة بعد</span>No quiz questions yet</h3><p><span class="arabic" style="display:block; margin-bottom:4px;">اكمل درس اول، وتظهر اسيلته هنا.</span>Complete your first lesson and its questions appear here.</p></div>`;
+    body.innerHTML = `<div class="empty-state"><i class="empty-icon" data-lucide="clipboard-list"></i><h3><span class="arabic" style="display:block; font-size:.8em; font-weight:400; color:var(--text-muted); margin-bottom:4px;">ما فيه اساله بعد</span>No quiz questions yet</h3><p><span class="arabic" style="display:block; margin-bottom:4px;">اكمل درس اول، وتظهر اسيلته هنا.</span>Complete your first lesson and its questions appear here.</p></div>`;
     if(window.lucide) lucide.createIcons();
     modal.classList.add('open');
     return;
@@ -15813,7 +15817,7 @@ function openDailyQuiz(){
       <span style="font-size:.72rem; color:var(--text-muted);"><span class="arabic">${fromCompleted ? 'من دروسك المكتملة' : 'من درس اليوم'}</span>، ${fromCompleted ? 'from your completed lessons' : 'from the Lesson of the Day'}</span>
     </div>
     <h3 style="font-size:1.2rem;"><span class="arabic">افحص معلوماتك</span>، Test what stuck</h3>
-    <p style="margin-top:6px; font-size:.82rem; color:var(--text-secondary);">${fromCompleted ? '<span class="arabic">اسيلة من دروس خلصتها، فتحسس وش اللي رسخ عندك.</span> Questions from lessons you completed, so you feel what stuck.' : '<span class="arabic">اكمل درس اول، وتتحول الاسيلة لاسيلتك انت.</span> Complete your first lesson and the quiz switches to your own questions.'}</p>
+    <p style="margin-top:6px; font-size:.82rem; color:var(--text-secondary);">${fromCompleted ? '<span class="arabic">اساله من دروس خلصتها، فتحسس وش اللي رسخ عندك.</span> Questions from lessons you completed, so you feel what stuck.' : '<span class="arabic">اكمل درس اول، وتتحول الاساله لاسيلتك انت.</span> Complete your first lesson and the quiz switches to your own questions.'}</p>
     <div class="card-elevated" style="padding:20px; border-radius:16px; margin-top:16px;" id="dailyQuizWrap"></div>`;
   renderQuiz(document.getElementById('dailyQuizWrap'), chosen, 'dq');
   modal.classList.add('open');
@@ -16044,7 +16048,7 @@ viewRenderers.plan = renderPlanView;
    ============================================================ */
 const CEFR_LEVELS = [
   { id:'A0', en:'Absolute Beginner',  ar:'من الصفر',       color:'#2F745E', descEn:'First sounds, letters and the most essential survival words.', descAr:'الاصوات والحروف الاولى واهم كلمات البقا.' },
-  { id:'A1', en:'Beginner',         ar:'مبتدي',        color:'#3F8C72', descEn:'Greetings, the alphabet, numbers and basic questions.', descAr:'التحيات، الحروف، الارقام والاسيلة البسيطة.' },
+  { id:'A1', en:'Beginner',         ar:'مبتدي',        color:'#3F8C72', descEn:'Greetings, the alphabet, numbers and basic questions.', descAr:'التحيات، الحروف، الارقام والاساله البسيطة.' },
   { id:'A2', en:'Elementary',       ar:'مبتدي متقدم',  color:'#5BA88A', descEn:'Survival English for travel, food, shopping and hotels.', descAr:'انجليزي البقا للسفر والاكل والتسوق والفنادق.' },
   { id:'B1', en:'Intermediate',     ar:'متوسط',        color:'#C8A96A', descEn:'Real conversations, opinions and everyday fluency.', descAr:'محادثات حقيقية وارا وطلاقة يومية.' },
   { id:'B2', en:'Upper-Intermediate', ar:'متوسط متقدم', color:'#D8BD83', descEn:'Listening, reading, accent and the workplace.', descAr:'الاستماع والقرايه واللكنة والدوام.' },
@@ -16200,6 +16204,16 @@ async function openLesson(academyId, lessonId){
   // their route. ensureRouteAllows loads effective state first if it has not
   // resolved yet (e.g. a deep link before the dashboard loads).
   if(typeof ensureRouteAllows === 'function' && !(await ensureRouteAllows(academyId))) return;
+  // Check if the lesson is locked before allowing access
+  const _academy = resolveAcademyById(academyId);
+  if(_academy){
+    const _list = academyLessonList(_academy);
+    const _lessonMeta = _list.find(l => l.id === lessonId);
+    if(_lessonMeta && _lessonMeta.locked){
+      toast('<span class="arabic">هذا الدرس مقفل، اكمل الدروس السابقة اولا</span>، This lesson is locked. Complete previous lessons first.');
+      return;
+    }
+  }
   wsState = { academyId, lessonId };
   // If the academy isn't resolved yet (curriculum RPC still loading / missed),
   // load the curriculum once and retry so DB academies never render blank.
@@ -17456,12 +17470,13 @@ function renderBookmarks(){
     list.innerHTML = filtered.length ? filtered.map(b => `
       <div class="bookmark-row">
         <div class="bookmark-type-icon"><i data-lucide="${typeIcon[b.type]||'bookmark'}" width="16" height="16"></i></div>
-        <div style="flex:1;"><b style="font-size:.9rem;">${b.label}</b><div style="font-size:.74rem; color:var(--text-muted);">${b.sub||''}</div></div>
+        <div style="flex:1;"><b style="font-size:.9rem;">${escapeHtml(b.label)}</b><div style="font-size:.74rem; color:var(--text-muted);">${escapeHtml(b.sub||'')}</div></div>
         <span class="chip">${b.type === 'vocab' ? '<span class="arabic">كلمة</span>، Word' : b.type === 'favlesson' ? '<span class="arabic">مفضّل</span>، Favourite' : '<span class="arabic">درس</span>، Lesson'}</span>
       </div>`).join('') : `<div class="empty-state"><i class="empty-icon" data-lucide="bookmark"></i><h3><span class="arabic" style="display:block; font-size:.8em; font-weight:400; color:var(--text-muted); margin-bottom:4px;">لا توجد مفضلة بعد</span>No bookmarks yet</h3><p><span class="arabic" style="display:block; margin-bottom:4px;">احفظ الدروس والكلمات اثنا دراستك، وستظهر هنا.</span>Save lessons and words as you study, and they will show up here.</p></div>`;
     if(window.lucide) lucide.createIcons();
   }
-  document.getElementById('bmSearch').addEventListener('input', renderList);
+  const bmSearch = document.getElementById('bmSearch');
+  if(bmSearch){ bmSearch.removeEventListener('input', renderList); bmSearch.addEventListener('input', renderList); }
   renderList();
 }
 viewRenderers.bookmarks = renderBookmarks;
@@ -17726,7 +17741,7 @@ function renderUpcomingLesson(){
   }
 }
 function levelInfo(){
-  const level = 1 + Math.floor(studentStats.xp / 500);
+  const level = Math.max(1, 1 + Math.floor(studentStats.xp / 500));
   const en = level <= 2 ? 'Beginner' : level <= 5 ? 'Intermediate' : 'Advanced';
   const ar = level <= 2 ? 'مبتدي' : level <= 5 ? 'متوسط' : 'متقدم';
   return {level, en, ar};
@@ -17921,9 +17936,9 @@ function renderActivePath(){
 function c_rpc_effective_state(){
   const c = client();
   if(!c || !currentUser) return Promise.resolve(false);
-  return c.rpc('student_effective_state').then(({ data }) => {
-    if(data && data.ok !== false){ window.PEL_EFFECTIVE_STATE = data; return true; }
-    return false;
+  return c.rpc('student_effective_state').then(({ data, error }) => {
+    if(error || !data || data.ok === false || !data.stage){ return false; }
+    window.PEL_EFFECTIVE_STATE = data; return true;
   }).catch(() => false);
 }
 /* Hydrate a plan from the server so an admin-assigned subscription clears the
@@ -19161,7 +19176,7 @@ function dashRecommendation(){
 }
 function dashQuickWin(rec){
   // A secondary, shorter action that is never the same as the main one.
-  const dayIdx = Math.floor(Date.now() / 86400000);
+  const _d = new Date(); const dayIdx = parseInt(new Intl.DateTimeFormat('en-CA', {timeZone:'Asia/Riyadh'}).format(_d).replace(/-/g,'')) % 100000;
   const gram = GRAMMAR_TOPICS[dayIdx % GRAMMAR_TOPICS.length];
   const word = VOCAB_BANK[dayIdx % VOCAB_BANK.length];
   const due = reviewDueCount();

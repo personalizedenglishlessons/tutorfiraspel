@@ -2572,7 +2572,7 @@ async function billingView(){
       '<div class="field full"><label>'+(lang==='ar'?'جواب (عربي)':'Answer (AR)')+'</label><textarea class="input" rows="2" data-faq="aAr" data-i="'+i+'">'+esc(f.aAr||'')+'</textarea></div>' +
       '</div><div class="btn-row" style="margin-top:8px;"><button class="btn btn-ghost btn-sm" data-faq-del="'+i+'">'+esc(lang==='ar'?'حذف السوال':'Remove')+'</button></div></div>';
   }
-  var faqHtml = '<div class="section-title">'+(lang==='ar'?'الاسيلة الشايعة':'FAQs (index)')+'</div>' +
+  var faqHtml = '<div class="section-title">'+(lang==='ar'?'الاساله الشايعة':'FAQs (index)')+'</div>' +
     '<div id="faqList">'+faqArr.map(faqRowHtml).join('')+'</div>' +
     '<div class="btn-row" style="margin-bottom:8px;"><button class="btn btn-outline btn-sm" id="faqAdd">'+esc(lang==='ar'?'سوال جديد':'Add question')+'</button></div>';
   indexHtml += faqHtml;
@@ -3430,7 +3430,7 @@ function editAnnouncementForm(a){
 
 async function settingsView(){
   var head = pageHead(lang === 'ar' ? 'اعدادات الموقع' : 'Site Settings',
-    lang === 'ar' ? 'شريط الاعلان الرييسي، الاسيلة الشايعة، رقم الواتساب، وخيارات الموقع - التغييرات تظهر للزوار فوراً.' : 'Homepage banner, FAQs, WhatsApp number and site flags - changes go live for visitors instantly.');
+    lang === 'ar' ? 'شريط الاعلان الرييسي، الاساله الشايعة، رقم الواتساب، وخيارات الموقع - التغييرات تظهر للزوار فوراً.' : 'Homepage banner, FAQs, WhatsApp number and site flags - changes go live for visitors instantly.');
   $('viewArea').innerHTML = head + loadingBlock();
   var c = client();
   if(!c){ $('viewArea').innerHTML = errBlock('no client'); return; }
@@ -3470,7 +3470,7 @@ async function settingsView(){
       '</div>' +
     '</div>' +
     '<div class="card" style="max-width:760px; margin-top:16px;">' +
-      '<div class="s360-meta" style="margin-top:0;"><span class="chip gold">' + esc(lang === 'ar' ? 'الاسيلة الشايعة - الصفحة البداية' : 'Homepage FAQs') + '</span></div>' +
+      '<div class="s360-meta" style="margin-top:0;"><span class="chip gold">' + esc(lang === 'ar' ? 'الاساله الشايعة - الصفحة البداية' : 'Homepage FAQs') + '</span></div>' +
       '<p style="margin:10px 0 0; font-size:.76rem; color:var(--text-muted); line-height:1.7;">' +
         esc(lang === 'ar'
           ? 'كل سطر = سوال|جواب. لازم نفس عدد الاسطر بالعربي والانجليزي وبنفس الترتيب.'
@@ -3498,7 +3498,7 @@ async function settingsView(){
     var arL = faqParse($('stFaqAr').value), enL = faqParse($('stFaqEn').value);
     if(arL.length !== enL.length){
       btn.disabled = false;
-      toast(lang === 'ar' ? 'عدد اسطر الاسيلة مختلف بين العربي والانجليزي - سوهم نفس العدد.' : 'FAQ line count differs between Arabic and English - make them match.', true);
+      toast(lang === 'ar' ? 'عدد اسطر الاساله مختلف بين العربي والانجليزي - سوهم نفس العدد.' : 'FAQ line count differs between Arabic and English - make them match.', true);
       return;
     }
     var faqOut = [];
