@@ -9648,8 +9648,9 @@ if(document.body) locObserver.observe(document.body, {childList:true, subtree:tr
 function triplet(en, ar, translit, cardStyle){
   // Pronunciation comes from the one sound-based engine, never from a
   // hand-typed string, so the same English always renders the same way.
+  en = en||''; ar = ar||''; translit = translit||'';
   const pron = translitEn(en) || translit;
-  return `<div class="triplet${cardStyle?' triplet-card':''}"><div class="t-en">${en}</div><div class="t-ar">${ar}</div><div class="t-translit">${pron}</div></div>`;
+  return `<div class="triplet${cardStyle?' triplet-card':''}"><div class="t-en">${escapeHtml(en)}</div><div class="t-ar">${escapeHtml(ar)}</div><div class="t-translit">${escapeHtml(pron)}</div></div>`;
 }
 
 const LESSON_TITLE_BANK = [
@@ -15759,7 +15760,7 @@ function renderQuiz(container, questions, keyPrefix){
     const q = questions[current];
     container.innerHTML = `
       <p style="font-size:.72rem; color:var(--text-muted); margin-bottom:8px;"><span class="arabic">سوال ${current+1} من ${questions.length}</span>، Question ${current+1} of ${questions.length}</p>
-      <h4 style="font-size:1.02rem; margin-bottom:16px; display:flex; align-items:flex-start; gap:8px;"><span style="flex:1;">${q.q}</span><button class="icon-btn speak-btn" data-speak="${(q.q.match(/[A-Za-z][A-Za-z\s,?'-.]+$/) || [''])[0].trim()}" aria-label="Listen" style="flex-shrink:0;width:26px;height:26px;"><i data-lucide="volume-2" width="12" height="12"></i></button></h4>
+      <h4 style="font-size:1.02rem; margin-bottom:16px; display:flex; align-items:flex-start; gap:8px;"><span style="flex:1;">${q.qEn ? escapeHtml(q.qEn) + (q.qAr ? '<div class="arabic" style="font-size:.85rem;font-weight:400;margin-top:4px;">' + escapeHtml(q.qAr) + '</div>' : '') + (q.qTr ? '<div class="arabic" style="font-size:.76rem;color:var(--gold-soft);margin-top:3px;">' + escapeHtml(q.qTr) + '</div>' : '') : escapeHtml(q.q||'')}</span><button class="icon-btn speak-btn" data-speak="${escapeHtml((q.qEn||q.q||'').match(/[A-Za-z][A-Za-z\s,?'-.]+$/) ? (q.qEn||q.q||'').match(/[A-Za-z][A-Za-z\s,?'-.]+$/)[0].trim() : '')}" aria-label="Listen" style="flex-shrink:0;width:26px;height:26px;"><i data-lucide="volume-2" width="12" height="12"></i></button></h4>
       <div id="${keyPrefix}-options"></div>`;
     const optWrap = container.querySelector('#'+keyPrefix+'-options');
     q.options.forEach((opt,i) => {
