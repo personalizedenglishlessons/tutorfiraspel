@@ -1216,7 +1216,7 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
           </div>
 
           <!-- CONTINUE LEARNING -->
-          <div class="eyebrow" style="margin-bottom:14px;"><span class="arabic">كمل تعلمك</span>، Continue Learning</div>
+          <div class="eyebrow" id="continueLearningLabel" style="margin-bottom:14px;"><span class="arabic">كمل تعلمك</span>، Continue Learning</div>
           <div class="card hoverable" style="display:flex; gap:24px; align-items:center; flex-wrap:wrap; margin-bottom:34px;" id="continueLearningCard">
             <div style="width:74px; height:74px; border-radius:16px; background:linear-gradient(135deg, rgba(200,169,106,.22), rgba(168,131,69,.14)); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
               <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.7"><path d="M8 5v14l11-7z"/></svg>
@@ -17844,6 +17844,12 @@ function renderActivePath(){
       </div>`).join('')}
     </div>` : '';
   if(card) card.style.display = '';
+  // Hide the hero card to avoid duplicate CTA — the active path card is the
+  // primary lesson entry point when the server state is loaded.
+  const heroCard = document.getElementById('heroCard');
+  if(heroCard) heroCard.style.display = 'none';
+  const clLabel = document.getElementById('continueLearningLabel');
+  if(clLabel) clLabel.style.display = '';
   body.innerHTML = `
     <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
       <span class="chip gold"><span class="arabic">${ar?'المستوى':'Level'}</span>، ${ar?'Level':''} ${st.level}</span>
@@ -18024,6 +18030,10 @@ async function startNextGuidedLesson(depth){
 function renderContinueLearning(){
   if(renderActivePath()){ /* database-driven path takes priority */ }
   else{
+  // Show the hero card — it's the primary CTA when there's no active path
+  const heroCard = document.getElementById('heroCard');
+  if(heroCard) heroCard.style.display = '';
+  const clLabel = document.getElementById('continueLearningLabel');
   const firstTime = isFirstTimeStudent();
   const inProgress = directionAcademies().find(a => a.progress > 0 && a.progress < 100);
   const {level, en: levelEn} = levelInfo();
@@ -18070,6 +18080,7 @@ function renderContinueLearning(){
     const estChip = document.getElementById('heroEstChip');
     if(estChip && firstObj && firstObj.duration) estChip.innerHTML = `<span class="arabic">تقريبا ${escapeHtml(String(firstObj.duration).replace(/\bmin\b/gi,'دقيقة').replace(/\bhr\b/gi,'ساعة'))}</span>، Est. ${escapeHtml(firstObj.duration||'')}`;
     if(card) card.style.display = 'none';
+    if(clLabel) clLabel.style.display = 'none';
   }else{
     const planNext = hasPlan() ? nextFromPlan() : null;
     if(heroTitle) heroTitle.innerHTML = `<span class="arabic" style="display:block; font-size:.7em; font-weight:400; color:var(--text-secondary); margin-bottom:2px;">كمل من حيث توقفت</span>Resume where you left off`;
@@ -18082,6 +18093,7 @@ function renderContinueLearning(){
       if(resumeText) resumeText.innerHTML = nextObj ? `<span class="arabic">${escapeHtml(nextObj.ar||'')}</span> · ${escapeHtml(nextObj.title||'')}` : `<span class="arabic">${escapeHtml(inProgress.ar||'')}</span> · ${escapeHtml(inProgress.en||'')}`;
       setHomeSubtitle(nextObj ? `كمل: ${escapeHtml(nextObj.ar||'')}.` : `كمل: ${escapeHtml(inProgress.ar||'')}.`, nextObj ? `Continue: ${escapeHtml(nextObj.title||'')}.` : `Continue: ${escapeHtml(inProgress.en||'')}.`);
       if(card) card.style.display = '';
+      if(clLabel) clLabel.style.display = '';
       if(body) body.innerHTML = `
         <span class="chip emerald">${escapeHtml(inProgress.en||'')}</span>
         <div style="display:flex; align-items:center; gap:12px; margin-top:12px;">
@@ -18100,6 +18112,7 @@ function renderContinueLearning(){
       if(resumeText) resumeText.innerHTML = `<span class="arabic">${escapeHtml(planNext.titleAr)}</span> · ${escapeHtml(planNext.titleEn)}`;
       setHomeSubtitle(`كمل: ${escapeHtml(planNext.titleAr||'')}.`, `Continue: ${escapeHtml(planNext.titleEn||'')}.`);
       if(card) card.style.display = '';
+      if(clLabel) clLabel.style.display = '';
       if(body) body.innerHTML = `
         <span class="chip gold"><span class="arabic">${escapeHtml(planNext.academyAr || '')}</span> · ${escapeHtml(planNext.academyEn || '')}</span>
         <div style="display:flex; align-items:center; gap:12px; margin-top:12px;">
@@ -18110,6 +18123,7 @@ function renderContinueLearning(){
     }else{
       if(resumeText) resumeText.innerHTML = `<span class="arabic">ما بدات اي درس بعد</span>، No lesson started yet.`;
       if(card) card.style.display = 'none';
+      if(clLabel) clLabel.style.display = 'none';
       setHomeSubtitle('كل المسارات مكتملة. راجع مفرداتك او ابدا بدرس جديد.', 'All learning paths complete. Review your vocabulary or start a fresh one.');
     }
   }
