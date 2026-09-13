@@ -254,7 +254,7 @@ the lesson view rendering section of app.html:
 
 ### 2. Admin panel hamza cleanup (622 lines with hamzas)
 - admin/admin.js has 622 lines with hamza characters in Arabic labels
-- These are MSA/formal Arabic (e.g., "الإدارة", "المؤسسة")
+- These are MSA/formal Arabic (e.g., "الادارة", "الموسسة")
 - User said "literally anywhere in the app" - may need to address admin panel too
 - LOW PRIORITY: admin panel is for teachers, not students
 
