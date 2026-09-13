@@ -236,7 +236,7 @@ var I = {
   'totalLessons':{en:'Total lessons', ar:'اجمالي الدروس'},
   'completedCount':{en:'Completed lessons', ar:'الدروس المنجزة'},
   'recVsProd':{en:'Recognition vs Production', ar:'الاسترجاع مقابل الإنتاج'},
-  'recVsProdHint':{en:'First-try production is the mastery signal — how often the student can USE the language, not just recognize it.', ar:'الإنتاج من أول محاولة هو مؤشر الإتقان — قدرة الطالب على استخدام اللغة، وليس التعرف عليها فقط.'},
+  'recVsProdHint':{en:'First-try production is the mastery signal - how often the student can USE the language, not just recognize it.', ar:'الانتاج من اول محاولة هو مؤشر الاتقان - قدرة الطالب على استخدام اللغة، وليس التعرف عليها فقط.'},
   'recognition':{en:'Recognition', ar:'الاسترجاع'},
   'production':{en:'Production (eventual)', ar:'الإنتاج (بعد المحاولات)'},
   'productionFirst':{en:'Production (first try)', ar:'الإنتاج (أول محاولة)'},

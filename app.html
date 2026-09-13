@@ -21,8 +21,8 @@
 <script src="lib/pel-plans.js?v=9df345ce" defer></script>
 <script src="lib/pel-settings.js?v=efc52be5" defer></script>
 <script src="lib/cert-qr.js?v=a43f19f9" defer></script>
-<script src="lib/cert-sheet.js?v=2bb6195d" defer></script>
-<script src="lib/pel_lesson_stage.js?v=9f823f0d"></script>
+<script src="lib/cert-sheet.js?v=5df6f54c" defer></script>
+<script src="lib/pel_lesson_stage.js?v=6aaa2cff"></script>
 <script src="lib/pel_dashboard_life.js?v=ed676701"></script>
 <script src="lib/pel_curriculum_path.js?v=b97575ec"></script>
 <style>
@@ -15869,21 +15869,21 @@ function academyCardHTML(a){
   if(a.progress >= 100) badges.push('<span class="chip emerald"><span class="arabic">مكتمل</span>، Completed</span>');
   return `
     <div class="academy-card" data-academy="${a.id}">
-      <div class="academy-cover" style="background:linear-gradient(135deg, ${a.from}, ${a.to});">
-        <button class="academy-fav${fav?' active':''}" data-fav="${a.id}" aria-label="Favourite"><i data-lucide="heart" width="15" height="15" fill="${fav?'currentColor':'none'}"></i></button>
-        <i class="cover-icon" data-lucide="${a.icon}" width="46" height="46" style="color:#fff;"></i>
+      <div class="academy-cover" style="background:linear-gradient(135deg, ${a.from||'#667eea'}, ${a.to||'#764ba2'});">
+        <button class="academy-fav${fav?' active':''}" data-fav="${escapeHtml(a.id||'')}" aria-label="Favourite"><i data-lucide="heart" width="15" height="15" fill="${fav?'currentColor':'none'}"></i></button>
+        <i class="cover-icon" data-lucide="${a.icon||'book-open'}" width="46" height="46" style="color:#fff;"></i>
         <div class="academy-badges">${badges.join('')}</div>
       </div>
       <div class="academy-body">
-        <span class="chip">${a.cat}</span>
+        <span class="chip">${escapeHtml(a.cat||'')}</span>
         <h4 style="margin-top:12px; font-size:1.02rem;">${escapeHtml(a.en||'')}</h4>
         <div class="academy-title-ar">${escapeHtml(a.ar||'')}</div>
-        <div class="academy-translit">${a.dir === 'ar' ? a.translit : translitEn(a.en)}</div>
-        <div class="progress-track" style="margin-top:14px;"><span class="progress-fill" style="width:${a.progress}%;"></span></div>
+        <div class="academy-translit">${escapeHtml(a.dir === 'ar' ? (a.translit||'') : translitEn(a.en||''))}</div>
+        <div class="progress-track" style="margin-top:14px;"><span class="progress-fill" style="width:${a.progress||0}%;"></span></div>
         <div class="academy-meta-row">
-          <span><i data-lucide="bar-chart-2" width="12" height="12"></i>${a.difficulty}</span>
-          <span><i data-lucide="clock" width="12" height="12"></i>${a.duration}</span>
-          <span><i data-lucide="layers" width="12" height="12"></i>${a.lessons} lessons</span>
+          <span><i data-lucide="bar-chart-2" width="12" height="12"></i>${escapeHtml(a.difficulty||'')}</span>
+          <span><i data-lucide="clock" width="12" height="12"></i>${escapeHtml(a.duration||'')}</span>
+          <span><i data-lucide="layers" width="12" height="12"></i>${a.lessons||0} lessons</span>
         </div>
       </div>
     </div>`;
