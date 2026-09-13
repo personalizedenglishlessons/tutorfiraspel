@@ -69,7 +69,7 @@ padding, conversation line width, and font sizes.
 8. Reload — verify selection + correct highlight restored
 9. In Arabic mode: verify no HTML leaks in input placeholders
 
-### NEXT: Live-test pronunciation hints + teaching flow (commit pending)
+### DONE: Expanded pronunciation + flow fixes + regression tests (commit `d3abc33`)
 
 #### Bug G: Fake dialogue — FIXED (commit `85f1352`)
 #### Bug H: Substring matching — FIXED (commit `85f1352`)
@@ -104,11 +104,19 @@ padding, conversation line width, and font sizes.
   match uses taught items, fake dialogue filtered, vocab-only skips
   production activities, challenge/review use taught items
 
+#### Advisor fixes (this commit — follow-up to d3abc33)
+- Removed `live` (heteronym: verb /lɪv/ vs adjective /laɪv/) from PRON_HINTS
+- concept_examples pool now deduplicates by normalized English text
+- concept_examples pool now includes `correct` exercise right answers
+- exercise-derived examples only added if they have Arabic translation
+- concept_examples renderer suppresses empty Arabic/translit reveal rows
+- DB pronunciation fields (pron_hint_ar, avoid_ar, beats) now carried through
+  dbToLesson (app.html) and buildItems (pel_lesson_stage.js)
+
 ### Verification status (updated)
 - ✅ `node --check` — syntax OK
 - ✅ `node tests/test_buildsequence_iam.js` — 13/13 PASS
 - ✅ `node tests/test_teaching_flow.js` — 31/31 PASS
-- ✅ Cache buster — `?v=fbf858e5`
 - ❌ NOT YET LIVE-TESTED: pronunciation hints rendering
 - ❌ NOT YET LIVE-TESTED: concept_examples activity
 - ❌ NOT YET LIVE-TESTED: match using taughtItems

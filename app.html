@@ -22,7 +22,7 @@
 <script src="lib/pel-settings.js?v=efc52be5" defer></script>
 <script src="lib/cert-qr.js?v=a43f19f9" defer></script>
 <script src="lib/cert-sheet.js?v=2bb6195d" defer></script>
-<script src="lib/pel_lesson_stage.js?v=fbf858e5"></script>
+<script src="lib/pel_lesson_stage.js?v=edec9e67"></script>
 <script src="lib/pel_dashboard_life.js?v=ed676701"></script>
 <script src="lib/pel_curriculum_path.js?v=b97575ec"></script>
 <style>
@@ -13452,6 +13452,8 @@ function dbToLesson(dbl, academy){
         pos: i.pos || '', ipa: i.ipa || '',
         example: exEn ? { en: exEn, ar: exAr, translit: exTr } : {},
         tip: i.note_en || i.noteEn || i.note_ar || '',
+        // Pronunciation hints: DB-authored hints override the hardcoded map
+        pron_hint_ar: i.pron_hint_ar || '', avoid_ar: i.avoid_ar || '', beats: i.beats || 0,
         sentences: []
       };
     });
