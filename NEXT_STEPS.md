@@ -67,6 +67,18 @@ the lesson view rendering section of app.html:
 
 **ALL user-facing .en/.ar accesses in app.html are now escapeHtml-guarded.**
 
+### Additional fixes (commits 174493e, 42fe85b, 484407f)
+- lesson.summary, lesson.takeaway, v.tip: escapeHtml + null guards
+- nextItem.ar: escapeHtml
+- renderFocusCard: rec.ctaAr/ctaEn/view escaped
+- setHomeSubtitle: function-level escapeHtml for ar/en params
+- estChip (nextObj.duration): escaped
+- setHomeSubtitle calls: all callers now pass escaped values
+- dbToLesson quiz construction: qEn/qAr/qtr escaped via escapeHtml (XSS fix)
+- renderDbPractice order tokens: esc(t) added (XSS fix)
+
+**Full audit complete: all user-facing template literals in app.html, lib/pel_lesson_stage.js, admin/admin.js, and lib/cert-sheet.js are now escapeHtml-guarded or use esc()/textContent.**
+
 ## NEXT: Live testing + remaining work
 
 ### 1. Live-test all fixes in browser
