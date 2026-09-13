@@ -1,6 +1,90 @@
 # NEXT STEPS — pick up here
 
-## ✅ DONE: Teach-before-test + null bug fix + auto-advance (this session)
+## ✅ DONE: Comprehensive null-guard audit + em dash cleanup (this session, commits 33680b9, b990413, f6df47b, 6b253b8)
+
+### Full activity renderer audit (commit 33680b9)
+Spawned a subagent to audit ALL 27 activity renderers in `lib/pel_lesson_stage.js`.
+Audit saved to `/home/user/workspace/audit_renderers.md`.
+
+#### 13 critical TypeError crashes FIXED
+All renderers that accessed fields on potentially-undefined objects without
+null checks — would throw `TypeError` at runtime if data was missing:
+1. `learn_sentence` — `act.sentence` not null-checked
+2. `arrange_words` — `act.sentence` not null-checked
+3. `fill_blank` — `it.sentences[0]` throws if `it.sentences` undefined (already partially fixed, hardened further)
+4. `listen` — `it.example.en` unguarded
+5. `identify_heard` — `it.example.en` unguarded
+6. `speaking` — `act.sentence` not null-checked
+7. `conversation_response` — `act.conv` not null-checked
+8. `complete_dialogue` — `conv[gap]` throws if `conv` undefined
+9. `grammar_correction` — `it.sentences[0]` and `it.example.en` both unguarded (already partially fixed, hardened)
+10. `choose_natural_expression` — `act.quiz[0]` throws if `act.quiz` undefined
+11. `free_response` — `act.item` not null-checked
+12. `review` — `act.items` not null-checked
+13. `challenge` — `shuffle(act.items)` throws if `act.items` undefined
+
+All fixed with `||{}` / `||[]` guards.
+
+#### 18 high-severity null/undefined text rendering FIXED
+Added `||''` fallbacks to `esc()` calls across 13 renderers where null fields
+could render as "null"/"undefined" text in the HTML. Although `escapeHtml()`
+in app.html already does `(s||'')`, adding explicit `||''` is defense-in-depth.
+
+Affected: recognize, match, arrange_words, spell, translate, pronunciation,
+speaking, listening_dictation, grammar_correction, free_response, review,
+challenge, complete_dialogue.
+
+### dbToLesson + renderDbPractice null guards (commit b990413)
+- Guarded `x.payload.question.*` with `(x.payload||{}).question||{}` in quiz construction
+- Guarded all `x.payload.*` accesses in `renderDbPractice` (order, spell, correct, translate)
+- Fixed ReferenceError: variable `p` was scoped to `checkBtn` handler but accessed in `dbx-pick` click handler — would crash at runtime. Now uses its own `pp` variable.
+- Added `esc()` to all user-facing text in `renderDbPractice`
+
+### Em dash cleanup (commit f6df47b)
+User instruction: NO em dashes (—) anywhere in the app.
+- Replaced 30+ em dashes in pronunciation hints with hyphens (-)
+- Replaced em dashes in score display placeholders
+- Replaced em dashes in mic unavailable messages (Arabic + English)
+- Replaced em dash in profile credits placeholder
+- Remaining em dashes are only in code comments (not user-facing)
+
+### Welcome screen null guards (commit 6b253b8)
+- Added `escapeHtml` + `||''` to resume text rendering
+- Added `||''` fallbacks to `setHomeSubtitle` calls
+
+### Verification status
+- ✅ `node --check lib/pel_lesson_stage.js` — syntax OK
+- ✅ `node tests/test_buildsequence_iam.js` — 13/13 PASS
+- ✅ `node tests/test_teaching_flow.js` — 31/31 PASS
+- ✅ All commits pushed to main
+
+### Commits this session
+| Commit | Description |
+|--------|-------------|
+| `33680b9` | fix: null-guard all activity renderers against TypeError crashes |
+| `b990413` | fix: null-guard dbToLesson quiz construction and renderDbPractice |
+| `f6df47b` | fix: remove em dashes from user-facing text, fix ReferenceError in dbx-pick |
+| `6b253b8` | fix: add escapeHtml + null guards to welcome screen text rendering |
+
+### What still needs attention (breadcrumbs for next session)
+1. **Live-test all fixes in browser** — load `app.html?fresh=<timestamp>`, log in,
+   open a lesson, verify no crashes on any activity type
+2. **Unguarded `.en`/`.ar` in app.html template literals** — ~30 locations in
+   lesson view rendering (lines 15878, 16220, 16318, 16331, 16349, 16371, 16404-16406,
+   16440, 16447, 16519-16533, 16811) where `v.en`, `v.ar`, `academy.ar`, `lesson.ar`,
+   `h.ar`, `h.en` are used without `||''` or `escapeHtml`. Low risk (data is
+   typically well-structured) but could show "undefined" if data is incomplete.
+3. **Merge feature branches** (still deferred):
+   - `feat/admin-create-student` — conflicts in `admin/admin.js`
+   - `fix/lesson-engine-phase1` — conflicts in `app.html`
+4. **DB quiz questions**: ensure all DB choose exercises have Arabic translations
+5. **Teaching methods review**: the teach-before-test pattern is implemented at
+   curriculum level (concept → concept_examples → learn → learn_sentence → practice).
+   Consider whether additional in-activity teaching hints are needed.
+
+---
+
+## ✅ DONE: Teach-before-test + null bug fix + auto-advance (previous session)
 
 ### Audit round 2: Enhanced teaching panel + renderer fixes
 
