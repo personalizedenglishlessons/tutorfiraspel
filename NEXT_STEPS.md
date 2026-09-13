@@ -4,6 +4,38 @@
 
 ### Audit round 2: Enhanced teaching panel + renderer fixes
 
+#### Audit round 3: Expanded Arabic grammar connection notes
+Expanded `connectionNoteFor()` from 5 to 24 grammar patterns covering all
+beginner lesson topics:
+1. There is / There are (existence)
+2. Present continuous (am/is/are + -ing)
+3. Present perfect (have/has + past participle)
+4. Going to (future plans)
+5. Will (future)
+6. Can / can't (ability)
+7. Have / has (possession)
+8. Would like (polite requests)
+9. Could you / Would you mind (polite requests)
+10. How much / How many (countable/uncountable)
+11. WH- question words (what/where/when/who/why/how)
+12. Comparatives (-er than / more... than)
+13. Demonstrative pronouns (this/that/these/those)
+14. Articles (a/an/the)
+15. Possessive adjectives (my/your/his/her/our/their)
+16. Prepositions (in/on/at)
+17. So do I / Neither do I (agreement)
+18. It is + adjective (weather/descriptions)
+19. Present tense to be (am/is/are)
+20. Past tense to be (was/were)
+21. Present simple (verb + s)
+22. Questions with do/does
+23. Negation with don't/doesn't
+24. Imperatives (commands)
+
+Each note explains the pattern in Saudi Arabic with examples and the sentence
+structure (النمط). Patterns are ordered from most specific to most general
+to avoid false matches (e.g., "there is" before "am/is/are").
+
 #### choose_natural_expression renderer fixed
 Was rendering raw `q.q` HTML (which included inline Arabic/translit divs from
 `dbToLesson`). Now renders `q.qEn`/`q.qAr`/`q.qTr` explicitly with proper
