@@ -18184,9 +18184,7 @@ function syncHeroStats(){
     if(label) label.textContent = pct + '%';
   };
   setRing('heroRing', 'heroRingLabel', weeklyPct, 251);
-  setRing('heroTodayRing', 'heroTodayPct', todayPct, 163);
-  setRing('heroWeeklyRing', 'heroWeeklyPct', weeklyPct, 163);
-  setRing('heroMonthlyRing', 'heroMonthlyPct', monthlyPct, 163);
+  // Removed: heroTodayRing, heroWeeklyRing, heroMonthlyRing — redundant progress rings removed from home page
 
   const streakNum = document.getElementById('heroStreakNum'); if(streakNum) streakNum.textContent = studentStats.streak;
   const lessonsNum = document.getElementById('heroLessonsNum'); if(lessonsNum) lessonsNum.textContent = completedLessons.size;
@@ -19344,26 +19342,7 @@ function renderSkillBars(){
     }).join('');
   if(window.lucide) lucide.createIcons();
 }
-function renderStatStories(){
-  const el = document.getElementById('statStories');
-  if(!el) return;
-  if(isFirstTimeStudent()){ el.innerHTML = ''; return; }
-  const w = dashWeekStats();
-  const due = reviewDueCount();
-  const today = pelDateKey();
-  const studiedToday = studentStats.lastStudyDate === today;
-  const future = reviewQueue().filter(r => r.due > Date.now()).sort((a,b) => a.due - b.due)[0];
-  const nextDue = future ? Math.max(1, Math.ceil((future.due - Date.now()) / 86400000)) : null;
-  const stories = [
-    { ar: studentStats.streak === 0 ? 'ادرس اليوم وابدا سلسلتك' : studiedToday ? 'حافظت على السلسلة اليوم' : 'ادرس اليوم عشان ما تنقطع',
-      en: studentStats.streak === 0 ? 'Study today to start your streak' : studiedToday ? 'Streak safe today' : 'Study today to keep it alive' },
-    { ar: `+${w.weekLessons} هذا الاسبوع`, en: `+${w.weekLessons} lesson${w.weekLessons === 1 ? '' : 's'} this week` },
-    { ar: `من ${completedLessons.size} درس`, en: `across ${completedLessons.size} lessons` },
-    { ar: nextDue ? `اقرب كلمة جاهزة بعد ${nextDue} ${nextDue === 1 ? 'يوم' : 'ايام'}` : due > 0 ? `${due} جاهزة الحين` : 'قايمة المراجعة فاضية',
-      en: nextDue ? `Next review word in ${nextDue}d` : due > 0 ? `${due} due right now` : 'Review queue is clear' },
-  ];
-  el.innerHTML = stories.map(s => `<div style="flex:1; min-width:150px; font-size:.74rem; color:var(--text-muted); line-height:1.5;"><span class="arabic" style="display:block;">${escapeHtml(s.ar||'')}</span>${escapeHtml(s.en||'')}</div>`).join('');
-}
+/* renderStatStories removed — #statStories element was removed from home page during consolidation */
 function renderLevelBlock(){
   const el = document.getElementById('levelBlock');
   if(!el) return;
@@ -19406,7 +19385,6 @@ function renderDashboardIntel(){
   renderFocusCard();
   renderQuickWin();
   renderSkillBars();
-  renderStatStories();
   renderLevelBlock();
   renderHeroIntel();
   if(window.lucide) lucide.createIcons();

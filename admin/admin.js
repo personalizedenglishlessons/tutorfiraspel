@@ -2003,31 +2003,7 @@ function addMemberModal(groupId){
     }, 350);
   });
 }
-function createStudentModal(st){
-  var s = modal(t('newStudent'), '' +
-    '<div class="form-grid">' +
-    '<div class="field" style="grid-column:1/-1;"><label>' + esc(t('name')) + '</label><input class="input" id="csName" placeholder="' + esc(t('name')) + '"></div>' +
-    '<div class="field"><label>' + esc(t('email')) + '</label><input class="input" id="csEmail" type="email" placeholder="student@example.com"></div>' +
-    '<div class="field"><label>' + esc(t('password')) + '</label><div style="display:flex; gap:6px;"><input class="input" id="csPass" type="password" placeholder="\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022" style="flex:1;"><button type="button" class="btn btn-ghost btn-sm" id="csToggle" style="flex:0 0 auto;">' + esc(t('showPassword')) + '</button></div><span class="why">' + esc(t('passwordHint')) + '</span></div>' +
-    '</div>' +
-    '<div class="btn-row" style="margin-top:16px;"><button class="btn btn-gold btn-sm" id="csSave">' + esc(t('create')) + '</button><button class="btn btn-ghost btn-sm" data-close>' + esc(t('cancel')) + '</button></div>');
-  s.querySelector('[data-close]').addEventListener('click', function(){ closeModal(s); });
-  var tog = $('csToggle');
-  if(tog) tog.addEventListener('click', function(){ var inp = $('csPass'); var show = inp.type === 'password'; inp.type = show ? 'text' : 'password'; tog.textContent = show ? t('hidePassword') : t('showPassword'); });
-  var save = $('csSave');
-  if(save) save.addEventListener('click', async function(){
-    var name = $('csName').value.trim(), email = $('csEmail').value.trim(), pass = $('csPass').value;
-    if(!name || !email || !pass){ toast(t('required'), true); return; }
-    save.disabled = true; save.textContent = '\u2026';
-    var r = await rpc('admin_create_student', { p_email: email, p_password: pass, p_full_name: name });
-    save.disabled = false; save.textContent = t('create');
-    if(!r.ok){ toast((r.error && r.error.message) ? r.error.message : t('errorGeneric'), true); return; }
-    await audit('student.create', 'user', (r.data && r.data.user_id) || '', { email: email, full_name: name });
-    closeModal(s);
-    toast(t('studentCreated'));
-    st.page = 0; loadStudents(st);
-  });
-}
+/* createStudentModal removed — superseded by openCreateStudent() from feat/admin-create-student merge */
 function assignTeacherModal(groupId){
   var s = modal(t('assignTeacher'), '<select class="input" id="atSel"><option value="">-</option></select>' +
     '<div class="btn-row"><button class="btn btn-gold btn-sm" id="atSave">' + esc(t('assign')) + '</button><button class="btn btn-ghost btn-sm" data-close>' + esc(t('cancel')) + '</button></div>');
