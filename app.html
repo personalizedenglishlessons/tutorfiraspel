@@ -17,14 +17,15 @@
 <script src="https://unpkg.com/lucide@1.34.0/dist/umd/lucide.js" integrity="sha384-frWQkjuw7X/yo4G2C2YnAAbkHHi7uBnMwf577mOjXDG0me9gl8Yrdyu1BhvS7WX5" crossorigin="anonymous" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.50.0/dist/umd/supabase.js" integrity="sha384-K0oxqktRvaThvYgGL4G+OK2Ih6VS6Uyu7j3+7WJgp/uWM0Yv6Xi4YEiw0BB+mPfi" crossorigin="anonymous" defer></script>
 <script src="lib/daily-lesson.js?v=ab0b373a" defer></script>
-<script src="lib/pel-personalization.js?v=992f67ed" defer></script>
+<script src="lib/pel-personalization.js?v=3c4594b8" defer></script>
 <script src="lib/pel-plans.js?v=9df345ce" defer></script>
 <script src="lib/pel-settings.js?v=efc52be5" defer></script>
 <script src="lib/cert-qr.js?v=a43f19f9" defer></script>
 <script src="lib/cert-sheet.js?v=5278e935" defer></script>
-<script src="lib/pel_lesson_stage.js?v=f32a48f6"></script>
+<script src="lib/pel_config.js?v=e4857dea"></script>
+<script src="lib/pel_lesson_stage.js?v=88a5cf7f"></script>
 <script src="lib/pel_dashboard_life.js?v=ed676701"></script>
-<script src="lib/pel_curriculum_path.js?v=b97575ec"></script>
+<script src="lib/pel_curriculum_path.js?v=f17afc34"></script>
 <style>
 /* ============================================================
    DESIGN SYSTEM TOKENS, shared with index.html / login.html
@@ -1499,8 +1500,8 @@ document.addEventListener('click', e => {
 /* ============================================================
    SUPABASE AUTH GUARD
    ============================================================ */
-const SUPABASE_URL = 'https://lewoochehpiycocvfwtz.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxld29vY2hlaHBpeWNvY3Zmd3R6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwNzQ3MzcsImV4cCI6MjA5OTY1MDczN30.sIWK6jwX7PW70fH0yPUuhOb25N1lBw2-Cvb3dtwDb9Y';
+const SUPABASE_URL = window.PEL_CONFIG.SUPABASE_URL;
+const SUPABASE_ANON_KEY = window.PEL_CONFIG.SUPABASE_ANON_KEY;
 let supabase = null;
 function client(){
   if(supabase) return supabase;
@@ -1508,7 +1509,7 @@ function client(){
   return supabase;
 }
 /* Bridge the shared client to satellite modules (live classes etc.) that
-   live OUTSIDE this IIFE — `client` is scoped here and was never visible to
+   live OUTSIDE this IIFE - `client` is scoped here and was never visible to
    them, which silently broke the Live Classes view (0 credits, dead تم
    button) since it was written. */
 window.pelSupabaseClient = function(){ return client(); };
@@ -1545,7 +1546,7 @@ let currentUser = null;
 let studentStats = { xp: 0, streak: 0, longestStreak: 0, lastStudyDate: null };
 /* LOCAL date key (YYYY-MM-DD) for the learner's timezone. The app used to use
    toISOString() (UTC) for study-day keys while week boundaries were computed
-   in local time — so a learner in Asia/Riyadh (UTC+3) who studied between
+   in local time - so a learner in Asia/Riyadh (UTC+3) who studied between
    midnight and 03:00 local had their study recorded under the previous UTC
    day and the dashboard showed "0 days this week" even right after studying.
    pelDateKey is now the single source of truth for every study/completion/
@@ -1603,17 +1604,21 @@ function clearStudentState(){
   renderDashboardIntel();
 }
 /* ============================================================
-   CREDITS — global loader for topbar pill + profile display
+   CREDITS - global loader for topbar pill + profile display
    Fetches from student_live_class_overview RPC and updates the
    topbar pill, so credits given by admin are immediately visible.
    ============================================================ */
 let _pelCredits = 0;
+let _pelOverviewCache = null; // shared cache for loadOverview to reuse
+let _pelOverviewTs = 0;
 async function refreshCredits(){
   const cl = client(); if(!cl || !currentUser) return;
   try{
     const { data, error } = await cl.rpc('student_live_class_overview');
     if(!error && data){
       _pelCredits = data.credits || 0;
+      _pelOverviewCache = data;
+      _pelOverviewTs = Date.now();
       const pill = document.getElementById('topbarCredits');
       const num = document.getElementById('topCreditsNum');
       if(pill && num){
@@ -1624,7 +1629,7 @@ async function refreshCredits(){
       const pc = document.getElementById('profileCreditsNum');
       if(pc) pc.textContent = _pelCredits;
     }
-  }catch(e){ /* credits RPC may not exist yet */ }
+  }catch(e){ console.warn('[PEL] credits RPC failed:', e.message||e); }
 }
 // Click the topbar credits pill to go to the Live Classes view
 document.addEventListener('DOMContentLoaded', () => {
@@ -1654,7 +1659,7 @@ async function loadStudentState(){
   const fresh = defaultStudentStateRow();
   applyStudentStateRow(fresh);
   if(!error){
-    try{ await c.from('student_state').upsert({ user_id: currentUser.id, ...fresh, updated_at: new Date().toISOString() }, {onConflict:'user_id'}); }catch(e){}
+    try{ await c.from('student_state').upsert({ user_id: currentUser.id, ...fresh, updated_at: new Date().toISOString() }, {onConflict:'user_id'}); }catch(e){ console.warn('[PEL] state save failed:', e.message||e); }
   }
 }
 async function persistStudentState(){
@@ -1758,7 +1763,7 @@ function visibleLibraryAcademies(all){
 async function ensureRouteAllows(academyId){
   if(typeof isStepStudent !== 'function') return true;
   if(!window.PEL_EFFECTIVE_STATE && typeof c_rpc_effective_state === 'function'){
-    try{ await c_rpc_effective_state(); }catch(e){}
+    try{ await c_rpc_effective_state(); }catch(e){ console.warn('[PEL] effective state RPC failed:', e.message||e); }
   }
   // Fail closed: if a signed-in student's route state could not be loaded we
   // cannot verify STEP isolation, so do not open the lesson.
@@ -2042,7 +2047,7 @@ function renderAccessGate(){
 async function pelGateSignOut(){
   const c = client();
   window.PEL_SERVER_PLAN = null;
-  if(c){ try{ await c.auth.signOut(); }catch(e){} }
+  if(c){ try{ await c.auth.signOut(); }catch(e){ console.warn('[PEL] auth signOut failed:', e.message||e); } }
   clearUserLocalKeys();
   window.location.href = 'login.html';
 }
@@ -2064,7 +2069,7 @@ function subscribeEntitlement(){
   const c = client();
   if(!c || !currentUser || !c.channel) return;
   try{
-    if(entChannel){ try{ c.removeChannel(entChannel); }catch(e){} entChannel = null; }
+    if(entChannel){ try{ c.removeChannel(entChannel); }catch(e){ console.warn('[PEL] channel cleanup failed:', e.message||e); } entChannel = null; }
     let deb = null;
     entChannel = c.channel('pel-entitlement-' + currentUser.id)
       .on('postgres_changes',
@@ -2188,7 +2193,7 @@ async function renderHomeIntel(){
 async function markAnnouncementRead(id){
   const c = client();
   if(!c) return;
-  try{ await c.rpc('student_mark_announcement_read', { p_announcement_id: id }); }catch(e){}
+  try{ await c.rpc('student_mark_announcement_read', { p_announcement_id: id }); }catch(e){ console.warn('[PEL] mark read failed:', e.message||e); }
   renderHomeIntel();
 }
 
@@ -2335,7 +2340,7 @@ window.addEventListener('load', async () => {
       // auto-refresh runs, so PostgREST rejects the call with 401. Force a
       // refresh; if it yields a fresh session, retry the RPC before we
       // ever declare the academy unreachable.
-      try{ const { data: r } = await c.auth.refreshSession(); if(r && r.session && r.session.user){ currentUser = r.session.user; } }catch(e){}
+      try{ const { data: r } = await c.auth.refreshSession(); if(r && r.session && r.session.user){ currentUser = r.session.user; } }catch(e){ console.warn('[PEL] session refresh failed:', e.message||e); }
       await new Promise(r => setTimeout(r, 1500));
       await loadSubPlan();
     }
@@ -2345,7 +2350,7 @@ window.addEventListener('load', async () => {
       // login so they can re-authenticate, instead of the dead-end
       // "Can't reach the academy" gate.
       __pelReport('rpc-failed-auth-error');
-      try{ await c.auth.signOut(); }catch(e){}
+      try{ await c.auth.signOut(); }catch(e){ console.warn('[PEL] auth signOut failed:', e.message||e); }
       clearUserLocalKeys();
       window.location.href = 'login.html';
       return;
@@ -2366,7 +2371,7 @@ window.addEventListener('load', async () => {
     __pelReport('boot-exception', { err: String(e && e.message || e).slice(0,300) });
     // Surface the REAL error instead of the generic gate so the actual
     // failure point is visible (was previously swallowed by authGateError).
-    console.error('[PEL boot] fatal:', e);
+    console.warn('[PEL boot] fatal:', e);
     const gate = document.getElementById('authGate');
     if(gate){
       gate.innerHTML = '<div class="ring"></div><p style="max-width:480px;text-align:center;line-height:1.6;"><span class="arabic" style="display:block;font-size:.9em;color:var(--text-muted);margin-bottom:4px;">صار خلل وانت تفتح الاكاديمية.</span><b>Boot error:</b> '+ String(e && e.message || e).replace(/[<>]/g,'').slice(0,500) +'<br><button onclick="location.reload()" style="margin-top:8px;cursor:pointer;">Retry</button></p>';
@@ -2385,7 +2390,7 @@ window.addEventListener('load', async () => {
 document.getElementById('logoutBtn').addEventListener('click', async () => {
   const c = client();
   window.PEL_SERVER_PLAN = null;
-  if(c){ try{ await c.auth.signOut(); }catch(e){} }
+  if(c){ try{ await c.auth.signOut(); }catch(e){ console.warn('[PEL] auth signOut failed:', e.message||e); } }
   clearUserLocalKeys();
   window.location.href = 'login.html';
 });
@@ -2454,7 +2459,7 @@ const navGroups = [
     {id:'pronunciation', en:'Pronunciation Studio', ar:'استوديو النطق', icon:'mic', minDone:8},
     {id:'speaking', en:'Speaking Studio', ar:'استوديو المحادثة', icon:'message-circle', minDone:12},
     {id:'listening', en:'Listening Lounge', ar:'ركن الاستماع', icon:'headphones', minDone:16},
-    {id:'reading', en:'Reading Corner', ar:'ركن القراءة', icon:'book', minDone:20},
+    {id:'reading', en:'Reading Corner', ar:'ركن القرايه', icon:'book', minDone:20},
     {id:'writing', en:'Writing Workshop', ar:'ورشة الكتابة', icon:'pen-line', minDone:24},
   ]},
   { label:{en:'Progress', ar:'تقدمك'}, items:[
@@ -9412,7 +9417,7 @@ function applyInterfaceLang(lang, opts){
   // Re-render the visible dynamic view so generated copy follows the language.
   const active = document.querySelector('.view.active');
   if(active && active.id && viewRenderers[active.id]){
-    try{ viewRenderers[active.id](); }catch(e){}
+    try{ viewRenderers[active.id](); }catch(e){ console.warn('[PEL] view render failed for ' + active.id + ":", e.message||e); }
   }
   if(active && (active.id === 'home' || active.id === 'view-home')){
     try{ renderHomeForDirection(); }catch(e){}
@@ -9606,13 +9611,13 @@ const LESSON_TITLE_BANK = [
 
 const ACADEMIES = [
   /* ------- A0 Absolute Beginner track (content lives in the DB: five
-     academies, 43 active lessons — they were mapped in ACADEMY_CEFR but
+     academies, 43 active lessons - they were mapped in ACADEMY_CEFR but
      never listed here, so the Levels view showed 'Content for this level
      is coming' for A0. Metadata mirrors public.academies.) ------- */
-  {id:'a0-sentence-building', en:'Sentence Building', ar:'بناء الجمل', translit:'سنتنس بيلدنج', cat:'Foundations', icon:'blocks', from:'#C8A96A', to:'#A88345', difficulty:'Beginner', duration:'2h', lessons:8},
+  {id:'a0-sentence-building', en:'Sentence Building', ar:'بنا الجمل', translit:'سنتنس بيلدنج', cat:'Foundations', icon:'blocks', from:'#C8A96A', to:'#A88345', difficulty:'Beginner', duration:'2h', lessons:8},
   {id:'a0-question-words', en:'Question Words', ar:'ادوات الاستفهام', translit:'كويستشن وردز', cat:'Foundations', icon:'message-circle-question', from:'#D9B87C', to:'#B08D57', difficulty:'Beginner', duration:'2h', lessons:8},
   {id:'a0-spelling-sounds', en:'Spelling and Sounds', ar:'التهجية والاصوات', translit:'سبيلنج اند ساوندز', cat:'Foundations', icon:'spell-check', from:'#CBB27E', to:'#9C7C46', difficulty:'Beginner', duration:'3h', lessons:10},
-  {id:'a0-error-clinic', en:'Error Clinic', ar:'عيادة الاخطاء', translit:'ايرور كلينك', cat:'Foundations', icon:'wand-2', from:'#BFA06A', to:'#8F7040', difficulty:'Beginner', duration:'3h', lessons:9},
+  {id:'a0-error-clinic', en:'Error Clinic', ar:'عيادة الاخطا', translit:'ايرور كلينك', cat:'Foundations', icon:'wand-2', from:'#BFA06A', to:'#8F7040', difficulty:'Beginner', duration:'3h', lessons:9},
   {id:'a0-social-english', en:'Social English', ar:'الانجليزي الاجتماعي', translit:'سوشل انجلش', cat:'Foundations', icon:'users', from:'#D4B476', to:'#A5854B', difficulty:'Beginner', duration:'2h', lessons:8},
   {id:'english-foundations', en:'English Foundations', ar:'اساسيات الانجليزي', translit:'انجلش فاونديشنز', cat:'Foundations', icon:'graduation-cap', from:'#C8A96A', to:'#A88345', difficulty:'Beginner', duration:'6h', lessons:36},
   {id:'everyday-english', en:'Everyday English', ar:'انجليزي الحياة اليومية', translit:'ايفري دي انجلش', cat:'Foundations', icon:'sun', from:'#D8BD83', to:'#C8A96A', difficulty:'Beginner', duration:'5h', lessons:28},
@@ -9622,7 +9627,7 @@ const ACADEMIES = [
   {id:'vocabulary-vault', en:'Vocabulary Vault', ar:'خزنة المفردات', translit:'فوكابيولري فولت', cat:'Skills', icon:'book-open', from:'#A88345', to:'#C8A96A', difficulty:'All Levels', duration:'10h', lessons:48},
   {id:'grammar-academy', en:'Grammar Academy', ar:'اكاديمية القواعد', translit:'جرامر اكاديمي', cat:'Skills', icon:'spell-check', from:'#343744', to:'#262833', difficulty:'All Levels', duration:'9h', lessons:40},
   {id:'listening-lounge', en:'Listening Lounge', ar:'ركن الاستماع', translit:'ليسننج لاونج', cat:'Skills', icon:'headphones', from:'#3F8C72', to:'#17171B', difficulty:'Intermediate', duration:'6h', lessons:26},
-  {id:'reading-corner', en:'Reading Corner', ar:'ركن القراءة', translit:'ريدنج كورنر', cat:'Skills', icon:'book', from:'#C8A96A', to:'#17171B', difficulty:'Intermediate', duration:'6h', lessons:27},
+  {id:'reading-corner', en:'Reading Corner', ar:'ركن القرايه', translit:'ريدنج كورنر', cat:'Skills', icon:'book', from:'#C8A96A', to:'#17171B', difficulty:'Intermediate', duration:'6h', lessons:27},
   {id:'writing-workshop', en:'Writing Workshop', ar:'ورشة الكتابة', translit:'رايتنج ووركشوب', cat:'Skills', icon:'pen-line', from:'#A88345', to:'#17171B', difficulty:'Advanced', duration:'7h', lessons:22},
   {id:'travel-english', en:'Travel English', ar:'انجليزي السفر', translit:'ترافل انجلش', cat:'Situational', icon:'plane', from:'#3F8C72', to:'#C8A96A', difficulty:'Intermediate', duration:'5h', lessons:20},
   {id:'business-english', en:'Business English', ar:'انجليزي الاعمال', translit:'بزنس انجلش', cat:'Career', icon:'briefcase', from:'#343744', to:'#C8A96A', difficulty:'Advanced', duration:'8h', lessons:34},
@@ -9744,7 +9749,7 @@ const VOCAB_BANK = [
   {en:'Brother', ipa:'/ˈbrʌðər/', ar:'اخ', translit:'براذر', example:{en:'My brother is older than me.', ar:'اخوي اكبر مني.', translit:'ماي براذر از اولدر ذان مي.'}, synonyms:'Sibling', antonyms:'Sister', family:'brotherhood', collocations:'older brother, younger brother', category:'Family', difficulty:'Beginner', tip:'Stress the first part: BRU-ther.', mistake:'Saying "bro-zer" with a z instead of the soft th.'},
   {en:'Sister', ipa:'/ˈsɪstər/', ar:'اخت', translit:'سيستر', example:{en:'My sister is a teacher.', ar:'اختي معلمة.', translit:'ماي سيستر از ا تيتشر.'}, synonyms:'Sibling', antonyms:'Brother', family:'sisterhood', collocations:'older sister, younger sister', category:'Family', difficulty:'Beginner', tip:'Short and clear: SIS-ter.', mistake:'Adding extra syllables like "sis-ter-er."'},
   {en:'Red', ipa:'/rɛd/', ar:'احمر', translit:'ريد', example:{en:'The car is red.', ar:'السيارة حمرا.', translit:'ذا كار از ريد.'}, synonyms:'Crimson', antonyms:'-', family:'reddish', collocations:'red car, light red', category:'Colors', difficulty:'Beginner', tip:'One short syllable, keep it quick.', mistake:'Stretching it into "re-ed" with two syllables.'},
-  {en:'Blue', ipa:'/bluː/', ar:'ازرق', translit:'بلو', example:{en:'The sky is blue today.', ar:'السماء زرقا اليوم.', translit:'ذا سكاي از بلو تودي.'}, synonyms:'Azure', antonyms:'-', family:'bluish', collocations:'blue sky, dark blue', category:'Colors', difficulty:'Beginner', tip:'One long vowel sound: bloo.', mistake:'Pronouncing it like "bluh" with a short cut-off.'},
+  {en:'Blue', ipa:'/bluː/', ar:'ازرق', translit:'بلو', example:{en:'The sky is blue today.', ar:'السما زرقا اليوم.', translit:'ذا سكاي از بلو تودي.'}, synonyms:'Azure', antonyms:'-', family:'bluish', collocations:'blue sky, dark blue', category:'Colors', difficulty:'Beginner', tip:'One long vowel sound: bloo.', mistake:'Pronouncing it like "bluh" with a short cut-off.'},
   {en:'Green', ipa:'/ɡriːn/', ar:'اخضر', translit:'قرين', example:{en:'The grass is green.', ar:'العشب اخضر.', translit:'ذا قراس از قرين.'}, synonyms:'Emerald', antonyms:'-', family:'greenish', collocations:'green light, dark green', category:'Colors', difficulty:'Beginner', tip:'Long ee sound: green.', mistake:'Saying "grin" with a short i, which is a different word.'},
   {en:'White', ipa:'/waɪt/', ar:'ابيض', translit:'وايت', example:{en:'I have a white shirt.', ar:'عندي قميص ابيض.', translit:'اي هاف ا وايت شيرت.'}, synonyms:'Ivory', antonyms:'Black', family:'whitish', collocations:'white shirt, pure white', category:'Colors', difficulty:'Beginner', tip:'The "h" is silent: wite.', mistake:'Pronouncing the h: "hwite."'},
   {en:'Morning', ipa:'/ˈmɔːrnɪŋ/', ar:'صباح', translit:'مورنينق', example:{en:'I drink coffee in the morning.', ar:'اشرب قهوة بالصبح.', translit:'اي درينك كوفي ان ذا مورنينق.'}, synonyms:'Dawn', antonyms:'Evening', family:'mornings', collocations:'in the morning, early morning', category:'Daily Life', difficulty:'Beginner', tip:'Stress the first syllable: MORN-ing.', mistake:'Saying "mor-ning" with even stress.'},
@@ -9771,15 +9776,15 @@ const VOCAB_BANK = [
 {en:'Antonym', ipa:'/ˈæntənɪm/', ar:'ضد، كلمة بمعنى معاكس', translit:'انتونيم', example:{en:'"Hot" is an antonym of "cold."', ar:'كلمة "hot" ضد لكلمة "cold."', translit:'هوت از ان انتونيم اوف كولد.'}, synonyms:'opposite', antonyms:'synonym', family:'antonym, antonymous', collocations:'exact antonym', category:'Vocabulary Vault', difficulty:'Intermediate', tip:'Pair new words with their antonyms to remember both.', mistake:'Confusing antonym with "anonymous."'},
 {en:'Context', ipa:'/ˈkɒntɛkst/', ar:'السياق، القرينة', translit:'كونتيكست', example:{en:'Guess the word from its context.', ar:'خمّن الكلمة من سياقها.', translit:'گيس ذا وورد فروم ايتس كونتيكست.'}, synonyms:'setting, situation', antonyms:'', family:'context, contextual', collocations:'in context, out of context', category:'Vocabulary Vault', difficulty:'Intermediate', tip:'Context tells you which meaning fits.', mistake:'Quoting a word "out of context" changes its sense.'},
 {en:'Definition', ipa:'/ˌdɛfɪˈnɪʃən/', ar:'تعريف، معنى الكلمة', translit:'ديفينيشِن', example:{en:'Read the definition carefully.', ar:'اقرا التعريف بعناية.', translit:'ريد ذا ديفينيشِن كيرفلي.'}, synonyms:'meaning, explanation', antonyms:'ambiguity', family:'define, defining', collocations:'clear definition, by definition', category:'Vocabulary Vault', difficulty:'Intermediate', tip:'A good definition uses simple words.', mistake:'Copying a definition without understanding it.'},
-{en:'Prefix', ipa:'/ˈpriːfɪks/', ar:'بادية، جزء يضاف اول الكلمة', translit:'بريفيكس', example:{en:'"Un-" is a prefix in "unhappy."', ar:'"Un-" بادية في "unhappy."', translit:'ان از ا بريفيكس ان ان هابي.'}, synonyms:'starter', antonyms:'suffix', family:'prefix, prefixed', collocations:'add a prefix, common prefix', category:'Vocabulary Vault', difficulty:'Intermediate', tip:'Prefixes like "un-" often reverse meaning.', mistake:'Confusing prefix with suffix.'},
-{en:'Noun', ipa:'/naʊn/', ar:'اسم، كلمة تدل على شخص او شيء', translit:'ناون', example:{en:'"Book" is a noun.', ar:'"Book" اسم.', translit:'بوك از ا ناون.'}, synonyms:'naming word', antonyms:'', family:'noun', collocations:'common noun, proper noun', category:'Grammar Academy', difficulty:'Intermediate', tip:'Proper nouns like "Riyadh" are capitalized.', mistake:'Forgetting to capitalize proper nouns.'},
+{en:'Prefix', ipa:'/ˈpriːfɪks/', ar:'بادية، جز يضاف اول الكلمة', translit:'بريفيكس', example:{en:'"Un-" is a prefix in "unhappy."', ar:'"Un-" بادية في "unhappy."', translit:'ان از ا بريفيكس ان ان هابي.'}, synonyms:'starter', antonyms:'suffix', family:'prefix, prefixed', collocations:'add a prefix, common prefix', category:'Vocabulary Vault', difficulty:'Intermediate', tip:'Prefixes like "un-" often reverse meaning.', mistake:'Confusing prefix with suffix.'},
+{en:'Noun', ipa:'/naʊn/', ar:'اسم، كلمة تدل على شخص او شي', translit:'ناون', example:{en:'"Book" is a noun.', ar:'"Book" اسم.', translit:'بوك از ا ناون.'}, synonyms:'naming word', antonyms:'', family:'noun', collocations:'common noun, proper noun', category:'Grammar Academy', difficulty:'Intermediate', tip:'Proper nouns like "Riyadh" are capitalized.', mistake:'Forgetting to capitalize proper nouns.'},
 {en:'Verb', ipa:'/vɜːb/', ar:'فعل، كلمة تدل على حدث', translit:'فِرب', example:{en:'"Run" is an action verb.', ar:'"Run" فعل حركة.', translit:'رَن از ان اكشن فِرب.'}, synonyms:'action word', antonyms:'', family:'verb, verbal', collocations:'main verb, helping verb', category:'Grammar Academy', difficulty:'Intermediate', tip:'Every sentence needs at least one verb.', mistake:'Writing a sentence with no verb.'},
 {en:'Adjective', ipa:'/ˈædʒɪktɪv/', ar:'نعت، صفة', translit:'ادجيكتيف', example:{en:'"Tall" is an adjective.', ar:'"Tall" صفة.', translit:'تول از ان ادجيكتيف.'}, synonyms:'describing word', antonyms:'', family:'adjective', collocations:'comparative adjective, descriptive adjective', category:'Grammar Academy', difficulty:'Intermediate', tip:'Adjectives come before nouns: "a tall man."', mistake:'Saying "a man tall" instead of "a tall man."'},
 {en:'Tense', ipa:'/tɛns/', ar:'زمن الفعل (ماضي/مضارع)', translit:'تينس', example:{en:'Use the past tense for finished actions.', ar:'استخدم زمن الماضي للافعال المنتهية.', translit:'يوز ذا باست تينس فور فينيشد اكشنز.'}, synonyms:'verb form, time', antonyms:'', family:'tense, tenses', collocations:'past tense, present tense', category:'Grammar Academy', difficulty:'Intermediate', tip:'Tense shows when an action happens.', mistake:'Mixing "went" and "go" in the same time frame.'},
 {en:'Subject', ipa:'/ˈsʌbdʒɪkt/', ar:'الفاعل، من يقوم بالفعل', translit:'سَبجيكت', example:{en:'The subject comes before the verb.', ar:'الفاعل ياتي قبل الفعل.', translit:'ذا سَبجيكت كامز بي فور ذا فِرب.'}, synonyms:'doer, agent', antonyms:'object', family:'subject, subjective', collocations:'subject of the sentence', category:'Grammar Academy', difficulty:'Intermediate', tip:'Ask "who?" to find the subject.', mistake:'Confusing subject with object.'},
 {en:'Accent', ipa:'/ˈæksənt/', ar:'لهجة، طريقة نطق', translit:'اكسينت', example:{en:'She has a strong American accent.', ar:'لديها لهجة امريكية واضحة.', translit:'شي هاز ا سترونق امريكان اكسينت.'}, synonyms:'dialect, pronunciation', antonyms:'', family:'accent, accented', collocations:'strong accent, soft accent', category:'Listening Lounge', difficulty:'Intermediate', tip:'Accents are normal; clarity matters more.', mistake:'Thinking an accent means bad English.'},
 {en:'Audio', ipa:'/ˈɔːdi.oʊ/', ar:'صوت مسجل', translit:'اوديو', example:{en:'The audio is too quiet.', ar:'الصوت المسجّل منخفض جدًا.', translit:'ذا اوديو از تو كوايت.'}, synonyms:'sound, recording', antonyms:'silence', family:'audio, audiovisual', collocations:'audio clip, play the audio', category:'Listening Lounge', difficulty:'Intermediate', tip:'Good audio helps you catch every word.', mistake:'Saying "the audios" as a plural noun.'},
-{en:'Replay', ipa:'/ˌriːˈpleɪ/', ar:'اعادة، يشغّل مرة اخرى', translit:'ري بلاي', example:{en:'Replay the part you missed.', ar:'اعد تشغيل الجزء الذي فاتك.', translit:'ري بلاي ذا بارت يو ميست.'}, synonyms:'play again, repeat', antonyms:'skip', family:'replay, replayed', collocations:'replay a clip, hit replay', category:'Listening Lounge', difficulty:'Intermediate', tip:'Replay hard parts until they feel easy.', mistake:'Moving on without replaying unclear parts.'},
+{en:'Replay', ipa:'/ˌriːˈpleɪ/', ar:'اعادة، يشغّل مرة اخرى', translit:'ري بلاي', example:{en:'Replay the part you missed.', ar:'اعد تشغيل الجز الذي فاتك.', translit:'ري بلاي ذا بارت يو ميست.'}, synonyms:'play again, repeat', antonyms:'skip', family:'replay, replayed', collocations:'replay a clip, hit replay', category:'Listening Lounge', difficulty:'Intermediate', tip:'Replay hard parts until they feel easy.', mistake:'Moving on without replaying unclear parts.'},
 {en:'Mumble', ipa:'/ˈmʌmbəl/', ar:'يهمس، يتكلم بغير وضوح', translit:'مَمبَل', example:{en:'Don\'t mumble; speak clearly.', ar:'لا تهمس؛ تحدث بوضوح.', translit:'دونت مَمبَل؛ سبيك كليرلي.'}, synonyms:'mutter, whisper', antonyms:'enunciate, shout', family:'mumble, mumbled', collocations:'mumble words, mumble to yourself', category:'Listening Lounge', difficulty:'Intermediate', tip:'Open your mouth more to avoid mumbling.', mistake:'Mumbling from nervousness and losing the listener.'},
 {en:'Volume', ipa:'/ˈvɒljuːm/', ar:'مستوى الصوت، ارتفاعه', translit:'فوليوم', example:{en:'Turn up the volume.', ar:'ارفع مستوى الصوت.', translit:'تيرن اب ذا فوليوم.'}, synonyms:'loudness, level', antonyms:'mute', family:'volume', collocations:'turn up the volume, lower the volume', category:'Listening Lounge', difficulty:'Intermediate', tip:'A clear volume helps you catch detail.', mistake:'Setting volume too high and missing soft sounds.'},
 {en:'Skim', ipa:'/skɪm/', ar:'يقرا بسرعة، يتصفّح', translit:'سكيم', example:{en:'Skim the article for the main idea.', ar:'تصفّح المقال بسرعة لتاخذ الفكرة العامة.', translit:'سكيم ذا ارتيكل فور ذا مين ايديا.'}, synonyms:'browse, glance', antonyms:'study, read closely', family:'skim, skimmed, skimming', collocations:'skim through, skim a text', category:'Reading Corner', difficulty:'Intermediate', tip:'Skimming is for the gist, not details.', mistake:'Trying to understand every word while skimming.'},
@@ -9819,7 +9824,7 @@ const VOCAB_BANK = [
 {en:'Streaming', ipa:'/ˈstriːmɪŋ/', ar:'بث، مشاهدة عبر الانترنت', translit:'ستريمينق', example:{en:'Is the show streaming?', ar:'هل المسلسل متاح للمشاهدة؟', translit:'از ذا شو ستريمينق؟'}, synonyms:'online viewing', antonyms:'download, broadcast', family:'stream, streamed', collocations:'streaming service, live streaming', category:'TV Series English', difficulty:'Advanced', tip:'Streaming means watching online, live.', mistake:'Confusing streaming with downloading.'},
 {en:'Lyrics', ipa:'/ˈlɪrɪks/', ar:'كلمات اغنية', translit:'ليريكس', example:{en:'I love the lyrics.', ar:'احب كلمات الاغنية.', translit:'اي لاف ذا ليريكس.'}, synonyms:'words, lines', antonyms:'melody, tune', family:'lyric, lyrical', collocations:'write lyrics, sing the lyrics', category:'Music English', difficulty:'Intermediate', tip:'Lyrics are the words of a song.', mistake:'Calling them "the words" instead of "lyrics."'},
 {en:'Chorus', ipa:'/ˈkɔːrəs/', ar:'المقطع المتكرر، اللازمة', translit:'كورَس', example:{en:'Sing the chorus with me.', ar:'غنِّ المقطع المتكرر معي.', translit:'سينق ذا كورَس ويذ مي.'}, synonyms:'refrain, hook', antonyms:'verse', family:'chorus, choruses', collocations:'sing the chorus, catchy chorus', category:'Music English', difficulty:'Intermediate', tip:'The chorus repeats throughout a song.', mistake:'Confusing chorus with verse.'},
-{en:'Verse', ipa:'/vɜːrs/', ar:'المقطع (في الاغنية)', translit:'فِرس', example:{en:'The first verse is slow.', ar:'المقطع الاول بطيء.', translit:'ذا فيرست فِرس از سلوه.'}, synonyms:'stanza, section', antonyms:'chorus', family:'verse, versed', collocations:'first verse, write a verse', category:'Music English', difficulty:'Intermediate', tip:'A verse tells the story between choruses.', mistake:'Mixing up verse and chorus.'},
+{en:'Verse', ipa:'/vɜːrs/', ar:'المقطع (في الاغنية)', translit:'فِرس', example:{en:'The first verse is slow.', ar:'المقطع الاول بطي.', translit:'ذا فيرست فِرس از سلوه.'}, synonyms:'stanza, section', antonyms:'chorus', family:'verse, versed', collocations:'first verse, write a verse', category:'Music English', difficulty:'Intermediate', tip:'A verse tells the story between choruses.', mistake:'Mixing up verse and chorus.'},
 {en:'Melody', ipa:'/ˈmɛlədi/', ar:'لحن', translit:'ميلودي', example:{en:'The melody is catchy.', ar:'اللحن ممتع.', translit:'ذا ميلودي از كاتشي.'}, synonyms:'tune, air', antonyms:'noise, dissonance', family:'melody, melodic', collocations:'hum a melody, simple melody', category:'Music English', difficulty:'Intermediate', tip:'A melody is the main tune of a song.', mistake:'Calling it "the music" instead of "the melody."'},
 {en:'Beat', ipa:'/biːt/', ar:'ايقاع، نبض', translit:'بيت', example:{en:'Tap your foot to the beat.', ar:'نقر بقدمك مع الايقاع.', translit:'تاب يور فوت تو ذا بيت.'}, synonyms:'rhythm, pulse', antonyms:'silence', family:'beat, beats', collocations:'keep the beat, strong beat', category:'Music English', difficulty:'Intermediate', tip:'The beat is the steady pulse of a song.', mistake:'Confusing beat with melody.'},
 {en:'Nuance', ipa:'/ˈnjuːɑːns/', ar:'فرق دقيق، ظلّ معنى', translit:'نيوانس', example:{en:'Notice the nuance in tone.', ar:'لاحظ الفرق الدقيق في النبرة.', translit:'نوتيس ذا نيوانس ان تون.'}, synonyms:'shade, subtlety', antonyms:'obviousness', family:'nuance, nuanced', collocations:'subtle nuance, capture a nuance', category:'English Mastery', difficulty:'Advanced', tip:'A nuance is a small, subtle difference.', mistake:'Treating synonyms as having no nuance.'},
@@ -9830,7 +9835,7 @@ const VOCAB_BANK = [
 {en:'Immersion', ipa:'/ɪˈmɜːrʒən/', ar:'انغماس (في اللغة)', translit:'امرجن', example:{en:'Immersion speeds up learning.', ar:'الانغماس يسرّع التعلّم.', translit:'امرجن سبيتس اب ليرنينق.'}, synonyms:'soaking, diving in', antonyms:'avoidance', family:'immerse, immersed', collocations:'language immersion, full immersion', category:'Fluency Journey', difficulty:'Advanced', tip:'Immersion means living the language daily.', mistake:'Waiting to be "ready" before immersion.'},
 {en:'Instinct', ipa:'/ˈɪnstɪŋkt/', ar:'حدس، غريزة', translit:'انستينكت', example:{en:'Trust your instinct when speaking.', ar:'ثق بحدسك عند التحدث.', translit:'تراست يور انستينكت وين سبيكنق.'}, synonyms:'intuition, gut feeling', antonyms:'reasoning, planning', family:'instinct, instinctive', collocations:'trust your instinct, by instinct', category:'Fluency Journey', difficulty:'Advanced', tip:'Instinct is knowing without thinking.', mistake:'Overthinking and freezing mid-sentence.'},
 {en:'Converse', ipa:'/kənˈvɜːrs/', ar:'يتحدث، يتبادل الحديث', translit:'كونفِرس', example:{en:'Let\'s converse in English.', ar:'لنتحدث بالانجليزية.', translit:'ليتس كونفِرس ان انجلش.'}, synonyms:'talk, chat', antonyms:'stay silent', family:'converse, conversation', collocations:'converse with, converse in', category:'Fluency Journey', difficulty:'Advanced', tip:'To converse is to talk with someone.', mistake:'Saying "converse with to" instead of "converse with."'},
-{en:'Proficiency', ipa:'/prəˈfɪʃənsi/', ar:'اتقان، كفاءة', translit:'بروفينسي', example:{en:'Test your English proficiency.', ar:'اختبر اتقانك للانجليزية.', translit:'تيست يور انجلش بروفينسي.'}, synonyms:'skill, competence', antonyms:'incompetence', family:'proficient, proficiency', collocations:'language proficiency, high proficiency', category:'Fluency Journey', difficulty:'Advanced', tip:'Proficiency is your skill level.', mistake:'Confusing proficiency with perfection.'},
+{en:'Proficiency', ipa:'/prəˈfɪʃənsi/', ar:'اتقان، كفايه', translit:'بروفينسي', example:{en:'Test your English proficiency.', ar:'اختبر اتقانك للانجليزية.', translit:'تيست يور انجلش بروفينسي.'}, synonyms:'skill, competence', antonyms:'incompetence', family:'proficient, proficiency', collocations:'language proficiency, high proficiency', category:'Fluency Journey', difficulty:'Advanced', tip:'Proficiency is your skill level.', mistake:'Confusing proficiency with perfection.'},
 {en:'Tongue-tied', ipa:'/ˈtʌŋ taɪd/', ar:'عاجز عن الكلام (خجلًا)', translit:'تَنق تايد', example:{en:'I got tongue-tied in the interview.', ar:'صِرت عاجزًا عن الكلام في المقابلة.', translit:'اي قوت تَنق تايد ان ذا انترفيو.'}, synonyms:'speechless, flustered', antonyms:'fluent, articulate', family:'tongue, tie', collocations:'feel tongue-tied, get tongue-tied', category:'Fluency Journey', difficulty:'Advanced', tip:'It means you cannot speak from nerves.', mistake:'Staying silent instead of pushing through.'},
 {en:'Hello', ipa:'/həˈloʊ/', ar:'مرحبًا', translit:'هَلو', example:{en:'Hello, how are you?', ar:'مرحبًا، كيف حالك؟', translit:'هَلو، هاو ار يو؟'}, synonyms:'hi, greetings', antonyms:'goodbye', family:'hello', collocations:'say hello, hello there', category:'Saudi Greetings', difficulty:'Beginner', tip:'"Hello" works any time of day.', mistake:'Forgetting to greet before a request.'},
 {en:'Goodbye', ipa:'/ˌɡʊdˈbaɪ/', ar:'مع السلامة، وداعًا', translit:'قودباي', example:{en:'Goodbye, see you tomorrow.', ar:'مع السلامة، اراك غدًا.', translit:'قودباي، سي يو تومورو.'}, synonyms:'bye, farewell', antonyms:'hello, hi', family:'goodbye', collocations:'say goodbye, wave goodbye', category:'Saudi Greetings', difficulty:'Beginner', tip:'"Goodbye" ends a meeting politely.', mistake:'Leaving without saying goodbye.'},
@@ -9849,7 +9854,7 @@ const VOCAB_BANK = [
 {en:'Approve', ipa:'/əˈpruːv/', ar:'يوافق، يعتمد', translit:'ابروف', example:{en:'The manager approved my request.', ar:'وافق المدير على طلبي.', translit:'ذا ماناجر ابروفد ماي ريكويست.'}, synonyms:'accept, authorize', antonyms:'reject, deny', family:'approve, approval', collocations:'approve a request, approve of', category:'Saudi At Work', difficulty:'Intermediate', tip:'"Approve a request" = accept it officially.', mistake:'Saying "approve on" instead of "approve."'},
 {en:'Appointment', ipa:'/əˈpɔɪntmənt/', ar:'موعد (طبي)', translit:'اپوينتمِنت', example:{en:'I have a doctor\'s appointment.', ar:'عندي موعد مع الطبيب.', translit:'اي هاف ا دوكتورز اپوينتمِنت.'}, synonyms:'booking, slot', antonyms:'cancellation', family:'appoint, appointment', collocations:'make an appointment, cancel an appointment', category:'Saudi Hospital', difficulty:'Intermediate', tip:'Book an appointment before you go.', mistake:'Saying "I have appointment" instead of "an appointment."'},
 {en:'Symptom', ipa:'/ˈsɪmptəm/', ar:'عَرَض مرضي', translit:'سيمبتوم', example:{en:'A fever is a symptom.', ar:'الحمى عَرَض مرضي.', translit:'ا فيفر از ا سيمبتوم.'}, synonyms:'sign, indication', antonyms:'', family:'symptom, symptomatic', collocations:'mild symptom, common symptom', category:'Saudi Hospital', difficulty:'Intermediate', tip:'A symptom is a sign of illness.', mistake:'Confusing symptom with the illness itself.'},
-{en:'Recovery', ipa:'/rɪˈkʌvəri/', ar:'تعافي، شفاء', translit:'ريكوفري', example:{en:'Her recovery was quick.', ar:'تعافيها كان سريعًا.', translit:'هر ريكوفري واز كويك.'}, synonyms:'healing, improvement', antonyms:'relapse', family:'recover, recovery', collocations:'full recovery, speed up recovery', category:'Saudi Hospital', difficulty:'Intermediate', tip:'Recovery is getting better after illness.', mistake:'Confusing recovery with discovery.'},
+{en:'Recovery', ipa:'/rɪˈkʌvəri/', ar:'تعافي، شفا', translit:'ريكوفري', example:{en:'Her recovery was quick.', ar:'تعافيها كان سريعًا.', translit:'هر ريكوفري واز كويك.'}, synonyms:'healing, improvement', antonyms:'relapse', family:'recover, recovery', collocations:'full recovery, speed up recovery', category:'Saudi Hospital', difficulty:'Intermediate', tip:'Recovery is getting better after illness.', mistake:'Confusing recovery with discovery.'},
 {en:'Insurance', ipa:'/ɪnˈʃʊərəns/', ar:'تامين (صحي)', translit:'انشورينس', example:{en:'Do you have health insurance?', ar:'هل لديك تامين صحي؟', translit:'دو يو هاف هيلث انشورينس؟'}, synonyms:'cover, coverage', antonyms:'', family:'insure, insurance', collocations:'health insurance, insurance card', category:'Saudi Hospital', difficulty:'Intermediate', tip:'Insurance helps pay for treatment.', mistake:'Forgetting the insurance card at home.'},
 {en:'Checkup', ipa:'/ˈtʃɛkʌp/', ar:'فحص طبي دوري', translit:'تشيك اب', example:{en:'Get a yearly checkup.', ar:'اجرِ فحصًا سنويًا.', translit:'گيت ا ييرلي تشيك اب.'}, synonyms:'examination, screening', antonyms:'', family:'check, checkup', collocations:'routine checkup, medical checkup', category:'Saudi Hospital', difficulty:'Intermediate', tip:'A checkup catches problems early.', mistake:'Skipping checkups when you feel fine.'},
 {en:'Ticket', ipa:'/ˈtɪkɪt/', ar:'تذكرة', translit:'تيكيت', example:{en:'Show your ticket at the gate.', ar:'اعرض تذكرتك عند البوابة.', translit:'شو يور تيكيت ات ذا گيت.'}, synonyms:'pass, boarding card', antonyms:'', family:'ticket, tickets', collocations:'book a ticket, plane ticket', category:'Saudi Travel', difficulty:'Beginner', tip:'Keep your ticket ready at the gate.', mistake:'Losing the ticket before boarding.'},
@@ -9858,7 +9863,7 @@ const VOCAB_BANK = [
 {en:'Boarding', ipa:'/ˈbɔːrdɪŋ/', ar:'صعود (الطايرة)', translit:'بوردينق', example:{en:'Boarding starts now.', ar:'الصعود يبدا الان.', translit:'بوردينق ستارتس ناو.'}, synonyms:'embarking, getting on', antonyms:'disembarking', family:'board, boarding', collocations:'boarding pass, boarding gate', category:'Saudi Travel', difficulty:'Beginner', tip:'Boarding is getting on the plane.', mistake:'Confusing boarding with landing.'},
 {en:'Departure', ipa:'/dɪˈpɑːrtʃər/', ar:'مغادرة، اقلاع', translit:'ديبارتشَر', example:{en:'Departure is at six.', ar:'المغادرة الساعة السادسة.', translit:'ديبارتشَر از ات سيكس.'}, synonyms:'leaving, takeoff', antonyms:'arrival', family:'depart, departure', collocations:'departure time, departure gate', category:'Saudi Travel', difficulty:'Beginner', tip:'Departure is when you leave.', mistake:'Confusing departure with arrival.'},
 {en:'Etiquette', ipa:'/ˈɛtɪkɛt/', ar:'اداب، اتيكيت', translit:'اتيكيت', example:{en:'Learn mosque etiquette.', ar:'تعلّم اداب المسجد.', translit:'ليرن موسك اتيكيت.'}, synonyms:'manners, customs', antonyms:'rudeness', family:'etiquette', collocations:'proper etiquette, dress etiquette', category:'Saudi Mosque Etiquette', difficulty:'Intermediate', tip:'Etiquette is polite behavior in a place.', mistake:'Pronouncing it "etti-ket."'},
-{en:'Prayer', ipa:'/prɛr/', ar:'صلاة، دعاء', translit:'برير', example:{en:'Prayer time is near.', ar:'وقت الصلاة اقترب.', translit:'برير تايم از نير.'}, synonyms:'worship, supplication', antonyms:'', family:'pray, prayer', collocations:'prayer time, prayer hall', category:'Saudi Mosque Etiquette', difficulty:'Intermediate', tip:'Keep quiet during prayer time.', mistake:'Talking loudly during prayer.'},
+{en:'Prayer', ipa:'/prɛr/', ar:'صلاه، دعا', translit:'برير', example:{en:'Prayer time is near.', ar:'وقت الصلاه اقترب.', translit:'برير تايم از نير.'}, synonyms:'worship, supplication', antonyms:'', family:'pray, prayer', collocations:'prayer time, prayer hall', category:'Saudi Mosque Etiquette', difficulty:'Intermediate', tip:'Keep quiet during prayer time.', mistake:'Talking loudly during prayer.'},
 {en:'Respect', ipa:'/rɪˈspɛkt/', ar:'احترام', translit:'ريسبيكت', example:{en:'Show respect to others.', ar:'اعرض الاحترام للاخرين.', translit:'شو ريسبيكت تو اذرز.'}, synonyms:'regard, honor', antonyms:'disrespect', family:'respect, respectful', collocations:'show respect, treat with respect', category:'Saudi Mosque Etiquette', difficulty:'Intermediate', tip:'Respect means treating others well.', mistake:'Confusing "respect" (noun) with "respectful."'},
 {en:'Modest', ipa:'/ˈmɒdɪst/', ar:'محتشم، متواضع', translit:'موديست', example:{en:'Wear modest clothes.', ar:'ارتدِ ملابس محتشمة.', translit:'وير موديست كلوذز.'}, synonyms:'decent, humble', antonyms:'showy, immodest', family:'modest, modesty', collocations:'modest dress, modest behavior', category:'Saudi Mosque Etiquette', difficulty:'Intermediate', tip:'Modest dress is simple and covering.', mistake:'Confusing "modest" (clothing) with "shy."'},
 {en:'Quiet', ipa:'/ˈkwaɪət/', ar:'هادي، صامت', translit:'كوايت', example:{en:'Please be quiet.', ar:'من فضلك اهدا.', translit:'بليز بي كوايت.'}, synonyms:'silent, calm', antonyms:'loud, noisy', family:'quiet, quietly', collocations:'keep quiet, quiet place', category:'Saudi Mosque Etiquette', difficulty:'Intermediate', tip:'"Quiet" is two syllables: qui-et.', mistake:'Spelling it "quite," which means "fairly."'},
@@ -9868,7 +9873,7 @@ const VOCAB_BANK = [
 {en:'Dial', ipa:'/ˈdaɪəl/', ar:'يطلب (رقمًا)', translit:'دايال', example:{en:'Dial the number.', ar:'اطلب الرقم.', translit:'دايال ذا نامبر.'}, synonyms:'call, ring', antonyms:'hang up', family:'dial, dialed', collocations:'dial a number, dial in', category:'Saudi Phone Calls', difficulty:'Intermediate', tip:'To dial is to enter a number.', mistake:'Saying "dial to" instead of "dial."'},
 {en:'Receptionist', ipa:'/rɪˈsɛpʃənɪst/', ar:'موظف الاستقبال', translit:'ريسبشنست', example:{en:'Ask the receptionist.', ar:'اسال موظف الاستقبال.', translit:'اسك ذا ريسبشنست.'}, synonyms:'front desk clerk', antonyms:'', family:'reception, receptionist', collocations:'the receptionist, call the receptionist', category:'Saudi Phone Calls', difficulty:'Intermediate', tip:'The receptionist greets and directs callers.', mistake:'Pronouncing it "reception-ist" too fast.'},
 {en:'Scene', ipa:'/siːn/', ar:'مشهد', translit:'سين', example:{en:'That scene made me cry.', ar:'ذلك المشهد ابكاني.', translit:'ذات سين ميد مي كراي.'}, synonyms:'shot, sequence', antonyms:'', family:'scene, scenes', collocations:'film a scene, cut a scene', category:'Movie English', difficulty:'Advanced', tip:'A scene is one part of a movie.', mistake:'Spelling it "seen," which is the verb.'},
-{en:'Sequel', ipa:'/ˈsiːkwəl/', ar:'جزء ثانٍ، تتمة', translit:'سيكويل', example:{en:'The sequel is better than the first.', ar:'الجزء الثاني افضل من الاول.', translit:'ذا سيكويل از بيتر ذان ذا فيرست.'}, synonyms:'follow-up, part two', antonyms:'prequel', family:'sequel, sequels', collocations:'a sequel to, make a sequel', category:'Movie English', difficulty:'Advanced', tip:'A sequel comes after the first film.', mistake:'Confusing sequel with prequel.'},
+{en:'Sequel', ipa:'/ˈsiːkwəl/', ar:'جز ثاني، تتمة', translit:'سيكويل', example:{en:'The sequel is better than the first.', ar:'الجز الثاني افضل من الاول.', translit:'ذا سيكويل از بيتر ذان ذا فيرست.'}, synonyms:'follow-up, part two', antonyms:'prequel', family:'sequel, sequels', collocations:'a sequel to, make a sequel', category:'Movie English', difficulty:'Advanced', tip:'A sequel comes after the first film.', mistake:'Confusing sequel with prequel.'},
 {en:'Plot', ipa:'/plɒt/', ar:'حبكة، قصة', translit:'بلوت', example:{en:'The plot was confusing.', ar:'كانت الحبكة محيرة.', translit:'ذا بلوت واز كونفيوزينق.'}, synonyms:'storyline, story', antonyms:'', family:'plot, plots', collocations:'plot twist, develop the plot', category:'Movie English', difficulty:'Advanced', tip:'The plot is the story of the movie.', mistake:'Confusing plot (story) with plot (land).'},
 {en:'Trailer', ipa:'/ˈtreɪlər/', ar:'اعلان الفيلم، مقطع تشويقي', translit:'تريلر', example:{en:'I watched the trailer online.', ar:'شاهدت اعلان الفيلم على الانترنت.', translit:'اي واتشت ذا تريلر اونلاين.'}, synonyms:'preview, teaser', antonyms:'full film', family:'trailer, trailers', collocations:'watch the trailer, movie trailer', category:'Movie English', difficulty:'Advanced', tip:'A trailer shows highlights before release.', mistake:'Confusing trailer (preview) with trailer (vehicle).'},
 {en:'Cast', ipa:'/kæst/', ar:'طاقم الممثلين', translit:'كاست', example:{en:'The cast was excellent.', ar:'كان طاقم الممثلين ممتازًا.', translit:'ذا كاست واز اكسيلِنت.'}, synonyms:'actors, ensemble', antonyms:'', family:'cast, casting', collocations:'cast member, full cast', category:'Movie English', difficulty:'Advanced', tip:'The cast is all the actors in a film.', mistake:'Confusing cast (actors) with cast (throw).'}];
@@ -12362,7 +12367,7 @@ const LESSON_LIBRARY = {
     ],
     quiz:[
       {q:'وش تقول لما ينادونك للاكل؟، What do you say when called to eat?', options:['جايتنا / Coming','ما ابي / I do not want','وين؟ / Where?'], correct:0},
-      {q:'متى الغدا المعتاد بالبيوت السعودية؟، When is the usual Saudi family lunch?', options:['بعد صلاة الظهر / After Dhuhr','الفجر / Dawn','نص الليل / Midnight'], correct:0},
+      {q:'متى الغدا المعتاد بالبيوت السعودية؟، When is the usual Saudi family lunch?', options:['بعد صلاه الظهر / After Dhuhr','الفجر / Dawn','نص الليل / Midnight'], correct:0},
     ],
     summary:'You learned the family meal call and the timing that shapes the Saudi day.',
     takeaway:'يلا الغدا، والكبسة على اصولها، كلمتان تدخلك في اي بيت.',
@@ -12807,7 +12812,7 @@ const LESSON_LIBRARY = {
       {en:'And peace be upon you too', ar:'وعليكم السلام', translit:'wa alaikum assalam', tip:'The fixed reply.'},
       {en:'Welcome, may it be accepted', ar:'تقبل الله', translit:'taqabbal allah', tip:'Said after prayer, meaning may God accept it.'},
     ],
-    grammar:{title:'The mosque exchange', rule:'Around the mosque, assalamu alaikum is the rule, and after prayer people say taqabbal allah to each other.', saudi:'بالمسجد: السلام عليكم، وبعد الصلاة: تقبل الله.', wrong:'Enter the mosque without the greeting.', right:'"Assalamu alaikum, taqabbal allah." (Peace, may God accept.)', mistakes:['Skipping the reply wa alaikum assalam, it is mandatory.','Saying taqabbal allah before the prayer ends.']},
+    grammar:{title:'The mosque exchange', rule:'Around the mosque, assalamu alaikum is the rule, and after prayer people say taqabbal allah to each other.', saudi:'بالمسجد: السلام عليكم، وبعد الصلاه: تقبل الله.', wrong:'Enter the mosque without the greeting.', right:'"Assalamu alaikum, taqabbal allah." (Peace, may God accept.)', mistakes:['Skipping the reply wa alaikum assalam, it is mandatory.','Saying taqabbal allah before the prayer ends.']},
     conversation:[
       {who:'A', ar:'السلام عليكم.', translit:'assalamu alaikum', en:'Peace be upon you.'},
       {who:'B', ar:'وعليكم السلام.', translit:'wa alaikum assalam', en:'And peace be upon you.'},
@@ -12816,7 +12821,7 @@ const LESSON_LIBRARY = {
     ],
     quiz:[
       {q:'وش تحية المسجد؟، What is the mosque greeting?', options:['السلام عليكم / Peace be upon you','هلا / Hi','وينك؟ / Where are you?'], correct:0},
-      {q:'وش تقول بعد الصلاة؟، What do you say after prayer?', options:['تقبل الله / May God accept','مبروك / Congrats','شكرا / Thanks'], correct:0},
+      {q:'وش تقول بعد الصلاه؟، What do you say after prayer?', options:['تقبل الله / May God accept','مبروك / Congrats','شكرا / Thanks'], correct:0},
     ],
     summary:'You learned the mosque greeting and the after prayer blessing.',
     takeaway:'السلام عليكم بالدخول، وتقبل الله بالخروج.',
@@ -12851,39 +12856,39 @@ const LESSON_LIBRARY = {
     situation:{
       hear:[{ar:'قدامك يمين.', translit:'gudaamak yameen', en:'In front of you, right.'},{ar:'نصلي بعد شوي.', translit:'nusalli baad shway', en:'We pray soon.'}],
       say:[{ar:'انا جديد هنا، وين اصلي؟', translit:'ana jadeed huna, wen asalli?', en:'I am new here, where do I pray?'}],
-      recover:[{ar:'اقصد مكان الوضوو، مو الصلاة.', translit:'agsid makan alwudu, mo alsala', en:'I mean the ablution place, not the prayer.'}],
+      recover:[{ar:'اقصد مكان الوضوو، مو الصلاه.', translit:'agsid makan alwudu, mo alsala', en:'I mean the ablution place, not the prayer.'}],
     },
   },
   'sa-mosque-time': {
-    title:'Prayer Times', ar:'مواقيت الصلاة', translit:'mawaqeet alsala', dir:'ar',
+    title:'Prayer Times', ar:'مواقيت الصلاه', translit:'mawaqeet alsala', dir:'ar',
     duration:'7 min', difficulty:'Intermediate',
     vocab:[
-      {en:'Prayer time', ar:'وقت الصلاة', translit:'waqt alsala', tip:'The time of prayer.'},
+      {en:'Prayer time', ar:'وقت الصلاه', translit:'waqt alsala', tip:'The time of prayer.'},
       {en:'The call to prayer', ar:'الاذان', translit:'aladhan', tip:'The call that announces prayer.'},
       {en:'The imam', ar:'الامام', translit:'alimaam', tip:'The prayer leader.'},
-      {en:'Prayer in congregation', ar:'صلاة جماعة', translit:'sala jamaa', tip:'Praying together.'},
+      {en:'Prayer in congregation', ar:'صلاه جماعة', translit:'sala jamaa', tip:'Praying together.'},
     ],
-    grammar:{title:'Asking about prayer time', rule:'The question is mata alsala (when is the prayer), and the answer names the time after the adhan.', saudi:'تسال: متى الصلاة؟ والجواب بعد الاذان.', wrong:'Miss the adhan and ask what happened.', right:'"Mata alsala alyoum?" (When is the prayer today?)', mistakes:['Saying salat (formal) for the daily prayer, sala is the dialect form here.','Not knowing the next prayer name, learn the five.']},
+    grammar:{title:'Asking about prayer time', rule:'The question is mata alsala (when is the prayer), and the answer names the time after the adhan.', saudi:'تسال: متى الصلاه؟ والجواب بعد الاذان.', wrong:'Miss the adhan and ask what happened.', right:'"Mata alsala alyoum?" (When is the prayer today?)', mistakes:['Saying salat (formal) for the daily prayer, sala is the dialect form here.','Not knowing the next prayer name, learn the five.']},
     conversation:[
-      {who:'You', ar:'متى صلاة المغرب؟', translit:'mata sala almaghrib?', en:'When is the Maghrib prayer?'},
+      {who:'You', ar:'متى صلاه المغرب؟', translit:'mata sala almaghrib?', en:'When is the Maghrib prayer?'},
       {who:'Local', ar:'بعد شوي، الاذان قريب.', translit:'baad shway, aladhan qareeb', en:'Soon, the call is close.'},
       {who:'You', ar:'تصلي جماعة؟', translit:'tusalli jamaa?', en:'Do you pray in congregation?'},
       {who:'Local', ar:'اكيد، في المسجد.', translit:'akeed, fee almasjid', en:'Of course, at the mosque.'},
     ],
     quiz:[
-      {q:'كيف تسال عن وقت الصلاة؟، How do you ask about prayer time?', options:['متى الصلاة؟ / When is the prayer?','وين الصلاة؟ / Where is the prayer?','بكم الصلاة؟ / How much is the prayer?'], correct:0},
-      {q:'وش يعلن وقت الصلاة؟، What announces the prayer time?', options:['الاذان / The adhan','الجرس / A bell','الصافرة / A whistle'], correct:0},
+      {q:'كيف تسال عن وقت الصلاه؟، How do you ask about prayer time?', options:['متى الصلاه؟ / When is the prayer?','وين الصلاه؟ / Where is the prayer?','بكم الصلاه؟ / How much is the prayer?'], correct:0},
+      {q:'وش يعلن وقت الصلاه؟، What announces the prayer time?', options:['الاذان / The adhan','الجرس / A bell','الصافرة / A whistle'], correct:0},
     ],
     summary:'You learned the prayer time question and the mosque rhythm around the adhan.',
-    takeaway:'متى الصلاة + الاذان قريب = لا تفوتك جماعة.',
+    takeaway:'متى الصلاه + الاذان قريب = لا تفوتك جماعة.',
     situation:{
       hear:[{ar:'الاذان قام.', translit:'aladhan gaam', en:'The call has started.'},{ar:'نصلي جماعة.', translit:'nusalli jamaa', en:'We pray in congregation.'}],
       say:[{ar:'متى اذان الفجر؟', translit:'mata adhan alfajr?', en:'When is the Fajr call?'}],
-      recover:[{ar:'اقصد صلاة العشا.', translit:'agsid sala alasha', en:'I mean the Isha prayer.'}],
+      recover:[{ar:'اقصد صلاه العشا.', translit:'agsid sala alasha', en:'I mean the Isha prayer.'}],
     },
   },
   'sa-mosque-after-prayer': {
-    title:'After the Prayer', ar:'بعد الصلاة', translit:'baad alsala', dir:'ar',
+    title:'After the Prayer', ar:'بعد الصلاه', translit:'baad alsala', dir:'ar',
     duration:'6 min', difficulty:'Intermediate',
     vocab:[
       {en:'May God accept', ar:'تقبل الله', translit:'taqabbal allah', tip:'The after prayer greeting.'},
@@ -12891,7 +12896,7 @@ const LESSON_LIBRARY = {
       {en:'A supplication', ar:'دعا', translit:'duaa', tip:'The personal prayer after the prayer.'},
       {en:'Stay (blessing)', ar:'بالسعادة', translit:'balsada', tip:'A parting blessing.'},
     ],
-    grammar:{title:'The after prayer exchange', rule:'After prayer, people exchange taqabbal allah, and the reply is allah yataqabbal, minni wa mink.', saudi:'بعد الصلاة: تقبل الله، والرد: الله يتقبل مني ومنك.', wrong:'Leave the mosque without the exchange.', right:'"Taqabbal allah. Allah yataqabbal minni wa mink." (May God accept, from me and from you.)', mistakes:['Using the greeting before the prayer finishes.','Forgetting the reply, it closes the exchange warmly.']},
+    grammar:{title:'The after prayer exchange', rule:'After prayer, people exchange taqabbal allah, and the reply is allah yataqabbal, minni wa mink.', saudi:'بعد الصلاه: تقبل الله، والرد: الله يتقبل مني ومنك.', wrong:'Leave the mosque without the exchange.', right:'"Taqabbal allah. Allah yataqabbal minni wa mink." (May God accept, from me and from you.)', mistakes:['Using the greeting before the prayer finishes.','Forgetting the reply, it closes the exchange warmly.']},
     conversation:[
       {who:'A', ar:'تقبل الله.', translit:'taqabbal allah', en:'May God accept.'},
       {who:'B', ar:'مني ومنك، تسلم.', translit:'minni wa mink, taslam', en:'From me and you, thank you.'},
@@ -12899,7 +12904,7 @@ const LESSON_LIBRARY = {
       {who:'B', ar:'بسلامة، بالعافية.', translit:'bislama, bialafya', en:'Safe travels, well.'},
     ],
     quiz:[
-      {q:'وش اول شي بعد الصلاة؟، What comes first after prayer?', options:['تقبل الله / May God accept','مبروك / Congrats','وينك؟ / Where are you?'], correct:0},
+      {q:'وش اول شي بعد الصلاه؟، What comes first after prayer?', options:['تقبل الله / May God accept','مبروك / Congrats','وينك؟ / Where are you?'], correct:0},
       {q:'وش رد تقبل الله؟، What is the reply?', options:['مني ومنك / From me and you','ما عليك / Its fine','تمام / OK'], correct:0},
     ],
     summary:'You learned the after prayer exchange that binds the community.',
@@ -12907,7 +12912,7 @@ const LESSON_LIBRARY = {
     situation:{
       hear:[{ar:'تقبل الله.', translit:'taqabbal allah', en:'May God accept.'},{ar:'الله يتقبل.', translit:'allah yataqabbal', en:'May God accept.'}],
       say:[{ar:'تقبل الله، الله يوفقك.', translit:'taqabbal allah, allah ywaffaqak', en:'May God accept, and grant you success.'}],
-      recover:[{ar:'انا جديد، وش اقول بعد الصلاة؟', translit:'ana jadeed, wesh agool baad alsala?', en:'I am new, what do I say after prayer?'}],
+      recover:[{ar:'انا جديد، وش اقول بعد الصلاه؟', translit:'ana jadeed, wesh agool baad alsala?', en:'I am new, what do I say after prayer?'}],
     },
   },
   'sa-mosque-eid': {
@@ -13158,7 +13163,7 @@ const LESSON_LIBRARY = {
     title:'Colors Basics', ar:'الالوان الاساسية', translit:'كالرز بيسيكس',
     duration:'7 min', difficulty:'Beginner',
     vocab:[VOCAB_BANK[43], VOCAB_BANK[44], VOCAB_BANK[45], VOCAB_BANK[46]],
-    grammar:{title:'Adjectives with "is"', rule:'Say what color a thing is: The car is red. The sky is blue. Use "is" for one thing.', saudi:'نقول لون الشي: السيارة حمرا. السماء زرقا. نستخدم is للشي الواحد.', wrong:'The car red.', right:'The car is red.', mistakes:['Dropping the verb "is": "the car red" instead of "the car is red."','Saying "the car is color red" which is extra.']},
+    grammar:{title:'Adjectives with "is"', rule:'Say what color a thing is: The car is red. The sky is blue. Use "is" for one thing.', saudi:'نقول لون الشي: السيارة حمرا. السما زرقا. نستخدم is للشي الواحد.', wrong:'The car red.', right:'The car is red.', mistakes:['Dropping the verb "is": "the car red" instead of "the car is red."','Saying "the car is color red" which is extra.']},
     conversation:[
       {who:'A', en:'I like your car, what color is it?', ar:'عجبتني سيارتك، وش لونها؟', translit:'اي لايك يور كار، وات كالر از ات؟'},
       {who:'B', en:'It is white, my brother has a red one.', ar:'ابيض، اخوي عنده وحدة حمرا.', translit:'ات از وايت، ماي براذر هاز ا ريد ون.'},
@@ -13170,7 +13175,7 @@ const LESSON_LIBRARY = {
       {q:'وش معنى "white"؟، "White" means:', options:['ابيض','اسود','احمر'], correct:0},
     ],
     summary:'You learned color words and how to describe things with "is".',
-    takeaway:'صف ثلاث اشياء حولك بالالوان: My shirt is..., the wall is...',
+    takeaway:'صف ثلاث اشيا حولك بالالوان: My shirt is..., the wall is...',
   },
 
 };
@@ -13613,7 +13618,7 @@ function getLesson(academyId, lessonId){
     };
   }
   // No authored content for this id: return null. renderWorkspace shows a
-  // graceful "Lesson not available" state — we never fabricate a generic
+  // graceful "Lesson not available" state - we never fabricate a generic
   // lesson (the old genericLesson path) because a synthetic quiz about
   // random vocab is worse than an honest miss.
   return null;
@@ -13717,7 +13722,7 @@ function awardXp(amount){
   const streakTxt = document.getElementById('sidebarStreakTxt');
   if(streakTxt) streakTxt.innerHTML = `<span class="arabic">سلسلة ${studentStats.streak} يوم</span>، ${studentStats.streak} day streak`;
   // Refresh the dashboard's weekly card + hero rings so "You studied X days
-  // this week" and the streak flame update the instant a lesson is finished —
+  // this week" and the streak flame update the instant a lesson is finished -
   // not only on the next dashboard visit.
   if(typeof renderWeekCard === 'function') renderWeekCard();
   if(typeof syncHeroStats === 'function') syncHeroStats();
@@ -13894,10 +13899,10 @@ async function pelWhisperTranscribe(blob){
   if(!text) throw new Error('empty whisper transcription');
   return text;
 }
-const PEL_TRANSCRIBE_URL = 'https://lewoochehpiycocvfwtz.supabase.co/functions/v1/transcribe';
+const PEL_TRANSCRIBE_URL = SUPABASE_URL + '/functions/v1/transcribe';
 async function pelTranscribeAudio(blob){
   // Attach the student's JWT so the edge function can verify it (JWT verify
-  // stays ON in Supabase — the endpoint is not public). Falls back to the
+  // stays ON in Supabase - the endpoint is not public). Falls back to the
   // anon key if there's no session, which the function will reject with 401.
   let auth = 'Bearer ' + SUPABASE_ANON_KEY;
   try{ const c = client(); if(c){ const { data } = await c.auth.getSession(); if(data && data.session && data.session.access_token) auth = 'Bearer ' + data.session.access_token; } }catch(e){}
@@ -16038,11 +16043,11 @@ viewRenderers.plan = renderPlanView;
    levels so the student always sees one clear, structured path.
    ============================================================ */
 const CEFR_LEVELS = [
-  { id:'A0', en:'Absolute Beginner',  ar:'من الصفر',       color:'#2F745E', descEn:'First sounds, letters and the most essential survival words.', descAr:'الاصوات والحروف الاولى واهم كلمات البقاء.' },
+  { id:'A0', en:'Absolute Beginner',  ar:'من الصفر',       color:'#2F745E', descEn:'First sounds, letters and the most essential survival words.', descAr:'الاصوات والحروف الاولى واهم كلمات البقا.' },
   { id:'A1', en:'Beginner',         ar:'مبتدي',        color:'#3F8C72', descEn:'Greetings, the alphabet, numbers and basic questions.', descAr:'التحيات، الحروف، الارقام والاسيلة البسيطة.' },
-  { id:'A2', en:'Elementary',       ar:'مبتدي متقدم',  color:'#5BA88A', descEn:'Survival English for travel, food, shopping and hotels.', descAr:'انجليزي البقاء للسفر والاكل والتسوق والفنادق.' },
-  { id:'B1', en:'Intermediate',     ar:'متوسط',        color:'#C8A96A', descEn:'Real conversations, opinions and everyday fluency.', descAr:'محادثات حقيقية واراء وطلاقة يومية.' },
-  { id:'B2', en:'Upper-Intermediate', ar:'متوسط متقدم', color:'#D8BD83', descEn:'Listening, reading, accent and the workplace.', descAr:'الاستماع والقراءة واللكنة والدوام.' },
+  { id:'A2', en:'Elementary',       ar:'مبتدي متقدم',  color:'#5BA88A', descEn:'Survival English for travel, food, shopping and hotels.', descAr:'انجليزي البقا للسفر والاكل والتسوق والفنادق.' },
+  { id:'B1', en:'Intermediate',     ar:'متوسط',        color:'#C8A96A', descEn:'Real conversations, opinions and everyday fluency.', descAr:'محادثات حقيقية وارا وطلاقة يومية.' },
+  { id:'B2', en:'Upper-Intermediate', ar:'متوسط متقدم', color:'#D8BD83', descEn:'Listening, reading, accent and the workplace.', descAr:'الاستماع والقرايه واللكنة والدوام.' },
   { id:'C1', en:'Advanced',         ar:'متقدم',        color:'#A88345', descEn:'Business, writing, idioms and media English.', descAr:'الاعمال والكتابة والتعابير وانجليزي الاعلام.' },
   { id:'C2', en:'Mastery',          ar:'اتقان',        color:'#343744', descEn:'Near-native fluency across every domain.', descAr:'طلاقة شبه اصلية في كل المجالات.' },
 ];
@@ -16137,7 +16142,7 @@ function renderCefrPath(){
   if(!el) return;
   if(!document.getElementById('cefrPathStyle')){ const s=document.createElement('style'); s.id='cefrPathStyle'; s.textContent=CEFR_PATH_STYLE; document.head.appendChild(s); }
   // Scope note: ar()/L() live in the main app IIFE and lib factories (out of
-  // scope in this block) and this block's L() is a vocab builder — so use
+  // scope in this block) and this block's L() is a vocab builder - so use
   // local helpers instead. accountPrefs IS in scope here (top-level let).
   const isAr = (accountPrefs && accountPrefs.lang==='ar') || document.documentElement.dir==='rtl';
   const esc = (s) => escapeHtml(String(s==null?'':s));
@@ -17229,7 +17234,7 @@ function renderReading(){
   el.dataset.rendered = '1';
   el.innerHTML = `
     <div class="page-head">
-      <span class="eyebrow"><span class="arabic" style="font-size:.95em;">ركن القراءة</span>، Reading Corner</span>
+      <span class="eyebrow"><span class="arabic" style="font-size:.95em;">ركن القرايه</span>، Reading Corner</span>
       <h1><span class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">مقالات قصيرة، مصممة لتطور حقيقي.</span>Short articles, built for real growth.</h1>
       <p><span class="arabic" style="display:block; margin-bottom:4px;">كل مقال يتضمن مفردات وملاحظة قواعدية واختبار. موقّت لتتبع سرعة قراوتك.</span>Every article includes vocabulary, a grammar note, and a quiz. Timed, so you can track your reading speed.</p>
     </div>
@@ -17340,7 +17345,7 @@ function renderWriting(){
     try{
       res = await checkGrammar(text);
     }catch(e){
-      console.error('[grammar] checkGrammar failed:', e);
+      console.warn('[grammar] checkGrammar failed:', e);
       res = { issues: [], fixed: text, engine: 'built-in', online: false, analyzed: false };
     }
     const found = res.issues, fixed = res.fixed;
@@ -17648,7 +17653,7 @@ const SKILL_SCORES = [
   {en:'Speaking', ar:'المحادثة', academyId:'speaking-studio'},
   {en:'Pronunciation', ar:'النطق', academyId:'american-accent-lab'},
   {en:'Listening', ar:'الاستماع', academyId:'listening-lounge'},
-  {en:'Reading', ar:'القراءة', academyId:'reading-corner'},
+  {en:'Reading', ar:'القرايه', academyId:'reading-corner'},
   {en:'Writing', ar:'الكتابة', academyId:'writing-workshop'},
 ];
 
@@ -17869,7 +17874,7 @@ function renderActivePath(){
       </div>`).join('')}
     </div>` : '';
   if(card) card.style.display = '';
-  // Hide the hero card to avoid duplicate CTA — the active path card is the
+  // Hide the hero card to avoid duplicate CTA - the active path card is the
   // primary lesson entry point when the server state is loaded.
   const heroCard = document.getElementById('heroCard');
   if(heroCard) heroCard.style.display = 'none';
@@ -18055,7 +18060,7 @@ async function startNextGuidedLesson(depth){
 function renderContinueLearning(){
   if(renderActivePath()){ /* database-driven path takes priority */ }
   else{
-  // Show the hero card — it's the primary CTA when there's no active path
+  // Show the hero card - it's the primary CTA when there's no active path
   const heroCard = document.getElementById('heroCard');
   if(heroCard) heroCard.style.display = '';
   const clLabel = document.getElementById('continueLearningLabel');
@@ -18171,7 +18176,7 @@ function syncHeroStats(){
     if(label) label.textContent = pct + '%';
   };
   setRing('heroRing', 'heroRingLabel', weeklyPct, 251);
-  // Removed: heroTodayRing, heroWeeklyRing, heroMonthlyRing — redundant progress rings removed from home page
+  // Removed: heroTodayRing, heroWeeklyRing, heroMonthlyRing - redundant progress rings removed from home page
 
   const streakNum = document.getElementById('heroStreakNum'); if(streakNum) streakNum.textContent = studentStats.streak;
   const lessonsNum = document.getElementById('heroLessonsNum'); if(lessonsNum) lessonsNum.textContent = completedLessons.size;
@@ -19329,7 +19334,7 @@ function renderSkillBars(){
     }).join('');
   if(window.lucide) lucide.createIcons();
 }
-/* renderStatStories removed — #statStories element was removed from home page during consolidation */
+/* renderStatStories removed - #statStories element was removed from home page during consolidation */
 function renderLevelBlock(){
   const el = document.getElementById('levelBlock');
   if(!el) return;
@@ -19391,7 +19396,7 @@ function renderDashboardIntel(){
       translitEn,
       accountPrefs: function(){ return accountPrefs; },
       openLesson: openLesson,
-      // SRS server sync (pel_srs_state): the stage engine guards these —
+      // SRS server sync (pel_srs_state): the stage engine guards these -
       // no user / no client just means local-only scheduling.
       supabase: function(){ try{ return client(); }catch(e){ return null; } },
       userId: function(){ return currentUser && currentUser.id; }
@@ -19781,11 +19786,11 @@ if(window.lucide) lucide.createIcons();
      ============================================================ -->
 <script>
 (function(){
-  const URL='https://lewoochehpiycocvfwtz.supabase.co';
-  const KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxld29vY2hlaHBpeWNvY3Zmd3R6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwNzQ3MzcsImV4cCI6MjA5OTY1MDczN30.sIWK6jwX7PW70fH0yPUuhOb25N1lBw2-Cvb3dtwDb9Y';
+  const URL = window.PEL_CONFIG.SUPABASE_URL;
+  const KEY = window.PEL_CONFIG.SUPABASE_ANON_KEY;
   let _c=null;
   // Reuse the single shared client() instance only. Never create a second
-  // GoTrueClient here — the previous fallback (window.supabase.createClient)
+  // GoTrueClient here - the previous fallback (window.supabase.createClient)
   // was the source of the "Multiple GoTrueClient instances" warning. The
   // shared client() is scoped inside the main app IIFE, so it is bridged to
   // window.pelSupabaseClient there; `typeof client` alone is always
@@ -19883,11 +19888,13 @@ if(window.lucide) lucide.createIcons();
 
   async function loadOverview(){
     const cl=c(); if(!cl) return null;
-    try{ const { data, error } = await cl.rpc('student_live_class_overview'); if(error){ console.error('live_class_overview', error); return null; } OVER=data; 
-      // Sync topbar credits pill with the overview data
-      if(data && typeof data.credits !== 'undefined'){ _pelCredits = data.credits; const pill=document.getElementById('topbarCredits'); const num=document.getElementById('topCreditsNum'); if(pill && num){ num.textContent = _pelCredits; pill.style.display = _pelCredits > 0 ? '' : 'none'; } const pc=document.getElementById('profileCreditsNum'); if(pc) pc.textContent = _pelCredits; }
+    // Reuse cached overview from refreshCredits if fresh (< 30s old)
+    if(_pelOverviewCache && (Date.now() - _pelOverviewTs) < 30000){ OVER=_pelOverviewCache; return OVER; }
+    try{ const { data, error } = await cl.rpc('student_live_class_overview'); if(error){ console.warn('[PEL] live_class_overview:', error.message||error); return null; } OVER=data;
+      // Sync cache + topbar credits pill with the overview data
+      if(data && typeof data.credits !== 'undefined'){ _pelCredits = data.credits; _pelOverviewCache = data; _pelOverviewTs = Date.now(); const pill=document.getElementById('topbarCredits'); const num=document.getElementById('topCreditsNum'); if(pill && num){ num.textContent = _pelCredits; pill.style.display = _pelCredits > 0 ? '' : 'none'; } const pc=document.getElementById('profileCreditsNum'); if(pc) pc.textContent = _pelCredits; }
       return data; }
-    catch(e){ console.error(e); return null; }
+    catch(e){ console.warn('[PEL] loadOverview failed:', e.message||e); return null; }
   }
 
   const SVC_AR={group_online_40:'حصة جماعية اونلاين',private_online_40:'حصة خاصة اونلاين',in_person_40:'حصة حضورية'};
@@ -19986,7 +19993,7 @@ if(window.lucide) lucide.createIcons();
       if(/Insufficient|enough credits/i.test(msg)){ ar2='ما عندك رصيد كافي.'; en2='You do not have enough credits.'; }
       else if(/not available in this city/i.test(msg)){ ar2='الحصص الحضورية مو متوفرة في مدينتك الحين.'; en2='In-person classes are not available in your city yet.'; }
       else if(/need a city|require a city/i.test(msg)){ ar2='اكتب مدينتك للحصة الحضورية.'; en2='Type your city for in-person classes.'; }
-      toast({en:en2, ar:ar2}, 'error'); console.error('request_live_class', e);
+      toast({en:en2, ar:ar2}, 'error'); console.warn('request_live_class', e);
     }finally{ btn.disabled=false; btn.textContent=orig; }
   }
 

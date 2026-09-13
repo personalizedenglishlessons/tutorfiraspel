@@ -1,14 +1,14 @@
-# NEXT STEPS — pick up here
+# NEXT STEPS - pick up here
 
 ## ✅ DONE: Comprehensive audit fixes (commit f8ffd81)
 
 ### Critical bugs fixed
-1. **Duplicate `studentName` i18n key** — was defined 3x in admin.js, last def
+1. **Duplicate `studentName` i18n key** - was defined 3x in admin.js, last def
    won (showed "Student" instead of "Full name" on create-student form).
    Renamed reports key to `studentCol`, removed duplicate.
-2. **Missing audit trail** in `openCreateStudent()` — added `audit()` call after
+2. **Missing audit trail** in `openCreateStudent()` - added `audit()` call after
    successful RPC, restoring accountability lost during merge.
-3. **Permission inconsistency** — standardized all student mutations to
+3. **Permission inconsistency** - standardized all student mutations to
    `students.manage` (was split across `students.manage` + `students.write`).
 
 ### Dead code removed
@@ -27,11 +27,11 @@
 - CSS hover states added for `pel-tool-link` buttons
 
 ### Feature branches merged
-- `feat/admin-create-student` (commit 28d2692) — admin can create student accounts
-- `fix/lesson-engine-phase1` (commit a7429e5) — CEFR Duolingo-style nesting,
+- `feat/admin-create-student` (commit 28d2692) - admin can create student accounts
+- `fix/lesson-engine-phase1` (commit a7429e5) - CEFR Duolingo-style nesting,
   speech scoring, study tools in lessons
-- `fix/client-academy-resolver` — already contained in main (0 commits ahead)
-- `fix/server-plan-profile` — already contained in main (0 commits ahead)
+- `fix/client-academy-resolver` - already contained in main (0 commits ahead)
+- `fix/server-plan-profile` - already contained in main (0 commits ahead)
 
 ### Arabic translations completed (commit 974ead7)
 - 30 choose exercises + 126 order exercises now have Arabic translations
@@ -39,7 +39,7 @@
 
 ### Audit items NOT yet fixed (lower priority)
 - `liveClasses` view relies on MutationObserver instead of viewRenderer (works
-  but fragile — brief blank flash on navigation)
+  but fragile - brief blank flash on navigation)
 - `comingSoonCopy` entries for views that now have renderers (dead code, harmless)
 - 120 empty catch blocks across codebase (would need individual review)
 - Fire-and-forget SRS upserts with no error visibility
@@ -55,7 +55,7 @@
 ## ✅ DONE: Home page consolidation + lesson tool integration (commits dc329c6, 76e8007, 035e135)
 
 ### Duplicate CTA fix (commit dc329c6)
-- **Problem**: Home page showed two cards with "Start Lesson" buttons — the hero
+- **Problem**: Home page showed two cards with "Start Lesson" buttons - the hero
   card (welcome/first lesson) AND the continue learning card (lesson path).
   Both had 0% progress rings. This happened because `renderActivePath()` ran
   after `renderContinueLearning()`, leaving the hero card populated with
@@ -68,7 +68,7 @@
 - **Removed**: Daily Experience grid (8 tiles linking to Vocabulary, Pronunciation,
   Speaking, Grammar, Writing) and Quick Actions grid (7 tiles with duplicate
   navigation). Also removed 4 redundant progress rings (Overall/Today/Weekly/
-  Monthly — duplicated the hero card ring and continue learning progress bar).
+  Monthly - duplicated the hero card ring and continue learning progress bar).
   Removed statStories section.
 - **Kept**: Hero card (primary CTA), announcements+live classes, smart review
   strip (contextual), continue learning card (lesson path), progress stats
@@ -102,10 +102,10 @@
    - 126 order exercises with English-only prompts (pattern: "Build it: [sentence]"
      → Arabic: "رتب: [sentence_ar]")
 3. **Merge 4 feature branches** (still deferred):
-   - `feat/admin-create-student` — conflicts in admin/admin.js
-   - `fix/client-academy-resolver` — fail-closed route guard
-   - `fix/lesson-engine-phase1` — study tools + speech scoring
-   - `fix/server-plan-profile` — true-zero placement track
+   - `feat/admin-create-student` - conflicts in admin/admin.js
+   - `fix/client-academy-resolver` - fail-closed route guard
+   - `fix/lesson-engine-phase1` - study tools + speech scoring
+   - `fix/server-plan-profile` - true-zero placement track
 4. **Admin panel hamza cleanup** (622 lines, low priority)
 5. **Consider**: Moving Smart Review, Vocabulary, and Grammar tools even deeper
    into the lesson flow (e.g., vocabulary cards in lessons could link directly
@@ -122,13 +122,13 @@ with `TypeError: (s || "").replace is not a function`. This crashed the app at
 boot via `renderContinueLearning` -> `clearStudentState` -> `loadStudentState`
 -> `revealApp`.
 
-**Fix**: Changed `(s||'')` to `String(s==null?'':s)` — coerces numbers,
+**Fix**: Changed `(s||'')` to `String(s==null?'':s)` - coerces numbers,
 booleans, and objects to string. `null`/`undefined` become empty string.
 All other `esc()` functions in the codebase already used this pattern.
 
 ### Migration: auth_rate_limit.sql applied
 The `auth_attempts` table (for server-side login rate limiting) was missing
-from the DB. Applied the migration — table + index + RLS now exist.
+from the DB. Applied the migration - table + index + RLS now exist.
 
 ### Migration: 202609130001_fix_embedded_arabic_questions.sql applied
 Audited all 1,255 lesson_exercises for missing Arabic translations:
@@ -143,14 +143,14 @@ Audited all 1,255 lesson_exercises for missing Arabic translations:
 
 **Choose fix**: 136 exercises had Arabic text embedded in `question.en`
 (bilingual format: `"Arabic text، English text"`). Split on Arabic comma (U+060C)
-into `question.ar` + `question.en`. Verified split quality on 10 samples — all
+into `question.ar` + `question.en`. Verified split quality on 10 samples - all
 correct.
 
 **Correct fix**: 5 grammar correction exercises were missing `why_ar` AND
 `why_en`. Added Arabic grammar explanations + English explanations +
 transliteration for all 5 (ids: 1556, 1561, 1566, 1571, 1576).
 
-### Remaining Arabic gaps (content work — needs human/LLM translation)
+### Remaining Arabic gaps (content work - needs human/LLM translation)
 - **30 choose exercises** with English-only questions (no embedded Arabic)
 - **126 order exercises** with English-only prompts (e.g., `"Build it: I am ready."`)
   - Pattern: `"Build it: [sentence]"` -> Arabic: `"رتب: [sentence_ar]"`
@@ -259,8 +259,8 @@ the lesson view rendering section of app.html:
 - LOW PRIORITY: admin panel is for teachers, not students
 
 ### 3. Merge feature branches (deferred)
-- `feat/admin-create-student` — conflicts in admin/admin.js
-- `fix/lesson-engine-phase1` — conflicts in app.html
+- `feat/admin-create-student` - conflicts in admin/admin.js
+- `fix/lesson-engine-phase1` - conflicts in app.html
 
 ### 4. DB quiz questions: ensure all DB choose exercises have Arabic translations
 
@@ -275,9 +275,9 @@ Consider whether additional in-activity teaching hints are needed.
 - Added `||''` fallbacks to `setHomeSubtitle` calls
 
 ### Verification status
-- ✅ `node --check lib/pel_lesson_stage.js` — syntax OK
-- ✅ `node tests/test_buildsequence_iam.js` — 13/13 PASS
-- ✅ `node tests/test_teaching_flow.js` — 31/31 PASS
+- ✅ `node --check lib/pel_lesson_stage.js` - syntax OK
+- ✅ `node tests/test_buildsequence_iam.js` - 13/13 PASS
+- ✅ `node tests/test_teaching_flow.js` - 31/31 PASS
 - ✅ All commits pushed to main
 
 ### Commits this session
@@ -289,16 +289,16 @@ Consider whether additional in-activity teaching hints are needed.
 | `6b253b8` | fix: add escapeHtml + null guards to welcome screen text rendering |
 
 ### What still needs attention (breadcrumbs for next session)
-1. **Live-test all fixes in browser** — load `app.html?fresh=<timestamp>`, log in,
+1. **Live-test all fixes in browser** - load `app.html?fresh=<timestamp>`, log in,
    open a lesson, verify no crashes on any activity type
-2. **Unguarded `.en`/`.ar` in app.html template literals** — ~30 locations in
+2. **Unguarded `.en`/`.ar` in app.html template literals** - ~30 locations in
    lesson view rendering (lines 15878, 16220, 16318, 16331, 16349, 16371, 16404-16406,
    16440, 16447, 16519-16533, 16811) where `v.en`, `v.ar`, `academy.ar`, `lesson.ar`,
    `h.ar`, `h.en` are used without `||''` or `escapeHtml`. Low risk (data is
    typically well-structured) but could show "undefined" if data is incomplete.
 3. **Merge feature branches** (still deferred):
-   - `feat/admin-create-student` — conflicts in `admin/admin.js`
-   - `fix/lesson-engine-phase1` — conflicts in `app.html`
+   - `feat/admin-create-student` - conflicts in `admin/admin.js`
+   - `fix/lesson-engine-phase1` - conflicts in `app.html`
 4. **DB quiz questions**: ensure all DB choose exercises have Arabic translations
 5. **Teaching methods review**: the teach-before-test pattern is implemented at
    curriculum level (concept → concept_examples → learn → learn_sentence → practice).
@@ -345,7 +345,7 @@ to avoid false matches (e.g., "there is" before "am/is/are").
 #### choose_natural_expression renderer fixed
 Was rendering raw `q.q` HTML (which included inline Arabic/translit divs from
 `dbToLesson`). Now renders `q.qEn`/`q.qAr`/`q.qTr` explicitly with proper
-escaping — no more raw HTML injection, no more "null".
+escaping - no more raw HTML injection, no more "null".
 
 #### Teaching panel enhanced with sentence + connection notes
 - **Sentence/Question section**: Shows the full English sentence/question with
@@ -382,13 +382,13 @@ Every practice activity now shows a **teaching panel** first, with:
 
 The panel appears once per activity (tracked via `act._taught` flag). Teaching
 activities (concept, concept_examples, learn, learn_sentence) do NOT get the
-panel — they ARE the teaching. On retry (wrong answer → Try again), the panel
+panel - they ARE the teaching. On retry (wrong answer → Try again), the panel
 is skipped because `act._taught` is already true.
 
 New functions in `lib/pel_lesson_stage.js`:
-- `TEACH_BEFORE` — set of activity types that get the teaching panel
-- `extractActivityVocab(act)` — extracts vocabulary from any activity type
-- `buildTeachHtml(act)` — builds the teaching panel HTML
+- `TEACH_BEFORE` - set of activity types that get the teaching panel
+- `extractActivityVocab(act)` - extracts vocabulary from any activity type
+- `buildTeachHtml(act)` - builds the teaching panel HTML
 
 `Stage.render()` modified: if the activity is a practice type and hasn't been
 taught yet, it renders the teaching panel first. When the student clicks
@@ -399,9 +399,9 @@ taught yet, it renders the teaching panel first. When the student clicks
 The countdown is shown on the completion screen and cancels on any click.
 
 ### Verification status
-- ✅ `node --check lib/pel_lesson_stage.js` — syntax OK
-- ✅ `node tests/test_buildsequence_iam.js` — 13/13 PASS
-- ✅ `node tests/test_teaching_flow.js` — 31/31 PASS
+- ✅ `node --check lib/pel_lesson_stage.js` - syntax OK
+- ✅ `node tests/test_buildsequence_iam.js` - 13/13 PASS
+- ✅ `node tests/test_teaching_flow.js` - 31/31 PASS
 - ✅ Cache buster: `?v=87cec61d`
 - ❌ NOT YET LIVE-TESTED: teaching panel rendering in browser
 - ❌ NOT YET LIVE-TESTED: auto-advance after completion
@@ -420,9 +420,9 @@ The countdown is shown on the completion screen and cancels on any click.
 10. Verify: clicking any button cancels the auto-advance
 
 ### Standing TODO
-- **Merge feature branches** (deferred — focus was on bug fixes):
-  - `feat/admin-create-student` — conflicts in `admin/admin.js`
-  - `fix/lesson-engine-phase1` — conflicts in `app.html`
+- **Merge feature branches** (deferred - focus was on bug fixes):
+  - `feat/admin-create-student` - conflicts in `admin/admin.js`
+  - `fix/lesson-engine-phase1` - conflicts in `app.html`
 - **Live-test** all three fixes in browser
 - **DB quiz questions**: ensure all DB choose exercises have Arabic translations
   (the null bug occurred because `question.ar` was null in the DB)
@@ -433,22 +433,22 @@ The countdown is shown on the completion screen and cancels on any click.
 
 ## ✅ DONE: v2 session persistence blockers 1-4 fixed (commit `268711e`)
 
-### Blocker 1: Unstable answer keys — FIXED
+### Blocker 1: Unstable answer keys - FIXED
 Added stable `data-choice-key` attributes to ALL 9 multiple-choice renderers:
 recognize, identify_heard, challenge, fill_blank, conversation_response,
 complete_dialogue, choose_natural_expression, guided_production, db_correct.
 Vocab-object renderers key on `o.en`; string renderers key on the string itself.
 `captureActivityDOM()` and `restoreActivityDOM()` now use a `choiceKey()` helper
-that prefers `data-choice-key` then text content — never `data-i` (unstable index).
+that prefers `data-choice-key` then text content - never `data-i` (unstable index).
 
-### Blocker 2: Ledger merging — FIXED
+### Blocker 2: Ledger merging - FIXED
 `saveStageSession()` now loads the existing saved session and merges into the
 existing `acts` map instead of rebuilding from scratch. Stale DOM-state keys
 (selected, typed, correctOpts, wrongOpts, checked, correct, etc.) are cleaned
 for the current activity before merging, so a re-render (Try again) doesn't
 leave ghost highlights. Previous activities' state is preserved.
 
-### Blocker 3: Closure state not updated on restore — FIXED
+### Blocker 3: Closure state not updated on restore - FIXED
 All 9 check handlers now read `sel` from the DOM at check time instead of
 relying on closure variables. Index-based renderers use
 `[...btns].indexOf(selectedBtn)`; text-based renderers use `textContent.trim()`;
@@ -456,14 +456,14 @@ db_correct uses `dataset.ok`. `restoreActivityDOM()` now enables the Check
 button when selections/typed text are restored (pre-check state) and dispatches
 an `input` event for typed-input renderers so their validation fires.
 
-### Blocker 4: correctOpts not captured — FIXED (consequence of Blockers 1+2)
+### Blocker 4: correctOpts not captured - FIXED (consequence of Blockers 1+2)
 The merge in `saveStageSession()` preserves `correctOpts` captured by `mark()`'s
 synchronous save, even when the throttled 500ms save fires after a re-render.
 Stable `data-choice-key` ensures restore matches the correct option across shuffles.
 
 ### BONUS BUG FIXES (same commit)
 
-#### Bug A: L() breaks HTML attributes in Arabic mode — CRITICAL FIX
+#### Bug A: L() breaks HTML attributes in Arabic mode - CRITICAL FIX
 `L()` returns `<span class="arabic">...</span>` in Arabic mode. When used inside
 HTML attributes (placeholder, data-ph), the `"` in `class="arabic"` closes the
 attribute, leaking raw HTML into the page. This broke spell, translate,
@@ -471,19 +471,19 @@ grammar_correction, listening_dictation, free_response, db_spell, db_translate
 inputs, and arrange_words/db_order drop zones. Added `Lt()` text-only helper
 and replaced all 9 attribute usages.
 
-#### Bug B: fill_blank shows no sentence context — FIXED
+#### Bug B: fill_blank shows no sentence context - FIXED
 When `fbItem.sentences` is empty, the fallback was `{en: fbItem.en}` (just the
 word). Now falls back to `fbItem.example` first. Renderer also falls back to
 `it.example.en` if the sentence has no `.en`.
 
-#### Bug C: iPad/tablet responsive — IMPROVED
+#### Bug C: iPad/tablet responsive - IMPROVED
 Added `@media(max-width:900px)` breakpoint for tablet sizes with adjusted
 padding, conversation line width, and font sizes.
 
 ### Verification status
-- ✅ `node --check lib/pel_lesson_stage.js` — syntax OK
-- ✅ `node tests/test_buildsequence_iam.js` — 13/13 PASS
-- ✅ Cache buster run — `app.html` updated to `?v=4d175721`
+- ✅ `node --check lib/pel_lesson_stage.js` - syntax OK
+- ✅ `node tests/test_buildsequence_iam.js` - 13/13 PASS
+- ✅ Cache buster run - `app.html` updated to `?v=4d175721`
 - ❌ NOT YET LIVE-TESTED: selection restore after reload (needs browser test)
 - ❌ NOT YET LIVE-TESTED: correctOpts restore after reload
 - ❌ NOT YET LIVE-TESTED: Arabic mode L() fix (needs browser test in Arabic)
@@ -497,16 +497,16 @@ padding, conversation line width, and font sizes.
 5. Verify: `Stage.state.checked === false`, button says "Check", feedback empty
 6. Select correct option, click Check
 7. Verify saved: `JSON.parse(localStorage.getItem('pel_stage_pos'))?.acts?.['3']?.correctOpts`
-8. Reload — verify selection + correct highlight restored
+8. Reload - verify selection + correct highlight restored
 9. In Arabic mode: verify no HTML leaks in input placeholders
 
 ### DONE: Expanded pronunciation + flow fixes + regression tests (commit `d3abc33`)
 
-#### Bug G: Fake dialogue — FIXED (commit `85f1352`)
-#### Bug H: Substring matching — FIXED (commit `85f1352`)
-#### Feature I: Pronunciation hints v1 — ADDED (commit `7d17bb8`)
-#### Feature J: Teach-before-practice — ADDED (commit `7d17bb8`)
-#### Feature K: Challenge/review taught items only — ADDED (commit `7d17bb8`)
+#### Bug G: Fake dialogue - FIXED (commit `85f1352`)
+#### Bug H: Substring matching - FIXED (commit `85f1352`)
+#### Feature I: Pronunciation hints v1 - ADDED (commit `7d17bb8`)
+#### Feature J: Teach-before-practice - ADDED (commit `7d17bb8`)
+#### Feature K: Challenge/review taught items only - ADDED (commit `7d17bb8`)
 
 #### Feature I-v2: Expanded pronunciation hints (this commit)
 - Expanded from 22 to ~50 trap words covering: TH sounds, P vs B, V vs F,
@@ -517,7 +517,7 @@ padding, conversation line width, and font sizes.
   - STR cluster, generic s+stop clusters, ph→F, silent kn, silent wr, -tion→شن
   - STR pattern placed before generic s+stop for better matching.
 - pronunciationHint() now accepts item objects (supports future DB fields:
-  pron_hint_ar, avoid_ar, beats) — DB-authored hints override hardcoded map.
+  pron_hint_ar, avoid_ar, beats) - DB-authored hints override hardcoded map.
 - Callers pass `it` (object) not `it.en` (string) so DB fields work.
 
 #### Feature J-v2: Improved teaching flow (this commit)
@@ -535,7 +535,7 @@ padding, conversation line width, and font sizes.
   match uses taught items, fake dialogue filtered, vocab-only skips
   production activities, challenge/review use taught items
 
-#### Advisor fixes (this commit — follow-up to d3abc33)
+#### Advisor fixes (this commit - follow-up to d3abc33)
 - Removed `live` (heteronym: verb /lɪv/ vs adjective /laɪv/) from PRON_HINTS
 - concept_examples pool now deduplicates by normalized English text
 - concept_examples pool now includes `correct` exercise right answers
@@ -545,9 +545,9 @@ padding, conversation line width, and font sizes.
   dbToLesson (app.html) and buildItems (pel_lesson_stage.js)
 
 ### Verification status (updated)
-- ✅ `node --check` — syntax OK
-- ✅ `node tests/test_buildsequence_iam.js` — 13/13 PASS
-- ✅ `node tests/test_teaching_flow.js` — 31/31 PASS
+- ✅ `node --check` - syntax OK
+- ✅ `node tests/test_buildsequence_iam.js` - 13/13 PASS
+- ✅ `node tests/test_teaching_flow.js` - 31/31 PASS
 - ❌ NOT YET LIVE-TESTED: pronunciation hints rendering
 - ❌ NOT YET LIVE-TESTED: concept_examples activity
 - ❌ NOT YET LIVE-TESTED: match using taughtItems
@@ -557,7 +557,7 @@ padding, conversation line width, and font sizes.
 2. concept_examples (real sentences from unified pool)
 3. learn (word + meaning + pronunciation hint)
 4. learn_sentence (word in context)
-5. recognize (MC quiz — taught items only)
+5. recognize (MC quiz - taught items only)
 6. match (taught items only)
 7. arrange_words / db_order
 8. fill_blank
@@ -600,14 +600,14 @@ Upgrades `pel_stage_pos` from cursor-only (v1) to full session save/restore (v2)
 
 ### What IS verified working (live-tested 2026-09-12)
 - ✅ Position restore across reload (idx=3 → reload → idx=3)
-- ✅ Stats restore (recTotal=1, recOk=1 preserved — mastery gate integrity)
+- ✅ Stats restore (recTotal=1, recOk=1 preserved - mastery gate integrity)
 - ✅ Per-activity flags restore (counted=true, okTracked=true)
 - ✅ Feedback + button restore ("✓ Correct" + "Continue" painted without mark())
 - ✅ DB sync confirmed (student_data has pel_stage_pos with v:2 format)
 - ✅ v2 save captures: checked, correct, selected (data-i), counted, okTracked, stats
 - ✅ 13/13 tests pass, syntax OK
 
-### ❌ BLOCKERS — next AI must fix these in order
+### ❌ BLOCKERS - next AI must fix these in order
 
 #### Blocker 1: Unstable answer keys (CRITICAL)
 **Problem**: `captureActivityDOM()` captures selected options by `data-i` (the option
@@ -641,7 +641,7 @@ because `sel` is null.
 A. Refactor Check handlers to read `inner.querySelector('.pel-option.selected')`
    at check time instead of relying on closure variables.
 B. OR: Implement renderer-specific restore that sets the closure variable.
-Option A is cleaner — search for `sel=` in each renderer and replace with
+Option A is cleaner - search for `sel=` in each renderer and replace with
 DOM lookup.
 
 #### Blocker 4: correctOpts not captured (debug needed)
@@ -650,7 +650,7 @@ DOM lookup.
 inside `mark()` calls `captureActivityDOM()` which should find `.pel-option.correct`
 elements. But the saved data has `checked:true, correct:true` but NO `correctOpts`.
 
-**Debug steps** (MUST use clean state — see below):
+**Debug steps** (MUST use clean state - see below):
 1. SQL delete: `DELETE FROM student_data WHERE key='pel_stage_pos' AND user_id='1d68ead7-7ef4-407a-9138-a171fa693272'`
 2. Clear localStorage: `localStorage.removeItem('pel_stage_pos')`
 3. Load `app.html?clean=<timestamp>` (cache-busting URL)
@@ -694,7 +694,7 @@ Interpretation:
 
 ---
 
-## 🔜 SMOKE TEST — continue after v2 blockers are fixed
+## 🔜 SMOKE TEST - continue after v2 blockers are fixed
 
 ### Verified working
 - ✅ Login works (testmail1@gmail.com / namas123)
@@ -738,32 +738,32 @@ Interpretation:
 | `cdcacbb` | feat(stage): per-activity progress persistence + curriculum view fix |
 | `6eece2f` | docs: NEXT_STEPS breadcrumb for stage position persistence |
 | `9bee3ee` | fix(stage): use direct Supabase upsert for stage pos + fix jsonb restore |
-| `d8b0436` | docs: NEXT_STEPS breadcrumb — stage position persistence LIVE-TESTED |
-| `dbc94d8` | feat(stage): full per-activity session persistence (v2) — every click saved |
-| `fa7c7db` | fix(stage): restore selected options by data-i/text — v2 session restore |
+| `d8b0436` | docs: NEXT_STEPS breadcrumb - stage position persistence LIVE-TESTED |
+| `dbc94d8` | feat(stage): full per-activity session persistence (v2) - every click saved |
+| `fa7c7db` | fix(stage): restore selected options by data-i/text - v2 session restore |
 | `052bfe4` | fix(stage): capture+restore correct/wrong option highlights after check |
 
 ### Latest lib cache buster
 `pel_lesson_stage.js?v=ad49790f`
 
 ### Key files
-- `lib/pel_lesson_stage.js` — Stage engine, ~3550 lines. Contains:
-  - `saveStageSession()` / `saveStagePos()` (line ~2498) — full v2 save
-  - `captureActivityDOM()` (line ~2453) — scans DOM for interaction state
-  - `applySavedSession()` (line ~2556) — restores stats + per-activity flags
-  - `restoreActivityDOM()` (line ~2592) — restores selections, text, feedback
-  - `clearStagePos()` (line ~2642) — clears localStorage + Supabase
-  - `Stage.mark()` (line ~2306) — calls `saveStageSession()` after updating counters
-  - `Stage.next()` (line ~2342) — calls `saveStagePos()` (alias for `saveStageSession`)
-  - `Stage.open()` (line ~2234) — calls `applySavedSession(saved)` to restore state
-  - `Stage.render()` (line ~2278) — calls `restoreActivityDOM()` after renderer paints
-  - Delegated click+input listener (line ~2219) — throttled 500ms save on every interaction
-- `lib/pel-personalization.js` — PEL_ENGINE (setCurriculumOverride, dbLesson, etc.)
-- `lib/pel_curriculum_path.js` — Curriculum view (self-wiring)
-- `app.html` — Main SPA (~20016 lines)
-- `tools/bust_lib_cache.py` — MUST run before committing lib/*.js changes
-- `tools/sql.py` — Supabase DB query (needs `SUPABASE_PAT` env var)
-- `tests/test_buildsequence_iam.js` — 13-check test suite
+- `lib/pel_lesson_stage.js` - Stage engine, ~3550 lines. Contains:
+  - `saveStageSession()` / `saveStagePos()` (line ~2498) - full v2 save
+  - `captureActivityDOM()` (line ~2453) - scans DOM for interaction state
+  - `applySavedSession()` (line ~2556) - restores stats + per-activity flags
+  - `restoreActivityDOM()` (line ~2592) - restores selections, text, feedback
+  - `clearStagePos()` (line ~2642) - clears localStorage + Supabase
+  - `Stage.mark()` (line ~2306) - calls `saveStageSession()` after updating counters
+  - `Stage.next()` (line ~2342) - calls `saveStagePos()` (alias for `saveStageSession`)
+  - `Stage.open()` (line ~2234) - calls `applySavedSession(saved)` to restore state
+  - `Stage.render()` (line ~2278) - calls `restoreActivityDOM()` after renderer paints
+  - Delegated click+input listener (line ~2219) - throttled 500ms save on every interaction
+- `lib/pel-personalization.js` - PEL_ENGINE (setCurriculumOverride, dbLesson, etc.)
+- `lib/pel_curriculum_path.js` - Curriculum view (self-wiring)
+- `app.html` - Main SPA (~20016 lines)
+- `tools/bust_lib_cache.py` - MUST run before committing lib/*.js changes
+- `tools/sql.py` - Supabase DB query (needs `SUPABASE_PAT` env var)
+- `tests/test_buildsequence_iam.js` - 13-check test suite
 
 ### v2 session format
 ```json
@@ -792,7 +792,7 @@ Interpretation:
 - **Student account**: testmail1@gmail.com / namas123
 - **User ID**: `1d68ead7-7ef4-407a-9138-a171fa693272`
 - **Lesson**: Past Simple academy → "Was and Were" (19 activities)
-- **Supabase PAT**: `<ask_user>` (NEVER commit — repo is public)
+- **Supabase PAT**: `<ask_user>` (NEVER commit - repo is public)
 - **Live URL**: https://personalizedenglishlessons.github.io/tutorfiraspel/app.html
 - **Cache-busting URL**: `app.html?fresh=<timestamp>` (GitHub Pages caches app.html for 10 min)
 
@@ -809,14 +809,14 @@ Interpretation:
 - Update NEXT_STEPS.md as a breadcrumb after every commit
 - Run `python3 tools/bust_lib_cache.py` before committing any lib/*.js change
 - Run `node --check lib/pel_lesson_stage.js` before committing
-- Run `node tests/test_buildsequence_iam.js` — must be 13/13 PASS
+- Run `node tests/test_buildsequence_iam.js` - must be 13/13 PASS
 - Usage is tight: batch reads, no redundant calls, no brute-force retries
 
 ### 4 Feature/Fix Branches (not yet merged)
-- `feat/admin-create-student` — admin can create student accounts
-- `fix/client-academy-resolver` — fail-closed route guard, library rerender loop
-- `fix/lesson-engine-phase1` — study tools + speech scoring in lesson structure
-- `fix/server-plan-profile` — true-zero placement track, no-plan badge, plan hardening
+- `feat/admin-create-student` - admin can create student accounts
+- `fix/client-academy-resolver` - fail-closed route guard, library rerender loop
+- `fix/lesson-engine-phase1` - study tools + speech scoring in lesson structure
+- `fix/server-plan-profile` - true-zero placement track, no-plan badge, plan hardening
 
 ### All bugs fixed across all sessions (18 total)
 1-7. Round 1 (`ad884b2`): Arabic span leaks, textContent bugs, challenge improvements

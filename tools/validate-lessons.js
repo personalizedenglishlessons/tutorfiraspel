@@ -87,7 +87,7 @@ ids.forEach(id => {
       else {
         const low = opts.map(o=>String(o).toLowerCase());
         // flag a duplicate only when the two options are identical including
-        // case — a case-only difference (e.g. 'REcord' vs 'reCORD') is an
+        // case - a case-only difference (e.g. 'REcord' vs 'reCORD') is an
         // intentional stress-teaching pair, not a bug.
         const dup = opts.some((o,k)=>opts.indexOf(o)!==k);
         if(dup) fail(id, 'quiz['+idx+'] duplicate option');
@@ -102,10 +102,10 @@ ids.forEach(id => {
 });
 
 if(errors.length === 0){
-  console.log('OK — all '+ids.length+' lessons pass schema validation.');
+  console.log('OK - all '+ids.length+' lessons pass schema validation.');
   process.exit(0);
 } else {
-  console.log('FAIL — '+errors.length+' issue(s):\n');
+  console.log('FAIL - '+errors.length+' issue(s):\n');
   errors.forEach(e => console.log('  - '+e));
   process.exit(1);
 }

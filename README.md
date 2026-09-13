@@ -1,4 +1,4 @@
-# PEL — Personalized English Lessons
+# PEL - Personalized English Lessons
 
 A Supabase-backed static web app for learning American English (with Arabic support),
 built by Tutor Firas. Served as a static site (e.g. GitHub Pages) from a subpath, so all
@@ -46,10 +46,10 @@ embedded in the app source.
 See [`supabase/schema-notes.md`](supabase/schema-notes.md) for the tables, RLS, and
 how lessons / certificates / feedback are read.
 
-## Stage modules (`lib/pel_lesson_stage.js` etc.) — SINGLE SOURCE OF TRUTH
+## Stage modules (`lib/pel_lesson_stage.js` etc.) - SINGLE SOURCE OF TRUTH
 
 `lib/pel_lesson_stage.js`, `lib/pel_dashboard_life.js`, and
-`lib/pel_curriculum_path.js` ARE the live engine — loaded as synchronous
+`lib/pel_curriculum_path.js` ARE the live engine - loaded as synchronous
 scripts in `app.html` (no longer optional mirrors). The stage and dashboard
 modules are **factories** (`window.PEL_STAGE_FACTORY(deps)` /
 `window.PEL_DASH_LIFE_FACTORY(deps)`): `app.html` calls them inside its main
@@ -57,7 +57,7 @@ script and injects the app helpers they need (`getLesson`, `markLessonComplete`,
 `ACADEMIES`, `toast`, ... plus getters for mutable state like `accountPrefs`).
 `lib/pel_curriculum_path.js` is self-contained and wires itself.
 
-**Never paste engine code back into `app.html`** — edit the lib module and the
+**Never paste engine code back into `app.html`** - edit the lib module and the
 whole app picks it up. `tests/test_buildsequence_iam.js` loads the REAL
 factory file (not hand-copies) so it always tests the shipped code.
 
@@ -70,7 +70,7 @@ dark ink.
 
 ## Local dev
 
-This is a static site — open `index.html` directly, or serve the folder:
+This is a static site - open `index.html` directly, or serve the folder:
 
 ```bash
 python3 -m http.server 8080
@@ -85,4 +85,4 @@ python3 -m http.server 8080
 
 ## License
 
-© PEL — Personalized English Lessons. All rights reserved.
+© PEL - Personalized English Lessons. All rights reserved.

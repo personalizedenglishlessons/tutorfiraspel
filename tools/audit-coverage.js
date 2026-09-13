@@ -1,7 +1,7 @@
 /* tools/audit-coverage.js
    Cross-references ACADEMY_LESSONS (academy -> lesson IDs shown to the
    student) against LESSON_LIBRARY (real authored lesson content) to find
-   lessons that appear in an academy's list but have NO real content —
+   lessons that appear in an academy's list but have NO real content -
    these are the "some lessons are just not there" gaps.
    Run: node tools/audit-coverage.js
 */

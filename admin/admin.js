@@ -10,8 +10,8 @@
 /* ============================================================
    0. CONSTANTS + CLIENT
    ============================================================ */
-var SUPABASE_URL = 'https://lewoochehpiycocvfwtz.supabase.co';
-var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxld29vY2hlaHBpeWNvY3Zmd3R6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwNzQ3MzcsImV4cCI6MjA5OTY1MDczN30.sIWK6jwX7PW70fH0yPUuhOb25N1lBw2-Cvb3dtwDb9Y';
+var SUPABASE_URL = window.PEL_CONFIG.SUPABASE_URL;
+var SUPABASE_ANON_KEY = window.PEL_CONFIG.SUPABASE_ANON_KEY;
 var supabase = null;
 function client(){
   if(supabase) return supabase;
@@ -192,12 +192,12 @@ var I = {
   'groupFull':{en:'Group is full', ar:'المجموعة ممتلية'},
   'moveFromWaitlist':{en:'Move into group', ar:'نقل للمجموعة'},
   'addStudent':{en:'Add student', ar:'اضافة طالب'},
-  'createStudent':{en:'Create student', ar:'انشاء طالب'},
+  'createStudent':{en:'Create student', ar:'انشا طالب'},
   'createStudentDesc':{en:'Create an account the student can sign in with. Set their name, email, and a password (min 8 chars).', ar:'انشي حساب يقدر الطالب يدخل فيه. حدد اسمه، ايميله، وكلمة مرور (٨ احرف على الاقل).'},
   'studentEmail':{en:'Email', ar:'البريد الالكتروني'},
   'studentPassword':{en:'Password', ar:'كلمة المرور'},
   'pwMinLen':{en:'At least 8 characters', ar:'٨ احرف على الاقل'},
-  'studentCreated':{en:'Student created. Share the email and password with them.', ar:'تم انشاء الطالب. شارك الايميل وكلمة المرور معه.'},
+  'studentCreated':{en:'Student created. Share the email and password with them.', ar:'تم انشا الطالب. شارك الايميل وكلمة المرور معه.'},
   'removeStudent':{en:'Remove', ar:'ازالة'},
   'assignTeacher':{en:'Assign teacher', ar:'اسناد معلم'},
   'schedule':{en:'Schedule', ar:'الجدول'},
@@ -1272,7 +1272,7 @@ function renderTabLearning(plan, st, kv, d){
 
   // Recognition vs Production analytics (from lesson_progress via
   // admin_student_360 'lesson_stats'). First-try production is the mastery
-  // signal — the same rule the lesson-stage completion gate uses.
+  // signal - the same rule the lesson-stage completion gate uses.
   var ls = d.lesson_stats || {};
   var tot = ls.totals || {};
   var hasStats = (tot.rec_total || 0) + (tot.prod_total || 0) > 0;
@@ -2004,7 +2004,7 @@ function addMemberModal(groupId){
     }, 350);
   });
 }
-/* createStudentModal removed — superseded by openCreateStudent() from feat/admin-create-student merge */
+/* createStudentModal removed - superseded by openCreateStudent() from feat/admin-create-student merge */
 function assignTeacherModal(groupId){
   var s = modal(t('assignTeacher'), '<select class="input" id="atSel"><option value="">-</option></select>' +
     '<div class="btn-row"><button class="btn btn-gold btn-sm" id="atSave">' + esc(t('assign')) + '</button><button class="btn btn-ghost btn-sm" data-close>' + esc(t('cancel')) + '</button></div>');
@@ -2609,15 +2609,15 @@ async function billingView(){
     });
     await Promise.all(Object.keys(byKey).map(function(k){
       return c.from('plan_pricing').upsert(byKey[k], {onConflict:'tier,duration_months'}).then(function(r){
-        if(r.error){ console.error('plan_pricing save',byKey[k],r.error); noteErr(r.error); }
-      }).catch(function(e){ console.error('plan_pricing save',byKey[k],e); noteErr(e); });
+        if(r.error){ console.warn('plan_pricing save',byKey[k],r.error); noteErr(r.error); }
+      }).catch(function(e){ console.warn('plan_pricing save',byKey[k],e); noteErr(e); });
     }));
     // index content (awaited so failures are counted accurately)
     await Promise.all(Array.prototype.slice.call(document.querySelectorAll('[data-ix]')).map(function(ta){
       var key = ta.dataset.ix, v = ta.value.trim();
       return c.from('site_settings').upsert({key:key, value:v}, {onConflict:'key'}).then(function(r){
-        if(r.error){ console.error('site_settings save',key,r.error); noteErr(r.error); }
-      }).catch(function(e){ console.error('site_settings save',key,e); noteErr(e); });
+        if(r.error){ console.warn('site_settings save',key,r.error); noteErr(r.error); }
+      }).catch(function(e){ console.warn('site_settings save',key,e); noteErr(e); });
     }));
     // FAQs (collect rows in DOM order, drop fully-blank ones)
     var faqOut = [];
@@ -2628,8 +2628,8 @@ async function billingView(){
     });
     try{
       var fr = await c.from('site_settings').upsert({key:'faqs', value:faqOut}, {onConflict:'key'});
-      if(fr.error){ console.error('site_settings faqs save',fr.error); noteErr(fr.error); }
-    }catch(e){ console.error('site_settings faqs save',e); noteErr(e); }
+      if(fr.error){ console.warn('site_settings faqs save',fr.error); noteErr(fr.error); }
+    }catch(e){ console.warn('site_settings faqs save',e); noteErr(e); }
     await audit('billing.update', 'plan_pricing', '', { cells: Object.keys(byKey).length });
     this.disabled = false; this.textContent = esc(t('save'));
     toast(errs ? (errs+' '+(lang==='ar'?'حقول لم تحفظ':'fields failed')+(firstMsg?': '+firstMsg:'')) : t('saved'), !!errs);

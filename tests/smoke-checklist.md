@@ -17,17 +17,17 @@ Run after every change to the static app.
 Load each page from a local server (`python3 -m http.server 8080`) and check the
 **Network** tab for 404s and the **Console** for errors:
 
-- [ ] `index.html` — landing renders, "Lesson of the Day" strip populated, no 404s
-- [ ] `login.html` — loads, favicon + brand render
-- [ ] `app.html` — shell renders, lessons load from Supabase (or fall back), no 404s
-- [ ] `verify.html` — loads cert-qr + cert-sheet
-- [ ] `admin.html` — admin.css + admin.js load from `admin/`
-- [ ] `legal.html` — brand assets load
+- [ ] `index.html` - landing renders, "Lesson of the Day" strip populated, no 404s
+- [ ] `login.html` - loads, favicon + brand render
+- [ ] `app.html` - shell renders, lessons load from Supabase (or fall back), no 404s
+- [ ] `verify.html` - loads cert-qr + cert-sheet
+- [ ] `admin.html` - admin.css + admin.js load from `admin/`
+- [ ] `legal.html` - brand assets load
 
 ## Certificate print QA
 - [ ] On screen: certificate is dark/elegant (gold on near-black)
 - [ ] Print preview (Ctrl+P): certificate is **cream paper + dark text + thin gold
-      strokes** — no full-sheet dark background, light on the printer
+      strokes** - no full-sheet dark background, light on the printer
 - [ ] QR + seal + certificate number render correctly in print
 
 ## Security

@@ -11,25 +11,25 @@ their own rows.
 
 These are the tables the running code reads/writes via `supabase.from(...)`.
 
-### Curriculum — queried by the admin console (`admin.js`)
-- `lessons` — a lesson belongs to an academy (`id`, `academy_id`, `en`, `ar`, …).
+### Curriculum - queried by the admin console (`admin.js`)
+- `lessons` - a lesson belongs to an academy (`id`, `academy_id`, `en`, `ar`, …).
   **41 beginner lessons** seeded for `english-foundations`.
-- `lesson_items` — vocab + dialogue building blocks (`lesson_id`, `kind`, `en`, `ar`,
+- `lesson_items` - vocab + dialogue building blocks (`lesson_id`, `kind`, `en`, `ar`,
   `translit`, examples, notes). **287 items** seeded.
-- `lesson_exercises` — practice questions per lesson. **203** seeded.
+- `lesson_exercises` - practice questions per lesson. **203** seeded.
 
-### Admin tables — queried by the admin console (`admin.js`)
+### Admin tables - queried by the admin console (`admin.js`)
 `academies`, `academy_lessons`, `certificates`, `groups`, `programs`,
 `student_profiles`, `student_data`, `student_state`, `site_settings`, `audit_log`,
 `interventions`, `learning_snapshots`, `live_classes`, `student_notes`.
 
-- `certificates` — issued certificates (student, academy, lesson/level, issue date,
+- `certificates` - issued certificates (student, academy, lesson/level, issue date,
   certificate code). The admin console issues & prints these; `verify.html` looks one up
   by its code (with the QR from `lib/cert-qr.js`).
 
-### Student-facing — queried by `app.html`
-- `student_data`, `student_state` — the logged-in student's own progress/state.
-- `pel_student_feedback_events` — feedback on lessons/drills/writing
+### Student-facing - queried by `app.html`
+- `student_data`, `student_state` - the logged-in student's own progress/state.
+- `pel_student_feedback_events` - feedback on lessons/drills/writing
   (`user_id`, `lesson_slug`, `fit_type`, `score`, payload).
   **RLS:** a student can `insert` and `select` only their own rows
   (`auth.uid() = user_id`).
@@ -44,7 +44,7 @@ sees a complete lesson.
 ## One-time SQL / seeding
 
 Seeding was done once via the **Supabase Management API** using a personal access
- token. That token is used **only** for one-time SQL — it is **not** stored in the app,
+ token. That token is used **only** for one-time SQL - it is **not** stored in the app,
  the zip, or the deployed site. To re-run or extend SQL, use the Management API SQL
  endpoint or the Supabase dashboard SQL editor; never commit a token to source.
 

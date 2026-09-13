@@ -1,5 +1,5 @@
 // Extracts PEL's own transliteration engine from app.html and exposes translitEn().
-// No AI — runs the app's exact JS rules. Used to populate DB translit gaps server-side.
+// No AI - runs the app's exact JS rules. Used to populate DB translit gaps server-side.
 const fs = require('fs');
 const src = fs.readFileSync(__dirname + '/app/app.html', 'utf8');
 

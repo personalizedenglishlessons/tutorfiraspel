@@ -1,12 +1,12 @@
 /* tools/audit-lessons.js
    Static content audit for app.html. Scans the lesson / exercise data for the
-   systemic quality bugs that make the app "feel poor" — placeholder/leak
+   systemic quality bugs that make the app "feel poor" - placeholder/leak
    strings, duplicate answer options, out-of-range correct indices, empty
    content fields, and genericLesson fallbacks. Prints a report and writes it
    to tools/audit-report.txt.
 
    Run:  node tools/audit-lessons.js
-   No DOM, no network — pure static parse of the inline data.
+   No DOM, no network - pure static parse of the inline data.
 */
 const fs = require('fs');
 const path = require('path');
@@ -84,7 +84,7 @@ while ((m = optRe.exec(src)) !== null){
   const opts = parseArray(src, arrStart);
   if (opts.length === 0) continue;
   const lineNo = src.slice(0, m.index).split('\n').length;
-  // duplicates (case-insensitive) — but only when the options are not a
+  // duplicates (case-insensitive) - but only when the options are not a
   // deliberate stress/capitalization teaching pair (e.g. 'REcord' vs 'reCORD').
   const lower = opts.map(o => o.toLowerCase());
   const seen = {};
@@ -118,7 +118,7 @@ lines.forEach((l, i) => {
 /* ---------- report ---------- */
 const byCat = {};
 findings.forEach(f => { (byCat[f.cat] = byCat[f.cat] || []).push(f); });
-let out = `PEL lesson content audit — ${new Date().toISOString()}\n`;
+let out = `PEL lesson content audit - ${new Date().toISOString()}\n`;
 out += `Source: app.html (${lines.length} lines)\n`;
 out += `Total findings: ${findings.length}\n\n`;
 for (const cat of Object.keys(byCat)){

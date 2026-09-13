@@ -2,7 +2,7 @@
 // runs buildSequence against REAL DB rows for i-am-sentences, to prove the
 // engine surfaces concept cards + authored exercises (previously dropped).
 // The factory is dependency-injected, so no hand-copied engine code is needed
-// anymore — this test exercises the exact code the live app ships.
+// anymore - this test exercises the exact code the live app ships.
 const fs = require('fs');
 const path = require('path');
 // Test data captured from the live DB (i-am-sentences lesson) so this test
@@ -47,7 +47,7 @@ const buildSequence = api.buildSequence;
 const buildItems = api.buildItems;
 const PEL_BEGINNER = api.PEL_BEGINNER;
 
-/* ---- dbToLesson (faithful copy from app.html — app-side mapping, not stage) ---- */
+/* ---- dbToLesson (faithful copy from app.html - app-side mapping, not stage) ---- */
 function dbToLesson(dbl, academy){
   const items = dbl.items || [];
   const vocab = items.filter(i => i.kind === 'word' || i.kind === 'phrase').map(i => {
