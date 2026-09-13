@@ -1,52 +1,98 @@
 # NEXT STEPS — pick up here
 
-## ✅ DONE: Comprehensive null-guard audit + em dash cleanup (this session, commits 33680b9, b990413, f6df47b, 6b253b8)
+## ✅ DONE: App.html null-guard sweep + hamza/em dash cleanup (commits b8cf4c5, 758db0b, d05ada1, 83a4865, cea570f)
 
-### Full activity renderer audit (commit 33680b9)
-Spawned a subagent to audit ALL 27 activity renderers in `lib/pel_lesson_stage.js`.
-Audit saved to `/home/user/workspace/audit_renderers.md`.
+### Lesson view rendering hardened (commit b8cf4c5)
+Added `escapeHtml()` + `||''` null guards to ALL user-facing template literals in
+the lesson view rendering section of app.html:
+- Lesson header: lesson.ar, lesson.title, lesson.translit
+- Vocabulary cards: v.ar, v.en, v.translit, data-speak
+- DB notes: n.en, n.ar
+- Grammar section: title, rule, saudi, wrong, right, data-speak
+- Conversation bubbles: c.ar, c.en, c.translit, data-speak
+- Situation blocks (hear/say/recover): h.ar, h.en, h.translit, data-speak
+- Next lesson: nextItem.en
+- Academy headers: academy.ar, academy.en
+- Lesson nav sidebar: l.en
+- Vocab flashcards: v.en, v.ar, v.category, v.synonyms, v.antonyms, v.collocations,
+  v.tip, v.example.en/ar/translit, wordKey, data-speak
+- Search results: l.en/ar, v.en/ar labels
+- Sidebar items: item.ar, item.en, item.icon
+- Coming soon copy: copy.ar
+- Word of the day: word.en/ar/translit
 
-#### 13 critical TypeError crashes FIXED
-All renderers that accessed fields on potentially-undefined objects without
-null checks — would throw `TypeError` at runtime if data was missing:
-1. `learn_sentence` — `act.sentence` not null-checked
-2. `arrange_words` — `act.sentence` not null-checked
-3. `fill_blank` — `it.sentences[0]` throws if `it.sentences` undefined (already partially fixed, hardened further)
-4. `listen` — `it.example.en` unguarded
-5. `identify_heard` — `it.example.en` unguarded
-6. `speaking` — `act.sentence` not null-checked
-7. `conversation_response` — `act.conv` not null-checked
-8. `complete_dialogue` — `conv[gap]` throws if `conv` undefined
-9. `grammar_correction` — `it.sentences[0]` and `it.example.en` both unguarded (already partially fixed, hardened)
-10. `choose_natural_expression` — `act.quiz[0]` throws if `act.quiz` undefined
-11. `free_response` — `act.item` not null-checked
-12. `review` — `act.items` not null-checked
-13. `challenge` — `shuffle(act.items)` throws if `act.items` undefined
+### renderQuiz + triplet null guards (commit 758db0b)
+- `renderQuiz()`: Now properly escapes q.qEn/qAr/qTr, falls back to escaped q.q
+  This was the ORIGINAL null bug the user reported - now properly fixed at the
+  source function level, not just in individual renderers.
+- `triplet()`: Added null guards + escapeHtml on all three fields (en, ar, translit)
 
-All fixed with `||{}` / `||[]` guards.
+### Hamza + em dash cleanup in UI labels (commit d05ada1)
+- pel_lesson_stage.js: stripped hamzas from ALL UI labels:
+  - 'Start practicing' label
+  - 'Production (first try)' / 'Almost there' screen
+  - 'Mic error' label (2 occurrences)
+  - 'Read and understand' prompt
+  - 'Dictation' / 'Examples' type labels
+  - 'Read the rule' / 'See examples' prompts
+- app.html: null-guarded academyCardHTML (a.from/to/icon/cat/translit/progress/difficulty/duration/lessons)
+- admin/admin.js: removed em dash from recVsProdHint
+- lib/cert-sheet.js: replaced em dashes with hyphens in date/cert placeholders
+- Remaining hamzas in lib/pel_lesson_stage.js are only in lesson DATA (vocab
+  examples, pronunciation engine) - NOT in UI labels. Per user instruction,
+  existing lesson data should NOT be "corrected".
 
-#### 18 high-severity null/undefined text rendering FIXED
-Added `||''` fallbacks to `esc()` calls across 13 renderers where null fields
-could render as "null"/"undefined" text in the HTML. Although `escapeHtml()`
-in app.html already does `(s||'')`, adding explicit `||''` is defense-in-depth.
+### Remaining app.html null guards (commits 83a4865, cea570f)
+- Pronunciation drill card: drill.ar, drill.focusAr, tgt.ar, tgt.en, translit
+- Pronunciation completion: drill.ar
+- Pronunciation topic words: w.en, w.ar, translit, data-speak
+- Drill select dropdown: d.title, d.ar
+- Daily items: lesson.title, ac.ar/en, phrase.example.en/ar, word fields
+- Sidebar group labels: group.label.ar/en
+- Profile: inProgress.ar/en/progress, firstObj.ar/title/duration
+- Profile level chip: levelInfo().ar
+- Profile lesson chip: inProgress.ar/en
+- Profile stat pills: s.ar, s.l
+- Skill scores: s.en, s.ar
+- Profile favorites: v.en, v.ar
+- Profile notes: n.text
+- Notifications: n.ar, n.en
+- Continue learning: inProgress.en (chip)
+- Hero level chip: levelInfo().ar/en
+- Roadmap done/upcoming/next: a.en/ar, c.en/ar
+- Plan settings frequency options: f.en/ar
+- Quick win recommendation: cat.ar/en, weak.ar/key, inProgress.ar/en/progress
+- Skill status chip: st.en/ar
+- Stat stories: s.ar/en
 
-Affected: recognize, match, arrange_words, spell, translate, pronunciation,
-speaking, listening_dictation, grammar_correction, free_response, review,
-challenge, complete_dialogue.
+**ALL user-facing .en/.ar accesses in app.html are now escapeHtml-guarded.**
 
-### dbToLesson + renderDbPractice null guards (commit b990413)
-- Guarded `x.payload.question.*` with `(x.payload||{}).question||{}` in quiz construction
-- Guarded all `x.payload.*` accesses in `renderDbPractice` (order, spell, correct, translate)
-- Fixed ReferenceError: variable `p` was scoped to `checkBtn` handler but accessed in `dbx-pick` click handler — would crash at runtime. Now uses its own `pp` variable.
-- Added `esc()` to all user-facing text in `renderDbPractice`
+## NEXT: Live testing + remaining work
 
-### Em dash cleanup (commit f6df47b)
-User instruction: NO em dashes (—) anywhere in the app.
-- Replaced 30+ em dashes in pronunciation hints with hyphens (-)
-- Replaced em dashes in score display placeholders
-- Replaced em dashes in mic unavailable messages (Arabic + English)
-- Replaced em dash in profile credits placeholder
-- Remaining em dashes are only in code comments (not user-facing)
+### 1. Live-test all fixes in browser
+- Load `app.html?fresh=<timestamp>`, log in
+- Open a lesson, verify no crashes on any activity type
+- Check pronunciation drills, daily quiz, profile, vocabulary cards
+- Verify no "null" or "undefined" appears anywhere in the UI
+- Test with incomplete DB data (e.g., a lesson missing vocab)
+
+### 2. Admin panel hamza cleanup (622 lines with hamzas)
+- admin/admin.js has 622 lines with hamza characters in Arabic labels
+- These are MSA/formal Arabic (e.g., "الإدارة", "المؤسسة")
+- User said "literally anywhere in the app" - may need to address admin panel too
+- LOW PRIORITY: admin panel is for teachers, not students
+
+### 3. Merge feature branches (deferred)
+- `feat/admin-create-student` — conflicts in admin/admin.js
+- `fix/lesson-engine-phase1` — conflicts in app.html
+
+### 4. DB quiz questions: ensure all DB choose exercises have Arabic translations
+
+### 5. Teaching methods review
+teach-before-test is at curriculum level (concept → concept_examples → learn → learn_sentence → practice).
+Consider whether additional in-activity teaching hints are needed.
+
+---
 
 ### Welcome screen null guards (commit 6b253b8)
 - Added `escapeHtml` + `||''` to resume text rendering
