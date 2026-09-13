@@ -22,7 +22,7 @@
 <script src="lib/pel-settings.js?v=efc52be5" defer></script>
 <script src="lib/cert-qr.js?v=a43f19f9" defer></script>
 <script src="lib/cert-sheet.js?v=2bb6195d" defer></script>
-<script src="lib/pel_lesson_stage.js?v=7282a44b"></script>
+<script src="lib/pel_lesson_stage.js?v=44484011"></script>
 <script src="lib/pel_dashboard_life.js?v=ed676701"></script>
 <script src="lib/pel_curriculum_path.js?v=b97575ec"></script>
 <style>
@@ -352,7 +352,7 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
 .ring-wrap .prog{ stroke:var(--gold); stroke-linecap:round; transition:stroke-dashoffset 1.4s var(--ease); }
 .ring-wrap .ring-center{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
 .ring-wrap .ring-center b{ font-family:'Fraunces',serif; font-size:1.05rem; }
-.ring-wrap .ring-center span{ font-size:.6rem; color:var(--text-muted); }
+.ring-wrap .ring-center span{ font-size:.6rem; color:var(--text-muted); text-align:center; max-width:90px; line-height:1.2; }
 .ring-wrap.small{ width:64px; height:64px; }
 .ring-wrap.small .ring-center b{ font-size:.82rem; }
 
@@ -18042,7 +18042,7 @@ function renderContinueLearning(){
   const dirAr = learningDirection() === 'ar';
   const firstLesson = nextLesson();
   if(firstTime){
-    if(heroTitle) heroTitle.innerHTML = `<span class="arabic" style="display:block; font-size:.7em; font-weight:400; color:var(--text-secondary); margin-bottom:2px;">مرحباً بك ${studentFirstName()}</span>Welcome, ${studentFirstName()}`;
+    if(heroTitle) heroTitle.innerHTML = `<span class="arabic" style="display:block; font-size:.7em; font-weight:400; color:var(--text-secondary); margin-bottom:2px;">مرحبا بك ${escapeHtml(studentFirstName())}</span>Welcome, ${escapeHtml(studentFirstName())}`;
     const firstObj = firstLesson ? getLesson(firstLesson.academy, firstLesson.lesson) : null;
     if(resumeText) resumeText.innerHTML = (hasPlan() && firstObj)
       ? `<span class="arabic">${escapeHtml(firstObj.ar || '')}</span> · ${escapeHtml(firstObj.title || '')}`
