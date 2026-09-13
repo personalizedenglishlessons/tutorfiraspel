@@ -18029,7 +18029,7 @@ function renderContinueLearning(){
   const {level, en: levelEn} = levelInfo();
   const setHomeSubtitle = (ar, en) => {
     const el = document.getElementById('homeSubtitle');
-    if(el) el.innerHTML = `<span class="arabic" style="display:block; margin-bottom:4px;">${ar}</span>${en}`;
+    if(el) el.innerHTML = `<span class="arabic" style="display:block; margin-bottom:4px;">${escapeHtml(ar||'')}</span>${escapeHtml(en||'')}`;
   };
 
   const heroLevelChip = document.getElementById('heroLevelChip');
@@ -18078,9 +18078,9 @@ function renderContinueLearning(){
       const next = nextLesson();
       const nextObj = next ? getLesson(next.academy, next.lesson) : null;
       const estChip = document.getElementById('heroEstChip');
-      if(estChip && nextObj && nextObj.duration) estChip.innerHTML = `<span class="arabic">تقريبا ${String(nextObj.duration).replace(/\bmin\b/gi,'دقيقة').replace(/\bhr\b/gi,'ساعة')}</span>، Est. ${nextObj.duration} remaining`;
+      if(estChip && nextObj && nextObj.duration) estChip.innerHTML = `<span class="arabic">تقريبا ${escapeHtml(String(nextObj.duration).replace(/\bmin\b/gi,'دقيقة').replace(/\bhr\b/gi,'ساعة'))}</span>، Est. ${escapeHtml(nextObj.duration||'')} remaining`;
       if(resumeText) resumeText.innerHTML = nextObj ? `<span class="arabic">${escapeHtml(nextObj.ar||'')}</span> · ${escapeHtml(nextObj.title||'')}` : `<span class="arabic">${escapeHtml(inProgress.ar||'')}</span> · ${escapeHtml(inProgress.en||'')}`;
-      setHomeSubtitle(nextObj ? `كمل: ${nextObj.ar||''}.` : `كمل: ${inProgress.ar||''}.`, nextObj ? `Continue: ${nextObj.title||''}.` : `Continue: ${inProgress.en||''}.`);
+      setHomeSubtitle(nextObj ? `كمل: ${escapeHtml(nextObj.ar||'')}.` : `كمل: ${escapeHtml(inProgress.ar||'')}.`, nextObj ? `Continue: ${escapeHtml(nextObj.title||'')}.` : `Continue: ${escapeHtml(inProgress.en||'')}.`);
       if(card) card.style.display = '';
       if(body) body.innerHTML = `
         <span class="chip emerald">${escapeHtml(inProgress.en||'')}</span>
@@ -18098,7 +18098,7 @@ function renderContinueLearning(){
       const estChip = document.getElementById('heroEstChip');
       if(estChip && planNext.minutes) estChip.innerHTML = `<span class="arabic">تقريبا ${planNext.minutes} <span class="arabic">دقيقة</span></span>، Est. ${planNext.minutes} min`;
       if(resumeText) resumeText.innerHTML = `<span class="arabic">${escapeHtml(planNext.titleAr)}</span> · ${escapeHtml(planNext.titleEn)}`;
-      setHomeSubtitle(`كمل: ${planNext.titleAr}.`, `Continue: ${planNext.titleEn}.`);
+      setHomeSubtitle(`كمل: ${escapeHtml(planNext.titleAr||'')}.`, `Continue: ${escapeHtml(planNext.titleEn||'')}.`);
       if(card) card.style.display = '';
       if(body) body.innerHTML = `
         <span class="chip gold"><span class="arabic">${escapeHtml(planNext.academyAr || '')}</span> · ${escapeHtml(planNext.academyEn || '')}</span>
