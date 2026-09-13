@@ -22,7 +22,7 @@
 <script src="lib/pel-settings.js?v=efc52be5" defer></script>
 <script src="lib/cert-qr.js?v=a43f19f9" defer></script>
 <script src="lib/cert-sheet.js?v=2bb6195d" defer></script>
-<script src="lib/pel_lesson_stage.js?v=1c5b96ec"></script>
+<script src="lib/pel_lesson_stage.js?v=c6438ede"></script>
 <script src="lib/pel_dashboard_life.js?v=ed676701"></script>
 <script src="lib/pel_curriculum_path.js?v=b97575ec"></script>
 <style>
@@ -13462,6 +13462,12 @@ function dbToLesson(dbl, academy){
     flip = !flip;
     return { who: flip ? 'A' : 'B', en: i.en, ar: i.ar, translit: i.tr || translitEn(i.en) };
   });
+  // Also expose sentence items as a flat example pool (no fake A/B speakers)
+  // so the stage engine can match vocab items with real context sentences
+  // without treating standalone examples as a dialogue.
+  const exampleSentences = items.filter(i => i.kind === 'sentence').map(i => ({
+    en: i.en, ar: i.ar, translit: i.tr || translitEn(i.en)
+  }));
   const quiz = (dbl.exercises || []).filter(x => x.type === 'choose').map(x => {
     const qtr = x.payload.question.tr || translitEn(x.payload.question.en || '');
     return {
@@ -13480,7 +13486,7 @@ function dbToLesson(dbl, academy){
     duration: dbl.d,
     kind: dbl.kind, skills: dbl.skills, goals: dbl.goals, contexts: dbl.contexts,
     prereqs: dbl.prereqs, version: dbl.version,
-    vocab, dbNotes: notes, conversation,
+    vocab, dbNotes: notes, conversation, exampleSentences,
     situation: null, grammar: null, takeaway: '',
     quiz,
     exercises: (dbl.exercises || []).filter(x => x.type !== 'choose'),

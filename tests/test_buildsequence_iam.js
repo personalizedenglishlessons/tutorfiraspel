@@ -63,10 +63,13 @@ function dbToLesson(dbl, academy){
   const conversation = items.filter(i => i.kind === 'sentence').map(i => {
     flip = !flip; return { who: flip?'A':'B', en: i.en, ar: i.ar_meaning||i.ar, translit: i.translit || i.tr || translitEn(i.en) };
   });
+  const exampleSentences = items.filter(i => i.kind === 'sentence').map(i => ({
+    en: i.en, ar: i.ar_meaning||i.ar, translit: i.translit || i.tr || translitEn(i.en)
+  }));
   const quiz = (dbl.exercises || []).filter(x => x.type === 'choose').map(x => ({
     q: x.payload.question.en, options: x.payload.options.map(o => ({ t: o.t })), correct: x.payload.options.findIndex(o => o.ok),
   }));
-  return { db:true, id:dbl.id, title:dbl.title_en, ar:dbl.title_ar, vocab, dbNotes: notes, conversation,
+  return { db:true, id:dbl.id, title:dbl.title_en, ar:dbl.title_ar, vocab, dbNotes: notes, conversation, exampleSentences,
     quiz, exercises: (dbl.exercises || []).filter(x => x.type !== 'choose') };
 }
 function translitEn(s){ return s ? '[tr:'+s+']' : ''; }

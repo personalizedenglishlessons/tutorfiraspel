@@ -1,74 +1,54 @@
-# PEL Learning System Audit Report
+# DB Lesson Audit Report
 
-## System Inventory
+## Scope
+346 lessons audited against lesson_items table.
 
-### Curriculum Architecture
-- **Plans**: Two tracks (start_from_zero, exam_prep) × 3 durations (1/2/3 months)
-- **Levels**: A0 (Absolute Beginner) → A1 → A2 → B1 → B2 → C1
-- **Academies**: 31 academies mapped to CEFR levels (A0-C1)
-- **Lessons**: 346 lessons in DB (A0-C2 + STEP), plus PEL_BEGINNER curriculum (32 lesson IDs with rich content)
-- **Activities**: 16 activity types in buildSequence(): learn, learn_sentence, recognize, match, arrange_words, fill_blank, spell, translate, listen, identify_heard, pronunciation, speaking, conversation_response, complete_dialogue, grammar_correction/free_response, review, challenge
+## Findings
 
-### Data Flow
-1. Student assigned plan/level → `PEL_EFFECTIVE_STATE` from `complete_activity` RPC
-2. `nextLesson()` checks: DB state → plan route → in-progress academy → first uncompleted
-3. `getLesson()` checks: FLAGSHIP_LESSONS → DB lesson → LESSON_LIBRARY → genericLesson()
-4. `buildSequence()` builds 9-13 activities from lesson vocab/conversation/quiz
-5. `markLessonComplete()` → `complete_activity` RPC → advances DB state
+### Critical: Vocab items with no context (419 items, 233 with zero sentences)
+419 vocab items have no `example_en` field. 233 have no context sentences
+in their lesson at all. 313 vocab words don't appear in any sentence item.
 
-## Critical Issues Found
+**Code mitigation**: buildSequence now matches vocab with conversation/example
+sentences that contain the word. Activities that require sentence context
+(fill_blank, arrange_words, speaking, guided_production) are SKIPPED when no
+valid sentence exists. The student sees a shorter lesson but everything shown
+makes sense.
 
-### 1. ANSWER-REVEALING (Critical - defeats teaching purpose)
+**Content fix needed**: Add `example_en`/`example_ar` to vocab items, or add
+sentence items that contain the vocab words.
 
-**`learn` activity (line 2215-2231):** Shows English + IPA + transliteration + Arabic + example sentence ALL AT ONCE. Pure display, not teaching. Student sees the answer before any recall.
+### 33 lessons with fake dialogue
+These lessons have `kind: 'sentence'` items that are standalone examples
+(e.g., "I am fine.", "I am ready."), not real dialogues. dbToLesson maps them
+to conversation with fake A/B speakers, which made conversation_response and
+complete_dialogue activities nonsensical.
 
-**`learn_sentence` (line 2232-2241):** Shows English + translit + Arabic simultaneously.
+**Code fix applied**: `isRealDialogue()` now checks for questions or
+conversational openers. Dialogue activities are only generated for real
+dialogues. Affected lessons:
+- a1pos-have-has, a2-checkpoint-1, adj-describing, articles-a-an-the
+- b1-agreeing-disagreeing, b1-checkpoint-communication, b1-checkpoint-grammar
+- b1-modals-deduction, b2-expressing-opinions, be-contractions
+- (and 23 more)
 
-**`pronunciation` (line 2354-2363):** Shows the word AND Arabic translation, then asks student to "say it aloud" and self-assess. Has speech recognition code (`canRecognize()`, `levenshtein()`) but doesn't use it.
+### 31 lessons with no vocab items
+Pure grammar/pattern lessons (e.g., be-contractions, do-questions, articles).
+These rely on dbNotes (concept cards) and exercises. The engine handles them
+via concept cards + authored exercises.
 
-**`speaking` (line 2365-2374):** Same as pronunciation - shows full answer, asks student to repeat.
+### 9 lessons with < 4 items
+Very thin lessons (checkpoint-be has 1 item). These will have very short
+sequences. Consider merging or enriching.
 
-**`review` (line 2449-2453):** Displays all items with both English AND Arabic. Passive display, not active recall.
+## Code fixes applied (all lessons benefit)
 
-### 2. SEQUENCING (Critical - tests immediately after teaching)
-
-**`buildSequence` order:** learn → recognize. The `recognize` activity asks "What does X mean?" immediately after `learn` showed the answer. This tests short-term memory, not learning.
-
-**All activities use `main[0]`:** arrange_words, fill_blank, spell, translate, listen, identify_heard, pronunciation, speaking ALL use `main[0]` - the first vocab item only. The other two items get minimal practice.
-
-### 3. WEAK ACTIVITIES
-
-**`listen` (line 2334-2340):** Just plays audio, says "you'll identify next." Student just clicks Continue - no action required.
-
-**`pronunciation` (line 2354-2363):** Self-assessment only. System has speech recognition but doesn't use it.
-
-**`review` (line 2449-2453):** Shows all answers. Should hide Arabic and test recall.
-
-**`challenge` (line 2455-2463):** Single multiple-choice question. Too simple for a "challenge."
-
-### 4. MISSING ELEMENTS
-
-- No spaced repetition in review (queue exists but not used for active recall)
-- No listening dictation (listen + type what you heard)
-- No guided production step between controlled practice and free response
-- No differentiation between recognition and production
-- `arrange_words` shows Arabic hint (line 2288) - student can match without understanding
-
-### 5. PROGRESSION
-
-**`nextLesson()` logic is sound** - uses DB state → plan → in-progress → first uncompleted.
-**`markLessonComplete`** marks complete on activity completion, no mastery check.
-**Review queue** feeds vocab but `review` activity doesn't test it.
-
-## Fix Priority
-
-STATUS (2026-09-08): items 1-7 are DONE and verified (see NEXT_STEPS.md).
-Kept for history:
-
-1. ~~Fix `learn` activity → progressive reveal~~ DONE (Show meaning button)
-2. ~~Fix `review` activity → active recall~~ DONE (I knew it / Forgot + SRS)
-3. ~~Fix `buildSequence` → distribute across ALL vocab items~~ DONE (main[0..2])
-4. ~~Fix `pronunciation` → use speech recognition~~ DONE (recordAndScore + pronFeedback)
-5. ~~Fix `recognize` → add gap between learning and testing~~ DONE (learn → recognize ordering + dedup distractors)
-6. ~~Fix `listen` → require student action~~ DONE (gated on Play; superseded by listening_dictation)
-7. ~~Fix `arrange_words` → hide Arabic hint~~ DONE (Show hint button)
+1. **Teach before test**: learn_sentence shown for all items with real sentences
+2. **Sentence matching**: vocab items matched with example sentences from lesson
+3. **Activity guards**: fill_blank/arrange_words/speaking/guided_production
+   skipped when sentence is too short or target word not in sentence
+4. **isRealDialogue**: dialogue activities only for real conversations
+5. **goodSentence/tokensContain**: proper validators prevent substring false
+   matches (e.g., "is" inside "this")
+6. **exampleSentences pool**: dbToLesson exposes sentence items as a flat pool
+   separate from the fake A/B conversation mapping

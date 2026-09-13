@@ -69,43 +69,69 @@ padding, conversation line width, and font sizes.
 8. Reload — verify selection + correct highlight restored
 9. In Arabic mode: verify no HTML leaks in input placeholders
 
-### NEXT: Live-test the teaching flow fixes (commit pending)
+### NEXT: Live-test the systemic teaching-engine fixes (commit pending)
 
-#### Bug D: Activities don't teach before testing — FIXED
-The `learn_sentence` activity was only added when `it.sentences[1]` existed.
-DB lessons often have vocab items with 0-1 sentences, so the student never saw
-the word in context before being tested. Now falls back to `sentences[0]` when
-it's a real multi-word sentence. Sequence now shows: concept → learn word →
-learn word in sentence → THEN test.
+#### Bug D: Activities don't teach before testing — FIXED (commit `84410c8`)
 
-#### Bug E: Vocab items missing sentence context from DB — FIXED
-DB lessons store example sentences as separate `kind: 'sentence'` items (mapped
-to conversation by dbToLesson), not attached to vocab items. This left vocab
-items with one-word "sentences". Now `buildSequence` matches vocab items with
-conversation sentences that contain the vocab word.
+#### Bug E: Vocab items missing sentence context from DB — FIXED (commit `84410c8`)
 
-#### Bug F: Nonsensical activities generated for thin lessons — FIXED
-- `fill_blank`: Now skipped if sentence < 3 words or target word not in sentence
-  (was `Math.max(0, -1)` silently blanking the first word)
-- `arrange_words`: Now skipped if sentence < 3 words (arranging 1 word is
-  meaningless)
-- `speaking`: Now skipped if sentence < 2 words
-- `guided_production`: Now skipped if sentence < 3 words
+#### Bug F: Nonsensical activities generated for thin lessons — FIXED (commit `84410c8`)
 
-### DB DATA ISSUE (not code — needs content fix)
-The `this-that-these-those` lesson has vocab items with descriptive Arabic
-meanings (e.g. "these" → "هذولي للقريب الجمع") instead of simple translations.
-This is a DB content issue, not a code bug. Consider updating lesson_items
-in Supabase to use simpler Arabic: "these" → "هذي" or "هولاء".
+#### Bug G: Fake dialogue from standalone sentences — FIXED (this commit)
+DB lessons store sentence items (kind='sentence') that are standalone examples
+("I am fine.", "I am ready."), not real dialogues. dbToLesson mapped them to
+conversation with fake A/B speakers. conversation_response and complete_dialogue
+activities used this fake dialogue — nonsensical. Now:
+- dbToLesson exposes exampleSentences (flat pool, no fake A/B)
+- isRealDialogue() checks for questions/conversational openers
+- Dialogue activities only generated for real dialogues
+- 33 lessons with fake dialogue are now handled correctly
+
+#### Bug H: Substring matching false positives — FIXED (this commit)
+`norm(c.en).indexOf(norm(it.en))` matched "is" inside "this". Replaced with
+tokensContain() — whole-token matching with word boundaries.
+
+#### Reusable validators added (this commit)
+- goodSentence(s, minWords) — checks sentence validity
+- tokensContain(sentenceEn, wordEn) — whole-token matching
+- isRealDialogue(conv) — distinguishes real dialogues from example lists
+
+### DB AUDIT RESULTS (tools/audit_lessons.py)
+- 346 lessons total
+- 419 vocab items missing example_en (DATA issue)
+- 313 vocab words not in any sentence (DATA issue)
+- 33 lessons with fake dialogue (CODE FIXED)
+- 31 lessons with no vocab (pure grammar — OK)
+- 9 lessons with < 4 items (very thin — consider enriching)
+
+Full report: AUDIT_REPORT.md
+
+### Code mitigation for thin data
+The engine now SKIPS activities that would be nonsensical:
+- fill_blank: skipped if sentence < 3 words or target word not in sentence
+- arrange_words: skipped if sentence < 3 words
+- speaking: skipped if sentence < 2 words
+- guided_production: skipped if sentence < 3 words
+- conversation_response/complete_dialogue: skipped if not a real dialogue
+
+Lessons with thin data will be shorter but everything shown makes sense.
+
+### DB DATA ISSUE (needs content fix — not code)
+419 vocab items have no example_en. 313 vocab words don't appear in any
+sentence. This is a content gap in the DB. The engine handles it by skipping
+activities that need sentence context, but the lessons would be richer with
+proper content. Consider:
+- Adding example_en/example_ar to vocab items in lesson_items
+- Adding sentence items that contain vocab words
+- Adding real dialogues to the 33 lessons with fake dialogue
 
 ### Verification status (updated)
 - ✅ `node --check` — syntax OK
 - ✅ `node tests/test_buildsequence_iam.js` — 13/13 PASS
-- ✅ Cache buster — `?v=1c5b96ec`
-- ✅ learn_sentence now shown for both main items (was 1, now 2)
-- ❌ NOT YET LIVE-TESTED: teaching flow (concept → learn → learn_sentence → test)
-- ❌ NOT YET LIVE-TESTED: conversation-matching (these/those lesson)
-- ❌ NOT YET LIVE-TESTED: activity guards (fill_blank/arrange_words skipped for thin lessons)
+- ✅ DB audit run — 346 lessons analyzed
+- ❌ NOT YET LIVE-TESTED: teaching flow on a real lesson
+- ❌ NOT YET LIVE-TESTED: isRealDialogue filtering
+- ❌ NOT YET LIVE-TESTED: activity guards on thin lessons
 
 ## ✅ DONE: v1 stage position persistence (commits `cdcacbb`, `9bee3ee`)
 
