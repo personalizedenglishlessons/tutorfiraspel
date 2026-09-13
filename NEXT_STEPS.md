@@ -1,5 +1,56 @@
 # NEXT STEPS — pick up here
 
+## ✅ DONE: escapeHtml TypeError fix + auth_rate_limit migration + Arabic question split (this session)
+
+### Bug: escapeHtml crash on non-string input (FIXED)
+`escapeHtml()` in app.html used `(s||'')` which returns the value as-is when
+truthy. If `s` was a number (e.g., a duration like `15`), `.replace()` failed
+with `TypeError: (s || "").replace is not a function`. This crashed the app at
+boot via `renderContinueLearning` -> `clearStudentState` -> `loadStudentState`
+-> `revealApp`.
+
+**Fix**: Changed `(s||'')` to `String(s==null?'':s)` — coerces numbers,
+booleans, and objects to string. `null`/`undefined` become empty string.
+All other `esc()` functions in the codebase already used this pattern.
+
+### Migration: auth_rate_limit.sql applied
+The `auth_attempts` table (for server-side login rate limiting) was missing
+from the DB. Applied the migration — table + index + RLS now exist.
+
+### Migration: 202609130001_fix_embedded_arabic_questions.sql applied
+Audited all 1,255 lesson_exercises for missing Arabic translations:
+
+| Type | Total | Missing Arabic (before) | Missing Arabic (after) | Fixed |
+|------|-------|------------------------|------------------------|-------|
+| choose | 514 | 166 | 30 | 136 |
+| correct | 105 | 5 | 0 | 5 |
+| order | 317 | 126 | 126 | 0 (needs translation) |
+| spell | 29 | 0 | 0 | - |
+| translate | 290 | 0 | 0 | - |
+
+**Choose fix**: 136 exercises had Arabic text embedded in `question.en`
+(bilingual format: `"Arabic text، English text"`). Split on Arabic comma (U+060C)
+into `question.ar` + `question.en`. Verified split quality on 10 samples — all
+correct.
+
+**Correct fix**: 5 grammar correction exercises were missing `why_ar` AND
+`why_en`. Added Arabic grammar explanations + English explanations +
+transliteration for all 5 (ids: 1556, 1561, 1566, 1571, 1576).
+
+### Remaining Arabic gaps (content work — needs human/LLM translation)
+- **30 choose exercises** with English-only questions (no embedded Arabic)
+- **126 order exercises** with English-only prompts (e.g., `"Build it: I am ready."`)
+  - Pattern: `"Build it: [sentence]"` -> Arabic: `"رتب: [sentence_ar]"`
+  - Pattern: `"Build the question: [sentence]"` -> Arabic: `"رتب السوال: [sentence_ar]"`
+  - These need the sentence translated to Arabic, not just the prompt prefix
+
+### Verification status
+- All 44 tests pass (13 buildsequence + 31 teaching flow)
+- DB audit confirmed: 136 choose + 5 correct exercises fixed
+- escapeHtml fix prevents crash for ANY non-string input
+
+---
+
 ## ✅ DONE: App.html null-guard sweep + hamza/em dash cleanup (commits b8cf4c5, 758db0b, d05ada1, 83a4865, cea570f)
 
 ### Lesson view rendering hardened (commit b8cf4c5)

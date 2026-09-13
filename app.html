@@ -14063,7 +14063,7 @@ function recordAndScore(onDone, targetText, btn, _retryCount){
   catch(e){ cleanupRecognition(); onDone(null, null, 'aborted'); }
   return rec;
 }
-function escapeHtml(s){ return (s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function escapeHtml(s){ return String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 /* ============================================================
    REAL GRAMMAR ENGINE - free, unlimited, open source.
    Layer 1: LanguageTool, the open-source proofreading engine.
