@@ -1,5 +1,43 @@
 # NEXT STEPS - pick up here
 
+## ✅ DONE: Deep audit - 20 issues fixed (commit 70728d0)
+
+### HIGH severity (2 fixed)
+- **Bookmark XSS**: `escapeHtml()` applied to `b.label` and `b.sub` in
+  `renderBookmarks()` - prevented stored XSS via DB-sourced lesson titles
+- **Double-mark race condition**: `mark()` now guards against double-calling
+  (prevents pronunciation "I said it" from overriding speech recognition score)
+
+### MEDIUM severity (8 fixed)
+- **Personalization guards**: `ACADEMY_LESSONS[u.academyId]` and
+  `route[currentStage].units[0]` now have null fallbacks
+- **Daily lesson timezone**: uses Asia/Riyadh local date instead of UTC
+  (was rotating at 3 AM Saudi time instead of midnight)
+- **restoreActivityDOM**: activity index check prevents cross-activity restoration
+- **markLessonComplete**: rolls back local state on RPC failure
+- **openLesson**: checks if lesson is locked (prevents deep-link bypass)
+- **renderBookmarks**: removeEventListener before addEventListener
+- **speak()**: double-callback guard (onend + onerror in Chrome)
+- **Assessment esc()**: escapes single quotes; open() clears stale timer
+
+### LOW severity (10 fixed)
+- estimateDuration meta.d guard, onboardClose null check, countUp
+  re-animation, guided_production empty guard, levelInfo bounds,
+  c_rpc_effective_state error handling, credits interval cleared on
+  signOut, mastery gate comment, SRS interval documented
+
+### Also fixed in this session
+- **Standalone hamza (ء)**: 54 replacements (قراءة→قرايه, شيء→شي, etc.)
+- **Incorrect word**: "اسيلة"→"اساله" (from hamza cleanup of اسئله)
+- **Em dashes**: 145 replaced with hyphens
+- **Empty catch blocks**: 9 critical ones now log console.warn
+- **Console.error**: 7 replaced with console.warn
+- **Supabase credentials**: centralized to lib/pel_config.js
+- **Duplicate RPC**: refreshCredits + loadOverview now share cache
+- **data-goto**: standardized to data-goto-view in curriculum_path.js
+
+---
+
 ## ✅ DONE: Comprehensive audit fixes (commit f8ffd81)
 
 ### Critical bugs fixed
