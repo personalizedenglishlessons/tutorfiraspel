@@ -2,6 +2,31 @@
 
 ## ✅ DONE: Teach-before-test + null bug fix + auto-advance (this session)
 
+### Audit round 2: Enhanced teaching panel + renderer fixes
+
+#### choose_natural_expression renderer fixed
+Was rendering raw `q.q` HTML (which included inline Arabic/translit divs from
+`dbToLesson`). Now renders `q.qEn`/`q.qAr`/`q.qTr` explicitly with proper
+escaping — no more raw HTML injection, no more "null".
+
+#### Teaching panel enhanced with sentence + connection notes
+- **Sentence/Question section**: Shows the full English sentence/question with
+  transliteration and Arabic translation (from `extractActivitySentence()`)
+- **How words connect section**: Arabic grammar explanation via
+  `connectionNoteFor()` with pattern detection for:
+  - Demonstrative pronouns (this/that/these/those = ذس/ذات/ذيز/ذوز)
+  - Present tense to be (am/is/are)
+  - Past tense to be (was/were)
+  - Present simple (verb + s)
+  - Questions with do/does
+
+#### Unguarded field fixes in learn + learn_sentence renderers
+- `learn` renderer: `it.translit`, `it.ar`, `it.example.*` now conditionally
+  rendered (no empty divs when fields are null/missing)
+- `learn_sentence` renderer: `s.translit`, `s.ar` now conditionally rendered
+
+### Original fixes (round 1)
+
 ### Bug: "null" in choose_natural_expression question (FIXED)
 `dbToLesson()` in `app.html` concatenated `x.payload.question.ar` directly into
 HTML. When the DB quiz question had no Arabic translation, it rendered the
