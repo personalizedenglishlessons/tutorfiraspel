@@ -485,7 +485,11 @@ function toast(msg, isErr){
   el.className = 'toast' + (isErr ? ' err' : '');
   var icon = isErr ? '<path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/>'
                     : '<path d="M4 12l6 6L20 6"/>';
-  el.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + icon + '</svg><span>' + msg + '</span>';
+  // SECURITY: msg can come from RPC error messages (r.error.message via
+  // rpcErrMsg()) which are server-controlled but may reflect user input. Escape
+  // before injecting to prevent HTML/script injection via error-displayed
+  // toast notifications. Callers passing static t() strings are unaffected.
+  el.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + icon + '</svg><span>' + esc(msg) + '</span>';
   stack.appendChild(el);
   setTimeout(function(){ el.style.opacity = '0'; el.style.transition = 'opacity .4s ease'; setTimeout(function(){ el.remove(); }, 400); }, 3400);
 }

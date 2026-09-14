@@ -52,6 +52,43 @@ local-scope overrides or legitimate object-construction uses):
   it may be a different, not-yet-found location - ask for a screenshot or
   the exact screen/lesson/button next time)
 
+### Follow-up audit (same session, broader scope)
+Ran a second pass per user's "audit the app and fix debug it" request, scoped to
+static-only checks (no browser, no DB) across the files NOT yet covered above:
+`admin/admin.js`, `admin.html`, `index.html`, `legal.html`, `login.html`,
+`verify.html`.
+
+- **`admin/admin.js` has zero `L(` calls** - the earlier breadcrumb note below
+  ("admin/admin.js (5 `L(` calls - not yet re-audited")) was a false positive
+  from a loose grep match (it was matching `insertAdjacentHTML(`/`ObjectURL(`,
+  not an actual `L(` call). Confirmed with a precise regex
+  (`rg -P '(?<![\w$.])L\('`) - corrected here so nobody wastes time chasing it
+  again.
+- **`index.html`, `legal.html`, `login.html`, `verify.html`, `admin.html`**:
+  no `L(` pattern present at all - these files use a different, simpler i18n
+  approach (a local `setLang(el, ar, en)` helper that sets `.innerHTML`
+  directly). Checked their innerHTML sites for injection risk: all content
+  passed in is either static owner-authored marketing copy/FAQ text hardcoded
+  in the file, or comes from `window.PEL_SITE` (a site-config object only the
+  site owner edits via `pel-settings.js`, not user-submitted data). No fix
+  needed here.
+- **Found and fixed 1 real bug in `admin/admin.js`**: the `toast(msg, isErr)`
+  helper (used for all admin-panel notifications) injected `msg` directly into
+  `innerHTML` with no escaping. Several call sites pass `rpcErrMsg(r)` /
+  `r.error.message`, which originates from Supabase RPC error responses -
+  these are server-controlled but could reflect back user-supplied input in
+  some error paths (e.g. a validation exception echoing a name/email a user
+  typed). **Fixed**: wrapped `msg` in the existing `esc()` helper before
+  injection. Verified all ~40 other `toast(...)` callers pass either `t(...)`
+  translation keys or static strings, so this is a strict hardening with zero
+  behavior change for the common case.
+- Reviewed all ~22 `modal(title, body, ...)` call sites in `admin/admin.js`
+  for the same class of bug - every DB-derived field passed into a modal body
+  is already wrapped in `esc()`; titles are always `t(...)` or static
+  strings. No fix needed.
+- Verification: `node --check admin/admin.js` clean; re-ran the 44 existing
+  tests (unaffected, unrelated files) - all still pass.
+
 ### Next steps (breadcrumb for next session)
 1. **If user still reports broken/leaked text after this fix**: ask for a
    screenshot or the exact screen + steps to reproduce (which view, which
