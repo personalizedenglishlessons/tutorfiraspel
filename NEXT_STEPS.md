@@ -1,5 +1,34 @@
 # NEXT STEPS - pick up here
 
+## ✅ DONE: Whole-app runtime smoke test (this session, round 3) - no new bugs found
+
+Ran a live smoke test against the deployed GitHub Pages site (not local, since
+the cloud browser can't reach the sandbox's localhost) after the two fix
+rounds below. Checked: index.html, login.html, app.html (dashboard + lesson
+reader + Speaking Studio, logged in as the test account), verify.html,
+legal.html, admin.html.
+
+For each page: console.error hook, window.onerror/unhandledrejection hook,
+and a DOM walk for any visible `[object Object]` text outside `<script>`
+tags. Result: **zero console errors, zero uncaught exceptions, zero visible
+object-leak text on any page.** Confirmed both `2ffd3ae` (Lesson Tools strip)
+and `b7ec67d` (admin toast escaping) fixes are live and working correctly in
+production.
+
+Also completed before the browser pass (all clean, no fixes needed):
+static broken-asset-reference scan (0 real issues - flagged items were
+template-literal/CSS-filter false positives), full RPC cross-check (all 17
+`.rpc()` calls in app.html + admin.js match live DB function signatures,
+including 10 not in tracked migration files but deployed via dashboard), and
+a duplicate-function-declaration scan (0 real top-level collisions).
+
+**Conclusion:** the low-hanging bug classes (Arabic-leak/XSS/RPC-mismatch/
+duplicate-declaration) are exhausted for now. If more issues turn up, they'll
+need either a specific user-reported screen/action to reproduce, or a
+different bug class entirely (e.g. mobile viewport, RTL layout edge cases,
+timing/race conditions under real network latency - none of which a static
+scan or a single-viewport smoke test can catch).
+
 ## ✅ DONE: Fixed 2 confirmed "[object Object]" / raw text leaks in app.html (this session)
 
 ### Context
