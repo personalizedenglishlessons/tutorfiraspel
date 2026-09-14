@@ -16369,7 +16369,15 @@ function renderLessonReader(container, academy, lesson){
         {view:'writing',icon:'pen-line',ar:'الكتابة',en:'Writing',why:'اكتب جملة'},
         {view:'speaking',icon:'messages-square',ar:'المحادثة',en:'Speaking',why:'تكلم بصوتك'},
         {view:'bookmarks',icon:'bookmark',ar:'المفضلة',en:'Bookmarks',why:'دروسك المحفوظة'}
-      ].map(function(t){return '<button class="pel-dash-tool" data-lt-view="'+t.view+'"><span class="td-ico">'+svgIcon(t.icon,18)+'</span><span class="td-t">'+L(t.en,t.ar)+'</span><span class="td-s"><span class="arabic">'+t.why+'</span></span></button>';}).join('')}</div>
+      ].map(function(t){
+        // Scope note: this map runs inside renderLessonReader() which has no
+        // local ar()/L() helper - falling through to the global object-
+        // returning L(en,ar,translit) rendered '[object Object]' for every
+        // tool label. Use a self-contained, scope-safe language check instead.
+        var _isAr = false;
+        try{ _isAr = (typeof accountPrefs!=='undefined' && accountPrefs && accountPrefs.lang==='ar') || document.documentElement.dir==='rtl'; }catch(e){}
+        return '<button class="pel-dash-tool" data-lt-view="'+t.view+'"><span class="td-ico">'+svgIcon(t.icon,18)+'</span><span class="td-t">'+escapeHtml(_isAr?t.ar:t.en)+'</span><span class="td-s"><span class="arabic">'+escapeHtml(t.why)+'</span></span></button>';
+      }).join('')}</div>
       <p style="font-size:.74rem;color:var(--text-muted);margin:8px 2px 0;"><span class="arabic">استخدم كل اداة مع هذا الدرس</span>، Use any tool with this lesson.</p>
     </div>
 
@@ -17168,7 +17176,10 @@ function renderSpeaking(){
     const _micHint = document.getElementById('roleplayMicHint');
     if(_micBtn && _micHint){
       if(!canRecognize()){
-        _micBtn.title = L('Typing is available below','الكتابة متاحة تحت');
+        // NOTE: app.html's top-level L(en,ar,translit) returns a {en,ar,translit}
+        // OBJECT, not a string - assigning it to .title would render
+        // '[object Object]'. Use a plain inline ternary on accountPrefs instead.
+        _micBtn.title = (accountPrefs && accountPrefs.lang==='ar') ? 'الكتابة متاحة تحت' : 'Typing is available below';
         _micBtn.style.opacity = '.55';
         _micHint.innerHTML = `<span class="arabic">المايك غير مدعوم على هذا المتصفح - اكتب ردك بالاسفل.</span>، Mic isn\'t supported on this browser - type your reply below.`;
       }

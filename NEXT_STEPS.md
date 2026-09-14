@@ -1,5 +1,82 @@
 # NEXT STEPS - pick up here
 
+## ✅ DONE: Fixed 2 confirmed "[object Object]" / raw text leaks in app.html (this session)
+
+### Context
+User reported seeing broken text in the app ("spam something" / "span") - a
+follow-up to the earlier Bug A fix (commit 268711e) where the global
+`function L(en,ar,translit){return {en,ar,translit}}` in app.html (an object
+builder for roleplay script data) gets accidentally called from a scope with
+no local Arabic-aware `L()`/`ar()` override, then concatenated directly into
+a string. Since it returns an OBJECT not a string, this always renders the
+literal text `[object Object]` (not actually a `<span>` leak this time, but
+the same root-cause class of bug: wrong-scope `L()` call).
+
+### Audit method
+Wrote a one-off static scan (`python3` script, not committed - see this
+breadcrumb for the approach if needed again) that:
+1. Found every function boundary and every local `const L = (en, arTxt) => ...`
+   override in app.html.
+2. For each of the 326 `L(` call sites, checked whether a local override was
+   in scope between the enclosing function start and the call.
+3. Of those, flagged the subset where the result is used directly in string
+   interpolation (`${L(...)}`, `'+L(...)+'`) rather than stored as an
+   `{en,ar,translit}` object for later `.en`/`.ar` field access (the roleplay
+   script data pattern, which is correct/intentional).
+
+This found exactly 2 real bugs (all other 324 call sites are either safe
+local-scope overrides or legitimate object-construction uses):
+
+1. **`renderLessonReader()` line ~16372** - the Lesson Tools button strip
+   (Pronunciation/Grammar/Vocabulary/Review/Listening/Reading/Writing/
+   Speaking/Bookmarks) called `L(t.en,t.ar)` with no local override in scope,
+   so every button label rendered as `[object Object]`. **Fixed**: inline
+   scope-safe `_isAr` check (`accountPrefs`/`dir==='rtl'` with try/catch) +
+   `escapeHtml()` on both the label and the `t.why` field.
+2. **`renderSpeaking()` line ~17171** - `_micBtn.title = L(...)` on the
+   "typing available" mic-fallback hint had the same bug, would set the
+   title attribute to the literal string `[object Object]`. **Fixed**:
+   inline ternary on `accountPrefs.lang==='ar'`.
+
+### Verification done
+- ✅ Extracted and syntax-checked all `<script>` blocks from app.html
+  (`node --check`) - OK
+- ✅ `node --check lib/pel_lesson_stage.js` - OK
+- ✅ `node tests/test_buildsequence_iam.js` - 13/13 PASS
+- ✅ `node tests/test_teaching_flow.js` - 31/31 PASS
+- ✅ Regression grep confirms no remaining `.title = L(` or direct `+L(...)+`
+  string-concat pattern anywhere in app.html
+- ❌ NOT LIVE-TESTED in browser (user has not confirmed the exact screen/flow
+  where they saw the broken text - these were the only 2 matches found by
+  the static scan, but if the user still sees leaked text after this fix,
+  it may be a different, not-yet-found location - ask for a screenshot or
+  the exact screen/lesson/button next time)
+
+### Next steps (breadcrumb for next session)
+1. **If user still reports broken/leaked text after this fix**: ask for a
+   screenshot or the exact screen + steps to reproduce (which view, which
+   button, English or Arabic mode) - the static scan covered `app.html`'s
+   ~326 `L(` call sites and 2 known-bug files
+   (`lib/pel_curriculum_path.js`, `lib/pel_dashboard_life.js` have their own
+   correctly-scoped local `L()` per earlier audits) but did NOT cover:
+   - `admin/admin.js` (5 `L(` calls - not yet re-audited this session)
+   - `verify.html`, `index.html`, `login.html`, `legal.html` (few `L(` calls
+     each, likely inline i18n patterns different from app.html's)
+   - Runtime/DB-driven values (e.g. `question.ar` being null) rather than a
+     scope bug - these were the subject of the *older* null-guard audits
+     already documented further down this file
+2. **Stale sections below**: everything from the "✅ DONE: Deep audit"
+   heading downward predates this entry and may already be superseded -
+   treat the 4 unmerged feature branches, admin-panel hamza cleanup, and
+   Arabic-translation content gaps (AUDIT_REPORT.md: 419 vocab items missing
+   `example_en`/`ar`, 30 choose + 126 order exercises missing Arabic) as the
+   longest-standing genuinely-open items once this leak report is resolved.
+3. **Standing workflow reminder**: usage/credits are limited per the user -
+   batch reads, avoid speculative live-browser QA without a concrete repro,
+   commit+push every finished fix immediately.
+
+---
+
 ## ✅ DONE: Deep audit - 20 issues fixed (commit 70728d0)
 
 ### HIGH severity (2 fixed)
