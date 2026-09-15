@@ -1524,16 +1524,16 @@ function clearStudentState(){
    topbar pill, so credits given by admin are immediately visible.
    ============================================================ */
 let _pelCredits = 0;
-let _pelOverviewCache = null; // shared cache for loadOverview to reuse
-let _pelOverviewTs = 0;
+window._pelOverviewCache = null; // shared cache for loadOverview to reuse (cross-script-block)
+window._pelOverviewTs = 0;
 async function refreshCredits(){
   const cl = client(); if(!cl || !currentUser) return;
   try{
     const { data, error } = await cl.rpc('student_live_class_overview');
     if(!error && data){
       _pelCredits = data.credits || 0;
-      _pelOverviewCache = data;
-      _pelOverviewTs = Date.now();
+      window._pelOverviewCache = data;
+      window._pelOverviewTs = Date.now();
       const pill = document.getElementById('topbarCredits');
       const num = document.getElementById('topCreditsNum');
       if(pill && num){
@@ -20084,10 +20084,10 @@ if(window.lucide) lucide.createIcons();
   async function loadOverview(){
     const cl=c(); if(!cl) return null;
     // Reuse cached overview from refreshCredits if fresh (< 30s old)
-    if(_pelOverviewCache && (Date.now() - _pelOverviewTs) < 30000){ OVER=_pelOverviewCache; return OVER; }
+    if(window._pelOverviewCache && (Date.now() - (window._pelOverviewTs||0)) < 30000){ OVER=window._pelOverviewCache; return OVER; }
     try{ const { data, error } = await cl.rpc('student_live_class_overview'); if(error){ console.warn('[PEL] live_class_overview:', error.message||error); return null; } OVER=data;
       // Sync cache + topbar credits pill with the overview data
-      if(data && typeof data.credits !== 'undefined'){ _pelCredits = data.credits; _pelOverviewCache = data; _pelOverviewTs = Date.now(); const pill=document.getElementById('topbarCredits'); const num=document.getElementById('topCreditsNum'); if(pill && num){ num.textContent = _pelCredits; pill.style.display = _pelCredits > 0 ? '' : 'none'; } const pc=document.getElementById('profileCreditsNum'); if(pc) pc.textContent = _pelCredits; }
+      if(data && typeof data.credits !== 'undefined'){ _pelCredits = data.credits; window._pelOverviewCache = data; window._pelOverviewTs = Date.now(); const pill=document.getElementById('topbarCredits'); const num=document.getElementById('topCreditsNum'); if(pill && num){ num.textContent = _pelCredits; pill.style.display = _pelCredits > 0 ? '' : 'none'; } const pc=document.getElementById('profileCreditsNum'); if(pc) pc.textContent = _pelCredits; }
       return data; }
     catch(e){ console.warn('[PEL] loadOverview failed:', e.message||e); return null; }
   }
