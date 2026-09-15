@@ -1199,3 +1199,28 @@ Interpretation:
 4. Activity touch in lesson stage: add `PEL_ACTIVITY.touch('activity', ...)` in pel_lesson_stage.js for per-activity tracking
 5. Admin overview: add online student count to admin_overview RPC
 6. Activity retention: periodic cleanup of old student_activity_events
+
+### Session: Merge all sections into guided path (commit e44b819)
+
+**What was done:**
+1. **Simplified dock buttons**: Home, Levels, Profile (removed "Academies" and "Lesson of Day" - students won't navigate to separate sections)
+2. **Simplified navGroups**: "Your Path" now only has "Levels" (removed "Academies" and "Lesson of Day")
+3. **Redirected "paths" view**: Now renders the CEFR guided path (renderCefrPath) instead of the library grid (renderLibrary)
+4. **Updated all references**: search palette, workspace back button, lesson next button, resume fallback all point to 'cefr'
+5. **Daily warm-up in lessons**: Word/Phrase of the Day woven into the start of buildSequence as a 'learn' activity (after 1st lesson). Students discover daily content naturally within their lesson, not from a separate section.
+6. **Daily content Deps**: Added `dailyWarmup` function to Deps that returns buildDailyItems() for the lesson engine to use.
+
+**Result:**
+- Student opens app → sees Homepage (single hub with active path, daily cards, review strip)
+- Student clicks "Levels" → sees guided CEFR path with all academies organized by level
+- Student opens a lesson → daily warm-up (Word of the Day) appears naturally at the start
+- Student completes lesson → adaptive tool activities injected based on performance
+- No more scattered sections: everything is in the guided path or woven into lessons
+
+**Next steps:**
+1. Browser test: verify dock shows 3 buttons, sidebar "Your Path" has only "Levels"
+2. Browser test: open a lesson (2nd+ lesson), verify daily warm-up appears
+3. Browser test: verify "Levels" dock button shows the CEFR guided path
+4. Consider merging remaining homepage daily cards into the active path section
+5. Activity touch in lesson stage: add PEL_ACTIVITY.touch('activity', ...) for per-activity tracking
+6. Admin overview: add online student count to admin_overview RPC
