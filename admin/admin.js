@@ -438,7 +438,11 @@ function esc(s){
 }
 function fmtDate(iso){
   if(!iso) return '-';
-  var d = new Date(iso);
+  // date-only strings (YYYY-MM-DD) are parsed as UTC midnight by JS and shift a day
+  // in negative-offset timezones - parse them as local calendar dates instead.
+  var d = (/^\d{4}-\d{2}-\d{2}/.test(iso))
+    ? new Date(+iso.slice(0,4), +iso.slice(5,7)-1, +iso.slice(8,10))
+    : new Date(iso);
   if(isNaN(d.getTime())) return String(iso);
   return d.toLocaleDateString(lang === 'ar' ? 'ar-SA-u-nu-latn' : 'en-US', {year:'numeric', month:'short', day:'numeric'});
 }
