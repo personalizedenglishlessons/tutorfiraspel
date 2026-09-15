@@ -1085,8 +1085,8 @@ var tabs = [
       host.innerHTML =
         '<div class="section-title" style="margin-top:0;">'+(lang==='ar'?'الباقة والرصيد':'Plan & credits')+'</div>' +
         '<div class="s360-meta" style="margin-bottom:10px;">' +
-          (b.tier?chip(esc(lang==='ar'?tierAr:b.tier),'gold'):'') +
-          (b.assessed_cefr_level?chip(esc((lang==='ar'?'مستوى ':'Level ')+b.assessed_cefr_level),''):'') +
+          (b.tier?chip(esc(b.tier==='exam_prep'?(lang==='ar'?'التجهيز للاختبارات':'Exam Prep'):(b.tier==='start_from_zero'?(lang==='ar'?'ابد من الصفر':'Start From Zero'):b.tier)),'gold'):'') +
+          (b.assessed_cefr_level?chip(esc((lang==='ar'?'مستوى ':'Level ')+lvlName(b.assessed_cefr_level)),''):'') +
           (b.assessed_track?chip(esc((lang==='ar'?'المسار ':'Track ')+(lang==='ar'?trackAr:b.assessed_track)),'bronze'):'') +
           (b.plan_duration_months?chip(esc(b.plan_duration_months+' '+(lang==='ar'?'اشهر':'mo')),''):'') +
           chip(esc((b.live_class_credits||0)+' '+(lang==='ar'?'رصيد حصص':'class credits')),'green') +
