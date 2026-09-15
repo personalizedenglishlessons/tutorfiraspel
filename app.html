@@ -2511,18 +2511,9 @@ const navGroups = [
     {id:'cefr', en:'Levels', ar:'المستويات', icon:'trending-up'},
     {id:'lessonOfDay', en:'Lesson of the Day', ar:'درس اليوم', icon:'sparkles'},
   ]},
-  { label:{en:'Skill Studios', ar:'الاستوديوهات'}, items:[
-    /* Skill studios unlock progressively - Duolingo-style: a new student
-       sees one clear path, extras appear as they earn them. */
-    {id:'vocabulary', en:'Vocabulary Vault', ar:'خزنة المفردات', icon:'book-open', minDone:3},
-    {id:'review', en:'Smart Review', ar:'المراجعة الذكية', icon:'rotate-ccw', minDone:4},
-    {id:'grammar', en:'Grammar Academy', ar:'اكاديمية القواعد', icon:'spell-check', minDone:5},
-    {id:'pronunciation', en:'Pronunciation Studio', ar:'استوديو النطق', icon:'mic', minDone:8},
-    {id:'speaking', en:'Speaking Studio', ar:'استوديو المحادثة', icon:'message-circle', minDone:12},
-    {id:'listening', en:'Listening Lounge', ar:'ركن الاستماع', icon:'headphones', minDone:16},
-    {id:'reading', en:'Reading Corner', ar:'ركن القرايه', icon:'book', minDone:20},
-    {id:'writing', en:'Writing Workshop', ar:'ورشة الكتابة', icon:'pen-line', minDone:24},
-  ]},
+  /* Skill Studios are no longer sidebar items - they are integrated into
+     the lesson flow by the guided engine. The viewRenderers are kept as
+     internal routes but not advertised as student navigation. */
   { label:{en:'Progress', ar:'تقدمك'}, items:[
     {id:'bookmarks', en:'Bookmarks', ar:'المفضلة', icon:'bookmark', minDone:6},
     {id:'achievements', en:'Achievements', ar:'الانجازات', icon:'award', minDone:10},
@@ -2707,10 +2698,7 @@ function buildDailyItems(){
     {icon:'book-open', title:'<span class="arabic">كلمة اليوم</span>، Word of the Day', body: escapeHtml(word.en||''), sub: `${escapeHtml(word.ar||'')}، ${escapeHtml(translitEn(word.en||''))}`, view:'vocabulary'},
     {icon:'quote', title:'<span class="arabic">عبارة اليوم</span>، Phrase of the Day', body: escapeHtml(phrase.example ? phrase.example.en||'' : phrase.en||''), sub: escapeHtml(phrase.example ? phrase.example.ar||'' : phrase.ar||''), view:'vocabulary'},
     {icon:'flag', title:'<span class="arabic">تلازم اليوم</span>، Collocation of the Day', body: escapeHtml(word.collocations || word.en||''), sub: escapeHtml(word.ar||''), view:'vocabulary'},
-    {icon:'mic', title:'<span class="arabic">تحدي النطق</span>، Pronunciation Challenge', body: escapeHtml(word.en||''), sub: escapeHtml(translitEn(word.en||'')) || '<span class="arabic">اسمع وكرر</span>، Listen & repeat', view:'pronunciation'},
-    {icon:'message-circle', title:'<span class="arabic">تحدي المحادثة</span>، Speaking Challenge', body: escapeHtml(persona.title||''), sub: `<span class="arabic">${escapeHtml(persona.opener.ar||'')}${persona.opener.translit ? '، ' + escapeHtml(persona.opener.translit) : ''}</span>، ${escapeHtml(persona.opener.en||'')}`, view:'speaking'},
-    {icon:'spell-check', title:'<span class="arabic">نصيحة قواعد</span>، Grammar Tip', body: escapeHtml(gram.title||''), sub:'<span class="arabic">مراجعة 90 ثانية</span>، A 90 second refresher', view:'grammar'},
-    {icon:'pen-line', title:'<span class="arabic">تحدي الكتابة</span>، Writing Challenge', body: escapeHtml(WRITING_PROMPTS[dayIdx % WRITING_PROMPTS.length].title||''), sub:'<span class="arabic">كتابة 5 دقايق</span>، A 5 minute writing task', view:'writing'},
+    /* Studio challenge cards removed - tools are now integrated into lessons */
   ];
 }
 function renderReviewBadge(){
@@ -2762,14 +2750,6 @@ const paletteData = [
   {group:'Navigate', icon:'home', label:'Learning Home', view:'home'},
   {group:'Navigate', icon:'route', label:'Academies', view:'paths'},
   {group:'Navigate', icon:'trending-up', label:'Levels', view:'cefr'},
-  {group:'Navigate', icon:'book-open', label:'Vocabulary Vault', view:'vocabulary'},
-  {group:'Navigate', icon:'spell-check', label:'Grammar Academy', view:'grammar'},
-  {group:'Navigate', icon:'mic', label:'Pronunciation Studio', view:'pronunciation'},
-  {group:'Navigate', icon:'message-circle', label:'Speaking Studio', view:'speaking'},
-  {group:'Navigate', icon:'headphones', label:'Listening Lounge', view:'listening'},
-  {group:'Navigate', icon:'book', label:'Reading Corner', view:'reading'},
-  {group:'Navigate', icon:'pen-line', label:'Writing Workshop', view:'writing'},
-  {group:'Navigate', icon:'rotate-ccw', label:'Smart Review', view:'review'},
   {group:'Navigate', icon:'bookmark', label:'Bookmarks', view:'bookmarks'},
   {group:'Navigate', icon:'award', label:'Achievements', view:'achievements'},
   {group:'Navigate', icon:'graduation-cap', label:'Certificates', view:'certificates'},
@@ -2777,8 +2757,7 @@ const paletteData = [
   {group:'Navigate', icon:'user', label:'Profile', view:'profile'},
   {group:'Navigate', icon:'settings', label:'Settings', view:'settings'},
   {group:"Today's Learning", icon:'sparkles', label:'Lesson of the Day', view:'lessonOfDay'},
-  {group:"Today's Learning", icon:'book-open', label:'Word of the Day', view:'vocabulary'},
-  {group:"Today's Learning", icon:'quote', label:'Phrase of the Day', view:'vocabulary'},
+  /* Tool-specific daily entries removed - tools are now inside lessons */
 ];
 const paletteOverlay = document.getElementById('paletteOverlay');
 const paletteInput = document.getElementById('paletteInput');
@@ -16137,6 +16116,18 @@ function cefrFromDifficulty(d){
   return 'A1';
 }
 function academyCefr(a){ return ACADEMY_CEFR[a.id] || cefrFromDifficulty(a.difficulty); }
+/* Map a CEFR level code (A0, A1, B1, ...) to the student-friendly name.
+   Used everywhere a level is shown to the student - never display the raw
+   code. Returns the code itself as fallback for unknown levels. */
+function cefrDisplayName(code, isAr){
+  if(!code) return isAr ? 'انجليزي البداية' : 'English Starter';
+  const c = String(code).toUpperCase();
+  const lvl = CEFR_LEVELS.find(l => l.id === c);
+  if(!lvl) return c;
+  return isAr ? lvl.ar : lvl.en;
+}
+/* Also expose a short label for chips/badges - e.g. "English Basics" */
+function cefrShortLabel(code, isAr){ return cefrDisplayName(code, isAr); }
 const CEFR_PATH_STYLE = `
 .cefr-path{display:flex;flex-direction:column;gap:0;max-width:760px;margin:0 auto;padding:4px 0 40px;}
 .cefr-level{position:relative;display:flex;gap:18px;padding:22px 0;border-top:1px dashed var(--border);}
@@ -17855,7 +17846,7 @@ async function renderControlCenter(){
       <div style="position:absolute; top:-110px; inset-inline-end:-90px; width:280px; height:280px; border-radius:50%; background:radial-gradient(circle, rgba(200,169,106,.14), transparent 70%); pointer-events:none;"></div>
       <div style="flex:1 1 320px; min-width:0; position:relative;">
       <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
-        <span class="chip gold"><span class="arabic">المستوى ${st.level}</span>، Level ${st.level}</span>
+        <span class="chip gold"><span class="arabic">المستوى ${cefrDisplayName(st.level, true)}</span>، ${cefrDisplayName(st.level, false)}</span>
         <span class="chip"><span class="arabic">${st.stage.name_ar||st.stage.name_en||''}</span>، ${st.stage.name_en||st.stage.name_ar||''}</span>
         ${st.can_access ? '' : `<span class="chip red"><span class="arabic">الخطة غير مفعلة</span>، Plan inactive</span>`}
         <span class="chip muted" style="margin-inline-start:auto;"><span dir="ltr">${done} / ${total}</span> <span class="arabic">دروس</span>، lessons</span>
@@ -17970,7 +17961,7 @@ function renderActivePath(){
   if(clLabel) clLabel.style.display = '';
   body.innerHTML = `
     <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
-      <span class="chip gold"><span class="arabic">${ar?'المستوى':'Level'}</span>، ${ar?'Level':''} ${st.level}</span>
+      <span class="chip gold">${escapeHtml(ar ? cefrDisplayName(st.level, true) : cefrDisplayName(st.level, false))}</span>
       <span class="chip emerald">${escapeHtml(stageName)}</span>
       <span class="chip muted" style="margin-inline-start:auto;"><span dir="ltr">${done} / ${total}</span></span>
     </div>
@@ -19120,7 +19111,7 @@ function renderPlanView(){
           <b style="font-size:.92rem;">${escapeHtml(st.title.en)}</b>
           <span class="arabic" style="font-size:.86rem; font-weight:600;">${escapeHtml(st.title.ar)}</span>
         </div>
-        <div style="font-size:.74rem; color:var(--text-muted); margin-top:3px;">${n} <span class="arabic">دروس</span>، lessons، Level ${escapeHtml(st.level)}، ${status}</div>
+        <div style="font-size:.74rem; color:var(--text-muted); margin-top:3px;">${n} <span class="arabic">دروس</span>، lessons، ${escapeHtml(cefrDisplayName(st.level, false))}، ${status}</div>
         ${preview}
       </div>
     </div>`;
