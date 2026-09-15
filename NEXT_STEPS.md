@@ -1250,3 +1250,27 @@ Interpretation:
 2. Browser test: click cards navigate to vocabulary/recommended view
 3. Consider adding pronunciation audio button on Word of the Day card
 4. Consider adding Collocation of the Day as a 4th card
+
+### Session: Remove Levels from student navigation (commit 0d0f1fe)
+
+**Problem:** Levels view showed all CEFR levels (A0-C2) with locked academies. A beginner student could see B1, B2, C1, C2 content they can't access - confusing and demotivating. Served no purpose since the learning engine routes students automatically.
+
+**What was done:**
+- Removed "Levels" from dock buttons
+- Replaced with "Smart Review" (SRS practice - actually useful for students)
+- Removed "Your Path" group entirely from sidebar navGroups
+- Added "Smart Review" to sidebar Progress group
+- Redirected 'paths' and 'academies' views to home
+- Updated search palette, beginner start buttons, workspace back, lesson next, resume fallback
+- CEFR path view kept as internal route but not advertised in navigation
+
+**Student navigation now:**
+- Dock: Home, Smart Review, Profile, More
+- Sidebar: Start (Home, Continue Learning) → Progress (Smart Review, Bookmarks, Achievements, Calendar, Certificates) → Account (Profile, Settings)
+- Homepage is the single hub: Daily Burst + Continue Learning (guided path) + Review Strip + Week/Focus + Progress stats
+
+**Next steps:**
+1. Browser test: verify dock shows Home, Review, Profile, More (no Levels)
+2. Browser test: verify sidebar has no "Your Path" group
+3. Browser test: verify beginner student lands on home (no locked levels visible)
+4. Consider: should the homepage show the student's current academy progress more prominently?
