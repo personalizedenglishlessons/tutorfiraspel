@@ -1184,29 +1184,6 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
           </div>
           <div id="ccBlock" style="margin-bottom:22px;"></div>
 
-          <!-- HERO (also holds active path + lesson list) -->
-          <div class="card card-elevated hoverable" style="padding:34px; position:relative; overflow:hidden; margin-bottom:22px;" id="heroCard">
-            <div style="position:absolute; top:-120px; right:-100px; width:320px; height:320px; border-radius:50%; background:radial-gradient(circle, rgba(200,169,106,.16), transparent 70%); pointer-events:none;"></div>
-            <div style="display:flex; gap:32px; align-items:center; flex-wrap:wrap; position:relative;">
-              <div class="ring-wrap">
-                <svg viewBox="0 0 96 96"><circle class="track" cx="48" cy="48" r="40"></circle><circle class="prog" id="heroRing" cx="48" cy="48" r="40" stroke-dasharray="251" stroke-dashoffset="251"></circle></svg>
-                <div class="ring-center"><b id="heroRingLabel">0%</b><span><span class="arabic" style="display:block; font-size:.9em;">الهدف الاسبوعي</span>Weekly goal</span></div>
-              </div>
-              <div style="flex:1; min-width:240px;">
-                <span class="chip gold" id="heroLevelChip"><span class="arabic">مستوى ١</span>، Level 1، Beginner</span>
-                <span class="chip" id="heroDirectionTag" style="margin-left:8px;">English، انجليزي</span>
-                <h2 style="margin-top:12px; font-size:1.5rem;" id="heroResumeTitle"><span class="arabic" style="display:block; font-size:.7em; font-weight:400; color:var(--text-secondary); margin-bottom:2px;">كمل من وين وقفت</span>Resume where you left off</h2>
-                <p style="margin-top:8px; color:var(--text-secondary); font-size:.9rem;" id="heroResumeText"></p>
-                <p id="heroResumeWhy" style="margin-top:8px; font-size:.82rem; color:var(--gold-soft); line-height:1.6;"></p>
-                <div style="display:flex; gap:14px; margin-top:18px; flex-wrap:wrap;">
-                  <button class="btn-gold magnetic" data-goto-view="resume" id="heroResumeBtn"><span class="arabic">كمل التعلم</span>، Resume Learning</button>
-                  <span class="chip" id="heroEstChip" style="align-self:center;"><span class="arabic">جاري التحميل</span>، Loading</span>
-                </div>
-              </div>
-            </div>
-            <!-- Active path lesson list (rendered by renderActivePath) -->
-            <div id="heroPathBody" style="margin-top:20px; display:none;"></div>
-          </div>
           <div id="subBanner" style="margin-bottom:22px;"></div>
 
           <!-- ANNOUNCEMENTS + LIVE CLASSES (academy intel - kept near the top) -->
