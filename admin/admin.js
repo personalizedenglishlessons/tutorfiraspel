@@ -742,7 +742,7 @@ $('viewArea').innerHTML = pageHead(t('overview'), lang === 'ar' ? 'وش يصير
 
   /* "What should I do?" - from real conditions */
   var actions = [];
-  if((tt.expiring || 0) > 0) actions.push({ warn:true, icon:'hourglass', txt: t('expiringReason').replace('%d', 0) });
+  if((tt.expiring || 0) > 0) actions.push({ warn:true, icon:'hourglass', txt: (lang === 'ar' ? (tt.expiring + ' برنامج ينتهي خلال ١٤ يوم - جدد او كلم الطالب') : (tt.expiring + ' program(s) end within 14 days - renew or reach out') ) });
   if(actions.length === 0){
     if((d.attention || []).length > 0) actions.push({ txt: lang === 'ar' ? (d.attention.length + ' طالب يحتاج انتباه') : (d.attention.length + ' students need attention') });
     if((d.upcoming_classes || []).length > 0) actions.push({ txt: lang === 'ar' ? (d.upcoming_classes.length + ' دروس مباشرة قادمة - سجل الحضور بعدها') : (d.upcoming_classes.length + ' upcoming live classes') });
