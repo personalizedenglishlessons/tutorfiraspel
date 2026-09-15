@@ -24,7 +24,7 @@
 <script src="lib/cert-sheet.js?v=5278e935" defer></script>
 <script src="lib/pel_config.js?v=e4857dea"></script>
 <script src="lib/pel_lesson_stage.js?v=d114a9f2"></script>
-<script src="lib/pel_dashboard_life.js?v=714137e8"></script>
+<script src="lib/pel_dashboard_life.js?v=86ebbe3b"></script>
 <script src="lib/pel_curriculum_path.js?v=f17afc34"></script>
 <style>
 /* ============================================================
@@ -1184,27 +1184,6 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
           </div>
           <div id="ccBlock" style="margin-bottom:22px;"></div>
 
-          <!-- HERO CARD (with animations: aurora, orbs, tilt, spotlight) -->
-          <div class="card card-elevated hoverable pel-dash-tilt pel-dash-rise" style="padding:34px; position:relative; overflow:hidden; margin-bottom:22px; animation-delay:180ms;" id="heroCard" data-pel-tilt="1">
-            <div class="pel-dash-aurora"></div>
-            <div style="position:absolute; top:-120px; right:-100px; width:320px; height:320px; border-radius:50%; background:radial-gradient(circle, rgba(200,169,106,.16), transparent 70%); pointer-events:none;"></div>
-            <div style="display:flex; gap:32px; align-items:center; flex-wrap:wrap; position:relative;">
-              <div style="flex:1; min-width:240px;">
-                <span class="chip gold" id="heroLevelChip"></span>
-                <span class="chip" id="heroDirectionTag" style="margin-left:8px;">English، انجليزي</span>
-                <h2 style="margin-top:12px; font-size:1.5rem;" id="heroResumeTitle"></h2>
-                <p style="margin-top:8px; color:var(--text-secondary); font-size:.9rem;" id="heroResumeText"></p>
-                <p id="heroResumeWhy" style="margin-top:8px; font-size:.82rem; color:var(--gold-soft); line-height:1.6;"></p>
-                <div style="display:flex; gap:14px; margin-top:18px; flex-wrap:wrap;">
-                  <button class="btn-gold magnetic" data-goto-view="resume" id="heroResumeBtn"><span class="arabic">كمل التعلم</span>، Resume Learning</button>
-                  <span class="chip" id="heroEstChip" style="align-self:center;"><span class="arabic">جاري التحميل</span>، Loading</span>
-                </div>
-              </div>
-            </div>
-            <!-- Active path lesson list (rendered by renderActivePath) -->
-            <div id="heroPathBody" style="margin-top:20px; display:none;"></div>
-            <div class="pel-dash-orb o1"></div><div class="pel-dash-orb o2"></div><div class="pel-dash-orb o3"></div><span class="pel-dash-spot"></span>
-          </div>
           <div id="subBanner" style="margin-bottom:22px;"></div>
 
           <!-- ANNOUNCEMENTS + LIVE CLASSES (academy intel - kept near the top) -->
