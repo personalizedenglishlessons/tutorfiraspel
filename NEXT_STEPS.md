@@ -1,5 +1,66 @@
 # NEXT STEPS - pick up here
 
+## DONE: Remove purposeless gold bar + DB audit + smoke test (2026-09-16 session)
+
+### Shipped
+1. **Removed gold 'كمل التعلم' bar** (commit `2dccd0b`):
+   - The hero card was stripped to just a full-width gold button that said
+     'كمل التعلم، Resume Learning' with 90% empty space. Served no purpose.
+   - Removed `#heroResumeBtn` entirely. Added `#heroPathBody` div inside
+     `#heroCard` so `renderActivePath()` can render the actual lesson path.
+   - Hero card hidden by default (`display:none`); only shows when
+     `renderActivePath()` or fallback has real content.
+   - Updated `renderContinueLearning()`: removed `heroCard.style.display=''`
+     from the else branch (was showing empty card). Added `heroCard.style.display=''`
+     to the two fallback content paths (inProgress + planNext).
+   - Cleaned up stale `heroResumeBtn` innerHTML reference in setup section.
+
+2. **DB audit** (read-only, via Supabase Management API):
+   - All 21 expected tables exist (student_presence, student_activity_events,
+     auth_attempts, lessons, academies, etc.)
+   - All 96 public functions exist and match RPC calls in app.html (16) +
+     admin.js (60). No missing RPCs.
+   - student_presence schema: all 12 expected columns present (user_id,
+     session_id, status, last_seen_at, last_login_at, current_page,
+     current_lesson_id, current_academy_id, last_action, last_action_at,
+     session_started_at, updated_at)
+   - student_activity_events schema: all 11 expected columns present
+   - Data counts: 1428 exercises, 54 academies, 366 lessons, 2559 items
+   - A0 Home Words: 20 lessons (correct)
+   - 1 student_presence row, 1 activity_event row (test data exists)
+
+3. **Browser smoke test** (cloud browser, logged in as testmail1):
+   - 0 console errors, 0 uncaught exceptions
+   - 0 [object Object] text leaks
+   - Gold 'كمل التعلم' bar: GONE (heroResumeBtn not in DOM)
+   - Hero card: visible, showing lesson path from renderActivePath()
+     (English Middle / STEP Exam Prep / 0 of 23 lessons / Start button)
+   - Login flow works, page renders correctly
+
+### Verification
+- `node --check` on all lib/*.js + admin/admin.js: OK
+- `node --check` on app.html script blocks: OK
+- `node tests/test_buildsequence_iam.js`: 13/13 PASS
+- `node tests/test_teaching_flow.js`: 31/31 PASS
+- Browser smoke test: 0 errors, hero card renders lesson path correctly
+
+### Next steps
+1. **360 order exercises missing Arabic translations** (was 126 in prior
+   session, now 360 - likely grew with A0 Home Words + new content).
+   These need human/LLM translation work (content, not code).
+2. **Activity touch in lesson stage**: Add `PEL_ACTIVITY.touch('activity', ...)`
+   in pel_lesson_stage.js Stage.mark() and Stage.next() for per-activity tracking.
+3. **Admin overview**: Add online student count to admin_overview RPC.
+4. **Activity retention**: Consider periodic cleanup of
+   student_activity_events (keep last 90 days).
+5. **Live admin UI test**: Admin login + verify student table shows online
+   badges, 360 header shows presence, activity tab shows events.
+6. **student_route() needs auth context**: Cannot test via Management API
+   (returns null without auth.uid()). Test via browser or authenticated
+   Supabase client.
+
+---
+
 ## DONE: Fix SyntaxError at app.html:18245 (2026-09-16 session)
 
 ### Problem
