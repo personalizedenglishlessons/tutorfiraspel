@@ -1224,3 +1224,29 @@ Interpretation:
 4. Consider merging remaining homepage daily cards into the active path section
 5. Activity touch in lesson stage: add PEL_ACTIVITY.touch('activity', ...) for per-activity tracking
 6. Admin overview: add online student count to admin_overview RPC
+
+### Session: Daily Burst section (commit c1c8f57)
+
+**What was done:**
+- Added prominent "Daily Burst" section at the top of the homepage, right below the hero card
+- Three visually striking cards in a responsive grid:
+  1. Word of the Day (gold theme): big serif English word, Arabic translation, transliteration, example sentence
+  2. Quick Win (emerald theme): recommended action with time estimate and tap-to-start CTA
+  3. Phrase of the Day (blue theme): English phrase with Arabic translation
+- Quick Win moved UP from its buried position in the week/focus grid (now prominent)
+- Click handlers on all three cards navigate to relevant views
+- Section hidden for first-time students (shows after completing 1st lesson)
+
+**Homepage layout now:**
+1. Hero card (CTA)
+2. Daily Burst (Word of the Day + Quick Win + Phrase of the Day) ← NEW, prominent
+3. Continue Learning
+4. Review Strip
+5. Week + Focus cards
+6. Learning Progress (stats + skill bars)
+
+**Next steps:**
+1. Browser test: verify Daily Burst cards appear below hero, Word/Phrase populated
+2. Browser test: click cards navigate to vocabulary/recommended view
+3. Consider adding pronunciation audio button on Word of the Day card
+4. Consider adding Collocation of the Day as a 4th card
