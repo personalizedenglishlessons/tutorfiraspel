@@ -885,6 +885,8 @@ html[data-theme="light"] .tile-icon{
 
 /* Hero: layered ambient glow, gold top hairline, corner ornament. */
 #heroCard{
+  max-width:680px;
+  margin-inline:auto;
   background:
     radial-gradient(90% 130% at 100% -20%, rgba(200,169,106,.14), transparent 55%),
     radial-gradient(70% 100% at 0% 110%, rgba(63,140,114,.08), transparent 55%),
@@ -1184,10 +1186,6 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
           </div>
           <div id="ccBlock" style="margin-bottom:22px;"></div>
 
-          <!-- HERO CARD (lesson path renders here via renderActivePath) -->
-          <div class="card card-elevated" style="padding:28px; margin-bottom:22px; display:none;" id="heroCard">
-            <div id="heroPathBody" style="display:none;"></div>
-          </div>
           <div id="subBanner" style="margin-bottom:22px;"></div>
 
           <!-- ANNOUNCEMENTS + LIVE CLASSES (academy intel - kept near the top) -->
@@ -18114,11 +18112,10 @@ async function startNextGuidedLesson(depth){
   return false;
 }
 function renderContinueLearning(){
-  if(renderActivePath()){ /* database-driven path takes priority */ }
-  else{
-  // Hero card only shows when renderActivePath or fallback has content
-  const heroCard = document.getElementById('heroCard');
-  if(heroCard) heroCard.style.display = 'none';
+  // renderActivePath() removed - #ccBlock (renderControlCenter) already shows
+  // the lesson card with progress ring + start button. The lesson path list
+  // was redundant and took up too much space.
+  {
   const clLabel = document.getElementById('continueLearningLabel');
   const firstTime = isFirstTimeStudent();
   const inProgress = directionAcademies().find(a => a.progress > 0 && a.progress < 100);
