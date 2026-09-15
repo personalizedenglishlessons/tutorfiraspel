@@ -1215,6 +1215,47 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
             <div class="card" id="homeLiveClasses"></div>
           </div>
 
+          <!-- DAILY BURST: Word of the Day + Quick Win + Phrase of the Day -->
+          <!-- Prominent section right below hero so students see it first -->
+          <div id="dailyBurstSection" style="display:none; margin-bottom:22px;">
+            <div class="eyebrow" style="margin-bottom:14px;"><span class="arabic">برق اليوم</span>، Daily Burst</div>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px;">
+              <!-- Word of the Day - the star -->
+              <div class="card hoverable" id="burstWordCard" style="padding:24px; cursor:pointer; border-color:rgba(200,169,106,.35); background:linear-gradient(135deg,rgba(200,169,106,.08),rgba(200,169,106,.02));">
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:14px;">
+                  <i data-lucide="book-open" width="18" height="18" style="color:var(--gold);"></i>
+                  <span class="eyebrow" style="margin:0;"><span class="arabic">كلمة اليوم</span>، Word of the Day</span>
+                </div>
+                <b id="burstWordEn" style="font-family:'Fraunces',serif; font-size:1.6rem; display:block; line-height:1.3;"></b>
+                <span id="burstWordAr" class="arabic" style="font-size:1.2rem; display:block; margin-top:6px; color:var(--text-secondary);"></span>
+                <span id="burstWordTranslit" style="font-size:.82rem; display:block; margin-top:4px; color:var(--text-muted); font-style:italic;"></span>
+                <p id="burstWordExample" style="font-size:.8rem; margin-top:14px; padding-top:14px; border-top:1px solid var(--border); color:var(--text-secondary); line-height:1.6;"></p>
+              </div>
+              <!-- Quick Win - prominent action -->
+              <div class="card hoverable" id="burstQuickWinCard" style="padding:24px; cursor:pointer; border-color:rgba(63,140,114,.35); background:linear-gradient(135deg,rgba(63,140,114,.08),rgba(63,140,114,.02));">
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:14px;">
+                  <i data-lucide="zap" width="18" height="18" style="color:var(--emerald);"></i>
+                  <span class="eyebrow" style="margin:0;"><span class="arabic">فوز سريع</span>، Quick Win</span>
+                </div>
+                <b id="burstQwTitle" style="font-size:1.15rem; display:block; line-height:1.4;"></b>
+                <span id="burstQwWhy" style="font-size:.8rem; display:block; margin-top:8px; color:var(--text-muted); line-height:1.6;"></span>
+                <div style="margin-top:16px; display:flex; align-items:center; gap:10px;">
+                  <span id="burstQwTime" class="chip" style="background:rgba(63,140,114,.12); color:var(--emerald); border-color:rgba(63,140,114,.3);"></span>
+                  <span style="font-size:.82rem; color:var(--emerald); font-weight:600;"><span class="arabic">اضغط للبدء</span>، Tap to start →</span>
+                </div>
+              </div>
+              <!-- Phrase of the Day -->
+              <div class="card hoverable" id="burstPhraseCard" style="padding:24px; cursor:pointer; border-color:rgba(100,149,237,.25); background:linear-gradient(135deg,rgba(100,149,237,.06),rgba(100,149,237,.01));">
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:14px;">
+                  <i data-lucide="quote" width="18" height="18" style="color:#6495ed;"></i>
+                  <span class="eyebrow" style="margin:0;"><span class="arabic">عبارة اليوم</span>، Phrase of the Day</span>
+                </div>
+                <b id="burstPhraseEn" style="font-size:1.1rem; display:block; line-height:1.5;"></b>
+                <span id="burstPhraseAr" class="arabic" style="font-size:1rem; display:block; margin-top:8px; color:var(--text-secondary); line-height:1.6;"></span>
+              </div>
+            </div>
+          </div>
+
           <!-- CONTINUE LEARNING -->
           <div class="eyebrow" id="continueLearningLabel" style="margin-bottom:14px;"><span class="arabic">كمل تعلمك</span>، Continue Learning</div>
           <div class="card hoverable" style="display:flex; gap:24px; align-items:center; flex-wrap:wrap; margin-bottom:34px;" id="continueLearningCard">
@@ -1248,17 +1289,8 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
                 <span class="eyebrow" style="margin:0 0 8px;"><span class="arabic">تركيزك الحين</span>، Your focus right now</span>
                 <div id="focusBody"></div>
               </div>
-              <div class="card" id="quickWinCard" style="display:none;">
-                <div style="display:flex; gap:14px; align-items:center; flex-wrap:wrap;">
-                  <div class="tile-icon" style="margin:0;"><i data-lucide="zap" width="17" height="17"></i></div>
-                  <div style="flex:1; min-width:150px;">
-                    <span class="eyebrow" style="margin:0 0 4px;"><span class="arabic">فوز سريع</span>، Quick win</span>
-                    <b id="quickWinTitle" style="font-size:.95rem; display:block;"></b>
-                    <span id="quickWinWhy" style="font-size:.78rem; color:var(--text-muted); display:block; margin-top:3px;"></span>
-                  </div>
-                  <button class="btn-outline" id="quickWinBtn" data-goto-view="review" style="white-space:nowrap;"><span class="arabic">ابدا</span>، Start</button>
-                </div>
-              </div>
+              <!-- Quick Win moved to Daily Burst section at top of homepage -->
+              <div class="card" id="quickWinCard" style="display:none;"></div>
             </div>
           </div>
 
@@ -19532,8 +19564,62 @@ function renderHeroIntel(){
     ? `<span class="arabic">${escapeHtml(rec.whyAr)}</span> · ${escapeHtml(rec.whyEn)}`
     : '';
 }
+function renderDailyBurst(){
+  // Daily Burst: Word of the Day + Quick Win + Phrase of the Day
+  // Prominent section at the top of the homepage so students see it first.
+  const section = document.getElementById('dailyBurstSection');
+  if(!section) return;
+  if(isFirstTimeStudent()){ section.style.display = 'none'; return; }
+  section.style.display = '';
+
+  // Word of the Day
+  const _d = new Date();
+  const dayIdx = parseInt(new Intl.DateTimeFormat('en-CA', {timeZone:'Asia/Riyadh'}).format(_d).replace(/-/g,'')) % 100000;
+  const word = VOCAB_BANK[dayIdx % VOCAB_BANK.length];
+  const phrase = VOCAB_BANK[(dayIdx * 7 + 3) % VOCAB_BANK.length];
+
+  const wEn = document.getElementById('burstWordEn');
+  const wAr = document.getElementById('burstWordAr');
+  const wTr = document.getElementById('burstWordTranslit');
+  const wEx = document.getElementById('burstWordExample');
+  if(wEn) wEn.textContent = word.en || '';
+  if(wAr) wAr.textContent = word.ar || '';
+  if(wTr) wTr.textContent = word.translit || '';
+  if(wEx && word.example){
+    wEx.innerHTML = `<span style="color:var(--gold-soft);">"</span>${escapeHtml(word.example.en||'')}<span style="color:var(--gold-soft);">"</span>${word.example.ar ? ' <span class="arabic" style="display:block;margin-top:4px;color:var(--text-muted);">'+escapeHtml(word.example.ar)+'</span>' : ''}`;
+  } else if(wEx){ wEx.innerHTML = ''; }
+
+  // Quick Win
+  const rec = dashRecommendation();
+  const qw = dashQuickWin(rec);
+  const qwTitle = document.getElementById('burstQwTitle');
+  const qwWhy = document.getElementById('burstQwWhy');
+  const qwTime = document.getElementById('burstQwTime');
+  if(qwTitle) qwTitle.innerHTML = `<span class="arabic" style="font-weight:400;">${escapeHtml(qw.titleAr)}</span> · ${escapeHtml(qw.titleEn)}`;
+  if(qwWhy) qwWhy.innerHTML = `<span class="arabic">${escapeHtml(qw.whyAr)}</span> · ${escapeHtml(qw.whyEn)}`;
+  if(qwTime) qwTime.textContent = qw.minutes || '';
+
+  // Phrase of the Day
+  const pEn = document.getElementById('burstPhraseEn');
+  const pAr = document.getElementById('burstPhraseAr');
+  const phraseEn = phrase.example ? phrase.example.en : phrase.en;
+  const phraseAr = phrase.example ? phrase.example.ar : phrase.ar;
+  if(pEn) pEn.textContent = phraseEn || '';
+  if(pAr) pAr.textContent = phraseAr || '';
+
+  // Click handlers
+  const wordCard = document.getElementById('burstWordCard');
+  if(wordCard) wordCard.onclick = () => goToView('vocabulary');
+  const qwCard = document.getElementById('burstQuickWinCard');
+  if(qwCard) qwCard.onclick = () => goToView(qw.view);
+  const phraseCard = document.getElementById('burstPhraseCard');
+  if(phraseCard) phraseCard.onclick = () => goToView('vocabulary');
+
+  if(window.lucide) lucide.createIcons();
+}
 function renderDashboardIntel(){
   syncPlanSnapshot();
+  renderDailyBurst();
   renderWeekCard();
   renderFocusCard();
   renderQuickWin();
