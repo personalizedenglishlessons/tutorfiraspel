@@ -1,5 +1,65 @@
 # NEXT STEPS - pick up here
 
+## DONE: A0 Home Words academy + full hamza cleanup + dialect polish (2026-09-15 session)
+
+### What shipped (all applied to live Supabase, migrations committed in supabase/migrations/)
+
+1. **202609150001_a0_home_words.sql** - new academy `a0-home-words`
+   (كلمات البيت, icon home, gold colors, sort_order 99 = FIRST in A0).
+   20 mastery-gated lessons `a0hw-01-yes-no` .. `a0hw-19-cola-time`
+   (checkpoint last, id stays `a0hw-19-cola-time` even though it is lesson 20 -
+   lesson ids are cosmetic, `academy_lessons.sort_order` controls display).
+   ~50 words the user picked (yes/no, pronouns, this/these, in/on/off, here/
+   there, up/down, inside/outside, left/right/middle, the, come/go/bring,
+   pick up/drop/carry, good/bad/fast/slow, er/ed, if/will/so, like/love/want,
+   pour/sit/put). 201 items, 173 exercises. Every lesson has >= 3 production
+   exercises (order/translate/spell) so the existing 60% first-try mastery
+   gate in renderDone() engages - a student cannot finish a lesson until they
+   really know it. `student_route()` granular_seq updated: a0-home-words is
+   route priority 0, other A0 academies shifted 1-5. Existing A0 students
+   parked at a0-sentence-building were re-seated (migration does the guarded
+   UPDATE, same pattern as 202608270001).
+
+2. **Two-meaning (polysemy) explain cards** - the user's "on = على AND شغال"
+   pattern applied to every multi-meaning starter word:
+   - on (place vs working) - a0hw-08
+   - like (زي comparison vs احب) - a0hw-19, its own lesson
+   - so (ف result vs جدا) - a0hw-18
+   - in (place vs time: in the morning) - a0hw-07
+   - right (يمين vs صح) + left (يسار vs he left) - a0hw-12
+   - her/his (after verb vs before owned thing) - a0hw-04
+   - pick up (lift vs answer the phone) - a0hw-15
+   Each card comes with at least one new exercise testing the second meaning.
+
+3. **202609150002_hamza_cleanup.sql** - 121 guarded updates removing all
+   remaining hamza (ء أ إ آ ؤ ئ) from lessons/lesson_items/lesson_exercises/
+   assessment_questions/academies/programs/tracks, hand-reviewed word by word
+   into Saudi home dialect. Verified: zero hamza in all public text columns.
+
+4. **Dialect polish in frontend** (app.html, lib/pel_lesson_stage.js):
+   - All 134 pronunciation tips rewritten: `مقطع واحد/مقطعين: X` -> `قول كذا: X`
+     and `لا تقول: X` -> `مو كذا لانه غلط: X` (user request, screenshot).
+   - Also fixed: كمل من حيث توقفت -> كمل من وين وقفت, الذي/التي -> اللي,
+     يجب ان -> لازم, وانا كذلك -> وانا كمان.
+   - DB had zero مقطع/لا تقول hits (checked), frontend was the only source.
+   - node --check + both test suites pass (13 + 31).
+
+### Verified end state
+- student_route({"level":"a0"}) -> a0-home-words first
+- 20 lessons / 20 academy links / >= 3 prod exercises each / zero hamza
+- track_a0_home_words... `track-a0-foundations` sort_order -1 = first
+
+### Next steps for a future session
+- Same two-meaning treatment could be extended to the OLDER academies
+  (a0-sentence-building, a0-question-words, etc.) - starter words there
+  (is/are, what, where) also have multiple meanings; user has not asked yet.
+- The `so`/`like`/`in`/`right`/`her`/`pick up` second meanings are taught -
+  consider adding them to the A0 placement assessment if it gates on them.
+- Old stale sections below (unmerged branches, Arabic gaps, hamza in
+  frontend) were all resolved and verified earlier this session.
+
+---
+
 ## ✅ DONE: Whole-app runtime smoke test (this session, round 3) - no new bugs found
 
 Ran a live smoke test against the deployed GitHub Pages site (not local, since
