@@ -1091,7 +1091,7 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
   <!-- ================= MOBILE STUDY DOCK ================= -->
   <nav class="dock" id="studyDock" aria-label="Quick navigation">
     <button class="dock-btn" data-view="home"><i data-lucide="home" width="21" height="21"></i><span>البداية</span></button>
-    <button class="dock-btn" data-view="cefr"><i data-lucide="trending-up" width="21" height="21"></i><span>المستويات</span></button>
+    <button class="dock-btn" data-view="review"><i data-lucide="rotate-ccw" width="21" height="21"></i><span>مراجعة</span></button>
     <button class="dock-btn" data-view="profile"><i data-lucide="user" width="21" height="21"></i><span>حسابي</span></button>
     <button class="dock-btn" id="dockMore"><i data-lucide="menu" width="21" height="21"></i><span>المزيد</span></button>
   </nav>
@@ -2537,13 +2537,12 @@ const navGroups = [
     {id:'home', en:'Learning Home', ar:'البداية', icon:'home'},
     {id:'resume', en:'Continue Learning', ar:'كمل تعلمك', icon:'play-circle'},
   ]},
-  { label:{en:'Your Path', ar:'مسارك'}, items:[
-    {id:'cefr', en:'Levels', ar:'المستويات', icon:'trending-up'},
-  ]},
-  /* Skill Studios are no longer sidebar items - they are integrated into
-     the lesson flow by the guided engine. The viewRenderers are kept as
-     internal routes but not advertised as student navigation. */
+  /* Levels/CEFR path removed from student navigation: the learning engine
+     routes students through the right academies automatically. Showing locked
+     levels (B1-C2) to a beginner is confusing and demotivating. The cefr
+     view is kept as an internal route but not advertised. */
   { label:{en:'Progress', ar:'تقدمك'}, items:[
+    {id:'review', en:'Smart Review', ar:'مراجعة ذكية', icon:'rotate-ccw'},
     {id:'bookmarks', en:'Bookmarks', ar:'المفضلة', icon:'bookmark', minDone:6},
     {id:'achievements', en:'Achievements', ar:'الانجازات', icon:'award', minDone:10},
     {id:'calendar', en:'Study Calendar', ar:'تقويم الدراسة', icon:'calendar-days', minDone:8},
@@ -2612,14 +2611,14 @@ function renderComingSoon(viewId){
 function goToView(id){
   PEL_ACTIVITY.touch('page_view', { page: id });
   if(id === 'lessonOfDay'){ const f = featuredLesson(); openLesson(f.academy, f.lesson); return; }
-  if(id === 'resume'){ const n = nextLesson(); if(n) openLesson(n.academy, n.lesson); else goToView('cefr'); return; }
+  if(id === 'resume'){ const n = nextLesson(); if(n) openLesson(n.academy, n.lesson); else goToView('home'); return; }
   if(id === 'dailyQuiz'){ openDailyQuiz(); return; }
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.querySelectorAll('.side-link').forEach(l => l.classList.remove('active'));
   document.querySelectorAll('.dock-btn').forEach(b => b.classList.remove('active'));
   const target = document.getElementById('view-' + id);
   if(target) target.classList.add('active');
-  const navId = id === 'workspace' ? 'cefr' : id;
+  const navId = id === 'workspace' ? 'home' : id;
   document.querySelectorAll('.side-link[data-view="'+navId+'"]').forEach(l => l.classList.add('active'));
   document.querySelectorAll('.dock-btn[data-view="'+navId+'"]').forEach(b => b.classList.add('active'));
   if(!['home','settings','workspace'].includes(id)){
@@ -2777,7 +2776,7 @@ function renderReviewStrip(){
    ============================================================ */
 const paletteData = [
   {group:'Navigate', icon:'home', label:'Learning Home', view:'home'},
-  {group:'Navigate', icon:'trending-up', label:'Levels', view:'cefr'},
+  {group:'Navigate', icon:'rotate-ccw', label:'Smart Review', view:'review'},
   {group:'Navigate', icon:'bookmark', label:'Bookmarks', view:'bookmarks'},
   {group:'Navigate', icon:'award', label:'Achievements', view:'achievements'},
   {group:'Navigate', icon:'graduation-cap', label:'Certificates', view:'certificates'},
@@ -16106,9 +16105,9 @@ function renderLibrary(){
   renderGrid();
   // Wire beginner start buttons for first-time students
   const a0Btn = document.getElementById('beginnerStartBtn');
-  if(a0Btn) a0Btn.addEventListener('click', () => goToView('cefr'));
+  if(a0Btn) a0Btn.addEventListener('click', () => goToView('home'));
   const a1Btn = document.getElementById('beginnerA1Btn');
-  if(a1Btn) a1Btn.addEventListener('click', () => goToView('cefr'));
+  if(a1Btn) a1Btn.addEventListener('click', () => goToView('home'));
 }
 viewRenderers.plan = renderPlanView;
 /* ============================================================
@@ -16341,9 +16340,9 @@ function renderCefrPath(){
   el.querySelectorAll('.cefr-unit-head').forEach(h => { h.onclick = () => { const ac=resolveAcademyById(h.dataset.academy); if(!ac) return; const first=(academyLessonList(ac)[0]||{}); if(first.id && typeof openLesson==='function') openLesson(h.dataset.academy, first.id); }; });
   if(window.lucide) lucide.createIcons();
 }
-viewRenderers.cefr = renderCefrPath;
-viewRenderers.paths = renderCefrPath;  // guided levels path replaces library grid
-viewRenderers.academies = renderCefrPath;
+viewRenderers.cefr = renderCefrPath;  // kept as internal route, not in navigation
+viewRenderers.paths = function(){ goToView('home'); };  // redirect to home
+viewRenderers.academies = function(){ goToView('home'); };  // redirect to home
 
 /* ============================================================
    ACADEMY WORKSPACE (Notion-style 3 column) + LESSON READER
@@ -16419,7 +16418,7 @@ function renderWorkspace(){
         <button class="btn-ghost-sm" id="wsSaveNote" style="margin-top:8px;"><span class="arabic">حفظ الملاحظة</span>، Save Note</button>
       </aside>
     </div>`;
-  document.getElementById('wsBack').addEventListener('click', () => goToView('cefr'));
+  document.getElementById('wsBack').addEventListener('click', () => goToView('home'));
 
   const navWrap = document.getElementById('wsLessonNav');
   navWrap.innerHTML = list.map(l => {
@@ -16686,7 +16685,7 @@ function renderLessonReader(container, academy, lesson){
   if(lessonNextBtn){
     lessonNextBtn.addEventListener('click', () => {
       if(nextItem) openLesson(academy.id, nextItem.id);
-      else goToView('cefr');
+      else goToView('home');
     });
   }
   const progressFill = document.getElementById('lessonProgressFill');
