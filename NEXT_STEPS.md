@@ -1,5 +1,66 @@
 # NEXT STEPS - pick up here
 
+## DONE: Student presence & activity tracking (2026-09-15 session)
+
+### Shipped
+1. **Migration 202609150003_student_presence_tracking.sql** (applied to live DB):
+   - `student_presence` table: one row per user, upsertable summary
+     (session_id, status, last_seen_at, last_login_at, current_page,
+     current_lesson_id, current_academy_id, last_action, last_action_at,
+     session_started_at, updated_at).
+   - `student_activity_events` table: append-only log (event_type, page,
+     academy_id, lesson_id, activity_idx, action_label, metadata).
+   - `student_touch()` RPC (SECURITY DEFINER): student app calls this to
+     upsert presence + log activity events. Heartbeats skip event insert
+     to reduce volume. Login event sets last_login_at. Session ID change
+     resets session_started_at.
+   - `admin_students` updated: LEFT JOIN student_presence, returns
+     is_online (computed: last_seen_at > now() - 2min), last_seen,
+     last_login, current_page, current_lesson, current_academy,
+     last_action, last_action_at, session_duration.
+   - `admin_student_360` updated: adds `presence` object + `recent_activity`
+     array (last 30 events from student_activity_events).
+   - RLS: students can read own presence/events; all writes via RPC only.
+
+2. **Student app wiring (app.html)**:
+   - PEL_ACTIVITY module: generates session_id (sessionStorage),
+     throttled touch() (heartbeats 45s min, other events 3s min).
+   - Heartbeat every 60s while tab visible + on visibilitychange.
+   - Touch on login (event_type='login'), page_view (goToView),
+     open_lesson, logout (before signOut).
+   - All calls fire-and-forget (never block UI).
+
+3. **Admin UI (admin.js)**:
+   - Student table: online/offline badge in Last Active column.
+   - Student 360 header: presence badge + last login, last action,
+     current lesson, session duration.
+   - Activity tab: new "Recent Activity" section with color-coded
+     event dots (green=login, red=logout, gold=open_lesson, warn=other).
+
+### Verify checklist (needs browser testing)
+- [ ] Log in as student (testmail1@gmail.com / namas123) → check DB
+      has student_presence row with last_login_at set
+- [ ] Open a lesson → check DB current_lesson_id updated
+- [ ] Wait 60s → check last_seen_at updated (heartbeat)
+- [ ] Log in as admin → student table shows Online badge for test student
+- [ ] Open student 360 → header shows presence badge + last login + session
+- [ ] Activity tab shows recent activity events
+- [ ] Close student tab → wait 2min → student shows Offline in admin
+
+### Next steps for future session
+1. **Browser test**: follow verify checklist above (needs live testing).
+2. **Activity touch in lesson stage**: currently touches on open_lesson but
+   not on individual activity interactions (answer check, lesson complete).
+   Could add `PEL_ACTIVITY.touch('activity', {activityIdx: idx, action: '...'})`
+   in pel_lesson_stage.js Stage.mark() and Stage.next().
+3. **Admin overview**: add online student count to admin_overview RPC.
+4. **Auto-refresh**: admin student table could auto-refresh every 60s to
+   update online/offline status in real-time.
+5. **Activity retention**: student_activity_events will grow indefinitely.
+   Consider a periodic cleanup (e.g., keep last 90 days).
+
+---
+
 ## DONE: Admin overhaul round 1 (2026-09-16 session)
 
 ### Shipped

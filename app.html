@@ -2330,6 +2330,8 @@ window.addEventListener('load', async () => {
       return;
     }
     currentUser = data.session.user;
+    PEL_ACTIVITY.touch('login');
+    PEL_ACTIVITY.startHeartbeat();
     subscribeEntitlement();
     // Entitlement FIRST: resolve access from the database before a single
     // protected pixel renders. No flash of the shell, ever. One automatic
@@ -2382,6 +2384,7 @@ window.addEventListener('load', async () => {
   }
   c.auth.onAuthStateChange((event, session) => {
     if(event === 'SIGNED_OUT' || !session){
+      try{ PEL_ACTIVITY.touch('logout'); }catch(e){}
       clearUserLocalKeys();
       window.location.href = 'login.html';
     }
@@ -2391,10 +2394,67 @@ window.addEventListener('load', async () => {
 document.getElementById('logoutBtn').addEventListener('click', async () => {
   const c = client();
   window.PEL_SERVER_PLAN = null;
-  if(c){ try{ await c.auth.signOut(); }catch(e){ console.warn('[PEL] auth signOut failed:', e.message||e); } }
+  if(c){ try{ PEL_ACTIVITY.touch('logout'); }catch(e){} try{ await c.auth.signOut(); }catch(e){ console.warn('[PEL] auth signOut failed:', e.message||e); } }
   clearUserLocalKeys();
   window.location.href = 'login.html';
 });
+
+/* ============================================================
+   PEL ACTIVITY - student presence + action tracking
+   Heartbeat every 60s, touch on login/logout/page_view/open_lesson
+   All calls are fire-and-forget (never block UI)
+   ============================================================ */
+const PEL_ACTIVITY = (function(){
+  let sessionId = null;
+  let heartbeatId = null;
+  let lastTouch = 0;
+
+  function getSessionId(){
+    if(sessionId) return sessionId;
+    sessionId = sessionStorage.getItem('pel_session_id');
+    if(!sessionId){
+      sessionId = Date.now().toString(36) + Math.random().toString(36).slice(2,8);
+      sessionStorage.setItem('pel_session_id', sessionId);
+    }
+    return sessionId;
+  }
+
+  function touch(eventType, opts){
+    if(!currentUser) return;
+    var now = Date.now();
+    // Throttle: heartbeats min 45s apart, other events min 3s apart (except login/logout)
+    if(eventType === 'heartbeat' && now - lastTouch < 45000) return;
+    if(eventType !== 'login' && eventType !== 'logout' && now - lastTouch < 3000) return;
+    lastTouch = now;
+
+    var c = client();
+    if(!c) return;
+    try{
+      c.rpc('student_touch', {
+        p_session_id: getSessionId(),
+        p_event_type: eventType || 'heartbeat',
+        p_page: (opts && opts.page) || null,
+        p_academy_id: (opts && opts.academyId) || null,
+        p_lesson_id: (opts && opts.lessonId) || null,
+        p_activity_idx: (opts && opts.activityIdx) || null,
+        p_action_label: (opts && opts.action) || null,
+        p_metadata: (opts && opts.metadata) || {}
+      }).catch(function(){ /* silent fail - never block UI */ });
+    }catch(e){ /* never throw */ }
+  }
+
+  function startHeartbeat(){
+    if(heartbeatId) clearInterval(heartbeatId);
+    heartbeatId = setInterval(function(){
+      if(!document.hidden && currentUser) touch('heartbeat');
+    }, 60000);
+    document.addEventListener('visibilitychange', function(){
+      if(!document.hidden && currentUser) touch('heartbeat');
+    });
+  }
+
+  return { touch: touch, startHeartbeat: startHeartbeat, getSessionId: getSessionId };
+})();
 
 /* ============================================================
    TOAST + RIPPLE + CONFETTI HELPERS
@@ -2530,6 +2590,7 @@ function renderComingSoon(viewId){
 }
 
 function goToView(id){
+  PEL_ACTIVITY.touch('page_view', { page: id });
   if(id === 'lessonOfDay'){ const f = featuredLesson(); openLesson(f.academy, f.lesson); return; }
   if(id === 'resume'){ const n = nextLesson(); if(n) openLesson(n.academy, n.lesson); else goToView('paths'); return; }
   if(id === 'dailyQuiz'){ openDailyQuiz(); return; }
@@ -16215,6 +16276,7 @@ async function openLesson(academyId, lessonId){
     }
   }
   wsState = { academyId, lessonId };
+  PEL_ACTIVITY.touch('open_lesson', { academyId: academyId, lessonId: lessonId, action: 'Open: ' + lessonId });
   // If the academy isn't resolved yet (curriculum RPC still loading / missed),
   // load the curriculum once and retry so DB academies never render blank.
   if(!resolveAcademyById(academyId) && typeof loadCurriculum === 'function'){

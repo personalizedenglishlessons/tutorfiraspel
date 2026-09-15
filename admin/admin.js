@@ -971,6 +971,7 @@ async function loadStudents(st){
   }
   var trs = rows.map(function(s){
     var attention = s.needs_attention ? '<span class="chip ' + (s.days_inactive >= 14 ? 'red' : 'warn') + '">' + esc(t('needsAttention')) + '</span>' : '<span class="chip muted">-</span>';
+    var onlineBadge = s.is_online ? '<span class="chip green" style="font-size:.62rem;padding:1px 6px;">' + esc(lang==='ar'?'متصل':'Online') + '</span>' : '<span class="chip muted" style="font-size:.62rem;padding:1px 6px;">' + esc(lang==='ar'?'غير متصل':'Offline') + '</span>';
     return '<tr>' +
       '<td><span class="mobile-label">' + esc(t('name')) + '</span><a class="row-link" data-open-student="' + s.id + '">' + esc(s.full_name) + '</a>' + (s.email ? '<div style="font-size:.68rem; color:var(--text-muted);">' + esc(s.email) + '</div>' : '') + '</td>' +
       '<td><span class="mobile-label">' + esc(t('status')) + '</span>' + statusChip(s.status || 'new') + '</td>' +
@@ -978,7 +979,7 @@ async function loadStudents(st){
       '<td class="num"><span class="mobile-label">XP</span>' + fmtN(s.xp) + '</td>' +
       '<td class="num"><span class="mobile-label">' + esc(t('streak')) + '</span>' + fmtN(s.streak) + 'd</td>' +
       '<td class="num"><span class="mobile-label">' + esc(t('progress')) + '</span>' + fmtN(s.completed_lessons) + '</td>' +
-      '<td><span class="mobile-label">' + esc(t('lastActive')) + '</span>' + relTime(s.last_active) + '</td>' +
+      '<td><span class="mobile-label">' + esc(t('lastActive')) + '</span>' + onlineBadge + ' <span style="font-size:.74rem;">' + relTime(s.last_active) + '</span></td>' +
       '<td><span class="mobile-label">' + esc(t('program')) + '</span>' + (s.program_name ? '<div style="font-weight:600;">' + esc(s.program_name) + '</div>' : '-') + (s.plan_status ? '<div style="margin-top:4px;">' + planStatusChip(s.plan_status) + (s.plan_days_left != null && ['active','expiring'].indexOf(s.plan_status) !== -1 ? ' <span style="font-size:.68rem; color:var(--text-muted);">' + esc(t('daysLeft').replace('%d', arNum(s.plan_days_left))) + '</span>' : '') + '</div>' : '<div style="margin-top:4px;"><span class="chip muted">' + esc(lang==='ar'?'لا توجد باقة':'No plan') + '</span></div>') + '</td>' +
       '<td><span class="mobile-label">' + esc(t('certs')) + '</span>' + fmtN(s.cert_count) + '</td>' +
       '<td><span class="mobile-label">' + esc(t('attention')) + '</span>' + attention + '</td>' +
@@ -1039,12 +1040,31 @@ function render360(){
 
   var nextRec = computeNextRec(plan, st, kv);
 
+  var presence = d.presence || {};
+  var presBadge = presence.is_online ? '<span class="chip green" style="font-size:.7rem;">' + esc(lang==='ar'?'متصل الان':'Online now') + '</span>' : '<span class="chip muted" style="font-size:.7rem;">' + esc(lang==='ar'?'غير متصل':'Offline') + '</span>';
+  var presInfo = '';
+  if(presence.last_login_at){
+    presInfo += '<span>· ' + esc(lang==='ar'?'اخر دخول':'Last login') + ': ' + esc(fmtDate(presence.last_login_at)) + '</span>';
+  }
+  if(presence.last_action){
+    presInfo += '<span>· ' + esc(lang==='ar'?'اخر اجراء':'Last action') + ': ' + esc(presence.last_action) + ' (' + esc(relTime(presence.last_action_at)) + ')</span>';
+  }
+  if(presence.current_lesson_id){
+    presInfo += '<span>· ' + esc(lang==='ar'?'الدرس الحالي':'Current lesson') + ': ' + esc(presence.current_lesson_id) + '</span>';
+  }
+  if(presence.session_duration_seconds != null){
+    var mins = Math.floor(presence.session_duration_seconds / 60);
+    var secs = presence.session_duration_seconds % 60;
+    presInfo += '<span>· ' + esc(lang==='ar'?'مدة الجلسة':'Session') + ': ' + esc(mins + 'm ' + secs + 's') + '</span>';
+  }
+
   var header =
     '<div class="card s360-header" style="margin-bottom:18px;">' +
     '<span class="avatar-circle">' + esc((p.full_name || '?').charAt(0).toUpperCase()) + '</span>' +
     '<div style="flex:1; min-width:220px;">' +
     '<h2 style="font-size:1.3rem;">' + esc(p.full_name || '-') + '</h2>' +
     '<div class="s360-meta">' +
+      presBadge +
       statusChip(p.status || 'new') + chip(esc(lvlName(p.level || (prof && prof.estimatedStartingLevel) || 'A1')), 'gold') +
       (p.role ? chip(esc(lang === 'ar' ? ((I[p.role+'Of']||{}).ar||p.role) : p.role), 'bronze') : '') +
       (prog ? chip(esc((lang === 'ar' ? prof.targetLevel : prof.targetLevel)) + ' → ' + esc(prof && prof.targetLevel), '') : '') +
@@ -1053,7 +1073,9 @@ function render360(){
     '</div>' +
     '<div class="s360-meta" style="color:var(--text-muted); font-size:.76rem;">' +
       '<span>' + esc(p.email || '') + '</span>' + (p.phone ? '<span>· ' + esc(p.phone) + '</span>' : '') +
-    '</div></div>' +
+    '</div>' +
+    (presInfo ? '<div class="s360-meta" style="color:var(--text-muted); font-size:.72rem; margin-top:4px;">' + presInfo + '</div>' : '') +
+    '</div>' +
     '<div class="btn-row">' +
     '<button class="btn btn-outline btn-sm" id="s360Preview">' + esc(t('preview')) + '</button>' +
     (hasPerm('students.manage') ? '<button class="btn btn-danger btn-sm" id="s360Delete">' + esc(lang === 'ar' ? 'حذف الطالب نهايياً' : 'Delete student permanently') + '</button>' : '') +
@@ -1531,8 +1553,27 @@ function renderTabActivity(st, kv, d){
       '<div><div>' + esc(a.topic || '-') + '</div><span class="why">' + fmtDate(a.date) + ' · ' + statusChip(a.status) + '</span></div></div>';
   }).join('') || '<div class="sub">' + esc(t('noAttendance')) + '</div>';
 
+  var activityEvents = (d.recent_activity || []).map(function(e){
+    var dotClass = e.event_type === 'login' ? 'green' : e.event_type === 'logout' ? 'red' : e.event_type === 'open_lesson' ? 'gold' : 'warn';
+    var label = e.event_type === 'login' ? (lang==='ar'?'تسجيل الدخول':'Login')
+      : e.event_type === 'logout' ? (lang==='ar'?'تسجيل الخروج':'Logout')
+      : e.event_type === 'open_lesson' ? (lang==='ar'?'فتح درس':'Open lesson')
+      : e.event_type === 'page_view' ? (lang==='ar'?'تصفح':'Page view')
+      : e.event_type === 'heartbeat' ? (lang==='ar'?'نبض':'Heartbeat')
+      : e.event_type || 'event';
+    var detail = '';
+    if(e.action_label) detail = esc(e.action_label);
+    else if(e.academy_id && e.lesson_id) detail = esc(academyName(e.academy_id, lang)) + ' · ' + esc(e.lesson_id);
+    else if(e.lesson_id) detail = esc(e.lesson_id);
+    else if(e.page) detail = esc(e.page);
+    return '<div class="reason-item"><span class="badge-dot ' + dotClass + '" style="margin-top:5px;"></span>' +
+      '<div><div>' + esc(label) + (detail ? ' · ' + detail : '') + '</div>' +
+      '<span class="why">' + esc(relTime(e.created_at)) + '</span></div></div>';
+  }).join('') || '<div class="sub">' + esc(lang==='ar'?'لا يوجد نشاط':'No activity') + '</div>';
+
   return '<div class="grid grid-2"><div><div class="section-title">' + esc(t('recentCompletions')) + ' (' + fmtN(studyDays.length) + ' ' + esc(t('totalLessons')) + ')</div><div class="card"><div class="reason-list">' + recent + '</div></div></div>' +
-    '<div><div class="section-title">' + esc(t('attendance')) + '</div><div class="card"><div class="reason-list">' + att + '</div></div></div></div>';
+    '<div><div class="section-title">' + esc(lang==='ar'?'النشاط الحديث':'Recent Activity') + '</div><div class="card"><div class="reason-list">' + activityEvents + '</div></div></div></div>' +
+    '<div style="margin-top:18px;"><div class="section-title">' + esc(t('attendance')) + '</div><div class="card"><div class="reason-list">' + att + '</div></div></div>';
 }
 function renderTabCertificates(d){
   var certs = (d.certificates || []).map(function(c){
