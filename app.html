@@ -17983,7 +17983,7 @@ function renderActivePath(){
     : s === 'available'
     ? '<span style="width:26px;height:26px;border-radius:50%;border:2px solid var(--gold);color:var(--gold);display:inline-flex;align-items:center;justify-content:center;font-size:.75rem;flex-shrink:0;box-shadow:0 0 0 4px rgba(200,169,106,.12);">●</span>'
     : '<i data-lucide="lock" width="14" height="14" style="color:var(--text-muted);flex-shrink:0;"></i>';
-  const rows = (st.lessons || []).map(L => {
+  const rows = (st.lessons || []).filter(L => L.state !== 'locked').map(L => {
     const title = ar ? (L.title_ar || L.title_en) : (L.title_en || L.title_ar);
     const isCk = L.kind === 'checkpoint';
     const dim = L.state === 'completed' ? 'opacity:.55;' : '';
@@ -17998,17 +17998,7 @@ function renderActivePath(){
       <span style="font-size:.7rem; color:var(--text-muted); flex-shrink:0;">${L.state==='completed'?(uiAr?'مكتمل':'Done'):L.state==='available'?(uiAr?'ابدا':'Start'):(uiAr?'مقفل':'Locked')}</span>
     </div>`;
   }).join('');
-  const later = (st.route_stages || []).filter(s => s.id !== st.stage.id && s.state === 'locked').slice(0,3);
-  const laterHtml = later.length ? `
-    <div style="margin-top:16px; padding-top:14px; border-top:1px solid var(--border);">
-      <div class="eyebrow" style="margin-bottom:4px;"><span class="arabic">${ar?'لاحقاً في رحلتك':'Later on your path'}</span>، ${ar?'Later':'لاحقاً'}</div>
-      <div style="font-size:.72rem; color:var(--text-muted); margin-bottom:6px;"><span class="arabic">${ar?'اضغط اي مسار لجعله مسارك النشط - تقدمك محفوظ.':'Tap an academy to make it your active path - your progress is kept.'}</span></div>
-      ${later.map(s => `<div data-switch-ac="${escapeHtml(s.id)}" role="button" tabindex="0" style="display:flex; align-items:center; gap:10px; padding:7px 8px; margin:2px -8px; border-radius:9px; cursor:pointer;">
-        <i data-lucide="lock" width="13" height="13"></i>
-        <span style="font-size:.84rem;">${escapeHtml(ar?(s.name_ar||s.name_en):(s.name_en||s.name_ar))}</span>
-        <i data-lucide="repeat" width="13" height="13" style="margin-inline-start:auto; opacity:.45;"></i>
-      </div>`).join('')}
-    </div>` : '';
+  const laterHtml = '';
   if(heroCard) heroCard.style.display = '';
   body.style.display = '';
   body.innerHTML = `
