@@ -18241,7 +18241,6 @@ function renderContinueLearning(){
     const estChip = document.getElementById('heroEstChip');
     if(estChip && firstObj && firstObj.duration) estChip.innerHTML = `<span class="arabic">تقريبا ${escapeHtml(String(firstObj.duration).replace(/\bmin\b/gi,'دقيقة').replace(/\bhr\b/gi,'ساعة'))}</span>، Est. ${escapeHtml(firstObj.duration||'')}`;
     if(card) card.style.display = 'none';
-  }
   }else{
     const planNext = hasPlan() ? nextFromPlan() : null;
     if(heroTitle) heroTitle.innerHTML = `<span class="arabic" style="display:block; font-size:.7em; font-weight:400; color:var(--text-secondary); margin-bottom:2px;">كمل من وين وقفت</span>Resume where you left off`;
