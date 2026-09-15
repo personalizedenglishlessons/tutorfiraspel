@@ -1290,16 +1290,39 @@ Interpretation:
 - Week activity also tracked per skill type from completion dates
 
 **Homepage layout now:**
-1. Daily Burst (Word of the Day + Quick Win + Phrase of the Day) ← FIRST thing visible
-2. Hero card (greeting + resume CTA)
+1. Word Burst (cycling vocabulary card, from pel_dashboard_life.js) ← FIRST thing visible
+2. Hero card (greeting + resume CTA + active path lesson list inside #heroPathBody)
 3. Announcements + Live classes
-4. Continue Learning (guided path)
-5. Review strip
-6. Week + Focus cards
-7. Progress (stats + skill bars with real data)
+4. Review strip
+5. Week + Focus cards (Focus card now functional, connected to student profile)
+6. Progress (stats + skill bars with real data)
 
 **Next steps:**
-1. Browser test after GitHub Pages cache updates (~10 min): verify Daily Burst is first section
-2. Browser test: verify skill bars show actual progress (not all 0%)
-3. Consider: make hero card more compact on mobile to show Daily Burst + hero without scrolling
-4. Consider: add pronunciation audio button on Word of the Day card
+1. Browser test: verify Word Burst is first section on all devices (phone, tablet, iPad, laptop)
+2. Browser test: verify Focus card shows stage/level/progress chips and is clickable
+3. Browser test: verify hero card shows active path lesson list inside it (no separate Continue Learning section)
+4. Consider: make hero card more compact on mobile
+5. Consider: add pronunciation audio button on Word Burst card
+
+## DONE: Remove Daily Burst + Continue Learning, fix Focus card (commit 8ff5428)
+
+**Problems fixed:**
+1. Daily Burst section (Word of Day, Quick Win, Phrase of Day) was redundant with Word Burst - removed Daily Burst entirely, Word Burst now takes the top position
+2. Continue Learning section was a separate card duplicating hero card info - removed it, moved useful props (stage name, progress bar, lesson list, resume CTA) into hero card via #heroPathBody
+3. Focus card was hidden for first-time students and not connected to server state - now always visible for logged-in students, shows PEL_EFFECTIVE_STATE stage/level/progress chips, whole card clickable, dashRecommendation() checks server state first
+4. Word Burst had 90px bottom margin - fixed to normal 22px
+5. buildWordBurst() now repositions existing card to top instead of skipping if already exists
+
+**Files changed:**
+- app.html: Removed #dailyBurstSection HTML, #continueLearningLabel/#continueLearningCard/#continueLearningBody HTML, renderDailyBurst() function. Added #heroPathBody inside hero card. Updated renderActivePath() to render into heroPathBody. Updated renderContinueLearning() to reference heroPathBody. Rewrote renderFocusCard() to be always visible, server-connected, clickable. Updated dashRecommendation() to check PEL_EFFECTIVE_STATE first.
+- lib/pel_dashboard_life.js: buildWordBurst() inserts before #heroCard (not after dailyBurstSection). Repositions existing card instead of returning. Fixed margin.
+- lib/onboard.js: (from previous commit) cefrName() helper, singular/plural lesson fix, plan home only on app.html
+
+**Homepage layout (final):**
+1. Word Burst (cycling vocabulary) ← top of page, all devices
+2. Hero card (greeting + resume CTA + lesson list inside #heroPathBody)
+3. Subscription banner
+4. Announcements + Live classes
+5. Review strip
+6. Week + Focus cards (functional, connected to profile)
+7. Progress (stats + skill bars)
