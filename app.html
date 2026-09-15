@@ -17,7 +17,7 @@
 <script src="https://unpkg.com/lucide@1.34.0/dist/umd/lucide.js" integrity="sha384-frWQkjuw7X/yo4G2C2YnAAbkHHi7uBnMwf577mOjXDG0me9gl8Yrdyu1BhvS7WX5" crossorigin="anonymous" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.50.0/dist/umd/supabase.js" integrity="sha384-K0oxqktRvaThvYgGL4G+OK2Ih6VS6Uyu7j3+7WJgp/uWM0Yv6Xi4YEiw0BB+mPfi" crossorigin="anonymous" defer></script>
 <script src="lib/daily-lesson.js?v=867bb077" defer></script>
-<script src="lib/pel-personalization.js?v=f9e31668" defer></script>
+<script src="lib/pel-personalization.js?v=57c8c1b8" defer></script>
 <script src="lib/pel-plans.js?v=739c223f" defer></script>
 <script src="lib/pel-settings.js?v=efc52be5" defer></script>
 <script src="lib/cert-qr.js?v=a43f19f9" defer></script>
@@ -2448,7 +2448,7 @@ const navGroups = [
   ]},
   { label:{en:'Your Path', ar:'مسارك'}, items:[
     {id:'paths', en:'Academies', ar:'الاكاديميات', icon:'layout-grid'},
-    {id:'cefr', en:'Levels (A0–C2)', ar:'المستويات', icon:'trending-up'},
+    {id:'cefr', en:'Levels', ar:'المستويات', icon:'trending-up'},
     {id:'lessonOfDay', en:'Lesson of the Day', ar:'درس اليوم', icon:'sparkles'},
   ]},
   { label:{en:'Skill Studios', ar:'الاستوديوهات'}, items:[
@@ -2700,7 +2700,7 @@ function renderReviewStrip(){
 const paletteData = [
   {group:'Navigate', icon:'home', label:'Learning Home', view:'home'},
   {group:'Navigate', icon:'route', label:'Academies', view:'paths'},
-  {group:'Navigate', icon:'trending-up', label:'Levels (A1–C2)', view:'cefr'},
+  {group:'Navigate', icon:'trending-up', label:'Levels', view:'cefr'},
   {group:'Navigate', icon:'book-open', label:'Vocabulary Vault', view:'vocabulary'},
   {group:'Navigate', icon:'spell-check', label:'Grammar Academy', view:'grammar'},
   {group:'Navigate', icon:'mic', label:'Pronunciation Studio', view:'pronunciation'},
@@ -10073,10 +10073,10 @@ const WRITING_PROMPTS = [
   {id:'business-idea', title:'Explain A Business Idea', prompt:'Write a short pitch explaining a business idea you have, to someone who knows nothing about it.'},
   {id:'story', title:'Tell A Short Story', prompt:'Write a short story about a time something went wrong but ended fine. 4 to 6 sentences.'},
   // ---- A1 beginner prompts that pair with the pronunciation drills ----
-  {id:'introduce-self', title:'Introduce Yourself (A1)', prompt:'Write 3 sentences introducing yourself: your name, where you are from, and one thing you like. Use "I am..." / "I am from..." / "I like...".'},
-  {id:'my-day', title:'My Day (A1)', prompt:'Write 4 sentences about your daily routine using time words: in the morning, in the afternoon, in the evening, at night.'},
-  {id:'order-food', title:'Order Food (A1)', prompt:'Write what you say to order at a restaurant: greet the waiter, ask for the menu, order one item, then say thank you.'},
-  {id:'greet-neighbor', title:'Greet A Neighbor (A1)', prompt:'Write a short conversation (4 lines) greeting your neighbor, asking how they are, and saying goodbye.'},
+  {id:'introduce-self', title:'Introduce Yourself', prompt:'Write 3 sentences introducing yourself: your name, where you are from, and one thing you like. Use "I am..." / "I am from..." / "I like...".'},
+  {id:'my-day', title:'My Day', prompt:'Write 4 sentences about your daily routine using time words: in the morning, in the afternoon, in the evening, at night.'},
+  {id:'order-food', title:'Order Food', prompt:'Write what you say to order at a restaurant: greet the waiter, ask for the menu, order one item, then say thank you.'},
+  {id:'greet-neighbor', title:'Greet A Neighbor', prompt:'Write a short conversation (4 lines) greeting your neighbor, asking how they are, and saying goodbye.'},
   // ---- Prompts tied to the leveled pronunciation drills ----
   {id:'pron-greetings', title:'Greeting Conversation (Drill)', prompt:'Write a short greeting conversation: say hello, ask how someone is, and reply. Try "Hi, how are you today?" and "I am good, thank you." End every sentence with a period.'},
   {id:'pron-classroom', title:'Classroom Instructions (Drill)', prompt:'Write three short instructions a teacher gives in class, e.g. "Open your book." and "Listen carefully and repeat." Capitalize the first word and end with a period.'},
@@ -16042,18 +16042,18 @@ function renderLibrary(){
 }
 viewRenderers.plan = renderPlanView;
 /* ============================================================
-   CEFR LEVELED PATH (A1 -> C2), Duolingo-style progression that
+   LEVELED PATH, Duolingo-style progression that
    re-tags the existing academies into the six recognized proficiency
    levels so the student always sees one clear, structured path.
    ============================================================ */
 const CEFR_LEVELS = [
-  { id:'A0', en:'Absolute Beginner',  ar:'من الصفر',       color:'#2F745E', descEn:'First sounds, letters and the most essential survival words.', descAr:'الاصوات والحروف الاولى واهم كلمات البقا.' },
-  { id:'A1', en:'Beginner',         ar:'مبتدي',        color:'#3F8C72', descEn:'Greetings, the alphabet, numbers and basic questions.', descAr:'التحيات، الحروف، الارقام والاساله البسيطة.' },
-  { id:'A2', en:'Elementary',       ar:'مبتدي متقدم',  color:'#5BA88A', descEn:'Survival English for travel, food, shopping and hotels.', descAr:'انجليزي البقا للسفر والاكل والتسوق والفنادق.' },
-  { id:'B1', en:'Intermediate',     ar:'متوسط',        color:'#C8A96A', descEn:'Real conversations, opinions and everyday fluency.', descAr:'محادثات حقيقية وارا وطلاقة يومية.' },
-  { id:'B2', en:'Upper-Intermediate', ar:'متوسط متقدم', color:'#D8BD83', descEn:'Listening, reading, accent and the workplace.', descAr:'الاستماع والقرايه واللكنة والدوام.' },
-  { id:'C1', en:'Advanced',         ar:'متقدم',        color:'#A88345', descEn:'Business, writing, idioms and media English.', descAr:'الاعمال والكتابة والتعابير وانجليزي الاعلام.' },
-  { id:'C2', en:'Mastery',          ar:'اتقان',        color:'#343744', descEn:'Near-native fluency across every domain.', descAr:'طلاقة شبه اصلية في كل المجالات.' },
+  { id:'A0', en:'English Starter',  ar:'انجليزي البداية',   color:'#2F745E', descEn:'From zero: your first words and the most essential survival words.', descAr:'من الصفر: اول كلماتك واهم كلمات البقا.' },
+  { id:'A1', en:'English Basics',   ar:'انجليزي الاساس',    color:'#3F8C72', descEn:'Greetings, the alphabet, numbers and basic questions.', descAr:'التحيات، الحروف، الارقام والاساله البسيطة.' },
+  { id:'A2', en:'English Daily',    ar:'انجليزي اليومي',    color:'#5BA88A', descEn:'Survival English for travel, food, shopping and hotels.', descAr:'انجليزي البقا للسفر والاكل والتسوق والفنادق.' },
+  { id:'B1', en:'English Middle',   ar:'انجليزي الوسط',     color:'#C8A96A', descEn:'Real conversations, opinions and everyday fluency.', descAr:'محادثات حقيقية وارا وطلاقة يومية.' },
+  { id:'B2', en:'English Strong',   ar:'انجليزي قوي',       color:'#D8BD83', descEn:'Listening, reading, accent and the workplace.', descAr:'الاستماع والقرايه واللكنة والدوام.' },
+  { id:'C1', en:'English High',     ar:'انجليزي عالي',      color:'#A88345', descEn:'Business, writing, idioms and media English.', descAr:'الاعمال والكتابة والتعابير وانجليزي الاعلام.' },
+  { id:'C2', en:'English Pro',      ar:'انجليزي محترف',     color:'#343744', descEn:'Near-native fluency across every domain.', descAr:'طلاقة شبه اصلية في كل المجالات.' },
 ];
 const ACADEMY_CEFR = {
   'a0-sentence-building':'A0','a0-question-words':'A0','a0-spelling-sounds':'A0','a0-error-clinic':'A0','a0-social-english':'A0',
@@ -16171,9 +16171,9 @@ function renderCefrPath(){
       }).join('');
       return `<div class="cefr-unit"><button class="cefr-unit-head" data-academy="${ac.id}"><span class="cefr-unit-icon"><i data-lucide="${ac.icon}" width="16" height="16"></i></span><span class="cefr-unit-title"><span>${L('Unit','وحدة')} ${uIdx+1}: ${esc(ac.en)}</span><span class="arabic" style="display:block;font-size:.82em;color:var(--text-muted);">${esc(ac.ar)}</span></span></button><div class="cefr-skill-path">${skillsHtml||`<div class="cefr-empty">${L('Lessons coming soon.','دروس قريبا.')}</div>`}</div></div>`;
     }).join('');
-    return `<div class="cefr-level"><div class="cefr-node" style="background:${lvl.color};">${lvl.id}</div><div class="cefr-level-body"><div class="cefr-level-title"><h3>${isAr?esc(lvl.ar):esc(lvl.en)}</h3><span class="lvl">${lvl.id}</span></div><p class="cefr-level-desc">${isAr?esc(lvl.descAr):esc(lvl.descEn)}</p><div class="cefr-units">${units||`<div class=\"cefr-empty\">${L('Content for this level is coming.','محتوى هذا المستوى قادم.')}</div>`}</div></div></div>`;
+    return `<div class="cefr-level"><div class="cefr-node" style="background:${lvl.color};">${CEFR_LEVELS.indexOf(lvl)+1}</div><div class="cefr-level-body"><div class="cefr-level-title"><h3>${isAr?esc(lvl.ar):esc(lvl.en)}</h3></div><p class="cefr-level-desc">${isAr?esc(lvl.descAr):esc(lvl.descEn)}</p><div class="cefr-units">${units||`<div class=\"cefr-empty\">${L('Content for this level is coming.','محتوى هذا المستوى قادم.')}</div>`}</div></div></div>`;
   }).join('');
-  el.innerHTML = `<div class="page-head"><span class="eyebrow"><span class="arabic" style="font-size:.95em;">المستويات</span>، CEFR Levels (A1–C2)</span><h1><span class="arabic" style="display:block;font-size:.62em;font-weight:400;color:var(--text-secondary);margin-bottom:4px;">مسار واحد واضح من المبتدي الى الاتقان.</span>One clear path, Beginner to Mastery.</h1><p><span class="arabic" style="display:block;margin-bottom:4px;">ستة مستويات معترف بها عالميا، كل واحد يبني على اللي قبله.</span>Six internationally recognized levels, each one building on the last.</p></div><div class="cefr-path">${levelsHtml}</div>`;
+  el.innerHTML = `<div class="page-head"><span class="eyebrow"><span class="arabic" style="font-size:.95em;">المستويات</span>، English Levels</span><h1><span class="arabic" style="display:block;font-size:.62em;font-weight:400;color:var(--text-secondary);margin-bottom:4px;">مسار واحد واضح من البداية الى الاحتراف.</span>One clear path, Starter to Pro.</h1><p><span class="arabic" style="display:block;margin-bottom:4px;">سبع مراحل واضحة، كل واحدة تبني على اللي قبلها.</span>Seven clear steps, each one building on the last.</p></div><div class="cefr-path">${levelsHtml}</div>`;
   el.querySelectorAll('.cefr-chip:not(.locked)').forEach(b => { b.onclick = () => { if(typeof openLesson==='function') openLesson(b.dataset.academy, b.dataset.lesson); }; });
   el.querySelectorAll('.cefr-skill-node:not([disabled])').forEach(b => { b.onclick = () => { if(b.dataset.lesson && typeof openLesson==='function') openLesson(b.dataset.academy, b.dataset.lesson); }; });
   el.querySelectorAll('.cefr-unit-head').forEach(h => { h.onclick = () => { const ac=resolveAcademyById(h.dataset.academy); if(!ac) return; const first=(academyLessonList(ac)[0]||{}); if(first.id && typeof openLesson==='function') openLesson(h.dataset.academy, first.id); }; });
@@ -19027,7 +19027,7 @@ function renderPlanView(){
   const doneN = e.totalLessons - un.remainingLessons;
 
   const chips = [
-    `<span class="chip gold">${escapeHtml(p.estimatedStartingLevel)} → ${escapeHtml(p.targetLevel)}</span>`,
+    `<span class="chip gold">${escapeHtml(startLvl.en)} → ${escapeHtml(goalLvl.en)}</span>`,
     `<span class="chip">${e.dailyMinutes} <span class="arabic">دقيقة/يوم</span>، ${e.weeklyFrequency}/7</span>`,
     `<span class="chip">${doneN}/${e.totalLessons} <span class="arabic">دروس</span>، lessons</span>`,
     `<span class="chip">${un.remainingLessons} <span class="arabic">متبقي</span>، left</span>`,
@@ -19087,7 +19087,7 @@ function renderPlanView(){
     <div class="page-head">
       <span class="eyebrow"><span class="arabic" style="font-size:.95em;">خطتي</span>، My Plan</span>
       <h1><span class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">مسارك مبني على اجوبتك ونتيجتك.</span>Your route, built from your answers.</h1>
-      <p><span class="arabic" style="display:block; margin-bottom:4px;">${escapeHtml(p.estimatedStartingLevel)} · ${escapeHtml(startLvl.ar)} ← ${escapeHtml(p.targetLevel)} · ${escapeHtml(goalLvl.ar)}</span>${escapeHtml(startLvl.en)} → ${escapeHtml(goalLvl.en)}</p>
+      <p><span class="arabic" style="display:block; margin-bottom:4px;">${escapeHtml(startLvl.ar)} ← ${escapeHtml(goalLvl.ar)}</span>${escapeHtml(startLvl.en)} → ${escapeHtml(goalLvl.en)}</p>
     </div>
     <div style="margin-bottom:22px;">${chips}</div>
     <div class="grid grid-2">

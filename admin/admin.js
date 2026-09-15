@@ -532,6 +532,27 @@ async function audit(action, targetType, targetId, metadata){
 function hasPerm(p){ return me.perms.indexOf(p) !== -1; }
 function canTeacher(){ return me.role === 'teacher' || me.role === 'admin' || me.role === 'super_admin'; }
 
+/* Level display names - friendly English/Arabic names instead of CEFR codes.
+   Internal codes (A0..C2) stay in the DB and as option VALUES only. */
+var LVL_NAMES = {
+  'A0': { en:'English Starter', ar:'انجليزي البداية' },
+  'A1': { en:'English Basics',   ar:'انجليزي الاساس' },
+  'A2': { en:'English Daily',    ar:'انجليزي اليومي' },
+  'B1': { en:'English Middle',   ar:'انجليزي الوسط' },
+  'B2': { en:'English Strong',   ar:'انجليزي قوي' },
+  'C1': { en:'English High',     ar:'انجليزي عالي' },
+  'C2': { en:'English Pro',      ar:'انجليزي محترف' }
+};
+function lvlName(code){
+  var m = LVL_NAMES[code];
+  return m ? (lang === 'ar' ? m.ar : m.en) : (code || '-');
+}
+function lvlOptions(cur){
+  return Object.keys(LVL_NAMES).map(function(l){
+    return '<option value="' + l + '"' + ((cur || 'A1') === l ? ' selected' : '') + '>' + esc(lvlName(l)) + '</option>';
+  }).join('');
+}
+
 /* academy + lesson display names via PEL_ENGINE */
 function academyName(id, lng){
   var m = (window.PEL_ENGINE && PEL_ENGINE.ACADEMY_META && PEL_ENGINE.ACADEMY_META[id]) || {};
@@ -662,7 +683,6 @@ var NAV = [
   { label:'trust', items:[
     {id:'certificates', en:'Certificates', ar:'الشهادات', icon:'graduation-cap'},
     {id:'announcements', en:'Announcements', ar:'الاعلانات', icon:'megaphone', perm:'announcements.manage'},
-    {id:'audit', en:'Audit Log', ar:'سجل التدقيق', icon:'scroll-text'},
     {id:'roles', en:'Access & Roles', ar:'الادوار والصلاحيات', icon:'shield', perm:'roles.manage'},
     {id:'health', en:'System Health', ar:'صحة النظام', icon:'heart-pulse', perm:'health.read'},
   ]},
@@ -707,7 +727,7 @@ function goTo(id, arg){
 /* ============================================================
    6. VIEW REGISTRY
    ============================================================ */
-var views = { overview, students, student, teachers, groups, groupDetail, courses, interventions, classes, programs, plans: plansView, billing: billingView, liveClasses: liveClassesView, questions: questionsView, announcements: announcementsView, settings: settingsView, certificates, audit: auditLog, roles, health, reports };
+var views = { overview, students, student, teachers, groups, groupDetail, courses, interventions, classes, programs, plans: plansView, billing: billingView, liveClasses: liveClassesView, questions: questionsView, announcements: announcementsView, settings: settingsView, certificates, roles, health, reports };
 
 /* ============================================================
    7. OVERVIEW (Phase 10)
@@ -753,15 +773,16 @@ $('viewArea').innerHTML = pageHead(t('overview'), lang === 'ar' ? 'وش يصير
   }).join('');
 
   var attentionHtml = (d.attention || []).map(function(s){
-    var reasons = (s.reasons || []).map(function(r){
+    var reasons = (s.reasons || []).filter(Boolean).map(function(r){
       if(r === 'inactive') return t('inactiveReason').replace('%d', s.days_inactive);
       if(r === 'missed_live') return t('missedLiveReason').replace('%d', s.recent_absences);
       if(r === 'expiring') return t('expiringReason').replace('%d', s.expiring_days);
       return r;
     }).join(' · ');
     return '<div class="reason-item"><span class="badge-dot ' + (s.days_inactive >= 14 ? 'red' : 'warn') + '" style="margin-top:5px;"></span>' +
-      '<div><a class="row-link" data-open-student="' + s.user_id + '">' + esc(s.full_name) + '</a>' +
-      '<span class="why">' + esc(reasons) + '</span></div></div>';
+      '<div style="flex:1;"><a class="row-link" data-open-student="' + s.user_id + '">' + esc(s.full_name) + '</a>' +
+      '<span class="why">' + esc(reasons) + '</span></div>' +
+      '<button class="btn btn-outline btn-sm" data-open-student="' + s.user_id + '">' + esc(lang === 'ar' ? 'افتح' : 'Open') + '</button></div>';
   }).join('') || '<div class="sub">' + esc(t('noData')) + '</div>';
 
   var plansExpiringHtml = (pv.expiring_soon || []).map(function(s){
@@ -781,10 +802,6 @@ $('viewArea').innerHTML = pageHead(t('overview'), lang === 'ar' ? 'وش يصير
     return '<div class="reason-item"><span class="badge-dot bronze" style="margin-top:5px;"></span><div><div>' + esc(c.topic || '-') + ' · ' + esc(c.group_name || '-') + '</div><span class="why">' + fmtDate(c.scheduled_date) + ' ' + esc(c.start_time || '') + ' · ' + esc(c.teacher_name || '-') + '</span></div></div>';
   }).join('') || '<div class="sub">' + esc(t('noData')) + '</div>';
 
-  var auditHtml = (d.recent_audit || []).map(function(a){
-    return '<div class="reason-item"><span class="badge-dot muted" style="margin-top:5px;"></span><div><div>' + esc(a.action) + ' · ' + esc(a.actor || '-') + '</div><span class="why">' + esc(a.target_type || '') + ' ' + esc(a.target_id || '') + ' · ' + relTime(a.created_at) + '</span></div></div>';
-  }).join('') || '<div class="sub">' + esc(t('noData')) + '</div>';
-
   var distHtml = (d.course_distribution || []).map(function(c){
     var max = d.course_distribution.length ? d.course_distribution[0].count : 1;
     var w = Math.round(100 * c.count / max);
@@ -800,8 +817,7 @@ $('viewArea').innerHTML = pageHead(t('overview'), lang === 'ar' ? 'وش يصير
     '<div class="section-title">' + esc(t('upcomingClasses')) + '</div><div class="card"><div class="reason-list">' + classesHtml + '</div></div>' +
     '<div class="section-title">' + esc(t('courseDistribution')) + '</div><div class="card">' + distHtml + '</div></div>' +
     '<div><div class="section-title">' + esc(t('recentCompletions')) + '</div><div class="card"><div class="reason-list">' + completionsHtml + '</div></div>' +
-    '<div class="section-title">' + esc(t('recentCerts')) + '</div><div class="card"><div class="reason-list">' + certsHtml + '</div></div>' +
-    '<div class="section-title">' + esc(t('recentAudit')) + '</div><div class="card"><div class="reason-list">' + auditHtml + '</div></div></div></div>';
+    '<div class="section-title">' + esc(t('recentCerts')) + '</div><div class="card"><div class="reason-list">' + certsHtml + '</div></div></div></div>';
   loadIcons();
   wireStudentLinks();
 }
@@ -825,7 +841,7 @@ function students(){
     '<div class="filter-bar">' +
       '<div class="search-wrap"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><input class="input" id="stSearch" placeholder="' + esc(t('searchPlaceholder')) + '" value="' + esc(st.search) + '"></div>' +
       sel('stStatus', t('status'), [['',''],['new','new'],['active','active'],['stalled','stalled'],['inactive','inactive'],['suspended','suspended']], st.filters.status) +
-      sel('stLevel', t('level'), [['',''],['A0','A0'],['A1','A1'],['A2','A2'],['B1','B1'],['B2','B2'],['C1','C1']], st.filters.level) +
+      sel('stLevel', t('level'), [['','all'],['A0','A0'],['A1','A1'],['A2','A2'],['B1','B1'],['B2','B2'],['C1','C1'],['C2','C2']].map(function(o){ return o[0]==='' ? o : [o[0], lvlName(o[0])]; }), st.filters.level) +
       '<div class="field" id="stProgramWrap"></div>' +
       '<div class="field" id="stTeacherWrap"></div>' +
       '<div class="field" id="stGroupWrap"></div>' +
@@ -954,7 +970,7 @@ async function loadStudents(st){
     return '<tr>' +
       '<td><span class="mobile-label">' + esc(t('name')) + '</span><a class="row-link" data-open-student="' + s.id + '">' + esc(s.full_name) + '</a>' + (s.email ? '<div style="font-size:.68rem; color:var(--text-muted);">' + esc(s.email) + '</div>' : '') + '</td>' +
       '<td><span class="mobile-label">' + esc(t('status')) + '</span>' + statusChip(s.status || 'new') + '</td>' +
-      '<td><span class="mobile-label">' + esc(t('level')) + '</span>' + chip(s.level || 'A1', 'gold') + '</td>' +
+      '<td><span class="mobile-label">' + esc(t('level')) + '</span>' + chip(esc(lvlName(s.level || 'A1')), 'gold') + '</td>' +
       '<td class="num"><span class="mobile-label">XP</span>' + fmtN(s.xp) + '</td>' +
       '<td class="num"><span class="mobile-label">' + esc(t('streak')) + '</span>' + fmtN(s.streak) + 'd</td>' +
       '<td class="num"><span class="mobile-label">' + esc(t('progress')) + '</span>' + fmtN(s.completed_lessons) + '</td>' +
@@ -1025,7 +1041,7 @@ function render360(){
     '<div style="flex:1; min-width:220px;">' +
     '<h2 style="font-size:1.3rem;">' + esc(p.full_name || '-') + '</h2>' +
     '<div class="s360-meta">' +
-      statusChip(p.status || 'new') + chip(esc(p.level || (prof && prof.estimatedStartingLevel) || 'A1'), 'gold') +
+      statusChip(p.status || 'new') + chip(esc(lvlName(p.level || (prof && prof.estimatedStartingLevel) || 'A1')), 'gold') +
       (p.role ? chip(esc(lang === 'ar' ? ((I[p.role+'Of']||{}).ar||p.role) : p.role), 'bronze') : '') +
       (prog ? chip(esc((lang === 'ar' ? prof.targetLevel : prof.targetLevel)) + ' → ' + esc(prof && prof.targetLevel), '') : '') +
       (p.program_name ? chip(esc(p.program_name), 'green') : '') +
@@ -1044,7 +1060,7 @@ var tabs = [
     ['plan', t('plan')], ['learning', t('learningHealth')], ['profile', t('profile')], ['personalization', t('personalization')],
     ['skills', t('skills')], ['recommendations', t('recommendations')], ['interventionList', t('interventionList')],
     ['activity', t('activity')], ['certificates', t('certificates')], ['timeline', t('timeline')],
-    ['notes', t('notes')], ['audit', t('audit')]
+    ['notes', t('notes')]
   ];
   var tabHtml = '<div class="tabs">' + tabs.map(function(x){
     return '<button class="tab' + (x[0] === s360Tab ? ' active' : '') + '" data-tab="' + x[0] + '">' + esc(x[1]) + '</button>';
@@ -1089,7 +1105,7 @@ var tabs = [
           '<div class="reason-item" style="flex-wrap:wrap;gap:8px;align-items:center;">' +
             '<div style="font-weight:700;min-width:110px;">'+esc(lang==='ar'?'الخطة والمستوى':'Plan & level')+'</div>' +
             chip(esc(b.tier==='exam_prep'?(lang==='ar'?'التجهيز للاختبارات':'Exam Prep'):(lang==='ar'?'ابد من الصفر':'Start From Zero')), 'gold') +
-            chip(esc(b.assessed_cefr_level||'A1'), '') +
+            chip(esc(lvlName(b.assessed_cefr_level||'A1')), '') +
             '<button class="btn btn-gold btn-sm" id="s360AssignPlan">'+esc(t('assignPlan'))+'</button>' +
             '<span style="font-size:.76rem;color:var(--text-muted);">'+esc(lang==='ar'?'يحدد البرنامج + المدة + نوع الخطة + المستوى اللي تاخذ منه الدروس':'Sets program + duration + plan type + level that drives their lessons')+'</span>' +
           '</div></div>' : '') +
@@ -1218,7 +1234,6 @@ function renderTab(tab){
   else if(tab === 'certificates'){ body.innerHTML = renderTabCertificates(d); }
   else if(tab === 'timeline'){ body.innerHTML = renderTabTimeline(p, st, kv, d); }
   else if(tab === 'notes'){ body.innerHTML = renderTabNotes(d); }
-  else if(tab === 'audit'){ body.innerHTML = renderTabAudit(d); }
   else body.innerHTML = '';
   loadIcons();
   wire360Actions();
@@ -1374,14 +1389,20 @@ function weekStartKey(){
   return d.toISOString().slice(0,10);
 }
 function renderTabPersonalization(plan){
+  var help = '<div class="notice" style="margin-bottom:14px;"><div style="font-weight:600;">' + esc(lang==='ar'?'من وين تجي هذي المعلومات؟':'Where this data comes from') + '</div>' +
+    '<div style="margin-top:6px; font-size:.8rem; color:var(--text-muted); line-height:1.7;">' +
+    esc(lang==='ar'
+      ? 'هذي خطة الطالب اللي يبنيها بنفسه: يجاوب على اسالة الاهداف والوقت اليومي اول ما يدخل التطبيق او من صفحة البداية. اذا بنى خطته، تشوف هنا هدفه ووقته ووتيرته. اذا الفضا فاضي، يعني الطالب ما بنى خطته بعد - اساله يدخل التطبيق ويبنيها، وبتقدر بعدها تسند له الباقة المناسبة.'
+      : 'This is the plan the student builds themselves: they answer the goal and daily-time questions on first sign-in or from the home page. Once built, you see their goal, pace and route here. If this is empty, the student has not built their plan yet - have them sign in and build it, then assign the right plan.') +
+    '</div></div>';
   if(!plan || !plan.profile){
-    return '<div class="card"><div class="sub">' + esc(t('noPlan')) + '</div></div>';
+    return help + '<div class="card"><div class="sub">' + esc(lang==='ar'?'هذا الطالب ما بنى خطته بعد. يبنيها اول ما يدخل التطبيق.':'This student has not built their plan yet. They build it the first time they sign in.') + '</div></div>';
   }
   var p = plan.profile, e = plan.estimate;
   var items = [
     [t('goal'), p.goalsEn || (p.goals || []).join(', '), p.goalsAr],
     [t('outcome'), p.targetOutcomeEn || p.targetOutcome, p.targetOutcomeAr],
-    [t('target'), p.targetLevel, null],
+    [t('target'), p.targetLevel ? lvlName(p.targetLevel) : '', null],
     [t('dailyMin'), p.dailyMinutes, null],
     [t('weeklyFreq'), p.weeklyFrequency + '/7', null],
     [t('contexts'), (p.realLifeContexts || []).join(', '), null],
@@ -1402,7 +1423,7 @@ function renderTabPersonalization(plan){
         return '<div class="reason-item"><span class="badge-dot gold" style="margin-top:5px;"></span><div><div>' + esc(lang === 'ar' ? sg.title.ar : sg.title.en) + '</div><span class="why">' + fmtN(unitCount) + ' ' + esc(t('totalLessons')) + '</span></div></div>';
       }).join('') + '</div></div>';
   }
-  return '<div class="card"><div class="kv-list">' + kv + '</div></div>' + routeHtml;
+  return help + '<div class="card"><div class="kv-list">' + kv + '</div></div>' + routeHtml;
 }
 function renderTabSkills(plan, st, kv){
   var completed = st.completed_lessons || [];
@@ -1575,13 +1596,6 @@ function renderTabNotes(d){
   }
   return '<div class="card"><div class="reason-list">' + list + '</div></div>' + form;
 }
-function renderTabAudit(d){
-  var list = (d.audit || []).map(function(a){
-    return '<div class="reason-item"><span class="badge-dot muted" style="margin-top:5px;"></span>' +
-      '<div><div>' + esc(a.action) + '</div><span class="why">' + esc(a.actor || '-') + ' · ' + fmtDate(a.created_at) + (a.target_id ? ' · ' + esc(a.target_id) : '') + '</span></div></div>';
-  }).join('') || '<div class="sub">' + esc(t('noData')) + '</div>';
-  return '<div class="card"><div class="reason-list">' + list + '</div></div>';
-}
 function wire360Actions(){
   /* accept / override / dismiss current recommendation */
   var accept = document.querySelector('[data-action="accept-rec"]');
@@ -1748,8 +1762,8 @@ function renderPreview(){
     '<div class="sub" style="letter-spacing:.08em; text-transform:uppercase;">' + esc(t('student360')) + '</div>' +
     '<h3 style="margin-top:6px;">' + esc(p.full_name || '-') + '</h3>' +
     '<div class="s360-meta" style="margin-top:8px;">' +
-      chip((plan && plan.profile && plan.profile.estimatedStartingLevel) || 'A1', 'gold') + ' → ' +
-      chip((plan && plan.profile && plan.profile.targetLevel) || '-', '') +
+      chip(esc(lvlName((plan && plan.profile && plan.profile.estimatedStartingLevel) || 'A1')), 'gold') + ' → ' +
+      chip(esc(lvlName((plan && plan.profile && plan.profile.targetLevel) || '-')), '') +
       (rec.rec && rec.rec.minutes ? chip(esc(t('est').replace('%d', arNum(rec.rec.minutes))), 'bronze') : '') +
     '</div></div>' +
     '<div class="card" style="margin-top:12px;"><div class="sub">' + esc(t('todayRec')) + '</div>' +
@@ -2120,7 +2134,7 @@ function academyCard(a){
     '<summary style="padding:18px 20px; cursor:pointer; display:flex; align-items:center; gap:12px; list-style:none;">' +
       '<span style="width:34px; height:34px; border-radius:10px; flex:none; background:linear-gradient(135deg,' + esc(a.color_from || '#C8A96A') + ',' + esc(a.color_to || '#A88345') + '); display:inline-flex; align-items:center; justify-content:center;"><i data-lucide="' + esc(a.icon || 'book-open') + '" width="17" height="17" style="color:#fff;"></i></span>' +
       '<span style="flex:1; min-width:140px;"><b>' + esc(lang === 'ar' ? a.name_ar : a.name_en) + '</b>' +
-        '<span class="s360-meta" style="margin-top:4px;">' + chip(esc(t(diffLabel)), 'bronze') + ' ' + chip(esc(String(a.level || 'A1')), '') + (a.active ? '' : ' ' + chip(esc(t('inactive')), 'red')) + '</span></span>' +
+        '<span class="s360-meta" style="margin-top:4px;">' + chip(esc(t(diffLabel)), 'bronze') + ' ' + chip(esc(lvlName(a.level || 'A1')), '') + (a.active ? '' : ' ' + chip(esc(t('inactive')), 'red')) + '</span></span>' +
       '<span class="s360-meta" style="margin:0;"><span>' + esc(t('lessonCount').replace('%d', arNum(links.length))) + '</span><span>· ' + esc(t('minutes').replace('%d', arNum(mins))) + '</span></span>' +
       (canManage ? '<span style="display:flex; gap:6px; flex-wrap:wrap;">' +
         '<button class="btn btn-outline btn-sm" data-ac-edit="' + esc(a.id) + '">' + esc(t('edit')) + '</button>' +
@@ -2187,7 +2201,7 @@ function academyForm(academyId){
         }).join('') + '</select></div>' +
       '<div class="field"><label>' + esc(t('level')) + '</label><select class="input" id="acLevel">' +
         ['A0','A1','A2','B1','B2','C1'].map(function(v){
-          return '<option' + (a && a.level === v ? ' selected' : '') + '>' + v + '</option>';
+          return '<option value="'+v+'"' + (a && a.level === v ? ' selected' : '') + '>' + esc(lvlName(v)) + '</option>';
         }).join('') + '</select></div>' +
       '<div class="field"><label>' + esc(t('colorFrom')) + '</label><input class="input" type="color" id="acFrom" value="' + esc(a ? (a.color_from || '#C8A96A') : '#C8A96A') + '"></div>' +
       '<div class="field"><label>' + esc(t('colorTo')) + '</label><input class="input" type="color" id="acTo" value="' + esc(a ? (a.color_to || '#A88345') : '#A88345') + '"></div>' +
@@ -2424,16 +2438,13 @@ async function programs(){
       statusChip(s.status) + '</div>';
   }).join('') || emptyBlock(t('noSubscriptions'));
 
-  var addBtn = hasPerm('subscriptions.manage') ? '<div class="btn-row" style="margin-bottom:16px;"><button class="btn btn-gold btn-sm" id="newSubBtn">' + esc(t('newSubscription')) + '</button>' +
-    '<button class="btn btn-outline btn-sm" id="newProgBtn">' + esc(t('newProgram')) + '</button></div>' : '';
+  var addBtn = hasPerm('subscriptions.manage') ? '<div class="btn-row" style="margin-bottom:16px;"><button class="btn btn-outline btn-sm" id="newProgBtn">' + esc(t('newProgram')) + '</button></div>' : '';
   $('viewArea').innerHTML = pageHead(t('programs'), lang === 'ar' ? 'البرامج والاشتراكات' : 'Programs and subscriptions') +
     addBtn +
     '<div class="section-title">' + esc(t('programCatalog')) + '</div><div class="grid grid-3">' + catalog + '</div>' +
     '<div class="section-title">' + esc(t('subscriptions')) + '</div><div class="card"><div class="reason-list">' + subRows + '</div></div>';
   loadIcons();
   wireStudentLinks();
-  var sb = $('newSubBtn');
-  if(sb) sb.addEventListener('click', function(){ subForm(prog); });
   var pb = $('newProgBtn');
   if(pb) pb.addEventListener('click', function(){ programForm(); });
 }
@@ -2468,51 +2479,6 @@ function programForm(){
     programs();
   });
 }
-function subForm(prog){
-  var s = modal(t('newSubscription'), '' +
-    '<div class="form-grid">' +
-      '<div class="field full"><label>' + esc(t('student')) + '</label><div class="search-wrap"><input class="input" id="sfSearch" placeholder="' + esc(t('searchPlaceholder')) + '"><div id="sfResults"></div></div></div>' +
-      '<div class="field full"><label>' + esc(t('program')) + '</label><select class="input" id="sfProg">' +
-        prog.map(function(x){ return '<option value="' + x.id + '">' + esc(x.name_en) + '</option>'; }).join('') + '</select></div>' +
-      '<div class="field"><label>' + esc(t('startDate')) + '</label><input class="input" type="date" id="sfStart" value="' + new Date().toISOString().slice(0,10) + '"></div>' +
-      '<div class="field"><label>' + esc(t('endDate')) + '</label><input class="input" type="date" id="sfEnd"></div>' +
-    '</div>' +
-    '<div class="btn-row"><button class="btn btn-gold btn-sm" id="sfSave">' + esc(t('create')) + '</button><button class="btn btn-ghost btn-sm" data-close>' + esc(t('cancel')) + '</button></div>');
-  s.querySelector('[data-close]').addEventListener('click', function(){ closeModal(s); });
-  var picked = null;
-  var input = $('sfSearch'), results = $('sfResults');
-  var timer = null;
-  input.addEventListener('input', function(){
-    clearTimeout(timer);
-    timer = setTimeout(async function(){
-      var q = input.value.trim();
-      if(q.length < 2){ results.innerHTML = ''; return; }
-      var r = await rpc('admin_students', { p_limit: 6, p_offset: 0, p_search: q, p_filters: {}, p_sort: 'name:asc' });
-      if(!r.ok){ return; }
-      results.innerHTML = (r.data || []).map(function(st){
-        return '<div class="reason-item" style="margin-top:6px;"><div style="flex:1;"><div style="font-weight:600;">' + esc(st.full_name) + '</div><span class="why">' + esc(st.email || '') + '</span></div>' +
-          '<button class="btn btn-gold btn-sm" data-pick="' + st.id + '">' + esc(t('select')) + '</button></div>';
-      }).join('') || '';
-      results.querySelectorAll('[data-pick]').forEach(function(b){
-        b.addEventListener('click', function(){
-          picked = b.getAttribute('data-pick');
-          input.value = b.closest('.reason-item').querySelector('div').textContent.trim();
-          results.innerHTML = '';
-        });
-      });
-    }, 350);
-  });
-  $('sfSave').addEventListener('click', async function(){
-    if(!picked){ toast(t('required'), true); return; }
-    var end = $('sfEnd').value || (new Date(Date.now() + 90*86400000).toISOString().slice(0,10));
-    var r = await rpc('admin_subscription_add', { p_user_id: picked, p_program_id: $('sfProg').value, p_start_date: $('sfStart').value, p_end_date: end, p_sessions_used: 0 });
-    if(!r.ok){ toast(rpcErrMsg(r), true); return; }
-    closeModal(s);
-    toast(t('saved'));
-    programs();
-  });
-}
-
 /* ============================================================
    16B. BILLING & INDEX EDITOR (Plans pricing matrix + index copy)
    --------------------------------------------------------------
@@ -2720,7 +2686,7 @@ async function questionsView(){
     var body = '<div class="form-grid">'+
       '<div class="field"><label>'+esc(lang==='ar'?'الكود':'Code')+'</label><input class="input" id="qf_code" value="'+esc(q?q.code:'')+'" placeholder="q16"></div>'+
       '<div class="field"><label>'+esc(lang==='ar'?'المسار':'Tier')+'</label><select class="input" id="qf_tier"><option value="beginner"'+(q&&q.tier==='beginner'?' selected':'')+'>Beginner</option><option value="exam_prep"'+(q&&q.tier==='exam_prep'?' selected':'')+'>Exam Prep</option></select></div>'+
-      '<div class="field"><label>'+esc(lang==='ar'?'المستوى':'Level')+'</label><select class="input" id="qf_level">'+['A0','A1','A2','B1','B2','C1'].map(function(l){return '<option value="'+l+'"'+(q&&q.level===l?' selected':'')+'>'+l+'</option>';}).join('')+'</select></div>'+
+      '<div class="field"><label>'+esc(lang==='ar'?'المستوى':'Level')+'</label><select class="input" id="qf_level">'+['A0','A1','A2','B1','B2','C1'].map(function(l){return '<option value="'+l+'"'+(q&&q.level===l?' selected':'')+'>'+esc(lvlName(l))+'</option>';}).join('')+'</select></div>'+
       '<div class="field"><label>'+esc(lang==='ar'?'الصعوبة':'Difficulty')+'</label><select class="input" id="qf_diff">'+[1,2,3,4,5].map(function(d){return '<option value="'+d+'"'+(q&&q.difficulty_rating===d?' selected':'')+'>'+d+'</option>';}).join('')+'</select></div>'+
       '<div class="field"><label>'+esc(lang==='ar'?'النوع':'Skill')+'</label><select class="input" id="qf_skill">'+['grammar','vocab','reading','listening'].map(function(s){return '<option value="'+s+'"'+(q&&q.skill_type===s?' selected':'')+'>'+s+'</option>';}).join('')+'</select></div>'+
       '<div class="field"><label><input type="checkbox" id="qf_active" '+(q?(q.active!==false?'checked':''):'checked')+'> '+esc(lang==='ar'?'متاح':'Active')+'</label></div>'+
@@ -2972,27 +2938,6 @@ var prevWrap = $('ciPreviewWrap');
 /* ============================================================
    18. AUDIT LOG (Phase 35)
    ============================================================ */
-async function auditLog(){
-  $('viewArea').innerHTML = pageHead(t('audit'), lang === 'ar' ? 'سجل كل اجراوات الادارة' : 'Full admin action history') + loadingBlock();
-  var c = client();
-  var r = await c.from('audit_log').select('id,actor_user_id,action,target_type,target_id,metadata,created_at').order('created_at',{ascending:false}).limit(300);
-  if(r.error){ $('viewArea').innerHTML = errBlock(rpcErrMsg(r)); return; }
-  var rows = r.data || [];
-  var html = rows.map(function(a){
-    return '<div class="reason-item"><span class="badge-dot muted" style="margin-top:5px;"></span>' +
-      '<div style="flex:1;"><div><b>' + esc(a.action) + '</b> · ' + esc(a.actor_user_id || '-') + '</div>' +
-      '<span class="why">' + esc(a.target_type || '') + ' ' + esc(a.target_id || '') + ' · ' + fmtDate(a.created_at) + '</span>' +
-      (a.metadata ? '<span class="why">' + esc(JSON.stringify(a.metadata)) + '</span>' : '') +
-      '</div></div>';
-  }).join('') || emptyBlock(t('noData'));
-  $('viewArea').innerHTML = pageHead(t('audit'), lang === 'ar' ? 'سجل التدقيق' : 'Audit log') +
-    '<div class="card"><div class="reason-list">' + html + '</div></div>';
-  loadIcons();
-}
-
-/* ============================================================
-   19. ACCESS & ROLES (Phase 36)
-   ============================================================ */
 async function roles(){
   $('viewArea').innerHTML = pageHead(t('roles'), lang === 'ar' ? 'الفريق والادوار' : 'Team and roles') + loadingBlock();
   var r = await rpc('admin_team');
@@ -3052,6 +2997,7 @@ async function health(){
 /* ============================================================
    21. REPORTS (Phase 38)
    ============================================================ */
+
 function reports(){
   var types = [['students','report_students'],['certificates','report_certificates'],['attendance','report_attendance'],
                ['programs','report_programs'],['classes','report_classes'],['atrisk','report_atrisk']];
@@ -3197,7 +3143,7 @@ async function openAssignPlanModal(uid, onDone, curTier, curLevel){
         '<option value="exam_prep"' + (curTier==='exam_prep'?' selected':'') + '>' + esc(lang==='ar'?'التجهيز للاختبارات':'Exam Prep') + '</option>' +
       '</select></div>' +
       '<div class="field"><label>' + esc(lang==='ar'?'المستوى':'Level') + '</label><select class="input" id="apLevel">' +
-        ['A0','A1','A2','B1','B2','C1','C2'].map(function(l){ return '<option value="'+l+'"'+(((curLevel||'A1')===l)?' selected':'')+'>'+l+'</option>'; }).join('') + '</select></div>' +
+        lvlOptions(curLevel) + '</select></div>' +
       '<div class="field full"><label>' + esc(t('reason')) + '</label><input class="input" id="apReason"></div>' +
     '</div>' +
     '<div class="btn-row"><button class="btn btn-gold btn-sm" id="apSave">' + esc(t('save')) + '</button><button class="btn btn-ghost btn-sm" data-close>' + esc(t('cancel')) + '</button></div>' +

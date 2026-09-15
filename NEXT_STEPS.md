@@ -1,5 +1,57 @@
 # NEXT STEPS - pick up here
 
+## DONE: Admin overhaul round 1 (2026-09-16 session)
+
+### Shipped
+1. **Create student fixed** (migration 202609160001, applied to live DB):
+   admin_create_student checked the dead legacy flag profiles.is_admin
+   (0 rows true) instead of the real role system -> 'Permission denied'
+   for every real admin. Now uses has_permission('students.manage') like
+   every other admin RPC. Verified: super_admin simulation now passes the
+   permission gate; student simulation still denied. Also synced
+   profiles.is_admin=true for admin/super_admin user_roles rows.
+2. **Level renaming** (display-only, internal codes A0..C2 unchanged in DB):
+   A0 English Starter/انجليزي البداية, A1 English Basics/انجليزي الاساس,
+   A2 English Daily/انجليزي اليومي, B1 English Middle/انجليزي الوسط,
+   B2 English Strong/انجليزي قوي, C1 English High/انجليزي عالي,
+   C2 English Pro/انجليزي محترف. Applied in admin.js (LVL_NAMES/lvlName/
+   lvlOptions helper: student table chips, 360 header, filters, assign-plan
+   modal, question bank, academy form), app.html CEFR_LEVELS + levels page
+   (numbered circles 1-7 instead of code circles, no code chips), plan page
+   chips/headers, lib/pel-personalization.js LEVELS, pel-assessment.js
+   result screen + WhatsApp message (uses PEL_ENGINE.levelInfo).
+3. **Audit trash removed from UI**: Audit Log nav view, overview 'recent
+   audit' card, student-360 audit tab all removed; audit() DB writes kept
+   (other actions still log silently).
+4. **One assign-plan path**: removed Programs-view 'New subscription'
+   (subForm/admin_subscription_add duplicate). Only openAssignPlanModal
+   (program + dates + tier + level in one modal) remains, reachable from
+   student 360 header and Plans view.
+5. **Needs attention hardened**: null reasons filtered, null-safe day
+   counts, explicit Open button per row (wireStudentLinks covers both
+   link + button).
+6. **Personalization tab explained**: bilingual helper card (data comes
+   from the student's own onboarding answers; empty = student has not
+   built a plan yet), clear empty state, friendly level names.
+
+### Gotcha for future edits to admin.js
+When deleting a function with a python 'find next function' pattern, the
+boundary `'\nfunction '` skips `async function` declarations - an earlier
+removal silently ate `async function roles` and `async function health`.
+Caught by a Node DOM-stub load test (see below). ALWAYS re-run:
+`grep -oP "^(async )?function \w+" admin/admin.js | sort` diff vs HEAD
+after surgical deletions.
+
+### Verify checklist (admin login required)
+- [ ] Create student works (was: permission denied)
+- [ ] Overview attention rows have Open buttons, reasons render
+- [ ] No Audit Log in sidebar, no audit card on overview
+- [ ] Levels show friendly names everywhere incl. assign-plan modal
+- [ ] Programs view has only 'New program', no 'New subscription'
+- [ ] Personalization tab shows helper text + empty state
+
+---
+
 ## DONE: A0 Home Words academy + full hamza cleanup + dialect polish (2026-09-15 session)
 
 ### What shipped (all applied to live Supabase, migrations committed in supabase/migrations/)
