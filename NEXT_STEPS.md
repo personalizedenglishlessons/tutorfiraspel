@@ -1,5 +1,63 @@
 # NEXT STEPS - pick up here
 
+## DONE: Fix SyntaxError at app.html:18245 (2026-09-16 session)
+
+### Problem
+`app.html:18245 Uncaught SyntaxError: Unexpected token 'else'` — the
+`if(firstTime)` block in `renderContinueLearning()` had a duplicate closing
+brace. Line 18244 `  }` closed the block, then line 18245 `  }else{` had an
+extra `}` before the `else`, causing a fatal syntax error that broke the
+entire app on load.
+
+### Fix
+Removed the duplicate closing brace. Now the structure is:
+```
+if(firstTime){
+  ...code...
+  if(card) card.style.display = 'none';
+}else{            // single close + else
+  ...code...
+}
+```
+
+### Verified
+- `node --check` on all 3 script blocks in app.html - OK
+- `node --check` on all lib/*.js + admin/admin.js - OK
+- `node tests/test_buildsequence_iam.js` - 13/13 PASS
+- `node tests/test_teaching_flow.js` - 31/31 PASS
+- Committed and pushed: `3f8769d`
+
+### Notes
+- Supabase Management API was under maintenance during this session
+  (est. completion 21:45 UTC). DB operations deferred until API recovers.
+- All 4 feature branches (feat/admin-create-student,
+  fix/client-academy-resolver, fix/lesson-engine-phase1,
+  fix/server-plan-profile) are already fully contained in main (0 commits
+  ahead). No merge needed.
+- The syntax error was likely introduced in commit `8ff5428` ("Remove Daily
+  Burst + Continue Learning, move Word Burst to top, fix Focus card") where
+  the `if(firstTime)`/`else` restructuring left a stale closing brace.
+
+### Next steps
+1. **Verify live site**: Load
+   https://personalizedenglishlessons.github.io/tutorfiraspel/app.html
+   and confirm the app loads without console errors (GitHub Pages caches
+   for ~10 min, use `?fresh=<timestamp>` to bust cache).
+2. **Supabase DB check**: Once API maintenance ends, verify no pending
+   migrations need applying (`supabase/migrations/` — all were previously
+   applied to live DB per NEXT_STEPS notes).
+3. **Browser test**: Follow the verify checklists in the sections below
+   (student presence tracking, admin overhaul, etc.).
+4. **Remaining Arabic translation gaps**: 30 choose exercises + 126 order
+   exercises still need Arabic translations (content work).
+5. **Activity touch in lesson stage**: Add `PEL_ACTIVITY.touch('activity',
+   ...)` in pel_lesson_stage.js Stage.mark() and Stage.next().
+6. **Admin overview**: Add online student count to admin_overview RPC.
+7. **Activity retention**: Consider periodic cleanup of
+   student_activity_events (keep last 90 days).
+
+---
+
 ## DONE: Student presence & activity tracking (2026-09-15 session)
 
 ### Shipped
