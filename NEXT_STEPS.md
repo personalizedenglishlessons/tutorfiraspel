@@ -1274,3 +1274,32 @@ Interpretation:
 2. Browser test: verify sidebar has no "Your Path" group
 3. Browser test: verify beginner student lands on home (no locked levels visible)
 4. Consider: should the homepage show the student's current academy progress more prominently?
+
+### Session: Daily Burst to top + fix empty progress (commit a2f52b9)
+
+**Problems fixed:**
+1. Daily Burst (Word of the Day, Quick Win, Phrase of the Day) was buried below hero card, announcements, and live classes - students had to scroll to see it
+2. Progress skill bars showed 0% for all skills because dashSkillData() tracked specific academies (speaking-studio, listening-lounge, grammar-academy) - students doing STEP Exam Prep or other academies saw empty progress
+
+**What was done:**
+- Moved Daily Burst HTML section to be the FIRST section on the homepage (before hero card)
+- Students now see Word of the Day, Quick Win, and Phrase of the Day immediately on every device
+- Rewrote dashSkillData() to compute skill progress from ALL completed lessons across ALL academies
+- Maps each academy to a primary skill type (speaking/listening/grammar/vocabulary)
+- Aggregates completed + total lessons per skill type - student with 12 completed lessons now sees actual progress
+- Week activity also tracked per skill type from completion dates
+
+**Homepage layout now:**
+1. Daily Burst (Word of the Day + Quick Win + Phrase of the Day) ← FIRST thing visible
+2. Hero card (greeting + resume CTA)
+3. Announcements + Live classes
+4. Continue Learning (guided path)
+5. Review strip
+6. Week + Focus cards
+7. Progress (stats + skill bars with real data)
+
+**Next steps:**
+1. Browser test after GitHub Pages cache updates (~10 min): verify Daily Burst is first section
+2. Browser test: verify skill bars show actual progress (not all 0%)
+3. Consider: make hero card more compact on mobile to show Daily Burst + hero without scrolling
+4. Consider: add pronunciation audio button on Word of the Day card
