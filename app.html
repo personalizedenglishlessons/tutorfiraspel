@@ -18116,6 +18116,7 @@ function renderContinueLearning(){
   // the lesson card with progress ring + start button. The lesson path list
   // was redundant and took up too much space.
   {
+  const heroCard = document.getElementById('heroCard');
   const clLabel = document.getElementById('continueLearningLabel');
   const firstTime = isFirstTimeStudent();
   const inProgress = directionAcademies().find(a => a.progress > 0 && a.progress < 100);
