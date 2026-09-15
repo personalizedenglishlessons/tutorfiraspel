@@ -17,13 +17,13 @@
 <script src="https://unpkg.com/lucide@1.34.0/dist/umd/lucide.js" integrity="sha384-frWQkjuw7X/yo4G2C2YnAAbkHHi7uBnMwf577mOjXDG0me9gl8Yrdyu1BhvS7WX5" crossorigin="anonymous" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.50.0/dist/umd/supabase.js" integrity="sha384-K0oxqktRvaThvYgGL4G+OK2Ih6VS6Uyu7j3+7WJgp/uWM0Yv6Xi4YEiw0BB+mPfi" crossorigin="anonymous" defer></script>
 <script src="lib/daily-lesson.js?v=867bb077" defer></script>
-<script src="lib/pel-personalization.js?v=57c8c1b8" defer></script>
+<script src="lib/pel-personalization.js?v=3611bdbf" defer></script>
 <script src="lib/pel-plans.js?v=739c223f" defer></script>
 <script src="lib/pel-settings.js?v=efc52be5" defer></script>
 <script src="lib/cert-qr.js?v=a43f19f9" defer></script>
 <script src="lib/cert-sheet.js?v=5278e935" defer></script>
 <script src="lib/pel_config.js?v=e4857dea"></script>
-<script src="lib/pel_lesson_stage.js?v=2ed42aeb"></script>
+<script src="lib/pel_lesson_stage.js?v=092f3ef9"></script>
 <script src="lib/pel_dashboard_life.js?v=0992d9ee"></script>
 <script src="lib/pel_curriculum_path.js?v=f17afc34"></script>
 <style>
@@ -16128,6 +16128,40 @@ function cefrDisplayName(code, isAr){
 }
 /* Also expose a short label for chips/badges - e.g. "English Basics" */
 function cefrShortLabel(code, isAr){ return cefrDisplayName(code, isAr); }
+
+/* ============================================================
+   GUIDED TOOL RULES - which tools appear at which level
+   Tools are NOT scattered on the sidebar. They appear contextually
+   inside lessons, filtered by the student's CEFR level.
+   A0 (English Starter): Vocabulary + Pronunciation basics
+   A1 (English Basics):   + Grammar
+   A2 (English Daily):    + Listening + Speaking
+   B1 (English Middle):   + Reading + Writing
+   B2+ (English Strong+): All tools unlocked
+   ============================================================ */
+const GUIDED_TOOL_RULES = {
+  vocabulary:    { minLevel:'A0', icon:'book-open',     ar:'المفردات',    en:'Vocabulary',    why:'كل كلمات الدرس' },
+  pronunciation: { minLevel:'A0', icon:'mic',          ar:'النطق',       en:'Pronunciation', why:'تدرب على نطق كلمات الدرس' },
+  review:        { minLevel:'A0', icon:'rotate-ccw',   ar:'المراجعة',    en:'Review',        why:'ثبت الكلمات اللي اخذتها', minDone:3 },
+  grammar:       { minLevel:'A1', icon:'spell-check',  ar:'القواعد',     en:'Grammar',       why:'افهم تركيب الجمل في الدرس' },
+  listening:     { minLevel:'A2', icon:'headphones',   ar:'الاستماع',    en:'Listening',     why:'اسمع وجاوب' },
+  speaking:      { minLevel:'A2', icon:'messages-square', ar:'المحادثة',  en:'Speaking',      why:'تكلم بصوتك' },
+  reading:       { minLevel:'B1', icon:'book-text',    ar:'القرايه',     en:'Reading',       why:'اقرا وتدرب' },
+  writing:       { minLevel:'B1', icon:'pen-line',     ar:'الكتابة',     en:'Writing',       why:'اكتب جملة' },
+};
+const CEFR_ORDER = ['A0','A1','A2','B1','B2','C1','C2'];
+/* Returns the tools available to a student at their current CEFR level. */
+function guidedToolsForLevel(levelCode){
+  const idx = CEFR_ORDER.indexOf(String(levelCode||'A0').toUpperCase());
+  const lvl = idx < 0 ? 0 : idx;
+  return Object.keys(GUIDED_TOOL_RULES).filter(function(toolId){
+    const rule = GUIDED_TOOL_RULES[toolId];
+    const toolIdx = CEFR_ORDER.indexOf(rule.minLevel);
+    if(toolIdx < 0 || toolIdx > lvl) return false;
+    if(rule.minDone && studentStats.lessonsDone < rule.minDone) return false;
+    return true;
+  });
+}
 const CEFR_PATH_STYLE = `
 .cefr-path{display:flex;flex-direction:column;gap:0;max-width:760px;margin:0 auto;padding:4px 0 40px;}
 .cefr-level{position:relative;display:flex;gap:18px;padding:22px 0;border-top:1px dashed var(--border);}
@@ -16412,25 +16446,22 @@ function renderLessonReader(container, academy, lesson){
 
     <div class="pel-dash-tools-wrap" style="margin-top:18px;">
       <div class="eyebrow" style="margin:2px 2px 8px;"><span class="arabic">ادوات الدرس</span>، Lesson Tools</div>
-      <div class="pel-dash-strip">${[
-        {view:'pronunciation',icon:'mic',ar:'النطق',en:'Pronunciation',why:'تدرب على نطق كلمات الدرس'},
-        {view:'grammar',icon:'spell-check',ar:'القواعد',en:'Grammar',why:'افهم تركيب الجمل في الدرس'},
-        {view:'vocabulary',icon:'book-open',ar:'المفردات',en:'Vocabulary',why:'كل كلمات الدرس'},
-        {view:'review',icon:'rotate-ccw',ar:'المراجعة',en:'Review',why:'ثبت الكلمات اللي اخذتها'},
-        {view:'listening',icon:'headphones',ar:'الاستماع',en:'Listening',why:'اسمع وجاوب'},
-        {view:'reading',icon:'book-text',ar:'القرايه',en:'Reading',why:'اقرا وتدرب'},
-        {view:'writing',icon:'pen-line',ar:'الكتابة',en:'Writing',why:'اكتب جملة'},
-        {view:'speaking',icon:'messages-square',ar:'المحادثة',en:'Speaking',why:'تكلم بصوتك'},
-        {view:'bookmarks',icon:'bookmark',ar:'المفضلة',en:'Bookmarks',why:'دروسك المحفوظة'}
-      ].map(function(t){
-        // Scope note: this map runs inside renderLessonReader() which has no
-        // local ar()/L() helper - falling through to the global object-
-        // returning L(en,ar,translit) rendered '[object Object]' for every
-        // tool label. Use a self-contained, scope-safe language check instead.
+      <div class="pel-dash-strip">${(() => {
+        // Guided tools: only show tools appropriate for the student's CEFR level.
+        // A0 students see Vocabulary + Pronunciation; Grammar unlocks at A1;
+        // Listening + Speaking at A2; Reading + Writing at B1.
         var _isAr = false;
         try{ _isAr = (typeof accountPrefs!=='undefined' && accountPrefs && accountPrefs.lang==='ar') || document.documentElement.dir==='rtl'; }catch(e){}
-        return '<button class="pel-dash-tool" data-lt-view="'+t.view+'"><span class="td-ico">'+svgIcon(t.icon,18)+'</span><span class="td-t">'+escapeHtml(_isAr?t.ar:t.en)+'</span><span class="td-s"><span class="arabic">'+escapeHtml(t.why)+'</span></span></button>';
-      }).join('')}</div>
+        var _st = window.PEL_EFFECTIVE_STATE;
+        var _lvl = (_st && _st.level) ? String(_st.level).toUpperCase() : 'A0';
+        var _tools = guidedToolsForLevel(_lvl);
+        // Always include bookmarks at the end
+        var _all = _tools.map(function(tid){ var r = GUIDED_TOOL_RULES[tid]; return {view:tid, icon:r.icon, ar:r.ar, en:r.en, why:r.why}; });
+        _all.push({view:'bookmarks',icon:'bookmark',ar:'المفضلة',en:'Bookmarks',why:'دروسك المحفوظة'});
+        return _all.map(function(t){
+          return '<button class="pel-dash-tool" data-lt-view="'+t.view+'"><span class="td-ico">'+svgIcon(t.icon,18)+'</span><span class="td-t">'+escapeHtml(_isAr?t.ar:t.en)+'</span><span class="td-s"><span class="arabic">'+escapeHtml(t.why)+'</span></span></button>';
+        }).join('');
+      })()}</div>
       <p style="font-size:.74rem;color:var(--text-muted);margin:8px 2px 0;"><span class="arabic">استخدم كل اداة مع هذا الدرس</span>، Use any tool with this lesson.</p>
     </div>
 
@@ -18878,13 +18909,17 @@ function dashPrevWeekStart(){
 function dashSkillData(){
   // Real per-academy completion counts this week vs last week, plus the
   // review queue's mastered ratio for vocabulary. Every value is derived.
+  // Filtered by student CEFR level - only show skills they've unlocked.
   const dates = lsGet('pel_completion_dates', {});
   const ws = dashWeekStart(), pws = dashPrevWeekStart();
+  var _st = window.PEL_EFFECTIVE_STATE;
+  var _lvl = (_st && _st.level) ? String(_st.level).toUpperCase() : 'A0';
+  var _unlocked = guidedToolsForLevel(_lvl);
   const specs = [
-    {key:'Speaking', ar:'المحادثة', view:'speaking', icon:'message-circle', academyId:'speaking-studio'},
-    {key:'Listening', ar:'الاستماع', view:'listening', icon:'headphones', academyId:'listening-lounge'},
-    {key:'Grammar', ar:'القواعد', view:'grammar', icon:'spell-check', academyId:'grammar-academy'},
-  ];
+    {key:'Speaking', ar:'المحادثة', view:'speaking', icon:'message-circle', academyId:'speaking-studio', tool:'speaking'},
+    {key:'Listening', ar:'الاستماع', view:'listening', icon:'headphones', academyId:'listening-lounge', tool:'listening'},
+    {key:'Grammar', ar:'القواعد', view:'grammar', icon:'spell-check', academyId:'grammar-academy', tool:'grammar'},
+  ].filter(s => _unlocked.indexOf(s.tool) !== -1);
   const out = specs.map(s => {
     let week = 0, lastWeek = 0, lastDate = null;
     Object.keys(dates).forEach(k => {
@@ -18895,13 +18930,16 @@ function dashSkillData(){
     });
     return { ...s, score: academyProgressById(s.academyId), week, lastWeek, lastDate };
   });
-  const q = reviewQueue();
-  const mastered = q.filter(r => r.reps >= 3).length;
-  out.push({
-    key:'Vocabulary', ar:'المفردات', view:'vocabulary', icon:'book-open', academyId:null,
-    score: q.length ? Math.round(100 * mastered / q.length) : null,
-    week: 0, lastWeek: 0, lastDate: null,
-  });
+  // Vocabulary is always available (minLevel A0) but only show if unlocked
+  if(_unlocked.indexOf('vocabulary') !== -1){
+    const q = reviewQueue();
+    const mastered = q.filter(r => r.reps >= 3).length;
+    out.push({
+      key:'Vocabulary', ar:'المفردات', view:'vocabulary', icon:'book-open', academyId:null,
+      score: q.length ? Math.round(100 * mastered / q.length) : null,
+      week: 0, lastWeek: 0, lastDate: null,
+    });
+  }
   return out;
 }
 function dashSkillStatus(s){
@@ -19475,6 +19513,10 @@ function renderDashboardIntel(){
       translitEn,
       accountPrefs: function(){ return accountPrefs; },
       openLesson: openLesson,
+      // Guided tool rules: which tools are unlocked at the student's CEFR level
+      guidedToolsForLevel: guidedToolsForLevel,
+      GUIDED_TOOL_RULES: GUIDED_TOOL_RULES,
+      studentLevel: function(){ try{ return (window.PEL_EFFECTIVE_STATE && window.PEL_EFFECTIVE_STATE.level) || 'A0'; }catch(e){ return 'A0'; } },
       // SRS server sync (pel_srs_state): the stage engine guards these -
       // no user / no client just means local-only scheduling.
       supabase: function(){ try{ return client(); }catch(e){ return null; } },
