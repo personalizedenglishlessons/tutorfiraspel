@@ -23,7 +23,7 @@
 <script src="lib/cert-qr.js?v=a43f19f9" defer></script>
 <script src="lib/cert-sheet.js?v=5278e935" defer></script>
 <script src="lib/pel_config.js?v=e4857dea"></script>
-<script src="lib/pel_lesson_stage.js?v=b831fdc6"></script>
+<script src="lib/pel_lesson_stage.js?v=d114a9f2"></script>
 <script src="lib/pel_dashboard_life.js?v=0992d9ee"></script>
 <script src="lib/pel_curriculum_path.js?v=f17afc34"></script>
 <style>
@@ -1091,8 +1091,7 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
   <!-- ================= MOBILE STUDY DOCK ================= -->
   <nav class="dock" id="studyDock" aria-label="Quick navigation">
     <button class="dock-btn" data-view="home"><i data-lucide="home" width="21" height="21"></i><span>البداية</span></button>
-    <button class="dock-btn" data-view="paths"><i data-lucide="layout-grid" width="21" height="21"></i><span>الاكاديميات</span></button>
-    <button class="dock-btn" data-view="lessonOfDay"><i data-lucide="sparkles" width="21" height="21"></i><span>اليوم</span></button>
+    <button class="dock-btn" data-view="cefr"><i data-lucide="trending-up" width="21" height="21"></i><span>المستويات</span></button>
     <button class="dock-btn" data-view="profile"><i data-lucide="user" width="21" height="21"></i><span>حسابي</span></button>
     <button class="dock-btn" id="dockMore"><i data-lucide="menu" width="21" height="21"></i><span>المزيد</span></button>
   </nav>
@@ -2507,9 +2506,7 @@ const navGroups = [
     {id:'resume', en:'Continue Learning', ar:'كمل تعلمك', icon:'play-circle'},
   ]},
   { label:{en:'Your Path', ar:'مسارك'}, items:[
-    {id:'paths', en:'Academies', ar:'الاكاديميات', icon:'layout-grid'},
     {id:'cefr', en:'Levels', ar:'المستويات', icon:'trending-up'},
-    {id:'lessonOfDay', en:'Lesson of the Day', ar:'درس اليوم', icon:'sparkles'},
   ]},
   /* Skill Studios are no longer sidebar items - they are integrated into
      the lesson flow by the guided engine. The viewRenderers are kept as
@@ -2583,14 +2580,14 @@ function renderComingSoon(viewId){
 function goToView(id){
   PEL_ACTIVITY.touch('page_view', { page: id });
   if(id === 'lessonOfDay'){ const f = featuredLesson(); openLesson(f.academy, f.lesson); return; }
-  if(id === 'resume'){ const n = nextLesson(); if(n) openLesson(n.academy, n.lesson); else goToView('paths'); return; }
+  if(id === 'resume'){ const n = nextLesson(); if(n) openLesson(n.academy, n.lesson); else goToView('cefr'); return; }
   if(id === 'dailyQuiz'){ openDailyQuiz(); return; }
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.querySelectorAll('.side-link').forEach(l => l.classList.remove('active'));
   document.querySelectorAll('.dock-btn').forEach(b => b.classList.remove('active'));
   const target = document.getElementById('view-' + id);
   if(target) target.classList.add('active');
-  const navId = id === 'workspace' ? 'paths' : id;
+  const navId = id === 'workspace' ? 'cefr' : id;
   document.querySelectorAll('.side-link[data-view="'+navId+'"]').forEach(l => l.classList.add('active'));
   document.querySelectorAll('.dock-btn[data-view="'+navId+'"]').forEach(b => b.classList.add('active'));
   if(!['home','settings','workspace'].includes(id)){
@@ -2748,7 +2745,6 @@ function renderReviewStrip(){
    ============================================================ */
 const paletteData = [
   {group:'Navigate', icon:'home', label:'Learning Home', view:'home'},
-  {group:'Navigate', icon:'route', label:'Academies', view:'paths'},
   {group:'Navigate', icon:'trending-up', label:'Levels', view:'cefr'},
   {group:'Navigate', icon:'bookmark', label:'Bookmarks', view:'bookmarks'},
   {group:'Navigate', icon:'award', label:'Achievements', view:'achievements'},
@@ -16314,8 +16310,8 @@ function renderCefrPath(){
   if(window.lucide) lucide.createIcons();
 }
 viewRenderers.cefr = renderCefrPath;
-viewRenderers.paths = renderLibrary;
-viewRenderers.academies = renderLibrary;
+viewRenderers.paths = renderCefrPath;  // guided levels path replaces library grid
+viewRenderers.academies = renderCefrPath;
 
 /* ============================================================
    ACADEMY WORKSPACE (Notion-style 3 column) + LESSON READER
@@ -16391,7 +16387,7 @@ function renderWorkspace(){
         <button class="btn-ghost-sm" id="wsSaveNote" style="margin-top:8px;"><span class="arabic">حفظ الملاحظة</span>، Save Note</button>
       </aside>
     </div>`;
-  document.getElementById('wsBack').addEventListener('click', () => goToView('paths'));
+  document.getElementById('wsBack').addEventListener('click', () => goToView('cefr'));
 
   const navWrap = document.getElementById('wsLessonNav');
   navWrap.innerHTML = list.map(l => {
@@ -16658,7 +16654,7 @@ function renderLessonReader(container, academy, lesson){
   if(lessonNextBtn){
     lessonNextBtn.addEventListener('click', () => {
       if(nextItem) openLesson(academy.id, nextItem.id);
-      else goToView('paths');
+      else goToView('cefr');
     });
   }
   const progressFill = document.getElementById('lessonProgressFill');
@@ -19568,6 +19564,8 @@ function renderDashboardIntel(){
       // Adaptive performance tracker: returns recent lesson scores so the
       // engine can inject bonus challenges or reinforcement activities
       recentPerformance: pelPerfRecent,
+      // Daily content (Word/Phrase of the Day) woven into lesson warm-up
+      dailyWarmup: function(){ try{ return buildDailyItems ? buildDailyItems().slice(1, 4) : []; }catch(e){ return []; } },
       // SRS server sync (pel_srs_state): the stage engine guards these -
       // no user / no client just means local-only scheduling.
       supabase: function(){ try{ return client(); }catch(e){ return null; } },
