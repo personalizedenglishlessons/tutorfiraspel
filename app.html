@@ -1215,50 +1215,7 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
             <div class="card" id="homeLiveClasses"></div>
           </div>
 
-          <!-- SMART REVIEW STRIP -->
-          <div class="card hoverable" id="reviewStrip" style="display:none; margin-bottom:34px; border-color:rgba(200,169,106,.3);">
-            <div style="display:flex; gap:20px; align-items:center; flex-wrap:wrap;">
-              <div style="width:60px; height:60px; border-radius:15px; background:linear-gradient(135deg, rgba(200,169,106,.22), rgba(63,140,114,.14)); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.7"><path d="M1 4v6h6"/><path d="M3.5 15a9 9 0 1 0 2-9.4L1 10"/></svg>
-              </div>
-              <div style="flex:1; min-width:200px;" id="reviewStripBody"></div>
-              <button class="btn-outline" data-goto-view="review" id="reviewStripBtn"><span class="arabic">ابدا المراجعة</span>، Start Review</button>
-            </div>
-          </div>
-
-          <!-- YOUR WEEK + FOCUS (live dashboard intelligence) -->
-          <div class="grid grid-2" style="margin-bottom:34px; align-items:stretch;">
-            <div class="card" id="weekCard" style="display:none; flex-direction:column;">
-              <span class="eyebrow" style="margin:0 0 8px;"><span class="arabic">اسابيعك</span>، Your week</span>
-              <b id="weekTitle" style="font-size:1.02rem;"></b>
-              <div id="weekMap" style="display:flex; gap:10px; margin-top:18px; flex-wrap:wrap;"></div>
-              <p id="weekInsight" style="margin-top:16px; font-size:.82rem; color:var(--text-secondary); line-height:1.7;"></p>
-            </div>
-            <div style="display:flex; flex-direction:column; gap:16px;">
-              <div class="card" id="focusCard" style="display:none; border-color:rgba(200,169,106,.35);">
-                <span class="eyebrow" style="margin:0 0 8px;"><span class="arabic">تركيزك الحين</span>، Your focus right now</span>
-                <div id="focusBody"></div>
-              </div>
-              <!-- Quick Win moved to Daily Burst section at top of homepage -->
-              <div class="card" id="quickWinCard" style="display:none;"></div>
-            </div>
-          </div>
-
-          <!-- DAILY EXPERIENCE + QUICK ACTIONS removed: tools integrated into lessons, not scattered on home page -->
-          <!-- OLD: dailyExperienceGrid + quickActionsGrid were here, linking to Vocabulary Vault, Grammar, Writing, Speaking, etc. -->
-
-          <!-- LEARNING PROGRESS (simplified: removed 4 redundant rings, kept stats + skill bars) -->
-          <div class="eyebrow" style="margin-bottom:14px;"><span class="arabic">تقدمك</span>، Your Progress</div>
-          <div class="card" style="display:flex; gap:28px; flex-wrap:wrap; align-items:center;">
-            <div style="display:flex; gap:28px; flex-wrap:wrap;">
-              <div><b id="heroStreakNum" style="font-family:'Fraunces',serif; font-size:1.4rem; color:var(--gold);">0</b><span style="display:block; font-size:.72rem; color:var(--text-muted);"><span class="arabic">سلسلة الايام</span>، Day streak</span></div>
-              <div><b id="heroLessonsNum" style="font-family:'Fraunces',serif; font-size:1.4rem;">0</b><span style="display:block; font-size:.72rem; color:var(--text-muted);"><span class="arabic">دروس مكتملة</span>، Lessons completed</span></div>
-              <div><b id="heroHoursNum" style="font-family:'Fraunces',serif; font-size:1.4rem;">0</b><span style="display:block; font-size:.72rem; color:var(--text-muted);"><span class="arabic">ساعات الدراسة</span>، Hours studied</span></div>
-              <div><b id="heroReviewDaysNum" style="font-family:'Fraunces',serif; font-size:1.4rem;">0</b><span style="display:block; font-size:.72rem; color:var(--text-muted);"><span class="arabic">ايام المراجعة</span>، Review days</span></div>
-            </div>
-            <div id="levelBlock" style="flex-basis:100%;"></div>
-            <div id="skillBars" style="flex-basis:100%; margin-top:20px; padding-top:20px; border-top:1px solid var(--border); display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:14px;"></div>
-          </div>
+          <!-- Review Strip, Week/Focus cards, and Progress section moved to Profile page -->
         </section>
 
         <!-- ================= THE PRIVATE ACADEMY (Part 2) ================= -->
@@ -1560,8 +1517,7 @@ function applyStudentStateRow(row){
   renderNotifications();
   renderUpcomingLesson();
   renderContinueLearning();
-  renderReviewStrip();
-  renderDashboardIntel();
+  renderHeroIntel();
   const topXp = document.getElementById('topXp');
   if(topXp) topXp.textContent = studentStats.xp.toLocaleString();
   const streakTxt = document.getElementById('sidebarStreakTxt');
@@ -1581,8 +1537,7 @@ function clearStudentState(){
   renderNotifications();
   renderUpcomingLesson();
   renderContinueLearning();
-  renderReviewStrip();
-  renderDashboardIntel();
+  renderHeroIntel();
 }
 /* ============================================================
    CREDITS - global loader for topbar pill + profile display
@@ -13719,8 +13674,7 @@ function markLessonComplete(academyId, lessonId, stats){
   renderNotifications();
   renderUpcomingLesson();
   renderContinueLearning();
-  renderReviewStrip();
-  renderDashboardIntel();
+  renderHeroIntel();
   const completedTitle = (reviewLesson && reviewLesson.title) ? reviewLesson.title : 'this lesson';
   toast(`<span class="arabic">اكتمل الدرس: ${completedTitle}</span>، Lesson complete: ${completedTitle}`); confettiBurst();
   return rpcPromise;
@@ -18427,6 +18381,47 @@ function renderProfile(){
       </div>
     </div>
 
+    <div class="eyebrow" style="margin-bottom:14px;"><span class="arabic" style="font-size:.95em;">نشاطك وتقدمك</span>، Your Activity &amp; Progress</div>
+
+    <!-- WEEK + FOCUS (moved from home page) -->
+    <div class="grid grid-2" style="align-items:stretch; margin-bottom:30px;">
+      <div class="card" id="weekCard" style="display:none; flex-direction:column;">
+        <span class="eyebrow" style="margin:0 0 8px;"><span class="arabic">اسابيعك</span>، Your week</span>
+        <b id="weekTitle" style="font-size:1.02rem;"></b>
+        <div id="weekMap" style="display:flex; gap:10px; margin-top:18px; flex-wrap:wrap;"></div>
+        <p id="weekInsight" style="margin-top:16px; font-size:.82rem; color:var(--text-secondary); line-height:1.7;"></p>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:16px;">
+        <div class="card" id="focusCard" style="display:none; border-color:rgba(200,169,106,.35);">
+          <span class="eyebrow" style="margin:0 0 8px;"><span class="arabic">تركيزك الحين</span>، Your focus right now</span>
+          <div id="focusBody"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SMART REVIEW STRIP (moved from home page) -->
+    <div class="card hoverable" id="reviewStrip" style="display:none; margin-bottom:30px; border-color:rgba(200,169,106,.3);">
+      <div style="display:flex; gap:20px; align-items:center; flex-wrap:wrap;">
+        <div style="width:60px; height:60px; border-radius:15px; background:linear-gradient(135deg, rgba(200,169,106,.22), rgba(63,140,114,.14)); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.7"><path d="M1 4v6h6"/><path d="M3.5 15a9 9 0 1 0 2-9.4L1 10"/></svg>
+        </div>
+        <div style="flex:1; min-width:200px;" id="reviewStripBody"></div>
+        <button class="btn-outline" data-goto-view="review" id="reviewStripBtn"><span class="arabic">ابدا المراجعة</span>، Start Review</button>
+      </div>
+    </div>
+
+    <!-- LEVEL / XP BLOCK (moved from home page) -->
+    <div class="card" style="display:flex; gap:28px; flex-wrap:wrap; align-items:center; margin-bottom:30px;">
+      <div style="display:flex; gap:28px; flex-wrap:wrap;">
+        <div><b id="heroStreakNum" style="font-family:'Fraunces',serif; font-size:1.4rem; color:var(--gold);">0</b><span style="display:block; font-size:.72rem; color:var(--text-muted);"><span class="arabic">سلسلة الايام</span>، Day streak</span></div>
+        <div><b id="heroLessonsNum" style="font-family:'Fraunces',serif; font-size:1.4rem;">0</b><span style="display:block; font-size:.72rem; color:var(--text-muted);"><span class="arabic">دروس مكتملة</span>، Lessons completed</span></div>
+        <div><b id="heroHoursNum" style="font-family:'Fraunces',serif; font-size:1.4rem;">0</b><span style="display:block; font-size:.72rem; color:var(--text-muted);"><span class="arabic">ساعات الدراسة</span>، Hours studied</span></div>
+        <div><b id="heroReviewDaysNum" style="font-family:'Fraunces',serif; font-size:1.4rem;">0</b><span style="display:block; font-size:.72rem; color:var(--text-muted);"><span class="arabic">ايام المراجعة</span>، Review days</span></div>
+      </div>
+      <div id="levelBlock" style="flex-basis:100%;"></div>
+      <div id="skillBars" style="flex-basis:100%; margin-top:20px; padding-top:20px; border-top:1px solid var(--border); display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:14px;"></div>
+    </div>
+
     <div class="eyebrow" style="margin-bottom:14px;"><span class="arabic" style="font-size:.95em;">خارطة التعلم</span>، Learning Roadmap</div>
     <div class="card">
       <div class="roadmap-track" id="profileRoadmap"></div>
@@ -18490,6 +18485,14 @@ function renderProfile(){
     </div>`).join('');
   document.getElementById('profileRoadmap').innerHTML = roadmapHtml;
 
+  if(window.lucide) lucide.createIcons();
+
+  // Render dashboard sections moved from home page
+  renderReviewStrip();
+  renderWeekCard();
+  renderFocusCard();
+  renderSkillBars();
+  renderLevelBlock();
   if(window.lucide) lucide.createIcons();
 }
 viewRenderers.profile = renderProfile;
