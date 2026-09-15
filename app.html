@@ -23,7 +23,7 @@
 <script src="lib/cert-qr.js?v=a43f19f9" defer></script>
 <script src="lib/cert-sheet.js?v=5278e935" defer></script>
 <script src="lib/pel_config.js?v=e4857dea"></script>
-<script src="lib/pel_lesson_stage.js?v=092f3ef9"></script>
+<script src="lib/pel_lesson_stage.js?v=b831fdc6"></script>
 <script src="lib/pel_dashboard_life.js?v=0992d9ee"></script>
 <script src="lib/pel_curriculum_path.js?v=f17afc34"></script>
 <style>
@@ -13732,6 +13732,8 @@ function markLessonComplete(academyId, lessonId, stats){
     const reviewAcademy = resolveAcademyById(academyId);
     reviewLesson.vocab.forEach(w => enqueueForReview(w, (reviewAcademy ? reviewAcademy.en + ' · ' : '') + reviewLesson.title));
   }
+  // Record performance for adaptive lesson sequencing
+  pelPerfRecord(lessonId, stats);
   syncAcademyProgress();
   awardXp(50);
   syncAchievements();
@@ -16161,6 +16163,52 @@ function guidedToolsForLevel(levelCode){
     if(rule.minDone && studentStats.lessonsDone < rule.minDone) return false;
     return true;
   });
+}
+
+/* ============================================================
+   ADAPTIVE PERFORMANCE TRACKER
+   Tracks the student's last 5 lesson scores so the lesson engine
+   can adapt: excelling students get bonus challenges, struggling
+   students get extra reinforcement.
+   ============================================================ */
+function pelPerfRecord(lessonId, stats){
+  try{
+    var perf = lsGet('pel_recent_perf', []);
+    perf.push({
+      lesson: lessonId,
+      prodOk: (stats && stats.prodOk) || 0,
+      prodTotal: (stats && stats.prodTotal) || 0,
+      recOk: (stats && stats.recOk) || 0,
+      recTotal: (stats && stats.recTotal) || 0,
+      ts: Date.now()
+    });
+    if(perf.length > 5) perf = perf.slice(-5);
+    lsSet('pel_recent_perf', perf);
+  }catch(e){}
+}
+function pelPerfRecent(){
+  try{
+    var perf = lsGet('pel_recent_perf', []);
+    if(!perf.length) return { avgScore: 0.5, lessonsDone: 0, trend: 'neutral', excelling: false, struggling: false };
+    var totalProd = 0, totalOk = 0;
+    perf.forEach(function(p){ totalProd += p.prodTotal||0; totalOk += p.prodOk||0; });
+    var avgScore = totalProd > 0 ? totalOk / totalProd : 0.5;
+    var trend = 'neutral';
+    if(perf.length >= 2){
+      var last = perf[perf.length-1];
+      var prev = perf[perf.length-2];
+      var lastRate = last.prodTotal > 0 ? last.prodOk/last.prodTotal : 0.5;
+      var prevRate = prev.prodTotal > 0 ? prev.prodOk/prev.prodTotal : 0.5;
+      trend = lastRate > prevRate + 0.1 ? 'improving' : lastRate < prevRate - 0.1 ? 'declining' : 'neutral';
+    }
+    return {
+      avgScore: avgScore,
+      lessonsDone: perf.length,
+      trend: trend,
+      excelling: avgScore >= 0.8 && perf.length >= 2,
+      struggling: avgScore < 0.5 && perf.length >= 2
+    };
+  }catch(e){ return { avgScore: 0.5, lessonsDone: 0, trend: 'neutral', excelling: false, struggling: false }; }
 }
 const CEFR_PATH_STYLE = `
 .cefr-path{display:flex;flex-direction:column;gap:0;max-width:760px;margin:0 auto;padding:4px 0 40px;}
@@ -19517,6 +19565,9 @@ function renderDashboardIntel(){
       guidedToolsForLevel: guidedToolsForLevel,
       GUIDED_TOOL_RULES: GUIDED_TOOL_RULES,
       studentLevel: function(){ try{ return (window.PEL_EFFECTIVE_STATE && window.PEL_EFFECTIVE_STATE.level) || 'A0'; }catch(e){ return 'A0'; } },
+      // Adaptive performance tracker: returns recent lesson scores so the
+      // engine can inject bonus challenges or reinforcement activities
+      recentPerformance: pelPerfRecent,
       // SRS server sync (pel_srs_state): the stage engine guards these -
       // no user / no client just means local-only scheduling.
       supabase: function(){ try{ return client(); }catch(e){ return null; } },
