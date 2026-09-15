@@ -1178,3 +1178,24 @@ Interpretation:
 11-13. Round 3 (`2bf630a`): conversation_response leak, listen gate bypass, identify_heard dedup
 14-16. This session (`0824c8a` + `cdcacbb` + `9bee3ee`): curriculum blank, dashboard undefined, stage position persistence
 17-18. v2 session persistence (`dbc94d8` + `fa7c7db` + `052bfe4`): full per-activity state save/restore
+
+### Session: Guided Tool Integration + A1 Fix (commits 59c0e35, 13b68df, 9175686)
+
+**What was done:**
+1. **A1 display fix** (59c0e35): Added `cefrDisplayName(code, isAr)` helper. Replaced raw CEFR codes (A0, A1, B1...) with friendly names (English Starter, English Basics...) in all student-facing displays: renderActivePath chips, stage previews.
+2. **Removed scattered tool links** (59c0e35): Removed Skill Studios group from sidebar navGroups, removed 8 studio entries from search palette, removed studio-linked daily challenge cards (Pronunciation/Speaking/Grammar/Writing challenges). Kept viewRenderers as internal routes.
+3. **GUIDED_TOOL_RULES** (13b68df): Added level-based tool gating config. Tools unlock by CEFR level: A0=Vocab+Pronunciation+Review, A1=+Grammar, A2=+Listening+Speaking, B1=+Reading+Writing. Lesson tools strip and dashboard skill data now filtered by level. Lesson completion screen shows dynamic tool buttons.
+4. **Adaptive tool injection** (9175686): Added PEL_PERF tracker (last 5 lessons' production scores). In buildSequence step 17, injects adaptive activities: bonus speaking/writing for excelling students, reinforcement recognize for struggling students, tool intro micro-activities for newly unlocked tools. All are real activities the student completes, not links.
+
+**Files modified:**
+- `app.html` - cefrDisplayName, GUIDED_TOOL_RULES, guidedToolsForLevel, PEL_PERF tracker, filtered lesson tools strip, filtered dashboard skill data, Deps additions
+- `lib/pel_lesson_stage.js` - dynamic tool buttons on completion screen, adaptive tool injection in buildSequence step 17
+- `NEXT_STEPS.md` - this breadcrumb
+
+**Next steps:**
+1. Browser test: verify A1 shows "English Basics" on homepage, sidebar has no Skill Studios, lesson tools strip shows only level-appropriate tools
+2. Browser test: complete a lesson as student, verify completion screen shows dynamic tool buttons
+3. Test adaptive injection: complete 2+ lessons with high scores, verify bonus activities appear; complete with low scores, verify reinforcement appears
+4. Activity touch in lesson stage: add `PEL_ACTIVITY.touch('activity', ...)` in pel_lesson_stage.js for per-activity tracking
+5. Admin overview: add online student count to admin_overview RPC
+6. Activity retention: periodic cleanup of old student_activity_events
