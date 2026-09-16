@@ -59,6 +59,85 @@
    (returns null without auth.uid()). Test via browser or authenticated
    Supabase client.
 
+### Hotfix: heroCard ReferenceError (commit `92ac8b9`)
+- After removing #heroCard from HTML and disabling renderActivePath(),
+  forgot to keep `const heroCard` declaration in renderContinueLearning().
+  Two `if(heroCard)` references at lines 18178+18196 threw ReferenceError
+  on boot. Added declaration back (element is null, null checks skip safely).
+- Also removed #heroPathBody entirely - #ccBlock (renderControlCenter)
+  already shows the lesson card with progress ring + start button.
+  The lesson path list from renderActivePath() was redundant.
+- User confirmed app works after fix propagated to GitHub Pages.
+
+---
+
+## DONE: Restructure concept explanations into Rule / Meaning / Examples / When-to-use + highlight important words everywhere (2026-09-16 session)
+
+### Problem
+Concept activities, grammar sections, and lesson-reader dbNotes all dumped
+explanations as a wall of text. User wanted:
+- a ترتيب (ordering) — Rule, Meaning, Examples, When-to-use, clearly labelled
+- important vocabulary words highlighted everywhere (lessons, courses, activities)
+
+### What was done
+#### `lib/pel_lesson_stage.js`
+- Added `collectTerms(act, state)` — collects vocab + grammar wrong/right pairs
+  + dbNotes terms + a small grammar-particle whitelist (yes/no/not/am/is/are/...)
+  so concept lessons like Yes/No/Not get key words highlighted even when vocab
+  is sparse.
+- Added `highlightImportant(html, terms)` — wraps vocabulary words in
+  `<span class="key-term">` with proper English (latin-letter) and Arabic
+  (\u0600-\u06FF) boundaries (no reliance on `\b`, which doesn't work for
+  Arabic in JS regex).
+- Added `sectionNoteText(en, ar)` — classifies each note's sentences into
+  Rule / Meaning / When-to-use buckets using keyword heuristics
+  (يعني/معنى/means, اذا/متى/تستخدم/when/use). Unmatched sentences stay in Rule
+  so nothing is dropped.
+- Added `collectExamples(act, state)` — pulls real example sentences from
+  `lesson.exampleSentences` / `lesson.conversation` (max 3) — no invented data.
+- Rewrote `concept()` renderer: numbered step cards under labelled sections
+  (📏 Rule, 💡 Meaning, 📝 Examples, 🎯 When to use). All text is highlighted.
+- Applied highlighting to `learn()`, `learn_sentence()`, `concept_examples()`
+  (English + Arabic reveal text).
+- Teaching panel: grammar.rule/saudi and dbNotes step cards now use
+  `highlightImportant()` via `_terms1/_terms2/_terms3` (collected from
+  `Stage.state`).
+- CSS: added `.key-term`, `.pel-concept-section-label`,
+  `.pel-concept-examples`, `.pel-concept-ex` to STYLE.
+
+#### `app.html` lesson reader
+- Added global `collectLessonTerms(lesson)`, `highlightImportant(html, terms)`,
+  `sectionNoteText(en, ar)` (mirroring the stage helpers).
+- `renderStepsHtml(text, textClass, terms)` now accepts an optional `terms`
+  arg and highlights inside.
+- dbNotes section: rewritten as an IIFE that classifies each note into
+  Rule / Meaning / When-to-use and renders labelled sections with highlighting.
+- grammar section: rewritten as an IIFE with 📏 Rule / 💡 Meaning / 📝 Examples
+  (drawn from `lesson.exampleSentences`) + wrong/right pair, all highlighted.
+- conversation section: rewritten as an IIFE so English + Arabic text both get
+  highlighted.
+- CSS: added `.key-term`, `.concept-section-label`, `.concept-examples`,
+  `.concept-ex` mirroring the stage engine's classes.
+
+### Verification
+- `node --check lib/pel_lesson_stage.js` ✓
+- All three app.html inline script blocks pass `node --check` ✓
+- `node tests/test_buildsequence_iam.js` → 13/13 PASS ✓
+- `node tests/test_teaching_flow.js` → 31/31 PASS ✓
+- `python3 tools/bust_lib_cache.py` → app.html now references
+  `lib/pel_lesson_stage.js?v=f5653743`
+
+### Notes for next session
+- Data model is still a single text blob per dbNote (`{en, ar, note_en, tr}`);
+  sectioning is heuristic-based, not authoritative. If a course has no
+  `exampleSentences`/`conversation`, the Examples section is omitted (not
+  fabricated).
+- The grammar-particle whitelist is intentionally short — extend it if more
+  concept lessons need extra coverage.
+- If you see a concept activity where a section is empty, the note's sentences
+  didn't match the keyword heuristics — the fallback (show Arabic text as
+  Meaning) covers the common case.
+
 ---
 
 ## DONE: Fix SyntaxError at app.html:18245 (2026-09-16 session)

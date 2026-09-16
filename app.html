@@ -23,7 +23,7 @@
 <script src="lib/cert-qr.js?v=a43f19f9" defer></script>
 <script src="lib/cert-sheet.js?v=5278e935" defer></script>
 <script src="lib/pel_config.js?v=e4857dea"></script>
-<script src="lib/pel_lesson_stage.js?v=f3aadab6"></script>
+<script src="lib/pel_lesson_stage.js?v=f5653743"></script>
 <script src="lib/pel_dashboard_life.js?v=5864c310"></script>
 <script src="lib/pel_curriculum_path.js?v=f17afc34"></script>
 <style>
@@ -563,6 +563,20 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
 .triplet .t-ar{ font-family:'Cairo','Tajawal',sans-serif; direction:rtl; color:var(--gold-soft); font-size:.92rem; margin-top:6px; }
 .triplet .t-translit{ font-family:'Cairo','Tajawal',sans-serif; direction:rtl; color:var(--text-muted); font-size:.8rem; margin-top:3px; }
 .triplet-card{ background:var(--card-elevated); border:1px solid var(--border); border-radius:14px; padding:16px 18px; }
+.concept-steps{display:flex;flex-direction:column;gap:10px;margin-top:14px;}
+.concept-step{display:flex;align-items:flex-start;gap:14px;padding:14px 16px;background:var(--card-elevated);border:1px solid var(--border);border-radius:14px;transition:border-color .2s;}
+.concept-step:hover{border-color:rgba(200,169,106,.3);}
+.concept-num{flex-shrink:0;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-soft));color:#171412;display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:700;}
+.concept-step-body{flex:1;min-width:0;}
+.concept-step-en{font-size:.98rem;font-weight:600;line-height:1.5;direction:ltr;}
+.concept-step-ar{font-size:.92rem;line-height:1.7;direction:rtl;text-align:start;}
+.key-term{color:var(--gold);font-weight:700;}
+.concept-section-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted);margin:18px 0 8px;display:flex;align-items:center;gap:6px;}
+.concept-section-label:first-child{margin-top:2px;}
+.concept-examples{display:flex;flex-direction:column;gap:8px;margin-top:8px;}
+.concept-ex{padding:12px 14px;background:rgba(200,169,106,.06);border:1px solid rgba(200,169,106,.18);border-radius:12px;}
+.concept-ex .ex-en{font-size:.95rem;font-weight:600;direction:ltr;}
+.concept-ex .ex-ar{font-size:.86rem;color:var(--text-secondary);margin-top:4px;direction:rtl;text-align:start;}
 
 /* library toolbar */
 .lib-toolbar{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-bottom:26px; }
@@ -13981,6 +13995,93 @@ function recordAndScore(onDone, targetText, btn, _retryCount){
   return rec;
 }
 function escapeHtml(s){ return String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+/* Split a block of explanation text into digestible step sentences.
+   Used everywhere grammar/explanation text is rendered to avoid wall-of-text layout. */
+function splitToSteps(text){
+  if(!text || !text.trim()) return [];
+  var raw = text.trim();
+  var parts = raw.split(/([.!?؟]+)/);
+  var steps = [];
+  for(var i=0;i<parts.length;i+=2){ var s = (parts[i] + (parts[i+1]||'')).trim(); if(s) steps.push(s); }
+  if(steps.length <= 1){
+    if(raw.length > 100){
+      var sub = raw.split(/[,،;]/).map(function(x){ return x.trim(); }).filter(function(x){ return x.length > 8; });
+      if(sub.length > 1) return sub;
+    }
+    return [raw];
+  }
+  var final = [];
+  steps.forEach(function(s){
+    if(s.length > 140){ s.split(/[,،;]/).forEach(function(sub){ if(sub.trim().length > 8) final.push(sub.trim()); }); }
+    else final.push(s);
+  });
+  return final;
+}
+/* Render steps as numbered cards (shared by lesson reader + any other view).
+   If `terms` is passed, vocabulary words are highlighted with gold styling. */
+function renderStepsHtml(text, textClass, terms){
+  var steps = splitToSteps(text);
+  if(!steps.length) return '';
+  return '<div class="concept-steps">' + steps.map(function(s,i){
+    var inner = escapeHtml(s);
+    if(terms && terms.length) inner = highlightImportant(inner, terms);
+    return '<div class="concept-step"><span class="concept-num">' + (i+1) + '</span><div class="concept-step-body"><div class="' + (textClass||'concept-step-en') + '">' + inner + '</div></div></div>';
+  }).join('') + '</div>';
+}
+
+/* Collect vocabulary terms to highlight for a lesson (used by lesson reader). */
+function collectLessonTerms(lesson){
+  var out=[]; var seen={};
+  function add(en,ar){ if(!en) return; var k=String(en).toLowerCase().trim(); if(!k||seen[k]) return; seen[k]=1; out.push({en:k,ar:(ar||'').trim()}); }
+  if(lesson){
+    (lesson.vocab||[]).concat(lesson.extraVocab||[]).forEach(function(v){ add(v.en, v.ar); });
+    if(lesson.grammar){
+      if(lesson.grammar.wrong) add(lesson.grammar.wrong, lesson.grammar.wrong_ar||'');
+      if(lesson.grammar.right) add(lesson.grammar.right, lesson.grammar.right_ar||'');
+    }
+    if(lesson.dbNotes) lesson.dbNotes.forEach(function(n){ if(n.en) add(n.en, n.ar||''); });
+    var W = ['yes','no','not','am','is','are','this','that','these','those','please','thank you'];
+    W.forEach(function(w){ add(w,''); });
+  }
+  return out;
+}
+
+/* Highlight vocabulary terms in already-escaped HTML text.
+   Handles English (latin) and Arabic (\u0600-\u06FF) without \b. */
+function highlightImportant(html, terms){
+  if(!html || !terms || !terms.length) return html;
+  var sorted = terms.slice().sort(function(a,b){ return (b.en||'').length - (a.en||'').length; });
+  var result = html;
+  sorted.forEach(function(t){
+    if(!t.en) return;
+    var term = t.en.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    if(!term) return;
+    try{
+      var re = new RegExp("(^|[^A-Za-z0-9'])" + term + "(?=$|[^A-Za-z0-9'])", 'gi');
+      result = result.replace(re, function(m, pre, word){ return pre + '<span class="key-term">' + word + '</span>'; });
+    }catch(e){}
+    if(t.ar && /[\u0600-\u06FF]/.test(t.ar)){
+      var arTerm = t.ar.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      try{
+        var arRe = new RegExp('(^|[^\u0600-\u06FF])(' + arTerm + ')(?=$|[^\u0600-\u06FF])', 'g');
+        result = result.replace(arRe, function(m, pre, word){ return pre + '<span class="key-term">' + word + '</span>'; });
+      }catch(e){}
+    }
+  });
+  return result;
+}
+
+/* Classify note text into Rule / Meaning / When-to-use buckets by keyword. */
+function sectionNoteText(en, ar){
+  var rule=[], meaning=[], whenToUse=[];
+  var enSteps = splitToSteps(en);
+  var arSteps = splitToSteps(ar);
+  var meaningKw = /يعني|معناها|معنى|means|meaning/i;
+  var whenKw = /اذا|لو|متى|تستخدم|تستعمل|قول|رد|when|if you|use this|say this|reply/i;
+  enSteps.forEach(function(s){ if(whenKw.test(s)) whenToUse.push(s); else if(meaningKw.test(s)) meaning.push(s); else rule.push(s); });
+  arSteps.forEach(function(s){ if(whenKw.test(s)) whenToUse.push(s); else if(meaningKw.test(s)) meaning.push(s); else rule.push(s); });
+  return {rule:rule, meaning:meaning, whenToUse:whenToUse};
+}
 /* ============================================================
    REAL GRAMMAR ENGINE - free, unlimited, open source.
    Layer 1: LanguageTool, the open-source proofreading engine.
@@ -16452,39 +16553,82 @@ function renderLessonReader(container, academy, lesson){
       </div>
     </div>
 
-    ${lesson.dbNotes && lesson.dbNotes.length ? `
-    <div class="lesson-section">
-      <h3><span class="arabic">لاحظ</span>، Notice</h3>
-      <p class="lesson-section-sub"><span class="arabic" style="display:block;">انماط وقواعد مختصرة، بالعامية والانجليزي.</span>Compact patterns and rules, in Saudi Arabic and English.</p>
-      <div style="display:grid; gap:12px; margin-top:14px;">
-        ${lesson.dbNotes.map(n => `
-        <div class="triplet-card" style="padding:14px 16px;">
-          <b style="font-family:'Fraunces',serif; font-size:.95rem;">${escapeHtml(n.en||'')}</b>
-          <div class="arabic" style="margin-top:6px; color:var(--gold-soft); font-size:.88rem; line-height:1.8;">${escapeHtml(n.ar||'')}</div>
-        </div>`).join('')}
-      </div>
-    </div>` : ''}
+    ${lesson.dbNotes && lesson.dbNotes.length ? (() => {
+      const terms = collectLessonTerms(lesson);
+      const sections = lesson.dbNotes.map(n => {
+        const s = sectionNoteText(n.en||'', n.ar||'');
+        return {en:n.en, ar:n.ar, tr:n.tr, sections:s};
+      });
+      let html = '<div class="lesson-section"><h3><span class="arabic">لاحظ</span>، Notice</h3><p class="lesson-section-sub"><span class="arabic" style="display:block;">انماط وقواعد مختصرة، بالعامية والانجليزي.</span>Compact patterns and rules, in Saudi Arabic and English.</p>';
+      sections.forEach(ns => {
+        if(ns.sections.rule.length){
+          html += '<div class="concept-section-label">📏 Rule</div>';
+          html += ns.sections.rule.map(s => renderStepsHtml(s, 'concept-step-en', terms)).join('');
+        }
+        if(ns.sections.meaning.length){
+          html += '<div class="concept-section-label">💡 Meaning</div>';
+          html += ns.sections.meaning.map(s => renderStepsHtml(s, 'concept-step-ar arabic', terms)).join('');
+        } else if(ns.ar && ns.sections.rule.length){
+          html += '<div class="concept-section-label">💡 Meaning</div>';
+          html += renderStepsHtml(ns.ar, 'concept-step-ar arabic', terms);
+        }
+        if(ns.sections.whenToUse.length){
+          html += '<div class="concept-section-label">🎯 When to use</div>';
+          html += ns.sections.whenToUse.map(s => renderStepsHtml(s, 'concept-step-en', terms)).join('');
+        }
+      });
+      html += '</div>';
+      return html;
+    })() : ''}
 
-    ${lesson.grammar ? `
-    <div class="lesson-section">
-      <h3><span class="arabic">القواعد</span>، ${lesson.dir === 'ar' ? 'Usage Note' : 'Grammar'}: ${escapeHtml(lesson.grammar.title||'')}</h3>
-      ${lesson.dir === 'ar'
-        ? `<p class="arabic" style="font-size:.92rem; color:var(--text); line-height:1.9;">${escapeHtml(lesson.grammar.saudi||'')}</p>
-           <p class="lesson-section-sub" style="margin-top:8px;">${escapeHtml(lesson.grammar.rule||'')}</p>`
-        : `<p class="lesson-section-sub">${escapeHtml(lesson.grammar.rule||'')}</p>
-           <p class="arabic" style="margin-top:10px; color:var(--text-secondary); font-size:.9rem;">${escapeHtml(lesson.grammar.saudi||'')}</p>`}
-      ${lesson.grammar.wrong && lesson.grammar.right ? `<div class="mistake-box">
-        <div class="wrong" style="display:flex;align-items:center;justify-content:space-between;gap:8px;"><span>✕ ${escapeHtml(lesson.grammar.wrong||'')}</span><button class="icon-btn speak-btn" data-speak="${escapeHtml(lesson.grammar.wrong||'')}" aria-label="Listen" style="flex-shrink:0;width:24px;height:24px;"><i data-lucide="volume-2" width="12" height="12"></i></button></div>
-        <div class="right" style="display:flex;align-items:center;justify-content:space-between;gap:8px;"><span>✓ ${escapeHtml(lesson.grammar.right||'')}</span><button class="icon-btn speak-btn" data-speak="${escapeHtml(lesson.grammar.right||'')}" aria-label="Listen" style="flex-shrink:0;width:24px;height:24px;"><i data-lucide="volume-2" width="12" height="12"></i></button></div>
-      </div>` : ''}
-    </div>` : ''}
+    ${lesson.grammar ? (() => {
+      const terms = collectLessonTerms(lesson);
+      let html = '<div class="lesson-section"><h3><span class="arabic">القواعد</span>، ' + (lesson.dir === 'ar' ? 'Usage Note' : 'Grammar') + ': ' + escapeHtml(lesson.grammar.title||'') + '</h3>';
+      // Rule
+      if(lesson.grammar.rule){
+        html += '<div class="concept-section-label">📏 Rule</div>';
+        html += renderStepsHtml(lesson.grammar.rule, 'concept-step-en', terms);
+      }
+      // Meaning (Saudi Arabic explanation)
+      if(lesson.grammar.saudi){
+        html += '<div class="concept-section-label">💡 Meaning</div>';
+        html += renderStepsHtml(lesson.grammar.saudi, 'concept-step-ar arabic', terms);
+      }
+      // Examples from the lesson
+      if(lesson.exampleSentences && lesson.exampleSentences.length){
+        html += '<div class="concept-section-label">📝 Examples</div><div class="concept-examples">';
+        lesson.exampleSentences.slice(0,3).forEach(function(ex){
+          html += '<div class="concept-ex"><div class="ex-en">' + highlightImportant(escapeHtml(ex.en||''), terms) + '</div>';
+          if(ex.ar) html += '<div class="ex-ar arabic">' + highlightImportant(escapeHtml(ex.ar), terms) + '</div>';
+          html += '</div>';
+        });
+        html += '</div>';
+      }
+      // Wrong vs Right
+      if(lesson.grammar.wrong && lesson.grammar.right){
+        html += '<div class="mistake-box">';
+        html += '<div class="wrong" style="display:flex;align-items:center;justify-content:space-between;gap:8px;"><span>✕ ' + highlightImportant(escapeHtml(lesson.grammar.wrong||''), terms) + '</span><button class="icon-btn speak-btn" data-speak="' + escapeHtml(lesson.grammar.wrong||'') + '" aria-label="Listen" style="flex-shrink:0;width:24px;height:24px;"><i data-lucide="volume-2" width="12" height="12"></i></button></div>';
+        html += '<div class="right" style="display:flex;align-items:center;justify-content:space-between;gap:8px;"><span>✓ ' + highlightImportant(escapeHtml(lesson.grammar.right||''), terms) + '</span><button class="icon-btn speak-btn" data-speak="' + escapeHtml(lesson.grammar.right||'') + '" aria-label="Listen" style="flex-shrink:0;width:24px;height:24px;"><i data-lucide="volume-2" width="12" height="12"></i></button></div>';
+        html += '</div>';
+      }
+      html += '</div>';
+      return html;
+    })() : ''}
 
     <div class="lesson-section">
       <h3><span class="arabic">مثال محادثة</span>، Conversation Example</h3>
       <div class="chat-scroll" style="max-height:none;">
-        ${(lesson.conversation || []).map(c => `${lesson.dir === 'ar'
-          ? `<div class="chat-bubble ${c.who==='A'||c.who==='You'?'me':'them'}"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;"><div style="flex:1;"><div class="arabic" style="font-size:.95rem;">${escapeHtml(c.ar||'')}</div><div class="arabic" style="font-size:.74rem; opacity:.7;">${escapeHtml(c.translit||'')}</div><div style="margin-top:6px; font-size:.82rem; opacity:.85;">${escapeHtml(c.en||'')}</div></div><button class="icon-btn speak-btn" data-speak="${escapeHtml(c.en||'')}" aria-label="Listen" style="flex-shrink:0;width:28px;height:28px;"><i data-lucide="volume-2" width="13" height="13"></i></button></div></div>`
-          : `<div class="chat-bubble ${c.who==='A'||c.who==='You'?'me':'them'}"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;"><div style="flex:1;">${escapeHtml(c.en||'')}<div class="arabic" style="margin-top:6px; font-size:.82rem; opacity:.85;">${escapeHtml(c.ar||'')}</div><div class="arabic" style="font-size:.72rem; opacity:.65;">${escapeHtml(c.translit || translitEn(c.en||''))}</div></div><button class="icon-btn speak-btn" data-speak="${escapeHtml(c.en||'')}" aria-label="Listen" style="flex-shrink:0;width:28px;height:28px;"><i data-lucide="volume-2" width="13" height="13"></i></button></div></div>`}`).join('')}
+        ${(() => {
+          const terms = collectLessonTerms(lesson);
+          return (lesson.conversation || []).map(c => {
+            const en = highlightImportant(escapeHtml(c.en||''), terms);
+            const ar = highlightImportant(escapeHtml(c.ar||''), terms);
+            if(lesson.dir === 'ar'){
+              return `<div class="chat-bubble ${c.who==='A'||c.who==='You'?'me':'them'}"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;"><div style="flex:1;"><div class="arabic" style="font-size:.95rem;">${ar}</div><div class="arabic" style="font-size:.74rem; opacity:.7;">${escapeHtml(c.translit||'')}</div><div style="margin-top:6px; font-size:.82rem; opacity:.85;">${en}</div></div><button class="icon-btn speak-btn" data-speak="${escapeHtml(c.en||'')}" aria-label="Listen" style="flex-shrink:0;width:28px;height:28px;"><i data-lucide="volume-2" width="13" height="13"></i></button></div></div>`;
+            }
+            return `<div class="chat-bubble ${c.who==='A'||c.who==='You'?'me':'them'}"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;"><div style="flex:1;">${en}<div class="arabic" style="margin-top:6px; font-size:.82rem; opacity:.85;">${ar}</div><div class="arabic" style="font-size:.72rem; opacity:.65;">${escapeHtml(c.translit || translitEn(c.en||''))}</div></div><button class="icon-btn speak-btn" data-speak="${escapeHtml(c.en||'')}" aria-label="Listen" style="flex-shrink:0;width:28px;height:28px;"><i data-lucide="volume-2" width="13" height="13"></i></button></div></div>`;
+          }).join('');
+        })()}
       </div>
     </div>
 
