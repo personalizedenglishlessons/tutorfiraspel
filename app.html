@@ -13816,7 +13816,7 @@ function micErrorMessage(code){
     'not-allowed': 'الوصول للمايك ممنوع، فعّل صلاحية المايكروفون لهذا الموقع من اعدادات المتصفح.',
     'permission-denied': 'الوصول للمايك ممنوع، فعّل صلاحية المايكروفون لهذا الموقع من اعدادات المتصفح.',
     'audio-capture': 'ما قدرنا نلقى مايكروفون، تاكد انه موصول وشغّال.',
-    'network': 'فيه مشكلة بالشبكة اثنا التعرف الصوتي، تحقق من اتصالك وحاول مرة اخرى.',
+    'network': 'فيه مشكلة بالشبكة مع محرك الصوت. اضغط "نطقتها" للتقدم، او جرب مرة ثانية.',
     'no-speech': 'ما سمعنا اي صوت، جرب تتكلم اقرب للمايك.',
     'aborted': 'توقف التسجيل، جرب مرة ثانية.',
   };
@@ -14039,10 +14039,45 @@ function recordAndScore(onDone, targetText, btn, _retryCount){
       onDone(bestInterim.heard, bestInterim.score);
       return;
     }
-    // "network" and "no-speech" are transient — auto-retry once so the
-    // student doesn't have to press the button again
-    if((code === 'network' || code === 'no-speech') && _retryCount < 1){
-      setTimeout(() => recordAndScore(onDone, targetText, btn, _retryCount + 1), 600);
+    // "network" and "no-speech" are transient — auto-retry up to 2 times
+    // so the student doesn't have to press the button again
+    if((code === 'network' || code === 'no-speech') && _retryCount < 2){
+      setTimeout(() => recordAndScore(onDone, targetText, btn, _retryCount + 1), 800);
+      return;
+    }
+    // If browser SpeechRecognition failed with network/aborted after retries,
+    // fall back to the on-device Whisper engine (no Google servers needed).
+    // This is critical for students in regions where Chrome's speech servers
+    // are blocked or unreliable (e.g. Saudi Arabia).
+    if((code === 'network' || code === 'aborted' || code === 'service-not-allowed') &&
+       typeof MediaRecorder !== 'undefined' && navigator.mediaDevices && navigator.mediaDevices.getUserMedia){
+      if(typeof toast === 'function'){
+        toast('<span class="arabic">جاري تجربة محرك الصوت البديل...</span>، Trying alternative speech engine...');
+      }
+      const secs = targetText ? Math.max(4, Math.min(9, targetText.split(' ').length + 2)) : 5;
+      if(btn) btn.classList.add('recording');
+      if(!pelWhisperPipe && typeof toast === 'function'){
+        toast('<span class="arabic">جاري تجهيز محرك الصوت اول مرة...</span>، Loading speech engine (first time only)...');
+      }
+      pelRecordAudio(secs).then(async blob => {
+        if(!blob){ if(btn) btn.classList.remove('recording'); onDone(null, null, 'no-speech'); return; }
+        try{
+          let heard = null;
+          try{ heard = await pelWhisperTranscribe(blob); }
+          catch(we){ heard = await pelTranscribeAudio(blob); }
+          if(btn) btn.classList.remove('recording');
+          if(!heard){ onDone(null, null, 'no-speech'); return; }
+          const sc = targetText ? wordMatchScore(heard, targetText) : null;
+          onDone(heard, sc);
+        }catch(e2){
+          if(btn) btn.classList.remove('recording');
+          const msg2 = /transcription_not_configured|not configured|empty whisper/i.test(String(e2))
+            ? L('Speech engine unavailable - type your answer below.','محرك الصوت غير متاح - اكتب اجابتك بالاسفل.')
+            : micErrorMessage('network');
+          toast('<span class="arabic">'+msg2+'</span>');
+          onDone(null, null, 'network');
+        }
+      });
       return;
     }
     onDone(null, null, code);
