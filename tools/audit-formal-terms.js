@@ -47,6 +47,12 @@ const WARNING_TERMS = [
   'ادوات التعريف',   // plural
   'أدوات التعريف',   // alternative
   'ظرف',             // "adverb" (formal) - but watch for false positives in common words
+  'الفاعل المفرد الغائب',  // formal grammar term
+  'الفاعل الجمع',          // formal grammar term
+  'الفعل المساعد',         // formal grammar term
+  'كلمة الاستفهام',        // formal - use "كلمة السوال" instead
+  'ادوات الاستفهام',      // formal - use "كلمات السوال" instead
+  'تلك',                   // formal - use "ذول" in Saudi dialect
 ];
 
 // Files to scan
@@ -86,6 +92,8 @@ function scanFile(filePath) {
       if (line.includes(term)) {
         // Skip false positives for ظرف (common word meaning "circumstance")
         if (term === 'ظرف' && (line.includes('ظروف') || line.includes('الظرف'))) return;
+        // Skip false positive: تلك as substring of امتلك
+        if (term === 'تلك' && line.includes('امتلك')) return;
         results.push({
           file: filePath,
           line: i + 1,
