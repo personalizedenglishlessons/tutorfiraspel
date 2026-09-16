@@ -151,7 +151,7 @@ LESSONS += [
    [CHO("This is ___ book (Ali).", "هذا كتاب ___ (علي).", "ذس از ___ بوك",
         [ok("his"), no("her"), no("my")], "His for a boy, her for a girl.", "هز للولد، هر للبنت."),
     ORD(["This", "is", "my", "book"], "Build: This is my book.", "بلد ات: ذس از ماي بوك",
-        "This is + possessive + noun.", "ذس از بعدين الملكية بعدين الاسم.", "هذا كتابي"),
+        "This is + possessive + noun.", "ذس از بعدين كلمة ملكية بعدين الاسم.", "هذا كتابي"),
     TR("Her name is Sara.", "اسمها سارة", ["هر نيم از سارة", "اسمها سارة"])],
    prereqs=["a1pos-have-has"], minutes=7, skills=["grammar", "speaking"]),
  L("a1pos-there-is", "There is and There are", "في وهناك", "A1", AC,
