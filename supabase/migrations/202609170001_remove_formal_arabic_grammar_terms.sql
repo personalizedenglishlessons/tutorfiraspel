@@ -2,6 +2,23 @@
 -- Replace formal terms with simple, student-friendly Saudi Arabic
 -- These terms confuse beginner students who don't understand formal Arabic grammar
 
+-- Round 2: Additional formal terms found in deeper audit
+update public.lessons
+  set title_ar = 'اختبار: كلمات السوال'
+  where id = 'qw-checkpoint'
+  and title_ar = 'اختبار: ادوات الاستفهام';
+
+update public.lesson_items
+  set ar_meaning = 'ترتيب السوال: كلمة السوال، ثم كلمة مساعدة، ثم الشخص. مو مثل العربي اللي يبدا بالشخص.'
+  where id = 656
+  and ar_meaning like '%كلمة الاستفهام%';
+
+update public.lesson_items
+  set ar_meaning = 'ذول سيارته.'
+  where id = 1497
+  and ar_meaning = 'تلك سيارته.';
+
+-- Round 1: Original formal terms
 -- Fix assessment question explanation (was: المضارع مع الضمير المفرد الغائب ياخذ s)
 update public.assessment_questions
   set explanation_ar = 'مع he/she/it نضيف s للفعل في الحاضر: she goes.'
