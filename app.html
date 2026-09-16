@@ -23,7 +23,7 @@
 <script src="lib/cert-qr.js?v=a43f19f9" defer></script>
 <script src="lib/cert-sheet.js?v=5278e935" defer></script>
 <script src="lib/pel_config.js?v=e4857dea"></script>
-<script src="lib/pel_lesson_stage.js?v=284f4149"></script>
+<script src="lib/pel_lesson_stage.js?v=6c8b328e"></script>
 <script src="lib/pel_dashboard_life.js?v=5864c310"></script>
 <script src="lib/pel_curriculum_path.js?v=f17afc34"></script>
 <style>
@@ -13951,44 +13951,110 @@ function recordAndScore(onDone, targetText, btn, _retryCount){
 
   const Rec = window.SpeechRecognition || window.webkitSpeechRecognition;
   const rec = new Rec();
-  rec.lang = 'en-US'; rec.continuous = false; rec.interimResults = false; rec.maxAlternatives = 5;
+  rec.lang = 'en-US';
+  rec.continuous = true; rec.interimResults = true; rec.maxAlternatives = 10;
   rec._btn = btn || null;
   activeRec = rec;
   if(btn) btn.classList.add('recording');
 
+  // Use a SpeechGrammarList to bias recognition toward the target word/phrase.
+  // This dramatically improves accuracy for accented speech — the browser knows
+  // what word the student is trying to say and matches against it, instead of
+  // trying to freely transcribe any English audio (which fails badly with accents).
+  // We also add common phonetic spellings Arabic speakers produce.
+  var SGL = window.SpeechGrammarList || window.webkitSpeechGrammarList;
+  if(SGL && targetText){
+    try{
+      var gl = new SGL();
+      var targetWords = targetText.toLowerCase().replace(/[^a-z\s']/g,'').split(/\s+/).filter(Boolean);
+      // Build grammar: the full phrase + each word individually + phonetic variants
+      var variants = [];
+      targetWords.forEach(function(w){ variants.push(w); });
+      // Add phonetic approximations Arabic speakers commonly produce
+      var phonMap = { 'th':'t|d|z|s', 'p':'b|p', 'b':'b|p', 'v':'f|v', 'f':'f|v', 'r':'r|l', 'l':'l|r', 'ch':'ch|sh|j', 'j':'j|ch', 'sh':'sh|s|ch', 's':'s|sh|z', 'z':'z|s', 'k':'k|g', 'g':'g|k' };
+      var altWords = targetWords.map(function(w){
+        var first2 = w.substring(0,2); var first1 = w.substring(0,1);
+        var rep = phonMap[first2] || phonMap[first1];
+        if(rep){ return rep.split('|').map(function(r){ return r + w.substring(first2.length || 1); }); }
+        return [w];
+      });
+      altWords.forEach(function(arr){ arr.forEach(function(w){ if(variants.indexOf(w)===-1) variants.push(w); }); });
+      // JSGF grammar: allow any of the variants as the result
+      var grammarStr = '#JSGF V1.0; grammar target; public <target> = ' + variants.join(' | ') + ';';
+      gl.addFromString(grammarStr, 1);
+      rec.grammars = gl;
+    }catch(ge){ /* grammar list not supported, continue without it */ }
+  }
+
+  // Track the best interim result so far — if the recognizer fires onresult
+  // with a final result, we use that; but if it times out or ends without a
+  // final result, we fall back to the best interim we saw.
+  var bestInterim = { heard: '', score: -1 };
+  var gotFinal = false;
+
   activeRecTimeout = setTimeout(() => {
     if(activeRec !== rec) return;
     cleanupRecognition();
-    onDone(null, null, 'no-speech');
-  }, 12000);
+    // If we got at least a partial match during listening, use it instead
+    // of reporting no-speech.
+    if(bestInterim.score >= 0 && bestInterim.heard){
+      onDone(bestInterim.heard, bestInterim.score);
+    } else {
+      onDone(null, null, 'no-speech');
+    }
+  }, 15000);
 
   rec.onresult = (e) => {
     if(activeRec !== rec) return;
-    let best = { heard: e.results[0][0].transcript, score: -1 };
-    if(targetText){
-      for(let i = 0; i < e.results[0].length; i++){
-        const alt = e.results[0][i].transcript;
-        const sc = wordMatchScore(alt, targetText);
-        if(sc !== null && sc > best.score) best = { heard: alt, score: sc };
+    // Check all results (interim + final) and pick the best match
+    for(var ri = e.resultIndex; ri < e.results.length; ri++){
+      var res = e.results[ri];
+      var isFinal = res.isFinal;
+      for(var ci = 0; ci < res.length; ci++){
+        var alt = res[ci].transcript;
+        if(!alt) continue;
+        var sc = targetText ? wordMatchScore(alt, targetText) : 0;
+        if(sc !== null && sc > bestInterim.score){
+          bestInterim = { heard: alt, score: sc };
+        }
+      }
+      if(isFinal){
+        gotFinal = true;
+        // On final result, use the best match found (could be this final
+        // or an earlier interim that scored higher)
+        cleanupRecognition();
+        onDone(bestInterim.heard, targetText ? bestInterim.score : null);
+        return;
       }
     }
-    cleanupRecognition();
-    onDone(best.heard, targetText ? best.score : null);
+    // Interim result — keep listening, don't stop yet
   };
   rec.onerror = (e) => {
     if(activeRec !== rec) return;
     const code = e && e.error;
     cleanupRecognition();
-    // "network" is usually a transient hiccup talking to the browser's
-    // speech service, not a real connectivity problem, retry once
-    // silently before bothering the student with an error.
-    if(code === 'network' && _retryCount < 1){
-      setTimeout(() => recordAndScore(onDone, targetText, btn, _retryCount + 1), 400);
+    // If we got a partial match before the error, use it
+    if(bestInterim.score >= 0 && bestInterim.heard){
+      onDone(bestInterim.heard, bestInterim.score);
+      return;
+    }
+    // "network" and "no-speech" are transient — auto-retry once so the
+    // student doesn't have to press the button again
+    if((code === 'network' || code === 'no-speech') && _retryCount < 1){
+      setTimeout(() => recordAndScore(onDone, targetText, btn, _retryCount + 1), 600);
       return;
     }
     onDone(null, null, code);
   };
-  rec.onend = () => { if(activeRec === rec) cleanupRecognition(); };
+  rec.onend = () => {
+    if(activeRec !== rec) return;
+    cleanupRecognition();
+    // If recognition ended without a final result but we got an interim match,
+    // use it instead of reporting failure
+    if(!gotFinal && bestInterim.score >= 0 && bestInterim.heard){
+      onDone(bestInterim.heard, bestInterim.score);
+    }
+  };
 
   try{ rec.start(); }
   catch(e){ cleanupRecognition(); onDone(null, null, 'aborted'); }
