@@ -23,7 +23,7 @@
 <script src="lib/cert-qr.js?v=a43f19f9" defer></script>
 <script src="lib/cert-sheet.js?v=5278e935" defer></script>
 <script src="lib/pel_config.js?v=e4857dea"></script>
-<script src="lib/pel_lesson_stage.js?v=00f3f702"></script>
+<script src="lib/pel_lesson_stage.js?v=acf27c9a"></script>
 <script src="lib/pel_dashboard_life.js?v=5864c310"></script>
 <script src="lib/pel_curriculum_path.js?v=f17afc34"></script>
 <style>
@@ -13470,10 +13470,10 @@ function renderDbPractice(container, exercises){
     }
     if(x.type === 'translate'){
       const p = x.payload || {};
-      const srcIsEn = p.dir !== 'ar2en';
-      return head(srcIsEn ? 'Say it in Arabic' : 'Say it in English', `
+      const srcIsEn = !/[\u0600-\u06FF]/.test(p.source || '');
+      return head(srcIsEn ? 'Translate to Arabic' : 'Translate to English', `
         <div style="font-size:.98rem; margin-bottom:10px;" class="${srcIsEn ? '' : 'arabic'}">${esc(p.source||'')}<div class="${srcIsEn ? 'arabic' : ''}" style="font-size:.82rem; color:var(--gold-soft); margin-top:4px;">${srcIsEn ? esc(p.source_tr || '') : ''}</div></div>
-        <input class="dbx-input" type="text" placeholder="${srcIsEn ? 'اكتب بالعربي...' : 'Type in English...'}" style="width:100%; background:var(--card); border:1px solid var(--border); border-radius:10px; padding:10px 12px; color:var(--text); font-size:.92rem; margin-bottom:10px;">
+        <input class="dbx-input" type="text" placeholder="${srcIsEn ? 'اكتب الترجمة بالعربي...' : 'Type the English translation...'}" style="width:100%; background:var(--card); border:1px solid var(--border); border-radius:10px; padding:10px 12px; color:var(--text); font-size:.92rem; margin-bottom:10px;">
         <button class="btn-outline dbx-check"><span class="arabic">تحقق</span>، Check</button>
         <div class="dbx-reveal" style="display:none; font-size:.82rem; color:var(--gold-soft); margin-top:8px;"></div>`, p.source);
     }
