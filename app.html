@@ -547,6 +547,7 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
 .mini-list-item{ padding:10px 0; border-bottom:1px solid var(--border); font-size:.82rem; }
 .mini-list-item:last-child{ border-bottom:none; }
 .mini-list-item .ml-en{ color:var(--text); font-weight:500; }
+.mini-list-item .ml-tr{ color:var(--gold-soft); font-size:.76rem; direction:ltr; margin-top:2px; }
 .mini-list-item .ml-ar{ font-family:'Cairo','Tajawal',sans-serif; direction:rtl; color:var(--text-muted); font-size:.76rem; margin-top:2px; }
 
 /* confetti */
@@ -561,7 +562,7 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
 .triplet:last-child{ border-bottom:none; }
 .triplet .t-en{ font-size:.96rem; color:var(--text); }
 .triplet .t-ar{ font-family:'Cairo','Tajawal',sans-serif; direction:rtl; color:var(--gold-soft); font-size:.92rem; margin-top:6px; }
-.triplet .t-translit{ font-family:'Cairo','Tajawal',sans-serif; direction:rtl; color:var(--text-muted); font-size:.8rem; margin-top:3px; }
+.triplet .t-translit{ font-family:'Cairo','Tajawal',sans-serif; direction:ltr; color:var(--text-muted); font-size:.8rem; margin-top:3px; }
 .triplet-card{ background:var(--card-elevated); border:1px solid var(--border); border-radius:14px; padding:16px 18px; }
 .concept-steps{display:flex;flex-direction:column;gap:10px;margin-top:14px;}
 .concept-step{display:flex;align-items:flex-start;gap:14px;padding:14px 16px;background:var(--card-elevated);border:1px solid var(--border);border-radius:14px;transition:border-color .2s;}
@@ -2621,7 +2622,7 @@ function buildDailyItems(){
   const ac = ACADEMIES.find(a => a.id === feat.academy);
   return [
     {icon:'sparkles', title:'<span class="arabic">درس اليوم</span>، Lesson of the Day', body: escapeHtml(lesson.title||''), sub: `<span class="arabic">${ac ? escapeHtml(ac.ar||ac.en||'') : ''}، ${String(lesson.duration||'').replace(/\bmin\b/i,'دقيقة')}</span>، ${ac ? escapeHtml(ac.en||'') : ''}، ${escapeHtml(lesson.duration||'')}`, view:'lessonOfDay'},
-    {icon:'book-open', title:'<span class="arabic">كلمة اليوم</span>، Word of the Day', body: escapeHtml(word.en||''), sub: `${escapeHtml(word.ar||'')}، ${escapeHtml(translitEn(word.en||''))}`, view:'vocabulary'},
+    {icon:'book-open', title:'<span class="arabic">كلمة اليوم</span>، Word of the Day', body: escapeHtml(word.en||''), sub: `${escapeHtml(translitEn(word.en||''))}، ${escapeHtml(word.ar||'')}`, view:'vocabulary'},
     {icon:'quote', title:'<span class="arabic">عبارة اليوم</span>، Phrase of the Day', body: escapeHtml(phrase.example ? phrase.example.en||'' : phrase.en||''), sub: escapeHtml(phrase.example ? phrase.example.ar||'' : phrase.ar||''), view:'vocabulary'},
     {icon:'flag', title:'<span class="arabic">تلازم اليوم</span>، Collocation of the Day', body: escapeHtml(word.collocations || word.en||''), sub: escapeHtml(word.ar||''), view:'vocabulary'},
     /* Studio challenge cards removed - tools are now integrated into lessons */
@@ -2756,7 +2757,7 @@ let notesStore = defaultNotesStore();
 function renderCtxLists(){
   const vEl = document.getElementById('ctxVocabList');
   vEl.innerHTML = vocabStore.length
-    ? vocabStore.map((v,i) => `<div class="mini-list-item"><div class="ml-en">${escapeHtml(v.en||'')}</div><div class="ml-ar">${escapeHtml(v.ar||'')}</div><button class="mini-remove-btn" data-rm-vocab="${i}" aria-label="Remove">×</button></div>`).join('')
+    ? vocabStore.map((v,i) => `<div class="mini-list-item"><div class="ml-en">${escapeHtml(v.en||'')}</div>${v.translit ? `<div class="ml-tr">${escapeHtml(v.translit)}</div>` : ''}<div class="ml-ar">${escapeHtml(v.ar||'')}</div><button class="mini-remove-btn" data-rm-vocab="${i}" aria-label="Remove">×</button></div>`).join('')
     : '<div class="mini-list-item" style="color:var(--text-muted);"><span class="arabic" style="display:block;">ما حفظت كلمات بعد</span><span style="display:block;">No saved words yet</span></div>';
   const nEl = document.getElementById('ctxNotesList');
   nEl.innerHTML = notesStore.length
@@ -9557,7 +9558,7 @@ function triplet(en, ar, translit, cardStyle){
   // hand-typed string, so the same English always renders the same way.
   en = en||''; ar = ar||''; translit = translit||'';
   const pron = translitEn(en) || translit;
-  return `<div class="triplet${cardStyle?' triplet-card':''}"><div class="t-en">${escapeHtml(en)}</div><div class="t-ar">${escapeHtml(ar)}</div><div class="t-translit">${escapeHtml(pron)}</div></div>`;
+  return `<div class="triplet${cardStyle?' triplet-card':''}"><div class="t-en">${escapeHtml(en)}</div><div class="t-translit">${escapeHtml(pron)}</div><div class="t-ar">${escapeHtml(ar)}</div></div>`;
 }
 
 const LESSON_TITLE_BANK = [
@@ -16484,7 +16485,7 @@ function renderWorkspace(){
   renderLessonReader(document.getElementById('wsCenter'), academy, lesson);
   window.__pelVocab = lesson.vocab || [];
   const wsVocabMini = document.getElementById('wsVocabMini');
-  wsVocabMini.innerHTML = window.__pelVocab.map((v,i) => `<div class="mini-list-item" data-wc-idx="${i}" role="button" tabindex="0" style="cursor:pointer;"><div class="ml-en">${escapeHtml(v.en)}</div><div class="ml-ar"><span class="arabic">${escapeHtml(v.ar)}</span> · ${escapeHtml(v.translit || translitEn(v.en))}</div></div>`).join('');
+  wsVocabMini.innerHTML = window.__pelVocab.map((v,i) => `<div class="mini-list-item" data-wc-idx="${i}" role="button" tabindex="0" style="cursor:pointer;"><div class="ml-en">${escapeHtml(v.en)}</div>${v.translit ? `<div class="ml-tr">${escapeHtml(v.translit)}</div>` : ''}${v.ar ? `<div class="ml-ar"><span class="arabic">${escapeHtml(v.ar)}</span></div>` : ''}</div>`).join('');
   wsVocabMini.querySelectorAll('[data-wc-idx]').forEach(el => el.addEventListener('click', e => {
     e.stopPropagation();
     showWordCard(window.__pelVocab[+el.getAttribute('data-wc-idx')], el);
@@ -16823,8 +16824,8 @@ function renderVocabulary(){
           <div class="flashcard-face">
             <span class="chip gold">${escapeHtml(v.category||'')}</span>
             <h3 class="vocab-word" style="margin-top:16px;">${escapeHtml(v.en||'')}</h3>
-            <div class="arabic" style="margin-top:14px; font-size:1.05rem; color:var(--gold-soft);">${escapeHtml(v.ar||'')}</div>
             <div class="arabic" style="font-size:.82rem; color:var(--text-muted);">${escapeHtml(translitEn(v.en||''))}</div>
+            <div class="arabic" style="margin-top:14px; font-size:1.05rem; color:var(--gold-soft);">${escapeHtml(v.ar||'')}</div>
             <div class="vocab-cat" style="display:flex; justify-content:space-between; align-items:center;">
               <span style="font-size:.7rem; color:var(--text-muted);"><span class="arabic">اضغط لقلب البطاقة</span>، Tap card to flip</span>
               <button class="icon-btn speak-btn" data-speak="${escapeHtml(v.en||'')}" aria-label="Listen" style="width:34px; height:34px;"><i data-lucide="volume-2" width="14" height="14"></i></button>
@@ -16898,11 +16899,11 @@ function renderVocabulary(){
         const exTr = v.example_tr || (exEn ? translitEn(exEn) : '');
         return '<div class="dbx-card" style="background:var(--card-elevated);border:1px solid var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;">' +
           '<h3 class="vocab-word" style="margin:0 0 6px;">' + escapeHtml(v.en) + '</h3>' +
-          '<div class="arabic" style="font-size:1.05rem;color:var(--gold-soft);">' + escapeHtml(ar) + '</div>' +
           '<div class="arabic" style="font-size:.82rem;color:var(--text-muted);margin-top:2px;">' + escapeHtml(tr) + '</div>' +
+          '<div class="arabic" style="font-size:1.05rem;color:var(--gold-soft);">' + escapeHtml(ar) + '</div>' +
           (exEn ? '<div style="margin-top:12px;font-size:.84rem;">' + escapeHtml(exEn) + '</div>' +
-            '<div class="arabic" style="font-size:.78rem;color:var(--text-muted);margin-top:3px;">' + escapeHtml(exAr) + '</div>' +
-            '<div class="arabic" style="font-size:.76rem;color:var(--gold-soft);margin-top:2px;">' + escapeHtml(exTr) + '</div>' : '') +
+            '<div class="arabic" style="font-size:.76rem;color:var(--gold-soft);margin-top:2px;">' + escapeHtml(exTr) + '</div>' +
+            '<div class="arabic" style="font-size:.78rem;color:var(--text-muted);margin-top:3px;">' + escapeHtml(exAr) + '</div>' : '') +
           '<div style="margin-top:auto;padding-top:10px;display:flex;justify-content:space-between;align-items:center;">' +
           '<span style="font-size:.7rem;color:var(--text-muted);"><span class="arabic">اسمع الكلمة</span></span>' +
           '<button class="icon-btn speak-btn" data-speak="' + escapeHtml(v.en) + '" style="width:34px;height:34px;"><i data-lucide="volume-2" width="14" height="14"></i></button>' +
@@ -16945,9 +16946,9 @@ function renderVocabulary(){
           '<h3 class="vocab-word" style="margin:8px 0 6px;">' + escapeHtml(v.en) + '</h3>' +
           '<div class="arabic" style="font-size:.82rem;color:var(--text-muted);">' + escapeHtml(tr) + '</div>' +
           '<div class="arabic" style="font-size:1.02rem;color:var(--gold-soft);margin-top:10px;">' + escapeHtml(ar) + '</div>' +
-          (cEn ? '<div style="margin-top:12px;font-size:.78rem;color:var(--text-muted);"><span class="arabic">الاستخدام</span>: ' + escapeHtml(cAr) + '</div>' +
-            '<div style="font-size:.76rem;margin-top:3px;">' + escapeHtml(cEn) + '</div>' +
-            '<div class="arabic" style="font-size:.74rem;color:var(--gold-soft);margin-top:2px;">' + escapeHtml(cTr) + '</div>' : '') +
+          (cEn ? '<div style="margin-top:12px;font-size:.76rem;margin-top:3px;">' + escapeHtml(cEn) + '</div>' +
+            '<div class="arabic" style="font-size:.74rem;color:var(--gold-soft);margin-top:2px;">' + escapeHtml(cTr) + '</div>' +
+            '<div style="font-size:.78rem;color:var(--text-muted);margin-top:3px;"><span class="arabic">الاستخدام</span>: ' + escapeHtml(cAr) + '</div>' : '') +
           '<div style="margin-top:auto;padding-top:10px;display:flex;justify-content:flex-end;">' +
           '<button class="icon-btn speak-btn" data-speak="' + escapeHtml(v.en) + '" style="width:34px;height:34px;"><i data-lucide="volume-2" width="14" height="14"></i></button>' +
           '</div></div>';
@@ -17896,7 +17897,7 @@ function renderReview(){
       <div class="eyebrow" style="margin:26px 0 12px;"><span class="arabic">الكلمات الجاية</span>، Coming up</div>
       <div class="card">${upcoming.slice(0,6).map(r => {
         const days = Math.max(1, Math.ceil((r.due - now) / 86400000));
-        return `<div class="mini-list-item"><div class="ml-en">${escapeHtml(r.en)} <span style="color:var(--text-muted); font-size:.7rem;">${escapeHtml(reviewTranslit(r))}</span></div><div class="ml-ar">${escapeHtml(r.ar)}</div><span style="font-size:.68rem; color:var(--gold-soft); white-space:nowrap;"><span class="arabic">بعد ${days} ${days===1?'يوم':'ايام'}</span>، in ${days}d</span></div>`;
+        return `<div class="mini-list-item"><div class="ml-en">${escapeHtml(r.en)}</div><div class="ml-tr">${escapeHtml(reviewTranslit(r))}</div><div class="ml-ar">${escapeHtml(r.ar)}</div><span style="font-size:.68rem; color:var(--gold-soft); white-space:nowrap;"><span class="arabic">بعد ${days} ${days===1?'يوم':'ايام'}</span>، in ${days}d</span></div>`;
       }).join('')}</div>`;
   }
 
@@ -18658,7 +18659,7 @@ function renderProfile(){
         </div>`; }).join('');
 
   document.getElementById('profileFavList').innerHTML = vocabStore.length
-    ? vocabStore.map(v => `<div class="mini-list-item"><div class="ml-en">${escapeHtml(v.en||'')}</div><div class="ml-ar">${escapeHtml(v.ar||'')}</div></div>`).join('')
+    ? vocabStore.map(v => `<div class="mini-list-item"><div class="ml-en">${escapeHtml(v.en||'')}</div>${v.translit ? `<div class="ml-tr">${escapeHtml(v.translit)}</div>` : ''}<div class="ml-ar">${escapeHtml(v.ar||'')}</div></div>`).join('')
     : `<p style="font-size:.82rem; color:var(--text-muted);"><span class="arabic" style="display:block;">لا توجد مفضلة محفوظة بعد</span><span style="display:block;">No favourites saved yet</span></p>`;
   document.getElementById('profileNotesList').innerHTML = notesStore.length
     ? notesStore.map(n => `<div class="mini-list-item">${escapeHtml(n.text||'')}</div>`).join('')
