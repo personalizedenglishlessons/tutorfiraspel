@@ -1349,7 +1349,7 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
         <div class="context-block">
           <h4><span class="arabic">ملاحظات حديثة</span>، Recent Notes</h4>
           <div style="display:flex; gap:6px; margin-bottom:8px;">
-            <input id="ctxNoteInput" placeholder="Write a note..." style="flex:1; min-width:0; background:var(--card-elevated); border:1px solid var(--border); border-radius:8px; padding:7px 10px; color:var(--text); font-size:.78rem;">
+            <input id="ctxNoteInput" placeholder="اكتب ملاحظة... / Write a note..." style="flex:1; min-width:0; background:var(--card-elevated); border:1px solid var(--border); border-radius:8px; padding:7px 10px; color:var(--text); font-size:.78rem;">
             <button class="btn-ghost-sm" id="ctxNoteAdd" style="flex-shrink:0;">+</button>
           </div>
           <div id="ctxNotesList"></div>
@@ -2673,14 +2673,14 @@ function renderReviewStrip(){
    COMMAND PALETTE
    ============================================================ */
 const paletteData = [
-  {group:'Navigate', icon:'home', label:'Learning Home', view:'home'},
-  {group:'Navigate', icon:'rotate-ccw', label:'Smart Review', view:'review'},
-  {group:'Navigate', icon:'bookmark', label:'Bookmarks', view:'bookmarks'},
-  {group:'Navigate', icon:'award', label:'Achievements', view:'achievements'},
-  {group:'Navigate', icon:'graduation-cap', label:'Certificates', view:'certificates'},
-  {group:'Navigate', icon:'calendar-days', label:'Study Calendar', view:'calendar'},
-  {group:'Navigate', icon:'user', label:'Profile', view:'profile'},
-  {group:'Navigate', icon:'settings', label:'Settings', view:'settings'},
+  {group:'Navigate', icon:'home', label:'Learning Home | البداية', view:'home'},
+  {group:'Navigate', icon:'rotate-ccw', label:'Smart Review | مراجعة ذكية', view:'review'},
+  {group:'Navigate', icon:'bookmark', label:'Bookmarks | المفضلة', view:'bookmarks'},
+  {group:'Navigate', icon:'award', label:'Achievements | الانجازات', view:'achievements'},
+  {group:'Navigate', icon:'graduation-cap', label:'Certificates | الشهادات', view:'certificates'},
+  {group:'Navigate', icon:'calendar-days', label:'Study Calendar | تقويم الدراسة', view:'calendar'},
+  {group:'Navigate', icon:'user', label:'Profile | الملف الشخصي', view:'profile'},
+  {group:'Navigate', icon:'settings', label:'Settings | الاعدادات', view:'settings'},
   {group:"Today's Learning", icon:'sparkles', label:'Lesson of the Day', view:'lessonOfDay'},
   /* Tool-specific daily entries removed - tools are now inside lessons */
 ];
@@ -2719,7 +2719,7 @@ function renderPalette(query){
       }
     });
   }
-  if(matches.length === 0){ paletteResults.innerHTML = `<div class="palette-empty">No results for "${escapeHtml(query)}". Try a lesson, word, or setting.</div>`; return; }
+  if(matches.length === 0){ paletteResults.innerHTML = `<div class="palette-empty"><span class="arabic" style="display:block;">لا توجد نتائج لـ "${escapeHtml(query)}"</span><span>Try a lesson, word, or setting.</span></div>`; return; }
   const groups = {};
   matches.forEach(m => { (groups[m.group] = groups[m.group] || []).push(m); });
   paletteResults.innerHTML = Object.keys(groups).map(g => `
@@ -2757,11 +2757,11 @@ function renderCtxLists(){
   const vEl = document.getElementById('ctxVocabList');
   vEl.innerHTML = vocabStore.length
     ? vocabStore.map((v,i) => `<div class="mini-list-item"><div class="ml-en">${escapeHtml(v.en||'')}</div><div class="ml-ar">${escapeHtml(v.ar||'')}</div><button class="mini-remove-btn" data-rm-vocab="${i}" aria-label="Remove">×</button></div>`).join('')
-    : '<div class="mini-list-item" style="color:var(--text-muted);"><span class="arabic">ما حفظت كلمات بعد.</span>، No saved words yet.</div>';
+    : '<div class="mini-list-item" style="color:var(--text-muted);"><span class="arabic" style="display:block;">ما حفظت كلمات بعد</span><span style="display:block;">No saved words yet</span></div>';
   const nEl = document.getElementById('ctxNotesList');
   nEl.innerHTML = notesStore.length
     ? notesStore.map((n,i) => `<div class="mini-list-item"><div class="ml-note">${n.text}</div><button class="mini-remove-btn" data-rm-note="${i}" aria-label="Remove">×</button></div>`).join('')
-    : '<div class="mini-list-item" style="color:var(--text-muted);"><span class="arabic">لا توجد ملاحظات بعد</span>، No notes yet.</div>';
+    : '<div class="mini-list-item" style="color:var(--text-muted);"><span class="arabic" style="display:block;">لا توجد ملاحظات بعد</span><span style="display:block;">No notes yet</span></div>';
 }
 document.getElementById('ctxVocabList').addEventListener('click', e => {
   const btn = e.target.closest('[data-rm-vocab]');
@@ -16074,7 +16074,7 @@ function renderLibrary(){
   if(currentUser && client() && !window.PEL_EFFECTIVE_STATE){
     el.innerHTML = '<div class="empty-state" style="padding:90px 20px;text-align:center;"><h3 style="margin:0;"><span class="arabic" style="display:block;margin-bottom:4px;">نحمّل مسارك</span>Loading your plan...</h3></div>';
     const failState = () => {
-      el.innerHTML = '<div class="empty-state" style="padding:90px 20px;text-align:center;"><h3 style="margin:0 0 8px;"><span class="arabic" style="display:block;margin-bottom:4px;">ما قدرنا نحمّل مسارك</span>Could not load your plan.</h3><button class="btn-outline" id="pelRetryRoute" style="margin-top:8px;">Retry</button></div>';
+      el.innerHTML = '<div class="empty-state" style="padding:90px 20px;text-align:center;"><h3 style="margin:0 0 8px;"><span class="arabic" style="display:block;margin-bottom:4px;">ما قدرنا نحمّل مسارك</span>Could not load your plan.</h3><button class="btn-outline" id="pelRetryRoute" style="margin-top:8px;"><span class="arabic" style="display:block;">حاول مرة ثانية</span>Retry</button></div>';
       const b = document.getElementById('pelRetryRoute'); if(b) b.addEventListener('click', renderLibrary);
     };
     c_rpc_effective_state().then(ok => { if(ok && window.PEL_EFFECTIVE_STATE){ renderLibrary(); } else { failState(); } }).catch(failState);
@@ -16439,14 +16439,14 @@ function renderWorkspace(){
   const academy = resolveAcademyById(wsState.academyId);
   const el = document.getElementById('view-workspace');
   if(!academy){
-    if(el) el.innerHTML = '<div class="empty-state" style="padding:60px 20px;text-align:center;"><i class="empty-icon" data-lucide="book-open"></i><h3>Lesson not available</h3><p><span class="arabic" style="display:block;margin-bottom:4px;">ما قدرنا نحمّل هذا الدرس</span>This academy could not be loaded. Return to the dashboard and try again.</p></div>';
+    if(el) el.innerHTML = '<div class="empty-state" style="padding:60px 20px;text-align:center;"><i class="empty-icon" data-lucide="book-open"></i><h3><span class="arabic" style="display:block;margin-bottom:4px;">الدرس غير متاح</span>Lesson not available</h3><p><span class="arabic" style="display:block;margin-bottom:4px;">ما قدرنا نحمّل هذا الدرس</span>This academy could not be loaded. Return to the dashboard and try again.</p></div>';
     if(window.lucide) lucide.createIcons();
     return;
   }
   const list = academyLessonList(academy);
   const lesson = getLesson(academy.id, wsState.lessonId);
   if(!lesson){
-    if(el) el.innerHTML = '<div class="empty-state" style="padding:60px 20px;text-align:center;"><i class="empty-icon" data-lucide="book-open"></i><h3>Lesson not available</h3><p><span class="arabic" style="display:block;margin-bottom:4px;">هذا الدرس لسا ما انضاف لل مكتبة</span>This lesson has no content yet. It will appear here once it is published.</p></div>';
+    if(el) el.innerHTML = '<div class="empty-state" style="padding:60px 20px;text-align:center;"><i class="empty-icon" data-lucide="book-open"></i><h3><span class="arabic" style="display:block;margin-bottom:4px;">الدرس غير متاح</span>Lesson not available</h3><p><span class="arabic" style="display:block;margin-bottom:4px;">هذا الدرس لسا ما انضاف لل مكتبة</span>This lesson has no content yet. It will appear here once it is published.</p></div>';
     if(window.lucide) lucide.createIcons();
     return;
   }
@@ -16464,7 +16464,7 @@ function renderWorkspace(){
         <h4><span class="arabic">مفردات هذا الدرس</span>، Vocabulary in this Lesson</h4>
         <div id="wsVocabMini" style="margin-bottom:22px;"></div>
         <h4><span class="arabic">ملاحظات</span>، Notes</h4>
-        <textarea id="wsNotes" placeholder="Write a private note for this lesson..." style="width:100%; min-height:100px; background:var(--card-elevated); border:1px solid var(--border); border-radius:12px; padding:12px; color:var(--text); font-size:.82rem;"></textarea>
+        <textarea id="wsNotes" placeholder="اكتب ملاحظة خاصة لهذا الدرس... / Write a private note for this lesson..." style="width:100%; min-height:100px; background:var(--card-elevated); border:1px solid var(--border); border-radius:12px; padding:12px; color:var(--text); font-size:.82rem;"></textarea>
         <button class="btn-ghost-sm" id="wsSaveNote" style="margin-top:8px;"><span class="arabic">حفظ الملاحظة</span>، Save Note</button>
       </aside>
     </div>`;
@@ -18659,10 +18659,10 @@ function renderProfile(){
 
   document.getElementById('profileFavList').innerHTML = vocabStore.length
     ? vocabStore.map(v => `<div class="mini-list-item"><div class="ml-en">${escapeHtml(v.en||'')}</div><div class="ml-ar">${escapeHtml(v.ar||'')}</div></div>`).join('')
-    : `<p style="font-size:.82rem; color:var(--text-muted);"><span class="arabic">لا توجد مفضلة محفوظة بعد</span>، No favourites saved yet.</p>`;
+    : `<p style="font-size:.82rem; color:var(--text-muted);"><span class="arabic" style="display:block;">لا توجد مفضلة محفوظة بعد</span><span style="display:block;">No favourites saved yet</span></p>`;
   document.getElementById('profileNotesList').innerHTML = notesStore.length
     ? notesStore.map(n => `<div class="mini-list-item">${escapeHtml(n.text||'')}</div>`).join('')
-    : `<p style="font-size:.82rem; color:var(--text-muted);"><span class="arabic">لا توجد ملاحظات بعد</span>، No notes yet.</p>`;
+    : `<p style="font-size:.82rem; color:var(--text-muted);"><span class="arabic" style="display:block;">لا توجد ملاحظات بعد</span><span style="display:block;">No notes yet</span></p>`;
 
   const roadmapHtml = [
     ...done.map(a => ({...a, state:'done'})),
