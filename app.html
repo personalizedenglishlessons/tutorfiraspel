@@ -23,7 +23,7 @@
 <script src="lib/cert-qr.js?v=a43f19f9" defer></script>
 <script src="lib/cert-sheet.js?v=5278e935" defer></script>
 <script src="lib/pel_config.js?v=e4857dea"></script>
-<script src="lib/pel_lesson_stage.js?v=9efc2926"></script>
+<script src="lib/pel_lesson_stage.js?v=7a3b15e6"></script>
 <script src="lib/pel_dashboard_life.js?v=94ad5635"></script>
 <script src="lib/pel_curriculum_path.js?v=f17afc34"></script>
 <style>
@@ -9846,6 +9846,436 @@ const VOCAB_BANK = [
 {en:'Cast', ipa:'/kæst/', ar:'طاقم الممثلين', translit:'كاست', example:{en:'The cast was excellent.', ar:'كان طاقم الممثلين ممتازًا.', translit:'ذا كاست واز اكسيلِنت.'}, synonyms:'actors, ensemble', antonyms:'', family:'cast, casting', collocations:'cast member, full cast', category:'Movie English', difficulty:'Advanced', tip:'The cast is all the actors in a film.', mistake:'Confusing cast (actors) with cast (throw).'}];
 
 /* ---- grammar academy topics ---- */
+/* ============================================================
+   SAUDI MISTAKE COACH — interactive error patterns for Saudi learners
+   Categorized by error type, each pattern has wrong/correct examples,
+   Saudi dialect explanation, quick rule, and practice questions.
+   Research-backed: Al-Hattami 2010, Ahmad 2011, Al-Seghayer 2014.
+   Exposed on window so the lesson engine can match patterns to lesson content.
+   ============================================================ */
+window.SAUDI_MISTAKE_COACH = [
+  {
+    id: 'articles',
+    titleEn: 'Articles: a / an / the',
+    titleAr: 'ادوات التعريف',
+    icon: 'circle-dot',
+    introAr: 'هذي اصعب شي على العربي لان العربي ما فيه a و an. بس الـ al- (الـ) موجودة. الخلطة تصير من كثر او قلة الاستخدام.',
+    patterns: [
+      {
+        id: 'missing-a',
+        titleEn: 'Missing a / an',
+        wrong: 'I am student.',
+        correct: 'I am a student.',
+        whyAr: 'بالعربي نقول انا طالب بدون كلمة قبلها. بس بالانجليزي اي شي واحد غير محدد لازم قبله a او an.',
+        ruleAr: 'الشي الواحد غير المحدد = a (قبل حرف ساكن) او an (قبل حرف علة).',
+        practice: [
+          {q:'She is ___ teacher.', options:['a','an','the','—'], correct:0},
+          {q:'He is ___ engineer.', options:['a','an','the','—'], correct:1},
+        ]
+      },
+      {
+        id: 'the-with-generic',
+        titleEn: 'Overusing the with plurals',
+        wrong: 'The dogs are loyal animals.',
+        correct: 'Dogs are loyal animals.',
+        whyAr: 'بالعربي نقول الكلاب وفية ولاء. بس بالانجليزي اذا تتكلم عن شي عام (مو كلاب محددة)، ما تستخدم the.',
+        ruleAr: 'الجمع العام (مو محدد) = بدون the. الكلاب المحددة = the dogs.',
+        practice: [
+          {q:'___ cats are independent.', options:['The','—','A','An'], correct:1},
+          {q:'I love ___ music.', options:['the','—','a','an'], correct:1},
+        ]
+      },
+      {
+        id: 'a-before-vowel',
+        titleEn: 'a before a vowel sound',
+        wrong: 'She is a engineer.',
+        correct: 'She is an engineer.',
+        whyAr: 'لان engineer تبدا بحرف علة (e)، لازم نستخدم an مو a.',
+        ruleAr: 'a,e,i,o,u في البداية = an. الباقي = a. (انتبه للصوت مو الحرف: an hour لان H ساكت).',
+        practice: [
+          {q:'I waited for ___ hour.', options:['a','an','the','—'], correct:1},
+          {q:'He bought ___ umbrella.', options:['a','an','the','—'], correct:1},
+        ]
+      }
+    ]
+  },
+  {
+    id: 'prepositions',
+    titleEn: 'Prepositions: in / on / at',
+    titleAr: 'حروف الجر',
+    icon: 'map-pin',
+    introAr: 'الترجمة الحرفية من العربي هي سبب اغلب الاغلاط. في العربي كلمة في تغطي اشياء كثيرة، بس بالانجليزي كل حرف له استخدام محدد.',
+    patterns: [
+      {
+        id: 'in-vs-on-time',
+        titleEn: 'in vs on (time)',
+        wrong: 'I will call you in Monday.',
+        correct: 'I will call you on Monday.',
+        whyAr: 'الايام تستخدم on مو in. in للشهور والسنين والفصول.',
+        ruleAr: 'on + يوم (Monday)، in + شهر/سنة (January/2024)، at + ساعة (5pm).',
+        practice: [
+          {q:'My birthday is ___ March.', options:['in','on','at','—'], correct:0},
+          {q:'The meeting is ___ Tuesday.', options:['in','on','at','—'], correct:1},
+          {q:'I will see you ___ 7 oclock.', options:['in','on','at','—'], correct:2},
+        ]
+      },
+      {
+        id: 'in-vs-on-place',
+        titleEn: 'in vs on (place)',
+        wrong: 'I am waiting on the bus stop.',
+        correct: 'I am waiting at the bus stop.',
+        whyAr: 'bus stop نقطة محددة = at. لو جوّه شي = in. لو فوق سطح = on.',
+        ruleAr: 'at = نقطة (باب، عنوان، محطة)، in = جوّه (غرفة، مدينة، صندوق)، on = فوق سطح (طاولة، جدار).',
+        practice: [
+          {q:'The keys are ___ the table.', options:['at','on','in','—'], correct:1},
+          {q:'She is ___ the kitchen.', options:['at','on','in','—'], correct:2},
+          {q:'I will meet you ___ the entrance.', options:['at','on','in','—'], correct:0},
+        ]
+      },
+      {
+        id: 'return-home',
+        titleEn: 'return to home (Arabic interference)',
+        wrong: 'We returned to home.',
+        correct: 'We returned home.',
+        whyAr: 'بالعربي نقول رجعنا للبيت. بس home لوحدها كافية، ما نضيف to قبلها مع return.',
+        ruleAr: 'return home / go home / come home — بدون to قبل home.',
+        practice: [
+          {q:'I want to go ___ home.', options:['to','—','at','in'], correct:1},
+          {q:'She returned ___ home late.', options:['to','—','at','in'], correct:1},
+        ]
+      },
+      {
+        id: 'laugh-at',
+        titleEn: 'laugh on (Arabic interference)',
+        wrong: 'She laughed on me.',
+        correct: 'She laughed at me.',
+        whyAr: 'بالعربي ضحكت علي. الترجمة الحرفية تعطي on بس الصح at.',
+        ruleAr: 'laugh at = يضحك على. angry with = غضبان من. depend on = يعتمد على.',
+        practice: [
+          {q:'Why are you angry ___ me?', options:['on','at','with','to'], correct:2},
+          {q:'It depends ___ the weather.', options:['on','at','with','to'], correct:0},
+        ]
+      }
+    ]
+  },
+  {
+    id: 'verb-agreement',
+    titleEn: 'Subject-Verb Agreement',
+    titleAr: 'توافق الفعل والفاعل',
+    icon: 'user-check',
+    introAr: 'العربي ما يزيد s للفعل مع الغائب. هذا اللي يخلي الطلاب يقولون He go بدل He goes.',
+    patterns: [
+      {
+        id: 'third-person-s',
+        titleEn: 'Missing -s with he/she/it',
+        wrong: 'He go to work every day.',
+        correct: 'He goes to work every day.',
+        whyAr: 'بالعربي نقول هو يروح وما نغير الفعل. بس بالانجليزي مع he/she/it لازم نزيد s على الفعل في المضارع.',
+        ruleAr: 'he/she/it + فعل + s: he runs, she works, it rains.',
+        practice: [
+          {q:'She ___ in a bank.', options:['work','works','working','is work'], correct:1},
+          {q:'The store ___ at 9am.', options:['open','opens','opening','is open'], correct:1},
+          {q:'He ___ football on weekends.', options:['play','plays','playing','is play'], correct:1},
+        ]
+      },
+      {
+        id: 'is-vs-are',
+        titleEn: 'is with plural subjects',
+        wrong: 'The students is here.',
+        correct: 'The students are here.',
+        whyAr: 'خلط is و are شائع لان العربي ما يفرق بين المفرد والجمع في الفعل.',
+        ruleAr: 'he/she/it + is، we/you/they + are، I + am.',
+        practice: [
+          {q:'They ___ my friends.', options:['is','are','am','be'], correct:1},
+          {q:'The book ___ on the table.', options:['is','are','am','be'], correct:0},
+          {q:'We ___ ready for the test.', options:['is','are','am','be'], correct:1},
+        ]
+      },
+      {
+        id: 'has-vs-have',
+        titleEn: 'has vs have',
+        wrong: 'He have a new car.',
+        correct: 'He has a new car.',
+        whyAr: 'نفس المشكلة: مع he/she/it نستخدم has مو have.',
+        ruleAr: 'I/we/you/they + have، he/she/it + has.',
+        practice: [
+          {q:'She ___ two brothers.', options:['have','has','having','is have'], correct:1},
+          {q:'I ___ a question.', options:['have','has','having','is have'], correct:0},
+        ]
+      }
+    ]
+  },
+  {
+    id: 'negation',
+    titleEn: 'Negation: no vs not',
+    titleAr: 'النفي',
+    icon: 'x-circle',
+    introAr: 'العربي يستخدم لا لكل شي. بالانجليزي لا و not مختلفين: no للرفض و not لنفي الجملة.',
+    patterns: [
+      {
+        id: 'no-vs-not',
+        titleEn: 'no instead of not',
+        wrong: 'I am no tired.',
+        correct: 'I am not tired.',
+        whyAr: 'لا بالعربي تستخدم للرفض والنفي. بس بالانجليزي not للنفي داخل الجملة، و no للرفض المستقل.',
+        ruleAr: 'not = نفي (is not, do not). no = رفض مستقل (No, thanks).',
+        practice: [
+          {q:'I do ___ like spicy food.', options:['no','not','isnt','dont'], correct:1},
+          {q:'Would you like tea? ___, thanks.', options:['No','Not','Isnt','Dont'], correct:0},
+          {q:'She is ___ coming today.', options:['no','not','isnt','dont'], correct:1},
+        ]
+      },
+      {
+        id: 'double-negative',
+        titleEn: 'Double negative',
+        wrong: 'I dont know nothing.',
+        correct: 'I dont know anything.',
+        whyAr: 'بالعربي ما اعرف شي ما فيها مشكلة. بس بالانجليزي جملتين نفي في جملة وحدة = غلط.',
+        ruleAr: 'جملة فيها dont/cant/not + anything/anybody/anywhere. مو nothing/nobody/nowhere.',
+        practice: [
+          {q:'I didnt say ___.', options:['nothing','anything','something','everything'], correct:1},
+          {q:'There isnt ___ in the room.', options:['nobody','anybody','somebody','everybody'], correct:1},
+        ]
+      }
+    ]
+  },
+  {
+    id: 'word-order',
+    titleEn: 'Word Order',
+    titleAr: 'ترتيب الكلمات',
+    icon: 'list-ordered',
+    introAr: 'العربي مرن في ترتيب الكلمات. الانجليزي صارم: فاعل + فعل + مفعول. وترتيب الصفة مختلف.',
+    patterns: [
+      {
+        id: 'adjective-noun',
+        titleEn: 'Adjective after noun (Arabic order)',
+        wrong: 'I bought a car red.',
+        correct: 'I bought a red car.',
+        whyAr: 'بالعربي الصفة تجي بعد الاسم: سيارة حمراء. بالانجليزي الصفة تجي قبل الاسم: red car.',
+        ruleAr: 'الصفة قبل الاسم: a big house (مو a house big).',
+        practice: [
+          {q:'She has ___ eyes.', options:['blue beautiful','beautiful blue','beauty blue','blue beauty'], correct:1},
+          {q:'I live in a ___ house.', options:['small nice','nice small','nice smallness','smally nice'], correct:1},
+        ]
+      },
+      {
+        id: 'frequency-adverbs',
+        titleEn: 'Adverb position (always, never)',
+        wrong: 'I go always to the gym.',
+        correct: 'I always go to the gym.',
+        whyAr: 'كلمات التكرار (always, usually, never) تجي قبل الفعل الاساسي. بس بعد is/are/am.',
+        ruleAr: 'قبل الفعل: I always go. بعد to be: She is always late.',
+        practice: [
+          {q:'He ___ eats breakfast.', options:['always','eats always','is always eat','always is'], correct:0},
+          {q:'She is ___ on time.', options:['never','is never','never is','never be'], correct:0},
+        ]
+      },
+      {
+        id: 'question-word-order',
+        titleEn: 'Statement as question',
+        wrong: 'You like coffee?',
+        correct: 'Do you like coffee?',
+        whyAr: 'بالعربي نرفع الصوت في الاخر ونسويها سوال. بالانجليزي لازم كلمة مساعدة (do/does/did) في البداية.',
+        ruleAr: 'سوال = كلمة مساعدة + فاعل + فعل: Do you like? Does she work? Did he go?',
+        practice: [
+          {q:'Choose the correct question:', options:['Where you live?','Where do you live?','Where live you?','Where you do live?'], correct:1},
+          {q:'Choose the correct question:', options:['What she does?','What does she do?','What she do?','What does she?'], correct:1},
+        ]
+      }
+    ]
+  },
+  {
+    id: 'confusing-words',
+    titleEn: 'Confusing Words',
+    titleAr: 'كلمات ملخبطة',
+    icon: 'split',
+    introAr: 'كلمات تشبه بعض بس معانيها مختلفة. هذي اللي يغلط فيها اغلب الطلاب.',
+    patterns: [
+      {
+        id: 'your-vs-youre',
+        titleEn: 'your vs youre',
+        wrong: 'Youre welcome.',
+        correct: 'You are welcome. / Your book is here.',
+        whyAr: 'your = ملكك (ضمير ملكية). youre = you are مختصرة. ما تقدر تستخدم your بدل youre.',
+        ruleAr: 'your + اسم (your name). youre = you are (youre welcome).',
+        practice: [
+          {q:'Is this ___ bag?', options:['your','youre','you are','yours'], correct:0},
+          {q:'___ going to love it.', options:['Your','Youre','Yours','You are'], correct:1},
+        ]
+      },
+      {
+        id: 'its-vs-its',
+        titleEn: 'its vs its',
+        wrong: 'The dog wagged its tail.',
+        correct: 'The dog wagged its tail. (correct!) / Its a nice day. → Its a nice day.',
+        whyAr: 'its = ملكه (its tail = ذيله). its = it is مختصرة. الخلطة تصير لان s تضاف للملكية في الاسماء العادية.',
+        ruleAr: 'its = ملكه (its color). its = it is (its cold). استثناء: its ما فيها فاصلة علوية للملكية.',
+        practice: [
+          {q:'The cat cleaned ___ paws.', options:['its','its','it is','its'], correct:0},
+          {q:'___ going to rain.', options:['Its','Its','It is','Both A and C'], correct:3},
+        ]
+      },
+      {
+        id: 'to-vs-too',
+        titleEn: 'to vs too vs two',
+        wrong: 'I am to tired to continue.',
+        correct: 'I am too tired to continue.',
+        whyAr: 'to = حرف جر (to school) او جزء من المصدر (to go). too = ايضاً او زيادة (too much). two = رقم 2.',
+        ruleAr: 'to = اتجاه/مصدر. too = زيادة/ايضاً. two = 2.',
+        practice: [
+          {q:'I want ___ go home.', options:['to','too','two','—'], correct:0},
+          {q:'This is ___ much salt.', options:['to','too','two','—'], correct:1},
+          {q:'I have ___ sisters.', options:['to','too','two','—'], correct:2},
+        ]
+      },
+      {
+        id: 'then-vs-than',
+        titleEn: 'then vs than',
+        wrong: 'She is taller then him.',
+        correct: 'She is taller than him.',
+        whyAr: 'then = وقت/بعد كذا (then we went). than = مقارنة (taller than).',
+        ruleAr: 'then = بعد كذا / وقت. than = مقارنة فقط.',
+        practice: [
+          {q:'He is older ___ me.', options:['then','than','that','the'], correct:1},
+          {q:'First we ate, ___ we left.', options:['then','than','that','the'], correct:0},
+        ]
+      }
+    ]
+  },
+  {
+    id: 'idioms',
+    titleEn: 'Everyday Expressions',
+    titleAr: 'تعبيرات يومية',
+    icon: 'message-circle',
+    introAr: 'تعبيرات انجليزية ما تترجم حرفياً. نشرحها بلهجتنا عشان تفهمها وتستخدمها.',
+    patterns: [
+      {
+        id: 'im-down',
+        titleEn: 'Im down',
+        wrong: '(translating literally) I am under',
+        correct: 'Im down for that. = موافق / يلا',
+        whyAr: 'مو معناها انا تحت! معناها انا موافق وجاهز.',
+        ruleAr: 'Im down (for) = موافق. مثال: Wanna grab food? — Im down!',
+        practice: [
+          {q:'Someone says: Wanna grab coffee? What does Im down mean?', options:['I am busy','I agree / sure','I am sad','I am leaving'], correct:1},
+        ]
+      },
+      {
+        id: 'makes-sense',
+        titleEn: 'That makes sense',
+        wrong: '(translating literally) It creates money',
+        correct: 'That makes sense. = ايه كذا وضحت / فهمت',
+        whyAr: 'ما علاقتها بالفلوس! معناها فهمت الشي او صار منطقي.',
+        ruleAr: 'makes sense = فهمت / منطقي. مثال: Oh, that makes sense now.',
+        practice: [
+          {q:'Someone explains something and you understand. You say:', options:['That makes money','That makes sense','That makes good','That makes it'], correct:1},
+        ]
+      },
+      {
+        id: 'ill-pass',
+        titleEn: 'Ill pass',
+        wrong: '(translating literally) I will walk past',
+        correct: 'Ill pass. = لا، بخليها / ما ابي',
+        whyAr: 'مو معناها بمر! معناها ما ابي او ما راح اسويها.',
+        ruleAr: 'Ill pass = ما ابي / لا. مثال: Want to try? — Ill pass.',
+        practice: [
+          {q:'Someone offers you something you dont want. You say:', options:['Ill pass','Ill walk','Ill past','Ill go'], correct:0},
+        ]
+      },
+      {
+        id: 'no-worries',
+        titleEn: 'No worries',
+        wrong: '(translating literally) No thinking',
+        correct: 'No worries. = عادي / ولا يهمك',
+        whyAr: 'معناها ما فيه مشكلة، عادي. تستخدمها لو اعتذر احد او لو تبي تهدى الوضع.',
+        ruleAr: 'No worries = عادي / ما فيه مشكلة. مثال: Sorry Im late! — No worries.',
+        practice: [
+          {q:'Someone says Sorry Im late. A natural reply:', options:['No worries','No thinking','No problems','Both A and C'], correct:3},
+        ]
+      },
+      {
+        id: 'piece-of-cake',
+        titleEn: 'Piece of cake',
+        wrong: '(translating literally) A slice of dessert',
+        correct: 'Its a piece of cake. = سهل جداً / يسير',
+        whyAr: 'ما علاقتها بالكاتو! معناها الشي سهل.',
+        ruleAr: 'piece of cake = سهل جداً. مثال: The test was a piece of cake.',
+        practice: [
+          {q:'The exam was easy. You can say:', options:['It was a piece of cake','It was a cake piece','It was cake','It was sweet'], correct:0},
+        ]
+      },
+      {
+        id: 'break-a-leg',
+        titleEn: 'Break a leg',
+        wrong: '(translating literally) Fracture your leg',
+        correct: 'Break a leg! = بالتوفيق! / يلا!',
+        whyAr: 'مو معناها كسر رجل! معناها بالتوفيق قبل عرض او امتحان.',
+        ruleAr: 'Break a leg! = بالتوفيق. مثال: Before the presentation — Break a leg!',
+        practice: [
+          {q:'Your friend is about to present. You say:', options:['Break a leg','Break your leg','Good break','Dont break'], correct:0},
+        ]
+      }
+    ]
+  },
+  {
+    id: 'pronunciation-traps',
+    titleEn: 'Pronunciation Traps',
+    titleAr: 'مخارج الحروف',
+    icon: 'volume-2',
+    introAr: 'اصوات ما موجودة بالعربي. هذي اللي تخلي الطلاب يلخبطون بينها.',
+    patterns: [
+      {
+        id: 'p-vs-b',
+        titleEn: 'P vs B',
+        wrong: 'parking → barking',
+        correct: 'parking (P = بهوا) vs barking (B = بدون هوا)',
+        whyAr: 'العربي ما فيه صوت P. P يطلع بهوا من الشفايف، B ما فيه هوا.',
+        ruleAr: 'P = هوا يطلع من الشفايف (paper). B = شفايف مضمومة بدون هوا (baby).',
+        practice: [
+          {q:'Which word starts with P sound?', options:['boy','pen','ball','book'], correct:1},
+          {q:'Which word starts with B sound?', options:['pen','park','book','pill'], correct:2},
+        ]
+      },
+      {
+        id: 'v-vs-f',
+        titleEn: 'V vs F',
+        wrong: 'very → ferry',
+        correct: 'very (V = اهتزاز) vs ferry (F = بدون اهتزاز)',
+        whyAr: 'العربي ما فيه V. V فيه اهتزاز خفيف في الشفة، F ما فيه.',
+        ruleAr: 'V = اهتزاز في الشفة (very). F = هواء بدون اهتزاز (fine).',
+        practice: [
+          {q:'Which word has a V sound?', options:['fan','van','food','fish'], correct:1},
+          {q:'Which word has an F sound?', options:['very','visit','five','love'], correct:2},
+        ]
+      },
+      {
+        id: 'th-sound',
+        titleEn: 'TH sound',
+        wrong: 'think → sink / this → dis',
+        correct: 'think (TH = ث) vs this (TH = ذ)',
+        whyAr: 'بعض الطلاب يستبدلون TH بـ T او S او D. لازم تطلع اللسان بين الاسنان.',
+        ruleAr: 'think = ث (خفيفة)، this = ذ، three = ثري مو تري.',
+        practice: [
+          {q:'Which word has the TH sound (as in think)?', options:['sink','think','tink','sinc'], correct:1},
+          {q:'Which word starts with TH (as in this)?', options:['dis','this','tis','sis'], correct:1},
+        ]
+      },
+      {
+        id: 'consonant-clusters',
+        titleEn: 'Consonant clusters (adding vowels)',
+        wrong: 'street → es-treet / school → es-cool',
+        correct: 'street (STR together) / school (SK together)',
+        whyAr: 'العربي ما يبدا كلمة بحرفين ساكنين. الطلاب يضيفون ا (es-treet).',
+        ruleAr: 'ابدا بحرف S مع الحرف اللي بعده مباشرة: school, street, student, stop.',
+        practice: [
+          {q:'How do you pronounce school?', options:['es-cool','school (S+K)','is-cool','as-cool'], correct:1},
+          {q:'How do you pronounce street?', options:['es-treet','is-treet','street (STR)','as-treet'], correct:2},
+        ]
+      }
+    ]
+  }
+];
+
 const GRAMMAR_TOPICS = [
   {id:'present-perfect', title:'Present Perfect vs Past Simple', rule:'Use present perfect for actions connecting the past to now. Use past simple for finished actions with a specific past time.', saudi:'لو الفعل له تاثير الحين او مو معروف وقته بالضبط، استخدم present perfect. لو تتكلم عن وقت محدد خلص، استخدم past simple.', wrong:'I have visited Riyadh last year.', right:'I visited Riyadh last year.', mistakes:['Using "have" with a specific past time word like "yesterday" or "last year."','Saying "I have went" instead of "I have gone."']},
   {id:'articles', title:'Articles: A, An, The', rule:'Use "a" before consonant sounds, "an" before vowel sounds, and "the" for something specific both speakers know.', saudi:'العربي مالها ادوات نكرة زي a/an، فهذا يصعب على الطلاب السعوديين، لازم تتذكرها بكل جملة.', wrong:'She is a engineer.', right:'She is an engineer.', mistakes:['Saying "a" before a vowel sound: "a apple" instead of "an apple."','Dropping the article completely: "I am engineer."']},
@@ -19829,6 +20259,9 @@ function renderDashboardIntel(){
       activityTouch: function(evt, opts){ try{ PEL_ACTIVITY.touch(evt, opts); }catch(e){} },
       accountPrefs: function(){ return accountPrefs; },
       openLesson: openLesson,
+      // Saudi Mistake Coach data — common Saudi learner mistakes woven into
+      // the lesson flow. Patterns are matched to lesson content automatically.
+      saudiMistakeCoach: function(){ return window.SAUDI_MISTAKE_COACH || []; },
       // Guided tool rules: which tools are unlocked at the student's CEFR level
       guidedToolsForLevel: guidedToolsForLevel,
       GUIDED_TOOL_RULES: GUIDED_TOOL_RULES,
