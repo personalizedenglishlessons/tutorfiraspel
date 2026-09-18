@@ -23,8 +23,8 @@
 <script src="lib/cert-qr.js?v=a43f19f9" defer></script>
 <script src="lib/cert-sheet.js?v=5278e935" defer></script>
 <script src="lib/pel_config.js?v=e4857dea"></script>
-<script src="lib/pel_lesson_stage.js?v=f29886e4"></script>
-<script src="lib/pel_dashboard_life.js?v=5864c310"></script>
+<script src="lib/pel_lesson_stage.js?v=9efc2926"></script>
+<script src="lib/pel_dashboard_life.js?v=94ad5635"></script>
 <script src="lib/pel_curriculum_path.js?v=f17afc34"></script>
 <style>
 /* ============================================================
@@ -9751,7 +9751,7 @@ const VOCAB_BANK = [
 {en:'Subject', ipa:'/ˈsʌbdʒɪkt/', ar:'الشخص اللي يسوي الفعل', translit:'سَبجيكت', example:{en:'The subject comes before the verb.', ar:'الشخص ياتي قبل الفعل.', translit:'ذا سَبجيكت كامز بي فور ذا فِرب.'}, synonyms:'doer, agent', antonyms:'object', family:'subject, subjective', collocations:'subject of the sentence', category:'Grammar Academy', difficulty:'Intermediate', tip:'Ask "who?" to find the subject.', mistake:'Confusing subject with object.'},
 {en:'Accent', ipa:'/ˈæksənt/', ar:'لهجة، طريقة نطق', translit:'اكسينت', example:{en:'She has a strong American accent.', ar:'لديها لهجة امريكية واضحة.', translit:'شي هاز ا سترونق امريكان اكسينت.'}, synonyms:'dialect, pronunciation', antonyms:'', family:'accent, accented', collocations:'strong accent, soft accent', category:'Listening Lounge', difficulty:'Intermediate', tip:'Accents are normal; clarity matters more.', mistake:'Thinking an accent means bad English.'},
 {en:'Audio', ipa:'/ˈɔːdi.oʊ/', ar:'صوت مسجل', translit:'اوديو', example:{en:'The audio is too quiet.', ar:'الصوت المسجّل منخفض جدًا.', translit:'ذا اوديو از تو كوايت.'}, synonyms:'sound, recording', antonyms:'silence', family:'audio, audiovisual', collocations:'audio clip, play the audio', category:'Listening Lounge', difficulty:'Intermediate', tip:'Good audio helps you catch every word.', mistake:'Saying "the audios" as a plural noun.'},
-{en:'Replay', ipa:'/ˌriːˈpleɪ/', ar:'اعادة، يشغّل مرة اخرى', translit:'ري بلاي', example:{en:'Replay the part you missed.', ar:'اعد تشغيل الجزء اللي فاتك.', translit:'ري بلاي ذا بارت يو ميست.'}, synonyms:'play again, repeat', antonyms:'skip', family:'replay, replayed', collocations:'replay a clip, hit replay', category:'Listening Lounge', difficulty:'Intermediate', tip:'Replay hard parts until they feel easy.', mistake:'Moving on without replaying unclear parts.'},
+{en:'Replay', ipa:'/ˌriːˈpleɪ/', ar:'اعاده، يشغّل مرة اخرى', translit:'ري بلاي', example:{en:'Replay the part you missed.', ar:'اعد تشغيل الجزء اللي فاتك.', translit:'ري بلاي ذا بارت يو ميست.'}, synonyms:'play again, repeat', antonyms:'skip', family:'replay, replayed', collocations:'replay a clip, hit replay', category:'Listening Lounge', difficulty:'Intermediate', tip:'Replay hard parts until they feel easy.', mistake:'Moving on without replaying unclear parts.'},
 {en:'Mumble', ipa:'/ˈmʌmbəl/', ar:'يهمس، يتكلم بغير وضوح', translit:'مَمبَل', example:{en:'Don\'t mumble; speak clearly.', ar:'لا تهمس؛ تحدث بوضوح.', translit:'دونت مَمبَل؛ سبيك كليرلي.'}, synonyms:'mutter, whisper', antonyms:'enunciate, shout', family:'mumble, mumbled', collocations:'mumble words, mumble to yourself', category:'Listening Lounge', difficulty:'Intermediate', tip:'Open your mouth more to avoid mumbling.', mistake:'Mumbling from nervousness and losing the listener.'},
 {en:'Volume', ipa:'/ˈvɒljuːm/', ar:'مستوى الصوت، ارتفاعه', translit:'فوليوم', example:{en:'Turn up the volume.', ar:'ارفع مستوى الصوت.', translit:'تيرن اب ذا فوليوم.'}, synonyms:'loudness, level', antonyms:'mute', family:'volume', collocations:'turn up the volume, lower the volume', category:'Listening Lounge', difficulty:'Intermediate', tip:'A clear volume helps you catch detail.', mistake:'Setting volume too high and missing soft sounds.'},
 {en:'Skim', ipa:'/skɪm/', ar:'يقرا بسرعة، يتصفّح', translit:'سكيم', example:{en:'Skim the article for the main idea.', ar:'تصفّح المقال بسرعة لتاخذ الفكرة العامة.', translit:'سكيم ذا ارتيكل فور ذا مين ايديا.'}, synonyms:'browse, glance', antonyms:'study, read closely', family:'skim, skimmed, skimming', collocations:'skim through, skim a text', category:'Reading Corner', difficulty:'Intermediate', tip:'Skimming is for the gist, not details.', mistake:'Trying to understand every word while skimming.'},
@@ -19826,6 +19826,7 @@ function renderDashboardIntel(){
       getLesson, goToView, markLessonComplete, micErrorMessage, nextLesson,
       pronFeedback, recordAndScore, resolveAcademyById, speak, subBlocked, toast,
       translitEn,
+      activityTouch: function(evt, opts){ try{ PEL_ACTIVITY.touch(evt, opts); }catch(e){} },
       accountPrefs: function(){ return accountPrefs; },
       openLesson: openLesson,
       // Guided tool rules: which tools are unlocked at the student's CEFR level
