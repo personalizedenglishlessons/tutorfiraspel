@@ -32,12 +32,12 @@
 - Total console errors: 0 across ALL views
 
 ### Known remaining issues
-1. **~282 order exercises missing Arabic translations** — needs human/LLM translation
-2. **Best practices roadmap** still pending (schema fixes, error handling, etc.)
+1. **Best practices roadmap** still pending (schema fixes, error handling, etc.)
 
 ### Resolved in 2026-09-18 session
 - **renderGrammar() now uses SAUDI_MISTAKE_COACH data** — Grammar Academy view enhanced with 8 categories (22 patterns) of Saudi-specific mistakes, each with wrong/correct examples, Arabic explanations, and interactive practice quizzes
 - **Duplicate exercises in grammar_db_challenges** — investigated, no such table or variable exists in the codebase; appears to have been resolved previously or was a false alarm
+- **282 order exercises "missing Arabic translations"** — FALSE ALARM: all 360 order exercises have Arabic content in the JSONB payload (prompt.ar, hint.ar, or ar fields). The hint_ar column was simply never populated because the data lives in the payload JSONB. No action needed.
 
 ---
 

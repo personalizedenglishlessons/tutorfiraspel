@@ -20,7 +20,7 @@
 const OPENAI_KEY = Deno.env.get("OPENAI_API_KEY") || "";
 
 const cors = {
-  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Origin": "https://personalizedenglishlessons.github.io",
   "Access-Control-Allow-Headers": "authorization, content-type, apikey",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
