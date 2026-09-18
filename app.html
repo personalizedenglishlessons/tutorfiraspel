@@ -2720,7 +2720,7 @@ function renderPalette(query){
       }
     });
   }
-  if(matches.length === 0){ paletteResults.innerHTML = `<div class="palette-empty"><span class="arabic" style="display:block;">لا توجد نتائج لـ "${escapeHtml(query)}"</span><span>Try a lesson, word, or setting.</span></div>`; return; }
+  if(matches.length === 0){ paletteResults.innerHTML = `<div class="palette-empty"><span class="arabic" style="display:block;">لا توجد نتايج لـ "${escapeHtml(query)}"</span><span>Try a lesson, word, or setting.</span></div>`; return; }
   const groups = {};
   matches.forEach(m => { (groups[m.group] = groups[m.group] || []).push(m); });
   paletteResults.innerHTML = Object.keys(groups).map(g => `
@@ -9751,7 +9751,7 @@ const VOCAB_BANK = [
 {en:'Subject', ipa:'/ˈsʌbdʒɪkt/', ar:'الشخص اللي يسوي الفعل', translit:'سَبجيكت', example:{en:'The subject comes before the verb.', ar:'الشخص ياتي قبل الفعل.', translit:'ذا سَبجيكت كامز بي فور ذا فِرب.'}, synonyms:'doer, agent', antonyms:'object', family:'subject, subjective', collocations:'subject of the sentence', category:'Grammar Academy', difficulty:'Intermediate', tip:'Ask "who?" to find the subject.', mistake:'Confusing subject with object.'},
 {en:'Accent', ipa:'/ˈæksənt/', ar:'لهجة، طريقة نطق', translit:'اكسينت', example:{en:'She has a strong American accent.', ar:'لديها لهجة امريكية واضحة.', translit:'شي هاز ا سترونق امريكان اكسينت.'}, synonyms:'dialect, pronunciation', antonyms:'', family:'accent, accented', collocations:'strong accent, soft accent', category:'Listening Lounge', difficulty:'Intermediate', tip:'Accents are normal; clarity matters more.', mistake:'Thinking an accent means bad English.'},
 {en:'Audio', ipa:'/ˈɔːdi.oʊ/', ar:'صوت مسجل', translit:'اوديو', example:{en:'The audio is too quiet.', ar:'الصوت المسجّل منخفض جدًا.', translit:'ذا اوديو از تو كوايت.'}, synonyms:'sound, recording', antonyms:'silence', family:'audio, audiovisual', collocations:'audio clip, play the audio', category:'Listening Lounge', difficulty:'Intermediate', tip:'Good audio helps you catch every word.', mistake:'Saying "the audios" as a plural noun.'},
-{en:'Replay', ipa:'/ˌriːˈpleɪ/', ar:'اعاده، يشغّل مرة اخرى', translit:'ري بلاي', example:{en:'Replay the part you missed.', ar:'اعد تشغيل الجزء اللي فاتك.', translit:'ري بلاي ذا بارت يو ميست.'}, synonyms:'play again, repeat', antonyms:'skip', family:'replay, replayed', collocations:'replay a clip, hit replay', category:'Listening Lounge', difficulty:'Intermediate', tip:'Replay hard parts until they feel easy.', mistake:'Moving on without replaying unclear parts.'},
+{en:'Replay', ipa:'/ˌriːˈpleɪ/', ar:'اعاده، يشغّل مرة اخرى', translit:'ري بلاي', example:{en:'Replay the part you missed.', ar:'اعد تشغيل الجزا اللي فاتك.', translit:'ري بلاي ذا بارت يو ميست.'}, synonyms:'play again, repeat', antonyms:'skip', family:'replay, replayed', collocations:'replay a clip, hit replay', category:'Listening Lounge', difficulty:'Intermediate', tip:'Replay hard parts until they feel easy.', mistake:'Moving on without replaying unclear parts.'},
 {en:'Mumble', ipa:'/ˈmʌmbəl/', ar:'يهمس، يتكلم بغير وضوح', translit:'مَمبَل', example:{en:'Don\'t mumble; speak clearly.', ar:'لا تهمس؛ تحدث بوضوح.', translit:'دونت مَمبَل؛ سبيك كليرلي.'}, synonyms:'mutter, whisper', antonyms:'enunciate, shout', family:'mumble, mumbled', collocations:'mumble words, mumble to yourself', category:'Listening Lounge', difficulty:'Intermediate', tip:'Open your mouth more to avoid mumbling.', mistake:'Mumbling from nervousness and losing the listener.'},
 {en:'Volume', ipa:'/ˈvɒljuːm/', ar:'مستوى الصوت، ارتفاعه', translit:'فوليوم', example:{en:'Turn up the volume.', ar:'ارفع مستوى الصوت.', translit:'تيرن اب ذا فوليوم.'}, synonyms:'loudness, level', antonyms:'mute', family:'volume', collocations:'turn up the volume, lower the volume', category:'Listening Lounge', difficulty:'Intermediate', tip:'A clear volume helps you catch detail.', mistake:'Setting volume too high and missing soft sounds.'},
 {en:'Skim', ipa:'/skɪm/', ar:'يقرا بسرعة، يتصفّح', translit:'سكيم', example:{en:'Skim the article for the main idea.', ar:'تصفّح المقال بسرعة لتاخذ الفكرة العامة.', translit:'سكيم ذا ارتيكل فور ذا مين ايديا.'}, synonyms:'browse, glance', antonyms:'study, read closely', family:'skim, skimmed, skimming', collocations:'skim through, skim a text', category:'Reading Corner', difficulty:'Intermediate', tip:'Skimming is for the gist, not details.', mistake:'Trying to understand every word while skimming.'},
@@ -9878,7 +9878,7 @@ window.SAUDI_MISTAKE_COACH = [
         titleEn: 'Overusing the with plurals',
         wrong: 'The dogs are loyal animals.',
         correct: 'Dogs are loyal animals.',
-        whyAr: 'بالعربي نقول الكلاب وفية ولاء. بس بالانجليزي اذا تتكلم عن شي عام (مو كلاب محددة)، ما تستخدم the.',
+        whyAr: 'بالعربي نقول الكلاب وفية وفا. بس بالانجليزي اذا تتكلم عن شي عام (مو كلاب محددة)، ما تستخدم the.',
         ruleAr: 'الجمع العام (مو محدد) = بدون the. الكلاب المحددة = the dogs.',
         practice: [
           {q:'___ cats are independent.', options:['The','—','A','An'], correct:1},
@@ -9904,7 +9904,7 @@ window.SAUDI_MISTAKE_COACH = [
     titleEn: 'Prepositions: in / on / at',
     titleAr: 'حروف الجر',
     icon: 'map-pin',
-    introAr: 'الترجمة الحرفية من العربي هي سبب اغلب الاغلاط. في العربي كلمة في تغطي اشياء كثيرة، بس بالانجليزي كل حرف له استخدام محدد.',
+    introAr: 'الترجمة الحرفية من العربي هي سبب اغلب الاغلاط. في العربي كلمة في تغطي اشيا كثيرة، بس بالانجليزي كل حرف له استخدام محدد.',
     patterns: [
       {
         id: 'in-vs-on-time',
@@ -9963,7 +9963,7 @@ window.SAUDI_MISTAKE_COACH = [
     titleEn: 'Subject-Verb Agreement',
     titleAr: 'توافق الفعل والفاعل',
     icon: 'user-check',
-    introAr: 'العربي ما يزيد s للفعل مع الغائب. هذا اللي يخلي الطلاب يقولون He go بدل He goes.',
+    introAr: 'العربي ما يزيد s للفعل مع الغايب. هذا اللي يخلي الطلاب يقولون He go بدل He goes.',
     patterns: [
       {
         id: 'third-person-s',
@@ -9983,7 +9983,7 @@ window.SAUDI_MISTAKE_COACH = [
         titleEn: 'is with plural subjects',
         wrong: 'The students is here.',
         correct: 'The students are here.',
-        whyAr: 'خلط is و are شائع لان العربي ما يفرق بين المفرد والجمع في الفعل.',
+        whyAr: 'خلط is و are شايع لان العربي ما يفرق بين المفرد والجمع في الفعل.',
         ruleAr: 'he/she/it + is، we/you/they + are، I + am.',
         practice: [
           {q:'They ___ my friends.', options:['is','are','am','be'], correct:1},
@@ -10051,7 +10051,7 @@ window.SAUDI_MISTAKE_COACH = [
         titleEn: 'Adjective after noun (Arabic order)',
         wrong: 'I bought a car red.',
         correct: 'I bought a red car.',
-        whyAr: 'بالعربي الصفة تجي بعد الاسم: سيارة حمراء. بالانجليزي الصفة تجي قبل الاسم: red car.',
+        whyAr: 'بالعربي الصفة تجي بعد الاسم: سيارة حمرا. بالانجليزي الصفة تجي قبل الاسم: red car.',
         ruleAr: 'الصفة قبل الاسم: a big house (مو a house big).',
         practice: [
           {q:'She has ___ eyes.', options:['blue beautiful','beautiful blue','beauty blue','blue beauty'], correct:1},
@@ -10108,8 +10108,8 @@ window.SAUDI_MISTAKE_COACH = [
         titleEn: 'its vs its',
         wrong: 'The dog wagged its tail.',
         correct: 'The dog wagged its tail. (correct!) / Its a nice day. → Its a nice day.',
-        whyAr: 'its = ملكه (its tail = ذيله). its = it is مختصرة. الخلطة تصير لان s تضاف للملكية في الاسماء العادية.',
-        ruleAr: 'its = ملكه (its color). its = it is (its cold). استثناء: its ما فيها فاصلة علوية للملكية.',
+        whyAr: 'its = ملكه (its tail = ذيله). its = it is مختصرة. الخلطة تصير لان s تضاف للملكية في الاسامي العادية.',
+        ruleAr: 'its = ملكه (its color). its = it is (its cold). ونشن: its ما فيها فاصلة علوية للملكية.',
         practice: [
           {q:'The cat cleaned ___ paws.', options:['its','its','it is','its'], correct:0},
           {q:'___ going to rain.', options:['Its','Its','It is','Both A and C'], correct:3},
@@ -10120,7 +10120,7 @@ window.SAUDI_MISTAKE_COACH = [
         titleEn: 'to vs too vs two',
         wrong: 'I am to tired to continue.',
         correct: 'I am too tired to continue.',
-        whyAr: 'to = حرف جر (to school) او جزء من المصدر (to go). too = ايضاً او زيادة (too much). two = رقم 2.',
+        whyAr: 'to = حرف جر (to school) او جزا من المصدر (to go). too = ايضاً او زيادة (too much). two = رقم 2.',
         ruleAr: 'to = اتجاه/مصدر. too = زيادة/ايضاً. two = 2.',
         practice: [
           {q:'I want ___ go home.', options:['to','too','two','—'], correct:0},
@@ -10242,7 +10242,7 @@ window.SAUDI_MISTAKE_COACH = [
         wrong: 'very → ferry',
         correct: 'very (V = اهتزاز) vs ferry (F = بدون اهتزاز)',
         whyAr: 'العربي ما فيه V. V فيه اهتزاز خفيف في الشفة، F ما فيه.',
-        ruleAr: 'V = اهتزاز في الشفة (very). F = هواء بدون اهتزاز (fine).',
+        ruleAr: 'V = اهتزاز في الشفة (very). F = هوا بدون اهتزاز (fine).',
         practice: [
           {q:'Which word has a V sound?', options:['fan','van','food','fish'], correct:1},
           {q:'Which word has an F sound?', options:['very','visit','five','love'], correct:2},
