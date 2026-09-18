@@ -32,9 +32,12 @@
 - Total console errors: 0 across ALL views
 
 ### Known remaining issues
-1. **360 order exercises missing Arabic translations** — needs human/LLM translation
-2. **Duplicate exercises in grammar_db_challenges** (reported by codebase LLM)
-3. **Best practices roadmap** still pending (schema fixes, error handling, etc.)
+1. **~282 order exercises missing Arabic translations** — needs human/LLM translation
+2. **Best practices roadmap** still pending (schema fixes, error handling, etc.)
+
+### Resolved in 2026-09-18 session
+- **renderGrammar() now uses SAUDI_MISTAKE_COACH data** — Grammar Academy view enhanced with 8 categories (22 patterns) of Saudi-specific mistakes, each with wrong/correct examples, Arabic explanations, and interactive practice quizzes
+- **Duplicate exercises in grammar_db_challenges** — investigated, no such table or variable exists in the codebase; appears to have been resolved previously or was a false alarm
 
 ---
 

@@ -17437,7 +17437,14 @@ function renderGrammar(){
       <h1><span class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">قواعد اللغة، تُشرح بالطريقة اللي يحتاجها الطالب العربي فعلا.</span>Grammar, explained the way Arabic-speaking students actually need it.</h1>
       <p><span class="arabic" style="display:block; margin-bottom:4px;">كل قاعدة تتضمن اكثر خطا يقع فيه المتحدثون بالعربية، وسبب حدوثه.</span>Every rule includes the mistake Arabic-speaking learners make most often, and why.</p>
     </div>
-    <div class="grid grid-2" id="grammarGrid"></div>`;
+    <div class="grid grid-2" id="grammarGrid"></div>
+    <div style="margin-top:36px;">
+      <div class="page-head" style="margin-bottom:20px;">
+        <span class="eyebrow"><span class="arabic" style="font-size:.95em;">مدرب الاخطاء السعودي</span>، Saudi Mistake Coach</span>
+        <h2 style="font-size:1.3rem; margin-top:8px;"><span class="arabic" style="display:block; font-size:.7em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">الاخطاء اللي يقع فيها المتحدث بالعربية، مع السبب والتمرين.</span>The mistakes Arabic speakers make, with the reason and practice.</h2>
+      </div>
+      <div class="grid grid-2" id="coachGrid"></div>
+    </div>`;
   const grid = document.getElementById('grammarGrid');
   grid.innerHTML = GRAMMAR_TOPICS.map((g,i) => `
     <div class="card">
@@ -17459,6 +17466,44 @@ function renderGrammar(){
       {q:'اي جملة صح؟، Which sentence is correct?', options:[g.wrong, g.right], correct:1}
     ], 'gq-'+g.id);
   });
+  // Saudi Mistake Coach: show each category with its patterns and practice questions
+  const coach = (window.SAUDI_MISTAKE_COACH || []);
+  const coachGrid = document.getElementById('coachGrid');
+  if(coach.length){
+    coachGrid.innerHTML = coach.map((cat,ci) => `
+      <div class="card" style="display:flex; flex-direction:column;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span class="chip gold" style="flex-shrink:0;"><i data-lucide="${cat.icon||'circle-dot'}" width="14" height="14"></i></span>
+          <div>
+            <h3 style="font-size:1.05rem;">${escapeHtml(cat.titleEn||'')}</h3>
+            <span class="arabic" style="font-size:.82rem; color:var(--text-muted);">${escapeHtml(cat.titleAr||'')}</span>
+          </div>
+        </div>
+        <p class="arabic" style="margin-top:12px; font-size:.84rem; color:var(--text-secondary); line-height:1.65;">${escapeHtml(cat.introAr||'')}</p>
+        <div style="margin-top:16px; display:flex; flex-direction:column; gap:18px;">
+          ${(cat.patterns||[]).map((pat,pi) => `
+            <div style="border-top:1px solid var(--border); padding-top:14px;">
+              <h4 style="font-size:.92rem;">${escapeHtml(pat.titleEn||'')}</h4>
+              <div class="mistake-box" style="margin-top:10px;">
+                <div class="wrong">✕ ${escapeHtml(pat.wrong||'')}</div>
+                <div class="right">✓ ${escapeHtml(pat.correct||'')}</div>
+              </div>
+              <p class="arabic" style="margin-top:10px; font-size:.82rem; color:var(--text-muted); line-height:1.6;">${escapeHtml(pat.whyAr||'')}</p>
+              <p class="arabic" style="margin-top:6px; font-size:.8rem; color:var(--gold-soft); line-height:1.6;">${escapeHtml(pat.ruleAr||'')}</p>
+              <div class="card-elevated" style="padding:14px; border-radius:12px; margin-top:12px;" id="coachQuiz-${ci}-${pi}"></div>
+            </div>
+          `).join('')}
+        </div>
+      </div>`).join('');
+    coach.forEach((cat,ci) => {
+      (cat.patterns||[]).forEach((pat,pi) => {
+        if(pat.practice && pat.practice.length){
+          renderQuiz(document.getElementById('coachQuiz-'+ci+'-'+pi), pat.practice, 'cq-'+ci+'-'+pi);
+        }
+      });
+    });
+  }
+  if(window.lucide) lucide.createIcons();
 }
 viewRenderers.grammar = renderGrammar;
 
