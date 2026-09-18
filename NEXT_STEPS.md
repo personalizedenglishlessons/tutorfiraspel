@@ -13,7 +13,13 @@
 
 5. **Formal Arabic in grammar quiz prompts** (commit `45cb563`): `ايهما صحيح؟` (MSA with hamza) and `الجملة الصحيحة:` (formal) replaced with Saudi dialect: `اي جملة صح؟` and `اي جملة صح:`. Browser-verified: no formal Arabic or hamza found in Grammar view.
 
-6. **Disabled-button bug across 12 renderers** (commit `644dc70`): Pre-existing bug where `ctx.btn.disabled=true` before `ctx.self.ready()` was overridden by `ready()` setting `btn.disabled=false`. Fixed all 12 instances (recognize, match, arrange_words, fill_blank, spell, translate, correct, choose_natural_expression, guided_production, etc.) by adding `ctx.btn.disabled=true` after each `ready()` call. Code-verified and tests pass. Live verification pending GitHub Pages cache refresh.
+6. **Disabled-button bug across 12 renderers** (commit `644dc70`): Pre-existing bug where `ctx.btn.disabled=true` before `ctx.self.ready()` was overridden by `ready()` setting `btn.disabled=false`. Fixed all 12 instances by adding `ctx.btn.disabled=true` after each `ready()` call. Live-verified on recognize renderer: disabled before selection, enabled after.
+
+7. **Hamza characters in student-facing Arabic** (commit `f75893c`): Found 10 instances of hamza (أ إ ؤ ئ ء) in Arabic text. Fixed all: نتائج→نتايج, ولاء→وفا, اشياء→اشيا, الغائب→الغايب, شائع→شايع, حمراء→حمرا, الاسماء→الاسامي, استثناء→ونشن, جزء→جزا, هواء→هوا. Global source search confirms 0 remaining.
+
+8. **Keyboard shortcuts** (commit `57481fc`): Added 1-9 to select options, Enter to click primary button (Check/Continue/Practice). Scoped to lesson stage, removed on close. Live-verified.
+
+9. **3-option grid layout** (commit `b4ddeba`): Multiple-choice questions with 3 options left an empty 4th grid slot. Fixed with CSS `:nth-child(3):last-child` rule to span full width.
 
 ### Audit coverage (live browser)
 - Home/dashboard: 0 errors, greeting correct
