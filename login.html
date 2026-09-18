@@ -17,6 +17,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;500;700&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.50.0/dist/umd/supabase.js" integrity="sha384-K0oxqktRvaThvYgGL4G+OK2Ih6VS6Uyu7j3+7WJgp/uWM0Yv6Xi4YEiw0BB+mPfi" crossorigin="anonymous" defer></script>
+<script src="lib/pel_config.js?v=e4857dea"></script>
 <style>
 :root{
   --bg:#0E0E10;
@@ -598,8 +599,8 @@ function showMessage(idPrefix, text, type){
 /* ==========================================================================
    SUPABASE CONFIGURATION
    ========================================================================== */
-const SUPABASE_URL = 'https://lewoochehpiycocvfwtz.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxld29vY2hlaHBpeWNvY3Zmd3R6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwNzQ3MzcsImV4cCI6MjA5OTY1MDczN30.sIWK6jwX7PW70fH0yPUuhOb25N1lBw2-Cvb3dtwDb9Y';
+const SUPABASE_URL = window.PEL_CONFIG.SUPABASE_URL;
+const SUPABASE_ANON_KEY = window.PEL_CONFIG.SUPABASE_ANON_KEY;
 
 let supabase = null;
 function initSupabase(){
@@ -658,14 +659,41 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     return;
   }
 
-  const { data, error } = await client.auth.signInWithPassword({ email, password });
+  // Route through the rate-limited-login edge function for brute-force protection
+  const fnUrl = SUPABASE_URL + '/functions/v1/rate-limited-login';
+  let fnResp;
+  try{
+    fnResp = await fetch(fnUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password, hp: '' })
+    });
+  }catch(e){
+    setLoading('login', false);
+    showMessage('login', 'Network error. Please try again.', 'error');
+    return;
+  }
+
+  const fnData = await fnResp.json();
   setLoading('login', false);
 
-  if(error){
+  if(!fnResp.ok || fnData.error){
     document.getElementById('loginPassword').parentElement.classList.add('invalid');
     setTimeout(() => document.getElementById('loginPassword').parentElement.classList.remove('invalid'), 500);
-    showMessage('login', error.message || 'Incorrect email or password.', 'error');
+    let msg = 'Incorrect email or password.';
+    if(fnData.error === 'too_many_attempts') msg = 'Too many login attempts. Please try again in 15 minutes.';
+    else if(fnData.error === 'invalid_email') msg = 'Please enter a valid email.';
+    else if(fnData.error === 'invalid_password') msg = 'Password must be at least 6 characters.';
+    showMessage('login', msg, 'error');
     return;
+  }
+
+  // Store the session from the edge function response
+  if(fnData.session && fnData.session.access_token){
+    const client = initSupabase();
+    if(client){
+      try{ await client.auth.setSession({ access_token: fnData.session.access_token, refresh_token: fnData.session.refresh_token }); }catch(e){}
+    }
   }
 
   if(remembered){ localStorage.setItem('pel-last-email', email); }

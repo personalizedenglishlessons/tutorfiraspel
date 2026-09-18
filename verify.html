@@ -16,6 +16,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;500;700&display=swap">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+<script src="lib/pel_config.js?v=e4857dea"></script>
 <script src="lib/cert-qr.js?v=a43f19f9"></script>
 <script src="lib/cert-sheet.js?v=5278e935"></script>
 <style>
@@ -274,8 +275,8 @@ applyVerifyLang(readAcctPrefs().lang === 'ar' ? 'ar' : 'en');
 /* ==========================================================================
    SUPABASE CONFIGURATION (public anon key, read-only lookup via RPC)
    ========================================================================== */
-const SUPABASE_URL = 'https://lewoochehpiycocvfwtz.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxld29vY2hlaHBpeWNvY3Zmd3R6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwNzQ3MzcsImV4cCI6MjA5OTY1MDczN30.sIWK6jwX7PW70fH0yPUuhOb25N1lBw2-Cvb3dtwDb9Y';
+const SUPABASE_URL = window.PEL_CONFIG.SUPABASE_URL;
+const SUPABASE_ANON_KEY = window.PEL_CONFIG.SUPABASE_ANON_KEY;
 
 let supabaseClient = null;
 function initClient(){
