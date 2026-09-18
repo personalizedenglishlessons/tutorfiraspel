@@ -1,5 +1,37 @@
 # NEXT STEPS - pick up here
 
+## DONE: Live audit + bug fixes (2026-09-18 session)
+
+### Bugs found and fixed
+1. **mistake_coach titleEn class** (commit `4ab25f2`): `pattern.titleEn` (English text) had `class="arabic"` causing wrong text direction. Removed the class. Browser-verified.
+
+2. **mistake_coach Check button enabled before selection** (commit `4ab25f2`): The `ready()` function sets `btn.disabled = false`, overriding the initial disable. Fixed by adding `ctx.btn.disabled = true` AFTER `ready()` call. Code-verified (could not browser-verify because activity state was already completed).
+
+3. **Mobile FAB overlap** (commit `4ab25f2`): `.fab-qt` at `bottom:18px` overlapped the 58px mobile dock nav. Moved FAB to `bottom:72px` and `qt-popup` to `bottom:140px`. Browser-verified: FAB bottom at 740px, dock top at 754px, 14px gap.
+
+4. **Greeting timezone bug** (commit `45cb563`): "Good morning" shown at 5 PM Riyadh time. Used `new Date().getHours()` (browser timezone) instead of user timezone. Fixed to use `Intl.DateTimeFormat` with `Asia/Riyadh`. Browser-verified: shows "Good evening" at 6 PM Riyadh.
+
+5. **Formal Arabic in grammar quiz prompts** (commit `45cb563`): `ايهما صحيح؟` (MSA with hamza) and `الجملة الصحيحة:` (formal) replaced with Saudi dialect: `اي جملة صح؟` and `اي جملة صح:`. Browser-verified: no formal Arabic or hamza found in Grammar view.
+
+6. **Disabled-button bug across 12 renderers** (commit pending): Pre-existing bug where `ctx.btn.disabled=true` before `ctx.self.ready()` was overridden by `ready()` setting `btn.disabled=false`. Fixed all 12 instances (recognize, match, arrange_words, fill_blank, spell, translate, correct, choose_natural_expression, guided_production, etc.) by adding `ctx.btn.disabled=true` after each `ready()` call.
+
+### Audit coverage (live browser)
+- Home/dashboard: 0 errors, greeting correct
+- Lesson flow + mistake_coach: 0 errors, tip→practice→check→continue all work
+- Smart Review: 0 errors, renders correctly
+- Grammar Academy: 0 errors, no formal Arabic/hamza
+- Bookmarks, Achievements, Study Calendar, Profile, Settings: 0 errors
+- Light mode: 0 errors, 0 contrast issues
+- Mobile (375px): sidebar hidden, FAB fixed, bottom nav present
+- Total console errors: 0 across ALL views
+
+### Known remaining issues
+1. **360 order exercises missing Arabic translations** — needs human/LLM translation
+2. **Duplicate exercises in grammar_db_challenges** (reported by codebase LLM)
+3. **Best practices roadmap** still pending (schema fixes, error handling, etc.)
+
+---
+
 ## DONE: Saudi Mistake Coach + expanded teaching content + pronunciation hints (2026-09-18 session)
 
 ### Shipped
