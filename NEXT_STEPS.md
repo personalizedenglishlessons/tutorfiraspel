@@ -13,7 +13,7 @@
 
 5. **Formal Arabic in grammar quiz prompts** (commit `45cb563`): `ايهما صحيح؟` (MSA with hamza) and `الجملة الصحيحة:` (formal) replaced with Saudi dialect: `اي جملة صح؟` and `اي جملة صح:`. Browser-verified: no formal Arabic or hamza found in Grammar view.
 
-6. **Disabled-button bug across 12 renderers** (commit pending): Pre-existing bug where `ctx.btn.disabled=true` before `ctx.self.ready()` was overridden by `ready()` setting `btn.disabled=false`. Fixed all 12 instances (recognize, match, arrange_words, fill_blank, spell, translate, correct, choose_natural_expression, guided_production, etc.) by adding `ctx.btn.disabled=true` after each `ready()` call.
+6. **Disabled-button bug across 12 renderers** (commit `644dc70`): Pre-existing bug where `ctx.btn.disabled=true` before `ctx.self.ready()` was overridden by `ready()` setting `btn.disabled=false`. Fixed all 12 instances (recognize, match, arrange_words, fill_blank, spell, translate, correct, choose_natural_expression, guided_production, etc.) by adding `ctx.btn.disabled=true` after each `ready()` call. Code-verified and tests pass. Live verification pending GitHub Pages cache refresh.
 
 ### Audit coverage (live browser)
 - Home/dashboard: 0 errors, greeting correct
