@@ -1,5 +1,66 @@
 # NEXT STEPS - pick up here
 
+## DONE: Saudi Mistake Coach + expanded teaching content + pronunciation hints (2026-09-18 session)
+
+### Shipped
+1. **Saudi Mistake Coach (commit `39eee63`)** — Major new feature:
+   - 8 categories, 29 interactive error patterns based on academic research
+     (Al-Hattami 2010, Ahmad 2011, Al-Seghayer 2014)
+   - Categories: articles, prepositions, verb-agreement, negation, word-order,
+     confusing-words, idioms, pronunciation-traps
+   - Each pattern: wrong sentence, correct sentence, Saudi dialect whyAr,
+     ruleAr, 1-3 practice questions
+   - Integrated into lesson flow as `mistake_coach` activity type — appears
+     naturally within lessons, not as a separate section. Patterns are matched
+     to lesson content (vocabulary, notes, exercises).
+   - Two-phase renderer: Phase 1 shows wrong/correct pair + explanation,
+     Phase 2 shows practice question with scoring
+   - Browser verified: 2 patterns matched and inserted into STEP lesson at
+     positions 23-24 ("Missing a/an", "Overusing the with plurals")
+   - Data exposed on window.SAUDI_MISTAKE_COACH and wired via deps.saudiMistakeCoach
+
+2. **Expanded TEACHING_CONTENT (commit `12cad61`)** — 18 new entries:
+   - the, in, on, at, is, are, was, were, have, has, not, no, but, because,
+     or, if, there
+   - Each entry: meaning in Saudi dialect, useWhen, dontUseWhen,
+     commonMistake, howToAvoid, remember
+
+3. **Expanded PRON_HINTS (commit `12cad61`)** — 23 new pronunciation hints:
+   - film, next, clothes, asked, text, stop, stand, story, price, print,
+     parking, happy, open, happen, apple, place, play, put, spend, sport, spring
+   - Covers research-identified trap words: consonant clusters, /p/ vs /b/
+   - Fixed duplicates (paper, please) and print hint (was using ب instead of پ)
+
+4. **Enhanced connectionNoteFor (commit `15fdb67`)** — 3 new grammar rules:
+   - Adjective before noun (Arabic interference: noun-adjective → adjective-noun)
+   - No vs not (Arabic uses لا for both)
+   - Adverb position (always/usually/never before main verb, after is/are/am)
+   - Total: 27 grammar patterns in connectionNoteFor
+
+5. **All hamza removed** from user-facing Arabic text in pel_lesson_stage.js
+   - اعادة→اعاده, exam→امتحان, شؤون→شون, etc.
+   - All Arabic now uses Saudi spoken dialect
+
+6. **PEL_ACTIVITY.touch integration (commit `12cad61`)**:
+   - Stage.mark() and Stage.next() now call PEL_ACTIVITY.touch() with
+     activity type, skill, and correct/total scores
+   - Wired via deps.activityTouch in app.html
+
+### Verification
+- All 44 tests pass (13 buildsequence + 31 teaching flow)
+- Browser smoke test: 0 errors, SAUDI_MISTAKE_COACH loaded with 8 categories
+- mistake_coach activity type verified in lesson sequence
+- Cache busters updated throughout session
+
+### Next steps
+1. **360 order exercises missing Arabic translations** — still needs human/LLM translation
+2. **renderGrammar() could use SAUDI_MISTAKE_COACH data** in Grammar view for
+   richer interactive content (currently only used in lesson flow)
+3. **Duplicate exercises in grammar_db_challenges** (reported by codebase LLM)
+4. **Best practices roadmap** still pending (schema fixes, error handling, etc.)
+
+---
+
 ## DONE: Remove purposeless gold bar + DB audit + smoke test (2026-09-16 session)
 
 ### Shipped
