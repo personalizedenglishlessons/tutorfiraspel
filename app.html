@@ -1756,7 +1756,7 @@ async function revealApp(user){
     const first = name.split(' ')[0];
     document.getElementById('userNameLabel').textContent = first;
     document.getElementById('avatarInitial').textContent = first.charAt(0).toUpperCase();
-    const hour = new Date().getHours();
+    const hour = (function(){ try { var now = new Date(); var fmt = new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Riyadh',hour:'numeric',hour12:false}); return parseInt(fmt.format(now),10); } catch(e){ return new Date().getHours(); } })();
     const greet = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
     const greetAr = hour < 12 ? 'صباح الخير' : hour < 18 ? 'مسا الخير' : 'مسا الخير';
     document.getElementById('greetingText').textContent = greet + ', ' + first + '.';
@@ -10535,7 +10535,7 @@ const FLAGSHIP_LESSONS = {
     ],
     quiz:[
       {q:'وش معنى "Long time no see"؟، "Long time no see" means...', options:["I haven't seen you in a while","You look tired","See you later"], correct:0},
-      {q:'ايهما صحيح؟، Which sentence is correct?', options:['I have seen him yesterday.','I saw him yesterday.','I see him yesterday.'], correct:1},
+      {q:'اي جملة صح؟، Which sentence is correct?', options:['I have seen him yesterday.','I saw him yesterday.','I see him yesterday.'], correct:1},
     ],
     summary:'You practiced catching up casually with a friend, using natural expressions Americans use daily.',
   },
@@ -10552,7 +10552,7 @@ const FLAGSHIP_LESSONS = {
     ],
     quiz:[
       {q:'وش تعرض عند البوابة؟، What do you show at the gate?', options:['Only your phone','Passport and boarding pass','Your luggage tag'], correct:1},
-      {q:'الجملة الصحيحة:، Correct sentence:', options:['The flight is on 6pm.','The flight is at 6pm.','The flight is in 6pm.'], correct:1},
+      {q:'اي جملة صح:، Correct sentence:', options:['The flight is on 6pm.','The flight is at 6pm.','The flight is in 6pm.'], correct:1},
     ],
     summary:'You practiced the essential exchange at airport check-in and boarding gates.',
   },
@@ -10569,7 +10569,7 @@ const FLAGSHIP_LESSONS = {
     ],
     quiz:[
       {q:'وش معنى "Complimentary" بالفندق؟، "Complimentary" in a hotel means...', options:['Extra charge applies','Included for free','Only for VIP guests'], correct:1},
-      {q:'الجملة الصحيحة:، Correct sentence:', options:['I need room for tonight.','I need a room for tonight.','I need rooms tonight for.'], correct:1},
+      {q:'اي جملة صح:، Correct sentence:', options:['I need room for tonight.','I need a room for tonight.','I need rooms tonight for.'], correct:1},
     ],
     summary:'You practiced checking in, confirming your reservation, and asking about hotel amenities.',
   },
@@ -10666,7 +10666,7 @@ const LESSON_LIBRARY = {
       {who:'B', en:'It is 055 123 4567.', ar:'صفر خمسة خمسة واحد اثنين ثلاثة اربعة خمسة ستة سبعة.', translit:'ات از او فايف فايف وان تو ثري فور فايف سكس سڤن.'},
     ],
     quiz:[
-      {q:'اي جملة صحيحة؟، Which sentence is correct?', options:['I name is Faisal.','My name is Faisal.','Mine name is Faisal.'], correct:1},
+      {q:'اي جملة صح؟، Which sentence is correct?', options:['I name is Faisal.','My name is Faisal.','Mine name is Faisal.'], correct:1},
       {q:'لما تطلب رقم جوال احد بادب:، To ask for a phone number politely:', options:['Can I get your phone number, please?','Give me your number.','Your number now.'], correct:0},
     ],
     summary:'You practiced giving your name, phone number, and address clearly for forms and bookings.',
@@ -10684,7 +10684,7 @@ const LESSON_LIBRARY = {
       {who:'B', en:'I am a student. When do your classes start?', ar:'انا طالب. متى تبدا محاضراتك؟', translit:'ايم ا ستودنت. وين دو يور كلاسيز ستارت؟'},
     ],
     quiz:[
-      {q:'اي سوال صحيح؟، Which question is correct?', options:['Where you live?','Where do you live?','You live where?'], correct:1},
+      {q:'اي سوال صح؟، Which question is correct?', options:['Where you live?','Where do you live?','You live where?'], correct:1},
       {q:'وش معنى "What do you do?"، "What do you do?" asks about your...', options:['Job','Age','Address'], correct:0},
     ],
     summary:'You practiced the three most useful question words and the correct English word order for questions.',
@@ -10720,7 +10720,7 @@ const LESSON_LIBRARY = {
       {who:'B', en:'She is younger, she is still in school.', ar:'هي اصغر، لسه بالمتوسط.', translit:'شي از يونقر، شي از سِتل ان سكول.'},
     ],
     quiz:[
-      {q:'اي جملة صحيحة؟، Which sentence is correct?', options:['My father have three brothers.','My father has three brothers.','My father having three brothers.'], correct:1},
+      {q:'اي جملة صح؟، Which sentence is correct?', options:['My father have three brothers.','My father has three brothers.','My father having three brothers.'], correct:1},
       {q:'كيف تسال احد عن اخوانه؟، How do you ask about someone\'s siblings?', options:['Do you have any siblings?','Are you siblings?','How siblings you have?'], correct:0},
     ],
     summary:'You practiced talking about your family with have/has and asking about siblings.',
@@ -10756,7 +10756,7 @@ const LESSON_LIBRARY = {
       {who:'B', en:'Three times a week, after work.', ar:'ثلاث مرات بالاسبوع، بعد الدوام.', translit:'ثري تايمز ا ويك، افتر وورك.'},
     ],
     quiz:[
-      {q:'اي جملة صحيحة؟، Which sentence is correct?', options:['I go work every day.','I go to work every day.','I to work go every day.'], correct:1},
+      {q:'اي جملة صح؟، Which sentence is correct?', options:['I go work every day.','I go to work every day.','I to work go every day.'], correct:1},
       {q:'"Usually" وين نضعه؟، Where does "usually" go?', options:['Before the main verb','At the end always','After the object'], correct:0},
     ],
     summary:'You practiced describing your daily routine with present simple and frequency adverbs.',
@@ -10792,7 +10792,7 @@ const LESSON_LIBRARY = {
       {who:'B', en:'In a logistics company. We should meet for coffee soon.', ar:'بشركة لوجستيات. لازم نطلع قهوة قريب.', translit:'ان ا لوجستكس كمبني. وي شود ميت فور كوفي سون.'},
     ],
     quiz:[
-      {q:'اي جملة صحيحة؟، Which sentence is correct?', options:['I have started a new job.','I have started a new job last Monday.','I have start a new job.'], correct:0},
+      {q:'اي جملة صح؟، Which sentence is correct?', options:['I have started a new job.','I have started a new job last Monday.','I have start a new job.'], correct:0},
       {q:'"Long time no see" معناها:، "Long time no see" means:', options:['We have not seen each other in a while','I cannot see well','See you never'], correct:0},
     ],
     summary:'You practiced catching up with friends, sharing news, and using present perfect correctly.',
@@ -10865,7 +10865,7 @@ const LESSON_LIBRARY = {
       {who:'B', en:'Yes, we walked there at sunset, it was beautiful.', ar:'ايه، مشينا هناك وقت الغروب، كان شي جميل.', translit:'يس، وي ووكد ذير ات سانست، ات واز بيوتيفل.'},
     ],
     quiz:[
-      {q:'اي جملة صحيحة عن امس؟، Which is correct about yesterday?', options:['Yesterday we visited the museum.','Yesterday we have visited the museum.','Yesterday we visit the museum.'], correct:0},
+      {q:'اي جملة صح عن امس؟، Which is correct about yesterday?', options:['Yesterday we visited the museum.','Yesterday we have visited the museum.','Yesterday we visit the museum.'], correct:0},
       {q:'كيف تسال عن رحلة احد؟، How do you ask about someone\'s trip?', options:['How was your trip?','How is your trip?','How will be your trip?'], correct:0},
     ],
     summary:'You practiced telling short stories in past simple and asking about past trips.',
@@ -11515,7 +11515,7 @@ const LESSON_LIBRARY = {
       {who:'B', en:'Sometimes, but she does not mind it.', ar:'احيانًا، بس ما تزعل.', translit:'سامتايمز، بات شي داز نات مايند ات.'},
     ],
     quiz:[
-      {q:'اي جملة صحيحة؟، Which sentence is correct?', options:['She works at a hospital.','She work at a hospital.','She working at a hospital.'], correct:0},
+      {q:'اي جملة صح؟، Which sentence is correct?', options:['She works at a hospital.','She work at a hospital.','She working at a hospital.'], correct:0},
       {q:'النفي مع she:، The negative with she is:', options:['She does not work.','She do not work.','She not works.'], correct:0},
     ],
     summary:'You practiced the present simple -s rule in questions, positives, and negatives.',
@@ -11533,7 +11533,7 @@ const LESSON_LIBRARY = {
       {who:'B', en:'I heard. Did they share the slides?', ar:'سمعت. شاركوا الشرايح؟', translit:'اي هيرد. ديد ذي شير ذا سلايدز؟'},
     ],
     quiz:[
-      {q:'اي سوال صحيح؟، Which question is correct?', options:['Did you go to the meeting?','Did you went to the meeting?','Did you going to the meeting?'], correct:0},
+      {q:'اي سوال صح؟، Which question is correct?', options:['Did you go to the meeting?','Did you went to the meeting?','Did you going to the meeting?'], correct:0},
       {q:'النفي بالماضي:، The past negative is:', options:['I did not go.','I did not went.','I not go.'], correct:0},
     ],
     summary:'You practiced past simple questions and negatives with did plus the base form.',
@@ -11587,7 +11587,7 @@ const LESSON_LIBRARY = {
       {who:'B', en:'Will do, take your time.', ar:'ان شا الله، خذ راحتك.', translit:'ويل دو، تيك يور تايم.'},
     ],
     quiz:[
-      {q:'الصيغة الصحيحة:، The correct collocation is:', options:['Make a decision','Do a decision','Take a decision'], correct:0},
+      {q:'الصيغة الصح:، The correct collocation is:', options:['Make a decision','Do a decision','Take a decision'], correct:0},
       {q:'الازدحام بالانجليزي:، Traffic is described as:', options:['Heavy traffic','Strong traffic','Big traffic'], correct:0},
     ],
     summary:'You learned that words have partners and started building natural collocations.',
@@ -11804,7 +11804,7 @@ const LESSON_LIBRARY = {
       {who:'B', en:'Do not give up, you are doing great.', ar:'لا تستسلم، انت ممتاز.', translit:'دو نات قيف اپ، يو ار دوينق قريت.'},
     ],
     quiz:[
-      {q:'الصيغة الصحيحة:، The correct order is:', options:['I looked it up.','I looked up it.','I looked up.'], correct:0},
+      {q:'الصيغة الصح:، The correct order is:', options:['I looked it up.','I looked up it.','I looked up.'], correct:0},
       {q:'"Give up" معناها:، "Give up" means:', options:['يستسلم','يعطي','يقوم'], correct:0},
     ],
     summary:'You practiced common phrasal verbs and the pronoun placement rule.',
@@ -11840,7 +11840,7 @@ const LESSON_LIBRARY = {
       {who:'B', en:'Sometimes, I love the live atmosphere.', ar:'احيانًا، احب اجوا اللايف.', translit:'سامتايمز، اي لوف ذا لايف اتموسفير.'},
     ],
     quiz:[
-      {q:'الصيغة الصحيحة:، The correct sentence is:', options:['I enjoy listening to music.','I enjoy listen music.','I enjoy to listen music.'], correct:0},
+      {q:'الصيغة الصح:، The correct sentence is:', options:['I enjoy listening to music.','I enjoy listen music.','I enjoy to listen music.'], correct:0},
       {q:'"I am into..." معناها:، "I am into..." means:', options:['احب واتميم بـ','اكره','ما عندي راي'], correct:0},
     ],
     summary:'You practiced talking about music tastes with gerunds and natural phrases.',
@@ -13550,7 +13550,7 @@ const LESSON_LIBRARY = {
       {who:'B', en:'My father is a nurse at the hospital.', ar:'ابوي ممرض بالمستشفى.', translit:'ماي فاذر از ا نرس ات ذا هاسبيتال.'},
     ],
     quiz:[
-      {q:'اي جملة صحيحة؟، Which sentence is correct?', options:['My brother\'s car is new.','My brother car is new.','My brothers car is new.'], correct:0},
+      {q:'اي جملة صح؟، Which sentence is correct?', options:['My brother\'s car is new.','My brother car is new.','My brothers car is new.'], correct:0},
       {q:'وش معنى "sister"؟، "Sister" means:', options:['اخت','اخ','اب'], correct:0},
     ],
     summary:'You learned family words and how to show possession with \'s.',
@@ -16344,7 +16344,7 @@ function renderQuiz(container, questions, keyPrefix){
     const verdictEn = perfect
       ? 'You answered every question correctly, no misses.'
       : (correctCount >= Math.ceil(questions.length/2) ? 'You got most right, review the ones you missed.' : 'Review the lesson again, the same questions will come back.');
-    container.innerHTML = `<div class="quiz-result-banner" style="background:${perfect?'rgba(66,163,106,.12)':'rgba(200,169,106,.1)'}; color:${perfect?'var(--success)':'var(--gold)'};"><span class="arabic">${correctCount} من ${questions.length} صحيحة، ${verdictAr}</span><br>${correctCount} / ${questions.length} correct، ${verdictEn}</div>`;
+    container.innerHTML = `<div class="quiz-result-banner" style="background:${perfect?'rgba(66,163,106,.12)':'rgba(200,169,106,.1)'}; color:${perfect?'var(--success)':'var(--gold)'};"><span class="arabic">${correctCount} من ${questions.length} صح، ${verdictAr}</span><br>${correctCount} / ${questions.length} correct، ${verdictEn}</div>`;
     if(perfect) confettiBurst();
   }
   renderQ();
@@ -17456,7 +17456,7 @@ function renderGrammar(){
     </div>`).join('');
   GRAMMAR_TOPICS.forEach(g => {
     renderQuiz(document.getElementById('grammarQuiz-'+g.id), [
-      {q:'ايهما صحيح؟، Which sentence is correct?', options:[g.wrong, g.right], correct:1}
+      {q:'اي جملة صح؟، Which sentence is correct?', options:[g.wrong, g.right], correct:1}
     ], 'gq-'+g.id);
   });
 }
