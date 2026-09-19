@@ -507,6 +507,59 @@ function applyLoginLang(lang){
   const prefs = readAccountPrefs();
   prefs.lang = lang;
   try{ localStorage.setItem('pel_account_prefs', JSON.stringify(prefs)); }catch(e){}
+  // Apply bilingual text
+  var ar = lang === 'ar';
+  var T = {
+    '.back-home .label': ar?'العودة للمنصة':'Back to Academy',
+    '.brand-heading': ar?'<em>كمل من وين وقفت</em>':'Welcome back. <em>Pick up where you left off.</em>',
+    '.brand-copy': ar?'ادخل اكاديميتك الخاصة. انجليزي امريكي، بشرح بالعربي، مع الاستاذ فراس.':'Step into your private academy. American English, explained in your language, guided by Tutor Firas.',
+    '.panel-label': ar?'دخول الطلاب':'Student Login',
+    '.form-title': ar?'تسجيل الدخول':'Sign In',
+    '.form-sub': ar?'للطلاب المسجلين. سجل دخولك للوحة التحكم.':'For enrolled students. Sign in to your dashboard.',
+    'label[for="loginEmail"]': ar?'البريد الالكتروني':'Email Address',
+    'label[for="loginPassword"]': ar?'كلمة المرور':'Password',
+    '#rememberToggle': ar?'<span class="checkbox" id="rememberCheckbox"></span> تذكرني':'<span class="checkbox" id="rememberCheckbox"></span> Remember me',
+    '#loginBtnLabel': ar?'دخول':'Log In',
+    '.divider-line': ar?'اكاديميتك الخاصة':'Your Private Academy',
+    '.security-badge:nth-of-type(1)': ar?'تسجيل مشفر':'Encrypted Login',
+    '.security-badge:nth-of-type(2)': ar?'وصول خاص للطلاب':'Private Student Access',
+    '.trust-strip p': ar?'طلاب يتعلمون مع الاستاذ فراس.':'Students learning with Tutor Firas.',
+    '.redirect-overlay p': ar?'نفتح لوحة التحكم...':'Opening your dashboard...'
+  };
+  Object.keys(T).forEach(function(sel){
+    var el = document.querySelector(sel);
+    if(el){
+      if(sel === '#rememberToggle' || sel === '.brand-heading'){ el.innerHTML = T[sel]; }
+      else { el.textContent = T[sel]; }
+    }
+  });
+  // Benefit items
+  var benefits = document.querySelectorAll('.benefit-item');
+  var benAr = ['مئات الدروس من الواقع','مدرب كتابة','تدريب المحادثة','تدريب النطق','شرح بالعربي الفصيح','نطق عربي للحروف','بناء المفردات','اكاديمية القواعد','تتبع التقدم','لوحة تحكم خاصة'];
+  var benEn = ['Hundreds of real-world lessons','Writing feedback coach','Speaking practice','Pronunciation training','Saudi Arabian Arabic explanations','Arabic transliteration','Vocabulary builder','Grammar academy','Progress tracking','Private dashboard'];
+  var benArr = ar ? benAr : benEn;
+  benefits.forEach(function(el, i){
+    var icon = el.querySelector('.b-icon');
+    el.innerHTML = '<span class="b-icon">'+(icon ? icon.textContent : '')+'</span>'+benArr[i];
+  });
+  // Trust pills
+  var pills = document.querySelectorAll('.trust-pill');
+  var pillAr = ['اكاديمية خاصة','منهج امريكي','تسجيل آمن','تعلم مع الاستاذ فراس'];
+  var pillEn = ['Private Academy','American Curriculum','Secure Authentication','Learn with Tutor Firas'];
+  var pillArr = ar ? pillAr : pillEn;
+  pills.forEach(function(el, i){ if(pillArr[i]) el.textContent = pillArr[i]; });
+  // Mini cards
+  var mc = document.querySelectorAll('.mini-card');
+  var mcAr = [['درس اليوم','في المطار'],['سلسلة الايام','٧ ايام متتالية · واصل'],['المفردات','١٢ كلمة جديدة هذا الاسبوع'],['تصحيح الكتابة','اصلاحان اليوم'],['اللهجة الامريكية','water · /ˈwɔː.tɚ/']];
+  var mcEn = [['Lesson of the Day','At the Airport'],['Daily Streaks','7 days in a row · keep it up'],['Vocabulary','12 new words this week'],['Writing Feedback','2 fixes explained today'],['American Accent','water · /ˈwɔː.tɚ/']];
+  var mcArr = ar ? mcAr : mcEn;
+  mc.forEach(function(el, i){
+    if(!mcArr[i]) return;
+    var b = el.querySelector('b');
+    var s = el.querySelector('span');
+    if(b) b.textContent = mcArr[i][0];
+    if(s) s.textContent = mcArr[i][1];
+  });
 }
 const loginLangBtn = document.getElementById('loginLangBtn');
 if(loginLangBtn) loginLangBtn.addEventListener('click', () => applyLoginLang(root.lang === 'ar' ? 'en' : 'ar'));
