@@ -335,7 +335,7 @@ nav.primary-nav a:hover::after{ width:100%; }
 /* ===== hero ===== */
 .hero{
   position:relative;
-  padding:calc(var(--header-h) + var(--site-banner-h, 0px) + 70px) 0 120px;
+  padding:calc(var(--header-h) + var(--site-banner-h, 0px) + 40px) 0 60px;
   overflow:hidden;
 }
 .hero-glow{
@@ -347,7 +347,8 @@ nav.primary-nav a:hover::after{ width:100%; }
 .hero-grid{
   display:grid; grid-template-columns:1.05fr .95fr; gap:60px; align-items:center;
 }
-@media(max-width:980px){ .hero-grid{ grid-template-columns:1fr; } }
+@media(max-width:980px){ .hero-grid{ grid-template-columns:1fr; gap:30px; } }
+@media(max-width:768px){ .hero{ padding:calc(var(--header-h) + var(--site-banner-h, 0px) + 20px) 0 40px; } .phrase-card{ min-height:180px; padding:20px 18px 16px; } .phrase-en{ font-size:1.2rem; } .phrase-ar{ font-size:.95rem; } .phrase-phon{ font-size:.75rem; } .hero-social{ justify-content:center; } .hero-cta-row{ margin-top:20px; } }
 
 .hero h1{
   font-size:clamp(2.6rem, 5vw, 4.1rem);
@@ -357,9 +358,9 @@ nav.primary-nav a:hover::after{ width:100%; }
   font-style:italic; color:var(--gold); font-weight:400;
 }
 .hero-sub{
-  margin-top:26px; font-size:1.08rem; color:var(--text-secondary); max-width:460px; line-height:1.7;
+  margin-top:18px; font-size:1.08rem; color:var(--text-secondary); max-width:460px; line-height:1.7;
 }
-.hero-cta-row{ margin-top:42px; display:flex; gap:16px; flex-wrap:wrap; }
+.hero-cta-row{ margin-top:28px; display:flex; gap:16px; flex-wrap:wrap; }
 @media(max-width:480px){
   .hero-cta-row{ flex-direction:column; }
   .hero-cta-row .btn-gold, .hero-cta-row .btn-outline{ width:100%; justify-content:center; }
@@ -387,10 +388,10 @@ nav.primary-nav a:hover::after{ width:100%; }
   border-radius:18px;
   background:linear-gradient(160deg, var(--card-elevated), var(--card));
   border:1px solid var(--border);
-  padding:32px 28px 24px;
+  padding:24px 24px 20px;
   position:relative;
   overflow:hidden;
-  min-height:280px;
+  min-height:220px;
   display:flex; flex-direction:column; justify-content:space-between;
 }
 .phrase-card::before{
@@ -1154,7 +1155,7 @@ section{ padding-top:80px; padding-bottom:80px; }
         </a>
       </div>
       <div class="path-hint" dir="rtl" style="margin-top:14px;">
-        <span class="arabic">اول درس عليك — جرب قبل ما تدفع</span>
+        <span class="arabic">اختبر مستواك مجاناً — عرف وش تحتاج بالضبط</span>
       </div>
       <div class="trust-row" dir="rtl" style="margin-top:18px; gap:10px 18px;">
         <div class="trust-item"><span class="dot"></span>الاستاذ فراس يعلمك بنفسه</div>
@@ -1242,7 +1243,7 @@ section{ padding-top:80px; padding-bottom:80px; }
     </div>
     <div class="pricing-grid" id="pricingGrid" dir="rtl"></div>
     <p class="pricing-note arabic">
-      <b>ما تدري وين تبدا؟</b> راسلنا واتساب، نسألك عن مستواك وهدفك، ونرجع لك بخطة وسعر يناسبك.
+      <b>ما تدري وين تبدا؟</b> راسلنا واتساب، نسألك عن مستواك وهدفك، ونرجع لك بخطة تناسبك.
     </p>
   </div>
 </section>
@@ -1369,8 +1370,8 @@ section{ padding-top:80px; padding-bottom:80px; }
     }
     // manual credit purchase callout
     html += '<div style="margin-top:34px;padding:24px;border:1px dashed rgba(200,169,106,.4);border-radius:20px;text-align:center;background:rgba(200,169,106,.04);">';
-    html += '<div style="font-weight:700;font-size:1rem;">'+(ar?'تبغى حصص اكثر؟':'Want extra live classes?')+'</div>';
-    html += '<p class="'+(ar?'arabic':'')+'" style="font-size:.86rem;color:var(--text-muted);margin:8px auto 16px;max-width:520px;line-height:1.7;">'+(ar?'تشتري حصص اضافية عبر واتساب بعد ما تدفع. كل شي يتم يدوياً.':'Buy class credits manually via WhatsApp after payment confirmation. No online payment, everything is processed manually.')+'</p>';
+    html += '<div style="font-weight:700;font-size:1rem;">'+(ar?'تبي حصص اكثر؟':'Want extra live classes?')+'</div>';
+    html += '<p class="'+(ar?'arabic':'')+'" style="font-size:.86rem;color:var(--text-muted);margin:8px auto 16px;max-width:520px;line-height:1.7;">'+(ar?'تشتري حصص اضافية عبر واتساب. كل شي يتم يدوياً.':'Buy class credits manually via WhatsApp after payment confirmation. No online payment, everything is processed manually.')+'</p>';
     var credWa = ar ? 'السلام عليكم، ابي اشتري رصيد حصص مباشرة اضافية. وش المتوفر؟' : 'Hello, I want to buy extra live class credits. What is available?';
     html += '<a href="'+waLink(credWa)+'" target="_blank" rel="noopener" class="btn-outline magnetic" data-magnetic>'+(ar?'اشتر رصيد حصص عن طريق واتساب':'Buy class credits via WhatsApp')+'</a>';
     html += '</div>';
@@ -1552,7 +1553,7 @@ function applyIndexLang(lang){
   var heroSub=document.querySelector('.hero .hero-sub');
   if(heroSub){ var hsar = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.ar) ? PEL_SITE.heroSub.ar : 'دروس قصيرة من مواقف تصير لك — بالشغل، بالسفر، بالدوام. نطق مسموع، شرح بالعربي، وحصص مباشرة مع الاستاذ فراس'; var hsen = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.en) ? PEL_SITE.heroSub.en : 'Short lessons from real situations — at work, traveling, daily life. Audio pronunciation, Arabic explanations, and live classes with Tutor Firas'; setLang(heroSub, hsar, hsen); }
   var pathHint=document.querySelector('.path-hint .arabic');
-  if(pathHint) setLang(pathHint, 'اول درس عليك — جرب قبل ما تدفع', 'First lesson is on us — try before you pay');
+  if(pathHint) setLang(pathHint, 'اختبر مستواك مجاناً — عرف وش تحتاج بالضبط', 'Free English level test — know exactly what you need');
   var pathHintEn=document.querySelector('.path-hint-en');
   if(pathHintEn) pathHintEn.textContent = lang==='ar' ? '' : 'First lesson is on us — try before you pay';
   // (trust items removed)
@@ -1707,7 +1708,7 @@ function applyIndexLang(lang){
   var pricingHead=document.querySelector('#pricing .section-head h2');
   if(pricingHead) setLang(pricingHead, 'باقتين، ثلاث مدد، وكلها تشمل حصص مباشرة.', 'Two tracks, three durations, all include live classes.');
   var pricingP=document.querySelector('#pricing .section-head p');
-  if(pricingP) setLang(pricingP, 'مسارين: واحد لللي يبدا من الصفر، وواحد لللي يستعد للستب او التوفل او الايلتس. تدفع عبر واتساب ونتفعّل حسابك خلال دقايق.', 'Two tracks: one for beginners starting from zero, and one for students preparing for STEP, TOEFL, or IELTS. Pay via WhatsApp and your account is activated within minutes.');
+  if(pricingP) setLang(pricingP, 'مسارين: واحد لللي يبدا من الصفر، وواحد لللي يستعد للستب او التوفل او الايلتس. تدفع عبر واتساب ونتفعّل حسابك خلال دقايق.', 'Two tracks: one for beginners starting from zero, and one for students preparing for STEP, TOEFL, or IELTS. Pay via WhatsApp, activated within minutes.');
   var pricingNote=document.querySelector('.pricing-note');
   if(pricingNote) pricingNote.innerHTML = lang==='ar' ? '<b>ما تعرف وش يناسبك؟</b> راسلنا واتساب ونساعدك تختار.' : '<b>Not sure which fits?</b> Message us on WhatsApp and we&rsquo;ll help you choose.';
   // footer + remaining section heads (minimal bilingual to satisfy full-site requirement)
@@ -1716,7 +1717,7 @@ function applyIndexLang(lang){
   var faqH2=document.querySelector('#faq .section-head h2');
   if(faqH2) faqH2.textContent = lang==='ar' ? 'اسيلة قبل التسجيل' : 'Questions before you enroll';
   var finalH2=document.querySelector('.final-cta h2');
-  if(finalH2) finalH2.textContent = lang==='ar' ? 'ابدا درسك الاول الحين' : 'Start your first lesson now';
+  if(finalH2) finalH2.textContent = lang==='ar' ? 'ابدا درسك الاول الحين' : 'Start your first lesson today';
   var finalP=document.querySelector('.final-cta p.arabic');
   if(finalP) finalP.textContent = lang==='ar' ? 'راسلنا واتساب، نفعّل حسابك وتبدا تتعلم اليوم.' : 'Message us on WhatsApp, we activate your account and you start learning the same day.';
   // personalPreview
@@ -2118,18 +2119,18 @@ window.addEventListener('storage', function(e){ if(e.key==='pel_account_prefs') 
 /* FAQ DATA - bilingual. DB copy (site_settings.faqs, editable in Admin >
    Site Settings) is canonical; this built-in list is the offline fallback. */
 const faqs = [
-  {qAr:'لمين هذا البرنامج؟', aAr:'لاي طالب طموح، موظف، او متقدم لجامعة يبغى يتكلم انجليزي امريكي طبيعي، مو بس يجتاز اختبار.', qEn:'Who is this for?', aEn:'Any ambitious student, employee, or university applicant who wants to speak natural American English, not just pass a test.'},
-  {qAr:'لازم يكون عندي اساس بالانجليزي؟', aAr:'لا. اختبار تحديد المستوى يبني لك خطة من نقطة البداية اللي انت فيها، من الصفر الى الطلاقة.', qEn:'Do I need prior English?', aEn:'No. The placement test builds your plan from where you are now, from zero to fluency.'},
-  {qAr:'المنهج انجليزي امريكي فعلاً؟', aAr:'اي والله. كل درس وتسجيل ودليل نطق مبني على الانجليزية الامريكية.', qEn:'Is the curriculum really American English?', aEn:'Yes. Every lesson, recording and pronunciation guide is built on American English.'},
-  {qAr:'الشرح يكون بالعربي؟', aAr:'نعم. القواعد والمفردات تنشرح بالعربي اول، مع نطق مكتوب بجانب كل كلمة جديدة.', qEn:'Is explanation in Arabic?', aEn:'Yes. Grammar and vocabulary are explained in Arabic first, with transliteration next to each new word.'},
-  {qAr:'اقدر ادرس من الجوال؟', aAr:'اكيد. لوحة التحكم الخاصة فيك متجاوبة بالكامل، تكمل دروسك من اي مكان.', qEn:'Can I study on mobile?', aEn:'Absolutely. Your personal dashboard is fully responsive, continue from anywhere.'},
-  {qAr:'كم مدة وصولي للمنصة؟', aAr:'حسب الباقة اللي تختارها: شهر، شهرين، او 3 اشهر. طول فترة اشتراكك يبقى الوصول كامل لكل الدروس والتحديثات الجديدة.', qEn:'How long is access?', aEn:'Depends on your plan: 1 month, 2 months, or 3 months. Full access to all lessons and updates for the entire period.'},
-  {qAr:'كيف اترجم واصحح كتابتي؟', aAr:'داخل المنصة ترجمة فورية مجانية بلا حدود لاي كلمة او جملة، وورشة كتابة تصحح لك وتبين لك سبب كل خطا بالعربي.', qEn:'How does translation and writing correction work?', aEn:'Unlimited free instant translation for any word or sentence, plus a writing workshop that corrects you and explains each mistake in Arabic.'},
-  {qAr:'اقدر اتابع تقدمي؟', aAr:'نعم. لوحتك الخاصة تتابع تطور محادثتك واستماعك ومفرداتك اسبوع بعد اسبوع.', qEn:'Can I track progress?', aEn:'Yes. Your private dashboard tracks speaking, listening and vocabulary week by week.'},
-  {qAr:'كم سعر الاشتراك؟', aAr:'فيه مسارين: ابد من الصفر، والتجهيز للاختبارات. مسار ابد من الصفر: شهر 500 ريال، شهرين 870 ريال، و3 اشهر 950 ريال (افضل قيمة). مسار التجهيز للاختبارات: شهر 1000 ريال، شهرين 1300 ريال، و3 اشهر 2200 ريال (افضل قيمة). كل الباقات تشمل حصص مباشرة اسبوعية. الدفع عبر واتساب والتنشيط خلال دقايق.', qEn:'How much?', aEn:'Two tracks: Start From 0 (500 SAR/mo, 870 SAR/2mo, 950 SAR/3mo best value) and Exam Prep (1000 SAR/mo, 1300 SAR/2mo, 2200 SAR/3mo best value). All plans include weekly live classes. Pay via WhatsApp, activated in minutes.'},
-  {qAr:'هل الباقات تشمل حصص مباشرة؟', aAr:'اي والله. كل باقة تشمل حصة مباشرة واحدة كل اسبوع على الاقل. باقات التجهيز للاختبارات تشمل من حصة الى 3 حصص اسبوعية حسب المدة. تبي حصص اضافية؟ اشتر رصيد حصص عن طريق واتساب.', qEn:'Do plans include live classes?', aEn:'Yes. Every plan includes at least 1 live class per week. Exam Prep plans include 1-3 live classes per week depending on duration. Want extra? Buy class credits via WhatsApp.'},
-  {qAr:'كيف ابدا التسجيل؟', aAr:'راسلنا على واتساب، نرسل لك تفاصيل الدفع ونفعّل حسابك خلال وقت قصير.', qEn:'How do I enroll?', aEn:'Message us on WhatsApp, we send payment details and activate your account shortly.'},
-  {qAr:'ايش يصير لما تنتهي باقاتي؟', aAr:'يبقى حسابك وكل تقدمك وشهاداتك محفوظة. بس يوقف الوصول للدروس. وقتها تقدر تجدد من لوحتك مباشرة، او تراسلنا واتساب ونفعل لك باقة جديدة.', qEn:'What happens when my plan ends?', aEn:'Your account, progress and certificates stay saved. Lesson access pauses. Renew from your dashboard or message us on WhatsApp.'},
+  {qAr:'لمين هذا البرنامج؟', aAr:'لكل واحد حاب يتعلم انجليزي — موظف، طالب، او اي شخص يبغى يتكلم بثقة. ما يهم مستواك، نبدأ من وين ما انت.', qEn:'Who is this for?', aEn:'Anyone who wants to learn English — employees, students, or anyone who wants to speak with confidence. Your level doesn\'t matter, we start where you are.'},
+  {qAr:'لازم اعرف انجليزي قبل؟', aAr:'لا. تختبر مستواك وتنبني خطة على اساسه. لو ما تعرف ولا كلمة، نبدأ من الحروف.', qEn:'Do I need to know English first?', aEn:'No. You take a level test and we build your plan from there. If you don\'t know a single word, we start from the alphabet.'},
+  {qAr:'المنهج امريكي فعلاً؟', aAr:'اي والله. كل درس وتسجيل ونطق مبني على اللهجة الامريكية.', qEn:'Is it really American English?', aEn:'Yes. Every lesson, recording, and pronunciation is built on American English.'},
+  {qAr:'الشرح بالعربي؟', aAr:'اي والله. كل درس مشروح بالعربي، والكلمات الجديدة مكتوب نطقها بجانبها.', qEn:'Is it explained in Arabic?', aEn:'Yes. Every lesson is explained in Arabic, and new words have their pronunciation written next to them.'},
+  {qAr:'اقدر ادرس من الجوال؟', aAr:'اكيد. المنصة تشتغل على الجوال والتابلت. تكمّل من وين ما وقفت.', qEn:'Can I study on my phone?', aEn:'Yes. The platform works on phones and tablets. You pick up where you left off.'},
+  {qAr:'كم مدة الاشتراك؟', aAr:'شهر، شهرين، او 3 اشهر. انت تختار. خلال هالفترة كل الدروس متاحة لك.', qEn:'How long is the subscription?', aEn:'One month, two months, or three months. You choose. All lessons are available to you during that time.'},
+  {qAr:'تقدرون تترجمون لي؟', aAr:'اي والله. تترجم اي كلمة او جملة وانت تتعلم. واذا كتبت شي، نصحح لك ونقولك وين الغلط.', qEn:'Can you translate for me?', aEn:'Yes. You can translate any word or sentence while you learn. And if you write something, we correct it and show you where the mistakes are.'},
+  {qAr:'اشوف تقدمي؟', aAr:'اي والله. لوحتك تشوف وين وصلت في المحادثة والاستماع والمفردات، اسبوع باسبوع.', qEn:'Can I see my progress?', aEn:'Yes. Your dashboard shows where you are in speaking, listening, and vocabulary, week by week.'},
+  {qAr:'كم سعر الاشتراك؟', aAr:'مسارين: ابد من الصفر يبدا من 500 ريال بالشهر، والتجهيز للاختبارات يبدا من 1000 ريال. كل الباقات فيها حصص مباشرة. تدفع عبر واتساب ونتفعّل حسابك خلال دقايق. شوف الباقات بالتفصيل فوق.', qEn:'How much?', aEn:'Two tracks: Start From Zero starts at 500 SAR/month, Exam Prep starts at 1000 SAR/month. All plans include live classes. Pay via WhatsApp, activated in minutes. See the plans above for details.'},
+  {qAr:'الباقات فيها حصص مباشرة؟', aAr:'اي والله. كل باقة فيها حصة مباشرة كل اسبوع على الاقل. باقات التجهيز للاختبارات فيها من حصة لـ 3 حصص بالاسبوع. تبي اكثر؟ تشتري رصيد حصص عبر واتساب.', qEn:'Do plans include live classes?', aEn:'Yes. Every plan includes at least one live class per week. Exam Prep plans include 1-3 classes per week. Want more? Buy extra class credits via WhatsApp.'},
+  {qAr:'كيف اسجل؟', aAr:'راسلنا واتساب، نرسل لك تفاصيل الدفع ونتفعّل حسابك بسرعة.', qEn:'How do I enroll?', aEn:'Message us on WhatsApp, we send payment details and activate your account quickly.'},
+  {qAr:'ايش يصير لما تخلص باقتي؟', aAr:'حسابك وتقدمك يبقى محفوظ. بس يوقف الوصول للدروس. تجدد من لوحتك او تراسلنا واتساب ونفعل لك باقة جديدة.', qEn:'What happens when my plan ends?', aEn:'Your account and progress stay saved. Lesson access pauses. Renew from your dashboard or message us on WhatsApp for a new plan.'},
 ];
 const faqList = document.getElementById('faqList');
 function renderFaqs(){
