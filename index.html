@@ -1061,16 +1061,15 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-of
 @media(hover:none){ .price-card:hover, #personalPreview .card:hover, .outcome-grid .card:hover{ transform:none; } }
 
 /* final premium polish: spacing, hierarchy, restraint */
-section{ padding-top:80px; padding-bottom:80px; }
-.hero{ padding:100px 0 60px; }
-.hero{ padding:100px 0 60px; }
+section{ padding-top:70px; padding-bottom:70px; }
+.hero{ padding:calc(var(--header-h, 60px) + var(--site-banner-h, 0px) + 30px) 0 40px; }
 .section-head{ margin-bottom:36px !important; }
 .section-head h2{ letter-spacing:-0.02em; line-height:1.2; }
 .card, .price-card, .feature-card, .course-card, .testi-card{ border-radius:18px; }
 .btn-gold, .btn-outline, .btn-wa{ letter-spacing:.01em; }
 @media(max-width:768px){
-  section{ padding-top:60px; padding-bottom:60px; }
-  .hero{ padding:calc(80px + var(--site-banner-h, 0px)) 0 40px; }
+  section{ padding-top:50px; padding-bottom:50px; }
+  .hero{ padding:calc(var(--header-h, 60px) + var(--site-banner-h, 0px) + 20px) 0 30px; }
   .hero h1{ font-size:clamp(1.9rem,7vw,2.8rem) !important; }
 }
 </style>
@@ -1538,7 +1537,7 @@ function applyIndexLang(lang){
     {sel:'#features .section-head p', ar:'كل جز من المنصة يخدم هدف واحد: تنتقل من التردد للطلاقة، محادثة صادقة بعد محادثة.', en:'Every part of the platform serves one goal: move you from hesitation to fluency, one honest conversation at a time.'},
     {sel:'#curriculum .section-head h2', ar:'منصة مصممة مثل معلم خاص، ومبنية مثل برنامج احترافي.', en:'A platform designed like a private tutor, built like pro software.'},
     {sel:'#curriculum .section-head p', ar:'كل اداة يحتاجها طالب جاد، مرتبة حول لوحة تحكم خاصة فيك.', en:'Every tool a serious learner needs, organized around your personal dashboard.'},
-    {sel:'#stories .section-head h2', ar:'اسمع منهم', en:'Hear from them'},
+    {sel:'#stories .section-head h2', ar:'قالو عن تجربتهم', en:'What they say about it'},
     {sel:'.proof .section-head h2', ar:'انجليزي تستخدمه برا التطبيق', en:'English you use outside the app'},
     {sel:'.proof .section-head p', ar:'مو درجات وشهادات بس، مواقف حقيقية تصير اسهل يوم بعد يوم', en:'Not just scores and certificates, real situations that get easier day by day'}
   ];
@@ -1766,10 +1765,10 @@ function applyIndexLang(lang){
   previewTabsMap.forEach(function(m){ var el=document.querySelector('.preview-tabs '+m.sel); if(el) el.textContent=m[lang]; });
   // remaining section heads (setLang keeps dir in sync)
   var moreHeads=[
-    {sel:'.course-section .section-head h2', ar:'مسارات متعددة، وخطة واحدة مبنية على مقاسك', en:'Multiple paths, one plan built for you'},
-    {sel:'.course-section .section-head p', ar:'التفاصيل الكاملة تفتح بعد التسجيل. هذي لمحة بسيطة عن الاتجاه العام', en:'Full details unlock after enrollment. This is a brief overview'},
-    {sel:'#timeline .section-head h2', ar:'كيف تسير رحلتك معنا', en:'How your journey goes with us'},
-    {sel:'#stories .section-head h2', ar:'اسمع منهم', en:'Hear from them'},
+    {sel:'.course-section .section-head h2', ar:'مسارات مختلفة، وخطة وحدة تناسبك', en:'Different tracks, one plan that fits you'},
+    {sel:'.course-section .section-head p', ar:'تشوف كل شي بعد ما تسجل. هذي لمحة بسيطة', en:'You see everything after you enroll. This is a quick look'},
+    {sel:'#timeline .section-head h2', ar:'كيف تتعلم معنا', en:'How you learn with us'},
+    {sel:'#stories .section-head h2', ar:'قالو عن تجربتهم', en:'What they say about it'},
     {sel:'.lesson-preview-head h2', ar:'لمحة عن شكل الدرس، مو الدرس نفسه', en:'A glimpse of a lesson, not the lesson itself'}
   ];
   moreHeads.forEach(function(h){ var el=document.querySelector(h.sel); if(el && h.ar) setLang(el, h.ar, h.en); });
@@ -2135,7 +2134,7 @@ const faqs = [
 const faqList = document.getElementById('faqList');
 function renderFaqs(){
   var ar = (function(){ try{ var p=JSON.parse(localStorage.getItem('pel_account_prefs')||'null'); return p&&p.lang==='ar'; }catch(e){ return document.documentElement.lang==='ar'; } })();
-  var live = (window.PEL_SITE && window.PEL_SITE.faqs) || faqs;
+  var live = faqs;
   faqList.innerHTML='';
   live.forEach(function(f){
     var q = ar ? f.qAr : f.qEn;
