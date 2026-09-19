@@ -445,14 +445,19 @@ nav.primary-nav a:hover::after{ width:100%; }
 }
 .hero-avatars{ display:flex; }
 .hero-avatars .av{
-  width:32px; height:32px; border-radius:50%;
-  border:2px solid var(--card-elevated);
+  width:36px; height:36px; border-radius:50%;
+  border:2.5px solid var(--card-elevated);
   margin-left:-10px;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Tajawal','Plus Jakarta Sans',sans-serif;
+  font-size:.95rem; font-weight:700; color:#fff;
+  background-size:cover; background-position:center;
+  box-shadow:0 2px 8px rgba(0,0,0,.2);
 }
 .hero-avatars .av:first-child{ margin-left:0; }
-.hero-avatars .av-1{ background:linear-gradient(135deg, #c8a96a, #8f7030); }
-.hero-avatars .av-2{ background:linear-gradient(135deg, #3f8c72, #2a6b56); }
-.hero-avatars .av-3{ background:linear-gradient(135deg, #6b5b95, #4a3f6b); }
+.hero-avatars .av-1{ background:linear-gradient(135deg, #d4b87a, #9a7a3a); }
+.hero-avatars .av-2{ background:linear-gradient(135deg, #4a9d80, #2f7a62); }
+.hero-avatars .av-3{ background:linear-gradient(135deg, #7b6ba8, #564a82); }
 .hero-social-text{
   font-size:.78rem; color:var(--text-muted); line-height:1.4;
 }
@@ -1177,9 +1182,9 @@ section{ padding-top:70px; padding-bottom:70px; }
       </div>
       <div class="hero-social" dir="rtl">
         <div class="hero-avatars">
-          <span class="av av-1"></span>
-          <span class="av av-2"></span>
-          <span class="av av-3"></span>
+          <span class="av av-1">أ</span>
+          <span class="av av-2">م</span>
+          <span class="av av-3">س</span>
         </div>
         <span class="hero-social-text">انضم لاكثر من ٥٠٠ طالب يتعلمون معنا</span>
       </div>
