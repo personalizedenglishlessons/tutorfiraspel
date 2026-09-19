@@ -364,15 +364,10 @@ nav.primary-nav a:hover::after{ width:100%; }
   .hero-cta-row .btn-gold, .hero-cta-row .btn-outline{ width:100%; justify-content:center; }
 }
 
-.trust-row{
-  margin-top:56px; display:flex; flex-wrap:wrap; gap:14px 28px;
-}
-@media(max-width:640px){ .trust-row{ justify-content:center; } }
-.trust-item{
-  display:flex; align-items:center; gap:9px;
-  font-size:.82rem; color:var(--text-muted); font-weight:500;
-}
-.trust-item .dot{ width:5px; height:5px; border-radius:50%; background:var(--gold); }
+
+@media(max-width:640px){  }
+
+
 
 /* hero visual - one calm preview shell (works on every screen size) */
 .hero-preview{
@@ -1210,9 +1205,6 @@ section{ padding-top:80px; padding-bottom:80px; }
       <div class="path-hint" dir="rtl" style="margin-top:14px;">
         <span class="arabic">شوف مسارك من الصفر للثقة — كل درس يوصلك خطوة اقررب</span>
       </div>
-        <div class="trust-item"><span class="dot"></span>شرح عربي لكل درس</div>
-        <div class="trust-item"><span class="dot"></span>ترجمة فورية بلا حدود</div>
-        <div class="trust-item"><span class="dot"></span>تتبع تقدمك</div>
       </div>
     </div>
 
@@ -1608,14 +1600,8 @@ function applyIndexLang(lang){
   if(pathHint) setLang(pathHint, 'اسيلة خفيفة، نعرف مستواك وهدفك ونرجع لك بخطة على مقاس وقتك', 'See your path from zero to confidence — each lesson brings you closer');
   var pathHintEn=document.querySelector('.path-hint-en');
   if(pathHintEn) pathHintEn.textContent = lang==='ar' ? '' : 'See your path from zero to confidence — each lesson brings you closer';
-  var trustItems=document.querySelectorAll('.trust-item');
-  var trustAr=['منهج امريكي اصلي','شرح عربي لكل درس','ترجمة فورية بلا حدود','لوحة تتابع تقدمك'];
-  var trustEn=['Authentic American curriculum','Arabic explained every lesson','Unlimited instant translation','Progress tracking dashboard'];
-  trustItems.forEach(function(el,i){ if(trustAr[i]){ var dot=el.querySelector('.dot'); var txt=lang==='ar'?trustAr[i]:trustEn[i]; el.innerHTML=(dot?'<span class="dot"></span>':'')+txt; }});
-  var heroPrimary=document.querySelector('#heroPathCta span');
-  if(heroPrimary) heroPrimary.textContent = lang==='ar' ? 'اعرف بدايتي' : 'Find my starting point';
-  var heroSecondary=document.querySelector('.hero-cta-row a.btn-outline');
-  if(heroSecondary) heroSecondary.textContent = lang==='ar' ? 'استكشف المنصة' : 'Explore PEL';
+  // (trust items removed)
+
   // hero social proof removed: fabricated statistics are not allowed on PEL
   var heroWa=document.querySelector('#heroWaBtn span');
   if(heroWa) heroWa.textContent = lang==='ar' ? 'راسل استاذ فراس' : 'Message Tutor Firas';
@@ -1693,7 +1679,7 @@ function applyIndexLang(lang){
   if(ltH2c) ltH2c.textContent = lang==='ar' ? 'من الدرس للحصة المباشرة للحقيقة' : 'Learn in PEL, speak with people';
   var ltSteps=document.querySelectorAll('#liveTeaching .lt-step');
   var ltAr=[{t:'اتعلم في PEL',d:'دروس دقيقتين من مواقف تصير لك'},{t:'تتمرن مع الاستاذ',d:'حصة مباشرة مع الاستاذ فراس كل اسبوع'},{t:'تستخدمها بالحياة',d:'تستخدم اللي تعلمته في شغلك وسفرك وسوالفك'}];
-  var ltEn=[{t:'Learn in PEL',d:'Short lessons from real situations'},{t:'Practice with a teacher',d:'Live group session every week'},{t:'Use it in real life',d:'Work, travel, everyday talk'}];
+  var ltEn=[{t:'Learn in PEL',d:'2-minute lessons from situations that happen to you'},{t:'Practice with a teacher',d:'Live group session every week'},{t:'Use it in real life',d:'Work, travel, everyday talk'}];
   ltSteps.forEach(function(step,i){ var arr=lang==='ar'?ltAr:ltEn; if(!arr[i])return; var tEl=step.querySelector('div[style*="font-weight:700"]'); if(tEl) tEl.textContent=arr[i].t; var dEl=step.querySelector('div[style*="color:var(--text-muted)"]'); if(dEl) dEl.textContent=arr[i].d; });
   // any remaining “ابني مسار تعلمي” buttons not covered by data-open-path span
   document.querySelectorAll('[data-open-path]').forEach(function(btn){
@@ -1764,20 +1750,20 @@ function applyIndexLang(lang){
   });
   // pricing header
   var pricingHead=document.querySelector('#pricing .section-head h2');
-  if(pricingHead) setLang(pricingHead, 'وصول كامل للمنصة، بسعر واضح', 'Full platform access, clear pricing');
+  if(pricingHead) setLang(pricingHead, 'باقتين، ثلاث مدد، وكلها تشمل حصص مباشرة.', 'Two tracks, three durations, all include live classes.');
   var pricingP=document.querySelector('#pricing .section-head p');
   if(pricingP) setLang(pricingP, 'عندنا مسارين: ابد من الصفر، والتجهيز للاختبارات. كل مسار فيه 3 باقات، وكل الباقات فيها حصص مباشرة مع الاستاذ فراس: باقات ابد من الصفر تشمل حصة كل اسبوع، وباقات التجهيز تشمل من حصة الى 3 حصص اسبوعية حسب المدة. الاشتراك والدفع كله عن طريق واتساب، مافي دفع اونلاين', 'Two tracks - Start From Zero and Exam Prep. Each has 3 plans, and every plan includes live classes with Tutor Firas: Start From Zero plans include 1 class a week, Exam Prep plans include 1 to 3 classes a week depending on duration. Signup and payment all happen over WhatsApp, no online payment');
   var pricingNote=document.querySelector('.pricing-note');
-  if(pricingNote) pricingNote.innerHTML = lang==='ar' ? '<b>ما تعرف اي باقة تناسبك؟</b> راسلنا واتساب، نتعرف على مستواك وهدفك، ونرجع لك بخطة وسعر يناسبك - او نخصص لك تدريباً فردياً اونلاين' : '<b>Not sure which plan fits?</b> Message us on WhatsApp - we’ll assess your level and goal and recommend the right plan, or a private option';
+  if(pricingNote) pricingNote.innerHTML = lang==='ar' ? '<b>ما تعرف وش يناسبك؟</b> راسلنا واتساب ونساعدك تختار.' : '<b>Not sure which fits?</b> Message us on WhatsApp and we'll help you choose.';
   // footer + remaining section heads (minimal bilingual to satisfy full-site requirement)
   var footerBrandP=document.querySelector('.footer-brand p.arabic');
-  if(footerBrandP) footerBrandP.textContent = lang==='ar' ? 'منصة تعليم انجليزي للناطقين بالعربية. شرح بالعربي، نطق مسموع، ترجمة فورية، ودراسة من مواقف حقيقية. مع الاستاذ فراس.' : 'A private academy for Arabic speakers who refuse to sound like a textbook. Built around one teacher, one voice, one plan at a time.';
+  if(footerBrandP) footerBrandP.textContent = lang==='ar' ? 'منصة تعليم انجليزي للناطقين بالعربية. شرح بالعربي، نطق مسموع، ترجمة فورية، ودراسة من مواقف حقيقية. مع الاستاذ فراس.' : 'An English learning platform for Arabic speakers. Arabic explanations, audio pronunciation, instant translation, and real-situation lessons. With Tutor Firas.';
   var faqH2=document.querySelector('#faq .section-head h2');
   if(faqH2) faqH2.textContent = lang==='ar' ? 'اسيلة قبل التسجيل' : 'Questions before you enroll';
   var finalH2=document.querySelector('.final-cta h2');
   if(finalH2) finalH2.textContent = lang==='ar' ? 'ابدا درسك الاول الحين' : 'Start your first lesson now';
   var finalP=document.querySelector('.final-cta p.arabic');
-  if(finalP) finalP.textContent = lang==='ar' ? 'راسلنا واتساب، نفعّل حسابك وتبدا تتعلم نفس اليوم.' : 'Message us, we will assess your level and goal and get back with the right plan and price.';
+  if(finalP) finalP.textContent = lang==='ar' ? 'راسلنا واتساب، نفعّل حسابك وتبدا تتعلم نفس اليوم.' : 'Message us on WhatsApp, we activate your account and you start learning the same day.';
   // personalPreview
   var ppEyebrow=document.querySelector('#personalPreview .eyebrow');
   if(ppEyebrow) ppEyebrow.textContent = lang==='ar' ? 'نفس المنصة، خطة غير' : 'Same platform, different plan';
@@ -1930,7 +1916,7 @@ function applyIndexLang(lang){
   if(loopP) loopP.textContent = lang==='ar' ? 'كل خطوة تبني على اللي قبلها، وتقدمك يرجع للنظام' : 'Each step builds on the last, and your progress feeds back into the system.';
   // live teaching bilingual
   var liveH2=document.querySelector('#liveTeaching h2');
-  if(liveH2) liveH2.textContent = lang==='ar' ? 'تتعلم في المنصة، وتتمرن مع استاذ حقيقي' : 'Learn in the app, practice with a real teacher';
+  if(liveH2) liveH2.textContent = lang==='ar' ? 'من الدرس للحصة المباشرة للحقيقة' : 'From lesson to live class to real life';
   var liveP=document.querySelector('#liveTeaching .section-head p');
   if(liveP) liveP.textContent = lang==='ar' ? 'مو حصص عشوايية على زوم. كل حصة مرتبطة بخطتك، وترجع ملاحظاتها للمنصة' : 'Not random Zoom classes. Every session is tied to your plan and feedback returns to the platform.';
   var liveCards=document.querySelectorAll('#liveTeaching .card');
