@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none';">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://lewoochehpiycocvfwtz.supabase.co https://api.supabase.co; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none';">
 <title>PEL، Personalized English Lessons، تعلم الانجليزية الامريكية بثقة</title>
 <link rel="canonical" href="index.html">
 <link rel="icon" type="image/svg+xml" href="brand/pel-favicon.svg?v=2">
@@ -1188,51 +1188,35 @@ section{ padding-top:80px; padding-bottom:80px; }
     </div>
 
     <div class="hero-preview" id="heroVisual">
-      <div class="feature-card" id="featureCard">
-        <div class="feature-card-head">
-          <span class="pill gold arabic">لماذا PEL؟</span>
-          <span class="feature-tagline">Everything you need to speak English</span>
+      <div class="lesson-card">
+        <div class="ls-head">
+          <div class="ls-pills">
+            <span class="pill gold arabic" id="lsDay">درس اليوم</span>
+            <span class="pill" id="lsAcademy">American Small Talk</span>
+          </div>
         </div>
-        <div class="feature-list">
-          <div class="feature-item">
-            <div class="feature-icon icon-audio">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
-            </div>
-            <div class="feature-body">
-              <b>نطق مسموع</b>
-              <span>Audio pronunciation for every word</span>
-            </div>
-          </div>
-          <div class="feature-item">
-            <div class="feature-icon icon-arabic">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14"/><path d="M5 12h14"/><path d="M5 16h9"/></svg>
-            </div>
-            <div class="feature-body">
-              <b>شرح بالعربي</b>
-              <span>Grammar explained in your language</span>
+        <div class="ls-title" id="lsTitle">Shopping For Clothes</div>
+        <div class="ls-dialog">
+          <div class="ls-line">
+            <span class="ls-play"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h3l5 4V5z"/><path d="M16 9a5 5 0 0 1 0 6"/></svg></span>
+            <div class="txt">
+              <b>How much is this?</b>
+              <span class="say"><span dir="rtl">بكم هذا؟</span><i class="say-sep"></i><span dir="rtl">هاو ماتش از ذس</span></span>
             </div>
           </div>
-          <div class="feature-item">
-            <div class="feature-icon icon-srs">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
-            </div>
-            <div class="feature-body">
-              <b>مراجعة ذكية</b>
-              <span>Spaced repetition that remembers</span>
+          <div class="ls-line reply">
+            <div class="txt">
+              <b>Twenty riyals</b>
+              <span class="say"><span dir="rtl">بعشرين ريال</span><i class="say-sep"></i><span dir="rtl">توينتي رايالز</span></span>
             </div>
           </div>
-          <div class="feature-item">
-            <div class="feature-icon icon-live">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-            </div>
-            <div class="feature-body">
-              <b>حصص مباشرة</b>
-              <span>Live classes with Tutor Firas</span>
-            </div>
-          </div>
+        </div>
+        <div class="ls-meta">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+          <span class="arabic">كل درس دقيقتين، نطق مسموع وشرح بالعربي</span>
         </div>
       </div>
-    <div style="text-align:center; margin-top:24px; font-size:.82rem; color:var(--text-muted);">ابدا الحين — اول درس عليك</div>
+    <div style="text-align:center; margin-top:24px; font-size:.82rem; color:var(--text-muted);">بدون تسجيل، تشوف نتيجتك قبل ما تدفع</div>
   </div>
 </section>
 <style>#personalPreview .pp-chip{ padding:12px 16px; border-radius:14px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.06); font-size:.9rem; transition:border-color .3s; cursor:default; } #personalPreview .pp-chip:hover{ border-color:rgba(200,169,106,.3); } @media(max-width:860px){ #personalPreview .reveal.pp-grid{ grid-template-columns:1fr !important; max-width:440px !important; margin:0 auto !important; } }</style>
@@ -1345,15 +1329,15 @@ section{ padding-top:80px; padding-bottom:80px; }
     return t==='exam_prep' ? {
       nameEn:'Exam Prep', nameAr:'التجهيز للاختبارات',
       termEn:'Advanced - STEP, TOEFL, IELTS', termAr:'متقدم - STEP و TOEFL و IELTS',
-      descEn:'For advanced students targeting STEP, TOEFL and IELTS.', descAr:'للمتقدمين المستعدين لـ STEP و TOEFL و IELTS.',
+      descEn:'For advanced students targeting STEP, TOEFL and IELTS.', descAr:'للي جاهزين للخطوة الثانية: STEP، TOEFL، و IELTS.',
       featEn:['Exam prep tracks','Mock exam simulator questions','Targeted vocabulary modules','Instant translation & writing review'],
-      featAr:['مسارات التجهيز للاختبارات','اسيلة محاكاة للامتحان','وحدات مصطلحات مستهدفة','ترجمة فورية ومراجعة كتابة']
+      featAr:['تجهيز مخصص لكل اختبار','اسلة محاكاة حقيقية زي الامتحان','كلمات ومصطلحات مركزة على الاختبار','ترجمة فورية وتصحيح كتابتك']
     } : {
       nameEn:'Start From 0', nameAr:'ابد من الصفر',
       termEn:'Absolute beginner - first letter', termAr:'مبتدي من الصفر - اول حرف',
-      descEn:'For absolute beginners starting from scratch.', descAr:'للمبتديين من الصفر خطوة بخطوة.',
+      descEn:'For absolute beginners starting from scratch.', descAr:'للي يبدا من الصفر، حرف حرف، خطوة خطوة.',
       featEn:['Full dashboard & lesson access','Baseline non-advanced lessons','Daily real-world scenarios','Instant translation & Arabic support'],
-      featAr:['وصول كامل للوحة التحكم والدروس','دروس اساسية غير متقدمة','سيناريوهات يومية واقعية','ترجمة فورية وشرح بالعربي']
+      featAr:['كل الدروس واللوحة امامك','تبدا من الاساسيات ببطء وثقة','تتعلم من مواقف تصير لك كل يوم','ترجمة فورية وشرح بالعربي مع كل درس']
     };
   }
   function durLabel(m,ar){ return m===1?(ar?'شهر':'1 Month'):(m===2?(ar?'شهران':'2 Months'):(ar?'3 اشهر':'3 Months')); }
@@ -2123,34 +2107,22 @@ window.addEventListener('load', renderDailyLesson);
 window.addEventListener('pel-lang-changed', renderDailyLesson);
 window.addEventListener('storage', function(e){ if(e.key==='pel_account_prefs') renderDailyLesson(); });
 
-/* FEATURE CARD - subtle hover animation on scroll into view */
+/* LESSON CARD - play button pulse on scroll into view */
 (function(){
-  var card = document.getElementById('featureCard');
+  var card = document.querySelector('.lesson-card');
   if(!card) return;
-  var items = card.querySelectorAll('.feature-item');
-  if(!items.length) return;
+  var play = card.querySelector('.ls-play');
+  if(!play) return;
   
-  // Stagger reveal items when the card comes into view
   if('IntersectionObserver' in window){
     var io = new IntersectionObserver(function(entries){
       entries.forEach(function(e){
         if(e.isIntersecting){
-          items.forEach(function(item, i){
-            setTimeout(function(){
-              item.style.opacity = '1';
-              item.style.transform = 'translateX(0)';
-            }, i * 120);
-          });
+          play.style.animation = 'lsPlayPulse 2s ease-in-out';
           io.unobserve(card);
         }
       });
     }, { threshold: 0.3 });
-    // Set initial state
-    items.forEach(function(item){
-      item.style.opacity = '0';
-      item.style.transform = 'translateX(20px)';
-      item.style.transition = 'opacity .5s, transform .5s';
-    });
     io.observe(card);
   }
 })();
