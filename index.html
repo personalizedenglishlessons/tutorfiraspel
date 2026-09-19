@@ -420,54 +420,68 @@ nav.primary-nav a:hover::after{ width:100%; }
 }
 .ls-meta svg{ width:13px; height:13px; color:var(--success); flex-shrink:0; }
 
-.mini-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-.mini{
-  border-radius:18px;
-  background:linear-gradient(160deg, var(--card-elevated), var(--card));
-  border:1px solid var(--border);
-  padding:13px 14px;
-  display:flex; flex-direction:column; gap:10px;
-  transition:transform .25s ease, border-color .3s, box-shadow .3s;
-}
-.mini:hover{ transform:translateY(-2px); border-color:rgba(200,169,106,.35); box-shadow:0 18px 44px -22px rgba(0,0,0,.65); }
-.mini-wide{ grid-column:1 / -1; }
-.mini-head{ display:flex; align-items:center; gap:8px; }
-.mini-head b{ font-size:.74rem; color:var(--text-secondary); font-weight:600; letter-spacing:.02em; }
-.mini-icon{
-  width:26px; height:26px; border-radius:8px; flex-shrink:0;
-  display:flex; align-items:center; justify-content:center;
-}
-.mini-icon svg{ width:14px; height:14px; }
-.mini-icon.gi{ background:rgba(200,169,106,.14); color:var(--gold); }
-.mini-icon.ei{ background:rgba(63,140,114,.16); color:var(--emerald); }
-.mini-icon.pi{ background:rgba(122,57,187,.16); color:#b794f4; }
-.mini-body{ display:flex; align-items:center; gap:9px; flex-wrap:wrap; }
-.mini-word{ font-size:.88rem; font-weight:600; color:var(--text); letter-spacing:.01em; white-space:nowrap; }
-.mini-ipa{ font-size:.74rem; color:var(--gold-soft); font-family:'Berkeley Mono',ui-monospace,monospace; white-space:nowrap; }
-.mini-say{ font-size:.78rem; color:var(--text-muted); white-space:nowrap; }
-.mini-arrow{ width:14px; height:14px; color:var(--gold); flex-shrink:0; }
-.mini-wave{ display:flex; align-items:center; gap:2.5px; margin-left:auto; }
-[dir="rtl"] .mini-wave{ margin-left:0; margin-right:auto; }
-.mini-wave i{ width:3px; border-radius:2px; background:var(--gold); opacity:.7; }
-.mini-wave i:nth-child(1){ height:7px; }
-.mini-wave i:nth-child(2){ height:12px; }
-.mini-wave i:nth-child(3){ height:16px; }
-.mini-wave i:nth-child(4){ height:11px; }
-.mini-wave i:nth-child(5){ height:6px; }
-.mini-note{ font-size:.74rem; color:var(--text-muted); line-height:1.4; }
-.mini-next{ margin-inline-start:auto; font-size:.66rem; color:var(--text-secondary); white-space:nowrap; }
-.mini-next .next-academy{ color:var(--gold-soft); font-weight:600; }
-.mini-ring{ position:relative; width:34px; height:34px; flex-shrink:0; }
-.mini-ring svg{ transform:rotate(-90deg); }
-.mini-ring .ring-bg{ stroke:var(--border); }
-.mini-ring .ring-fg{ stroke:var(--gold); stroke-linecap:round; }
-.mini-ring .ring-pct{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:.58rem; font-weight:700; color:var(--text); }
-.say-sep{ display:inline-block; width:1px; height:10px; background:var(--border); margin:0 7px; vertical-align:middle; }
+/* feature tabs panel - replaces floating cards */
+.feature-tabs{ display:flex; gap:6px; flex-wrap:wrap; }
+.ftab{ padding:8px 14px; border-radius:12px; font-size:.8rem; font-weight:600; color:var(--text-muted); border:1px solid transparent; background:transparent; transition:all .25s var(--ease); cursor:pointer; font-family:inherit; }
+.ftab:hover{ color:var(--text-secondary); background:rgba(255,255,255,.04); }
+.ftab.active{ color:var(--gold); background:rgba(200,169,106,.1); border-color:rgba(200,169,106,.3); }
+.feature-panel{ position:relative; min-height:200px; }
+.fpanel{ display:none; }
+.fpanel.active{ display:block; animation:fpFade .4s var(--ease); }
+@keyframes fpFade{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+.feature-footer{ text-align:center; padding-top:10px; border-top:1px solid var(--border); font-size:.76rem; color:var(--text-muted); }
+
+/* pronunciation feature */
+.pron-feature{ padding:16px; border-radius:18px; background:linear-gradient(160deg, var(--card-elevated), var(--card)); border:1px solid var(--border); }
+.pron-feature-head{ margin-bottom:14px; }
+.pron-feature-body{ display:flex; flex-direction:column; gap:12px; }
+.pron-item{ display:flex; align-items:center; gap:12px; flex-wrap:wrap; padding:12px 14px; border-radius:14px; background:rgba(255,255,255,.025); border:1px solid var(--border); }
+.pron-word{ font-size:1rem; font-weight:600; color:var(--text); }
+.pron-ipa{ font-size:.78rem; color:var(--gold-soft); font-family:ui-monospace,monospace; }
+.pron-say{ font-size:.82rem; color:var(--text-muted); }
+.pron-wave{ display:flex; align-items:center; gap:2.5px; margin-inline-start:auto; }
+.pron-wave i{ width:3px; border-radius:2px; background:var(--gold); opacity:.7; }
+.pron-wave i:nth-child(1){ height:7px; }
+.pron-wave i:nth-child(2){ height:12px; }
+.pron-wave i:nth-child(3){ height:16px; }
+.pron-wave i:nth-child(4){ height:11px; }
+.pron-wave i:nth-child(5){ height:6px; }
+.pron-note{ margin-top:12px; font-size:.76rem; color:var(--text-muted); text-align:center; }
+
+/* translation feature */
+.tr-feature{ padding:16px; border-radius:18px; background:linear-gradient(160deg, var(--card-elevated), var(--card)); border:1px solid var(--border); }
+.tr-feature-head{ margin-bottom:14px; }
+.tr-items{ display:flex; flex-direction:column; gap:10px; }
+.tr-item{ display:flex; align-items:center; gap:12px; padding:12px 14px; border-radius:14px; background:rgba(255,255,255,.025); border:1px solid var(--border); }
+.tr-ar{ font-size:.9rem; color:var(--text); }
+.tr-arrow{ width:16px; height:16px; color:var(--gold); flex-shrink:0; }
+.tr-en{ font-size:.88rem; color:var(--text-secondary); font-weight:500; }
+.tr-note{ margin-top:12px; font-size:.76rem; color:var(--text-muted); text-align:center; }
+
+/* progress feature */
+.prog-feature{ padding:16px; border-radius:18px; background:linear-gradient(160deg, var(--card-elevated), var(--card)); border:1px solid var(--border); }
+.prog-feature-head{ margin-bottom:14px; }
+.prog-items{ display:flex; flex-direction:column; gap:14px; }
+.prog-item{ display:flex; align-items:center; gap:14px; padding:14px; border-radius:14px; background:rgba(255,255,255,.025); border:1px solid var(--border); }
+.prog-ring{ position:relative; width:40px; height:40px; flex-shrink:0; }
+.prog-ring svg{ transform:rotate(-90deg); }
+.prog-ring .ring-bg{ stroke:var(--border); }
+.prog-ring .ring-fg{ stroke:var(--gold); stroke-linecap:round; }
+.prog-ring .ring-pct{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:.64rem; font-weight:700; color:var(--text); }
+.prog-detail{ display:flex; flex-direction:column; gap:3px; }
+.prog-detail b{ font-size:.88rem; color:var(--text); }
+.prog-next{ font-size:.72rem; color:var(--gold-soft); }
+.prog-stats{ display:flex; gap:10px; }
+.prog-stat{ flex:1; text-align:center; padding:12px 8px; border-radius:12px; background:rgba(255,255,255,.025); border:1px solid var(--border); }
+.prog-stat b{ display:block; font-size:1.1rem; color:var(--gold); font-weight:700; }
+.prog-stat span{ font-size:.68rem; color:var(--text-muted); margin-top:2px; display:block; }
+.prog-note{ margin-top:12px; font-size:.76rem; color:var(--text-muted); text-align:center; }
 
 @media(max-width:980px){ .hero-preview{ width:min(100%, 520px); } }
 @media(max-width:480px){
-  .mini-grid{ grid-template-columns:1fr; }
-  .mini-wide{ grid-column:auto; }
+  .feature-tabs{ gap:4px; }
+  .ftab{ padding:6px 10px; font-size:.72rem; }
+  .prog-stats{ flex-direction:column; }
   .ls-line.reply, [dir="rtl"] .ls-line.reply{ padding-left:0; padding-right:0; }
 }
 
@@ -1137,8 +1151,8 @@ section{ padding-top:80px; padding-bottom:80px; }
   <div class="container hero-grid">
     <div class="reveal is-visible">
        <span class="eyebrow hero-eyebrow" dir="ltr" style="justify-content:flex-start;"><span class="pel-tag">Personalized English Lessons</span></span>
-      <h1 class="arabic-h" dir="rtl" style="margin-top:18px; font-size:clamp(2.2rem,5vw,3.6rem); line-height:1.15;">انجليزي يشبه حياتك، <em>مو جمل تحفظها</em></h1>
-      <p class="arabic hero-sub" dir="rtl" style="font-size:1.05rem; max-width:560px; margin-top:14px; line-height:1.8;">قل لنا وش تبي الانجليزي لاجله، شغلك سفرك سوالفك اليومية، ونبني لك بداية على مقاسك بدروس من مواقف حقيقية وشرح واضح بالعربي</p>
+      <h1 class="arabic-h" dir="rtl" style="margin-top:18px; font-size:clamp(2rem,4.5vw,3.2rem); line-height:1.2;">انجليزي للدوام، السفر، وسوالفك اليومية</h1>
+      <p class="arabic hero-sub" dir="rtl" style="font-size:1rem; max-width:520px; margin-top:14px; line-height:1.8;">مو كلام كتب. دروس من مواقف تصير لك فعلا، نطق مسموع، شرح بالعربي، وتتبع تقدمك خطوة بخطوة</p>
       <div class="hero-cta-row" style="margin-top:26px; gap:12px; flex-wrap:wrap; align-items:center;">
         <button class="btn-gold magnetic" data-open-path id="heroPathCta" style="padding:14px 28px; font-size:.95rem;">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="2.5"/><circle cx="18" cy="5" r="2.5"/><path d="M8.5 19H15a3 3 0 0 0 3-3v-8.5M6 16.5V8a3 3 0 0 1 3-3h3.5"/></svg>
@@ -1158,77 +1172,123 @@ section{ padding-top:80px; padding-bottom:80px; }
         <div class="trust-item"><span class="dot"></span>منهج امريكي اصلي</div>
         <div class="trust-item"><span class="dot"></span>شرح عربي لكل درس</div>
         <div class="trust-item"><span class="dot"></span>ترجمة فورية بلا حدود</div>
-        <div class="trust-item"><span class="dot"></span>لوحة تتابع تقدمك</div>
+        <div class="trust-item"><span class="dot"></span>تتبع تقدمك</div>
       </div>
     </div>
 
     <div class="hero-preview" id="heroVisual">
-      <div class="lesson-card">
-        <div class="ls-head">
-          <div class="ls-pills">
-            <span class="pill gold arabic" id="lsDay">درس اليوم</span>
-            <span class="pill" id="lsAcademy">American Small Talk</span>
-          </div>
-        </div>
-        <div class="ls-title" id="lsTitle">Shopping For Clothes</div>
-        <div class="ls-dialog">
-          <div class="ls-line">
-            <span class="ls-play"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h3l5 4V5z"/><path d="M16 9a5 5 0 0 1 0 6"/></svg></span>
-            <div class="txt">
-              <b>How much is this?</b>
-              <span class="say"><span dir="rtl">بكم هذا؟</span><i class="say-sep"></i><span dir="rtl">هاو ماتش از ذس</span></span>
+      <div class="feature-tabs" id="featureTabs">
+        <button class="ftab active" data-ftab="lesson"><span>درس دقيقتين</span></button>
+        <button class="ftab" data-ftab="pronun"><span>نطق وتسجيل</span></button>
+        <button class="ftab" data-ftab="translate"><span>ترجمة وشرح</span></button>
+        <button class="ftab" data-ftab="progress"><span>تقدمك</span></button>
+      </div>
+      <div class="feature-panel" id="featurePanel">
+        <!-- Lesson tab -->
+        <div class="fpanel active" data-fpanel="lesson">
+          <div class="ls-head">
+            <div class="ls-pills">
+              <span class="pill gold arabic">درس اليوم</span>
+              <span class="pill">American Small Talk</span>
             </div>
           </div>
-          <div class="ls-line reply">
-            <div class="txt">
-              <b>Twenty riyals</b>
-              <span class="say"><span dir="rtl">بعشرين ريال</span><i class="say-sep"></i><span dir="rtl">توينتي رايالز</span></span>
+          <div class="ls-title">Shopping For Clothes</div>
+          <div class="ls-dialog">
+            <div class="ls-line">
+              <span class="ls-play"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h3l5 4V5z"/><path d="M16 9a5 5 0 0 1 0 6"/></svg></span>
+              <div class="txt">
+                <b>How much is this?</b>
+                <span class="say"><span dir="rtl">بكم هذا؟</span><i class="say-sep"></i><span dir="rtl">هاو ماتش از ذس</span></span>
+              </div>
+            </div>
+            <div class="ls-line reply">
+              <div class="txt">
+                <b>Twenty riyals</b>
+                <span class="say"><span dir="rtl">بعشرين ريال</span><i class="say-sep"></i><span dir="rtl">توينتي رايالز</span></span>
+              </div>
             </div>
           </div>
+          <div class="ls-meta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="arabic">كل درس دقيقتين، نطق مسموع وشرح بالعربي</span>
+          </div>
         </div>
-        <div class="ls-meta">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-          <span class="arabic">كل درس دقيقتين، نطق مسموع وشرح بالعربي</span>
+
+        <!-- Pronunciation tab -->
+        <div class="fpanel" data-fpanel="pronun">
+          <div class="pron-feature">
+            <div class="pron-feature-head">
+              <span class="pill gold arabic">Pronunciation Studio</span>
+            </div>
+            <div class="pron-feature-body">
+              <div class="pron-item">
+                <b class="pron-word">Water</b>
+                <span class="pron-ipa">/ˈwɔː.tɚ/</span>
+                <span class="pron-say arabic">ووتر</span>
+                <span class="pron-wave"><i></i><i></i><i></i><i></i><i></i></span>
+              </div>
+              <div class="pron-item">
+                <b class="pron-word">Riyals</b>
+                <span class="pron-ipa">/ˈri.jəlz/</span>
+                <span class="pron-say arabic">ريالز</span>
+                <span class="pron-wave"><i></i><i></i><i></i><i></i><i></i></span>
+              </div>
+            </div>
+            <p class="arabic pron-note">تسمع الكلمة، تقولها، وتشوف وش ناقص</p>
+          </div>
+        </div>
+
+        <!-- Translation tab -->
+        <div class="fpanel" data-fpanel="translate">
+          <div class="tr-feature">
+            <div class="tr-feature-head">
+              <span class="pill gold arabic">ترجمة فورية</span>
+            </div>
+            <div class="tr-items">
+              <div class="tr-item">
+                <span class="tr-ar arabic">بكم هذا؟</span>
+                <svg class="tr-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+                <span class="tr-en">How much is this?</span>
+              </div>
+              <div class="tr-item">
+                <span class="tr-ar arabic">وين الحمام؟</span>
+                <svg class="tr-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+                <span class="tr-en">Where is the bathroom?</span>
+              </div>
+            </div>
+            <p class="arabic tr-note">ترجمة بلا حدود لاي كلمة او جملة، مجانا</p>
+          </div>
+        </div>
+
+        <!-- Progress tab -->
+        <div class="fpanel" data-fpanel="progress">
+          <div class="prog-feature">
+            <div class="prog-feature-head">
+              <span class="pill gold arabic">لوحة التقدم</span>
+            </div>
+            <div class="prog-items">
+              <div class="prog-item">
+                <span class="prog-ring">
+                  <svg width="40" height="40" viewBox="0 0 40 40"><circle class="ring-bg" cx="20" cy="20" r="16" fill="none" stroke-width="3"/><circle class="ring-fg" cx="20" cy="20" r="16" fill="none" stroke-width="3" stroke-dasharray="100.53" stroke-dashoffset="30.16"/></svg>
+                  <span class="ring-pct">70%</span>
+                </span>
+                <div class="prog-detail">
+                  <b>تقدمك في الدروس</b>
+                  <span class="arabic prog-next">Next: Grammar Academy</span>
+                </div>
+              </div>
+              <div class="prog-stats">
+                <div class="prog-stat"><b>12</b><span class="arabic">درس مكتمل</span></div>
+                <div class="prog-stat"><b>85</b><span class="arabic">كلمة جديدة</span></div>
+                <div class="prog-stat"><b>3</b><span class="arabic">حصص مباشرة</span></div>
+              </div>
+            </div>
+            <p class="arabic prog-note">درس بعد درس، مستواك يطلع</p>
+          </div>
         </div>
       </div>
-      <div class="mini-grid">
-        <article class="mini">
-          <div class="mini-head">
-            <span class="mini-icon gi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9.5 9.5 0 0 1 0 13"/></svg></span>
-            <b>اسمعها صح</b>
-          </div>
-          <div class="mini-body">
-            <span class="mini-word">Water</span>
-            <span class="mini-ipa">/ˈwɔː.tɚ/</span>
-            <span class="mini-say arabic">ووتر</span>
-            <span class="mini-wave"><i></i><i></i><i></i><i></i><i></i></span>
-          </div>
-        </article>
-        <article class="mini">
-          <div class="mini-head">
-            <span class="mini-icon ei"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg></span>
-            <b>ترجمة تفهمك</b>
-          </div>
-          <div class="mini-body">
-            <span class="mini-say arabic">بكم هذا؟</span>
-            <svg class="mini-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
-            <span class="mini-word">How much is this?</span>
-          </div>
-        </article>
-        <article class="mini mini-wide">
-          <div class="mini-head">
-            <span class="mini-icon pi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m3 17 6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></span>
-            <b>تقدمك محفوظ</b>
-            <span class="mini-next">Next: <span class="next-academy">Grammar Academy</span></span>
-          </div>
-          <div class="mini-body">
-            <span class="mini-ring">
-              <svg width="34" height="34" viewBox="0 0 34 34"><circle class="ring-bg" cx="17" cy="17" r="14" fill="none" stroke-width="3"/><circle class="ring-fg" cx="17" cy="17" r="14" fill="none" stroke-width="3" stroke-dasharray="87.96" stroke-dashoffset="62.14"/></svg>
-              <span class="ring-pct">70%</span>
-            </span>
-            <span class="mini-note arabic">درس بعد درس، مستواك يطلع</span>
-          </div>
-        </article>
+      <div class="feature-footer">
+        <span class="arabic">شوف وش داخل المنصة</span>
       </div>
     </div>
   </div>
@@ -1360,9 +1420,9 @@ section{ padding-top:80px; padding-bottom:80px; }
   function matrixRows(){
     if(window.PEL_PLANS_DB && PEL_PLANS_DB.length) return PEL_PLANS_DB;
     return [
-      {tier:'start_from_zero',duration_months:1,price:230,weekly_live_classes:1,featured:false},
-      {tier:'start_from_zero',duration_months:2,price:450,weekly_live_classes:1,featured:false},
-      {tier:'start_from_zero',duration_months:3,price:750,weekly_live_classes:1,featured:true},
+      {tier:'start_from_zero',duration_months:1,price:500,weekly_live_classes:1,featured:false},
+      {tier:'start_from_zero',duration_months:2,price:870,weekly_live_classes:1,featured:false},
+      {tier:'start_from_zero',duration_months:3,price:950,weekly_live_classes:1,featured:true},
       {tier:'exam_prep',duration_months:1,price:1000,weekly_live_classes:1,featured:false},
       {tier:'exam_prep',duration_months:2,price:1300,weekly_live_classes:2,featured:false},
       {tier:'exam_prep',duration_months:3,price:2200,weekly_live_classes:3,featured:true}
@@ -1621,17 +1681,23 @@ function applyIndexLang(lang){
     if(span) span.textContent = lang==='ar' ? 'افتح الدرس في المنصة' : 'Open in app';
     else dailyCta.textContent = lang==='ar' ? 'افتح الدرس في المنصة' : 'Open in app';
   }
-  // hero visual mini cards
-  var miniT = lang==='ar'
-    ? ['اسمعها صح','ترجمة تفهمك','تقدمك محفوظ']
-    : ['Hear it clearly','Translation that explains','Progress stays saved'];
-  document.querySelectorAll('.mini-head b').forEach(function(el,i){ if(miniT[i]) el.textContent=miniT[i]; });
-  var fcNote=document.querySelector('.mini-note');
-  if(fcNote) fcNote.textContent = lang==='ar' ? 'درس بعد درس، مستواك يطلع' : 'Lesson by lesson, your level rises';
-  var lsDay=document.getElementById('lsDay');
+  // feature tabs (replaces floating mini cards)
+  var ftabLabels = lang==='ar'
+    ? ['درس دقيقتين','نطق وتسجيل','ترجمة وشرح','تقدمك']
+    : ['2-min Lesson','Pronunciation','Translation','Progress'];
+  document.querySelectorAll('.ftab span').forEach(function(el,i){ if(ftabLabels[i]) el.textContent=ftabLabels[i]; });
+  var lsDay=document.querySelector('.fpanel[data-fpanel=lesson] .pill.gold');
   if(lsDay) lsDay.textContent = lang==='ar' ? 'درس اليوم' : 'Lesson of the Day';
   var lsMeta=document.querySelector('.ls-meta span');
   if(lsMeta) lsMeta.textContent = lang==='ar' ? 'كل درس دقيقتين، نطق مسموع وشرح بالعربي' : 'Every lesson is 2 minutes, with audio pronunciation and Arabic explanation';
+  var pronNote=document.querySelector('.pron-note');
+  if(pronNote) pronNote.textContent = lang==='ar' ? 'تسمع الكلمة، تقولها، وتشوف وش ناقص' : 'Hear it, say it, see what needs work';
+  var trNote=document.querySelector('.tr-note');
+  if(trNote) trNote.textContent = lang==='ar' ? 'ترجمة بلا حدود لاي كلمة او جملة، مجانا' : 'Unlimited free translation for any word or sentence';
+  var progNote=document.querySelector('.prog-note');
+  if(progNote) progNote.textContent = lang==='ar' ? 'درس بعد درس، مستواك يطلع' : 'Lesson by lesson, your level rises';
+  var featFooter=document.querySelector('.feature-footer span');
+  if(featFooter) featFooter.textContent = lang==='ar' ? 'شوف وش داخل المنصة' : 'See what is inside the platform';
   // extra catch for stray Arabic UI still showing in English (personalPreview badge etc.)
   document.querySelectorAll('.card .chip.gold').forEach(function(el){
     var t=(el.textContent||'').trim();
@@ -1878,11 +1944,7 @@ function applyIndexLang(lang){
       if(span) span.textContent = lang==='ar' ? 'افتح الدرس في المنصة' : 'Open in app';
     }
   }
-  // lesson preview head
-  var lessonHead=document.querySelector('.lesson-card h3');
-  if(lessonHead) lessonHead.textContent = lang==='ar' ? 'تتكلم بثقة في المواقف اليومية' : 'Speak confidently in everyday situations';
-  var lessonP=document.querySelector('.lesson-card p.arabic');
-  if(lessonP) lessonP.textContent = lang==='ar' ? 'تتمرن على العبارات ونبرة الكلام اللي يستخدمها المتحدث الاصلي في مواقف الحياة اليومية.' : 'Practice phrases and tone used by native speakers in everyday situations.';
+  // (old lesson-card head references removed - replaced by feature tabs)
   // testimonials bilingual
   var testiAr=[
     {name:'رهف العتيبي',role:'موظفه موارد بشريه الرياض',quote:'كنت كل ما صار عندنا اجتماع مع اجانب اسكت واخلي غيري يتكلم بعد فتره مع الاستاذ فراس صرت ارد واتكلم بثقه وحتى مديري لاحظ الفرق'},
@@ -2127,8 +2189,8 @@ function renderDailyLesson(){
   try{ pick = PEL_DAILY.featured(); }catch(e){ return; }
   if(!pick || !pick.lesson || !pick.academy) return;
   var ar = (function(){ try{ var p=JSON.parse(localStorage.getItem('pel_account_prefs')||'null'); return p&&p.lang==='ar'; }catch(e){ return document.documentElement.lang!=='en'; } })();
-  const lsTitle = document.getElementById('lsTitle');
-  const lsAcademy = document.getElementById('lsAcademy');
+  const lsTitle = document.querySelector('.fpanel[data-fpanel=lesson] .ls-title');
+  const lsAcademy = document.querySelector('.fpanel[data-fpanel=lesson] .pill:not(.gold)');
   const lesson = pick.lesson, ac = pick.academy;
   if(lsTitle) lsTitle.textContent = ar ? lesson.ar : lesson.en;
   if(lsAcademy) lsAcademy.textContent = ar ? ac.ar : ac.en;
@@ -2140,6 +2202,44 @@ window.addEventListener('load', renderDailyLesson);
 window.addEventListener('pel-lang-changed', renderDailyLesson);
 window.addEventListener('storage', function(e){ if(e.key==='pel_account_prefs') renderDailyLesson(); });
 
+/* FEATURE TABS - interactive showcase of real app features */
+(function(){
+  var tabs = document.querySelectorAll('.ftab');
+  var panels = document.querySelectorAll('.fpanel');
+  tabs.forEach(function(tab){
+    tab.addEventListener('click', function(){
+      var target = tab.getAttribute('data-ftab');
+      tabs.forEach(function(t){ t.classList.remove('active'); });
+      panels.forEach(function(p){ p.classList.remove('active'); });
+      tab.classList.add('active');
+      var panel = document.querySelector('.fpanel[data-fpanel="'+target+'"]');
+      if(panel) panel.classList.add('active');
+    });
+  });
+})();
+
+/* AUTO-ROTATE FEATURE TABS (every 5 seconds, stops on hover) */
+(function(){
+  var tabs = document.querySelectorAll('.ftab');
+  var heroVisual = document.getElementById('heroVisual');
+  if(!tabs.length || !heroVisual) return;
+  var idx = 0;
+  var timer = null;
+  function rotate(){
+    idx = (idx + 1) % tabs.length;
+    tabs[idx].click();
+  }
+  function start(){ if(!timer) timer = setInterval(rotate, 5000); }
+  function stop(){ if(timer){ clearInterval(timer); timer = null; } }
+  start();
+  heroVisual.addEventListener('mouseenter', stop);
+  heroVisual.addEventListener('mouseleave', start);
+  // Also stop when user manually clicks a tab
+  tabs.forEach(function(tab){
+    tab.addEventListener('click', function(){ stop(); });
+  });
+})();
+
 /* FAQ DATA - bilingual. DB copy (site_settings.faqs, editable in Admin >
    Site Settings) is canonical; this built-in list is the offline fallback. */
 const faqs = [
@@ -2148,11 +2248,11 @@ const faqs = [
   {qAr:'المنهج انجليزي امريكي فعلاً؟', aAr:'اي والله. كل درس وتسجيل ودليل نطق مبني على الانجليزية الامريكية.', qEn:'Is the curriculum really American English?', aEn:'Yes. Every lesson, recording and pronunciation guide is built on American English.'},
   {qAr:'الشرح يكون بالعربي؟', aAr:'نعم. القواعد والمفردات تنشرح بالعربي اول، مع نطق مكتوب بجانب كل كلمة جديدة.', qEn:'Is explanation in Arabic?', aEn:'Yes. Grammar and vocabulary are explained in Arabic first, with transliteration next to each new word.'},
   {qAr:'اقدر ادرس من الجوال؟', aAr:'اكيد. لوحة التحكم الخاصة فيك متجاوبة بالكامل، تكمل دروسك من اي مكان.', qEn:'Can I study on mobile?', aEn:'Absolutely. Your personal dashboard is fully responsive, continue from anywhere.'},
-  {qAr:'كم مدة وصولي للمنصة؟', aAr:'حسب الباقة اللي تختارها: 30 يوم، شهرين، او 3 اشهر. طول فترة اشتراكك يبقى الوصول كامل لكل الدروس والتحديثات الجديدة.', qEn:'How long is access?', aEn:'Depends on your plan: 30 days, 2 months, or 3 months. Full access to all lessons and updates for the entire period.'},
+  {qAr:'كم مدة وصولي للمنصة؟', aAr:'حسب الباقة اللي تختارها: شهر، شهرين، او 3 اشهر. طول فترة اشتراكك يبقى الوصول كامل لكل الدروس والتحديثات الجديدة.', qEn:'How long is access?', aEn:'Depends on your plan: 1 month, 2 months, or 3 months. Full access to all lessons and updates for the entire period.'},
   {qAr:'كيف اترجم واصحح كتابتي؟', aAr:'داخل المنصة ترجمة فورية مجانية بلا حدود لاي كلمة او جملة، وورشة كتابة تصحح لك وتبين لك سبب كل خطا بالعربي.', qEn:'How does translation and writing correction work?', aEn:'Unlimited free instant translation for any word or sentence, plus a writing workshop that corrects you and explains each mistake in Arabic.'},
   {qAr:'اقدر اتابع تقدمي؟', aAr:'نعم. لوحتك الخاصة تتابع تطور محادثتك واستماعك ومفرداتك اسبوع بعد اسبوع.', qEn:'Can I track progress?', aEn:'Yes. Your private dashboard tracks speaking, listening and vocabulary week by week.'},
-  {qAr:'كم سعر الاشتراك؟', aAr:'فيه مسارين: ابد من الصفر (شهر 230 ريال، شهرين 450 ريال، 3 اشهر 750 ريال، وكل باقة تشمل حصة مباشرة كل اسبوع)، والتجهيز للاختبارات (شهر 1000 ريال، شهرين 1300 ريال بحصتين اسبوعية، و3 اشهر 2200 ريال بـ3 حصص اسبوعية). الدفع عبر واتساب والتنشيط خلال دقايق.', qEn:'How much?', aEn:'Two tracks: Start From 0 (1 month 230 SAR, 2 months 450 SAR, 3 months 750 SAR - every plan includes 1 live class a week) and Exam Prep (1 month 1000 SAR, 2 months 1300 SAR with 2 classes a week, 3 months 2200 SAR with 3 classes a week). Pay via WhatsApp, activated in minutes.'},
-  {qAr:'هل الباقات تشمل حصص مباشرة؟', aAr:'كل الباقات تشمل حصص مباشرة مع الاستاذ فراس: باقات ابد من الصفر تشمل حصة كل اسبوع، وباقات التجهيز للاختبارات تشمل حصة اسبوعية في باقة الشهر، وحصتين في الشهرين، و3 حصص في باقة الـ3 اشهر. تبي حصص اضافية؟ اشتر رصيد حصص عن طريق واتساب.', qEn:'Do plans include live classes?', aEn:'Every plan includes live classes with Tutor Firas: Start From Zero plans include 1 class a week, and Exam Prep plans include 1, 2 or 3 classes a week depending on duration. Want extra? Buy class credits via WhatsApp.'},
+  {qAr:'كم سعر الاشتراك؟', aAr:'فيه مسارين: ابد من الصفر، والتجهيز للاختبارات. مسار ابد من الصفر: شهر 500 ريال، شهرين 870 ريال، و3 اشهر 950 ريال (افضل قيمة). مسار التجهيز للاختبارات: شهر 1000 ريال، شهرين 1300 ريال، و3 اشهر 2200 ريال (افضل قيمة). كل الباقات تشمل حصص مباشرة اسبوعية. الدفع عبر واتساب والتنشيط خلال دقايق.', qEn:'How much?', aEn:'Two tracks: Start From 0 (500 SAR/mo, 870 SAR/2mo, 950 SAR/3mo best value) and Exam Prep (1000 SAR/mo, 1300 SAR/2mo, 2200 SAR/3mo best value). All plans include weekly live classes. Pay via WhatsApp, activated in minutes.'},
+  {qAr:'هل الباقات تشمل حصص مباشرة؟', aAr:'اي والله. كل باقة تشمل حصة مباشرة واحدة كل اسبوع على الاقل. باقات التجهيز للاختبارات تشمل من حصة الى 3 حصص اسبوعية حسب المدة. تبي حصص اضافية؟ اشتر رصيد حصص عن طريق واتساب.', qEn:'Do plans include live classes?', aEn:'Yes. Every plan includes at least 1 live class per week. Exam Prep plans include 1-3 live classes per week depending on duration. Want extra? Buy class credits via WhatsApp.'},
   {qAr:'كيف ابدا التسجيل؟', aAr:'راسلنا على واتساب، نرسل لك تفاصيل الدفع ونفعّل حسابك خلال وقت قصير.', qEn:'How do I enroll?', aEn:'Message us on WhatsApp, we send payment details and activate your account shortly.'},
   {qAr:'ايش يصير لما تنتهي باقاتي؟', aAr:'يبقى حسابك وكل تقدمك وشهاداتك محفوظة. بس يوقف الوصول للدروس. وقتها تقدر تجدد من لوحتك مباشرة، او تراسلنا واتساب ونفعل لك باقة جديدة.', qEn:'What happens when my plan ends?', aEn:'Your account, progress and certificates stay saved. Lesson access pauses. Renew from your dashboard or message us on WhatsApp.'},
 ];
