@@ -1548,11 +1548,11 @@ function applyIndexLang(lang){
   loginTexts.forEach(function(el){ el.textContent = lang==='ar' ? 'دخول الطلاب' : 'Student Login'; });
   // hero
   var heroH1=document.querySelector('.hero h1.arabic-h');
-  if(heroH1){ var h1ar = (window.PEL_SITE && PEL_SITE.heroHeadline && PEL_SITE.heroHeadline.ar) ? PEL_SITE.heroHeadline.ar : 'انجليزي للدوام، السفر، وسوالفك اليومية'; var h1en = (window.PEL_SITE && PEL_SITE.heroHeadline && PEL_SITE.heroHeadline.en) ? PEL_SITE.heroHeadline.en : 'English for work, travel, and daily life'; setLang(heroH1, h1ar, h1en); }
+  if(heroH1){ var h1ar = (window.PEL_SITE && PEL_SITE.heroHeadline && PEL_SITE.heroHeadline.ar) ? PEL_SITE.heroHeadline.ar : 'انجليزي يتكلم معك، مو مع كتاب'; var h1en = (window.PEL_SITE && PEL_SITE.heroHeadline && PEL_SITE.heroHeadline.en) ? PEL_SITE.heroHeadline.en : 'English that talks with you, not with a book'; setLang(heroH1, h1ar, h1en); }
   var heroSub=document.querySelector('.hero .hero-sub');
-  if(heroSub){ var hsar = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.ar) ? PEL_SITE.heroSub.ar : 'مو كلام كتب. دروس من مواقف تصير لك فعلا، نطق مسموع، شرح بالعربي، وتتبع تقدمك خطوة بخطوة'; var hsen = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.en) ? PEL_SITE.heroSub.en : 'Not textbook talk. Lessons from situations that actually happen to you, audio pronunciation, Arabic explanations, and step-by-step progress tracking'; setLang(heroSub, hsar, hsen); }
+  if(heroSub){ var hsar = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.ar) ? PEL_SITE.heroSub.ar : 'دروس قصيرة من مواقف تصير لك — بالشغل، بالسفر، بالدوام. نطق مسموع، شرح بالعربي، وحصص مباشرة مع الاستاذ فراس'; var hsen = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.en) ? PEL_SITE.heroSub.en : 'Short lessons from real situations — at work, traveling, daily life. Audio pronunciation, Arabic explanations, and live classes with Tutor Firas'; setLang(heroSub, hsar, hsen); }
   var pathHint=document.querySelector('.path-hint .arabic');
-  if(pathHint) setLang(pathHint, 'اسيلة خفيفة، نعرف مستواك وهدفك ونرجع لك بخطة على مقاس وقتك', 'First lesson is on us — try before you pay');
+  if(pathHint) setLang(pathHint, 'اول درس عليك — جرب قبل ما تدفع', 'First lesson is on us — try before you pay');
   var pathHintEn=document.querySelector('.path-hint-en');
   if(pathHintEn) pathHintEn.textContent = lang==='ar' ? '' : 'First lesson is on us — try before you pay';
   // (trust items removed)
@@ -1631,7 +1631,7 @@ function applyIndexLang(lang){
   var ltHead=document.querySelector('#liveTeaching .eyebrow');
   if(ltHead) ltHead.textContent = lang==='ar' ? 'تعلم وممارسة' : 'Learn & practice';
   var ltH2c=document.querySelector('#liveTeaching h2');
-  if(ltH2c) ltH2c.textContent = lang==='ar' ? 'من الدرس للحصة المباشرة للحياة' : 'Learn in PEL, speak with people';
+  if(ltH2c) ltH2c.textContent = lang==='ar' ? 'من الدرس للحصة المباشرة للحياة' : 'From a lesson, to a live class, to real life';
   var ltSteps=document.querySelectorAll('#liveTeaching .lt-step');
   var ltAr=[{t:'اتعلم في PEL',d:'دروس قصيرة من حياتك اليومية'},{t:'تتمرن مع الاستاذ',d:'تتدرب مع الاستاذ فراس كل اسبوع'},{t:'تستخدمها بالحياة',d:'تستخدمه بشغلك وسفرك وسوالفك'}];
   var ltEn=[{t:'Learn in PEL',d:'2-minute lessons from situations that happen to you'},{t:'Practice with a teacher',d:'Live group session every week'},{t:'Use it in real life',d:'Work, travel, everyday talk'}];
@@ -1707,12 +1707,12 @@ function applyIndexLang(lang){
   var pricingHead=document.querySelector('#pricing .section-head h2');
   if(pricingHead) setLang(pricingHead, 'باقتين، ثلاث مدد، وكلها تشمل حصص مباشرة.', 'Two tracks, three durations, all include live classes.');
   var pricingP=document.querySelector('#pricing .section-head p');
-  if(pricingP) setLang(pricingP, 'عندنا مسارين: ابد من الصفر، والتجهيز للاختبارات. كل مسار فيه 3 باقات، وكل الباقات فيها حصص مباشرة مع الاستاذ فراس: باقات ابد من الصفر تشمل حصة كل اسبوع، وباقات التجهيز تشمل من حصة الى 3 حصص اسبوعية حسب المدة. الاشتراك والدفع كله عن طريق واتساب، مافي دفع اونلاين', 'Two tracks - Start From Zero and Exam Prep. Each has 3 plans, and every plan includes live classes with Tutor Firas: Start From Zero plans include 1 class a week, Exam Prep plans include 1 to 3 classes a week depending on duration. Signup and payment all happen over WhatsApp, no online payment');
+  if(pricingP) setLang(pricingP, 'مسارين: واحد لللي يبدا من الصفر، وواحد لللي يستعد للستب او التوفل او الايلتس. تدفع عبر واتساب ونتفعّل حسابك خلال دقايق.', 'Two tracks: one for beginners starting from zero, and one for students preparing for STEP, TOEFL, or IELTS. Pay via WhatsApp and your account is activated within minutes.');
   var pricingNote=document.querySelector('.pricing-note');
   if(pricingNote) pricingNote.innerHTML = lang==='ar' ? '<b>ما تعرف وش يناسبك؟</b> راسلنا واتساب ونساعدك تختار.' : '<b>Not sure which fits?</b> Message us on WhatsApp and we&rsquo;ll help you choose.';
   // footer + remaining section heads (minimal bilingual to satisfy full-site requirement)
   var footerBrandP=document.querySelector('.footer-brand p.arabic');
-  if(footerBrandP) footerBrandP.textContent = lang==='ar' ? 'منصة تعليم انجليزي بالعربي. دروس من مواقف حقيقية، نطق مسموع، وحصص مباشرة مع الاستاذ فراس.' : 'An English learning platform for Arabic speakers. Arabic explanations, audio pronunciation, instant translation, and real-situation lessons. With Tutor Firas.';
+  if(footerBrandP) footerBrandP.textContent = lang==='ar' ? 'منصة تعليم انجليزي بالعربي. دروس من مواقف حقيقية، نطق مسموع، وحصص مباشرة مع الاستاذ فراس.' : 'An English learning platform in Arabic. Real-world lessons, audio pronunciation, and live classes with Tutor Firas.';
   var faqH2=document.querySelector('#faq .section-head h2');
   if(faqH2) faqH2.textContent = lang==='ar' ? 'اسيلة قبل التسجيل' : 'Questions before you enroll';
   var finalH2=document.querySelector('.final-cta h2');
