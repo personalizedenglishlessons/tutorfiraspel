@@ -416,112 +416,84 @@ nav.primary-nav a:hover::after{ width:100%; }
 }
 .ls-meta svg{ width:13px; height:13px; color:var(--success); flex-shrink:0; }
 
-/* learning journey card */
-.journey-card{
-  padding:22px;
+/* feature highlights card */
+.feature-card{
+  padding:24px;
   border-radius:22px;
   background:linear-gradient(165deg, var(--card-elevated), var(--card));
   border:1px solid var(--border);
   box-shadow:0 24px 60px -30px rgba(0,0,0,.7), 0 0 50px -20px rgba(200,169,106,.12);
   display:flex; flex-direction:column; gap:0;
 }
-.journey-head{
+.feature-card-head{
   display:flex; align-items:center; gap:10px; flex-wrap:wrap;
   padding-bottom:18px; margin-bottom:4px;
   border-bottom:1px solid var(--border);
 }
-.journey-from, .journey-to{
+.feature-tagline{
   font-size:.82rem; color:var(--text-muted);
 }
-.journey-to{ color:var(--gold); font-weight:600; }
-.journey-arrow{ color:var(--text-muted); flex-shrink:0; }
-
-.journey-path{
+.feature-list{
   display:flex; flex-direction:column;
   padding:18px 0 6px;
+  gap:4px;
 }
-.journey-node{
+.feature-item{
   display:flex; align-items:flex-start; gap:14px;
-  position:relative;
-  padding:8px 0;
+  padding:10px 0;
+  transition:transform .3s;
 }
-.node-dot{
-  width:28px; height:28px; border-radius:50%; flex-shrink:0;
-  border:2px solid var(--border);
+.feature-item:hover{ transform:translateX(4px); }
+.feature-icon{
+  width:36px; height:36px; border-radius:12px; flex-shrink:0;
+  border:1px solid var(--border);
   background:var(--card);
   display:flex; align-items:center; justify-content:center;
-  color:var(--text-muted);
+  color:var(--gold);
   transition:all .3s;
   z-index:2; position:relative;
 }
-.journey-node.active .node-dot{
-  border-color:var(--gold);
-  background:var(--gold);
-  color:#171412;
-  box-shadow:0 0 0 4px rgba(200,169,106,.12), 0 0 20px -4px rgba(200,169,106,.4);
-}
-.journey-node[data-level="4"] .node-dot{
+.feature-item:hover .feature-icon{
   border-color:rgba(200,169,106,.4);
-  color:var(--gold);
+  background:rgba(200,169,106,.06);
+  box-shadow:0 0 16px -4px rgba(200,169,106,.3);
 }
-.node-body{
+.feature-body{
   display:flex; flex-direction:column; gap:2px;
-  padding-top:3px;
+  padding-top:4px;
 }
-.node-body b{
-  font-size:.86rem; color:var(--text); font-weight:600;
+.feature-body b{
+  font-size:.88rem; color:var(--text); font-weight:600;
 }
-.journey-node.active .node-body b{ color:var(--gold); }
-.node-body span{
-  font-size:.78rem; color:var(--text-muted); line-height:1.4;
+.feature-body span{
+  font-size:.76rem; color:var(--text-muted); line-height:1.4;
 }
-.node-tag{
-  margin-inline-start:auto;
-  font-size:.66rem; font-weight:700;
-  padding:3px 10px; border-radius:999px;
-  background:rgba(200,169,106,.12); color:var(--gold);
-  white-space:nowrap; align-self:center;
+
+/* trust items row */
+.trust-row{
+  display:flex; flex-wrap:wrap; gap:10px 18px;
+  margin-top:18px;
 }
-.journey-line{
-  width:2px; height:20px;
-  margin-inline-start:13px;
-  background:var(--border);
-  margin-top:-2px; margin-bottom:-2px;
+.trust-item{
+  display:flex; align-items:center; gap:8px;
+  font-size:.8rem; color:var(--text-muted);
 }
-.journey-foot{
-  padding-top:16px; margin-top:6px;
-  border-top:1px solid var(--border);
-}
-.journey-progress{
-  display:flex; align-items:center; gap:12px;
-}
-.journey-bar{
-  flex:1; height:5px; border-radius:999px;
-  background:var(--border); overflow:hidden;
-}
-.journey-bar-fill{
-  height:100%; width:8%;
-  border-radius:999px;
-  background:linear-gradient(90deg, var(--gold), var(--gold-soft));
-  animation:journeyPulse 3s ease-in-out infinite;
-}
-@keyframes journeyPulse{
-  0%,100%{ opacity:.7; }
-  50%{ opacity:1; }
-}
-.journey-progress span{
-  font-size:.72rem; color:var(--text-muted); white-space:nowrap;
+.trust-item .dot{
+  width:7px; height:7px; border-radius:50%;
+  background:var(--gold);
+  flex-shrink:0;
+  box-shadow:0 0 8px -2px rgba(200,169,106,.5);
 }
 
 @media(max-width:980px){
   .hero-preview{ width:min(100%, 480px); }
-  .journey-card{ padding:18px; }
+  .feature-card{ padding:18px; }
 }
 @media(max-width:480px){
-  .journey-card{ padding:16px; }
-  .node-body b{ font-size:.82rem; }
-  .node-body span{ font-size:.74rem; }
-  .node-tag{ display:none; }
+  .feature-card{ padding:16px; }
+  .feature-body b{ font-size:.82rem; }
+  .feature-body span{ font-size:.72rem; }
+  .trust-item{ font-size:.74rem; }
 }
 
 /* ===== section shell ===== */
@@ -1206,74 +1178,106 @@ section{ padding-top:80px; padding-bottom:80px; }
       <div class="path-hint" dir="rtl" style="margin-top:14px;">
         <span class="arabic">شوف مسارك من الصفر للثقة — كل درس يوصلك خطوة اقررب</span>
       </div>
+      <div class="trust-row" dir="rtl" style="margin-top:18px; gap:10px 18px;">
+        <div class="trust-item"><span class="dot"></span>منهج امريكي اصلي</div>
+        <div class="trust-item"><span class="dot"></span>شرح عربي لكل درس</div>
+        <div class="trust-item"><span class="dot"></span>ترجمة فورية بلا حدود</div>
+        <div class="trust-item"><span class="dot"></span>لوحة تتابع تقدمك</div>
+      </div>
       </div>
     </div>
 
     <div class="hero-preview" id="heroVisual">
-      <div class="journey-card" id="journeyCard">
-        <div class="journey-head">
-          <span class="pill gold arabic">مسارك</span>
-          <span class="journey-from arabic">من الصفر</span>
-          <svg class="journey-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
-          <span class="journey-to arabic">ثقة كاملة</span>
+      <div class="feature-card" id="featureCard">
+        <div class="feature-card-head">
+          <span class="pill gold arabic">لماذا PEL؟</span>
+          <span class="feature-tagline">Everything you need to speak English</span>
         </div>
-        <div class="journey-path">
-          <div class="journey-node active" data-level="0">
-            <div class="node-dot">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+        <div class="feature-list">
+          <div class="feature-item">
+            <div class="feature-icon icon-audio">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
             </div>
-            <div class="node-body">
-              <b>الصفر</b>
-              <span class="arabic">تتعلم الحروف والاصوات</span>
-            </div>
-            <span class="node-tag arabic">أنت هنا</span>
-          </div>
-          <div class="journey-line"></div>
-          <div class="journey-node" data-level="1">
-            <div class="node-dot"></div>
-            <div class="node-body">
-              <b>أساسيات</b>
-              <span class="arabic">تقول اسمك، تسال عن السعر</span>
+            <div class="feature-body">
+              <b>نطق مسموع</b>
+              <span>Audio pronunciation for every word</span>
             </div>
           </div>
-          <div class="journey-line"></div>
-          <div class="journey-node" data-level="2">
-            <div class="node-dot"></div>
-            <div class="node-body">
-              <b>محادثة</b>
-              <span class="arabic">تتكلم عن شغلك وعائلتك</span>
+          <div class="feature-item">
+            <div class="feature-icon icon-arabic">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14"/><path d="M5 12h14"/><path d="M5 16h9"/></svg>
+            </div>
+            <div class="feature-body">
+              <b>شرح بالعربي</b>
+              <span>Grammar explained in your language</span>
             </div>
           </div>
-          <div class="journey-line"></div>
-          <div class="journey-node" data-level="3">
-            <div class="node-dot"></div>
-            <div class="node-body">
-              <b>اجتماعات</b>
-              <span class="arabic">تشارك في الاجتماعات وتعرض افكارك</span>
+          <div class="feature-item">
+            <div class="feature-icon icon-srs">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            </div>
+            <div class="feature-body">
+              <b>مراجعة ذكية</b>
+              <span>Spaced repetition that remembers</span>
             </div>
           </div>
-          <div class="journey-line"></div>
-          <div class="journey-node" data-level="4">
-            <div class="node-dot">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 7.4H22l-6 4.6 2.3 7.4L12 17l-6.3 4.4L8 14 2 9.4h7.6z"/></svg>
+          <div class="feature-item">
+            <div class="feature-icon icon-live">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
             </div>
-            <div class="node-body">
-              <b>ثقة كاملة</b>
-              <span class="arabic">تتقدم لمقابلة شغل، تسافر وتتكلم بثقة</span>
+            <div class="feature-body">
+              <b>حصص مباشرة</b>
+              <span>Live classes with Tutor Firas</span>
             </div>
-          </div>
-        </div>
-        <div class="journey-foot">
-          <div class="journey-progress">
-            <div class="journey-bar"><div class="journey-bar-fill"></div></div>
-            <span class="arabic">كل درس يوصلك خطوة اقررب</span>
           </div>
         </div>
       </div>
-    <div style="text-align:center; margin-top:24px; font-size:.82rem; color:var(--text-muted);">بدون تسجيل، نتيجتك تطلع قدامك على طول</div>
+    <div style="text-align:center; margin-top:24px; font-size:.82rem; color:var(--text-muted);">ابدا الحين — اول درس عليك</div>
   </div>
 </section>
 <style>#personalPreview .pp-chip{ padding:12px 16px; border-radius:14px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.06); font-size:.9rem; transition:border-color .3s; cursor:default; } #personalPreview .pp-chip:hover{ border-color:rgba(200,169,106,.3); } @media(max-width:860px){ #personalPreview .reveal.pp-grid{ grid-template-columns:1fr !important; max-width:440px !important; margin:0 auto !important; } }</style>
+
+<!-- PERSONALIZED PLAN PREVIEW -->
+<section id="personalPreview" style="padding:80px 0; background:var(--surface); border-top:1px solid var(--border);">
+  <div class="container">
+    <div class="section-head center reveal" dir="rtl" style="max-width:640px; margin:0 auto 40px;">
+      <span class="eyebrow">خطتك على مقاسك</span>
+      <h2 class="arabic-h" style="font-size:clamp(1.8rem,3.2vw,2.4rem);">قل لنا وش تبي، ونبني لك الطريق</h2>
+    </div>
+    <div class="reveal pp-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:20px; max-width:920px; margin:0 auto;">
+      <div class="pp-say" style="border-radius:20px; padding:26px; display:flex; flex-direction:column; gap:14px;">
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+          <span style="width:28px; height:28px; border-radius:8px; background:rgba(200,169,106,.12); display:flex; align-items:center; justify-content:center; color:var(--gold);"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
+          <span style="font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); font-weight:700;">انت تقول</span>
+        </div>
+        <div class="pp-chip">ابي انجليزي للشغل</div>
+        <div class="pp-chip">المحادثة صعبة علي</div>
+        <div class="pp-chip">اقدر ادرس 20 دقيقة يوميا</div>
+        <button class="btn-gold magnetic" data-open-path style="margin-top:auto; justify-content:center; padding:14px 22px; font-size:.9rem;"><span>اعرف بدايتي</span></button>
+      </div>
+      <div class="pp-build" style="border-radius:20px; padding:26px; display:flex; flex-direction:column; gap:14px;">
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+          <span style="width:28px; height:28px; border-radius:8px; background:var(--gold); color:#171412; display:flex; align-items:center; justify-content:center; font-size:.75rem; font-weight:800;">✦</span>
+          <span style="font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); font-weight:700;">PEL يبني</span>
+        </div>
+        <div style="display:flex; gap:12px; align-items:center; padding:14px 16px; border-radius:14px; background:rgba(200,169,106,.06); border:1px solid rgba(200,169,106,.15);">
+          <span style="min-width:48px; height:48px; border-radius:14px; background:linear-gradient(135deg,var(--gold),var(--gold-soft)); color:#171412; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:1rem; box-shadow:0 4px 16px -4px rgba(200,169,106,.4);">A2</span>
+          <div><div style="font-weight:700; font-size:1rem;">انجليزي العمل</div><div style="font-size:.78rem; color:var(--text-muted); margin-top:2px;">تركيزك: محادثة واستماع</div></div>
+        </div>
+        <div class="pp-route">
+          <div style="padding-left:10px;"><div class="route-label">اليوم</div><div style="font-size:.9rem; margin-top:3px;">تبدا محادثة في الشغل</div></div>
+        </div>
+        <div class="pp-route">
+          <div style="padding-left:10px;"><div class="route-label">بعدها</div><div style="font-size:.9rem; margin-top:3px;">تسال زميلك عن مساعدة</div></div>
+        </div>
+        <div class="pp-route">
+          <div style="padding-left:10px;"><div class="route-label">بعدين</div><div style="font-size:.9rem; margin-top:3px;">اجتماعات، عملا، مقابلات</div></div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:24px; font-size:.82rem; color:var(--text-muted);">بدون تسجيل، تشوف نتيجتك قبل ما تدفع</div>
+  </div>
+</section>
 
 <!-- PERSONALIZED HOME (returning students with a saved plan) -->
 <section class="plan-home" id="planHome" style="display:none;" aria-label="Your learning plan"></section>
@@ -2119,24 +2123,34 @@ window.addEventListener('load', renderDailyLesson);
 window.addEventListener('pel-lang-changed', renderDailyLesson);
 window.addEventListener('storage', function(e){ if(e.key==='pel_account_prefs') renderDailyLesson(); });
 
-/* JOURNEY CARD - animate progress bar on scroll into view */
+/* FEATURE CARD - subtle hover animation on scroll into view */
 (function(){
-  var card = document.getElementById('journeyCard');
+  var card = document.getElementById('featureCard');
   if(!card) return;
-  var bar = card.querySelector('.journey-bar-fill');
-  if(!bar) return;
+  var items = card.querySelectorAll('.feature-item');
+  if(!items.length) return;
   
-  // Animate the progress bar when the card comes into view
+  // Stagger reveal items when the card comes into view
   if('IntersectionObserver' in window){
     var io = new IntersectionObserver(function(entries){
       entries.forEach(function(e){
         if(e.isIntersecting){
-          bar.style.transition = 'width 1.2s cubic-bezier(.4,0,.2,1)';
-          bar.style.width = '12%';
+          items.forEach(function(item, i){
+            setTimeout(function(){
+              item.style.opacity = '1';
+              item.style.transform = 'translateX(0)';
+            }, i * 120);
+          });
           io.unobserve(card);
         }
       });
     }, { threshold: 0.3 });
+    // Set initial state
+    items.forEach(function(item){
+      item.style.opacity = '0';
+      item.style.transform = 'translateX(20px)';
+      item.style.transition = 'opacity .5s, transform .5s';
+    });
     io.observe(card);
   }
 })();
