@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://lewoochehpiycocvfwtz.supabase.co https://api.supabase.co wss://lewoochehpiycocvfwtz.supabase.co https://api.dictionaryapi.dev https://translate.googleapis.com; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none';">
@@ -493,11 +493,11 @@ themeToggle.addEventListener('click', () => {
    language the student chose in the app applies here too, and a
    choice made on the login page follows them into the app. */
 function readAccountPrefs(){
-  try{ return JSON.parse(localStorage.getItem('pel_account_prefs') || 'null') || { lang:'en', direction:'en' }; }
-  catch(e){ return { lang:'en', direction:'en' }; }
+  try{ return JSON.parse(localStorage.getItem('pel_account_prefs') || 'null') || { lang:'ar', direction:'en' }; }
+  catch(e){ return { lang:'ar', direction:'en' }; }
 }
 function applyLoginLang(lang){
-  lang = lang === 'ar' ? 'ar' : 'en';
+  lang = lang === 'en' ? 'en' : 'ar';
   root.lang = lang;
   root.dir = lang === 'ar' ? 'rtl' : 'ltr';
   document.body.classList.toggle('ui-ar', lang === 'ar');
@@ -510,7 +510,7 @@ function applyLoginLang(lang){
 }
 const loginLangBtn = document.getElementById('loginLangBtn');
 if(loginLangBtn) loginLangBtn.addEventListener('click', () => applyLoginLang(root.lang === 'ar' ? 'en' : 'ar'));
-applyLoginLang((readAccountPrefs().lang === 'ar') ? 'ar' : 'en');
+applyLoginLang((readAccountPrefs().lang === 'en') ? 'en' : 'ar');
 
 /* ============ SPOTLIGHT ============ */
 const spotlight = document.getElementById('spotlight');

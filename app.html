@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://lewoochehpiycocvfwtz.supabase.co https://api.supabase.co wss://lewoochehpiycocvfwtz.supabase.co https://api.dictionaryapi.dev https://translate.googleapis.com https://unpkg.com; base-uri 'self'; form-action 'self'; object-src 'none';">
@@ -1743,7 +1743,7 @@ async function revealApp(user){
   await hydrateLearningState(user);
   // Restore this student's interface language + learning direction from
   // their account (synced via lsSet) before anything paints.
-  applyInterfaceLang(accountPrefs.lang || 'en');
+  applyInterfaceLang(accountPrefs.lang || 'ar');
   renderHomeForDirection();
   renderControlCenter();
   // Load credits for topbar pill + profile display
@@ -9362,7 +9362,7 @@ function notifPrefs(){ return lsGet('pel_notif_prefs', {daily:true, streak:true}
 /* accountPrefs holds the learner's own preferences: interface language
    (lang) and what they are learning (direction). Both are persisted via
    lsSet so they sync to Supabase and follow the student across devices. */
-let accountPrefs = JSON.parse(localStorage.getItem('pel_account_prefs') || 'null') || {lang:'en', direction:'en'};
+let accountPrefs = JSON.parse(localStorage.getItem('pel_account_prefs') || 'null') || {lang:'ar', direction:'en'};
 function learningDirection(){
   return accountPrefs.direction === 'ar' ? 'ar' : 'en';
 }
@@ -9377,7 +9377,7 @@ function applyInterfaceLang(lang, opts){
   const sel = document.getElementById('interfaceLangSelect');
   if(sel) sel.value = lang;
   const pill = document.getElementById('topbarLangBtn');
-  if(pill) pill.textContent = lang === 'ar' ? 'ع' : 'EN';
+  if(pill) pill.textContent = lang === 'ar' ? 'EN' : 'ع';
   const dirSel = document.getElementById('learnDirectionSelect');
   if(dirSel) dirSel.value = learningDirection();
   lsSet('pel_account_prefs', accountPrefs);
@@ -16575,10 +16575,10 @@ function renderLibrary(){
       <span style="font-size:2rem;flex-shrink:0;">👋</span>
       <div style="flex:1;min-width:200px;">
         <div style="font-weight:700;font-size:1.05rem;">${ar?'اهلا بك! ابدا من هنا':'Welcome! Start Here'}</div>
-        <div style="font-size:.86rem;color:var(--text-muted);margin-top:4px;line-height:1.6;">${ar?'لو ما تعرف انجليزي ابدا، ابد بـ A0 (من الصفر): الحروف، الاصوات، والكلمات الاساسية. لو تعرف شوي، ابد بـ A1.':'If you know almost no English, start at A0 (Absolute Beginner): letters, sounds, and survival words. If you know a little, start at A1.'}</div>
+        <div style="font-size:.86rem;color:var(--text-muted);margin-top:4px;line-height:1.6;">${ar?'لو ما تعرف انجليزي ابدا، ابد بـ انجليزي البداية: الحروف، الاصوات، والكلمات الاساسية. لو تعرف شوي، ابد بـ انجليزي الاساس.':'If you know almost no English, start at English Starter: letters, sounds, and survival words. If you know a little, start at English Basics.'}</div>
       </div>
-      <button class="btn-gold" id="beginnerStartBtn" style="flex-shrink:0;">${ar?'ابدا من A0':'Start at A0'}</button>
-      <button class="btn-outline" id="beginnerA1Btn" style="flex-shrink:0;">${ar?'ابدا من A1':'Start at A1'}</button>
+      <button class="btn-gold" id="beginnerStartBtn" style="flex-shrink:0;">${ar?'ابدا من انجليزي البداية':'Start at English Starter'}</button>
+      <button class="btn-outline" id="beginnerA1Btn" style="flex-shrink:0;">${ar?'ابدا من انجليزي الاساس':'Start at English Basics'}</button>
     </div>` : ''}
     <div class="page-head">
       <span class="eyebrow"><span class="arabic" style="font-size:.95em;">الاكاديميات</span>، The Private Academy</span>
@@ -18516,8 +18516,8 @@ function renderUpcomingLesson(){
 }
 function levelInfo(){
   const level = Math.max(1, 1 + Math.floor(studentStats.xp / 500));
-  const en = level <= 2 ? 'Beginner' : level <= 5 ? 'Intermediate' : 'Advanced';
-  const ar = level <= 2 ? 'مبتدي' : level <= 5 ? 'متوسط' : 'متقدم';
+  const en = level <= 2 ? 'English Starter' : level <= 5 ? 'English Middle' : 'English Pro';
+  const ar = level <= 2 ? 'انجليزي البداية' : level <= 5 ? 'انجليزي الوسط' : 'انجليزي محترف';
   return {level, en, ar};
 }
 /* Database-authoritative control center: renders exactly what the DB says
@@ -18603,7 +18603,7 @@ function renderHomeForDirection(){
     heroLevelChip: document.getElementById('heroLevelChip'),
   };
   if(els.homeSubtitle) els.homeSubtitle.innerHTML = `<span class="arabic" style="display:block; margin-bottom:4px;">درسك الجاي جاهز. كمل من وين وقفت.</span>Your next ${dirLabelEn} lesson is ready. Pick up where you left off.`;
-  if(els.heroLevelChip && !isFirstTimeStudent() && !hasPlan()) els.heroLevelChip.innerHTML = `<span class="arabic">مستوى ${levelInfo().level}، ${escapeHtml(levelInfo().ar||'')}</span>، Level ${levelInfo().level}، ${escapeHtml(levelInfo().en||'')}`;
+  if(els.heroLevelChip && !isFirstTimeStudent() && !hasPlan()) els.heroLevelChip.innerHTML = `<span class="arabic">${escapeHtml(levelInfo().ar||'')}</span>، ${escapeHtml(levelInfo().en||'')}`;
   if(els.heroResumeTitle && !isFirstTimeStudent() && !hasPlan()) els.heroResumeTitle.innerHTML = `<span class="arabic" style="display:block; font-size:.7em; font-weight:400; color:var(--text-secondary); margin-bottom:2px;">كمل من وين وقفت</span>Resume where you left off`;
   if(els.heroResumeText && !isFirstTimeStudent() && !hasPlan()) els.heroResumeText.innerHTML = `<span class="arabic">كمل على وتيرتك، ولا تنسى مراجعة كلماتك.</span>Keep your pace, and do not forget your word reviews.`;
   if(els.heroResumeBtn && !isFirstTimeStudent() && !hasPlan()) els.heroResumeBtn.innerHTML = '';

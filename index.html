@@ -1298,7 +1298,7 @@ section{ padding-top:70px; padding-bottom:70px; }
 (function () {
   var grid = document.getElementById('pricingGrid');
   if (!grid) return;
-  function getLang(){ try{ var p=JSON.parse(localStorage.getItem('pel_account_prefs')||'null'); return p&&p.lang==='ar'?'ar':'en'; }catch(e){ return document.documentElement.lang==='ar'?'ar':'en'; } }
+  function getLang(){ try{ var p=JSON.parse(localStorage.getItem('pel_account_prefs')||'null'); return p&&p.lang==='en'?'en':'ar'; }catch(e){ return document.documentElement.lang==='en'?'en':'ar'; } }
   var TIERS = ['start_from_zero','exam_prep'];
   function meta(t){
     return t==='exam_prep' ? {
@@ -1509,8 +1509,8 @@ themeToggle.addEventListener('click', () => {
 });
 
 /* LANGUAGE - global pel_account_prefs, persists from landing */
-function readLangPrefs(){ try{ var p=JSON.parse(localStorage.getItem('pel_account_prefs')||'null'); return p&&p.lang==='ar'?'ar':'en'; }catch(e){ return 'ar'; } }
-function saveLangPrefs(lang){ try{ var p=JSON.parse(localStorage.getItem('pel_account_prefs')||'null')||{lang:'en',direction:'en'}; p.lang=lang; localStorage.setItem('pel_account_prefs', JSON.stringify(p)); }catch(e){} }
+function readLangPrefs(){ try{ var p=JSON.parse(localStorage.getItem('pel_account_prefs')||'null'); return p&&p.lang==='en'?'en':'ar'; }catch(e){ return 'ar'; } }
+function saveLangPrefs(lang){ try{ var p=JSON.parse(localStorage.getItem('pel_account_prefs')||'null')||{lang:'ar',direction:'en'}; p.lang=lang; localStorage.setItem('pel_account_prefs', JSON.stringify(p)); }catch(e){} }
 function applyIndexLang(lang){
   // single helper: sets copy + dir + lang together so punctuation never flips
   function setLang(el, ar, en){
