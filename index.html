@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none';">
 <title>PEL، Personalized English Lessons، تعلم الانجليزية الامريكية بثقة</title>
 <link rel="canonical" href="index.html">
 <link rel="icon" type="image/svg+xml" href="brand/pel-favicon.svg?v=2">
@@ -1754,7 +1755,7 @@ function applyIndexLang(lang){
   var pricingP=document.querySelector('#pricing .section-head p');
   if(pricingP) setLang(pricingP, 'عندنا مسارين: ابد من الصفر، والتجهيز للاختبارات. كل مسار فيه 3 باقات، وكل الباقات فيها حصص مباشرة مع الاستاذ فراس: باقات ابد من الصفر تشمل حصة كل اسبوع، وباقات التجهيز تشمل من حصة الى 3 حصص اسبوعية حسب المدة. الاشتراك والدفع كله عن طريق واتساب، مافي دفع اونلاين', 'Two tracks - Start From Zero and Exam Prep. Each has 3 plans, and every plan includes live classes with Tutor Firas: Start From Zero plans include 1 class a week, Exam Prep plans include 1 to 3 classes a week depending on duration. Signup and payment all happen over WhatsApp, no online payment');
   var pricingNote=document.querySelector('.pricing-note');
-  if(pricingNote) pricingNote.innerHTML = lang==='ar' ? '<b>ما تعرف وش يناسبك؟</b> راسلنا واتساب ونساعدك تختار.' : '<b>Not sure which fits?</b> Message us on WhatsApp and we'll help you choose.';
+  if(pricingNote) pricingNote.innerHTML = lang==='ar' ? '<b>ما تعرف وش يناسبك؟</b> راسلنا واتساب ونساعدك تختار.' : '<b>Not sure which fits?</b> Message us on WhatsApp and we&rsquo;ll help you choose.';
   // footer + remaining section heads (minimal bilingual to satisfy full-site requirement)
   var footerBrandP=document.querySelector('.footer-brand p.arabic');
   if(footerBrandP) footerBrandP.textContent = lang==='ar' ? 'منصة تعليم انجليزي للناطقين بالعربية. شرح بالعربي، نطق مسموع، ترجمة فورية، ودراسة من مواقف حقيقية. مع الاستاذ فراس.' : 'An English learning platform for Arabic speakers. Arabic explanations, audio pronunciation, instant translation, and real-situation lessons. With Tutor Firas.';
