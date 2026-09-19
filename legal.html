@@ -291,8 +291,8 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-of
 
       <h3><span class="t-ar">5. وين تنحفظ بياناتك</span><span class="t-en">5. Where your data is stored</span></h3>
       <p>
-        <span class="t-ar">بياناتك تنحفظ على <b>Supabase</b>، وهي خدمة استضافة سحابية مومنة. اي تواصل عبر واتساب يخضع لسياسة الخصوصية الخاصة بتطبيق واتساب.</span>
-        <span class="t-en">Your data is stored on <b>Supabase</b>, a trusted cloud hosting service. Any communication over WhatsApp is subject to WhatsApp's own privacy policy.</span>
+        <span class="t-ar">بياناتك تنحفظ على <b>Supabase</b>، وهي خدمة استضافة سحابية موثوقة ومحمية بنظام حماية الصفوف (Row-Level Security). اي تواصل عبر واتساب يخضع لسياسة الخصوصية الخاصة بتطبيق واتساب. كما نحفظ تفضيلاتك (الوضع الليلي/النهاري، اللغة، وجلسة الدخول) محلياً على جهازك فقط باستخدام تقنية Local Storage، ولا نشاركها مع اي طرف.</span>
+        <span class="t-en">Your data is stored on <b>Supabase</b>, a trusted cloud hosting service protected by Row-Level Security (RLS). Any communication over WhatsApp is subject to WhatsApp's own privacy policy. We also store your preferences (dark/light theme, language, and sign-in session) locally on your device using Local Storage, and never share them with anyone.</span>
       </p>
 
       <h3><span class="t-ar">6. حقوقك على بياناتك</span><span class="t-en">6. Your rights over your data</span></h3>
@@ -345,8 +345,8 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-of
       </p>
       <ul>
         <li>
-          <span class="t-ar"><b>مسار ابد من الصفر:</b> شهر <b>230 ريال</b>، شهران <b>450 ريال</b>، و3 اشهر <b>750 ريال</b>. كل باقة في هذا المسار تشمل <b>حصة مباشرة كل اسبوع</b> مع الاستاذ فراس (4 حصص للشهر، 8 للشهرين، 12 للاشهر الثلاثة).</span>
-          <span class="t-en"><b>Start From 0 track:</b> 1 month <b>230 SAR</b>, 2 months <b>450 SAR</b>, and 3 months <b>750 SAR</b>. Every plan in this track includes <b>1 live class per week</b> with Tutor Firas (4 sessions for 1 month, 8 for 2 months, 12 for 3 months).</span>
+          <span class="t-ar"><b>مسار ابد من الصفر:</b> شهر <b>800 ريال</b>، شهران <b>1000 ريال</b>، و3 اشهر <b>1500 ريال</b>. كل باقة في هذا المسار تشمل <b>حصة مباشرة كل اسبوع</b> مع الاستاذ فراس (4 حصص للشهر، 8 للشهرين، 12 للاشهر الثلاثة).</span>
+          <span class="t-en"><b>Start From 0 track:</b> 1 month <b>800 SAR</b>, 2 months <b>1000 SAR</b>, and 3 months <b>1500 SAR</b>. Every plan in this track includes <b>1 live class per week</b> with Tutor Firas (4 sessions for 1 month, 8 for 2 months, 12 for 3 months).</span>
         </li>
         <li>
           <span class="t-ar"><b>مسار التجهيز للاختبارات (STEP / TOEFL / IELTS):</b> شهر <b>1000 ريال</b> (حصة مباشرة كل اسبوع)، شهران <b>1300 ريال</b> (حصتان كل اسبوع)، و3 اشهر <b>2200 ريال</b> (3 حصص كل اسبوع).</span>
@@ -492,7 +492,7 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-of
     document.documentElement.dir = lang==='ar'?'rtl':'ltr';
     document.body.style.direction = lang==='ar'?'rtl':'ltr';
     var btn=document.getElementById('legalLangBtn'); if(btn) btn.textContent = lang==='ar'?'EN':'ع';
-    try{ var p=JSON.parse(localStorage.getItem('pel_account_prefs')||'null')||{lang:'en',direction:'en'}; p.lang=lang; localStorage.setItem('pel_account_prefs', JSON.stringify(p)); }catch(e){}
+    try{ var p=JSON.parse(localStorage.getItem('pel_account_prefs')||'null')||{lang:'ar',direction:'en'}; p.lang=lang; localStorage.setItem('pel_account_prefs', JSON.stringify(p)); }catch(e){}
   }
   var legalLangBtn=document.getElementById('legalLangBtn');
   if(legalLangBtn) legalLangBtn.addEventListener('click', function(){ applyLegalLang(readLang()==='ar'?'en':'ar'); });
