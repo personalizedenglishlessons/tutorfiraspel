@@ -9579,7 +9579,7 @@ function triplet(en, ar, translit, cardStyle){
   // hand-typed string, so the same English always renders the same way.
   en = en||''; ar = ar||''; translit = translit||'';
   const pron = translitEn(en) || translit;
-  return `<div class="triplet${cardStyle?' triplet-card':''}"><div class="t-en">${escapeHtml(en)}</div><div class="t-translit">${escapeHtml(pron)}</div><div class="t-ar">${escapeHtml(ar)}</div></div>`;
+  return `<div class="triplet${cardStyle?' triplet-card':''}"><div class="t-en" dir="ltr">${escapeHtml(en)}</div><div class="t-translit">${escapeHtml(pron)}</div><div class="t-ar">${escapeHtml(ar)}</div></div>`;
 }
 
 const LESSON_TITLE_BANK = [
@@ -17305,7 +17305,7 @@ function renderVocabulary(){
         <div class="flashcard" data-idx="${i}">
           <div class="flashcard-face">
             <span class="chip gold">${escapeHtml(v.category||'')}</span>
-            <h3 class="vocab-word" style="margin-top:16px;">${escapeHtml(v.en||'')}</h3>
+            <h3 class="vocab-word" style="margin-top:16px;" dir="ltr">${escapeHtml(v.en||'')}</h3>
             <div class="arabic" style="font-size:.82rem; color:var(--text-muted);">${escapeHtml(translitEn(v.en||''))}</div>
             <div class="arabic" style="margin-top:14px; font-size:1.05rem; color:var(--gold-soft);">${escapeHtml(v.ar||'')}</div>
             <div class="vocab-cat" style="display:flex; justify-content:space-between; align-items:center;">
@@ -17315,10 +17315,10 @@ function renderVocabulary(){
           </div>
           <div class="flashcard-face flashcard-back">
             ${triplet(v.example ? v.example.en||'' : '', v.example ? v.example.ar||'' : '', v.example ? v.example.translit||'' : '')}
-            <p style="font-size:.76rem; color:var(--text-muted); margin-top:10px;"><b style="color:var(--text-secondary);"><span class="arabic">مرادفات</span>، Synonyms:</b> ${escapeHtml(v.synonyms||'')}</p>
-            <p style="font-size:.76rem; color:var(--text-muted); margin-top:4px;"><b style="color:var(--text-secondary);"><span class="arabic">اضداد</span>، Antonyms:</b> ${escapeHtml(v.antonyms||'')}</p>
-            <p style="font-size:.76rem; color:var(--text-muted); margin-top:4px;"><b style="color:var(--text-secondary);"><span class="arabic">تلازمات لفظية</span>، Collocations:</b> ${escapeHtml(v.collocations||'')}</p>
-            <div class="mistake-box" style="margin-top:10px;"><p style="font-size:.74rem; color:var(--text-secondary);">${escapeHtml(v.tip||'')}</p></div>
+            <p style="font-size:.76rem; color:var(--text-muted); margin-top:10px;"><b style="color:var(--text-secondary);"><span class="arabic">مرادفات</span>، Synonyms:</b> <span dir="ltr">${escapeHtml(v.synonyms||'')}</span></p>
+            <p style="font-size:.76rem; color:var(--text-muted); margin-top:4px;"><b style="color:var(--text-secondary);"><span class="arabic">اضداد</span>، Antonyms:</b> <span dir="ltr">${escapeHtml(v.antonyms||'')}</span></p>
+            <p style="font-size:.76rem; color:var(--text-muted); margin-top:4px;"><b style="color:var(--text-secondary);"><span class="arabic">تلازمات لفظية</span>، Collocations:</b> <span dir="ltr">${escapeHtml(v.collocations||'')}</span></p>
+            <div class="mistake-box" style="margin-top:10px;"><p style="font-size:.74rem; color:var(--text-secondary);" dir="ltr">${escapeHtml(v.tip||'')}</p></div>
             <button class="btn-ghost-sm bookmark-word-btn" data-word="${escapeHtml(wordKey||'')}" data-en="${escapeHtml(v.en||'')}" data-ar="${escapeHtml(v.ar||'')}" style="margin-top:10px;">${bm?'★ <span class="arabic">محفوظة</span>، Bookmarked':'☆ <span class="arabic">احفظ الكلمة</span>، Save Word'}</button>
           </div>
         </div>
@@ -17380,10 +17380,10 @@ function renderVocabulary(){
         const exAr = v.example_ar || '';
         const exTr = v.example_tr || (exEn ? translitEn(exEn) : '');
         return '<div class="dbx-card" style="background:var(--card-elevated);border:1px solid var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;">' +
-          '<h3 class="vocab-word" style="margin:0 0 6px;">' + escapeHtml(v.en) + '</h3>' +
+          '<h3 class="vocab-word" style="margin:0 0 6px;" dir="ltr">' + escapeHtml(v.en) + '</h3>' +
           '<div class="arabic" style="font-size:.82rem;color:var(--text-muted);margin-top:2px;">' + escapeHtml(tr) + '</div>' +
           '<div class="arabic" style="font-size:1.05rem;color:var(--gold-soft);">' + escapeHtml(ar) + '</div>' +
-          (exEn ? '<div style="margin-top:12px;font-size:.84rem;">' + escapeHtml(exEn) + '</div>' +
+          (exEn ? '<div style="margin-top:12px;font-size:.84rem;" dir="ltr">' + escapeHtml(exEn) + '</div>' +
             '<div class="arabic" style="font-size:.76rem;color:var(--gold-soft);margin-top:2px;">' + escapeHtml(exTr) + '</div>' +
             '<div class="arabic" style="font-size:.78rem;color:var(--text-muted);margin-top:3px;">' + escapeHtml(exAr) + '</div>' : '') +
           '<div style="margin-top:auto;padding-top:10px;display:flex;justify-content:space-between;align-items:center;">' +
@@ -17424,11 +17424,11 @@ function renderVocabulary(){
         const cAr = v.example_ar || '';
         const cTr = v.example_tr || (cEn ? translitEn(cEn) : '');
         return '<div class="dbx-card" style="background:var(--card-elevated);border:1px solid var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;">' +
-          '<span class="chip gold" style="align-self:flex-start;">Expression</span>' +
-          '<h3 class="vocab-word" style="margin:8px 0 6px;">' + escapeHtml(v.en) + '</h3>' +
+          '<span class="chip gold" style="align-self:flex-start;" dir="ltr">Expression</span>' +
+          '<h3 class="vocab-word" style="margin:8px 0 6px;" dir="ltr">' + escapeHtml(v.en) + '</h3>' +
           '<div class="arabic" style="font-size:.82rem;color:var(--text-muted);">' + escapeHtml(tr) + '</div>' +
           '<div class="arabic" style="font-size:1.02rem;color:var(--gold-soft);margin-top:10px;">' + escapeHtml(ar) + '</div>' +
-          (cEn ? '<div style="margin-top:12px;font-size:.76rem;margin-top:3px;">' + escapeHtml(cEn) + '</div>' +
+          (cEn ? '<div style="margin-top:12px;font-size:.76rem;margin-top:3px;" dir="ltr">' + escapeHtml(cEn) + '</div>' +
             '<div class="arabic" style="font-size:.74rem;color:var(--gold-soft);margin-top:2px;">' + escapeHtml(cTr) + '</div>' +
             '<div style="font-size:.78rem;color:var(--text-muted);margin-top:3px;"><span class="arabic">الاستخدام</span>: ' + escapeHtml(cAr) + '</div>' : '') +
           '<div style="margin-top:auto;padding-top:10px;display:flex;justify-content:flex-end;">' +
@@ -17743,14 +17743,14 @@ function renderPronunciation(){
     const t = PRONUNCIATION_TOPICS.find(x => x.id===topicId);
     const card = document.getElementById('pronPracticeCard');
     card.innerHTML = `
-      <h3 style="font-size:1.1rem;">${t.title}</h3>
-      <p style="margin-top:8px; font-size:.84rem; color:var(--text-muted);">Listen to each word, then record yourself repeating it.</p>
+      <h3 style="font-size:1.1rem;" dir="ltr">${t.title}</h3>
+      <p style="margin-top:8px; font-size:.84rem; color:var(--text-muted);" dir="ltr">Listen to each word, then record yourself repeating it.</p>
       <div style="display:grid; gap:14px; margin-top:20px;">
         ${t.words.map((w,i) => { const cleanEn = w.en.replace(/\s*\([^)]*\)\s*/g,'').trim(); const translit = transliterateText(cleanEn); return `
         <div class="triplet-card" style="display:flex; flex-direction:column; gap:8px;">
           <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;">
             <div>
-              <b style="font-family:'Fraunces',serif;">${escapeHtml(w.en||'')}</b>
+              <b style="font-family:'Fraunces',serif;" dir="ltr">${escapeHtml(w.en||'')}</b>
               <div class="arabic" style="margin-top:3px; font-size:.8rem; color:var(--text-secondary);">${escapeHtml(w.ar||'')}</div>
               <div class="arabic" style="margin-top:1px; font-size:.74rem; color:var(--text-muted);">${escapeHtml(translit||'')}</div>
             </div>
@@ -17824,7 +17824,7 @@ function renderSpeaking(){
   grid.innerHTML = SPEAKING_PERSONAS.map(p => `
     <div class="card hoverable persona-card" data-persona="${p.id}">
       <div class="persona-avatar"><i data-lucide="${p.icon}" width="22" height="22"></i></div>
-      <h4 style="font-size:.92rem;">${p.title}</h4>
+      <h4 style="font-size:.92rem;" dir="ltr">${p.title}</h4>
     </div>`).join('');
   if(window.lucide) lucide.createIcons();
   grid.addEventListener('click', e => {
@@ -17837,7 +17837,7 @@ function renderSpeaking(){
     rc.innerHTML = `
       <div style="display:flex; align-items:center; gap:12px; margin-bottom:18px;">
         <div class="persona-avatar" style="margin:0;"><i data-lucide="${persona.icon}" width="20" height="20"></i></div>
-        <div><h3 style="font-size:1.05rem;">${persona.title}</h3><span style="font-size:.76rem; color:var(--text-muted);"><span class="arabic">تمثيل جاري</span>، Roleplay in progress</span></div>
+        <div><h3 style="font-size:1.05rem;" dir="ltr">${persona.title}</h3><span style="font-size:.76rem; color:var(--text-muted);"><span class="arabic">تمثيل جاري</span>، Roleplay in progress</span></div>
       </div>
       <div class="chat-scroll" id="roleplayChat"></div>
       <div style="display:flex; align-items:center; gap:10px; margin-top:16px;">
@@ -17861,9 +17861,9 @@ function renderSpeaking(){
       const A = ar ? esc(ar) : '';
       const T = translit ? esc(translit) : '';
       if(leadAr && A){
-        div.innerHTML = `${A}${E?`<div style="margin-top:6px; font-size:.8rem; opacity:.85;">${E}</div>`:''}${T?`<div class="arabic" style="font-size:.7rem; opacity:.6;">${T}</div>`:''}`;
+        div.innerHTML = `${A}${E?`<div style="margin-top:6px; font-size:.8rem; opacity:.85;" dir="ltr">${E}</div>`:''}${T?`<div class="arabic" style="font-size:.7rem; opacity:.6;">${T}</div>`:''}`;
       }else{
-        div.innerHTML = `${E}${A?`<div class="arabic" style="margin-top:6px; font-size:.8rem; opacity:.85;">${A}</div>`:''}${T?`<div class="arabic" style="font-size:.7rem; opacity:.6;">${T}</div>`:''}`;
+        div.innerHTML = `${E?`<span dir="ltr">${E}</span>`:''}${A?`<div class="arabic" style="margin-top:6px; font-size:.8rem; opacity:.85;">${A}</div>`:''}${T?`<div class="arabic" style="font-size:.7rem; opacity:.6;">${T}</div>`:''}`;
       }
       chat.appendChild(div); chat.scrollTop = chat.scrollHeight;
       return div;
@@ -17988,7 +17988,7 @@ function renderListening(){
     <div class="card hoverable" data-track="${t.id}">
       <div class="tile-icon" style="margin-bottom:14px;"><i data-lucide="headphones" width="18" height="18"></i></div>
       <h4 style="font-size:1rem;">${t.title}</h4>
-      <p style="margin-top:8px; font-size:.78rem; color:var(--text-muted);">${t.lines.length} lines · Intermediate</p>
+      <p style="margin-top:8px; font-size:.78rem; color:var(--text-muted);" dir="ltr">${t.lines.length} lines · Intermediate</p>
     </div>`).join('');
   if(window.lucide) lucide.createIcons();
   grid.addEventListener('click', e => {
@@ -18005,7 +18005,7 @@ function renderListening(){
       document.getElementById('closeListeningModal').addEventListener('click', () => modal.classList.remove('open'));
     }
     document.getElementById('listeningModalBody').innerHTML = `
-      <h3 style="font-size:1.2rem;">${track.title}</h3>
+      <h3 style="font-size:1.2rem;" dir="ltr">${track.title}</h3>
       <div style="display:flex; align-items:center; gap:10px; margin:16px 0;">
         <button class="btn-outline" id="playAllBtn"><i data-lucide="play" width="15" height="15"></i> <span class="arabic">تشغيل الكل</span>، Play All</button>
         <label style="font-size:.78rem; color:var(--text-muted);"><span class="arabic">السرعة</span>، Speed <input type="range" min="0.6" max="1.3" step="0.1" value="1" id="trackSpeed" style="accent-color:var(--gold);"></label>
@@ -18023,7 +18023,7 @@ function renderListening(){
       track.lines.forEach((l,i) => setTimeout(() => speak(l.en), i*2600));
     });
     renderQuiz(document.getElementById('trackQuiz'), [
-      {q:'عن ماذا يتحدث هذا المقطع الصوتي؟، What is this listening track mainly about?', options:[track.title, 'Weather forecast', 'Sports results'], correct:0}
+      {qEn:'What is this listening track mainly about?', qAr:'عن ماذا يتحدث هذا المقطع الصوتي؟', options:[track.title, 'Weather forecast', 'Sports results'], correct:0}
     ], 'lt-'+track.id);
     modal.classList.add('open');
     if(window.lucide) lucide.createIcons();
@@ -18048,8 +18048,8 @@ function renderReading(){
   grid.innerHTML = READING_ARTICLES.map(a => `
     <div class="card hoverable" data-article="${a.id}">
       <span class="chip gold">${a.topic}</span>
-      <h4 style="margin-top:12px; font-size:1rem;">${a.title}</h4>
-      <p style="margin-top:8px; font-size:.78rem; color:var(--text-muted);">${a.body.length} <span class="arabic">فقرات</span>، paragraphs، 3 <span class="arabic">دقايق قراوة</span>، min read</p>
+      <h4 style="margin-top:12px; font-size:1rem;" dir="ltr">${a.title}</h4>
+      <p style="margin-top:8px; font-size:.78rem; color:var(--text-muted);"><span class="arabic">${a.body.length} فقرات</span>، <span dir="ltr">${a.body.length} paragraphs</span>، <span class="arabic">3 دقايق قراوة</span>، <span dir="ltr">3 min read</span></p>
     </div>`).join('');
   grid.addEventListener('click', e => {
     const card = e.target.closest('[data-article]'); if(!card) return;
@@ -18069,14 +18069,14 @@ function renderReading(){
     document.getElementById('readingModalBody').innerHTML = `
       <div class="article-cover" style="background:linear-gradient(135deg,var(--gold-soft),var(--bronze));"></div>
       <span class="chip gold">${article.topic}</span>
-      <h3 style="margin-top:12px; font-size:1.3rem;">${article.title}</h3>
+      <h3 style="margin-top:12px; font-size:1.3rem;" dir="ltr">${article.title}</h3>
       <div class="reading-timer" style="margin-top:10px;"><i data-lucide="timer" width="14" height="14"></i><span id="readTimerLabel">0:00</span></div>
       <div style="margin-top:18px; display:flex; flex-direction:column; gap:16px;">${article.body.map(b => triplet(b.en,b.ar,b.translit,true)).join('')}</div>
       <div class="card-elevated" style="padding:18px; border-radius:14px; margin-top:20px;" id="articleQuiz"></div>`;
     clearInterval(readTimerInterval);
     readTimerInterval = setInterval(() => { seconds++; const m=Math.floor(seconds/60), s=seconds%60; document.getElementById('readTimerLabel').textContent = m+':'+String(s).padStart(2,'0'); }, 1000);
     renderQuiz(document.getElementById('articleQuiz'), [
-      {q:'عن ماذا يتحدث هذا المقال؟، This article is mainly about:', options:[article.topic, 'Cooking recipes', 'Car repair'], correct:0}
+      {qEn:'This article is mainly about:', qAr:'عن ماذا يتحدث هذا المقال؟', options:[article.topic, 'Cooking recipes', 'Car repair'], correct:0}
     ], 'ra-'+article.id);
     modal.classList.add('open');
     if(window.lucide) lucide.createIcons();
@@ -18103,8 +18103,8 @@ function renderWriting(){
   grid.innerHTML = WRITING_PROMPTS.map(p => `
     <div class="card hoverable${p.free?' writing-free-card':''}" data-prompt="${p.id}">
       ${p.free ? '<span class="chip gold" style="margin-bottom:10px; display:inline-block;"><span class="arabic">موضوع حر</span>، Free topic</span>' : ''}
-      <h4 style="font-size:1.02rem;">${p.title}</h4>
-      <p style="margin-top:8px; font-size:.82rem; color:var(--text-muted);">${p.prompt}</p>
+      <h4 style="font-size:1.02rem;" dir="ltr">${p.title}</h4>
+      <p style="margin-top:8px; font-size:.82rem; color:var(--text-muted);" dir="ltr">${p.prompt}</p>
     </div>`).join('');
   grid.addEventListener('click', e => {
     const card = e.target.closest('[data-prompt]'); if(!card) return;
@@ -18121,8 +18121,8 @@ function renderWriting(){
     const card = document.getElementById('writingEditorCard');
     card.style.display = 'block';
     card.innerHTML = `
-      <h3 style="font-size:1.1rem;">${prompt.title}</h3>
-      <p style="margin-top:8px; font-size:.84rem; color:var(--text-muted);">${prompt.prompt}</p>
+      <h3 style="font-size:1.1rem;" dir="ltr">${prompt.title}</h3>
+      <p style="margin-top:8px; font-size:.84rem; color:var(--text-muted);" dir="ltr">${prompt.prompt}</p>
       <textarea class="writing-editor" id="writingArea" placeholder="ابدا الكتابة هنا... / Start writing here..." style="margin-top:16px;"></textarea>
       <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:12px; flex-wrap:wrap;">
         <span class="arabic" style="font-size:.72rem; color:var(--text-muted);">اكتب ٣ جمل على الاقل عشان الفايدة.</span>
@@ -18167,14 +18167,14 @@ function renderWriting(){
     found.forEach(r => { if(r.category && !learned.some(l => l.category === r.category)) learned.push(r); });
     const issuesHtml = found.length ? found.map(r => `
       <div class="fb-issue">
-        <div class="fb-pair"><span class="fb-wrong">${escapeHtml('✗ ' + r.example)}</span>${r.fixedExample ? `<span class="fb-right">${escapeHtml('✓ ' + r.fixedExample)}</span>` : ''}</div>
+        <div class="fb-pair"><span class="fb-wrong" dir="ltr">${escapeHtml('✗ ' + r.example)}</span>${r.fixedExample ? `<span class="fb-right" dir="ltr">${escapeHtml('✓ ' + r.fixedExample)}</span>` : ''}</div>
         <p class="arabic fb-ar">${escapeHtml(r.ar)}</p>
         <p class="fb-en">${escapeHtml(r.en)}</p>
         ${(r.whyAr || r.why_ar || r.whyEn || r.why_en) ? `<p class="fb-why">${(r.whyAr || r.why_ar) ? `<span class="arabic">السبب:</span> ${escapeHtml(r.whyAr || r.why_ar)}<br>` : ''}${escapeHtml(r.whyEn || r.why_en || '')}</p>` : ''}
         ${r.learn ? `<span class="chip fb-learn"><span class="arabic">${escapeHtml(r.learn.ar)}</span></span>` : ''}
       </div>`).join('') : '';
     const learnHtml = learned.length ? learned.map(l => `
-      <div class="fb-learn-item"><span class="chip gold">${escapeHtml((LEARN_CATEGORIES[l.category]||{}).en||l.category)}</span><span class="arabic">${escapeHtml(l.learn.ar)}</span><span style="color:var(--text-secondary);">${escapeHtml(l.learn.en)}</span></div>`).join('') : '';
+      <div class="fb-learn-item"><span class="chip gold" dir="ltr">${escapeHtml((LEARN_CATEGORIES[l.category]||{}).en||l.category)}</span><span class="arabic">${escapeHtml(l.learn.ar)}</span><span style="color:var(--text-secondary);" dir="ltr">${escapeHtml(l.learn.en)}</span></div>`).join('') : '';
     const verdict = found.length === 0
       ? (!res.analyzed
         ? `<p class="fb-verdict warn"><span class="arabic">لم نتمكن من فحص النص بالكامل (خدمة الفحص ما اشتغلت). حاول مرة ثانية.</span> We could not fully check your writing (the checking service did not respond). Please try again.</p>`
@@ -18200,7 +18200,7 @@ function renderWriting(){
         ${verdict}
         <div class="fb-section">
           <h5 class="fb-section-title"><span class="arabic">كتابتك</span>، Your writing</h5>
-          <div class="fb-original">${escapeHtml(text)}</div>
+          <div class="fb-original" dir="ltr">${escapeHtml(text)}</div>
         </div>
         ${found.length ? `<div class="fb-section">
           <h5 class="fb-section-title"><span class="arabic">اللي يحتاج تحسين</span>، What needs attention</h5>
@@ -18208,7 +18208,7 @@ function renderWriting(){
         </div>` : ''}
         ${found.length ? `<div class="fb-section">
           <h5 class="fb-section-title"><span class="arabic">النسخة المحسنة</span>، Better version</h5>
-          <div class="fb-fixed">${escapeHtml(fixed)}</div>
+          <div class="fb-fixed" dir="ltr">${escapeHtml(fixed)}</div>
         </div>` : ''}
         <div class="fb-section">
           <h5 class="fb-section-title"><span class="arabic">معنى كتابتك بالعربي</span>، Your meaning</h5>
