@@ -23,7 +23,7 @@
 <script src="lib/cert-qr.js?v=a43f19f9" defer></script>
 <script src="lib/cert-sheet.js?v=5278e935" defer></script>
 <script src="lib/pel_config.js?v=e4857dea"></script>
-<script src="lib/pel_lesson_stage.js?v=b1782444"></script>
+<script src="lib/pel_lesson_stage.js?v=c28c89a5"></script>
 <script src="lib/pel_dashboard_life.js?v=94ad5635"></script>
 <script src="lib/pel_curriculum_path.js?v=f17afc34"></script>
 <style>
@@ -1044,8 +1044,8 @@ html[data-theme="light"] .article-cover{
 /* ============================================================
    RESPONSIVE FIT - desktop, tablet, phones (no properties removed)
    ============================================================ */
-html{ overflow-x:hidden; }
-body{ overflow-x:hidden; }
+html{ overflow-x:clip; }
+body{ overflow-x:clip; }
 img,svg,video,canvas{ max-width:100%; height:auto; }
 .app-shell, .main-col, .content, .content-cols{ max-width:100%; min-width:0; overflow-x:clip; }
 
