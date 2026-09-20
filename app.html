@@ -2443,10 +2443,10 @@ const navGroups = [
      view is kept as an internal route but not advertised. */
   { label:{en:'Progress', ar:'تقدمك'}, items:[
     {id:'review', en:'Smart Review', ar:'مراجعة ذكية', icon:'rotate-ccw'},
-    {id:'bookmarks', en:'Bookmarks', ar:'المفضلة', icon:'bookmark', minDone:6},
-    {id:'achievements', en:'Achievements', ar:'الانجازات', icon:'award', minDone:10},
-    {id:'calendar', en:'Study Calendar', ar:'تقويم الدراسة', icon:'calendar-days', minDone:8},
-    {id:'certificates', en:'Certificates', ar:'الشهادات', icon:'graduation-cap', minDone:15},
+    {id:'bookmarks', en:'Bookmarks', ar:'المفضلة', icon:'bookmark'},
+    {id:'achievements', en:'Achievements', ar:'الانجازات', icon:'award'},
+    {id:'calendar', en:'Study Calendar', ar:'تقويم الدراسة', icon:'calendar-days'},
+    {id:'certificates', en:'Certificates', ar:'الشهادات', icon:'graduation-cap'},
   ]},
   { label:{en:'Account', ar:'حسابك'}, items:[
     {id:'profile', en:'Profile', ar:'الملف الشخصي', icon:'user'},
@@ -2469,7 +2469,7 @@ navGroups.forEach(group => {
     const a = document.createElement('button');
     a.className = 'side-link';
     a.dataset.view = item.id;
-    if(item.minDone){ a.dataset.minDone = item.minDone; a.style.display = 'none'; }
+    // All sidebar items are always visible — no progressive reveal gating
     a.innerHTML = `<span class="side-icon"><i data-lucide="${item.icon||'circle'}" width="18" height="18"></i></span><span class="side-text-wrap"><span class="ar">${escapeHtml(item.ar||'')}</span><span class="en">${escapeHtml(item.en||'')}</span></span>`;
     sidebarNav.appendChild(a);
   });
@@ -2484,9 +2484,11 @@ function lessonsDoneCount(){
   return n;
 }
 function syncFeatureGates(){
-  const done = lessonsDoneCount();
+  // All sidebar features are unlocked for all students regardless of
+  // lessons completed. Previously Bookmarks/Calendar/Achievements/Certificates
+  // were hidden until 6/8/10/15 lessons were done.
   document.querySelectorAll('#sidebarNav .side-link[data-min-done]').forEach(el => {
-    el.style.display = done >= (+el.getAttribute('data-min-done')) ? '' : 'none';
+    el.style.display = '';
   });
   if(typeof syncSideLabels==='function') syncSideLabels();
 }
@@ -16716,15 +16718,11 @@ const GUIDED_TOOL_RULES = {
 const CEFR_ORDER = ['A0','A1','A2','B1','B2','C1','C2'];
 /* Returns the tools available to a student at their current CEFR level. */
 function guidedToolsForLevel(levelCode){
-  const idx = CEFR_ORDER.indexOf(String(levelCode||'A0').toUpperCase());
-  const lvl = idx < 0 ? 0 : idx;
-  return Object.keys(GUIDED_TOOL_RULES).filter(function(toolId){
-    const rule = GUIDED_TOOL_RULES[toolId];
-    const toolIdx = CEFR_ORDER.indexOf(rule.minLevel);
-    if(toolIdx < 0 || toolIdx > lvl) return false;
-    if(rule.minDone && studentStats.lessonsDone < rule.minDone) return false;
-    return true;
-  });
+  // All study tools are unlocked for all students regardless of CEFR level
+  // or lessons completed. Previously tools were gated by level (A0→Vocab,
+  // A1→Grammar, A2→Listening/Speaking, B1→Reading/Writing) which blocked
+  // beginners from accessing the full toolkit.
+  return Object.keys(GUIDED_TOOL_RULES);
 }
 
 /* ============================================================
