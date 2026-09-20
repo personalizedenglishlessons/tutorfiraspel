@@ -9388,15 +9388,15 @@ function applyInterfaceLang(lang, opts){
     try{ viewRenderers[active.id](); }catch(e){ console.warn('[PEL] view render failed for ' + active.id + ":", e.message||e); }
   }
   if(active && (active.id === 'home' || active.id === 'view-home')){
-    try{ renderHomeForDirection(); }catch(e){}
-    try{ renderHomeIntel(); }catch(e){}
-    try{ renderNotifications(); }catch(e){}
+    try{ renderHomeForDirection(); }catch(e){console.warn('[PEL] renderHomeForDirection:',e.message||e);}
+    try{ renderHomeIntel(); }catch(e){console.warn('[PEL] renderHomeIntel:',e.message||e);}
+    try{ renderNotifications(); }catch(e){console.warn('[PEL] renderNotifications:',e.message||e);}
   }
   updateLocalizedSelects();
   localizeChrome(document);
   // Re-render the lesson stage so its L()/ar() calls pick up the new language.
   // The stage is not a "view" so the view-renderer pass above doesn't cover it.
-  try{ if(window.PEL_LESSON_STAGE && window.PEL_LESSON_STAGE.el && window.PEL_LESSON_STAGE.el.parentNode) window.PEL_LESSON_STAGE.render(); }catch(e){}
+  try{ if(window.PEL_LESSON_STAGE && window.PEL_LESSON_STAGE.el && window.PEL_LESSON_STAGE.el.parentNode) window.PEL_LESSON_STAGE.render(); }catch(e){console.warn('[PEL] lesson stage render:',e.message||e);}
   if(opts.announce){
     toast(lang === 'ar' ? '<span class="arabic">تم تحويل الواجهة للعربية</span>، Interface switched to Arabic'
       : '<span class="arabic">تم تحويل الواجهة للانجليزية</span>، Interface switched to English');
@@ -9561,7 +9561,7 @@ const locObserver = new MutationObserver(() => {
   if(locTimer) clearTimeout(locTimer);
   locTimer = setTimeout(() => {
     localizing = true;
-    try{ localizeChrome(document); }catch(e){}
+    try{ localizeChrome(document); }catch(e){console.warn('[PEL] localizeChrome:',e.message||e);}
     localizing = false;
   }, 40);
 });
@@ -18551,8 +18551,8 @@ async function renderControlCenter(){
   try{ const { data } = await c.rpc('student_effective_state'); st = data; }catch(e){}
   if(!st || st.ok === false || !st.stage){ host.innerHTML = ''; return; }
   window.PEL_EFFECTIVE_STATE = st;
-  try{ syncFeatureGates(); }catch(e){}
-  try{ if(document.getElementById('continueLearningBody')) renderContinueLearning(); }catch(e){}
+  try{ syncFeatureGates(); }catch(e){console.warn('[PEL] syncFeatureGates:',e.message||e);}
+  try{ if(document.getElementById('continueLearningBody')) renderContinueLearning(); }catch(e){console.warn('[PEL] renderContinueLearning:',e.message||e);}
   /* New student: pull them straight into lesson one of their chosen path. */
   try{
     if(!window.__pelAutoStarted && currentUser && guidedMode()){
@@ -18606,7 +18606,7 @@ async function renderControlCenter(){
   const sb = document.getElementById('ccStartBtn');
   if(sb && L) sb.addEventListener('click', () => { try{ openLesson(st.stage.id, L.id); }catch(e){} });
 }
-document.addEventListener('pel-progress-updated', () => { try{ renderControlCenter(); }catch(e){} });
+document.addEventListener('pel-progress-updated', () => { try{ renderControlCenter(); }catch(e){console.warn('[PEL] renderControlCenter:',e.message||e);} });
 
 function renderHomeForDirection(){
   // Home copy that depends on what the student is learning, not just the
@@ -18629,7 +18629,7 @@ function renderHomeForDirection(){
   // Direction tag in the hero chip so the learner always sees what track they are on.
   const dirTag = document.getElementById('heroDirectionTag');
   if(dirTag) dirTag.textContent = accountPrefs.lang === 'ar' ? dirLabelAr : dirLabelEn;
-  try{ if(typeof renderActivePath === 'function') renderActivePath(); }catch(e){}
+  try{ if(typeof renderActivePath === 'function') renderActivePath(); }catch(e){console.warn('[PEL] renderActivePath:',e.message||e);}
 }
 /* Active-academy learning path: the DB says what this student sees.
    Completed lessons recede, the current lesson leads, future work stays
