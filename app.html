@@ -9393,17 +9393,6 @@ function applyInterfaceLang(lang, opts){
   }
   updateLocalizedSelects();
   localizeChrome(document);
-  // Explicitly handle the greeting pair AFTER localizeChrome, since
-  // localizeChrome's .arabic sibling scan overrides the display set here.
-  // The greeting text is also set dynamically by onAuthSuccess after the
-  // initial localizeChrome pass, so we need to force the correct display.
-  var gAr = document.getElementById('greetingArabic');
-  var gEn = document.getElementById('greetingText');
-  if(gAr && gEn){
-    var _arMode = accountPrefs.lang === 'ar';
-    gAr.style.display = _arMode ? 'block' : 'none';
-    gEn.style.display = _arMode ? 'none' : '';
-  }
   // Re-render the lesson stage so its L()/ar() calls pick up the new language.
   // The stage is not a "view" so the view-renderer pass above doesn't cover it.
   try{ if(window.PEL_LESSON_STAGE && window.PEL_LESSON_STAGE.el && window.PEL_LESSON_STAGE.el.parentNode) window.PEL_LESSON_STAGE.render(); }catch(e){}
@@ -9530,6 +9519,19 @@ function localizeChrome(root){
       if(n && n.nodeType === 3) n.textContent = stripHeadSep(n.textContent);
     }
   });
+
+  // Greeting pair: localizeChrome's .arabic sibling scan misses this because
+  // the English greeting often contains digits (e.g. username "testmail1"),
+  // which makes englishOnly() return false. Handle it explicitly here so
+  // every localizeChrome pass (including MutationObserver-triggered ones)
+  // keeps the greeting display correct. Use style.display directly instead
+  // of hideEl() to avoid the i18n-hide unwrap on the next pass.
+  var gAr = document.getElementById('greetingArabic');
+  var gEn = document.getElementById('greetingText');
+  if(gAr && gEn){
+    gAr.style.display = arMode ? 'block' : 'none';
+    gEn.style.display = arMode ? 'none' : '';
+  }
 
   // Bilingual placeholders pick the side of the interface language.
   scope.querySelectorAll('input[placeholder], textarea[placeholder]').forEach(el => {
