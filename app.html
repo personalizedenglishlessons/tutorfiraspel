@@ -9392,9 +9392,11 @@ function applyInterfaceLang(lang, opts){
     try{ renderNotifications(); }catch(e){}
   }
   updateLocalizedSelects();
-  // Explicitly handle the greeting pair since localizeChrome's .arabic
-  // sibling scan doesn't always catch it (the greeting text is set
-  // dynamically after the initial localizeChrome pass).
+  localizeChrome(document);
+  // Explicitly handle the greeting pair AFTER localizeChrome, since
+  // localizeChrome's .arabic sibling scan overrides the display set here.
+  // The greeting text is also set dynamically by onAuthSuccess after the
+  // initial localizeChrome pass, so we need to force the correct display.
   var gAr = document.getElementById('greetingArabic');
   var gEn = document.getElementById('greetingText');
   if(gAr && gEn){
@@ -9402,7 +9404,6 @@ function applyInterfaceLang(lang, opts){
     gAr.style.display = _arMode ? 'block' : 'none';
     gEn.style.display = _arMode ? 'none' : '';
   }
-  localizeChrome(document);
   // Re-render the lesson stage so its L()/ar() calls pick up the new language.
   // The stage is not a "view" so the view-renderer pass above doesn't cover it.
   try{ if(window.PEL_LESSON_STAGE && window.PEL_LESSON_STAGE.el && window.PEL_LESSON_STAGE.el.parentNode) window.PEL_LESSON_STAGE.render(); }catch(e){}
