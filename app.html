@@ -9398,8 +9398,9 @@ function applyInterfaceLang(lang, opts){
   var gAr = document.getElementById('greetingArabic');
   var gEn = document.getElementById('greetingText');
   if(gAr && gEn){
-    gAr.style.display = arMode ? 'block' : 'none';
-    gEn.style.display = arMode ? 'none' : '';
+    var _arMode = accountPrefs.lang === 'ar';
+    gAr.style.display = _arMode ? 'block' : 'none';
+    gEn.style.display = _arMode ? 'none' : '';
   }
   localizeChrome(document);
   // Re-render the lesson stage so its L()/ar() calls pick up the new language.
