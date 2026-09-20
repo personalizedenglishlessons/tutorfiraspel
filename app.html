@@ -9388,9 +9388,14 @@ function applyInterfaceLang(lang, opts){
   }
   if(active && (active.id === 'home' || active.id === 'view-home')){
     try{ renderHomeForDirection(); }catch(e){}
+    try{ renderHomeIntel(); }catch(e){}
+    try{ renderNotifications(); }catch(e){}
   }
   updateLocalizedSelects();
   localizeChrome(document);
+  // Re-render the lesson stage so its L()/ar() calls pick up the new language.
+  // The stage is not a "view" so the view-renderer pass above doesn't cover it.
+  try{ if(window.PEL_LESSON_STAGE && window.PEL_LESSON_STAGE.el && window.PEL_LESSON_STAGE.el.parentNode) window.PEL_LESSON_STAGE.render(); }catch(e){}
   if(opts.announce){
     toast(lang === 'ar' ? '<span class="arabic">تم تحويل الواجهة للعربية</span>، Interface switched to Arabic'
       : '<span class="arabic">تم تحويل الواجهة للانجليزية</span>، Interface switched to English');
@@ -9429,7 +9434,7 @@ if(learnDirectionSelect){
    the interface language back and forth always restores.
    ============================================================ */
 const AR_CHAR_RE = /[\u0600-\u06FF]/;
-const CONTENT_MARK_RE = /(triplet|chat-bubble|chat-scroll|situation-|flashcard|mistake-box|mini-list-item|quiz-option|vocab-word|vocab-ipa|fb-issue|qt-result|pel-stage|pel-path)/;
+const CONTENT_MARK_RE = /(triplet|chat-bubble|chat-scroll|situation-|flashcard|mistake-box|quiz-option|vocab-word|vocab-ipa|fb-issue|qt-result|pel-stage|pel-path)/;
 function isContentNode(el){
   // The lesson body of a Saudi Arabian Arabic lesson is authored
   // Arabic-first: the Arabic is the target, English the support.
@@ -9487,8 +9492,8 @@ function localizeChrome(root){
   });
   scope.querySelectorAll('[data-i18n-hide]').forEach(el => showEl(el));
 
-  // Sidebar .ar/.en pairs.
-  scope.querySelectorAll('.side-text-wrap .ar, .side-text-wrap .en').forEach(el => {
+  // Sidebar .ar/.en pairs (both nav items and group labels).
+  scope.querySelectorAll('.side-text-wrap .ar, .side-text-wrap .en, .side-label .ar, .side-label .en').forEach(el => {
     const isAr = el.classList.contains('ar');
     if((arMode && isAr) || (!arMode && !isAr)) showEl(el); else hideEl(el);
   });
