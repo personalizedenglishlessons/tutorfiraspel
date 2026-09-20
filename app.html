@@ -391,7 +391,7 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
 
 /* command palette */
 .palette-overlay{
-  position:fixed; inset:0; z-index:2500; background:rgba(4,4,5,.55); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+  position:fixed; inset:0; z-index:2500; background:rgba(4,4,5,.8); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
   display:flex; align-items:flex-start; justify-content:center; padding:12vh 20px 20px;
   opacity:0; pointer-events:none; transition:opacity .25s ease;
 }
@@ -1079,7 +1079,8 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
   .workspace-center{ padding:20px 14px; }
   .lesson-cover{ height:140px; padding:16px; }
   .modal-box{ padding:20px; margin:12px; }
-  .palette-box{ margin:0 12px; }
+  .palette-box{ margin:0 12px; max-height:76vh; }
+  .palette-results{ max-height:calc(76vh - 70px); }
   #accessGate{ padding:16px; }
   #accessGate .gate-card{ padding:0 4px; }
   .fab-qt{ bottom:72px; right:18px; width:52px; height:52px; }
