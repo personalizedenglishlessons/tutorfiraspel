@@ -17284,8 +17284,8 @@ function renderVocabulary(){
   el.innerHTML = `
     <div class="page-head">
       <span class="eyebrow"><span class="arabic" style="font-size:.95em;">خزنة المفردات</span>، Vocabulary Vault</span>
-      <h1><span class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">كل كلمة، بثلاث لغات.</span>Every word, in three languages.</h1>
-      <p><span class="arabic" style="display:block; margin-bottom:4px;">اقلب البطاقة لترى المعنى بالعربية الفصحى والنطق والمرادفات والاخطا الشايعة.</span>Flip a card to see the Arabic (MSA) meaning, pronunciation, synonyms and common mistakes.</p>
+      <h1><span class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">كل كلمة، بثلاث لغات.</span><span dir="ltr">Every word, in three languages.</span></h1>
+      <p><span class="arabic" style="display:block; margin-bottom:4px;">اقلب البطاقة لترى المعنى بالعربية الفصحى والنطق والمرادفات والاخطا الشايعة.</span><span dir="ltr">Flip a card to see the Arabic (MSA) meaning, pronunciation, synonyms and common mistakes.</span></p>
     </div>
     <div class="lib-toolbar">
       <div class="lib-search"><i data-lucide="search" width="15" height="15" style="color:var(--text-muted);"></i><input type="text" id="vocabSearch" placeholder="ابحث في المفردات... / Search vocabulary..."></div>
@@ -17723,8 +17723,8 @@ function renderPronunciation(){
     <div class="page-head">
       <span class="eyebrow"><span class="arabic" style="font-size:.95em;">استوديو النطق</span>، Pronunciation Studio</span>
       <h1 class="arabic" style="font-size:1.6em;">مختبر اللكنة الامريكية.</h1>
-      <div style="margin-top:6px; font-family:'Fraunces',serif; font-size:1.1rem; color:var(--text-secondary);">American Accent Lab.</div>
-      <p style="margin-top:10px;"><span class="arabic">استمع، كرر، سجل صوتك، وقارن، موضوع بموضوع. الدرجات تقديرية لانها تعتمد على التعرف الصوتي للمتصفح، وليست تقييم نطق معتمد.</span><br>Listen, repeat, record yourself, and compare, topic by topic. Scores are an approximate practice estimate from browser speech recognition, not a certified pronunciation assessment.</p>
+      <div style="margin-top:6px; font-family:'Fraunces',serif; font-size:1.1rem; color:var(--text-secondary);" dir="ltr">American Accent Lab.</div>
+      <p style="margin-top:10px;"><span class="arabic">استمع، كرر، سجل صوتك، وقارن، موضوع بموضوع. الدرجات تقديرية لانها تعتمد على التعرف الصوتي للمتصفح، وليست تقييم نطق معتمد.</span><br><span dir="ltr">Listen, repeat, record yourself, and compare, topic by topic. Scores are an approximate practice estimate from browser speech recognition, not a certified pronunciation assessment.</span></p>
     </div>
     <div class="grid grid-3" id="pronTopicGrid" style="margin-bottom:28px;"></div>
     <div class="card" id="pronPracticeCard"></div>
@@ -17815,8 +17815,8 @@ function renderSpeaking(){
   el.innerHTML = `
     <div class="page-head">
       <span class="eyebrow"><span class="arabic" style="font-size:.95em;">استوديو المحادثة</span>، Speaking Studio</span>
-      <h1><span class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">تدرب على محادثات حقيقية.</span>Practice real conversations.</h1>
-      <p><span class="arabic" style="display:block; margin-bottom:4px;">اختر مع من تريد التحدث. كل رد يتضمن العربية والانجليزية والنطق.</span>Choose who you want to talk to. Every reply includes Arabic, English, and pronunciation.</p>
+      <h1><span class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">تدرب على محادثات حقيقية.</span><span dir="ltr">Practice real conversations.</span></h1>
+      <p><span class="arabic" style="display:block; margin-bottom:4px;">اختر مع من تريد التحدث. كل رد يتضمن العربية والانجليزية والنطق.</span><span dir="ltr">Choose who you want to talk to. Every reply includes Arabic, English, and pronunciation.</span></p>
     </div>
     <div class="grid grid-4" id="personaGrid" style="margin-bottom:28px;"></div>
     <div class="card" id="roleplayCard" style="display:none;"></div>`;
@@ -17979,8 +17979,8 @@ function renderListening(){
   el.innerHTML = `
     <div class="page-head">
       <span class="eyebrow"><span class="arabic" style="font-size:.95em;">ركن الاستماع</span>، Listening Lounge</span>
-      <h1><span class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">درّب اذنك بصوت متحدثين اصليين.</span>Train your ear with native audio.</h1>
-      <p><span class="arabic" style="display:block; margin-bottom:4px;">نصوص تفاعلية، جملة بجملة. بدون تحميل، كل شي داخل الاكاديمية.</span>Interactive transcripts, sentence by sentence. No downloads, everything stays inside the academy.</p>
+      <h1><span class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">درّب اذنك بصوت متحدثين اصليين.</span><span dir="ltr">Train your ear with native audio.</span></h1>
+      <p><span class="arabic" style="display:block; margin-bottom:4px;">نصوص تفاعلية، جملة بجملة. بدون تحميل، كل شي داخل الاكاديمية.</span><span dir="ltr">Interactive transcripts, sentence by sentence. No downloads, everything stays inside the academy.</span></p>
     </div>
     <div class="grid grid-3" id="listenGrid"></div>`;
   const grid = document.getElementById('listenGrid');
@@ -18040,8 +18040,8 @@ function renderReading(){
   el.innerHTML = `
     <div class="page-head">
       <span class="eyebrow"><span class="arabic" style="font-size:.95em;">ركن القرايه</span>، Reading Corner</span>
-      <h1><span class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">مقالات قصيرة، مصممة لتطور حقيقي.</span>Short articles, built for real growth.</h1>
-      <p><span class="arabic" style="display:block; margin-bottom:4px;">كل مقال يتضمن مفردات وملاحظة قواعدية واختبار. موقّت لتتبع سرعة قراوتك.</span>Every article includes vocabulary, a grammar note, and a quiz. Timed, so you can track your reading speed.</p>
+      <h1><span class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">مقالات قصيرة، مصممة لتطور حقيقي.</span><span dir="ltr">Short articles, built for real growth.</span></h1>
+      <p><span class="arabic" style="display:block; margin-bottom:4px;">كل مقال يتضمن مفردات وملاحظة قواعدية واختبار. موقّت لتتبع سرعة قراوتك.</span><span dir="ltr">Every article includes vocabulary, a grammar note, and a quiz. Timed, so you can track your reading speed.</span></p>
     </div>
     <div class="grid grid-3" id="readingGrid"></div>`;
   const grid = document.getElementById('readingGrid');
@@ -18094,8 +18094,8 @@ function renderWriting(){
   el.innerHTML = `
     <div class="page-head">
       <span class="eyebrow"><span class="arabic" style="font-size:.95em;">ورشة الكتابة</span>، Writing Workshop</span>
-      <h1><span class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">اكتب، وخذ مراجعة تفهمك خطاك.</span>Write, and get feedback that explains your mistakes.</h1>
-      <p><span class="arabic" style="display:block; margin-bottom:4px;">اكتب باي موضوع تحبه، والمراجعة تعطيك: تصحيح، السبب، معنى كتابتك، ونقطة تتعلمها. كل شي مجاني وبلا حدود.</span>Write about any topic you like, and the review gives you: corrections, the reason, your meaning, and something to learn. Free and unlimited.</p>
+      <h1><span class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">اكتب، وخذ مراجعة تفهمك خطاك.</span><span dir="ltr">Write, and get feedback that explains your mistakes.</span></h1>
+      <p><span class="arabic" style="display:block; margin-bottom:4px;">اكتب باي موضوع تحبه، والمراجعة تعطيك: تصحيح، السبب، معنى كتابتك، ونقطة تتعلمها. كل شي مجاني وبلا حدود.</span><span dir="ltr">Write about any topic you like, and the review gives you: corrections, the reason, your meaning, and something to learn. Free and unlimited.</span></p>
     </div>
     <div class="grid grid-2" id="writingPromptGrid" style="margin-bottom:28px;"></div>
     <div class="card" id="writingEditorCard" style="display:none;"></div>`;
