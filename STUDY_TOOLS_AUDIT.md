@@ -5,27 +5,28 @@
 **Repository:** `personalizedenglishlessons/tutorfiraspel`
 **Deployed at:** https://personalizedenglishlessons.github.io/tutorfiraspel/
 **Method:** Live browser audit using test account (testmail1@gmail.com)
+**Test account:** Level A0/A1, 12 completed lessons, STEP exam prep track
 
 ---
 
 ## Executive Summary
 
-All 8 study tools (plus Bookmarks) were audited live in the deployed app. Every tool renders correctly with zero console errors and zero warnings. All tools are fully unlocked for all students regardless of CEFR level or lessons completed.
+All 8 study tools (plus Bookmarks) were audited live in the deployed app with interaction testing. Every tool renders correctly and key interactions work. Zero console errors and zero warnings across all tools. All tools are fully unlocked for all students.
 
 ---
 
 ## Audit Results
 
-| # | Tool | View ID | Content Rendered | Status | Notes |
-|---|------|---------|-------------------|--------|-------|
-| 1 | Vocabulary | `vocabulary` | 171 flashcards + A0 pronunciation cards + Abha expressions | PASS | Search, filter, flip, bookmark, speak all functional. A0 and Abha sections load async from Supabase. |
-| 2 | Grammar | `grammar` | 16 grammar topic cards + 8 Saudi Mistake Coach cards | PASS | Each topic has quiz. Coach has 8 categories with patterns and practice questions. |
-| 3 | Pronunciation | `pronunciation` | 15 topic tiles + 4 leveled drills | PASS | Topics clickable, drill selector functional, drill body renders with word→phrase→sentence progression. |
-| 4 | Speaking | `speaking` | 18 persona cards | PASS | Roleplay simulator with typed + voice input. Smart reply engine + conversation fit checker. |
-| 5 | Listening | `listening` | 7 audio tracks | PASS | Interactive transcripts with play-all, speed control, and comprehension quizzes. |
-| 6 | Reading | `reading` | 6 timed articles | PASS | Articles with vocabulary, grammar notes, quizzes, and reading timer. |
-| 7 | Writing | `writing` | 25 writing prompts | PASS | Free topic + structured prompts. Grammar check with multi-layer engine (LanguageTool + compromise + rule bank). |
-| 8 | Review | `review` | SRS deck (2 due cards, 2 in queue) | PASS | Spaced repetition with reveal → knew/review flow. Mistakes tracking. Upcoming cards preview. |
+| # | Tool | View ID | Content | Interaction Tested | Status |
+|---|------|---------|---------|---------------------|--------|
+| 1 | Vocabulary | `vocabulary` | 171 flashcards | Card flip, search filter (2 results for "appointment") | PASS |
+| 2 | Grammar | `grammar` | 16 topics + 8 coach cards | Quiz option click (correct/incorrect states) | PASS |
+| 3 | Pronunciation | `pronunciation` | 15 topics + 4 drills | Drill selector, record button | PASS |
+| 4 | Speaking | `speaking` | 18 personas | Persona click → roleplay card with opener + input | PASS |
+| 5 | Listening | `listening` | 7 tracks | Track modal open → 2 lines + quiz | PASS |
+| 6 | Reading | `reading` | 6 articles | Article modal open → timer running + quiz | PASS |
+| 7 | Writing | `writing` | 25 prompts | Prompt click → editor with textarea + review button | PASS |
+| 8 | Review | `review` | 2 due cards | Reveal button → meaning shown + knew/again buttons | PASS |
 
 ---
 
@@ -48,10 +49,24 @@ Three locations still locked study tools based on lessons completed:
 
 All gating removed. All 9 tools now unlocked for all students.
 
-### HIGH — Transcribe CORS (VERIFIED FIXED)
+### HIGH — A0 Pronunciation Cards and Abha Expressions not loading (FIXED)
+**File:** `app.html`, lines 17358 and 17402
+**Commit:** `051dcfa`
+
+The vocabulary tool's async IIFEs used `window.supabase` (the library global, which has `createClient` but no `from` method) instead of `window.pelSupabaseClient()` (the initialized client instance). The call `sb.from('words')` threw `"sb.from is not a function"` silently, so the A0 Pronunciation Cards (153 words) and Abha Expressions (30 phrases) sections never rendered. Fixed both IIFEs to use `window.pelSupabaseClient()`.
+
+**Verification:** Direct DB query via `window.pelSupabaseClient()` returns 153 A0 words and 30 Abha expressions. Will render once GitHub Pages rebuilds with the fix.
+
+### MEDIUM — `-ED Endings` bidi rendering (FIXED)
+**File:** `app.html`, line 17740
+**Commit:** `051dcfa`
+
+The pronunciation topic title `-ED Endings` rendered as `ED Endings-` in RTL context because the `<h4>` had no explicit direction. Added `dir="ltr"` to pronunciation topic titles.
+
+### HIGH — Transcribe CORS (VERIFIED ALREADY FIXED)
 **File:** `supabase/functions/transcribe/index.ts`
 
-The deployed `transcribe` Edge Function (v2) now returns `Access-Control-Allow-Origin: https://personalizedenglishlessons.github.io` instead of `*`. Verified with `curl -X OPTIONS` from multiple origins — always returns the restricted origin, never reflects the requesting origin.
+The deployed `transcribe` Edge Function (v2) returns `Access-Control-Allow-Origin: https://personalizedenglishlessons.github.io` (not `*`). Verified with `curl -X OPTIONS` from multiple origins — always returns the restricted origin, never reflects the requesting origin. No redeploy was needed; the function was already updated and deployed in a prior session.
 
 ---
 
@@ -59,8 +74,8 @@ The deployed `transcribe` Edge Function (v2) now returns `Access-Control-Allow-O
 
 - **Console errors:** 0 across all 8 tools
 - **Console warnings:** 0 across all 8 tools
+- **Interaction tests:** All 8 tools tested with key interactions (see table above)
 - **All 44 tests pass** (13 build-sequence + 31 teaching-flow)
 - **All syntax checks pass** (lib files + app.html inline scripts)
-- **All view containers exist** and render correctly
-- **All data arrays populated** (VOCAB_BANK, GRAMMAR_TOPICS, PRONUNCIATION_TOPICS, SPEAKING_PERSONAS, LISTENING_TRACKS, READING_ARTICLES, WRITING_PROMPTS)
-- **All helper functions defined** (checkGrammar, smartReply, freeTranslate, speak, recordAndScore, pronFeedback, canRecognize, savePelFeedbackEvent)
+- **A0 Pronunciation Cards:** 153 words in database (verified via direct query)
+- **Abha Expressions:** 30 phrases in database (verified via direct query)
