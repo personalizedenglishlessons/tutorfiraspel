@@ -19,7 +19,7 @@ All 8 study tools (plus Bookmarks) were audited live in the deployed app with in
 
 | # | Tool | View ID | Content | Interaction Tested | Status |
 |---|------|---------|---------|---------------------|--------|
-| 1 | Vocabulary | `vocabulary` | 171 flashcards | Card flip, search filter (2 results for "appointment") | PASS |
+| 1 | Vocabulary | `vocabulary` | 171 flashcards + 153 A0 cards + 30 Abha expressions | Card flip, search filter (2 results for "appointment") | PASS |
 | 2 | Grammar | `grammar` | 16 topics + 8 coach cards | Quiz option click (correct/incorrect states) | PASS |
 | 3 | Pronunciation | `pronunciation` | 15 topics + 4 drills | Drill selector, record button | PASS |
 | 4 | Speaking | `speaking` | 18 personas | Persona click → roleplay card with opener + input | PASS |
@@ -55,7 +55,7 @@ All gating removed. All 9 tools now unlocked for all students.
 
 The vocabulary tool's async IIFEs used `window.supabase` (the library global, which has `createClient` but no `from` method) instead of `window.pelSupabaseClient()` (the initialized client instance). The call `sb.from('words')` threw `"sb.from is not a function"` silently, so the A0 Pronunciation Cards (153 words) and Abha Expressions (30 phrases) sections never rendered. Fixed both IIFEs to use `window.pelSupabaseClient()`.
 
-**Verification:** Direct DB query via `window.pelSupabaseClient()` returns 153 A0 words and 30 Abha expressions. Will render once GitHub Pages rebuilds with the fix.
+**Verification:** Verified on deployed app after GitHub Pages rebuild — `#a0VocabGrid` contains 153 cards, `#abhaExprGrid` contains 30 expressions. Both sections now render correctly.
 
 ### MEDIUM — `-ED Endings` bidi rendering (FIXED)
 **File:** `app.html`, line 17740
@@ -72,8 +72,7 @@ The deployed `transcribe` Edge Function (v2) returns `Access-Control-Allow-Origi
 
 ## Verification
 
-- **Console errors:** 0 across all 8 tools
-- **Console warnings:** 0 across all 8 tools
+- **Console errors:** 0 JavaScript errors observed during interaction smoke tests across all 8 tools
 - **Interaction tests:** All 8 tools tested with key interactions (see table above)
 - **All 44 tests pass** (13 build-sequence + 31 teaching-flow)
 - **All syntax checks pass** (lib files + app.html inline scripts)
