@@ -14292,10 +14292,12 @@ async function pelWhisperEnsure(onProgress){
   if(pelWhisperPipe) return pelWhisperPipe;
   if(pelWhisperLoading) return pelWhisperLoading;
   pelWhisperLoading = (async () => {
-    const mod = await import('https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.0.0/dist/transformers.min.js');
-    const { pipeline } = mod;
-    pelWhisperPipe = await pipeline('automatic-speech-recognition', 'onnx-community/whisper-base.en', { language:'en', task:'transcribe' });
-    return pelWhisperPipe;
+    try{
+      const mod = await import('https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.0.0/dist/transformers.min.js');
+      const { pipeline } = mod;
+      pelWhisperPipe = await pipeline('automatic-speech-recognition', 'onnx-community/whisper-base.en', { language:'en', task:'transcribe' });
+      return pelWhisperPipe;
+    }catch(e){ pelWhisperLoading = null; throw e; }
   })();
   return pelWhisperLoading;
 }
@@ -17080,7 +17082,7 @@ function renderLessonReader(container, academy, lesson){
         // lessons light up with a chip instead of feeling brand new.
         const known = lesson.vocab.filter(v => reviewQueue().some(r => r.en === v.en));
         if(!known.length) return '';
-        return `<div style="margin:10px 0 2px; font-size:.78rem; color:var(--emerald);"><span class="arabic">تعلمتها قبل</span>، <span dir="ltr">You met these before: ${known.map(v => '<b style="font-family:\'Fraunces\',serif;">' + v.en + '</b>').join(', ')}.</span> <button class="btn-ghost-sm" id="goToReviewFromLesson" style="margin-top:4px;"><span class="arabic">راجعها</span>، Review</button></div>`;
+        return `<div style="margin:10px 0 2px; font-size:.78rem; color:var(--emerald);"><span class="arabic">تعلمتها قبل</span>، <span dir="ltr">You met these before: ${known.map(v => '<b style="font-family:\'Fraunces\',serif;">' + escapeHtml(v.en) + '</b>').join(', ')}.</span> <button class="btn-ghost-sm" id="goToReviewFromLesson" style="margin-top:4px;"><span class="arabic">راجعها</span>، Review</button></div>`;
       })()}
       <div style="display:grid; gap:12px; margin-top:16px;">
         ${lesson.vocab.map(v => `
