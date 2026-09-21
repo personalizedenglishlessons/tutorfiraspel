@@ -2764,7 +2764,7 @@ function renderCtxLists(){
     : '<div class="mini-list-item" style="color:var(--text-muted);"><span class="arabic" style="display:block;">ما حفظت كلمات بعد</span><span style="display:block;">No saved words yet</span></div>';
   const nEl = document.getElementById('ctxNotesList');
   nEl.innerHTML = notesStore.length
-    ? notesStore.map((n,i) => `<div class="mini-list-item"><div class="ml-note">${n.text}</div><button class="mini-remove-btn" data-rm-note="${i}" aria-label="Remove">×</button></div>`).join('')
+    ? notesStore.map((n,i) => `<div class="mini-list-item"><div class="ml-note">${escapeHtml(n.text)}</div><button class="mini-remove-btn" data-rm-note="${i}" aria-label="Remove">×</button></div>`).join('')
     : '<div class="mini-list-item" style="color:var(--text-muted);"><span class="arabic" style="display:block;">لا توجد ملاحظات بعد</span><span style="display:block;">No notes yet</span></div>';
 }
 document.getElementById('ctxVocabList').addEventListener('click', e => {
@@ -17014,7 +17014,7 @@ function showWordCard(v, anchor){
   card.style.top = Math.min(window.scrollY + window.innerHeight - 240, r.bottom + 8 + window.scrollY) + 'px';
   card.style.insetInlineStart = Math.max(12, Math.min(window.scrollX + window.innerWidth - 320, r.left + window.scrollX)) + 'px';
   if(window.lucide) lucide.createIcons();
-  document.getElementById('pwcSay').onclick = () => { try{ speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(v.en); u.lang='en-US'; u.rate=.85; speechSynthesis.speak(u); }catch(e){} };
+  document.getElementById('pwcSay').onclick = () => { speak(v.en); };
   document.getElementById('pwcX').onclick = () => { card.style.display='none'; };
 }
 function renderLessonReader(container, academy, lesson){
