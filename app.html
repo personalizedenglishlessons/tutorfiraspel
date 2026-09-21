@@ -17355,7 +17355,7 @@ function renderVocabulary(){
   // translit fallback. Anon can SELECT words (RLS allows it).
   (async () => {
     try {
-      const sb = window.supabase;
+      const sb = window.pelSupabaseClient ? window.pelSupabaseClient() : null;
       if (!sb) return;
       const { data, error } = await sb.from('words')
         .select('en,ar,translit,example_en,example_ar,example_tr')
@@ -17399,7 +17399,7 @@ function renderVocabulary(){
   // نطق + Abha-dialect Arabic + context. No AI, rule-based translit fallback.
   (async () => {
     try {
-      const sb = window.supabase;
+      const sb = window.pelSupabaseClient ? window.pelSupabaseClient() : null;
       if (!sb) return;
       const { data, error } = await sb.from('words')
         .select('en,ar,translit,example_en,example_ar,example_tr')
@@ -17737,7 +17737,7 @@ function renderPronunciation(){
       <div id="pronDrillBody" style="margin-top:18px;"></div>
     </div>`;
   const grid = document.getElementById('pronTopicGrid');
-  grid.innerHTML = PRONUNCIATION_TOPICS.map((t,i) => `<div class="topic-tile${i===0?' active':''}" data-topic="${t.id}"><h4 style="font-size:.95rem;">${t.title}</h4><p style="font-size:.74rem; color:var(--text-muted); margin-top:6px;">${t.words.length} <span class="arabic">كلمات للتدريب</span>، practice words</p></div>`).join('');
+  grid.innerHTML = PRONUNCIATION_TOPICS.map((t,i) => `<div class="topic-tile${i===0?' active':''}" data-topic="${t.id}"><h4 style="font-size:.95rem;" dir="ltr">${t.title}</h4><p style="font-size:.74rem; color:var(--text-muted); margin-top:6px;">${t.words.length} <span class="arabic">كلمات للتدريب</span>، practice words</p></div>`).join('');
   function renderPractice(topicId){
     const t = PRONUNCIATION_TOPICS.find(x => x.id===topicId);
     const card = document.getElementById('pronPracticeCard');
