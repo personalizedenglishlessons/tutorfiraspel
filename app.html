@@ -14389,7 +14389,7 @@ function recordAndScore(onDone, targetText, btn, _retryCount){
         // Whisper unavailable AND backend not configured: point the learner to
         // the typed input so the mic never looks silently broken.
         const msg = /transcription_not_configured|not configured|empty whisper/i.test(String(e))
-          ? L('Speech engine unavailable - type your answer below.','محرك الصوت غير متاح - اكتب اجابتك بالاسفل.')
+          ? 'محرك الصوت غير متاح - اكتب اجابتك بالاسفل.'
           : micErrorMessage('network');
         toast('<span class="arabic">'+msg+'</span>');
         onDone(null, null, 'network');
@@ -14523,7 +14523,7 @@ function recordAndScore(onDone, targetText, btn, _retryCount){
         }catch(e2){
           if(btn) btn.classList.remove('recording');
           const msg2 = /transcription_not_configured|not configured|empty whisper/i.test(String(e2))
-            ? L('Speech engine unavailable - type your answer below.','محرك الصوت غير متاح - اكتب اجابتك بالاسفل.')
+            ? 'محرك الصوت غير متاح - اكتب اجابتك بالاسفل.'
             : micErrorMessage('network');
           toast('<span class="arabic">'+msg2+'</span>');
           onDone(null, null, 'network');
@@ -18019,7 +18019,9 @@ function renderListening(){
       </div>`).join('');
     linesWrap.querySelectorAll('[data-line]').forEach(btn => btn.addEventListener('click', () => speak(track.lines[btn.dataset.line].en)));
     document.getElementById('playAllBtn').addEventListener('click', () => {
-      track.lines.forEach((l,i) => setTimeout(() => speak(l.en), i*2600));
+      let li = 0;
+      const playNext = () => { if(li < track.lines.length){ speak(track.lines[li].en, () => { li++; playNext(); }); } };
+      playNext();
     });
     renderQuiz(document.getElementById('trackQuiz'), [
       {qEn:'What is this listening track mainly about?', qAr:'عن ماذا يتحدث هذا المقطع الصوتي؟', options:[track.title, 'Weather forecast', 'Sports results'], correct:0}
@@ -18054,16 +18056,16 @@ function renderReading(){
     const card = e.target.closest('[data-article]'); if(!card) return;
     openArticle(READING_ARTICLES.find(a => a.id === card.dataset.article));
   });
-  let readTimerInterval = null;
   function openArticle(article){
     let modal = document.getElementById('readingModal');
     if(!modal){
       modal = document.createElement('div'); modal.className='modal-overlay'; modal.id='readingModal';
       modal.innerHTML = `<div class="modal-box" style="max-width:600px; position:relative;"><button class="modal-close" id="closeReadingModal">✕</button><div id="readingModalBody"></div></div>`;
       document.body.appendChild(modal);
-      modal.addEventListener('click', e => { if(e.target===modal){ modal.classList.remove('open'); clearInterval(readTimerInterval);} });
-      document.getElementById('closeReadingModal').addEventListener('click', () => { modal.classList.remove('open'); clearInterval(readTimerInterval); });
+      modal.addEventListener('click', e => { if(e.target===modal){ modal.classList.remove('open'); if(modal._timer) clearInterval(modal._timer); } });
+      document.getElementById('closeReadingModal').addEventListener('click', () => { modal.classList.remove('open'); if(modal._timer) clearInterval(modal._timer); });
     }
+    if(modal._timer) clearInterval(modal._timer);
     let seconds = 0;
     document.getElementById('readingModalBody').innerHTML = `
       <div class="article-cover" style="background:linear-gradient(135deg,var(--gold-soft),var(--bronze));"></div>
@@ -18072,8 +18074,8 @@ function renderReading(){
       <div class="reading-timer" style="margin-top:10px;"><i data-lucide="timer" width="14" height="14"></i><span id="readTimerLabel">0:00</span></div>
       <div style="margin-top:18px; display:flex; flex-direction:column; gap:16px;">${article.body.map(b => triplet(b.en,b.ar,b.translit,true)).join('')}</div>
       <div class="card-elevated" style="padding:18px; border-radius:14px; margin-top:20px;" id="articleQuiz"></div>`;
-    clearInterval(readTimerInterval);
-    readTimerInterval = setInterval(() => { seconds++; const m=Math.floor(seconds/60), s=seconds%60; document.getElementById('readTimerLabel').textContent = m+':'+String(s).padStart(2,'0'); }, 1000);
+    clearInterval(modal._timer);
+    modal._timer = setInterval(() => { seconds++; const m=Math.floor(seconds/60), s=seconds%60; const lbl=document.getElementById('readTimerLabel'); if(lbl) lbl.textContent = m+':'+String(s).padStart(2,'0'); }, 1000);
     renderQuiz(document.getElementById('articleQuiz'), [
       {qEn:'This article is mainly about:', qAr:'عن ماذا يتحدث هذا المقال؟', options:[article.topic, 'Cooking recipes', 'Car repair'], correct:0}
     ], 'ra-'+article.id);
