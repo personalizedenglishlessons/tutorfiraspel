@@ -16708,7 +16708,7 @@ function cefrShortLabel(code, isAr){ return cefrDisplayName(code, isAr); }
 const GUIDED_TOOL_RULES = {
   vocabulary:    { minLevel:'A0', icon:'book-open',     ar:'المفردات',    en:'Vocabulary',    why:'كل كلمات الدرس' },
   pronunciation: { minLevel:'A0', icon:'mic',          ar:'النطق',       en:'Pronunciation', why:'تدرب على نطق كلمات الدرس' },
-  review:        { minLevel:'A0', icon:'rotate-ccw',   ar:'المراجعة',    en:'Review',        why:'ثبت الكلمات اللي اخذتها', minDone:3 },
+  review:        { minLevel:'A0', icon:'rotate-ccw',   ar:'المراجعة',    en:'Review',        why:'ثبت الكلمات اللي اخذتها' },
   grammar:       { minLevel:'A1', icon:'spell-check',  ar:'القواعد',     en:'Grammar',       why:'افهم تركيب الجمل في الدرس' },
   listening:     { minLevel:'A2', icon:'headphones',   ar:'الاستماع',    en:'Listening',     why:'اسمع وجاوب' },
   speaking:      { minLevel:'A2', icon:'messages-square', ar:'المحادثة',  en:'Speaking',      why:'تكلم بصوتك' },
@@ -17055,9 +17055,10 @@ function renderLessonReader(container, academy, lesson){
     <div class="pel-dash-tools-wrap" style="margin-top:18px;">
       <div class="eyebrow" style="margin:2px 2px 8px;"><span class="arabic">ادوات الدرس</span>، Lesson Tools</div>
       <div class="pel-dash-strip">${(() => {
-        // Guided tools: only show tools appropriate for the student's CEFR level.
-        // A0 students see Vocabulary + Pronunciation; Grammar unlocks at A1;
-        // Listening + Speaking at A2; Reading + Writing at B1.
+        // All study tools are unlocked for all students regardless of CEFR level
+        // or lessons completed. Previously tools were gated by level (A0→Vocab,
+        // A1→Grammar, A2→Listening/Speaking, B1→Reading/Writing) which blocked
+        // beginners from accessing the full toolkit.
         var _isAr = false;
         try{ _isAr = (typeof accountPrefs!=='undefined' && accountPrefs && accountPrefs.lang==='ar') || document.documentElement.dir==='rtl'; }catch(e){}
         var _st = window.PEL_EFFECTIVE_STATE;
@@ -17067,7 +17068,7 @@ function renderLessonReader(container, academy, lesson){
         var _all = _tools.map(function(tid){ var r = GUIDED_TOOL_RULES[tid]; return {view:tid, icon:r.icon, ar:r.ar, en:r.en, why:r.why}; });
         _all.push({view:'bookmarks',icon:'bookmark',ar:'المفضلة',en:'Bookmarks',why:'دروسك المحفوظة'});
         return _all.map(function(t){
-          return '<button class="pel-dash-tool" data-lt-view="'+t.view+'"><span class="td-ico">'+svgIcon(t.icon,18)+'</span><span class="td-t">'+escapeHtml(_isAr?t.ar:t.en)+'</span><span class="td-s"><span class="arabic">'+escapeHtml(t.why)+'</span></span></button>';
+          return '<button class="pel-dash-tool" data-lt-view="'+t.view+'"><span class="td-ico"><i data-lucide="'+t.icon+'" width="18" height="18"></i></span><span class="td-t">'+escapeHtml(_isAr?t.ar:t.en)+'</span><span class="td-s"><span class="arabic">'+escapeHtml(t.why)+'</span></span></button>';
         }).join('');
       })()}</div>
       <p style="font-size:.74rem;color:var(--text-muted);margin:8px 2px 0;"><span class="arabic">استخدم كل اداة مع هذا الدرس</span>، <span dir="ltr">Use any tool with this lesson.</span></p>
