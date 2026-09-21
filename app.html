@@ -24,8 +24,8 @@
 <script src="lib/cert-sheet.js?v=5278e935" defer></script>
 <script src="lib/pel_config.js?v=e4857dea"></script>
 <script src="lib/pel_lesson_stage.js?v=9b68ef62"></script>
-<script src="lib/pel_dashboard_life.js?v=94ad5635"></script>
-<script src="lib/pel_curriculum_path.js?v=f17afc34"></script>
+<script src="lib/pel_dashboard_life.js?v=e21d3119"></script>
+<script src="lib/pel_curriculum_path.js?v=b451f595"></script>
 <style>
 /* ============================================================
    DESIGN SYSTEM TOKENS, shared with index.html / login.html
@@ -16696,14 +16696,12 @@ function cefrDisplayName(code, isAr){
 function cefrShortLabel(code, isAr){ return cefrDisplayName(code, isAr); }
 
 /* ============================================================
-   GUIDED TOOL RULES - which tools appear at which level
+   GUIDED TOOL RULES - study tools metadata
    Tools are NOT scattered on the sidebar. They appear contextually
-   inside lessons, filtered by the student's CEFR level.
-   A0 (English Starter): Vocabulary + Pronunciation basics
-   A1 (English Basics):   + Grammar
-   A2 (English Daily):    + Listening + Speaking
-   B1 (English Middle):   + Reading + Writing
-   B2+ (English Strong+): All tools unlocked
+   inside lessons and on the dashboard strip. All tools are unlocked
+   for all students regardless of CEFR level or lessons completed.
+   The minLevel fields are kept for reference only and are NOT used
+   for gating — guidedToolsForLevel() returns all tools.
    ============================================================ */
 const GUIDED_TOOL_RULES = {
   vocabulary:    { minLevel:'A0', icon:'book-open',     ar:'المفردات',    en:'Vocabulary',    why:'كل كلمات الدرس' },
