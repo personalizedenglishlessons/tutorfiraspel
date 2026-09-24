@@ -181,5 +181,23 @@ if(reviewAct){
   check('review uses taught or SRS items', true);
 }
 
+/* ====== how_to_say ACTIVITY TESTS ====== */
+
+// 16. how_to_say appears in sequence for lessons with vocab
+var seqTest = buildSequence(makeLesson({}), 'how-to-say-test');
+var howToSayAct = seqTest.find(a => a.type === 'how_to_say');
+check('how_to_say present in sequence', !!howToSayAct);
+check('how_to_say has item.en', howToSayAct && howToSayAct.item && howToSayAct.item.en);
+check('how_to_say item has translit', howToSayAct && howToSayAct.item && howToSayAct.item.translit);
+
+// 17. how_to_say appears after learn activities
+var learnIdx2 = seqTest.findIndex(a => a.type === 'learn');
+var howToSayIdx = seqTest.findIndex(a => a.type === 'how_to_say');
+check('how_to_say after learn', learnIdx2 !== -1 && howToSayIdx !== -1 && learnIdx2 < howToSayIdx);
+
+// 18. how_to_say appears before first practice activity
+var firstPracticeIdx2 = seqTest.findIndex(a => ['recognize','match','fill_blank','arrange_words','spell'].indexOf(a.type) !== -1);
+check('how_to_say before first practice', howToSayIdx !== -1 && firstPracticeIdx2 !== -1 && howToSayIdx < firstPracticeIdx2);
+
 console.log('\n' + (fail === 0 ? 'ALL PASS' : (fail + ' FAILED')) + ' (' + pass + ' passed, ' + fail + ' failed)');
 process.exit(fail === 0 ? 0 : 1);
