@@ -39,47 +39,40 @@ update public.lessons
 
 -- Fix any lesson content that uses formal grammar terms in lesson_items
 update public.lesson_items
-  set ar = replace(ar, 'من فعل الكون', 'كلمة ربط')
-  where ar like '%من فعل الكون%';
+  set ar_meaning = replace(ar_meaning, 'من فعل الكون', 'كلمة ربط')
+  where ar_meaning like '%من فعل الكون%';
 
 update public.lesson_items
-  set ar = replace(ar, 'خاصتي', 'حقتي')
-  where ar like '%خاصتي%';
+  set ar_meaning = replace(ar_meaning, 'خاصتي', 'حقتي')
+  where ar_meaning like '%خاصتي%';
 
 update public.lesson_items
-  set ar = replace(ar, 'خاصتك', 'حقتك')
-  where ar like '%خاصتك%';
+  set ar_meaning = replace(ar_meaning, 'خاصتك', 'حقتك')
+  where ar_meaning like '%خاصتك%';
 
 update public.lesson_items
-  set ar = replace(ar, 'خاصته', 'حقه')
-  where ar like '%خاصته%';
+  set ar_meaning = replace(ar_meaning, 'خاصته', 'حقه')
+  where ar_meaning like '%خاصته%';
 
 update public.lesson_items
-  set ar = replace(ar, 'خاصتها', 'حقها')
-  where ar like '%خاصتها%';
+  set ar_meaning = replace(ar_meaning, 'خاصتها', 'حقها')
+  where ar_meaning like '%خاصتها%';
 
 update public.lesson_items
-  set ar = replace(ar, 'خاصتنا', 'حقنا')
-  where ar like '%خاصتنا%';
+  set ar_meaning = replace(ar_meaning, 'خاصتنا', 'حقنا')
+  where ar_meaning like '%خاصتنا%';
 
 update public.lesson_items
-  set ar = replace(ar, 'خاصتهم', 'حقهم')
-  where ar like '%خاصتهم%';
+  set ar_meaning = replace(ar_meaning, 'خاصتهم', 'حقهم')
+  where ar_meaning like '%خاصتهم%';
 
 -- Fix lesson_exercises that use formal terms
 update public.lesson_exercises
-  set prompt_ar = replace(prompt_ar, 'من فعل الكون', 'كلمة ربط')
-  where prompt_ar like '%من فعل الكون%';
+  set hint_ar = replace(hint_ar, 'من فعل الكون', 'كلمة ربط')
+  where hint_ar like '%من فعل الكون%';
 
 update public.lesson_exercises
-  set prompt_ar = replace(prompt_ar, 'خاصتي', 'حقتي')
-  where prompt_ar like '%خاصتي%';
+  set hint_ar = replace(hint_ar, 'خاصتي', 'حقتي')
+  where hint_ar like '%خاصتي%';
 
--- Fix lesson notes/grammar fields
-update public.lessons
-  set grammar_note_ar = replace(grammar_note_ar, 'من فعل الكون', 'كلمة ربط')
-  where grammar_note_ar like '%من فعل الكون%';
-
-update public.lessons
-  set grammar_note_ar = replace(grammar_note_ar, 'خاصتي', 'حقتي')
-  where grammar_note_ar like '%خاصتي%';
+-- Note: grammar_note_ar column does not exist on lessons table; skipped.

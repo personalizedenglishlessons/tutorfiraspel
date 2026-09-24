@@ -44,11 +44,13 @@ alter table public.student_presence enable row level security;
 alter table public.student_activity_events enable row level security;
 
 -- Students can read their own presence (for potential future features)
+drop policy if exists "student reads own presence" on public.student_presence;
 create policy "student reads own presence"
   on public.student_presence for select
   using (auth.uid() = user_id);
 
 -- Students can read their own activity events
+drop policy if exists "student reads own activity" on public.student_activity_events;
 create policy "student reads own activity"
   on public.student_activity_events for select
   using (auth.uid() = user_id);
