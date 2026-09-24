@@ -500,7 +500,7 @@ function pageHead(title, sub, crumb){
 function modal(title, body, wide, footer){
   var s = document.createElement('div');
   s.className = 'modal-scrim';
-  s.innerHTML = '<div class="modal' + (wide ? ' wide' : '') + '"><h3>' + title + '</h3>' +
+  s.innerHTML = '<div class="modal' + (wide ? ' wide' : '') + '"><h3>' + esc(title) + '</h3>' +
     '<div class="modal-body">' + body + '</div>' + (footer || '') + '</div>';
   s.addEventListener('click', function(e){ if(e.target === s) s.remove(); });
   document.body.appendChild(s);
