@@ -23,7 +23,7 @@
 <script src="lib/cert-qr.js?v=a43f19f9" defer></script>
 <script src="lib/cert-sheet.js?v=5278e935" defer></script>
 <script src="lib/pel_config.js?v=e4857dea"></script>
-<script src="lib/pel_lesson_stage.js?v=8464737e"></script>
+<script src="lib/pel_lesson_stage.js?v=d20bf5d3"></script>
 <script src="lib/pel_dashboard_life.js?v=e21d3119"></script>
 <script src="lib/pel_curriculum_path.js?v=b451f595"></script>
 <style>
@@ -17884,7 +17884,7 @@ function renderPronunciation(){
         } else if(score >= 40){
           fb.innerHTML = `<span style="color:var(--gold);">●</span> <span class="arabic">قريب! سمعت</span>: "${escapeHtml(heard)}" <span class="arabic">(${score}% تقريبي), الصح هو</span> "<b>${escapeHtml(target)}</b>"، <span class="arabic">جرب مرة ثانية بهدو</span>${tipHtml}`;
         } else {
-          fb.innerHTML = `<i data-lucide="rotate-ccw" width="14" height="14"></i> <span class="arabic">سمعت</span>: "${escapeHtml(heard)}" <span class="arabic">(${score}% تقريبي), ما تطابقت مع</span> "<b>${escapeHtml(target)}</b>"، <span class="arabic">اضغط</span> <i data-lucide="volume-2" width="14" height="14"></i> <span class="arabic">لتسمع النطق الصحيح وحاول مرة ثانية</span>${tipHtml}`;
+          fb.innerHTML = `<span style="color:var(--gold);">↻</span> <span class="arabic">سمعت</span>: "${escapeHtml(heard)}" <span class="arabic">(${score}% تقريبي), ما تطابقت مع</span> "<b>${escapeHtml(target)}</b>"، <span class="arabic">اضغط زر السماع لتسمع النطق الصحيح وحاول مرة ثانية</span>${tipHtml}`;
         }
       }, target, this);
     }));
