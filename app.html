@@ -23,7 +23,7 @@
 <script src="lib/cert-qr.js?v=a43f19f9" defer></script>
 <script src="lib/cert-sheet.js?v=5278e935" defer></script>
 <script src="lib/pel_config.js?v=e4857dea"></script>
-<script src="lib/pel_lesson_stage.js?v=9b68ef62"></script>
+<script src="lib/pel_lesson_stage.js?v=a70329b9"></script>
 <script src="lib/pel_dashboard_life.js?v=e21d3119"></script>
 <script src="lib/pel_curriculum_path.js?v=b451f595"></script>
 <style>
@@ -14001,7 +14001,15 @@ function renderDbPractice(container, exercises){
           if(heard === null){ fb.innerHTML = '<span class="arabic">' + (micErrorMessage(err)||'') + '</span>'; return; }
           const pf = (typeof pronFeedback === 'function') ? pronFeedback(heard, tgt) : null;
           const tip = (pf && pf.tipAr) ? ' <span class="arabic" style="color:var(--gold);">💡 '+pf.tipAr+'</span>' : '';
-          fb.innerHTML = '🗣️ <span class="arabic">سمعت</span> "' + escapeHtml(heard) + '" (' + score + '%)' + tip;
+          // Encouragement messages based on score — reduces speaking anxiety
+          // Research: 100% of Saudi EFL learners report speaking anxiety
+          // Ref: https://www.e-iji.net/dosyalar/iji_2026_3_19.pdf
+          let enc = '';
+          if(score < 40) enc = ' <span class="arabic" style="color:var(--text-muted);">الغلط عادي، هذا كيف نتعلم. حاول مرة ثانية.</span>';
+          else if(score < 70) enc = ' <span class="arabic" style="color:var(--text-muted);">كويس! قربت من النطق الصح. حاول مرة ثانية.</span>';
+          else if(score < 90) enc = ' <span class="arabic" style="color:var(--success);">احسنت! نطقك صار احسن. كمل.</span>';
+          else enc = ' <span class="arabic" style="color:var(--success);">ممتاز! نطقك طبيعي.</span>';
+          fb.innerHTML = '🗣️ <span class="arabic">سمعت</span> "' + escapeHtml(heard) + '" (' + score + '%)' + tip + enc;
         }, tgt, this);
       });
     }
