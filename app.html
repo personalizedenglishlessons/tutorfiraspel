@@ -14086,6 +14086,11 @@ function markLessonComplete(academyId, lessonId, stats){
   // above is only an offline mirror; the DB is the source of truth.
   // `stats` (Recognition vs Production counters from the lesson stage) is
   // persisted to lesson_progress for admin analytics.
+  // XP, achievements, and confetti are deferred until the RPC confirms —
+  // no optimistic rewards that would need rolling back on rejection.
+  const reviewLesson = getLesson(academyId, lessonId);
+  const reviewAcademy = resolveAcademyById(academyId);
+  const completedTitle = (reviewLesson && reviewLesson.title) ? reviewLesson.title : 'this lesson';
   let rpcPromise = Promise.resolve(null);
   try{
     const c = client();
@@ -14099,23 +14104,38 @@ function markLessonComplete(academyId, lessonId, stats){
           }
           window.PEL_EFFECTIVE_STATE = data;
           document.dispatchEvent(new CustomEvent('pel-progress-updated', { detail:data }));
+          // Server confirmed — now grant rewards
+          const compDates = lsGet('pel_completion_dates', {});
+          compDates[key] = pelDateKey();
+          lsSet('pel_completion_dates', compDates);
+          if(reviewLesson && reviewLesson.vocab){
+            reviewLesson.vocab.forEach(w => enqueueForReview(w, (reviewAcademy ? reviewAcademy.en + ' · ' : '') + reviewLesson.title));
+          }
+          pelPerfRecord(lessonId, stats);
+          syncAcademyProgress();
+          awardXp(50);
+          syncAchievements();
+          syncHeroStats();
+          if(ACADEMIES.some(a => a.progress === 100)) syncCertificateRecords();
+          renderNotifications();
+          renderUpcomingLesson();
+          renderContinueLearning();
+          renderHeroIntel();
+          toast('اكتمل الدرس: ' + completedTitle + '، Lesson complete: ' + completedTitle); confettiBurst();
           // Guided mode: serve the next lesson without leaving the flow.
           if(guidedMode()) setTimeout(() => { startNextGuidedLesson(); }, 1400);
           return data;
         }).catch(()=>{ completedLessons.delete(key); persistStudentState(); syncAcademyProgress(); return null; });
+      return rpcPromise;
     }
   }catch(e){}
+  // Offline fallback (no client or no user) — grant rewards locally
   const compDates = lsGet('pel_completion_dates', {});
   compDates[key] = pelDateKey();
   lsSet('pel_completion_dates', compDates);
-  // Feed this lesson's vocabulary into the smart review queue so the
-  // words come back for spaced recall instead of being forgotten.
-  const reviewLesson = getLesson(academyId, lessonId);
   if(reviewLesson && reviewLesson.vocab){
-    const reviewAcademy = resolveAcademyById(academyId);
     reviewLesson.vocab.forEach(w => enqueueForReview(w, (reviewAcademy ? reviewAcademy.en + ' · ' : '') + reviewLesson.title));
   }
-  // Record performance for adaptive lesson sequencing
   pelPerfRecord(lessonId, stats);
   syncAcademyProgress();
   awardXp(50);
@@ -14126,8 +14146,7 @@ function markLessonComplete(academyId, lessonId, stats){
   renderUpcomingLesson();
   renderContinueLearning();
   renderHeroIntel();
-  const completedTitle = (reviewLesson && reviewLesson.title) ? reviewLesson.title : 'this lesson';
-  toast(`<span class="arabic">اكتمل الدرس: ${completedTitle}</span>، Lesson complete: ${completedTitle}`); confettiBurst();
+  toast('اكتمل الدرس: ' + completedTitle + '، Lesson complete: ' + completedTitle); confettiBurst();
   return rpcPromise;
 }
 function defaultStudentStats(){ return { xp: 0, streak: 0, longestStreak: 0, lastStudyDate: null }; }
