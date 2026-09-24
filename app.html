@@ -1109,10 +1109,10 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
 
   <!-- ================= MOBILE STUDY DOCK ================= -->
   <nav class="dock" id="studyDock" aria-label="Quick navigation">
-    <button class="dock-btn" data-view="home"><i data-lucide="home" width="21" height="21"></i><span>البداية</span></button>
-    <button class="dock-btn" data-view="review"><i data-lucide="rotate-ccw" width="21" height="21"></i><span>مراجعة</span></button>
-    <button class="dock-btn" data-view="profile"><i data-lucide="user" width="21" height="21"></i><span>حسابي</span></button>
-    <button class="dock-btn" id="dockMore"><i data-lucide="menu" width="21" height="21"></i><span>المزيد</span></button>
+    <button type="button" class="dock-btn" data-view="home"><i data-lucide="home" width="21" height="21"></i><span>البداية</span></button>
+    <button type="button" class="dock-btn" data-view="review"><i data-lucide="rotate-ccw" width="21" height="21"></i><span>مراجعة</span></button>
+    <button type="button" class="dock-btn" data-view="profile"><i data-lucide="user" width="21" height="21"></i><span>حسابي</span></button>
+    <button type="button" class="dock-btn" id="dockMore"><i data-lucide="menu" width="21" height="21"></i><span>المزيد</span></button>
   </nav>
 
   <!-- ================= SIDEBAR ================= -->
@@ -1120,7 +1120,7 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
     <div class="sidebar-head">
       <span class="sidebar-logo"><img class="pel-logo" src="brand/pel-wordmark.svg" alt="PEL"><img class="pel-logo pel-logo-light" src="brand/pel-wordmark-dark.svg" alt="PEL"></span>
       <span class="sidebar-name"><span class="arabic" style="display:block; font-size:.92em;">دروس انجليزي مخصصة</span><span style="display:block; font-size:.8em; color:var(--text-muted); margin-top:2px;">Personalized English Lessons</span></span>
-      <button class="sidebar-collapse-btn" id="collapseBtn" aria-label="Collapse sidebar">
+      <button type="button" class="sidebar-collapse-btn" id="collapseBtn" aria-label="Collapse sidebar">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
       </button>
     </div>
@@ -1137,11 +1137,11 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
 
     <!-- ================= TOPBAR ================= -->
     <header class="topbar">
-      <button class="mobile-sidebar-btn" id="mobileSidebarBtn" aria-label="Open menu">
+      <button type="button" class="mobile-sidebar-btn" id="mobileSidebarBtn" aria-label="Open menu">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
       </button>
 
-      <button class="search-trigger" id="searchTrigger">
+      <button type="button" class="search-trigger" id="searchTrigger">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
         <span><span class="arabic">ابحث في الدروس والمفردات والقواعد...</span><span style="display:block; font-size:.72em; color:var(--text-muted); margin-top:1px;">Search lessons, vocabulary, grammar...</span></span>
         <span class="kbd">Ctrl K</span>
@@ -1154,14 +1154,14 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
         <div class="pill-stat hide-mid" title="نقاط الخبرة، XP"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4z"/></svg> <b id="topXp">0</b> <span class="arabic">نقطة</span> XP</div>
         <div class="pill-stat hide-mid" title="سلسلة الايام، Day streak"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z"/></svg> <b id="topStreak">0</b> <span class="arabic">يوم</span> streak</div>
 
-        <button class="lang-pill" id="topbarLangBtn" aria-label="Switch interface language">EN</button>
+        <button type="button" class="lang-pill" id="topbarLangBtn" aria-label="Switch interface language">EN</button>
 
-        <button class="icon-btn" id="themeToggle" aria-label="Toggle theme">
+        <button type="button" class="icon-btn" id="themeToggle" aria-label="Toggle theme">
           <svg id="themeIcon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3v2M12 19v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M3 12h2M19 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/><circle cx="12" cy="12" r="4.2"/></svg>
         </button>
 
         <div class="notif-wrap">
-          <button class="icon-btn" id="notifBtn" aria-label="Notifications">
+          <button type="button" class="icon-btn" id="notifBtn" aria-label="Notifications">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 01-3.4 0"/></svg>
             <span class="notif-dot"></span>
           </button>
@@ -1171,21 +1171,21 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
         </div>
 
         <div class="context-toggle-btn">
-          <button class="icon-btn" id="contextToggleBtn" aria-label="Open study panel">
+          <button type="button" class="icon-btn" id="contextToggleBtn" aria-label="Open study panel">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M15 4v16"/></svg>
           </button>
         </div>
 
         <div class="user-menu-wrap">
-          <button class="user-menu-trigger" id="userMenuBtn">
+          <button type="button" class="user-menu-trigger" id="userMenuBtn">
             <span class="avatar-circle" id="avatarInitial"></span>
             <span class="user-meta"><b id="userNameLabel"></b><span id="userLevelLabel"></span></span>
           </button>
           <div class="dropdown" id="userDropdown">
-            <button class="dropdown-item" data-view="profile"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg> <span><span class="arabic" style="display:block;">الملف الشخصي</span><span style="display:block; font-size:.82em; color:var(--text-muted);">View Profile</span></span></button>
-            <button class="dropdown-item" data-view="settings"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.9l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.9-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1-1.6 1.7 1.7 0 00-1.9.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.9 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1 1.7 1.7 0 00-.3-1.9l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.9.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.9-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.9V9a1.7 1.7 0 001.5 1h.1a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"/></svg> <span><span class="arabic" style="display:block;">الاعدادات</span><span style="display:block; font-size:.82em; color:var(--text-muted);">Settings</span></span></button>
+            <button type="button" class="dropdown-item" data-view="profile"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg> <span><span class="arabic" style="display:block;">الملف الشخصي</span><span style="display:block; font-size:.82em; color:var(--text-muted);">View Profile</span></span></button>
+            <button type="button" class="dropdown-item" data-view="settings"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.9l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.9-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1-1.6 1.7 1.7 0 00-1.9.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.9 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1 1.7 1.7 0 00-.3-1.9l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.9.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.9-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.9V9a1.7 1.7 0 001.5 1h.1a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"/></svg> <span><span class="arabic" style="display:block;">الاعدادات</span><span style="display:block; font-size:.82em; color:var(--text-muted);">Settings</span></span></button>
             <div class="dropdown-sep"></div>
-            <button class="dropdown-item danger" id="logoutBtn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg> <span><span class="arabic" style="display:block;">تسجيل الخروج</span><span style="display:block; font-size:.82em; color:var(--text-muted);">Log Out</span></span></button>
+            <button type="button" class="dropdown-item danger" id="logoutBtn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg> <span><span class="arabic" style="display:block;">تسجيل الخروج</span><span style="display:block; font-size:.82em; color:var(--text-muted);">Log Out</span></span></button>
           </div>
         </div>
       </div>
@@ -1248,8 +1248,8 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
               <h3 style="font-size:1.05rem;">Appearance <span class="arabic" style="font-size:.85em; font-weight:400;">· المظهر</span></h3>
               <p style="margin-top:8px; font-size:.84rem; color:var(--text-muted);"><span class="arabic" style="display:block;">اختار شكل الاكاديمية على هذا الجهاز.</span>Choose how the academy looks on this device.</p>
               <div style="display:flex; gap:10px; margin-top:18px;">
-                <button class="btn-outline" data-theme-choice="dark" id="darkChoiceBtn"><span class="arabic">داكن</span>، Dark</button>
-                <button class="btn-outline" data-theme-choice="light" id="lightChoiceBtn"><span class="arabic">فاتح</span>، Light</button>
+                <button type="button" class="btn-outline" data-theme-choice="dark" id="darkChoiceBtn"><span class="arabic">داكن</span>، Dark</button>
+                <button type="button" class="btn-outline" data-theme-choice="light" id="lightChoiceBtn"><span class="arabic">فاتح</span>، Light</button>
               </div>
             </div>
             <div class="card">
@@ -1308,7 +1308,7 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
                 <span id="grammarStatusDot" style="width:9px; height:9px; border-radius:50%; background:var(--text-muted); display:inline-block; flex:0 0 auto;"></span>
                 <span id="grammarStatusText" style="color:var(--text-muted);"><span class="arabic">جاري الفحص...</span> Checking...</span>
               </div>
-              <button class="btn-outline" id="grammarTestBtn" style="margin-top:14px;"><span class="arabic">اختبر الاتصال</span>، Test connection</button>
+              <button type="button" class="btn-outline" id="grammarTestBtn" style="margin-top:14px;"><span class="arabic">اختبر الاتصال</span>، Test connection</button>
             </div>
             <div class="card">
               <h3 style="font-size:1.05rem;">Privacy <span class="arabic" style="font-size:.85em; font-weight:400;">· الخصوصية</span></h3>
@@ -1353,7 +1353,7 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
           <h4><span class="arabic">ملاحظات حديثة</span>، Recent Notes</h4>
           <div style="display:flex; gap:6px; margin-bottom:8px;">
             <input id="ctxNoteInput" placeholder="اكتب ملاحظة... / Write a note..." style="flex:1; min-width:0; background:var(--card-elevated); border:1px solid var(--border); border-radius:8px; padding:7px 10px; color:var(--text); font-size:.78rem;">
-            <button class="btn-ghost-sm" id="ctxNoteAdd" style="flex-shrink:0;">+</button>
+            <button type="button" class="btn-ghost-sm" id="ctxNoteAdd" style="flex-shrink:0;">+</button>
           </div>
           <div id="ctxNotesList"></div>
         </div>
@@ -1368,8 +1368,8 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
           <div class="pomo-display">
             <div class="pomo-time" id="pomoTime">25:00</div>
             <div class="pomo-controls">
-              <button class="pomo-btn" id="pomoStart" aria-label="Start"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
-              <button class="pomo-btn" id="pomoReset" aria-label="Reset"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 109-9 9.75 9.75 0 00-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg></button>
+              <button type="button" class="pomo-btn" id="pomoStart" aria-label="Start"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+              <button type="button" class="pomo-btn" id="pomoReset" aria-label="Reset"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 109-9 9.75 9.75 0 00-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg></button>
             </div>
             <div class="pomo-total" id="pomoTotal" style="font-size:.72rem; color:var(--text-muted); margin-top:6px;"></div>
           </div>
@@ -1380,17 +1380,17 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
 </div>
 
 <!-- ================= QUICK TRANSLATE (floating, mobile-friendly) ================= -->
-<button class="fab-qt qt-fab" id="qtFab" aria-label="Open Quick Translate">
+<button type="button" class="fab-qt qt-fab" id="qtFab" aria-label="Open Quick Translate">
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h7M7 3v2c0 4.5-2 8-5 10M4 13c1.8 1.5 4 2 5.5 1.8M13 21l4-9 4 9M14.5 18h5"/></svg>
 </button>
 <div class="qt-popup" id="qtPopup">
   <div class="qt-popup-head">
     <h4 style="margin:0;"><span class="arabic">ترجمة سريعة</span>، Quick Translate</h4>
-    <button class="icon-btn" id="qtCloseBtn" aria-label="Close">✕</button>
+    <button type="button" class="icon-btn" id="qtCloseBtn" aria-label="Close">✕</button>
   </div>
   <div class="qt-box">
     <textarea id="qtInput" placeholder="اكتب كلمة او جملة بالعربي او الانجليزي... / Type a word or sentence in Arabic or English..."></textarea>
-    <button class="btn-ghost-sm" id="qtBtn" style="margin-top:8px;"><span class="arabic">ترجم</span>، Translate</button>
+    <button type="button" class="btn-ghost-sm" id="qtBtn" style="margin-top:8px;"><span class="arabic">ترجم</span>، Translate</button>
     <div class="qt-result" id="qtResult"></div>
   </div>
 </div>
@@ -1958,8 +1958,8 @@ function renderAccessGate(){
       cardsHtml +
       '<div style="display:flex; gap:12px; justify-content:center; margin-top:28px; flex-wrap:wrap; align-items:center;">' +
         '<a class="btn-gold" href="' + waHref + '" target="_blank" rel="noopener"><i data-lucide="message-circle" width="16" height="16"></i>' + (ar ? 'كلمنا واتساب' : 'Contact on WhatsApp') + '</a>' +
-        '<button class="btn-outline" id="gateRecheck"><i data-lucide="refresh-cw" width="16" height="16"></i>' + (ar ? 'شيك الحين' : 'Check again') + '</button>' +
-        '<button class="btn-ghost" id="gateSignOut">' + (ar ? 'خروج من حسابك' : 'Sign out') + '</button>' +
+        '<button type="button" class="btn-outline" id="gateRecheck"><i data-lucide="refresh-cw" width="16" height="16"></i>' + (ar ? 'شيك الحين' : 'Check again') + '</button>' +
+        '<button type="button" class="btn-ghost" id="gateSignOut">' + (ar ? 'خروج من حسابك' : 'Sign out') + '</button>' +
       '</div>' +
     '</div>';
   const so = document.getElementById('gateSignOut');
@@ -2042,7 +2042,7 @@ function renderSubBanner(){
       '<div class="tile-icon" style="margin:0;"><i data-lucide="lock" width="18" height="18"></i></div>' +
       '<div style="flex:1; min-width:200px;"><b>' + (ar ? 'خلصت باقتك' : 'Your lesson access has ended') + '</b>' +
       '<div style="font-size:.8rem; color:var(--text-secondary); margin-top:3px;">' + (ar ? 'حسابك وتقدمك وشهاداتك كلها محفوظة، جدد باقتك وترجع تكمل من نفس المكان.' : 'Your account, progress and certificates are safe. Renew your plan to resume exactly where you left off.') + '</div></div>' +
-      '<button class="btn-gold" id="subRenewBtn">' + (ar ? 'جدد باقتك الحين' : 'Renew Your Plan') + '</button>' +
+      '<button type="button" class="btn-gold" id="subRenewBtn">' + (ar ? 'جدد باقتك الحين' : 'Renew Your Plan') + '</button>' +
       '</div></div>';
   } else if(subPlan.status === 'expiring'){
     html = '<div class="card" style="border-color:rgba(200,169,106,.45); background:linear-gradient(135deg, rgba(200,169,106,.12), rgba(200,169,106,.03));">' +
@@ -2050,7 +2050,7 @@ function renderSubBanner(){
       '<div class="tile-icon" style="margin:0;"><i data-lucide="hourglass" width="18" height="18"></i></div>' +
       '<div style="flex:1; min-width:200px;"><b>' + (ar ? 'باقتك قربت تخلص' : 'Your plan is expiring soon') + '</b>' +
       '<div style="font-size:.8rem; color:var(--text-secondary); margin-top:3px;">' + (ar ? ('باقي ' + subPlan.daysLeft + ' يوم، جدد قبل لا توقف عليك الدروس.') : (subPlan.daysLeft + ' days left. Renew before it ends to keep learning without a break.')) + '</div></div>' +
-      '<button class="btn-gold" id="subRenewBtn">' + (ar ? 'جدد الحين' : 'Renew Now') + '</button>' +
+      '<button type="button" class="btn-gold" id="subRenewBtn">' + (ar ? 'جدد الحين' : 'Renew Now') + '</button>' +
       '</div></div>';
   } else if(!subPlan.hasPlan){
     html = '<div class="card" style="border-color:rgba(63,140,114,.35); background:linear-gradient(135deg, rgba(63,140,114,.08), rgba(63,140,114,.02));">' +
@@ -2058,7 +2058,7 @@ function renderSubBanner(){
       '<div class="tile-icon" style="margin:0;"><i data-lucide="sparkles" width="18" height="18"></i></div>' +
       '<div style="flex:1; min-width:200px;"><b>' + (ar ? 'اختر باقتك وخلنا نبدا' : 'Choose your plan') + '</b>' +
       '<div style="font-size:.8rem; color:var(--text-secondary); margin-top:3px;">' + (ar ? 'الاكاديمية بالاشتراك، شوف الباقات واختر اللي تناسبك.' : 'The academy runs on plans. Pick the one that fits your goals.') + '</div></div>' +
-      '<button class="btn-gold" id="subRenewBtn">' + (ar ? 'شوف الباقات' : 'See Plans') + '</button>' +
+      '<button type="button" class="btn-gold" id="subRenewBtn">' + (ar ? 'شوف الباقات' : 'See Plans') + '</button>' +
       '</div></div>';
   }
   if(!html) return;
@@ -2093,7 +2093,7 @@ async function renderHomeIntel(){
             '<div style="flex:1;"><div style="font-weight:600;">' + escapeHtml(a.title) + (a.priority === 'important' ? ' <span class="chip red">!</span>' : '') + (a.link ? ' <span class="chip">' + (ar ? 'رابط ↗' : 'link ↗') + '</span>' : '') + '</div>' +
             '<span class="why">' + escapeHtml(a.message) + '</span></div></div>';
         }).join('') +
-        '<div style="margin-top:10px;"><button class="btn-ghost-sm" id="annAllBtn">' + (ar ? 'شوف الكل' : 'View all') + '</button></div>';
+        '<div style="margin-top:10px;"><button type="button" class="btn-ghost-sm" id="annAllBtn">' + (ar ? 'شوف الكل' : 'View all') + '</button></div>';
       } else {
         body = '<div style="font-size:.8rem; color:var(--text-muted);">' + (ar ? 'ما فيه اعلانات الحين.' : 'No announcements right now.') + '</div>';
       }
@@ -2152,7 +2152,7 @@ function showRenewal(){
       '<div style="display:flex; justify-content:space-between; align-items:center; gap:14px; margin-bottom:18px; color:var(--text); flex-wrap:wrap;">' +
         '<div><h2 style="font-size:1.3rem;">' + (ar ? 'جدد باقتك او اشترك' : 'Renew or subscribe') + '</h2>' +
         '<div style="font-size:.85rem; color:var(--text-muted); margin-top:4px;">' + (ar ? 'تقدمك وشهاداتك كلها محفوظة، ترجع تكمل من نفس المكان.' : 'Your progress and certificates are safe - you resume right where you stopped.') + '</div></div>' +
-        '<button class="btn-ghost" id="renewalClose">' + (ar ? 'اغلاق' : 'Close') + '</button>' +
+        '<button type="button" class="btn-ghost" id="renewalClose">' + (ar ? 'اغلاق' : 'Close') + '</button>' +
       '</div>' +
       '<div style="display:flex; gap:16px; flex-wrap:wrap; justify-content:center; align-items:stretch;">' + cards + '</div>' +
     '</div>';
@@ -2178,7 +2178,7 @@ function showAnnouncementsModal(){
         '</div>';
     }).join('') || '<div style="font-size:.85rem; color:var(--text-muted);">' + (ar ? 'ما فيه اعلانات الحين.' : 'No announcements.') + '</div>';
     overlay.innerHTML = '<div style="max-width:720px; width:100%;">' +
-      '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; color:var(--text);"><h2 style="font-size:1.25rem;">' + (ar ? 'اعلانات الاكاديمية' : 'Announcements') + '</h2><button class="btn-ghost" id="annModalClose">' + (ar ? 'اغلاق' : 'Close') + '</button></div>' + rows + '</div>';
+      '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; color:var(--text);"><h2 style="font-size:1.25rem;">' + (ar ? 'اعلانات الاكاديمية' : 'Announcements') + '</h2><button type="button" class="btn-ghost" id="annModalClose">' + (ar ? 'اغلاق' : 'Close') + '</button></div>' + rows + '</div>';
     document.body.appendChild(overlay);
     document.getElementById('annModalClose').addEventListener('click', () => overlay.remove());
     overlay.addEventListener('click', e => { if(e.target === overlay) overlay.remove(); });
@@ -2238,7 +2238,7 @@ function showAnnouncementsModal(){
     el.style.cssText = 'position:fixed; inset:auto 16px 16px 16px; z-index:10000; background:#2b1d1d; color:#f3e3e3; border:1px solid rgba(196,111,86,.5); border-radius:14px; padding:14px 18px; font-size:.85rem; line-height:1.6; max-width:720px; margin:0 auto;';
     el.innerHTML = '<b>صار خلل بسيط وانت تفتح الاكاديمية.</b><br>' +
       '<span style="opacity:.85;">' + String(err && (err.message || err.reason || err)).replace(/[<>]/g,'').slice(0,300) + '</span><br>' +
-      '<button onclick="location.reload()" style="margin-top:8px; cursor:pointer;">جرب مرة ثانية</button>';
+      '<button type="button" onclick="location.reload()" style="margin-top:8px; cursor:pointer;">جرب مرة ثانية</button>';
     document.body.appendChild(el);
   }
   window.addEventListener('error', e => surface(e.error || e.message));
@@ -2312,7 +2312,7 @@ window.addEventListener('load', async () => {
     console.warn('[PEL boot] fatal:', e);
     const gate = document.getElementById('authGate');
     if(gate){
-      gate.innerHTML = '<div class="ring"></div><p style="max-width:480px;text-align:center;line-height:1.6;"><span class="arabic" style="display:block;font-size:.9em;color:var(--text-muted);margin-bottom:4px;">صار خلل وانت تفتح الاكاديمية.</span><b>Boot error:</b> '+ String(e && e.message || e).replace(/[<>]/g,'').slice(0,500) +'<br><button onclick="location.reload()" style="margin-top:8px;cursor:pointer;">Retry</button></p>';
+      gate.innerHTML = '<div class="ring"></div><p style="max-width:480px;text-align:center;line-height:1.6;"><span class="arabic" style="display:block;font-size:.9em;color:var(--text-muted);margin-bottom:4px;">صار خلل وانت تفتح الاكاديمية.</span><b>Boot error:</b> '+ String(e && e.message || e).replace(/[<>]/g,'').slice(0,500) +'<br><button type="button" onclick="location.reload()" style="margin-top:8px;cursor:pointer;">Retry</button></p>';
       document.body.classList.add('ready');
     }
     return;
@@ -2429,6 +2429,15 @@ document.addEventListener('keydown', e => {
   e.preventDefault();
   btn.click();
 });
+// Accessibility: set lang="ar" dir="rtl" on all .arabic elements for screen readers
+(function pelA11yArabic(){
+  function tagArabic(){ document.querySelectorAll('.arabic:not([lang])').forEach(el => { el.setAttribute('lang','ar'); el.setAttribute('dir','rtl'); }); }
+  if(document.readyState !== 'loading') tagArabic();
+  else document.addEventListener('DOMContentLoaded', tagArabic);
+  // Re-tag after dynamic content renders
+  const obs = new MutationObserver(() => tagArabic());
+  obs.observe(document.body, { childList:true, subtree:true });
+})();
 function confettiBurst(){
   const colors = ['#C8A96A','#D8BD83','#A88345','#3F8C72'];
   for(let i=0;i<36;i++){
@@ -2747,7 +2756,7 @@ function renderPalette(query){
   matches.forEach(m => { (groups[m.group] = groups[m.group] || []).push(m); });
   paletteResults.innerHTML = Object.keys(groups).map(g => `
     <div class="palette-group-label">${g}</div>
-    ${groups[g].map(m => `<button class="palette-item" data-view="${m.view}"${m.lesson ? ` data-academy="${m.academy}" data-lesson="${m.lesson}"` : ''}><i data-lucide="${m.icon}" width="16" height="16"></i>${m.label}</button>`).join('')}
+    ${groups[g].map(m => `<button type="button" class="palette-item" data-view="${m.view}"${m.lesson ? ` data-academy="${m.academy}" data-lesson="${m.lesson}"` : ''}><i data-lucide="${m.icon}" width="16" height="16"></i>${m.label}</button>`).join('')}
   `).join('');
   if(window.lucide) lucide.createIcons();
 }
@@ -2779,11 +2788,11 @@ let notesStore = defaultNotesStore();
 function renderCtxLists(){
   const vEl = document.getElementById('ctxVocabList');
   vEl.innerHTML = vocabStore.length
-    ? vocabStore.map((v,i) => `<div class="mini-list-item"><div class="ml-en">${escapeHtml(v.en||'')}</div>${v.translit ? `<div class="ml-tr">${escapeHtml(v.translit)}</div>` : ''}<div class="ml-ar">${escapeHtml(v.ar||'')}</div><button class="mini-remove-btn" data-rm-vocab="${i}" aria-label="Remove">×</button></div>`).join('')
+    ? vocabStore.map((v,i) => `<div class="mini-list-item"><div class="ml-en">${escapeHtml(v.en||'')}</div>${v.translit ? `<div class="ml-tr">${escapeHtml(v.translit)}</div>` : ''}<div class="ml-ar">${escapeHtml(v.ar||'')}</div><button type="button" class="mini-remove-btn" data-rm-vocab="${i}" aria-label="Remove">×</button></div>`).join('')
     : '<div class="mini-list-item" style="color:var(--text-muted);"><span class="arabic" style="display:block;">ما حفظت كلمات بعد</span><span style="display:block;">No saved words yet</span></div>';
   const nEl = document.getElementById('ctxNotesList');
   nEl.innerHTML = notesStore.length
-    ? notesStore.map((n,i) => `<div class="mini-list-item"><div class="ml-note">${escapeHtml(n.text)}</div><button class="mini-remove-btn" data-rm-note="${i}" aria-label="Remove">×</button></div>`).join('')
+    ? notesStore.map((n,i) => `<div class="mini-list-item"><div class="ml-note">${escapeHtml(n.text)}</div><button type="button" class="mini-remove-btn" data-rm-note="${i}" aria-label="Remove">×</button></div>`).join('')
     : '<div class="mini-list-item" style="color:var(--text-muted);"><span class="arabic" style="display:block;">لا توجد ملاحظات بعد</span><span style="display:block;">No notes yet</span></div>';
 }
 document.getElementById('ctxVocabList').addEventListener('click', e => {
@@ -13893,7 +13902,7 @@ function renderDbPractice(container, exercises){
         </div>
         ${bodyHtml}
         ${sayText ? `<div class="dbx-say" style="margin-top:12px; padding-top:12px; border-top:1px dashed var(--border); display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-          <button class="mic-record-btn dbx-say-btn" data-say="${escapeHtml(sayText)}" title="Say it" type="button"><i data-lucide="mic" width="18" height="18"></i></button>
+          <button type="button" class="mic-record-btn dbx-say-btn" data-say="${escapeHtml(sayText)}" title="Say it" type="button"><i data-lucide="mic" width="18" height="18"></i></button>
           <span class="arabic" style="font-size:.78rem; color:var(--text-muted);">انطقها</span>
           <span class="dbx-say-fb" style="font-size:.78rem; color:var(--gold-soft); flex:1; min-width:120px;"></span>
         </div>` : ''}
@@ -13912,9 +13921,9 @@ function renderDbPractice(container, exercises){
         ${pr.ar ? `<div class="arabic" style="font-size:.78rem; color:var(--text-muted); margin-bottom:10px;">${esc(pr.ar)}</div>` : ''}
         <div class="dbx-answer" style="min-height:38px; border:1px dashed var(--border); border-radius:10px; padding:7px 9px; margin-bottom:10px; display:flex; flex-wrap:wrap; gap:6px;"></div>
         <div class="dbx-tokens" style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px;">
-          ${tokensShuffled.map(t => `<button class="quiz-option dbx-token" style="padding:5px 11px;">${esc(t||'')}</button>`).join('')}
+          ${tokensShuffled.map(t => `<button type="button" class="quiz-option dbx-token" style="padding:5px 11px;">${esc(t||'')}</button>`).join('')}
         </div>
-        <button class="btn-outline dbx-check"><span class="arabic">تحقق</span>، Check</button>`, x.payload.answer);
+        <button type="button" class="btn-outline dbx-check"><span class="arabic">تحقق</span>، Check</button>`, x.payload.answer);
     }
     if(x.type === 'spell'){
       const p = x.payload || {};
@@ -13923,9 +13932,9 @@ function renderDbPractice(container, exercises){
         <div style="font-size:.8rem; color:var(--text-muted); margin-bottom:10px;"><span class="arabic">المعنى</span>: ${esc(p.meaning||'')} · <span class="arabic">${esc(p.translit||'')}</span></div>
         <div class="dbx-answer" style="font-family:'Fraunces',serif; min-height:34px; border:1px dashed var(--border); border-radius:10px; padding:6px 9px; margin-bottom:10px; letter-spacing:.3em;"></div>
         <div class="dbx-tokens" style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px;">
-          ${(p.options||[]).map(t => `<button class="quiz-option dbx-token" style="padding:5px 11px;">${esc(t)}</button>`).join('')}
+          ${(p.options||[]).map(t => `<button type="button" class="quiz-option dbx-token" style="padding:5px 11px;">${esc(t)}</button>`).join('')}
         </div>
-        <button class="btn-outline dbx-check"><span class="arabic">تحقق</span>، Check</button>`, x.payload.answer);
+        <button type="button" class="btn-outline dbx-check"><span class="arabic">تحقق</span>، Check</button>`, x.payload.answer);
     }
     if(x.type === 'correct'){
       const p = x.payload || {};
@@ -13934,8 +13943,8 @@ function renderDbPractice(container, exercises){
       return head('Fix the mistake', `
         <div style="font-size:.84rem; color:var(--text-muted); margin-bottom:10px;"><span class="arabic">${esc(x.hint_ar || '')}</span>${x.hint_en ? '، ' + esc(x.hint_en) : ''}</div>
         <div class="dbx-tokens" style="display:grid; gap:8px; margin-bottom:12px;">
-          <div><button class="quiz-option dbx-pick" data-ok="wrong" style="text-align:left;">${esc(wrong)}</button><div class="arabic" style="font-size:.78rem;color:var(--gold-soft);margin-top:2px;">${esc(p.wrong_tr || translitEn(wrong))}</div></div>
-          <div><button class="quiz-option dbx-pick" data-ok="right" style="text-align:left;">${esc(right)}</button><div class="arabic" style="font-size:.78rem;color:var(--gold-soft);margin-top:2px;">${esc(p.right_tr || translitEn(right))}</div></div>
+          <div><button type="button" class="quiz-option dbx-pick" data-ok="wrong" style="text-align:left;">${esc(wrong)}</button><div class="arabic" style="font-size:.78rem;color:var(--gold-soft);margin-top:2px;">${esc(p.wrong_tr || translitEn(wrong))}</div></div>
+          <div><button type="button" class="quiz-option dbx-pick" data-ok="right" style="text-align:left;">${esc(right)}</button><div class="arabic" style="font-size:.78rem;color:var(--gold-soft);margin-top:2px;">${esc(p.right_tr || translitEn(right))}</div></div>
         </div>
         <div class="dbx-why" style="display:none; font-size:.8rem; color:var(--emerald);"></div>`, p.right);
     }
@@ -13945,7 +13954,7 @@ function renderDbPractice(container, exercises){
       return head(srcIsEn ? 'Translate to Arabic' : 'Translate to English', `
         <div style="font-size:.98rem; margin-bottom:10px;" class="${srcIsEn ? '' : 'arabic'}">${esc(p.source||'')}<div class="${srcIsEn ? 'arabic' : ''}" style="font-size:.82rem; color:var(--gold-soft); margin-top:4px;">${srcIsEn ? esc(p.source_tr || '') : ''}</div></div>
         <input class="dbx-input" type="text" placeholder="${srcIsEn ? 'اكتب الترجمة بالعربي...' : 'Type the English translation...'}" style="width:100%; background:var(--card); border:1px solid var(--border); border-radius:10px; padding:10px 12px; color:var(--text); font-size:.92rem; margin-bottom:10px;">
-        <button class="btn-outline dbx-check"><span class="arabic">تحقق</span>، Check</button>
+        <button type="button" class="btn-outline dbx-check"><span class="arabic">تحقق</span>، Check</button>
         <div class="dbx-reveal" style="display:none; font-size:.82rem; color:var(--gold-soft); margin-top:8px;"></div>`, p.source);
     }
     return '';
@@ -16371,7 +16380,7 @@ function renderQuiz(container, questions, keyPrefix){
     const q = questions[current];
     container.innerHTML = `
       <p style="font-size:.72rem; color:var(--text-muted); margin-bottom:8px;"><span class="arabic">سوال ${current+1} من ${questions.length}</span>، <span dir="ltr">Question ${current+1} of ${questions.length}</span></p>
-      <h4 style="font-size:1.02rem; margin-bottom:16px; display:flex; align-items:flex-start; gap:8px;"><span style="flex:1;" dir="ltr">${q.qEn ? escapeHtml(q.qEn) + (q.qAr ? '<div class="arabic" style="font-size:.85rem;font-weight:400;margin-top:4px;">' + escapeHtml(q.qAr) + '</div>' : '') + (q.qTr ? '<div class="arabic" style="font-size:.76rem;color:var(--gold-soft);margin-top:3px;">' + escapeHtml(q.qTr) + '</div>' : '') : escapeHtml(q.q||'')}</span><button class="icon-btn speak-btn" data-speak="${escapeHtml((q.qEn||q.q||'').match(/[A-Za-z][A-Za-z\s,?'-.]+$/) ? (q.qEn||q.q||'').match(/[A-Za-z][A-Za-z\s,?'-.]+$/)[0].trim() : '')}" aria-label="Listen" style="flex-shrink:0;width:26px;height:26px;"><i data-lucide="volume-2" width="12" height="12"></i></button></h4>
+      <h4 style="font-size:1.02rem; margin-bottom:16px; display:flex; align-items:flex-start; gap:8px;"><span style="flex:1;" dir="ltr">${q.qEn ? escapeHtml(q.qEn) + (q.qAr ? '<div class="arabic" style="font-size:.85rem;font-weight:400;margin-top:4px;">' + escapeHtml(q.qAr) + '</div>' : '') + (q.qTr ? '<div class="arabic" style="font-size:.76rem;color:var(--gold-soft);margin-top:3px;">' + escapeHtml(q.qTr) + '</div>' : '') : escapeHtml(q.q||'')}</span><button type="button" class="icon-btn speak-btn" data-speak="${escapeHtml((q.qEn||q.q||'').match(/[A-Za-z][A-Za-z\s,?'-.]+$/) ? (q.qEn||q.q||'').match(/[A-Za-z][A-Za-z\s,?'-.]+$/)[0].trim() : '')}" aria-label="Listen" style="flex-shrink:0;width:26px;height:26px;"><i data-lucide="volume-2" width="12" height="12"></i></button></h4>
       <div id="${keyPrefix}-options"></div>`;
     const optWrap = container.querySelector('#'+keyPrefix+'-options');
     q.options.forEach((opt,i) => {
@@ -16421,7 +16430,7 @@ function openDailyQuiz(){
   let modal = document.getElementById('dailyQuizModal');
   if(!modal){
     modal = document.createElement('div'); modal.className = 'modal-overlay'; modal.id = 'dailyQuizModal';
-    modal.innerHTML = `<div class="modal-box" style="max-width:560px; position:relative;"><button class="modal-close" id="closeDailyQuizModal">✕</button><div id="dailyQuizBody"></div></div>`;
+    modal.innerHTML = `<div class="modal-box" style="max-width:560px; position:relative;"><button type="button" class="modal-close" id="closeDailyQuizModal">✕</button><div id="dailyQuizBody"></div></div>`;
     document.body.appendChild(modal);
     modal.addEventListener('click', e => { if(e.target === modal) modal.classList.remove('open'); });
     document.getElementById('closeDailyQuizModal').addEventListener('click', () => modal.classList.remove('open'));
@@ -16481,7 +16490,7 @@ function academyCardHTML(a){
   return `
     <div class="academy-card" data-academy="${a.id}">
       <div class="academy-cover" style="background:linear-gradient(135deg, ${a.from||'#667eea'}, ${a.to||'#764ba2'});">
-        <button class="academy-fav${fav?' active':''}" data-fav="${escapeHtml(a.id||'')}" aria-label="Favourite"><i data-lucide="heart" width="15" height="15" fill="${fav?'currentColor':'none'}"></i></button>
+        <button type="button" class="academy-fav${fav?' active':''}" data-fav="${escapeHtml(a.id||'')}" aria-label="Favourite"><i data-lucide="heart" width="15" height="15" fill="${fav?'currentColor':'none'}"></i></button>
         <i class="cover-icon" data-lucide="${a.icon||'book-open'}" width="46" height="46" style="color:#fff;"></i>
         <div class="academy-badges">${badges.join('')}</div>
       </div>
@@ -16530,7 +16539,7 @@ function pelPathHTML(){
       : '<i data-lucide="lock" width="17" height="17"></i>';
     const startTag = L.state === 'available' ? `<div class="pel-start"><span class="arabic">ابدا</span> · Start</div>` : '';
     return `<div class="pel-prow">
-      <button class="pwn-node st-${L.state} ${zig[i%3]}"${L.state==='locked'?' disabled':''} data-pnode="${escapeHtml(L.id)}" aria-label="${escapeHtml(title)}">${ic}</button>
+      <button type="button" class="pwn-node st-${L.state} ${zig[i%3]}"${L.state==='locked'?' disabled':''} data-pnode="${escapeHtml(L.id)}" aria-label="${escapeHtml(title)}">${ic}</button>
       ${startTag}
       <div class="pel-ptitle">${escapeHtml(title)}${ck?` <em style="font-style:normal;color:var(--gold);font-size:.72rem;"> · ${ar?'اختبار المرحلة':'checkpoint'}</em>`:''}</div>
     </div>`;
@@ -16601,7 +16610,7 @@ function renderLibrary(){
   if(currentUser && client() && !window.PEL_EFFECTIVE_STATE){
     el.innerHTML = '<div class="empty-state" style="padding:90px 20px;text-align:center;"><h3 style="margin:0;"><span class="arabic" style="display:block;margin-bottom:4px;">نحمّل مسارك</span>Loading your plan...</h3></div>';
     const failState = () => {
-      el.innerHTML = '<div class="empty-state" style="padding:90px 20px;text-align:center;"><h3 style="margin:0 0 8px;"><span class="arabic" style="display:block;margin-bottom:4px;">ما قدرنا نحمّل مسارك</span>Could not load your plan.</h3><button class="btn-outline" id="pelRetryRoute" style="margin-top:8px;"><span class="arabic" style="display:block;">حاول مرة ثانية</span>Retry</button></div>';
+      el.innerHTML = '<div class="empty-state" style="padding:90px 20px;text-align:center;"><h3 style="margin:0 0 8px;"><span class="arabic" style="display:block;margin-bottom:4px;">ما قدرنا نحمّل مسارك</span>Could not load your plan.</h3><button type="button" class="btn-outline" id="pelRetryRoute" style="margin-top:8px;"><span class="arabic" style="display:block;">حاول مرة ثانية</span>Retry</button></div>';
       const b = document.getElementById('pelRetryRoute'); if(b) b.addEventListener('click', renderLibrary);
     };
     c_rpc_effective_state().then(ok => { if(ok && window.PEL_EFFECTIVE_STATE){ renderLibrary(); } else { failState(); } }).catch(failState);
@@ -16638,8 +16647,8 @@ function renderLibrary(){
         <div style="font-weight:700;font-size:1.05rem;">${ar?'اهلا بك! ابدا من هنا':'Welcome! Start Here'}</div>
         <div style="font-size:.86rem;color:var(--text-muted);margin-top:4px;line-height:1.6;">${ar?'لو ما تعرف انجليزي ابدا، ابد بـ انجليزي البداية: الحروف، الاصوات، والكلمات الاساسية. لو تعرف شوي، ابد بـ انجليزي الاساس.':'If you know almost no English, start at English Starter: letters, sounds, and survival words. If you know a little, start at English Basics.'}</div>
       </div>
-      <button class="btn-gold" id="beginnerStartBtn" style="flex-shrink:0;">${ar?'ابدا من انجليزي البداية':'Start at English Starter'}</button>
-      <button class="btn-outline" id="beginnerA1Btn" style="flex-shrink:0;">${ar?'ابدا من انجليزي الاساس':'Start at English Basics'}</button>
+      <button type="button" class="btn-gold" id="beginnerStartBtn" style="flex-shrink:0;">${ar?'ابدا من انجليزي البداية':'Start at English Starter'}</button>
+      <button type="button" class="btn-outline" id="beginnerA1Btn" style="flex-shrink:0;">${ar?'ابدا من انجليزي الاساس':'Start at English Basics'}</button>
     </div>` : ''}
     <div class="page-head">
       <span class="eyebrow"><span class="arabic" style="font-size:.95em;">الاكاديميات</span>، The Private Academy</span>
@@ -16656,7 +16665,7 @@ function renderLibrary(){
 
     <div class="lib-toolbar">
       <div class="lib-search"><i data-lucide="search" width="15" height="15" style="color:var(--text-muted);"></i><label for="libSearchInput" class="sr-only">Search academies</label><input type="text" id="libSearchInput" placeholder="ابحث في الاكاديميات... / Search academies..."></div>
-      <div id="libFilters" style="display:flex; gap:8px; flex-wrap:wrap;">${categories.map((c,i) => `<button class="lib-filter${i===0?' active':''}" data-cat="${c}">${c}</button>`).join('')}</div>
+      <div id="libFilters" style="display:flex; gap:8px; flex-wrap:wrap;">${categories.map((c,i) => `<button type="button" class="lib-filter${i===0?' active':''}" data-cat="${c}">${c}</button>`).join('')}</div>
     </div>
     <div class="grid grid-4" id="libGrid"></div>
   `;
@@ -16897,11 +16906,11 @@ function renderCefrPath(){
         const firstOpen = sk.lessons.find(l => !l.locked) || sk.lessons[0];
         const chipsHtml = sk.lessons.map(l => {
           let done=false; try{ done=completedLessons.has(ac.id+'::'+l.id); }catch(e){}
-          return `<button class="cefr-chip ${l.locked?'locked':''} ${done?'done':''}" data-academy="${ac.id}" data-lesson="${l.id}" ${l.locked?'disabled':''}><span class="cefr-lesson-en">${esc(l.en||l.id)}</span></button>`;
+          return `<button type="button" class="cefr-chip ${l.locked?'locked':''} ${done?'done':''}" data-academy="${ac.id}" data-lesson="${l.id}" ${l.locked?'disabled':''}><span class="cefr-lesson-en">${esc(l.en||l.id)}</span></button>`;
         }).join('');
-        return `<div class="cefr-skill ${status}"><button class="cefr-skill-node" data-academy="${ac.id}" data-lesson="${firstOpen?firstOpen.id:''}" ${status==='locked'?'disabled':''}><i data-lucide="${status==='complete'?'crown':status==='locked'?'lock':'play'}" width="15" height="15"></i></button><div class="cefr-skill-body"><div class="cefr-skill-title">${esc(skillTitle(sk))}</div><div class="cefr-skill-chips">${chipsHtml}</div></div></div>`;
+        return `<div class="cefr-skill ${status}"><button type="button" class="cefr-skill-node" data-academy="${ac.id}" data-lesson="${firstOpen?firstOpen.id:''}" ${status==='locked'?'disabled':''}><i data-lucide="${status==='complete'?'crown':status==='locked'?'lock':'play'}" width="15" height="15"></i></button><div class="cefr-skill-body"><div class="cefr-skill-title">${esc(skillTitle(sk))}</div><div class="cefr-skill-chips">${chipsHtml}</div></div></div>`;
       }).join('');
-      return `<div class="cefr-unit"><button class="cefr-unit-head" data-academy="${ac.id}"><span class="cefr-unit-icon"><i data-lucide="${ac.icon}" width="16" height="16"></i></span><span class="cefr-unit-title"><span>${L('Unit','وحدة')} ${uIdx+1}: ${esc(ac.en)}</span><span class="arabic" style="display:block;font-size:.82em;color:var(--text-muted);">${esc(ac.ar)}</span></span></button><div class="cefr-skill-path">${skillsHtml||`<div class="cefr-empty">${L('Lessons coming soon.','دروس قريبا.')}</div>`}</div></div>`;
+      return `<div class="cefr-unit"><button type="button" class="cefr-unit-head" data-academy="${ac.id}"><span class="cefr-unit-icon"><i data-lucide="${ac.icon}" width="16" height="16"></i></span><span class="cefr-unit-title"><span>${L('Unit','وحدة')} ${uIdx+1}: ${esc(ac.en)}</span><span class="arabic" style="display:block;font-size:.82em;color:var(--text-muted);">${esc(ac.ar)}</span></span></button><div class="cefr-skill-path">${skillsHtml||`<div class="cefr-empty">${L('Lessons coming soon.','دروس قريبا.')}</div>`}</div></div>`;
     }).join('');
     return `<div class="cefr-level"><div class="cefr-node" style="background:${lvl.color};">${CEFR_LEVELS.indexOf(lvl)+1}</div><div class="cefr-level-body"><div class="cefr-level-title"><h3>${isAr?esc(lvl.ar):esc(lvl.en)}</h3></div><p class="cefr-level-desc">${isAr?esc(lvl.descAr):esc(lvl.descEn)}</p><div class="cefr-units">${units||`<div class=\"cefr-empty\">${L('Content for this level is coming.','محتوى هذا المستوى قادم.')}</div>`}</div></div></div>`;
   }).join('');
@@ -16974,7 +16983,7 @@ function renderWorkspace(){
   el.innerHTML = `
     <div class="workspace-shell">
       <nav class="workspace-nav">
-        <button class="workspace-nav-back" id="wsBack"><i data-lucide="arrow-left" width="14" height="14"></i> <span class="arabic">كل الاكاديميات</span>، All Academies</button>
+        <button type="button" class="workspace-nav-back" id="wsBack"><i data-lucide="arrow-left" width="14" height="14"></i> <span class="arabic">كل الاكاديميات</span>، All Academies</button>
         <h4><span class="arabic">${escapeHtml(academy.ar||'')}</span> · ${escapeHtml(academy.en||'')}</h4>
         <div id="wsLessonNav"></div>
       </nav>
@@ -16986,7 +16995,7 @@ function renderWorkspace(){
         <div id="wsVocabMini" style="margin-bottom:22px;"></div>
         <h4><span class="arabic">ملاحظات</span>، Notes</h4>
         <textarea id="wsNotes" placeholder="اكتب ملاحظة خاصة لهذا الدرس... / Write a private note for this lesson..." style="width:100%; min-height:100px; background:var(--card-elevated); border:1px solid var(--border); border-radius:12px; padding:12px; color:var(--text); font-size:.82rem;"></textarea>
-        <button class="btn-ghost-sm" id="wsSaveNote" style="margin-top:8px;"><span class="arabic">حفظ الملاحظة</span>، Save Note</button>
+        <button type="button" class="btn-ghost-sm" id="wsSaveNote" style="margin-top:8px;"><span class="arabic">حفظ الملاحظة</span>، Save Note</button>
       </aside>
     </div>`;
   document.getElementById('wsBack').addEventListener('click', () => goToView('home'));
@@ -16996,7 +17005,7 @@ function renderWorkspace(){
     const key = lessonKey(academy.id, l.id);
     const done = completedLessons.has(key);
     const active = l.id === wsState.lessonId;
-    return `<button class="ws-lesson-link${active?' active':''}${done?' done':''}" data-lesson="${l.id}" ${l.locked?'disabled style="opacity:.4;cursor:not-allowed;"':''}>
+    return `<button type="button" class="ws-lesson-link${active?' active':''}${done?' done':''}" data-lesson="${l.id}" ${l.locked?'disabled style="opacity:.4;cursor:not-allowed;"':''}>
       <span class="ws-lesson-dot"></span><span>${escapeHtml(l.en||'')}${l.locked?' <i data-lucide=\"lock\" width=\"11\" height=\"11\"></i>':''}</span>
     </button>`;
   }).join('');
@@ -17038,8 +17047,8 @@ function showWordCard(v, anchor){
     <div style="display:flex; align-items:center; gap:10px;">
       <b style="font-size:1.05rem;">${escapeHtml(v.en)}</b>
       ${v.ipa ? `<span style="color:var(--text-muted); font-size:.78rem;">${escapeHtml(v.ipa)}</span>` : ''}
-      <button id="pwcSay" style="margin-inline-start:auto;background:none;border:none;color:var(--gold);cursor:pointer;" aria-label="pronounce"><i data-lucide="volume-2" width="16" height="16"></i></button>
-      <button id="pwcX" style="background:none;border:none;color:var(--text-muted);cursor:pointer;" aria-label="close"><i data-lucide="x" width="15" height="15"></i></button>
+      <button type="button" id="pwcSay" style="margin-inline-start:auto;background:none;border:none;color:var(--gold);cursor:pointer;" aria-label="pronounce"><i data-lucide="volume-2" width="16" height="16"></i></button>
+      <button type="button" id="pwcX" style="background:none;border:none;color:var(--text-muted);cursor:pointer;" aria-label="close"><i data-lucide="x" width="15" height="15"></i></button>
     </div>
     <div style="margin-top:6px; font-size:.9rem;"><span class="arabic">${escapeHtml(v.ar || '')}</span>${v.translit ? `<span style="color:var(--text-muted);"> · ${escapeHtml(v.translit)}</span>` : ''}</div>
     ${ex.en ? `
@@ -17083,11 +17092,11 @@ function renderLessonReader(container, academy, lesson){
       return `<div class="card" style="margin-top:14px; padding:14px 16px; display:flex; align-items:center; gap:14px; flex-wrap:wrap; border-color:rgba(200,169,106,.3);">
         <span style="font-size:1.05rem;">💡</span>
         <div style="flex:1; min-width:200px;"><b style="font-size:.86rem;"><span class="arabic" style="font-weight:400;">عندك ${dueNow} كلمة جاهزة للمراجعة</span>، ${dueNow} word${dueNow===1?'':'s'} ready for review</b><p style="font-size:.74rem; color:var(--text-muted); margin-top:2px;"><span class="arabic">دقيقة مراجعة قبل الدرس تثبتها وتحرر ذاكرتك لدرس جديد.</span>A minute of review first locks them in and frees your memory for new material.</p></div>
-        <button class="btn-outline" id="lessonReviewNudgeBtn" style="flex-shrink:0;"><span class="arabic">راجع الحين</span>، Review Now</button>
+        <button type="button" class="btn-outline" id="lessonReviewNudgeBtn" style="flex-shrink:0;"><span class="arabic">راجع الحين</span>، Review Now</button>
       </div>`;
     })()}
     <h1 class="arabic" style="margin-top:14px; font-size:1.9rem;">${escapeHtml(lesson.ar||'')}</h1>
-    <div style="margin-top:8px; font-size:1.05rem; color:var(--gold-soft); display:flex; align-items:center; gap:8px;">${escapeHtml(lesson.title||'')}<button class="icon-btn speak-btn" data-speak="${escapeHtml(lesson.title||'')}" aria-label="Listen" style="width:30px;height:30px;flex-shrink:0;"><i data-lucide="volume-2" width="14" height="14"></i></button></div>
+    <div style="margin-top:8px; font-size:1.05rem; color:var(--gold-soft); display:flex; align-items:center; gap:8px;">${escapeHtml(lesson.title||'')}<button type="button" class="icon-btn speak-btn" data-speak="${escapeHtml(lesson.title||'')}" aria-label="Listen" style="width:30px;height:30px;flex-shrink:0;"><i data-lucide="volume-2" width="14" height="14"></i></button></div>
     <div class="arabic" style="margin-top:2px; font-size:.86rem; color:var(--text-muted);">${escapeHtml(lesson.dir === 'ar' ? (lesson.translit||'') : translitEn(lesson.title||''))}</div>
 
     <div class="pel-dash-tools-wrap" style="margin-top:18px;">
@@ -17106,7 +17115,7 @@ function renderLessonReader(container, academy, lesson){
         var _all = _tools.map(function(tid){ var r = GUIDED_TOOL_RULES[tid]; return {view:tid, icon:r.icon, ar:r.ar, en:r.en, why:r.why}; });
         _all.push({view:'bookmarks',icon:'bookmark',ar:'المفضلة',en:'Bookmarks',why:'دروسك المحفوظة'});
         return _all.map(function(t){
-          return '<button class="pel-dash-tool" data-lt-view="'+t.view+'"><span class="td-ico"><i data-lucide="'+t.icon+'" width="18" height="18"></i></span><span class="td-t">'+escapeHtml(_isAr?t.ar:t.en)+'</span><span class="td-s"><span class="arabic">'+escapeHtml(t.why)+'</span></span></button>';
+          return '<button type="button" class="pel-dash-tool" data-lt-view="'+t.view+'"><span class="td-ico"><i data-lucide="'+t.icon+'" width="18" height="18"></i></span><span class="td-t">'+escapeHtml(_isAr?t.ar:t.en)+'</span><span class="td-s"><span class="arabic">'+escapeHtml(t.why)+'</span></span></button>';
         }).join('');
       })()}</div>
       <p style="font-size:.74rem;color:var(--text-muted);margin:8px 2px 0;"><span class="arabic">استخدم كل اداة مع هذا الدرس</span>، <span dir="ltr">Use any tool with this lesson.</span></p>
@@ -17120,7 +17129,7 @@ function renderLessonReader(container, academy, lesson){
         // lessons light up with a chip instead of feeling brand new.
         const known = lesson.vocab.filter(v => reviewQueue().some(r => r.en === v.en));
         if(!known.length) return '';
-        return `<div style="margin:10px 0 2px; font-size:.78rem; color:var(--emerald);"><span class="arabic">تعلمتها قبل</span>، <span dir="ltr">You met these before: ${known.map(v => '<b style="font-family:\'Fraunces\',serif;">' + escapeHtml(v.en) + '</b>').join(', ')}.</span> <button class="btn-ghost-sm" id="goToReviewFromLesson" style="margin-top:4px;"><span class="arabic">راجعها</span>، Review</button></div>`;
+        return `<div style="margin:10px 0 2px; font-size:.78rem; color:var(--emerald);"><span class="arabic">تعلمتها قبل</span>، <span dir="ltr">You met these before: ${known.map(v => '<b style="font-family:\'Fraunces\',serif;">' + escapeHtml(v.en) + '</b>').join(', ')}.</span> <button type="button" class="btn-ghost-sm" id="goToReviewFromLesson" style="margin-top:4px;"><span class="arabic">راجعها</span>، Review</button></div>`;
       })()}
       <div style="display:grid; gap:12px; margin-top:16px;">
         ${lesson.vocab.map(v => `
@@ -17130,13 +17139,13 @@ function renderLessonReader(container, academy, lesson){
               <div style="margin-top:2px; color:var(--text-muted); font-size:.8rem;" dir="ltr">${escapeHtml(v.translit||'')} · ${escapeHtml(v.en||'')}</div>
               ${v.tip ? `<div style="margin-top:6px; font-size:.78rem; color:var(--text-secondary); line-height:1.6;" dir="ltr">💡 ${escapeHtml(v.tip||'')}</div>` : ''}
             </div>
-            <button class="icon-btn speak-btn" data-speak="${escapeHtml(v.ar||'')}" aria-label="Listen"><i data-lucide="volume-2" width="15" height="15"></i></button>
+            <button type="button" class="icon-btn speak-btn" data-speak="${escapeHtml(v.ar||'')}" aria-label="Listen"><i data-lucide="volume-2" width="15" height="15"></i></button>
           </div>` : `
           <div class="triplet-card" style="display:flex; justify-content:space-between; align-items:center; gap:14px;">
             <div><b style="font-family:'Fraunces',serif;">${escapeHtml(v.en||'')}</b> <span class="arabic" style="color:var(--text-muted); font-size:.78rem;">${escapeHtml(v.translit || translitEn(v.en||''))}</span>
               <div class="arabic" style="margin-top:4px; color:var(--gold-soft); font-size:.86rem;">${escapeHtml(v.ar||'')}</div>
             </div>
-            <button class="icon-btn speak-btn" data-speak="${escapeHtml(v.en||'')}" aria-label="Listen"><i data-lucide="volume-2" width="15" height="15"></i></button>
+            <button type="button" class="icon-btn speak-btn" data-speak="${escapeHtml(v.en||'')}" aria-label="Listen"><i data-lucide="volume-2" width="15" height="15"></i></button>
           </div>`}`).join('')}
       </div>
     </div>
@@ -17195,8 +17204,8 @@ function renderLessonReader(container, academy, lesson){
       // Wrong vs Right
       if(lesson.grammar.wrong && lesson.grammar.right){
         html += '<div class="mistake-box">';
-        html += '<div class="wrong" style="display:flex;align-items:center;justify-content:space-between;gap:8px;"><span dir="ltr">✕ ' + highlightImportant(escapeHtml(lesson.grammar.wrong||''), terms) + '</span><button class="icon-btn speak-btn" data-speak="' + escapeHtml(lesson.grammar.wrong||'') + '" aria-label="Listen" style="flex-shrink:0;width:24px;height:24px;"><i data-lucide="volume-2" width="12" height="12"></i></button></div>';
-        html += '<div class="right" style="display:flex;align-items:center;justify-content:space-between;gap:8px;"><span dir="ltr">✓ ' + highlightImportant(escapeHtml(lesson.grammar.right||''), terms) + '</span><button class="icon-btn speak-btn" data-speak="' + escapeHtml(lesson.grammar.right||'') + '" aria-label="Listen" style="flex-shrink:0;width:24px;height:24px;"><i data-lucide="volume-2" width="12" height="12"></i></button></div>';
+        html += '<div class="wrong" style="display:flex;align-items:center;justify-content:space-between;gap:8px;"><span dir="ltr">✕ ' + highlightImportant(escapeHtml(lesson.grammar.wrong||''), terms) + '</span><button type="button" class="icon-btn speak-btn" data-speak="' + escapeHtml(lesson.grammar.wrong||'') + '" aria-label="Listen" style="flex-shrink:0;width:24px;height:24px;"><i data-lucide="volume-2" width="12" height="12"></i></button></div>';
+        html += '<div class="right" style="display:flex;align-items:center;justify-content:space-between;gap:8px;"><span dir="ltr">✓ ' + highlightImportant(escapeHtml(lesson.grammar.right||''), terms) + '</span><button type="button" class="icon-btn speak-btn" data-speak="' + escapeHtml(lesson.grammar.right||'') + '" aria-label="Listen" style="flex-shrink:0;width:24px;height:24px;"><i data-lucide="volume-2" width="12" height="12"></i></button></div>';
         html += '</div>';
       }
       html += '</div>';
@@ -17212,9 +17221,9 @@ function renderLessonReader(container, academy, lesson){
             const en = highlightImportant(escapeHtml(c.en||''), terms);
             const ar = highlightImportant(escapeHtml(c.ar||''), terms);
             if(lesson.dir === 'ar'){
-              return `<div class="chat-bubble ${c.who==='A'||c.who==='You'?'me':'them'}"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;"><div style="flex:1;"><div class="arabic" style="font-size:.95rem;">${ar}</div><div class="arabic" style="font-size:.74rem; opacity:.7;">${escapeHtml(c.translit||'')}</div><div style="margin-top:6px; font-size:.82rem; opacity:.85;" dir="ltr">${en}</div></div><button class="icon-btn speak-btn" data-speak="${escapeHtml(c.en||'')}" aria-label="Listen" style="flex-shrink:0;width:28px;height:28px;"><i data-lucide="volume-2" width="13" height="13"></i></button></div></div>`;
+              return `<div class="chat-bubble ${c.who==='A'||c.who==='You'?'me':'them'}"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;"><div style="flex:1;"><div class="arabic" style="font-size:.95rem;">${ar}</div><div class="arabic" style="font-size:.74rem; opacity:.7;">${escapeHtml(c.translit||'')}</div><div style="margin-top:6px; font-size:.82rem; opacity:.85;" dir="ltr">${en}</div></div><button type="button" class="icon-btn speak-btn" data-speak="${escapeHtml(c.en||'')}" aria-label="Listen" style="flex-shrink:0;width:28px;height:28px;"><i data-lucide="volume-2" width="13" height="13"></i></button></div></div>`;
             }
-            return `<div class="chat-bubble ${c.who==='A'||c.who==='You'?'me':'them'}"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;"><div style="flex:1;" dir="ltr">${en}<div class="arabic" style="margin-top:6px; font-size:.82rem; opacity:.85;">${ar}</div><div class="arabic" style="font-size:.72rem; opacity:.65;">${escapeHtml(c.translit || translitEn(c.en||''))}</div></div><button class="icon-btn speak-btn" data-speak="${escapeHtml(c.en||'')}" aria-label="Listen" style="flex-shrink:0;width:28px;height:28px;"><i data-lucide="volume-2" width="13" height="13"></i></button></div></div>`;
+            return `<div class="chat-bubble ${c.who==='A'||c.who==='You'?'me':'them'}"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;"><div style="flex:1;" dir="ltr">${en}<div class="arabic" style="margin-top:6px; font-size:.82rem; opacity:.85;">${ar}</div><div class="arabic" style="font-size:.72rem; opacity:.65;">${escapeHtml(c.translit || translitEn(c.en||''))}</div></div><button type="button" class="icon-btn speak-btn" data-speak="${escapeHtml(c.en||'')}" aria-label="Listen" style="flex-shrink:0;width:28px;height:28px;"><i data-lucide="volume-2" width="13" height="13"></i></button></div></div>`;
           }).join('');
         })()}
       </div>
@@ -17224,9 +17233,9 @@ function renderLessonReader(container, academy, lesson){
     <div class="lesson-section">
       <h3><span class="arabic">خطة الموقف</span>، <span dir="ltr">Situation Plan</span></h3>
       <p class="lesson-section-sub"><span class="arabic" style="display:block;">وش بتسمع، وش تقول، ووش تسوي لو ما فهمت. هذا الموقف يجهزك لسوالف حقيقية.</span><span dir="ltr">What you will hear, what to say, and what to do if it goes wrong. This prepares you for the real conversation.</span></p>
-      ${lesson.situation.hear ? `<div class="situation-block"><div class="situation-label">👂 <span class="arabic">بتسمع</span>، <span dir="ltr">You will hear</span></div>${lesson.situation.hear.map(h => `<div class="situation-line"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:6px;"><div style="flex:1;"><div class="situation-ar">${escapeHtml(h.ar||'')}</div><div class="situation-en" dir="ltr">${h.translit ? '<span class="situation-translit">' + escapeHtml(h.translit) + '</span>، ' : ''}${escapeHtml(h.en||'')}</div></div><button class="icon-btn speak-btn" data-speak="${escapeHtml(h.en||'')}" aria-label="Listen" style="flex-shrink:0;width:26px;height:26px;"><i data-lucide="volume-2" width="12" height="12"></i></button></div></div>`).join('')}</div>` : ''}
-      ${lesson.situation.say ? `<div class="situation-block"><div class="situation-label">🗣️ <span class="arabic">تقدر تقول</span>، <span dir="ltr">You can say</span></div>${lesson.situation.say.map(h => `<div class="situation-line"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:6px;"><div style="flex:1;"><div class="situation-ar">${escapeHtml(h.ar||'')}</div><div class="situation-en" dir="ltr">${h.translit ? '<span class="situation-translit">' + escapeHtml(h.translit) + '</span>، ' : ''}${escapeHtml(h.en||'')}</div></div><button class="icon-btn speak-btn" data-speak="${escapeHtml(h.en||'')}" aria-label="Listen" style="flex-shrink:0;width:26px;height:26px;"><i data-lucide="volume-2" width="12" height="12"></i></button></div></div>`).join('')}</div>` : ''}
-      ${lesson.situation.recover ? `<div class="situation-block"><div class="situation-label">🆘 <span class="arabic">لو ما فهمت</span>، <span dir="ltr">If you do not understand</span></div>${lesson.situation.recover.map(h => `<div class="situation-line"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:6px;"><div style="flex:1;"><div class="situation-ar">${escapeHtml(h.ar||'')}</div><div class="situation-en" dir="ltr">${h.translit ? '<span class="situation-translit">' + escapeHtml(h.translit) + '</span>، ' : ''}${escapeHtml(h.en||'')}</div></div><button class="icon-btn speak-btn" data-speak="${escapeHtml(h.en||'')}" aria-label="Listen" style="flex-shrink:0;width:26px;height:26px;"><i data-lucide="volume-2" width="12" height="12"></i></button></div></div>`).join('')}</div>` : ''}
+      ${lesson.situation.hear ? `<div class="situation-block"><div class="situation-label">👂 <span class="arabic">بتسمع</span>، <span dir="ltr">You will hear</span></div>${lesson.situation.hear.map(h => `<div class="situation-line"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:6px;"><div style="flex:1;"><div class="situation-ar">${escapeHtml(h.ar||'')}</div><div class="situation-en" dir="ltr">${h.translit ? '<span class="situation-translit">' + escapeHtml(h.translit) + '</span>، ' : ''}${escapeHtml(h.en||'')}</div></div><button type="button" class="icon-btn speak-btn" data-speak="${escapeHtml(h.en||'')}" aria-label="Listen" style="flex-shrink:0;width:26px;height:26px;"><i data-lucide="volume-2" width="12" height="12"></i></button></div></div>`).join('')}</div>` : ''}
+      ${lesson.situation.say ? `<div class="situation-block"><div class="situation-label">🗣️ <span class="arabic">تقدر تقول</span>، <span dir="ltr">You can say</span></div>${lesson.situation.say.map(h => `<div class="situation-line"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:6px;"><div style="flex:1;"><div class="situation-ar">${escapeHtml(h.ar||'')}</div><div class="situation-en" dir="ltr">${h.translit ? '<span class="situation-translit">' + escapeHtml(h.translit) + '</span>، ' : ''}${escapeHtml(h.en||'')}</div></div><button type="button" class="icon-btn speak-btn" data-speak="${escapeHtml(h.en||'')}" aria-label="Listen" style="flex-shrink:0;width:26px;height:26px;"><i data-lucide="volume-2" width="12" height="12"></i></button></div></div>`).join('')}</div>` : ''}
+      ${lesson.situation.recover ? `<div class="situation-block"><div class="situation-label">🆘 <span class="arabic">لو ما فهمت</span>، <span dir="ltr">If you do not understand</span></div>${lesson.situation.recover.map(h => `<div class="situation-line"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:6px;"><div style="flex:1;"><div class="situation-ar">${escapeHtml(h.ar||'')}</div><div class="situation-en" dir="ltr">${h.translit ? '<span class="situation-translit">' + escapeHtml(h.translit) + '</span>، ' : ''}${escapeHtml(h.en||'')}</div></div><button type="button" class="icon-btn speak-btn" data-speak="${escapeHtml(h.en||'')}" aria-label="Listen" style="flex-shrink:0;width:26px;height:26px;"><i data-lucide="volume-2" width="12" height="12"></i></button></div></div>`).join('')}</div>` : ''}
     </div>` : ''}
 
     ${lesson.exercises && lesson.exercises.length ? `
@@ -17244,7 +17253,7 @@ function renderLessonReader(container, academy, lesson){
 
     <div class="lesson-section" style="background:var(--card); border-radius:16px; padding:20px;">
       <h3 style="font-size:1.02rem;"><span class="arabic">ملخص الدرس</span>، <span dir="ltr">Lesson Summary</span></h3>
-      <div style="display:flex;align-items:flex-start;gap:8px;margin-top:10px;"><p style="flex:1;font-size:.88rem; color:var(--text-secondary); line-height:1.7;">${escapeHtml(lesson.summary||'')}</p><button class="icon-btn speak-btn" data-speak="${escapeHtml(lesson.summary||'')}" aria-label="Listen" style="flex-shrink:0;width:28px;height:28px;"><i data-lucide="volume-2" width="13" height="13"></i></button></div>
+      <div style="display:flex;align-items:flex-start;gap:8px;margin-top:10px;"><p style="flex:1;font-size:.88rem; color:var(--text-secondary); line-height:1.7;">${escapeHtml(lesson.summary||'')}</p><button type="button" class="icon-btn speak-btn" data-speak="${escapeHtml(lesson.summary||'')}" aria-label="Listen" style="flex-shrink:0;width:28px;height:28px;"><i data-lucide="volume-2" width="13" height="13"></i></button></div>
     </div>
     ${lesson.takeaway ? `
     <div class="lesson-section" style="background:rgba(200,169,106,.06); border:1px solid rgba(200,169,106,.25); border-radius:16px; padding:20px;">
@@ -17253,9 +17262,9 @@ function renderLessonReader(container, academy, lesson){
     </div>` : ''}
 
     <div class="lesson-actions-row">
-      <button class="btn-outline${bookmarked?' toggled':''}" id="lessonBookmarkBtn"><i data-lucide="bookmark" width="15" height="15"></i> ${bookmarked?'<span class="arabic">محفوظ</span>، <span dir="ltr">Bookmarked</span>':'<span class="arabic">حفظ</span>، <span dir="ltr">Bookmark</span>'}</button>
-      <button class="btn-outline${favLesson?' toggled':''}" id="lessonFavBtn"><i data-lucide="heart" width="15" height="15"></i> ${favLesson?'<span class="arabic">مفضّل</span>، <span dir="ltr">Favourited</span>':'<span class="arabic">تفضيل</span>، <span dir="ltr">Favourite</span>'}</button>
-      <button class="btn-gold" id="lessonCompleteBtn">${done?'<span class="arabic">مكتمل</span> ✓':'<span class="arabic">اكمال الدرس</span>، <span dir="ltr">Mark Complete</span>'}</button>
+      <button type="button" class="btn-outline${bookmarked?' toggled':''}" id="lessonBookmarkBtn"><i data-lucide="bookmark" width="15" height="15"></i> ${bookmarked?'<span class="arabic">محفوظ</span>، <span dir="ltr">Bookmarked</span>':'<span class="arabic">حفظ</span>، <span dir="ltr">Bookmark</span>'}</button>
+      <button type="button" class="btn-outline${favLesson?' toggled':''}" id="lessonFavBtn"><i data-lucide="heart" width="15" height="15"></i> ${favLesson?'<span class="arabic">مفضّل</span>، <span dir="ltr">Favourited</span>':'<span class="arabic">تفضيل</span>، <span dir="ltr">Favourite</span>'}</button>
+      <button type="button" class="btn-gold" id="lessonCompleteBtn">${done?'<span class="arabic">مكتمل</span> ✓':'<span class="arabic">اكمال الدرس</span>، <span dir="ltr">Mark Complete</span>'}</button>
     </div>
     ${done && nextItem ? `
     <div class="lesson-section" style="background:rgba(63,140,114,.08); border:1px solid rgba(63,140,114,.3); border-radius:16px; padding:20px; margin-top:22px;">
@@ -17263,12 +17272,12 @@ function renderLessonReader(container, academy, lesson){
       <p style="margin-top:8px; font-size:.92rem; font-family:'Fraunces',serif;" dir="ltr">${escapeHtml(nextItem.en||'')}</p>
       <p class="arabic" style="margin-top:2px; font-size:.84rem; color:var(--text-secondary);">${escapeHtml(nextItem.ar || '')}</p>
       <p style="margin-top:6px; font-size:.76rem; color:var(--text-muted);"><span class="arabic">خطوة وحدة تفتح الدرس الجاي.</span><span dir="ltr">One step opens the next lesson.</span></p>
-      <button class="btn-gold" id="lessonNextBtn" style="margin-top:14px;"><span class="arabic">ابدا الدرس الجاي</span>، <span dir="ltr">Start Next Lesson</span></button>
+      <button type="button" class="btn-gold" id="lessonNextBtn" style="margin-top:14px;"><span class="arabic">ابدا الدرس الجاي</span>، <span dir="ltr">Start Next Lesson</span></button>
     </div>` : done && !nextItem ? `
     <div class="lesson-section" style="background:rgba(200,169,106,.07); border:1px solid rgba(200,169,106,.28); border-radius:16px; padding:20px; margin-top:22px;">
       <h3 style="font-size:1.02rem;"><span class="arabic">اكملت هذا المسار</span>، <span dir="ltr">Academy Complete</span></h3>
       <p style="margin-top:8px; font-size:.86rem; color:var(--text-secondary);"><span class="arabic">ما شا الله، خلصت اخر درس في ${escapeHtml(academy.ar||'')}. راجع الكلمات في المراجعة الذكية، او ابدا اكاديمية ثانية.</span><span dir="ltr">You finished the last lesson of ${escapeHtml(academy.en||'')}. Review your words in Smart Review, or start another academy.</span></p>
-      <button class="btn-outline" id="lessonNextBtn" style="margin-top:14px;"><span class="arabic">شوف الاكاديميات</span>، <span dir="ltr">Browse Academies</span></button>
+      <button type="button" class="btn-outline" id="lessonNextBtn" style="margin-top:14px;"><span class="arabic">شوف الاكاديميات</span>، <span dir="ltr">Browse Academies</span></button>
     </div>` : ''}
   `;
   if(lesson.quiz && lesson.quiz.length) renderQuiz(document.getElementById('lessonQuizWrap'), lesson.quiz, 'lq');
@@ -17328,7 +17337,7 @@ function renderVocabulary(){
     </div>
     <div class="lib-toolbar">
       <div class="lib-search"><i data-lucide="search" width="15" height="15" style="color:var(--text-muted);"></i><label for="vocabSearch" class="sr-only">Search vocabulary</label><input type="text" id="vocabSearch" placeholder="ابحث في المفردات... / Search vocabulary..."></div>
-      <div id="vocabFilters" style="display:flex; gap:8px; flex-wrap:wrap;">${categories.map((c,i)=>`<button class="lib-filter${i===0?' active':''}" data-cat="${c}">${c}</button>`).join('')}</div>
+      <div id="vocabFilters" style="display:flex; gap:8px; flex-wrap:wrap;">${categories.map((c,i)=>`<button type="button" class="lib-filter${i===0?' active':''}" data-cat="${c}">${c}</button>`).join('')}</div>
     </div>
     <div class="grid grid-3" id="vocabGrid"></div>`;
   function renderGrid(){
@@ -17349,7 +17358,7 @@ function renderVocabulary(){
             <div class="arabic" style="margin-top:14px; font-size:1.05rem; color:var(--gold-soft);">${escapeHtml(v.ar||'')}</div>
             <div class="vocab-cat" style="display:flex; justify-content:space-between; align-items:center;">
               <span style="font-size:.7rem; color:var(--text-muted);"><span class="arabic">اضغط لقلب البطاقة</span>، Tap card to flip</span>
-              <button class="icon-btn speak-btn" data-speak="${escapeHtml(v.en||'')}" aria-label="Listen" style="width:34px; height:34px;"><i data-lucide="volume-2" width="14" height="14"></i></button>
+              <button type="button" class="icon-btn speak-btn" data-speak="${escapeHtml(v.en||'')}" aria-label="Listen" style="width:34px; height:34px;"><i data-lucide="volume-2" width="14" height="14"></i></button>
             </div>
           </div>
           <div class="flashcard-face flashcard-back">
@@ -17358,7 +17367,7 @@ function renderVocabulary(){
             <p style="font-size:.76rem; color:var(--text-muted); margin-top:4px;"><b style="color:var(--text-secondary);"><span class="arabic">اضداد</span>، Antonyms:</b> <span dir="ltr">${escapeHtml(v.antonyms||'')}</span></p>
             <p style="font-size:.76rem; color:var(--text-muted); margin-top:4px;"><b style="color:var(--text-secondary);"><span class="arabic">تلازمات لفظية</span>، Collocations:</b> <span dir="ltr">${escapeHtml(v.collocations||'')}</span></p>
             <div class="mistake-box" style="margin-top:10px;"><p style="font-size:.74rem; color:var(--text-secondary);" dir="ltr">${escapeHtml(v.tip||'')}</p></div>
-            <button class="btn-ghost-sm bookmark-word-btn" data-word="${escapeHtml(wordKey||'')}" data-en="${escapeHtml(v.en||'')}" data-ar="${escapeHtml(v.ar||'')}" style="margin-top:10px;">${bm?'★ <span class="arabic">محفوظة</span>، Bookmarked':'☆ <span class="arabic">احفظ الكلمة</span>، Save Word'}</button>
+            <button type="button" class="btn-ghost-sm bookmark-word-btn" data-word="${escapeHtml(wordKey||'')}" data-en="${escapeHtml(v.en||'')}" data-ar="${escapeHtml(v.ar||'')}" style="margin-top:10px;">${bm?'★ <span class="arabic">محفوظة</span>، Bookmarked':'☆ <span class="arabic">احفظ الكلمة</span>، Save Word'}</button>
           </div>
         </div>
       </div>`;
@@ -17427,7 +17436,7 @@ function renderVocabulary(){
             '<div class="arabic" style="font-size:.78rem;color:var(--text-muted);margin-top:3px;">' + escapeHtml(exAr) + '</div>' : '') +
           '<div style="margin-top:auto;padding-top:10px;display:flex;justify-content:space-between;align-items:center;">' +
           '<span style="font-size:.7rem;color:var(--text-muted);"><span class="arabic">اسمع الكلمة</span></span>' +
-          '<button class="icon-btn speak-btn" data-speak="' + escapeHtml(v.en) + '" style="width:34px;height:34px;"><i data-lucide="volume-2" width="14" height="14"></i></button>' +
+          '<button type="button" class="icon-btn speak-btn" data-speak="' + escapeHtml(v.en) + '" style="width:34px;height:34px;"><i data-lucide="volume-2" width="14" height="14"></i></button>' +
           '</div></div>';
       }).join('');
       grid.querySelectorAll('.speak-btn').forEach(b => b.addEventListener('click', e => { e.stopPropagation(); speak(b.dataset.speak); }));
@@ -17471,7 +17480,7 @@ function renderVocabulary(){
             '<div class="arabic" style="font-size:.74rem;color:var(--gold-soft);margin-top:2px;">' + escapeHtml(cTr) + '</div>' +
             '<div style="font-size:.78rem;color:var(--text-muted);margin-top:3px;"><span class="arabic">الاستخدام</span>: ' + escapeHtml(cAr) + '</div>' : '') +
           '<div style="margin-top:auto;padding-top:10px;display:flex;justify-content:flex-end;">' +
-          '<button class="icon-btn speak-btn" data-speak="' + escapeHtml(v.en) + '" style="width:34px;height:34px;"><i data-lucide="volume-2" width="14" height="14"></i></button>' +
+          '<button type="button" class="icon-btn speak-btn" data-speak="' + escapeHtml(v.en) + '" style="width:34px;height:34px;"><i data-lucide="volume-2" width="14" height="14"></i></button>' +
           '</div></div>';
       }).join('');
       grid.querySelectorAll('.speak-btn').forEach(b => b.addEventListener('click', e => { e.stopPropagation(); speak(b.dataset.speak); }));
@@ -17685,8 +17694,8 @@ function renderPronDrill(card, drill){
           <div class="arabic" style="font-size:1.15rem;color:var(--text-secondary);margin-top:6px;">${escapeHtml(tgt.ar||'')}</div>
           <div class="arabic translit" style="font-size:.98rem;color:var(--text-muted);margin-top:3px;">${escapeHtml(translit(tgt.en||''))}</div>
           <div style="margin-top:18px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
-            <button class="icon-btn speak-btn" data-dspeak="${escapeHtml(tgt.en||'')}"><i data-lucide="volume-2" width="18" height="18"></i> <span class="arabic">استمع</span></button>
-            <button class="btn-gold" data-drec><i data-lucide="mic" width="18" height="18"></i> <span class="arabic">انطق</span></button>
+            <button type="button" class="icon-btn speak-btn" data-dspeak="${escapeHtml(tgt.en||'')}"><i data-lucide="volume-2" width="18" height="18"></i> <span class="arabic">استمع</span></button>
+            <button type="button" class="btn-gold" data-drec><i data-lucide="mic" width="18" height="18"></i> <span class="arabic">انطق</span></button>
           </div>
           <div class="voice-feedback" id="drill-fb" style="display:none;margin-top:16px;font-size:.85rem;padding:12px 14px;border-radius:12px;background:var(--card-elevated);line-height:1.6;text-align:right;"></div>
         </div>`;
@@ -17704,7 +17713,7 @@ function renderPronDrill(card, drill){
             setTimeout(advance, 950);
           } else {
             fb.innerHTML = `🟡 <span class="arabic">سمعت</span> \"${escapeHtml(heard)}\" (${score}%). <span class="arabic">الصح</span> \"<b>${escapeHtml(tgt.en)}</b>\"<span class="arabic">. حاول مرة ثانية او تخطى.</span>${tip}
-              <div style="margin-top:10px;display:flex;gap:8px;justify-content:flex-end;"><button class="btn-gold" id="drill-retry"><span class="arabic">اعد</span></button><button class="btn-ghost" id="drill-skip"><span class="arabic">تخطى</span></button></div>`;
+              <div style="margin-top:10px;display:flex;gap:8px;justify-content:flex-end;"><button type="button" class="btn-gold" id="drill-retry"><span class="arabic">اعد</span></button><button type="button" class="btn-ghost" id="drill-skip"><span class="arabic">تخطى</span></button></div>`;
             document.getElementById('drill-retry').onclick = () => { fb.style.display='none'; card.querySelector('[data-drec]').click(); };
             document.getElementById('drill-skip').onclick = () => { targetScores[targetIndex] = 0; advance(); };
           }
@@ -17730,11 +17739,11 @@ function renderPronDrill(card, drill){
           ${saved.best>final?`<div class="arabic" style="margin-top:4px;font-size:.78rem;color:var(--text-muted);">افضل نتيجة سابقة: ${saved.best}% (${saved.attempts} محاولات)</div>`:''}
           <div style="margin-top:10px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;align-items:center;">
             <span class="chip" style="background:rgba(200,169,106,.14);color:var(--gold);border:1px solid rgba(200,169,106,.3);font-size:.74rem;"><span class="arabic">المجموع التراكمي</span> Cumulative: ${cum!=null?cum+'%':'-'}</span>
-            ${drill.writingPrompt?`<button class="btn-ghost" id="drill-wprompt"><i data-lucide="pen-line" width="15" height="15"></i> <span class="arabic">تمرين كتابة</span></button>`:''}
+            ${drill.writingPrompt?`<button type="button" class="btn-ghost" id="drill-wprompt"><i data-lucide="pen-line" width="15" height="15"></i> <span class="arabic">تمرين كتابة</span></button>`:''}
           </div>
           <div style="margin-top:14px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
-            <button class="btn-gold" id="drill-restart"><span class="arabic">اعد التدريب</span></button>
-            ${nxt?`<button class="btn-ghost" id="drill-next"><span class="arabic">التالي: </span>${nxt.title}</button>`:''}
+            <button type="button" class="btn-gold" id="drill-restart"><span class="arabic">اعد التدريب</span></button>
+            ${nxt?`<button type="button" class="btn-ghost" id="drill-next"><span class="arabic">التالي: </span>${nxt.title}</button>`:''}
           </div>
         </div>`;
       if(window.lucide) lucide.createIcons();
@@ -17794,8 +17803,8 @@ function renderPronunciation(){
               <div class="arabic" style="margin-top:1px; font-size:.74rem; color:var(--text-muted);">${escapeHtml(translit||'')}</div>
             </div>
             <div class="audio-controls">
-              <button class="icon-btn speak-btn" data-speak="${escapeHtml((w.en||'').split(' / ')[0].replace(/\s*\([^)]*\)\s*/g,'').trim())}" aria-label="Listen"><i data-lucide="volume-2" width="15" height="15"></i></button>
-              <button class="mic-record-btn" data-record="${i}" aria-label="Record"><i data-lucide="mic" width="17" height="17"></i></button>
+              <button type="button" class="icon-btn speak-btn" data-speak="${escapeHtml((w.en||'').split(' / ')[0].replace(/\s*\([^)]*\)\s*/g,'').trim())}" aria-label="Listen"><i data-lucide="volume-2" width="15" height="15"></i></button>
+              <button type="button" class="mic-record-btn" data-record="${i}" aria-label="Record"><i data-lucide="mic" width="17" height="17"></i></button>
             </div>
           </div>
           <div class="voice-feedback" id="pron-fb-${i}" style="display:none; font-size:.82rem; padding:10px 12px; border-radius:10px; background:var(--card-elevated); line-height:1.6;"></div>
@@ -17880,9 +17889,9 @@ function renderSpeaking(){
       </div>
       <div class="chat-scroll" id="roleplayChat"></div>
       <div style="display:flex; align-items:center; gap:10px; margin-top:16px;">
-        <button class="mic-record-btn" id="roleplayMic" aria-label="Speak your reply"><i data-lucide="mic" width="18" height="18"></i></button>
+        <button type="button" class="mic-record-btn" id="roleplayMic" aria-label="Speak your reply"><i data-lucide="mic" width="18" height="18"></i></button>
         <input type="text" id="roleplayTypedInput" placeholder="اكتب ردك... / Or type your reply..." style="flex:1; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:11px 14px; color:var(--text); font-size:.86rem;">
-        <button class="btn-gold" id="roleplaySend"><span class="arabic">ارسال</span>، Send</button>
+        <button type="button" class="btn-gold" id="roleplaySend"><span class="arabic">ارسال</span>، Send</button>
       </div>
       <div id="roleplayMicHint" style="margin-top:6px; font-size:.74rem; color:var(--text-muted);"></div>
       <div id="roleplayFeedback" style="margin-top:14px;"></div>`;
@@ -18038,7 +18047,7 @@ function renderListening(){
     let modal = document.getElementById('listeningModal');
     if(!modal){
       modal = document.createElement('div'); modal.className='modal-overlay'; modal.id='listeningModal';
-      modal.innerHTML = `<div class="modal-box" style="max-width:600px; position:relative;"><button class="modal-close" id="closeListeningModal">✕</button><div id="listeningModalBody"></div></div>`;
+      modal.innerHTML = `<div class="modal-box" style="max-width:600px; position:relative;"><button type="button" class="modal-close" id="closeListeningModal">✕</button><div id="listeningModalBody"></div></div>`;
       document.body.appendChild(modal);
       modal.addEventListener('click', e => { if(e.target===modal){ modal.classList.remove('open'); if('speechSynthesis' in window) speechSynthesis.cancel(); } });
       document.getElementById('closeListeningModal').addEventListener('click', () => { modal.classList.remove('open'); if('speechSynthesis' in window) speechSynthesis.cancel(); });
@@ -18046,7 +18055,7 @@ function renderListening(){
     document.getElementById('listeningModalBody').innerHTML = `
       <h3 style="font-size:1.2rem;" dir="ltr">${track.title}</h3>
       <div style="display:flex; align-items:center; gap:10px; margin:16px 0;">
-        <button class="btn-outline" id="playAllBtn"><i data-lucide="play" width="15" height="15"></i> <span class="arabic">تشغيل الكل</span>، Play All</button>
+        <button type="button" class="btn-outline" id="playAllBtn"><i data-lucide="play" width="15" height="15"></i> <span class="arabic">تشغيل الكل</span>، Play All</button>
         <label style="font-size:.78rem; color:var(--text-muted);"><span class="arabic">السرعة</span>، Speed <input type="range" min="0.6" max="1.3" step="0.1" value="1" id="trackSpeed" style="accent-color:var(--gold);"></label>
       </div>
       <div id="trackLines" style="display:flex; flex-direction:column; gap:14px;"></div>
@@ -18055,7 +18064,7 @@ function renderListening(){
     linesWrap.innerHTML = track.lines.map((l,i) => `
       <div class="triplet-card" style="display:flex; justify-content:space-between; align-items:flex-start; gap:14px;">
         <div>${triplet(l.en, l.ar, l.translit)}</div>
-        <button class="icon-btn" data-line="${i}" aria-label="Repeat"><i data-lucide="repeat" width="14" height="14"></i></button>
+        <button type="button" class="icon-btn" data-line="${i}" aria-label="Repeat"><i data-lucide="repeat" width="14" height="14"></i></button>
       </div>`).join('');
     linesWrap.querySelectorAll('[data-line]').forEach(btn => btn.addEventListener('click', () => speak(track.lines[btn.dataset.line].en)));
     document.getElementById('playAllBtn').addEventListener('click', () => {
@@ -18102,7 +18111,7 @@ function renderReading(){
     let modal = document.getElementById('readingModal');
     if(!modal){
       modal = document.createElement('div'); modal.className='modal-overlay'; modal.id='readingModal';
-      modal.innerHTML = `<div class="modal-box" style="max-width:600px; position:relative;"><button class="modal-close" id="closeReadingModal">✕</button><div id="readingModalBody"></div></div>`;
+      modal.innerHTML = `<div class="modal-box" style="max-width:600px; position:relative;"><button type="button" class="modal-close" id="closeReadingModal">✕</button><div id="readingModalBody"></div></div>`;
       document.body.appendChild(modal);
       modal.addEventListener('click', e => { if(e.target===modal){ modal.classList.remove('open'); if(modal._timer) clearInterval(modal._timer); } });
       document.getElementById('closeReadingModal').addEventListener('click', () => { modal.classList.remove('open'); if(modal._timer) clearInterval(modal._timer); });
@@ -18169,7 +18178,7 @@ function renderWriting(){
       <textarea class="writing-editor" id="writingArea" placeholder="ابدا الكتابة هنا... / Start writing here..." style="margin-top:16px;"></textarea>
       <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:12px; flex-wrap:wrap;">
         <span class="arabic" style="font-size:.72rem; color:var(--text-muted);">اكتب ٣ جمل على الاقل عشان الفايدة.</span>
-        <button class="btn-gold" id="reviewWritingBtn"><span class="arabic">اطلب المراجعة</span>، Get Feedback</button>
+        <button type="button" class="btn-gold" id="reviewWritingBtn"><span class="arabic">اطلب المراجعة</span>، Get Feedback</button>
       </div>
       <div id="writingFeedback"></div>`;
     document.getElementById('reviewWritingBtn').addEventListener('click', () => {
@@ -18265,7 +18274,7 @@ function renderWriting(){
           <h5 class="fb-section-title"><span class="arabic">جرب مرة ثانية</span>، Try again</h5>
           <p class="arabic" style="font-size:.8rem; color:var(--text-muted); margin-bottom:8px;">اعد كتابة جملتك بنفسك مع مراعاة الملاحظات.</p>
           <textarea class="writing-editor" id="tryAgainArea" placeholder="اكتب نسختك الجديدة هنا... / Write your improved version here..." style="min-height:100px;"></textarea>
-          <button class="btn-outline" id="tryAgainBtn" style="margin-top:10px;"><span class="arabic">تحقق من النسخة الجديدة</span>، Check the new version</button>
+          <button type="button" class="btn-outline" id="tryAgainBtn" style="margin-top:10px;"><span class="arabic">تحقق من النسخة الجديدة</span>، Check the new version</button>
         </div>
       </div>`;
     const tr = await freeTranslate(text);
@@ -18421,12 +18430,12 @@ function renderReview(){
         <div class="card" style="max-width:640px; margin:0 auto 12px; padding:28px;">
           <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
             <span class="chip" style="font-size:.68rem;"><span class="arabic">${idx+1} من ${due.length}</span>، ${idx+1} of ${due.length}</span>
-            <button class="icon-btn" id="reviewRemoveBtn" title="Remove from queue" aria-label="Remove">×</button>
+            <button type="button" class="icon-btn" id="reviewRemoveBtn" title="Remove from queue" aria-label="Remove">×</button>
           </div>
           <div style="text-align:center; padding:26px 0 10px;">
             <div style="font-size:1.6rem; font-family:'Fraunces',serif;">${escapeHtml(item.en)}</div>
             <div class="arabic" style="margin-top:4px; font-size:.8rem; color:var(--text-muted);">${escapeHtml(reviewTranslit(item))}</div>
-            <button class="btn-ghost-sm" id="reviewSpeakBtn" style="margin-top:10px;"><i data-lucide="volume-2" width="14" height="14"></i> <span class="arabic">استمع</span>، Listen</button>
+            <button type="button" class="btn-ghost-sm" id="reviewSpeakBtn" style="margin-top:10px;"><i data-lucide="volume-2" width="14" height="14"></i> <span class="arabic">استمع</span>، Listen</button>
             <div id="reviewReveal" style="display:none; margin-top:18px; padding-top:18px; border-top:1px solid var(--border);">
               <div class="arabic" style="font-size:1.15rem; color:var(--gold-soft);">${escapeHtml(item.ar)}</div>
               <div class="arabic" style="font-size:.85rem; color:var(--text-muted); margin-top:4px;">${escapeHtml(reviewTranslit(item))}</div>
@@ -18434,9 +18443,9 @@ function renderReview(){
             </div>
           </div>
           <div style="display:flex; gap:10px; margin-top:16px; flex-wrap:wrap;">
-            <button class="btn-outline" id="reviewRevealBtn" style="flex:1;"><span class="arabic">اظهر المعنى</span>، Reveal</button>
-            <button class="btn-gold" id="reviewKnewBtn" style="flex:1; display:none;"><span class="arabic">عرفتها</span>، I knew it</button>
-            <button class="btn-outline" id="reviewAgainBtn" style="flex:1; display:none;"><span class="arabic">ارجعها</span>، Review again</button>
+            <button type="button" class="btn-outline" id="reviewRevealBtn" style="flex:1;"><span class="arabic">اظهر المعنى</span>، Reveal</button>
+            <button type="button" class="btn-gold" id="reviewKnewBtn" style="flex:1; display:none;"><span class="arabic">عرفتها</span>، I knew it</button>
+            <button type="button" class="btn-outline" id="reviewAgainBtn" style="flex:1; display:none;"><span class="arabic">ارجعها</span>، Review again</button>
           </div>
         </div>`;
       document.getElementById('reviewSpeakBtn').addEventListener('click', () => speak(item.en));
@@ -18478,7 +18487,7 @@ function renderReview(){
       <div class="card" style="border-color:rgba(210,92,92,.35);">
         <p style="font-size:.84rem; color:var(--text-secondary); margin-bottom:14px;"><span class="arabic">هذي الاخطا رجعت معك اكثر من مرة بكتابتك. ركز عليها بالدرس الجاي.</span>These mistakes have shown up in your writing more than once. Focus on them in your next lessons.</p>
         ${missEntries.map(k => `<div class="mini-list-item"><div class="ml-en">${escapeHtml((LEARN_CATEGORIES[k]||{}).en || k)}</div><div class="ml-ar"><span class="arabic">${escapeHtml((LEARN_CATEGORIES[k]||{}).ar || k)}</span></div><span class="chip" style="color:var(--danger); border-color:rgba(210,92,92,.4);">× ${misses[k]}</span></div>`).join('')}
-        <button class="btn-outline" id="reviewMistakesGoWriting" style="margin-top:14px;"><span class="arabic">اطلع على ورشة الكتابة</span>، Open Writing Workshop</button>
+        <button type="button" class="btn-outline" id="reviewMistakesGoWriting" style="margin-top:14px;"><span class="arabic">اطلع على ورشة الكتابة</span>، Open Writing Workshop</button>
       </div>`;
     document.getElementById('reviewMistakesGoWriting').addEventListener('click', () => goToView('writing'));
   }
@@ -18565,7 +18574,7 @@ function renderUpcomingLesson(){
         <p style="margin-top:8px; font-size:.86rem; font-family:'Fraunces',serif;">${escapeHtml(pn.titleEn)}</p>
         <p class="arabic" style="margin-top:2px; font-size:.8rem; color:var(--text-secondary);">${escapeHtml(pn.titleAr)}</p>
         <p style="margin-top:4px; font-size:.74rem; color:var(--text-muted);">${escapeHtml(pn.academyEn)} <span class="arabic">· ${escapeHtml(pn.academyAr || '')}</span></p>
-        <button class="btn-outline" data-goto-view="resume" style="margin-top:10px; width:100%;"><span class="arabic">افتح الدرس</span>، Open lesson</button>
+        <button type="button" class="btn-outline" data-goto-view="resume" style="margin-top:10px; width:100%;"><span class="arabic">افتح الدرس</span>، Open lesson</button>
       </div>`;
   }else{
     el.innerHTML = `<div class="card-elevated" style="padding:16px; border-radius:14px; border:1px solid var(--border);">
@@ -18627,7 +18636,7 @@ async function renderControlCenter(){
       <p style="color:var(--text-muted); font-size:.82rem; margin-top:4px;">
         <span class="arabic">درس اليوم · ${L.minutes || 5} دقيقة${ck ? ` · <b style="color:var(--gold);">اختبار المرحلة</b>` : ''}</span>، Today's lesson · ${L.minutes || 5} min${ck ? ` · <b style="color:var(--gold);">Stage checkpoint</b>` : ''}
       </p>
-      <button class="btn-gold magnetic" id="ccStartBtn" style="margin-top:14px;"><span class="arabic">ابدا الدرس</span>، Start lesson</button>`
+      <button type="button" class="btn-gold magnetic" id="ccStartBtn" style="margin-top:14px;"><span class="arabic">ابدا الدرس</span>، Start lesson</button>`
       : `<p style="margin-top:16px; color:var(--text-secondary);"><span class="arabic">اكملت هذه المرحلة.</span>، You have finished this stage.</p>`}
       ${nxt ? `<p style="margin-top:14px; font-size:.8rem; color:var(--text-muted); display:flex; align-items:center; gap:6px;"><i data-lucide="lock" width="13" height="13"></i> <span><span class="arabic">التالي: ${escapeHtml(nxt.title_ar||nxt.title_en)}</span>، Next: ${escapeHtml(nxt.title_en||nxt.title_ar)}</span></p>` : ''}
       </div>
@@ -18964,7 +18973,7 @@ function renderContinueLearning(){
           <div class="progress-track" style="flex:1; max-width:280px;"><span class="progress-fill" style="width:${inProgress.progress}%;"></span></div>
           <span style="font-size:.76rem; color:var(--text-muted);">${inProgress.progress}%</span>
         </div>
-        <button class="btn-outline" data-goto-view="resume" style="margin-top:12px;"><span class="arabic">كمل</span>، Resume</button>`;
+        <button type="button" class="btn-outline" data-goto-view="resume" style="margin-top:12px;"><span class="arabic">كمل</span>، Resume</button>`;
     }else if(planNext && !inProgress){
       const plan = getPlan();
       const un = planUnlock() || {};
@@ -18983,7 +18992,7 @@ function renderContinueLearning(){
           <div class="progress-track" style="flex:1; max-width:280px;"><span class="progress-fill" style="width:${pct}%;"></span></div>
           <span style="font-size:.76rem; color:var(--text-muted);"><span dir="ltr">${doneN}/${total}</span> <span class="arabic">دروس</span>، lessons</span>
         </div>
-        <button class="btn-outline" data-goto-view="resume" style="margin-top:12px;"><span class="arabic">كمل مسارك</span>، Resume my plan</button>`;
+        <button type="button" class="btn-outline" data-goto-view="resume" style="margin-top:12px;"><span class="arabic">كمل مسارك</span>، Resume my plan</button>`;
     }else{
       if(resumeText) resumeText.innerHTML = `<span class="arabic">ما بدات اي درس بعد</span>، No lesson started yet.`;
       if(card) card.style.display = 'none';
@@ -19098,7 +19107,7 @@ function renderProfile(){
         <span class="chip gold" style="margin-top:8px; display:inline-block;" id="profileLevelChip"></span>
         <span class="chip" style="margin-top:8px; margin-left:8px; display:inline-block;" id="profileCurrentLessonChip"></span>
       </div>
-      <button class="btn-outline" id="editGoalBtn"><span class="arabic">تعديل هدف التعلم</span>، Edit learning goal</button>
+      <button type="button" class="btn-outline" id="editGoalBtn"><span class="arabic">تعديل هدف التعلم</span>، Edit learning goal</button>
     </div>
 
     <div class="eyebrow" style="margin-bottom:14px;"><span class="arabic">الاحصاييات</span>، Statistics</div>
@@ -19114,7 +19123,7 @@ function renderProfile(){
           <div style="font-size:.78rem;color:var(--text-muted);"><span class="arabic">رصيد الحصص المباشرة</span>، Live class credits</div>
         </div>
       </div>
-      <button class="btn-outline" id="profileBookClassBtn" style="margin-inline-start:auto;"><span class="arabic">احجز حصة</span>، Book a class</button>
+      <button type="button" class="btn-outline" id="profileBookClassBtn" style="margin-inline-start:auto;"><span class="arabic">احجز حصة</span>، Book a class</button>
     </div>
 
     <div class="grid grid-2" style="align-items:start; margin-bottom:30px;">
@@ -19168,7 +19177,7 @@ function renderProfile(){
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.7"><path d="M1 4v6h6"/><path d="M3.5 15a9 9 0 1 0 2-9.4L1 10"/></svg>
         </div>
         <div style="flex:1; min-width:200px;" id="reviewStripBody"></div>
-        <button class="btn-outline" data-goto-view="review" id="reviewStripBtn"><span class="arabic">ابدا المراجعة</span>، Start Review</button>
+        <button type="button" class="btn-outline" data-goto-view="review" id="reviewStripBtn"><span class="arabic">ابدا المراجعة</span>، Start Review</button>
       </div>
     </div>
 
@@ -19315,8 +19324,8 @@ function renderCertificates(){
         <div class="cert-row"><span><span class="arabic">رقم الشهادة</span>، Certificate ID</span><b>${c.certId}</b></div>
         <div class="cert-row"><span><span class="arabic">صادرة عن</span>، Issued by</span><b>PEL Academy</b></div>
         <div class="cert-actions">
-          <button class="btn-outline cert-print-btn" data-cert="${c.certId}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg> <span class="arabic">طباعة / PDF</span>، Print PDF</button>
-          <button class="btn-outline cert-verify-btn" data-cert="${c.certId}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg> <span class="arabic">تحقق</span>، Verify</button>
+          <button type="button" class="btn-outline cert-print-btn" data-cert="${c.certId}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg> <span class="arabic">طباعة / PDF</span>، Print PDF</button>
+          <button type="button" class="btn-outline cert-verify-btn" data-cert="${c.certId}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg> <span class="arabic">تحقق</span>، Verify</button>
         </div>
       </div>
     </div>`).join('') : `<div class="empty-state"><i class="empty-icon" data-lucide="graduation-cap"></i><h3><span class="arabic" style="display:block; font-size:.8em; font-weight:400; color:var(--text-muted); margin-bottom:4px;">لا توجد شهادات بعد</span>No certificates yet</h3><p><span class="arabic" style="display:block; margin-bottom:4px;">انهِ اول اكاديمية لك للحصول على شهادة اتمام.</span>Finish your first academy to earn a certificate of completion.</p></div>`;
@@ -19562,7 +19571,7 @@ async function openCertVerify(cert){
     modal.className = 'modal-overlay';
     modal.id = 'certVerifyModal';
     modal.innerHTML = `<div class="modal-box" style="max-width:520px; position:relative;">
-      <button class="modal-close" id="closeCertVerifyModal">✕</button>
+      <button type="button" class="modal-close" id="closeCertVerifyModal">✕</button>
       <div id="certVerifyBody"></div>
     </div>`;
     document.body.appendChild(modal);
@@ -19580,16 +19589,16 @@ async function openCertVerify(cert){
     <label style="display:block; margin-top:18px; font-size:.68rem; text-transform:uppercase; letter-spacing:.12em; color:var(--text-muted);"><span class="arabic">رابط التحقق</span>، Verification link</label>
     <div style="display:flex; gap:8px; margin-top:8px;">
       <input readonly value="${escapeHtml(link)}" style="flex:1; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:11px 13px; color:var(--text); font-size:.78rem; outline:none;">
-      <button class="btn-outline" id="copyVerifyLink" style="padding:0 14px;"><span class="arabic">نسخ</span>، Copy</button>
+      <button type="button" class="btn-outline" id="copyVerifyLink" style="padding:0 14px;"><span class="arabic">نسخ</span>، Copy</button>
     </div>
     <label style="display:block; margin-top:16px; font-size:.68rem; text-transform:uppercase; letter-spacing:.12em; color:var(--text-muted);"><span class="arabic">رمز التحقق</span>، Verification code</label>
     <div style="display:flex; gap:8px; margin-top:8px;">
       <input readonly value="${escapeHtml(cert.code)}" style="flex:1; background:var(--surface); border:1px dashed var(--border); border-radius:10px; padding:11px 13px; color:var(--gold-soft); font-family:'Fraunces',serif; font-size:.9rem; letter-spacing:.14em; outline:none; text-align:center;">
-      <button class="btn-outline" id="copyVerifyCode" style="padding:0 14px;"><span class="arabic">نسخ</span>، Copy</button>
+      <button type="button" class="btn-outline" id="copyVerifyCode" style="padding:0 14px;"><span class="arabic">نسخ</span>، Copy</button>
     </div>
     <div id="certStatus" style="margin-top:18px; padding:13px 16px; border-radius:12px; font-size:.82rem; line-height:1.7; display:none;"></div>
     <a href="${escapeHtml(link)}" target="_blank" rel="noopener" class="btn-gold" style="display:flex; align-items:center; justify-content:center; gap:8px; margin-top:18px; text-decoration:none; padding:13px 0; border-radius:12px;"><span class="arabic">فتح صفحة التحقق</span>، Open verification page</a>
-    <button class="btn-outline" id="certRetryBtn" style="margin-top:10px; width:100%; justify-content:center; display:none;"><span class="arabic">اعادة المحاولة</span>، Try again</button>
+    <button type="button" class="btn-outline" id="certRetryBtn" style="margin-top:10px; width:100%; justify-content:center; display:none;"><span class="arabic">اعادة المحاولة</span>، Try again</button>
   `;
   const statusEl = document.getElementById('certStatus');
   const retryBtn = document.getElementById('certRetryBtn');
@@ -19855,7 +19864,7 @@ function renderPlanSettings(){
     <div style="margin-top:4px;">
       <label style="display:block; font-size:.78rem; font-weight:600; color:var(--text-secondary); margin-bottom:8px;"><span class="arabic">الدقايق اليومية</span>، Daily pace</label>
       <div style="display:flex; gap:8px; flex-wrap:wrap;">${dailyOpts.map(m =>
-        `<button class="pel-pace-chip btn-ghost-sm" data-pace="${m}" style="${m === state.daily ? 'border-color:var(--gold); color:var(--gold-soft);' : ''}">${m} min</button>`).join('')}</div>
+        `<button type="button" class="pel-pace-chip btn-ghost-sm" data-pace="${m}" style="${m === state.daily ? 'border-color:var(--gold); color:var(--gold-soft);' : ''}">${m} min</button>`).join('')}</div>
     </div>
     <div style="margin-top:16px;">
       <label style="display:block; font-size:.78rem; font-weight:600; color:var(--text-secondary); margin-bottom:8px;"><span class="arabic">الايام بالاسبوع</span>، Days per week</label>
@@ -19865,7 +19874,7 @@ function renderPlanSettings(){
     </div>
     <p id="planEstPreview" style="margin-top:14px; font-size:.84rem; color:var(--gold-soft); font-weight:600;"></p>
     <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;">
-      <button class="btn-gold" data-plan-save><span class="arabic">احفظ التغييرات</span>، Save changes</button>
+      <button type="button" class="btn-gold" data-plan-save><span class="arabic">احفظ التغييرات</span>، Save changes</button>
       <a class="btn-outline" href="index.html#pricing"><span class="arabic">اختبر مستواك من جديد</span>، Retake the level test</a>
     </div>
     <p style="margin-top:10px; font-size:.74rem; color:var(--text-muted);"><span class="arabic">اعادة البنا تحافظ على الدروس المكتملة وتقيمك.</span>A rebuild keeps your completed lessons and progress.</p>`;
@@ -19935,7 +19944,7 @@ function renderPlanView(){
     let preview = '';
     if(cls === 'locked'){
       preview = `<div style="margin-top:8px;">
-        <button class="pel-stage-toggle btn-ghost-sm" data-stage-key="${escapeHtml(st.key)}" style="font-size:.72rem; color:var(--gold-soft); background:none; border:none; cursor:pointer; padding:0;"><span class="arabic">شوف وش بتتعلم</span>، See what you'll learn</button>
+        <button type="button" class="pel-stage-toggle btn-ghost-sm" data-stage-key="${escapeHtml(st.key)}" style="font-size:.72rem; color:var(--gold-soft); background:none; border:none; cursor:pointer; padding:0;"><span class="arabic">شوف وش بتتعلم</span>، See what you'll learn</button>
         <div class="pel-stage-preview" data-stage-preview="${escapeHtml(st.key)}" style="display:none; margin-top:8px; font-size:.76rem; color:var(--text-secondary); line-height:1.8;">` +
         st.units.map(u => u.lessonIds.map(lid => { const m = E.lessonMeta(lid); return `· ${escapeHtml(m ? m.t : lid)}`; }).join('<br>')).join('<br>') +
         `</div>
@@ -19960,7 +19969,7 @@ function renderPlanView(){
       <h3 style="font-size:1.1rem; margin-top:4px;">${escapeHtml(pr.titleEn)}</h3>
       <p style="font-size:.9rem; color:var(--gold-soft); margin-top:2px;"><span class="arabic">${escapeHtml(pr.academyAr || '')}</span> · ${escapeHtml(pr.academyEn || '')}</p>
       <p style="font-size:.82rem; color:var(--text-muted); margin-top:8px; line-height:1.7;"><span class="arabic">${escapeHtml(pr.whyAr)}</span> · ${escapeHtml(pr.whyEn)}</p>
-      <button class="btn-gold" data-plan-lesson="${escapeHtml(pr.academyId)}|${escapeHtml(pr.lessonId)}" style="margin-top:16px;"><span class="arabic">افتح الدرس</span>، Start lesson</button>
+      <button type="button" class="btn-gold" data-plan-lesson="${escapeHtml(pr.academyId)}|${escapeHtml(pr.lessonId)}" style="margin-top:16px;"><span class="arabic">افتح الدرس</span>، Start lesson</button>
     </div>` : '';
 
   const adaptNotes = [];
@@ -20001,7 +20010,7 @@ function renderPlanView(){
         <div class="card">
           <span class="eyebrow" style="margin:0 0 8px;"><span class="arabic">عدّل خطتك</span>، Adjust your plan</span>
           <p style="font-size:.82rem; color:var(--text-muted); line-height:1.7;"><span class="arabic" style="display:block;">غيّر ايقاعك اليومي وعدد ايام الاسبوع في الاعدادات، واعيد بنا التقدير.</span>Change your daily pace and weekly frequency in settings - the estimate rebuilds.</p>
-          <button class="btn-outline" data-goto-view="settings" style="margin-top:12px;"><span class="arabic">افتح الاعدادات</span>، Open settings</button>
+          <button type="button" class="btn-outline" data-goto-view="settings" style="margin-top:12px;"><span class="arabic">افتح الاعدادات</span>، Open settings</button>
         </div>
       </div>
     </div>`;
@@ -20244,7 +20253,7 @@ function renderFocusCard(){
       <p style="margin-top:5px; font-size:.95rem; font-weight:600;">${rec.titleAr ? `<span class="arabic">${escapeHtml(rec.titleAr)}</span> · ` : ''}<span dir="ltr">${escapeHtml(rec.titleEn)}</span></p>
       <p style="font-size:.78rem; color:var(--text-muted); margin-top:3px; line-height:1.6;"><span class="arabic">${escapeHtml(rec.whyAr)}</span> · <span dir="ltr">${escapeHtml(rec.whyEn)}</span></p>
     </div>
-    <button class="btn-gold" data-goto-view="${escapeHtml(rec.view||'')}" style="white-space:nowrap;"><span class="arabic">${escapeHtml(rec.ctaAr||'')}</span> · <span dir="ltr">${escapeHtml(rec.ctaEn||'')}</span></button>
+    <button type="button" class="btn-gold" data-goto-view="${escapeHtml(rec.view||'')}" style="white-space:nowrap;"><span class="arabic">${escapeHtml(rec.ctaAr||'')}</span> · <span dir="ltr">${escapeHtml(rec.ctaEn||'')}</span></button>
   </div>`;
   const body = document.getElementById('focusBody');
   if(body) body.innerHTML = html;
@@ -20286,7 +20295,7 @@ function renderSkillBars(){
     + skills.map(s => {
       const st = dashSkillStatus(s);
       const scoreTxt = s.score == null ? '·' : s.score + '%';
-      return `<button class="skill-bar-row" data-view="${s.view}" style="cursor:pointer;">
+      return `<button type="button" class="skill-bar-row" data-view="${s.view}" style="cursor:pointer;">
         <div style="display:flex; align-items:center; gap:10px;">
           <i data-lucide="${s.icon}" width="16" height="16" style="color:var(--gold-soft); flex-shrink:0;"></i>
           <span style="font-size:.84rem; font-weight:600;"><span class="arabic" style="font-weight:400;">${escapeHtml(s.ar)}</span> · <span dir="ltr">${escapeHtml(s.key)}</span></span>
@@ -20892,7 +20901,7 @@ if(window.lucide) lucide.createIcons();
     if(!d.welcome_seen){
       const hi = A ? 'اهلا وسهل بك في PEL' : 'Welcome to PEL';
       const body = A ? 'كل دروسك ومتابعتك ورصيدك يحفظ هنا. خذ اختبار المستوى عشان نبداك من النقطة المناسبة لك، وادخل حصص مباشرة اونلاين وحضورية برصيد الحصص. اضغط تم ورج نشوفك.' : 'All your lessons, progress and live-class credits live here. Take the level test so we start you at the right point, and book live online or in-person classes with your credits. Tap done and lets go.';
-      welcome='<div class="pel-welcome"><div class="pel-welcome-icon"><i data-lucide="sparkles" width="22" height="22"></i></div><div><h3>'+esc(hi)+'</h3><p>'+esc(body)+'</p></div><button class="btn-gold pel-welcome-btn" data-welcome>تم</button></div>';
+      welcome='<div class="pel-welcome"><div class="pel-welcome-icon"><i data-lucide="sparkles" width="22" height="22"></i></div><div><h3>'+esc(hi)+'</h3><p>'+esc(body)+'</p></div><button type="button" class="btn-gold pel-welcome-btn" data-welcome>تم</button></div>';
     }
 
     const cards=services.map(s=>{
@@ -20924,7 +20933,7 @@ if(window.lucide) lucide.createIcons();
         '<div class="pel-row"><label class="pel-field"><span>'+(esc(A?'مدينتك':'Your city'))+'</span><input id="pelCity" type="text" placeholder="'+esc(A?'اكتب مدينتك':'Type your city')+'"></label></div>'+
         '<label class="pel-field"><span>'+(esc(A?'اوقات مناسبة لك':'Preferred times'))+'</span><input id="pelTimes" type="text" placeholder="'+esc(A?'مثال: المسا، نهاية الاسبوع':'e.g. evenings, weekends')+'"></label>'+
         '<label class="pel-field"><span>'+(esc(A?'ملاحظات':'Notes'))+'</span><textarea id="pelNotes" rows="2" placeholder="'+esc(A?'اي شي تبي المعلم يعرفه':'Anything you want the teacher to know')+'"></textarea></label>'+
-        '<div class="pel-form-foot"><span id="pelCost"></span><button class="btn-gold" id="pelSubmit" disabled>'+esc(A?'اطلب الحصة':'Request class')+'</button></div>'+
+        '<div class="pel-form-foot"><span id="pelCost"></span><button type="button" class="btn-gold" id="pelSubmit" disabled>'+esc(A?'اطلب الحصة':'Request class')+'</button></div>'+
         '<p class="pel-form-hint" id="pelHint"></p>'+
       '</div>'+
       '<div class="pel-req-card"><h3>'+(esc(A?'طلباتك':'Your requests'))+'</h3><div class="pel-req-list">'+reqRows+'</div></div>'+
@@ -21009,7 +21018,7 @@ if(window.lucide) lucide.createIcons();
     const hi=A?'اهلا وسهل بك في PEL':'Welcome to PEL';
     const body=A?'كل دروسك ومتابعتك ورصيدك يحفظ هنا. خذ اختبار المستوى عشان نبداك من النقطة المناسبة، وادخل حصص مباشرة اونلاين وحضورية برصيد الحصص. اضغط تم ورج نشوفك.':'All your lessons, progress and live-class credits live here. Take the level test so we start you at the right point, and book live online or in-person classes with your credits. Tap done and lets go.';
     const el=document.createElement('div'); el.id='pelGlobalWelcome'; el.className='pel-welcome pel-global-welcome';
-    el.innerHTML='<div class="pel-welcome-icon"><i data-lucide="sparkles" width="22" height="22"></i></div><div><h3>'+esc(hi)+'</h3><p>'+esc(body)+'</p></div><button class="btn-gold pel-welcome-btn" data-welcome>تم</button>';
+    el.innerHTML='<div class="pel-welcome-icon"><i data-lucide="sparkles" width="22" height="22"></i></div><div><h3>'+esc(hi)+'</h3><p>'+esc(body)+'</p></div><button type="button" class="btn-gold pel-welcome-btn" data-welcome>تم</button>';
     const home=document.getElementById('view-home');
     if(home){ home.insertBefore(el, home.firstChild); }
     else { const cc=document.querySelector('.content-cols'); if(cc) cc.insertBefore(el, cc.firstChild); else document.body.insertBefore(el, document.body.firstChild); }
