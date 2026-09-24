@@ -14000,7 +14000,7 @@ function renderDbPractice(container, exercises){
         recordAndScore((heard, score, err) => {
           if(heard === null){ fb.innerHTML = '<span class="arabic">' + (micErrorMessage(err)||'') + '</span>'; return; }
           const pf = (typeof pronFeedback === 'function') ? pronFeedback(heard, tgt) : null;
-          const tip = (pf && pf.tipAr) ? ' <span class="arabic" style="color:var(--gold);">💡 '+pf.tipAr+'</span>' : '';
+          const tip = (pf && pf.tipAr) ? ' <span class="arabic" style="color:var(--gold);">'+pf.tipAr+'</span>' : '';
           // Encouragement messages based on score — reduces speaking anxiety
           // Research: 100% of Saudi EFL learners report speaking anxiety
           // Ref: https://www.e-iji.net/dosyalar/iji_2026_3_19.pdf
@@ -14009,7 +14009,7 @@ function renderDbPractice(container, exercises){
           else if(score < 70) enc = ' <span class="arabic" style="color:var(--text-muted);">كويس! قربت من النطق الصح. حاول مرة ثانية.</span>';
           else if(score < 90) enc = ' <span class="arabic" style="color:var(--success);">احسنت! نطقك صار احسن. كمل.</span>';
           else enc = ' <span class="arabic" style="color:var(--success);">ممتاز! نطقك طبيعي.</span>';
-          fb.innerHTML = '🗣️ <span class="arabic">سمعت</span> "' + escapeHtml(heard) + '" (' + score + '%)' + tip + enc;
+          fb.innerHTML = '<span class="arabic">سمعت</span> "' + escapeHtml(heard) + '" (' + score + '%)' + tip + enc;
         }, tgt, this);
       });
     }
@@ -17143,7 +17143,7 @@ function renderLessonReader(container, academy, lesson){
       const dueNow = reviewDueCount();
       if(dueNow === 0 || isFirstTimeStudent()) return '';
       return `<div class="card" style="margin-top:14px; padding:14px 16px; display:flex; align-items:center; gap:14px; flex-wrap:wrap; border-color:rgba(200,169,106,.3);">
-        <span style="font-size:1.05rem;">💡</span>
+        <span style="font-size:1.05rem;"></span>
         <div style="flex:1; min-width:200px;"><b style="font-size:.86rem;"><span class="arabic" style="font-weight:400;">عندك ${dueNow} كلمة جاهزة للمراجعة</span>، ${dueNow} word${dueNow===1?'':'s'} ready for review</b><p style="font-size:.74rem; color:var(--text-muted); margin-top:2px;"><span class="arabic">دقيقة مراجعة قبل الدرس تثبتها وتحرر ذاكرتك لدرس جديد.</span>A minute of review first locks them in and frees your memory for new material.</p></div>
         <button type="button" class="btn-outline" id="lessonReviewNudgeBtn" style="flex-shrink:0;"><span class="arabic">راجع الحين</span>، Review Now</button>
       </div>`;
@@ -17190,7 +17190,7 @@ function renderLessonReader(container, academy, lesson){
           <div class="triplet-card" style="display:flex; justify-content:space-between; align-items:center; gap:14px;">
             <div style="flex:1;"><b style="font-family:'Cairo','Tajawal',sans-serif; font-size:1.05rem; direction:rtl; text-align:right; display:block;">${escapeHtml(v.ar||'')}</b>
               <div style="margin-top:2px; color:var(--text-muted); font-size:.8rem;" dir="ltr">${escapeHtml(v.translit||'')} · ${escapeHtml(v.en||'')}</div>
-              ${v.tip ? `<div style="margin-top:6px; font-size:.78rem; color:var(--text-secondary); line-height:1.6;" dir="ltr">💡 ${escapeHtml(v.tip||'')}</div>` : ''}
+              ${v.tip ? `<div style="margin-top:6px; font-size:.78rem; color:var(--text-secondary); line-height:1.6;" dir="ltr">${escapeHtml(v.tip||'')}</div>` : ''}
             </div>
             <button type="button" class="icon-btn speak-btn" data-speak="${escapeHtml(v.ar||'')}" aria-label="Listen"><i data-lucide="volume-2" width="15" height="15"></i></button>
           </div>` : `
@@ -17212,18 +17212,18 @@ function renderLessonReader(container, academy, lesson){
       let html = '<div class="lesson-section"><h3><span class="arabic">لاحظ</span>، Notice</h3><p class="lesson-section-sub"><span class="arabic" style="display:block;">انماط وقواعد مختصرة، بالعامية والانجليزي.</span><span dir="ltr">Compact patterns and rules, in Saudi Arabic and English.</span></p>';
       sections.forEach(ns => {
         if(ns.sections.rule.length){
-          html += '<div class="concept-section-label" dir="ltr">📏 Rule</div>';
+          html += '<div class="concept-section-label" dir="ltr">Rule</div>';
           html += ns.sections.rule.map(s => renderStepsHtml(s, 'concept-step-en', terms)).join('');
         }
         if(ns.sections.meaning.length){
-          html += '<div class="concept-section-label">💡 Meaning</div>';
+          html += '<div class="concept-section-label">Meaning</div>';
           html += ns.sections.meaning.map(s => renderStepsHtml(s, 'concept-step-ar arabic', terms)).join('');
         } else if(ns.ar && ns.sections.rule.length){
-          html += '<div class="concept-section-label">💡 Meaning</div>';
+          html += '<div class="concept-section-label">Meaning</div>';
           html += renderStepsHtml(ns.ar, 'concept-step-ar arabic', terms);
         }
         if(ns.sections.whenToUse.length){
-          html += '<div class="concept-section-label" dir="ltr">🎯 When to use</div>';
+          html += '<div class="concept-section-label" dir="ltr">When to use</div>';
           html += ns.sections.whenToUse.map(s => renderStepsHtml(s, 'concept-step-en', terms)).join('');
         }
       });
@@ -17236,12 +17236,12 @@ function renderLessonReader(container, academy, lesson){
       let html = '<div class="lesson-section"><h3><span class="arabic">القواعد</span>، <span dir="ltr">' + (lesson.dir === 'ar' ? 'Usage Note' : 'Grammar') + ': ' + escapeHtml(lesson.grammar.title||'') + '</span></h3>';
       // Rule
       if(lesson.grammar.rule){
-        html += '<div class="concept-section-label" dir="ltr">📏 Rule</div>';
+        html += '<div class="concept-section-label" dir="ltr">Rule</div>';
         html += renderStepsHtml(lesson.grammar.rule, 'concept-step-en', terms);
       }
       // Meaning (Saudi Arabic explanation)
       if(lesson.grammar.saudi){
-        html += '<div class="concept-section-label">💡 Meaning</div>';
+        html += '<div class="concept-section-label">Meaning</div>';
         html += renderStepsHtml(lesson.grammar.saudi, 'concept-step-ar arabic', terms);
       }
       // Examples from the lesson
@@ -17287,7 +17287,7 @@ function renderLessonReader(container, academy, lesson){
       <h3><span class="arabic">خطة الموقف</span>، <span dir="ltr">Situation Plan</span></h3>
       <p class="lesson-section-sub"><span class="arabic" style="display:block;">وش بتسمع، وش تقول، ووش تسوي لو ما فهمت. هذا الموقف يجهزك لسوالف حقيقية.</span><span dir="ltr">What you will hear, what to say, and what to do if it goes wrong. This prepares you for the real conversation.</span></p>
       ${lesson.situation.hear ? `<div class="situation-block"><div class="situation-label">👂 <span class="arabic">بتسمع</span>، <span dir="ltr">You will hear</span></div>${lesson.situation.hear.map(h => `<div class="situation-line"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:6px;"><div style="flex:1;"><div class="situation-ar">${escapeHtml(h.ar||'')}</div><div class="situation-en" dir="ltr">${h.translit ? '<span class="situation-translit">' + escapeHtml(h.translit) + '</span>، ' : ''}${escapeHtml(h.en||'')}</div></div><button type="button" class="icon-btn speak-btn" data-speak="${escapeHtml(h.en||'')}" aria-label="Listen" style="flex-shrink:0;width:26px;height:26px;"><i data-lucide="volume-2" width="12" height="12"></i></button></div></div>`).join('')}</div>` : ''}
-      ${lesson.situation.say ? `<div class="situation-block"><div class="situation-label">🗣️ <span class="arabic">تقدر تقول</span>، <span dir="ltr">You can say</span></div>${lesson.situation.say.map(h => `<div class="situation-line"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:6px;"><div style="flex:1;"><div class="situation-ar">${escapeHtml(h.ar||'')}</div><div class="situation-en" dir="ltr">${h.translit ? '<span class="situation-translit">' + escapeHtml(h.translit) + '</span>، ' : ''}${escapeHtml(h.en||'')}</div></div><button type="button" class="icon-btn speak-btn" data-speak="${escapeHtml(h.en||'')}" aria-label="Listen" style="flex-shrink:0;width:26px;height:26px;"><i data-lucide="volume-2" width="12" height="12"></i></button></div></div>`).join('')}</div>` : ''}
+      ${lesson.situation.say ? `<div class="situation-block"><div class="situation-label"><span class="arabic">تقدر تقول</span>، <span dir="ltr">You can say</span></div>${lesson.situation.say.map(h => `<div class="situation-line"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:6px;"><div style="flex:1;"><div class="situation-ar">${escapeHtml(h.ar||'')}</div><div class="situation-en" dir="ltr">${h.translit ? '<span class="situation-translit">' + escapeHtml(h.translit) + '</span>، ' : ''}${escapeHtml(h.en||'')}</div></div><button type="button" class="icon-btn speak-btn" data-speak="${escapeHtml(h.en||'')}" aria-label="Listen" style="flex-shrink:0;width:26px;height:26px;"><i data-lucide="volume-2" width="12" height="12"></i></button></div></div>`).join('')}</div>` : ''}
       ${lesson.situation.recover ? `<div class="situation-block"><div class="situation-label">🆘 <span class="arabic">لو ما فهمت</span>، <span dir="ltr">If you do not understand</span></div>${lesson.situation.recover.map(h => `<div class="situation-line"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:6px;"><div style="flex:1;"><div class="situation-ar">${escapeHtml(h.ar||'')}</div><div class="situation-en" dir="ltr">${h.translit ? '<span class="situation-translit">' + escapeHtml(h.translit) + '</span>، ' : ''}${escapeHtml(h.en||'')}</div></div><button type="button" class="icon-btn speak-btn" data-speak="${escapeHtml(h.en||'')}" aria-label="Listen" style="flex-shrink:0;width:26px;height:26px;"><i data-lucide="volume-2" width="12" height="12"></i></button></div></div>`).join('')}</div>` : ''}
     </div>` : ''}
 
@@ -17759,10 +17759,10 @@ function renderPronDrill(card, drill){
         recordAndScore((heard, score, err) => {
           if(heard === null){ fb.innerHTML = `<span class="arabic">${micErrorMessage(err)}</span>`; return; }
           const pf = pronFeedback(heard, tgt.en);
-          const tip = pf.tipAr ? `<div class="arabic" style="margin-top:6px;color:var(--gold);">💡 ${pf.tipAr}</div>` : '';
+          const tip = pf.tipAr ? `<div class="arabic" style="margin-top:6px;color:var(--gold);">${pf.tipAr}</div>` : '';
           if(score >= passAt){
             targetScores[targetIndex] = score;
-            fb.innerHTML = `✅ <span class="arabic">صح! سمعت</span> \"${escapeHtml(heard)}\" (${score}%)${tip}`;
+            fb.innerHTML = `<span class="arabic">صح! سمعت</span> \"${escapeHtml(heard)}\" (${score}%)${tip}`;
             setTimeout(advance, 950);
           } else {
             fb.innerHTML = `🟡 <span class="arabic">سمعت</span> \"${escapeHtml(heard)}\" (${score}%). <span class="arabic">الصح</span> \"<b>${escapeHtml(tgt.en)}</b>\"<span class="arabic">. حاول مرة ثانية او تخطى.</span>${tip}
@@ -17878,9 +17878,9 @@ function renderPronunciation(){
           return;
         }
         const pf = pronFeedback(heard, target);
-        const tipHtml = pf.tipAr ? `<div class="arabic" style="margin-top:6px; color:var(--gold);">💡 ${pf.tipAr}</div><div style="font-size:.74rem; color:var(--text-muted); margin-top:2px;">${escapeHtml(pf.tipEn)}</div>` : '';
+        const tipHtml = pf.tipAr ? `<div class="arabic" style="margin-top:6px; color:var(--gold);">${pf.tipAr}</div><div style="font-size:.74rem; color:var(--text-muted); margin-top:2px;">${escapeHtml(pf.tipEn)}</div>` : '';
         if(score >= 75){
-          fb.innerHTML = `✅ <span class="arabic">ممتاز! نطقك واضح</span>, سمعت: "${escapeHtml(heard)}" <span class="arabic">(${score}% تقريبي)</span>${tipHtml}`;
+          fb.innerHTML = `<span class="arabic">ممتاز! نطقك واضح</span>, سمعت: "${escapeHtml(heard)}" <span class="arabic">(${score}% تقريبي)</span>${tipHtml}`;
         } else if(score >= 40){
           fb.innerHTML = `🟡 <span class="arabic">قريب! سمعت</span>: "${escapeHtml(heard)}" <span class="arabic">(${score}% تقريبي), الصح هو</span> "<b>${escapeHtml(target)}</b>"، <span class="arabic">جرب مرة ثانية بهدو</span>${tipHtml}`;
         } else {
