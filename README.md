@@ -50,7 +50,7 @@ tutorfiraspel/
 │   │   ├── transcribe/     Whisper speech-to-text Edge Function (v2, CORS restricted)
 │   │   ├── rate-limited-login/  Per-IP login rate limiting Edge Function (v4, deployed)
 │   │   └── tutor-ai/       Archived (was orphaned, deleted from Supabase)
-│   └── migrations/         SQL migration files (30 migrations)
+│   └── migrations/         SQL migration files (32 migrations)
 ├── tests/
 │   ├── test_buildsequence_iam.js  Build sequence tests (13 tests)
 │   ├── test_teaching_flow.js     Teaching flow tests (31 tests)

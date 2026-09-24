@@ -1,5 +1,35 @@
 # NEXT STEPS - pick up here
 
+## DONE: Supabase Data API grants fix (2026-09-24 session)
+
+### Context
+Supabase announced that starting October 30, 2026, new tables created in the
+`public` schema will no longer automatically receive Data API (PostgREST) grants.
+Existing tables retain their current grants, but any migration that creates a
+table without explicit GRANT statements would leave that table unreachable on
+fresh databases (preview branches, `supabase db reset`).
+
+### Issues found and fixed
+1. **`pel_student_feedback_events` had ZERO grants** (commit `26961a3`, migration `202609240007`): The table was created via Management API SQL without grants. The app does `supabase.from('pel_student_feedback_events').insert(row)` with `.catch(()=>{})`, so every feedback insert was silently failing. Fixed: granted `authenticated` SELECT, INSERT.
+
+2. **4 migration files missing GRANT statements** (commit `26961a3`): Migrations that CREATE TABLE but never GRANT would break on fresh DBs:
+   - `202609050001_ensure_permission_system.sql`: `user_roles`, `role_permissions` — added `service_role` ALL + `authenticated` SELECT on `user_roles` (matches RLS)
+   - `auth_rate_limit.sql`: `auth_attempts` — added `service_role` ALL (Edge Function only)
+   - `202608260003_student_learning_state.sql`: `student_learning_state` — added `authenticated` SELECT/INSERT/UPDATE + `service_role` ALL (matches RLS)
+   - `202609150003_student_presence_tracking.sql`: `student_presence`, `student_activity_events` — added `authenticated` SELECT + `service_role` ALL (matches RLS)
+
+3. **No table had `service_role` grants** (commit `26961a3`, migration `202609240007`): Supabase best practice recommends `service_role` ALL on all tables. Added via dynamic DO block granting ALL on all 51 public tables + USAGE/SELECT on all sequences.
+
+### Verification
+- Live DB verified: all 51 public tables have `service_role` SELECT/INSERT/UPDATE/DELETE
+- `pel_student_feedback_events`: `authenticated` SELECT+INSERT confirmed
+- `student_learning_state`: `authenticated` SELECT+INSERT+UPDATE confirmed
+- `student_presence`, `student_activity_events`: `authenticated` SELECT confirmed
+- `user_roles`: `authenticated` SELECT confirmed
+- Migration is idempotent (safe to re-run)
+
+---
+
 ## DONE: Deep audit + bug fixes + performance (2026-09-24 session)
 
 ### Bugs found and fixed
