@@ -1,5 +1,38 @@
 # NEXT STEPS - pick up here
 
+## DONE: Deep audit + bug fixes + performance (2026-09-24 session)
+
+### Bugs found and fixed
+1. **CSP `frame-ancestors` in meta tags** (commit `fe728d9`): All 5 HTML pages (index, login, admin, verify, legal) had `frame-ancestors 'none'` in their CSP `<meta>` tag. Browsers ignore this directive in `<meta>` elements — it only works via HTTP response headers. This caused a console error on every page load. Removed from all meta CSP tags; the `_headers` file already includes `frame-ancestors 'none'` + `X-Frame-Options: DENY` for Cloudflare/Netlify migration. Browser-verified: zero console errors on all pages.
+
+2. **Orphaned `complete_activity` function overload** (commit `fe728d9`, migration `202609240002`): Two overloads existed in the live DB — the old 3-arg `complete_activity(text, integer, jsonb)` (no `p_stats`) and the current 4-arg version with `p_stats`. The old overload was dead code from when the signature was expanded via `CREATE OR REPLACE FUNCTION` (which can't change a function's argument list, so the old overload was left behind). Dropped the old overload from the live DB. Verified: only the 4-arg version remains.
+
+3. **Stale migration comment** (commit `fe728d9`): `202609240001_admin_mutation_rpcs.sql` was marked "DRAFT — not yet applied to live DB" but verification against `information_schema.routines` confirmed all RPCs are deployed and admin.js uses them. Updated the comment to reflect actual status.
+
+4. **Missing online student count in admin overview** (commit `a7a9d5a`, migration `202609240003`): The `admin_overview` RPC had "active (7d)" and "stalled" counts but no "online now" count — a pending item from previous sessions. Added `v_online` count querying `student_presence` where `status = 'online'` and `last_seen_at >= now() - 5 minutes` (heartbeat threshold). Added `onlineNow` translation + KPI card to admin.js (green when > 0). Applied to live DB.
+
+5. **Missing database indexes** (commit `40345dc`, migration `202609240004`): Index audit found 8 key columns queried by admin RPCs that had no index, causing full table scans: `student_presence(status, last_seen_at)`, `subscriptions(status, end_date)`, `student_notes(user_id)`, `interventions(status)`, `live_classes(status, scheduled_date)`, `certificates(status)`, `student_activity_events(lesson_id)`, `student_activity_events(academy_id)`. Created all 8 indexes. Applied to live DB.
+
+6. **Sequential RPC error handling in `renderHomeIntel`** (commit `5ef7cfd`): `student_announcements` and `student_my_classes` RPCs were awaited sequentially in a single try block. If announcements threw, the classes section stayed stuck on "Loading..." forever. Switched to `Promise.allSettled` so each section renders independently.
+
+7. **Modal title XSS defense** (commit `40345dc`): `admin.js` `modal()` function didn't escape the title parameter. All current callers pass safe `t()` translation strings, but added `esc()` defensively.
+
+### Verification
+- All 44 tests pass (13 buildsequence + 31 teaching flow)
+- Browser-verified: zero console errors on landing page (CSP fix confirmed)
+- Live DB verified: all RPC functions present, old complete_activity dropped, indexes created
+- SECURITY.md updated to document frame-ancestors removal
+
+### Pending items resolved this session
+- **Online student count in admin_overview RPC** — DONE
+- **Activity touch per-activity tracking** — verified DONE (PEL_ACTIVITY.touch wired via deps.activityTouch in lesson stage)
+
+### Still pending
+1. **Best practices roadmap** — schema fixes partially addressed (indexes added), error handling improved (renderHomeIntel). Remaining: httpOnly cookie sessions need Edge Function proxy rewrite.
+2. **360 order exercises** — confirmed false alarm (data lives in JSONB payload)
+
+---
+
 ## DONE: Live audit + bug fixes (2026-09-18 session)
 
 ### Bugs found and fixed
