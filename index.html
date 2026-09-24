@@ -1177,7 +1177,7 @@ section{ padding-top:70px; padding-bottom:70px; }
       <div class="phrase-card" id="phraseCard">
         <div class="phrase-scene" id="phraseScene">
           <span class="phrase-tag">في الشغل</span>
-          <div class="phrase-en" id="phraseEn">Could you send me the details?</div>
+          <div class="phrase-en" id="phraseEn" dir="ltr">Could you send me the details?</div>
           <div class="phrase-ar" id="phraseAr" dir="rtl">تقدر ترسل لي التفاصيل؟</div>
           <div class="phrase-phon" id="phrasePhon" dir="rtl">كود يو سند مي ذا ديتيلز</div>
         </div>
@@ -2181,10 +2181,12 @@ window.addEventListener('storage', function(e){ if(e.key==='pel_account_prefs') 
       bar.parentNode.removeChild(bar);
       return;
     }
+    document.body.style.paddingBottom = '120px';
     requestAnimationFrame(function(){ bar.classList.add('show'); });
     var btn = document.getElementById('consentBtn');
     if(btn) btn.addEventListener('click', function(){
       try{ localStorage.setItem('pel_consent', '1'); }catch(e){}
+      document.body.style.paddingBottom = '';
       bar.classList.remove('show');
       setTimeout(function(){ if(bar.parentNode) bar.parentNode.removeChild(bar); }, 400);
     });

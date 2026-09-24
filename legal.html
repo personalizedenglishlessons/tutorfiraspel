@@ -508,10 +508,12 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-of
       if(localStorage.getItem('pel_consent') === '1'){
         consentBar.remove();
       }else{
+        document.body.style.paddingBottom = '120px';
         requestAnimationFrame(() => consentBar.classList.add('show'));
         const consentBtn = document.getElementById('consentBtn');
         if(consentBtn) consentBtn.addEventListener('click', () => {
           try{ localStorage.setItem('pel_consent', '1'); }catch(e){}
+          document.body.style.paddingBottom = '';
           consentBar.classList.remove('show');
           setTimeout(() => { if(consentBar.parentNode) consentBar.parentNode.removeChild(consentBar); }, 400);
         });
