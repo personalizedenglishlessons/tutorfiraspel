@@ -65,13 +65,10 @@ the fixes below. Key findings:
 
 ### Stale branches resolved
 All 4 remote branches have 0 commits ahead of main — fully merged:
-- `feat/admin-create-student` — 0 ahead, 365 behind
-- `fix/client-academy-resolver` — 0 ahead, 373 behind
-- `fix/lesson-engine-phase1` — 0 ahead, 312 behind
-- `fix/server-plan-profile` — 0 ahead, 369 behind
-
-These branches can be safely deleted from GitHub (not deleted yet — awaiting
-explicit authorization).
+- `feat/admin-create-student` — deleted from GitHub
+- `fix/client-academy-resolver` — deleted from GitHub
+- `fix/lesson-engine-phase1` — deleted from GitHub
+- `fix/server-plan-profile` — deleted from GitHub
 
 ### Verification
 - All 49 tests pass (13 buildsequence + 36 teaching flow)
@@ -80,15 +77,64 @@ explicit authorization).
 - Pedagogical features (TBLT, minimal pairs, mistake coach, encouragement)
   confirmed aligned with research
 
+## DONE: httpOnly Cookie Session Architecture (2026-09-25 session)
+
+### Architecture
+Two Edge Functions deployed to Supabase:
+1. **pel-auth** (`/functions/v1/pel-auth`): login (sets HttpOnly cookies),
+   session check (reads/refreshes cookies), logout (clears cookies)
+   - Cookies: `sb-access-token`, `sb-refresh-token` (HttpOnly, Secure,
+     SameSite=None, Path=/functions)
+   - CSRF: double-submit via `pel-csrf` readable cookie + `x-pel-csrf` header
+   - Rate-limited via existing `check_auth_rate_limit` RPC
+   - Honeypot field for bot detection
+2. **pel-api** (`/functions/v1/pel-api`): allowlisted RPC + table proxy
+   - Reads session from cookies, sends as Bearer to Supabase REST API
+   - RLS still enforces row-level security
+   - 50+ allowlisted operations (student RPCs, table reads/writes, admin RPCs)
+   - Supports eq, in, order, limit filters for table selects
+
+### Frontend migration
+- `lib/pel_config.js`: added `pelAuth()`, `pelApi()`, `pelRpc()`,
+  `pelTableSelect()`, `pelTableUpsert()`, `pelSession()` helpers
+- `login.html`: session check + login + redirect all use cookie-based path
+  with legacy fallback
+- `app.html`: session check, logout, all 20 student RPC calls, all table
+  reads/writes migrated to wrappers with legacy fallback
+- `admin/admin.js`: session check, logout, RPC wrapper, all 12 table reads
+  migrated to wrappers with legacy fallback
+- `lib/pel_lesson_stage.js`: SRS sync (srsSync, srsPush, srsPushAll) uses
+  pelTableSelect/pelTableUpsert when cookie auth active
+
+### How it works
+- `PEL_COOKIE_AUTH` flag defaults to `false` (app uses legacy localStorage)
+- When user logs in via `pelAuth('login')`, cookies are set and flag is true
+- All subsequent calls route through `pelApi` (cookies) instead of
+  `supabase.from()`/`supabase.rpc()` (localStorage)
+- If cookie auth fails, falls back to legacy path automatically
+- Periodic session check every 5min replaces `onAuthStateChange`
+
+### Commits
+- `a2d223d` - design doc + pel-auth Edge Function
+- `be8c94b` - pel-api Edge Function
+- `b9d91f7` - pelAuth/pelApi/pelSession frontend helpers
+- `300e530` - fix v1 URLs and cookie paths
+- `a3465b4` - login.html migration
+- `a7bc4c4` - app.html auth flow migration
+- `e3750de` - all student RPC + table calls migrated
+- `e4fe452` - admin panel migration
+
 ### Still pending
-1. **Best practices roadmap** — httpOnly cookie sessions need Edge Function
-   proxy rewrite. This is architecture-wide and should be scoped separately.
-2. **Self-check does not satisfy mastery** — when mic is unavailable,
+1. **Self-check does not satisfy mastery** — when mic is unavailable,
    speaking/pronunciation/minimal_pairs activities still mark `true`. A
    deeper fix would flag these as `fallbackSelfCheck:true` and exclude them
    from the mastery gate's `prodFirstOk` counter. Requires wider stats
    changes.
-3. **Stale branch cleanup** — 4 remote branches can be deleted once authorized.
+2. **Cross-origin cookie limitation** — GitHub Pages and Supabase are on
+   different domains. Third-party cookies with SameSite=None may be
+   blocked by some browsers (Safari ITP, Firefox private mode). If this
+   becomes an issue, serve the app from the same domain as the API.
+3. **Stale branch cleanup** — DONE. All 4 stale remote branches deleted.
 
 ---
 
