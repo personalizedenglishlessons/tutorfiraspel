@@ -18916,9 +18916,13 @@ async function hydrateLearningState(user){
    automatically - no dashboard hopping. The server always decides what
    comes next; the UI only follows. */
 function guidedMode(){ return lsGet('pel_guided', true) !== false; }
+let __pelStartingNextLesson = false;
 async function startNextGuidedLesson(depth){
   depth = depth || 0;
+  if(__pelStartingNextLesson) return false;
   if(!guidedMode() || !currentUser || !client()) return false;
+  __pelStartingNextLesson = true;
+  try {
   const ok = await c_rpc_effective_state();
   if(!ok) return false;
   const st = window.PEL_EFFECTIVE_STATE;
@@ -18938,6 +18942,7 @@ async function startNextGuidedLesson(depth){
     }
   }
   return false;
+  } finally { __pelStartingNextLesson = false; }
 }
 function renderContinueLearning(){
   // renderActivePath() removed - #ccBlock (renderControlCenter) already shows
