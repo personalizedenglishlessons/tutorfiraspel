@@ -55,14 +55,14 @@ function setCookie(name: string, value: string, maxAge: number): string {
     "HttpOnly",
     "Secure",
     "SameSite=None",
-    "Path=/functions/v2",
+    "Path=/functions",
     `Max-Age=${maxAge}`,
   ];
   return parts.join("; ");
 }
 
 function clearCookie(name: string): string {
-  return `${name}=; HttpOnly; Secure; SameSite=None; Path=/functions/v2; Max-Age=0`;
+  return `${name}=; HttpOnly; Secure; SameSite=None; Path=/functions; Max-Age=0`;
 }
 
 function generateCsrf(): string {
