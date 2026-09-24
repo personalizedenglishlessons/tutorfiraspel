@@ -2637,7 +2637,7 @@ async function billingView(){
       if(fr.error){ console.warn('site_settings faqs save',fr.error); noteErr(fr.error); }
     }catch(e){ console.warn('site_settings faqs save',e); noteErr(e); }
     await audit('billing.update', 'plan_pricing', '', { cells: Object.keys(byKey).length });
-    this.disabled = false; this.textContent = esc(t('save'));
+    this.disabled = false; this.textContent = t('save');
     toast(errs ? (errs+' '+(lang==='ar'?'حقول لم تحفظ':'fields failed')+(firstMsg?': '+firstMsg:'')) : t('saved'), !!errs);
   });
   loadIcons();
@@ -2760,7 +2760,7 @@ async function questionsView(){
       var r = isEdit
         ? await c.from('assessment_questions').update(row).eq('id', q.id)
         : await c.from('assessment_questions').insert(row);
-      this.disabled = false; this.textContent = esc(t('save'));
+      this.disabled = false; this.textContent = t('save');
       if(r.error){ toast(rpcErrMsg(r), true); return; }
       await audit('question.upsert','assessment_questions',code,{tier:row.tier,level:row.level,difficulty:row.difficulty_rating});
       closeModal(scrim);
