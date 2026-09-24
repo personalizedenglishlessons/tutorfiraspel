@@ -1,5 +1,97 @@
 # NEXT STEPS - pick up here
 
+## DONE: Pedagogical bug fixes + research-driven improvements (2026-09-25 session)
+
+### Research basis
+Web research on ESL/EFL best practices for Arabic-speaking learners informed
+the fixes below. Key findings:
+- **Spaced repetition**: optimal intervals are 1→3→7→14→30 days (app already
+  uses this schedule via SM-2-lite — confirmed correct)
+- **Corrective feedback**: immediate feedback is more effective than delayed
+  (app already provides immediate feedback — confirmed correct)
+- **TBLT**: strong positive effect (d=0.93) on fluency (app already has
+  scenario_roleplay — confirmed correct)
+- **Arabic speakers pronunciation**: need dedicated phoneme contrast practice
+  for /p/-/b/, /f/-/v/ (app has minimal_pairs — confirmed correct)
+- **Speaking anxiety**: 100% of Saudi EFL learners report speaking anxiety;
+  encouragement messages reduce it (app already has them — confirmed correct)
+- **Microlearning**: optimal session length is 5-15 minutes; shorter than 5
+  min lacks depth, longer than 15 min hits cognitive load limits
+- **Saudi EFL errors**: articles, prepositions, verb tenses, subject-verb
+  agreement, word order, punctuation, capitalization (app has mistake_coach
+  targeting these — confirmed correct)
+- **CEFR alignment**: formative assessment aligned with CEFR descriptors
+  (app has assessment engine + curriculum path — confirmed correct)
+
+### Bugs found and fixed
+1. **Intonation activity: student could answer without listening** (commit
+   `a79bcd3`): The intonation activity showed two audio clips (question vs
+   statement) but the student could select an answer and check without playing
+   either clip. Fixed: options are now disabled (dimmed, non-clickable) until
+   both audio clips have been played. Same gating pattern as the `listen`
+   activity.
+
+2. **identify_heard: student could answer without playing audio** (commit
+   `a79bcd3`): The identify_heard activity showed options immediately, so the
+   student could guess without listening. Fixed: options start disabled and
+   dimmed; the Play button must be clicked first to enable them. Button label
+   changed from "Play again" to "Play" since it may be the first time.
+
+3. **Speaking/pronunciation/minimal_pairs: fallback always marked correct**
+   (commit `a79bcd3`): When speech recognition is unavailable, the Check
+   button was enabled immediately and always called `mark(ctx, true)`. This
+   meant the student could get production credit without hearing or saying
+   anything. Fixed: when no mic is available, the Check button is now disabled
+   until the student clicks "Hear it" at least once. The mark is still `true`
+   (self-check) — a deeper "self-check does not satisfy mastery gate" change
+   remains as a future improvement.
+
+4. **Writing practice: exact match scoring too strict** (commit `a79bcd3`): The
+   writing_practice activity used exact word-for-word matching after
+   normalization. This meant "I'm" vs "I am" or "don't" vs "do not" would be
+   marked wrong. Fixed: added contraction normalization (I'm = I am, don't =
+   do not, etc.) so minor form differences don't fail correct answers. Still
+   uses exact match after normalization — no loose "contains all words" check
+   that could accept bad grammar.
+
+5. **makeWrongSentence: article and negation rules were backwards** (commit
+   `8437375`): The grammar_correction activity generates a wrong sentence from
+   a correct one. The article rules (`/^a ([aeiou])/ → 'An'`) and negation
+   rules (`/^(he|she|it) don't/ → 'doesn't'`) were correcting wrong sentences
+   instead of making correct sentences wrong. They would never fire on a
+   correct sentence (dead code). Fixed to: `/^an ([aeiou])/ → 'A'` (an apple
+   → a apple = wrong) and `/^(he|she|it) doesn't/ → 'don't'` (he doesn't → he
+   don't = wrong).
+
+### Stale branches resolved
+All 4 remote branches have 0 commits ahead of main — fully merged:
+- `feat/admin-create-student` — 0 ahead, 365 behind
+- `fix/client-academy-resolver` — 0 ahead, 373 behind
+- `fix/lesson-engine-phase1` — 0 ahead, 312 behind
+- `fix/server-plan-profile` — 0 ahead, 369 behind
+
+These branches can be safely deleted from GitHub (not deleted yet — awaiting
+explicit authorization).
+
+### Verification
+- All 49 tests pass (13 buildsequence + 36 teaching flow)
+- All 35 activity types have renderers (verified programmatically)
+- SRS intervals (1→3→7→14→30 days) match research findings
+- Pedagogical features (TBLT, minimal pairs, mistake coach, encouragement)
+  confirmed aligned with research
+
+### Still pending
+1. **Best practices roadmap** — httpOnly cookie sessions need Edge Function
+   proxy rewrite. This is architecture-wide and should be scoped separately.
+2. **Self-check does not satisfy mastery** — when mic is unavailable,
+   speaking/pronunciation/minimal_pairs activities still mark `true`. A
+   deeper fix would flag these as `fallbackSelfCheck:true` and exclude them
+   from the mastery gate's `prodFirstOk` counter. Requires wider stats
+   changes.
+3. **Stale branch cleanup** — 4 remote branches can be deleted once authorized.
+
+---
+
 ## DONE: Supabase Data API grants fix (2026-09-24 session)
 
 ### Context
