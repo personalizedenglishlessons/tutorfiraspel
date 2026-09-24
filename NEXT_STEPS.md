@@ -19,7 +19,7 @@
 
 ### Verification
 - All 44 tests pass (13 buildsequence + 31 teaching flow)
-- Browser-verified: zero console errors on landing page (CSP fix confirmed)
+- Browser-verified: zero console errors on landing page (CSP fix confirmed on live site)
 - Live DB verified: all RPC functions present, old complete_activity dropped, indexes created
 - SECURITY.md updated to document frame-ancestors removal
 
