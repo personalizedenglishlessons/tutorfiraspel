@@ -2080,9 +2080,16 @@ async function renderHomeIntel(){
   annEl.innerHTML = '<span class="eyebrow" style="margin:0 0 10px;">' + (ar ? 'اعلانات الاكاديمية' : 'Announcements') + '</span><div id="annBody"><div style="font-size:.8rem; color:var(--text-muted);">' + (ar ? 'لحظات…' : 'Loading…') + '</div></div>';
   clsEl.innerHTML = '<span class="eyebrow" style="margin:0 0 10px;">' + (ar ? 'حصصك المباشرة' : 'Your Live Classes') + '</span><div id="clsBody"><div style="font-size:.8rem; color:var(--text-muted);">' + (ar ? 'لحظات…' : 'Loading…') + '</div></div>';
   try{
-    const ann = await c.rpc('student_announcements');
-    const cls = await c.rpc('student_my_classes');
-    if(ann.data && !ann.error){
+    // Fetch announcements and classes independently so a failure in one
+    // doesn't block the other from rendering (previously a single try block
+    // left the classes section stuck on "Loading..." if announcements threw)
+    const [annRes, clsRes] = await Promise.allSettled([
+      c.rpc('student_announcements'),
+      c.rpc('student_my_classes')
+    ]);
+    const ann = annRes.status === 'fulfilled' ? annRes.value : null;
+    const cls = clsRes.status === 'fulfilled' ? clsRes.value : null;
+    if(ann && ann.data && !ann.error){
       const unread = ann.data.unread_count || 0;
       const items = ann.data.items || [];
       annCache = { unread, items };
@@ -2109,7 +2116,7 @@ async function renderHomeIntel(){
       const allBtn = document.getElementById('annAllBtn');
       if(allBtn) allBtn.addEventListener('click', showAnnouncementsModal);
     }
-    if(cls.data && !cls.error){
+    if(cls && cls.data && !cls.error){
       const next = cls.data.next || [];
       let rows;
       if(next.length){
