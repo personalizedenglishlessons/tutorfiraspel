@@ -2270,6 +2270,89 @@ window.addEventListener('load', async () => {
     return;
   }
   try{
+    // Try cookie-based session first (pel-auth Edge Function)
+    var cookieUser = null;
+    if(typeof window.pelAuth === 'function'){
+      try{
+        var sess = await pelAuth('session');
+        if(sess && sess.user){
+          cookieUser = sess.user;
+          window.PEL_COOKIE_AUTH = true;
+          __pelReport('cookie-session-ok');
+        }
+      }catch(e){ __pelReport('cookie-session-fail'); }
+    }
+
+    if(cookieUser){
+      // Cookie auth active - use pelApi for all calls
+      currentUser = cookieUser;
+      PEL_ACTIVITY.touch('login');
+      PEL_ACTIVITY.startHeartbeat();
+      subscribeEntitlement();
+      await loadSubPlan();
+      if(subPlan.rpcFailed !== false){
+        // Session might be expired, try refresh via pel-auth
+        try{
+          var refreshed = await pelAuth('session');
+          if(refreshed && refreshed.user){
+            currentUser = refreshed.user;
+          } else {
+            __pelReport('cookie-refresh-failed');
+            pelClearSession();
+            window.PEL_COOKIE_AUTH = false;
+            clearUserLocalKeys();
+            window.location.href = 'login.html';
+            return;
+          }
+        }catch(e){
+          pelClearSession();
+          window.PEL_COOKIE_AUTH = false;
+          clearUserLocalKeys();
+          window.location.href = 'login.html';
+          return;
+        }
+        await new Promise(r => setTimeout(r, 1500));
+        await loadSubPlan();
+      }
+      if(subPlan.rpcFailed !== false){
+        __pelReport('rpc-failed-auth-error');
+        clearInterval(_creditsIntervalId);
+        try{ await pelAuth('logout'); }catch(e){}
+        pelClearSession();
+        window.PEL_COOKIE_AUTH = false;
+        clearUserLocalKeys();
+        window.location.href = 'login.html';
+        return;
+      }
+      if(subBlocked()){
+        document.getElementById('authGate').style.display = 'none';
+        showAccessGate();
+        document.body.classList.add('ready');
+        scheduleEntitlementRecheck();
+        __pelReport('gate-shown');
+        return;
+      }
+      await revealApp(cookieUser);
+      scheduleEntitlementRecheck();
+      maybeShowImportantAnnouncement();
+      __pelReport('app-revealed');
+      // Periodic cookie session check (replaces onAuthStateChange for cookie auth)
+      setInterval(async function(){
+        if(!window.PEL_COOKIE_AUTH) return;
+        try{
+          var check = await pelAuth('session');
+          if(!check || !check.user){
+            pelClearSession();
+            window.PEL_COOKIE_AUTH = false;
+            clearUserLocalKeys();
+            window.location.href = 'login.html';
+          }
+        }catch(e){}
+      }, 300000); // check every 5 minutes
+      return;
+    }
+
+    // Legacy: use Supabase JS client session
     const { data } = await c.auth.getSession();
     if(!data.session || !data.session.user){
       __pelReport('no-session-redirect');
@@ -2343,6 +2426,13 @@ document.getElementById('logoutBtn').addEventListener('click', async () => {
   clearInterval(_creditsIntervalId);
   const c = client();
   window.PEL_SERVER_PLAN = null;
+  // Try cookie-based logout first
+  if(window.PEL_COOKIE_AUTH && typeof window.pelAuth === 'function'){
+    try{ await pelAuth('logout'); }catch(e){}
+    pelClearSession();
+    window.PEL_COOKIE_AUTH = false;
+  }
+  // Legacy: sign out via Supabase JS client
   if(c){ try{ PEL_ACTIVITY.touch('logout'); }catch(e){} try{ await c.auth.signOut(); }catch(e){ console.warn('[PEL] auth signOut failed:', e.message||e); } }
   clearUserLocalKeys();
   window.location.href = 'login.html';
