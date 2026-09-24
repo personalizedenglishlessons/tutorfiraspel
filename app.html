@@ -1302,7 +1302,7 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
                 A real, free, unlimited grammar engine. If you run your own LanguageTool server (see deploy/grammar), paste its address here. Leave it empty to use the built-in engine.
               </p>
               <div style="margin-top:16px;">
-                <input type="text" id="grammarEndpointInput" placeholder="http://localhost:8010" spellcheck="false" style="width:100%; padding:10px 12px; border-radius:10px; background:var(--card-elevated); border:1px solid var(--border); color:var(--text);">
+                <input type="text" id="grammarEndpointInput" dir="auto" placeholder="http://localhost:8010" spellcheck="false" style="width:100%; padding:10px 12px; border-radius:10px; background:var(--card-elevated); border:1px solid var(--border); color:var(--text);">
               </div>
               <div style="margin-top:12px; display:flex; align-items:center; gap:8px; font-size:.8rem;">
                 <span id="grammarStatusDot" style="width:9px; height:9px; border-radius:50%; background:var(--text-muted); display:inline-block; flex:0 0 auto;"></span>
@@ -1352,7 +1352,7 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
         <div class="context-block">
           <h4><span class="arabic">ملاحظات حديثة</span>، Recent Notes</h4>
           <div style="display:flex; gap:6px; margin-bottom:8px;">
-            <input id="ctxNoteInput" placeholder="اكتب ملاحظة... / Write a note..." style="flex:1; min-width:0; background:var(--card-elevated); border:1px solid var(--border); border-radius:8px; padding:7px 10px; color:var(--text); font-size:.78rem;">
+            <input id="ctxNoteInput" dir="auto" placeholder="اكتب ملاحظة... / Write a note..." style="flex:1; min-width:0; background:var(--card-elevated); border:1px solid var(--border); border-radius:8px; padding:7px 10px; color:var(--text); font-size:.78rem;">
             <button type="button" class="btn-ghost-sm" id="ctxNoteAdd" style="flex-shrink:0;">+</button>
           </div>
           <div id="ctxNotesList"></div>
@@ -1389,7 +1389,7 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
     <button type="button" class="icon-btn" id="qtCloseBtn" aria-label="Close">✕</button>
   </div>
   <div class="qt-box">
-    <textarea id="qtInput" placeholder="اكتب كلمة او جملة بالعربي او الانجليزي... / Type a word or sentence in Arabic or English..."></textarea>
+    <textarea id="qtInput" dir="auto" placeholder="اكتب كلمة او جملة بالعربي او الانجليزي... / Type a word or sentence in Arabic or English..."></textarea>
     <button type="button" class="btn-ghost-sm" id="qtBtn" style="margin-top:8px;"><span class="arabic">ترجم</span>، Translate</button>
     <div class="qt-result" id="qtResult"></div>
   </div>
@@ -1400,7 +1400,7 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
   <div class="palette-box">
     <div class="palette-input-row">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-      <input type="text" id="paletteInput" placeholder="ابحث في الدروس والمفردات والقواعد والاعدادات... / Search lessons, vocabulary, grammar, settings...">
+      <input type="text" id="paletteInput" dir="auto" placeholder="ابحث في الدروس والمفردات والقواعد والاعدادات... / Search lessons, vocabulary, grammar, settings...">
       <span class="kbd">Esc</span>
     </div>
     <div class="palette-results" id="paletteResults"></div>
@@ -13965,7 +13965,7 @@ function renderDbPractice(container, exercises){
       const srcIsEn = !/[\u0600-\u06FF]/.test(p.source || '');
       return head(srcIsEn ? 'Translate to Arabic' : 'Translate to English', `
         <div style="font-size:.98rem; margin-bottom:10px;" class="${srcIsEn ? '' : 'arabic'}">${esc(p.source||'')}<div class="${srcIsEn ? 'arabic' : ''}" style="font-size:.82rem; color:var(--gold-soft); margin-top:4px;">${srcIsEn ? esc(p.source_tr || '') : ''}</div></div>
-        <input class="dbx-input" type="text" placeholder="${srcIsEn ? 'اكتب الترجمة بالعربي...' : 'Type the English translation...'}" style="width:100%; background:var(--card); border:1px solid var(--border); border-radius:10px; padding:10px 12px; color:var(--text); font-size:.92rem; margin-bottom:10px;">
+        <input class="dbx-input" type="text" dir="auto" placeholder="${srcIsEn ? 'اكتب الترجمة بالعربي...' : 'Type the English translation...'}" style="width:100%; background:var(--card); border:1px solid var(--border); border-radius:10px; padding:10px 12px; color:var(--text); font-size:.92rem; margin-bottom:10px;">
         <button type="button" class="btn-outline dbx-check"><span class="arabic">تحقق</span>، Check</button>
         <div class="dbx-reveal" style="display:none; font-size:.82rem; color:var(--gold-soft); margin-top:8px;"></div>`, p.source);
     }
@@ -16702,7 +16702,7 @@ function renderLibrary(){
     <div class="rail-track" style="margin-bottom:36px;">${recommended.map(a => `<div class="rail-card">${academyCardHTML(a)}</div>`).join('')}</div>
 
     <div class="lib-toolbar">
-      <div class="lib-search"><i data-lucide="search" width="15" height="15" style="color:var(--text-muted);"></i><label for="libSearchInput" class="sr-only">Search academies</label><input type="text" id="libSearchInput" placeholder="ابحث في الاكاديميات... / Search academies..."></div>
+      <div class="lib-search"><i data-lucide="search" width="15" height="15" style="color:var(--text-muted);"></i><label for="libSearchInput" class="sr-only">Search academies</label><input type="text" id="libSearchInput" dir="auto" placeholder="ابحث في الاكاديميات... / Search academies..."></div>
       <div id="libFilters" style="display:flex; gap:8px; flex-wrap:wrap;">${categories.map((c,i) => `<button type="button" class="lib-filter${i===0?' active':''}" data-cat="${c}">${c}</button>`).join('')}</div>
     </div>
     <div class="grid grid-4" id="libGrid"></div>
@@ -17032,7 +17032,7 @@ function renderWorkspace(){
         <h4><span class="arabic">مفردات هذا الدرس</span>، Vocabulary in this Lesson</h4>
         <div id="wsVocabMini" style="margin-bottom:22px;"></div>
         <h4><span class="arabic">ملاحظات</span>، Notes</h4>
-        <textarea id="wsNotes" placeholder="اكتب ملاحظة خاصة لهذا الدرس... / Write a private note for this lesson..." style="width:100%; min-height:100px; background:var(--card-elevated); border:1px solid var(--border); border-radius:12px; padding:12px; color:var(--text); font-size:.82rem;"></textarea>
+        <textarea id="wsNotes" dir="auto" placeholder="اكتب ملاحظة خاصة لهذا الدرس... / Write a private note for this lesson..." style="width:100%; min-height:100px; background:var(--card-elevated); border:1px solid var(--border); border-radius:12px; padding:12px; color:var(--text); font-size:.82rem;"></textarea>
         <button type="button" class="btn-ghost-sm" id="wsSaveNote" style="margin-top:8px;"><span class="arabic">حفظ الملاحظة</span>، Save Note</button>
       </aside>
     </div>`;
@@ -17374,7 +17374,7 @@ function renderVocabulary(){
       <p><span class="arabic" style="display:block; margin-bottom:4px;">اقلب البطاقة لترى المعنى بالعربية الفصحى والنطق والمرادفات والاخطا الشايعة.</span><span dir="ltr">Flip a card to see the Arabic (MSA) meaning, pronunciation, synonyms and common mistakes.</span></p>
     </div>
     <div class="lib-toolbar">
-      <div class="lib-search"><i data-lucide="search" width="15" height="15" style="color:var(--text-muted);"></i><label for="vocabSearch" class="sr-only">Search vocabulary</label><input type="text" id="vocabSearch" placeholder="ابحث في المفردات... / Search vocabulary..."></div>
+      <div class="lib-search"><i data-lucide="search" width="15" height="15" style="color:var(--text-muted);"></i><label for="vocabSearch" class="sr-only">Search vocabulary</label><input type="text" id="vocabSearch" dir="auto" placeholder="ابحث في المفردات... / Search vocabulary..."></div>
       <div id="vocabFilters" style="display:flex; gap:8px; flex-wrap:wrap;">${categories.map((c,i)=>`<button type="button" class="lib-filter${i===0?' active':''}" data-cat="${c}">${c}</button>`).join('')}</div>
     </div>
     <div class="grid grid-3" id="vocabGrid"></div>`;
@@ -17928,7 +17928,7 @@ function renderSpeaking(){
       <div class="chat-scroll" id="roleplayChat"></div>
       <div style="display:flex; align-items:center; gap:10px; margin-top:16px;">
         <button type="button" class="mic-record-btn" id="roleplayMic" aria-label="Speak your reply"><i data-lucide="mic" width="18" height="18"></i></button>
-        <input type="text" id="roleplayTypedInput" placeholder="اكتب ردك... / Or type your reply..." style="flex:1; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:11px 14px; color:var(--text); font-size:.86rem;">
+        <input type="text" id="roleplayTypedInput" dir="auto" placeholder="اكتب ردك... / Or type your reply..." style="flex:1; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:11px 14px; color:var(--text); font-size:.86rem;">
         <button type="button" class="btn-gold" id="roleplaySend"><span class="arabic">ارسال</span>، Send</button>
       </div>
       <div id="roleplayMicHint" style="margin-top:6px; font-size:.74rem; color:var(--text-muted);"></div>
@@ -18213,7 +18213,7 @@ function renderWriting(){
     card.innerHTML = `
       <h3 style="font-size:1.1rem;" dir="ltr">${prompt.title}</h3>
       <p style="margin-top:8px; font-size:.84rem; color:var(--text-muted);" dir="ltr">${prompt.prompt}</p>
-      <textarea class="writing-editor" id="writingArea" placeholder="ابدا الكتابة هنا... / Start writing here..." style="margin-top:16px;"></textarea>
+      <textarea class="writing-editor" id="writingArea" dir="auto" placeholder="ابدا الكتابة هنا... / Start writing here..." style="margin-top:16px;"></textarea>
       <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:12px; flex-wrap:wrap;">
         <span class="arabic" style="font-size:.72rem; color:var(--text-muted);">اكتب ٣ جمل على الاقل عشان الفايدة.</span>
         <button type="button" class="btn-gold" id="reviewWritingBtn"><span class="arabic">اطلب المراجعة</span>، Get Feedback</button>
@@ -18311,7 +18311,7 @@ function renderWriting(){
         <div class="fb-section">
           <h5 class="fb-section-title"><span class="arabic">جرب مرة ثانية</span>، Try again</h5>
           <p class="arabic" style="font-size:.8rem; color:var(--text-muted); margin-bottom:8px;">اعد كتابة جملتك بنفسك مع مراعاة الملاحظات.</p>
-          <textarea class="writing-editor" id="tryAgainArea" placeholder="اكتب نسختك الجديدة هنا... / Write your improved version here..." style="min-height:100px;"></textarea>
+          <textarea class="writing-editor" id="tryAgainArea" dir="auto" placeholder="اكتب نسختك الجديدة هنا... / Write your improved version here..." style="min-height:100px;"></textarea>
           <button type="button" class="btn-outline" id="tryAgainBtn" style="margin-top:10px;"><span class="arabic">تحقق من النسخة الجديدة</span>، Check the new version</button>
         </div>
       </div>`;
@@ -18341,7 +18341,7 @@ function renderBookmarks(){
       <h1><span class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">كل ما حفظته، في مكان واحد.</span>Everything you saved, in one place.</h1>
       <p><span class="arabic" style="display:block; margin-bottom:4px;">الدروس والمفردات والمفضلة، قابلة للبحث ومنظمة.</span>Lessons, vocabulary, and favourites, searchable and organised.</p>
     </div>
-    <div class="lib-search" style="margin-bottom:20px; max-width:420px;"><i data-lucide="search" width="15" height="15" style="color:var(--text-muted);"></i><label for="bmSearch" class="sr-only">Search bookmarks</label><input type="text" id="bmSearch" placeholder="ابحث في المفضلة... / Search your bookmarks..."></div>
+    <div class="lib-search" style="margin-bottom:20px; max-width:420px;"><i data-lucide="search" width="15" height="15" style="color:var(--text-muted);"></i><label for="bmSearch" class="sr-only">Search bookmarks</label><input type="text" id="bmSearch" dir="auto" placeholder="ابحث في المفضلة... / Search your bookmarks..."></div>
     <div class="card" id="bmList"></div>`;
   function renderList(){
     const q = (document.getElementById('bmSearch').value||'').toLowerCase();
@@ -20973,9 +20973,9 @@ if(window.lucide) lucide.createIcons();
       (cities.length?('<div class="pel-inperson-note">'+esc(inPersonNote+cityList)+'</div>'):'')+
       '<div class="pel-form-card"><h3>'+esc(A?'اطلب حصة':'Request a class')+'</h3>'+
         '<label class="pel-field"><span>'+(esc(A?'نوع الحصة':'Class type'))+'</span><select id="pelSvc">'+opts+'</select></label>'+
-        '<div class="pel-row"><label class="pel-field"><span>'+(esc(A?'مدينتك':'Your city'))+'</span><input id="pelCity" type="text" placeholder="'+esc(A?'اكتب مدينتك':'Type your city')+'"></label></div>'+
-        '<label class="pel-field"><span>'+(esc(A?'اوقات مناسبة لك':'Preferred times'))+'</span><input id="pelTimes" type="text" placeholder="'+esc(A?'مثال: المسا، نهاية الاسبوع':'e.g. evenings, weekends')+'"></label>'+
-        '<label class="pel-field"><span>'+(esc(A?'ملاحظات':'Notes'))+'</span><textarea id="pelNotes" rows="2" placeholder="'+esc(A?'اي شي تبي المعلم يعرفه':'Anything you want the teacher to know')+'"></textarea></label>'+
+        '<div class="pel-row"><label class="pel-field"><span>'+(esc(A?'مدينتك':'Your city'))+'</span><input id="pelCity" type="text" dir="auto" placeholder="'+esc(A?'اكتب مدينتك':'Type your city')+'"></label></div>'+
+        '<label class="pel-field"><span>'+(esc(A?'اوقات مناسبة لك':'Preferred times'))+'</span><input id="pelTimes" type="text" dir="auto" placeholder="'+esc(A?'مثال: المسا، نهاية الاسبوع':'e.g. evenings, weekends')+'"></label>'+
+        '<label class="pel-field"><span>'+(esc(A?'ملاحظات':'Notes'))+'</span><textarea id="pelNotes" rows="2" dir="auto" placeholder="'+esc(A?'اي شي تبي المعلم يعرفه':'Anything you want the teacher to know')+'"></textarea></label>'+
         '<div class="pel-form-foot"><span id="pelCost"></span><button type="button" class="btn-gold" id="pelSubmit" disabled>'+esc(A?'اطلب الحصة':'Request class')+'</button></div>'+
         '<p class="pel-form-hint" id="pelHint"></p>'+
       '</div>'+
