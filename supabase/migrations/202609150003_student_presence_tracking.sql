@@ -143,6 +143,15 @@ $function$;
 -- Grant execute to authenticated users (students call this)
 grant execute on function public.student_touch(text, text, text, text, text, integer, text, jsonb) to authenticated;
 
+-- Table grants: RLS policies alone do not confer table privileges.
+-- authenticated needs SELECT for the "own presence/activity" RLS policies;
+-- service_role bypasses RLS but still needs table-level grants for Data API.
+grant select on public.student_presence to authenticated;
+grant select on public.student_activity_events to authenticated;
+grant all on public.student_presence to service_role;
+grant all on public.student_activity_events to service_role;
+grant usage, select on sequence public.student_activity_events_id_seq to service_role;
+
 -- ============================================================
 -- 3. Update admin_students to include presence data
 -- ============================================================

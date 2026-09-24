@@ -116,3 +116,9 @@ begin
   );
 end;
 $$;
+
+-- Table grants: RLS policies alone do not confer table privileges.
+-- authenticated needs these for the RLS policies to function;
+-- service_role bypasses RLS but still needs table-level grants for Data API.
+grant select, insert, update on public.student_learning_state to authenticated;
+grant all on public.student_learning_state to service_role;

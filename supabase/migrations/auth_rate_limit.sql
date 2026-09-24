@@ -17,6 +17,9 @@ create index if not exists auth_attempts_ip_created_idx
 alter table public.auth_attempts enable row level security;
 -- no policies => anon/authenticated cannot access; service role (Edge Function) can.
 
+-- Table grant: only service_role (Edge Function) needs access
+grant all on public.auth_attempts to service_role;
+
 -- optional: prune old attempts nightly so the table stays small.
 -- run once in the SQL editor or schedule via pg_cron if available:
 -- delete from public.auth_attempts where created_at < now() - interval '24 hours';

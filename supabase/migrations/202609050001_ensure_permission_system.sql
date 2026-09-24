@@ -153,3 +153,11 @@ end;
 $$;
 
 grant execute on function public._visible_student_ids() to authenticated;
+
+-- 9. Table grants (required for Data API access since Oct 2026 Supabase change)
+-- user_roles: RLS allows authenticated SELECT own row; service_role bypasses RLS
+grant select on public.user_roles to authenticated;
+grant all on public.user_roles to service_role;
+
+-- role_permissions: accessed only via SECURITY DEFINER functions, not directly by client
+grant all on public.role_permissions to service_role;
