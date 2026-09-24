@@ -24,7 +24,7 @@
 <script src="lib/cert-sheet.js?v=5278e935" defer></script>
 <script src="lib/pel_config.js?v=e4857dea"></script>
 <script src="lib/pel_lesson_stage.js?v=d20bf5d3"></script>
-<script src="lib/pel_dashboard_life.js?v=e21d3119"></script>
+<script src="lib/pel_dashboard_life.js?v=7faa5e71"></script>
 <script src="lib/pel_curriculum_path.js?v=b451f595"></script>
 <style>
 /* ============================================================
@@ -1070,8 +1070,12 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
   .page-head{ margin-bottom:20px; }
   .page-head h1{ font-size:clamp(1.45rem,6vw,1.9rem); }
   .card{ padding:18px; border-radius:16px; }
-  #heroCard{ padding:22px !important; }
-  #heroCard > div{ gap:18px !important; }
+  #heroCard{ padding:18px !important; gap:16px !important; flex-direction:column; align-items:stretch !important; }
+  #heroCard > div:last-child{ width:84px !important; height:84px !important; align-self:center; }
+  #heroCard > div:last-child svg{ width:84px; height:84px; }
+  #heroCard > div:last-child > div{ width:84px; height:84px; }
+  #heroCard > div:last-child b{ font-size:1.3rem; }
+  #heroCard .chip{ font-size:.7rem; padding:4px 8px; }
   .ring-wrap{ width:84px; height:84px; }
   .ring-wrap.small{ width:58px; height:58px; }
   .grid, .grid-2, .grid-3, .grid-4{ gap:14px; }
@@ -18674,7 +18678,7 @@ async function renderControlCenter(){
   const pct = total ? Math.round(done / total * 100) : 0;
   const ck = L && L.kind === 'checkpoint';
   host.innerHTML = `
-    <div class="card card-elevated hoverable" style="padding:26px; position:relative; overflow:hidden; display:flex; gap:24px; align-items:center; flex-wrap:wrap;">
+    <div class="card card-elevated hoverable" id="heroCard" style="padding:26px; position:relative; overflow:hidden; display:flex; gap:24px; align-items:center; flex-wrap:wrap;">
       <div style="position:absolute; top:-110px; inset-inline-end:-90px; width:280px; height:280px; border-radius:50%; background:radial-gradient(circle, rgba(200,169,106,.14), transparent 70%); pointer-events:none;"></div>
       <div style="flex:1 1 320px; min-width:0; position:relative;">
       <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
