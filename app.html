@@ -16669,9 +16669,9 @@ function renderLibrary(){
   renderGrid();
   // Wire beginner start buttons for first-time students
   const a0Btn = document.getElementById('beginnerStartBtn');
-  if(a0Btn) a0Btn.addEventListener('click', () => goToView('home'));
+  if(a0Btn) a0Btn.addEventListener('click', () => openAcademy('a0-sentence-building'));
   const a1Btn = document.getElementById('beginnerA1Btn');
-  if(a1Btn) a1Btn.addEventListener('click', () => goToView('home'));
+  if(a1Btn) a1Btn.addEventListener('click', () => openAcademy('english-foundations'));
 }
 viewRenderers.plan = renderPlanView;
 /* ============================================================
@@ -18027,8 +18027,8 @@ function renderListening(){
       modal = document.createElement('div'); modal.className='modal-overlay'; modal.id='listeningModal';
       modal.innerHTML = `<div class="modal-box" style="max-width:600px; position:relative;"><button class="modal-close" id="closeListeningModal">✕</button><div id="listeningModalBody"></div></div>`;
       document.body.appendChild(modal);
-      modal.addEventListener('click', e => { if(e.target===modal) modal.classList.remove('open'); });
-      document.getElementById('closeListeningModal').addEventListener('click', () => modal.classList.remove('open'));
+      modal.addEventListener('click', e => { if(e.target===modal){ modal.classList.remove('open'); if('speechSynthesis' in window) speechSynthesis.cancel(); } });
+      document.getElementById('closeListeningModal').addEventListener('click', () => { modal.classList.remove('open'); if('speechSynthesis' in window) speechSynthesis.cancel(); });
     }
     document.getElementById('listeningModalBody').innerHTML = `
       <h3 style="font-size:1.2rem;" dir="ltr">${track.title}</h3>
@@ -18047,7 +18047,9 @@ function renderListening(){
     linesWrap.querySelectorAll('[data-line]').forEach(btn => btn.addEventListener('click', () => speak(track.lines[btn.dataset.line].en)));
     document.getElementById('playAllBtn').addEventListener('click', () => {
       let li = 0;
-      const playNext = () => { if(li < track.lines.length){ speak(track.lines[li].en, () => { li++; playNext(); }); } };
+      const playNext = () => {
+        if(!modal.classList.contains('open')) return;
+        if(li < track.lines.length){ speak(track.lines[li].en, () => { li++; playNext(); }); } };
       playNext();
     });
     renderQuiz(document.getElementById('trackQuiz'), [
