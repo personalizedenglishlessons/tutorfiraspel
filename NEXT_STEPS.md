@@ -1659,3 +1659,64 @@ Interpretation:
 5. Review strip
 6. Week + Focus cards (functional, connected to profile)
 7. Progress (stats + skill bars)
+
+## DONE: Pedagogical research + new activity types (2026-09-24 session)
+
+### Research conducted
+Web-based research on English language teaching for Arabic/Saudi speakers, covering:
+- British Council: Tips for teaching English to Arabic speakers
+- e-iji.net: Barriers to English-speaking proficiency among Saudi EFL learners
+- Frontiers in Education: Gamified mobile-assisted language learning
+- Wiley: Spaced repetition meta-analysis, TBLT vs PPP
+- Cambridge: Task-Based Language Teaching
+- 12+ peer-reviewed sources total
+
+Full report: `docs/PEDAGOGICAL_RESEARCH_REPORT.md`
+
+### New activity types implemented (3)
+
+1. **Minimal Pair Drill** (`minimal_pairs`) — Proactive phoneme contrast practice
+   - 10 minimal pairs covering: /p/-/b/, /f/-/v/, /θ/-/s/, /ð/-/z/, /t/-/d/, /ch/-/sh/, /r/-/l/
+   - Shows target word vs common mistake side-by-side
+   - Audio playback for both words
+   - Mic recording + scoring with encouragement messages
+   - Auto-matches lesson word when possible, otherwise rotates
+   - Research: British Council recommends dedicated phoneme contrast practice
+
+2. **Intonation Exercise** (`intonation`) — Identify meaning from intonation
+   - 4 intonation pairs (rising=question, falling=statement)
+   - Plays both versions, student picks which means what
+   - Explains the rule after answering
+   - Research: Arabic speakers struggle with English intonation patterns
+
+3. **Writing Practice** (`writing_practice`) — Guided short writing
+   - 8 writing prompts (name, country, greetings, requests)
+   - Student types English sentence from Arabic prompt
+   - Flexible word-level matching (case/punctuation insensitive)
+   - Shows correct answer + encouragement on mistakes
+   - Research: British Council recommends writing practice for Arabic speakers
+
+### Speaking anxiety reduction (implemented earlier this session)
+Score-based encouragement messages added to 3 locations:
+- Pronunciation exercise in lesson stage
+- Speaking exercise in lesson stage
+- Pronunciation feedback in dashboard exercises
+
+Messages by score:
+- < 40%: "الغلط عادي، هذا كيف نتعلم. حاول مرة ثانية."
+- 40-69%: "كويس! قربت من النطق الصح. حاول مرة ثانية."
+- 70-89%: "احسنت! نطقك صار احسن. كمل."
+- 90%+: "ممتاز! نطقك طبيعي."
+
+Research basis: 100% of Saudi EFL learners report speaking anxiety.
+
+### Lesson sequence (updated)
+New activities inserted at:
+- Step 9b: Minimal pair drill (after pronunciation, before speaking)
+- Step 10b: Intonation exercise (after speaking, before conversation)
+- Step 13a: Writing practice (after grammar correction, before choose natural expression)
+
+### Files changed
+- `lib/pel_lesson_stage.js`: 3 new RENDERERS (minimal_pairs, intonation, writing_practice), 3 new data sets (PEL_MIN_PAIRS, PEL_INTONATION_EX, PEL_WRITING_PROMPTS), 3 new TYPE_LABELS_DEF + PROMPTS_DEF entries, updated extractActivitySentence, module-level rotation counters, speaking anxiety messages in pronunciation + speaking renderers
+- `app.html`: Speaking anxiety messages in dashboard pronunciation feedback, cache buster bump
+- `docs/PEDAGOGICAL_RESEARCH_REPORT.md`: Full research report with 12+ sources
