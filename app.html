@@ -1094,6 +1094,7 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
   .btn-gold, .btn-outline{ padding:11px 16px; font-size:.82rem; }
   .pill-stat{ padding:6px 10px; font-size:.72rem; }
 }
+  .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border-width:0; }
 </style>
 </head>
 <body>
@@ -1759,7 +1760,7 @@ async function revealApp(user){
     document.getElementById('avatarInitial').textContent = first.charAt(0).toUpperCase();
     const hour = (function(){ try { var now = new Date(); var fmt = new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Riyadh',hour:'numeric',hour12:false}); return parseInt(fmt.format(now),10); } catch(e){ return new Date().getHours(); } })();
     const greet = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
-    const greetAr = hour < 12 ? 'صباح الخير' : hour < 18 ? 'مسا الخير' : 'مسا الخير';
+    const greetAr = hour < 12 ? 'صباح الخير' : hour < 18 ? 'نهارك سعيد' : 'مسا الخير';
     document.getElementById('greetingText').textContent = greet + ', ' + first + '.';
     document.getElementById('greetingArabic').textContent = greetAr + '، ' + first + '.';
   }
@@ -2182,6 +2183,8 @@ function showAnnouncementsModal(){
     document.getElementById('annModalClose').addEventListener('click', () => overlay.remove());
     overlay.addEventListener('click', e => { if(e.target === overlay) overlay.remove(); });
     items.filter(a => !a.read).forEach(a => { c.rpc('student_mark_announcement_read', { p_announcement_id: a.id }).catch(() => {}); });
+  }).catch(() => {
+    toast(ar ? 'ما قدرنا نحمّل الاعلانات.' : 'Could not load announcements.');
   });
 }
 
@@ -2284,6 +2287,7 @@ window.addEventListener('load', async () => {
       // login so they can re-authenticate, instead of the dead-end
       // "Can't reach the academy" gate.
       __pelReport('rpc-failed-auth-error');
+      clearInterval(_creditsIntervalId);
       try{ await c.auth.signOut(); }catch(e){ console.warn('[PEL] auth signOut failed:', e.message||e); }
       clearUserLocalKeys();
       window.location.href = 'login.html';
@@ -2323,6 +2327,7 @@ window.addEventListener('load', async () => {
 });
 
 document.getElementById('logoutBtn').addEventListener('click', async () => {
+  clearInterval(_creditsIntervalId);
   const c = client();
   window.PEL_SERVER_PLAN = null;
   if(c){ try{ PEL_ACTIVITY.touch('logout'); }catch(e){} try{ await c.auth.signOut(); }catch(e){ console.warn('[PEL] auth signOut failed:', e.message||e); } }
@@ -2415,6 +2420,14 @@ document.addEventListener('click', e => {
   btn.style.overflow = 'hidden';
   btn.appendChild(r);
   setTimeout(()=>r.remove(),650);
+});
+// Keyboard activation for role="button" elements (WCAG 2.1 AA)
+document.addEventListener('keydown', e => {
+  if(e.key !== 'Enter' && e.key !== ' ') return;
+  const btn = e.target.closest('[role="button"]');
+  if(!btn) return;
+  e.preventDefault();
+  btn.click();
 });
 function confettiBurst(){
   const colors = ['#C8A96A','#D8BD83','#A88345','#3F8C72'];
@@ -16642,7 +16655,7 @@ function renderLibrary(){
     <div class="rail-track" style="margin-bottom:36px;">${recommended.map(a => `<div class="rail-card">${academyCardHTML(a)}</div>`).join('')}</div>
 
     <div class="lib-toolbar">
-      <div class="lib-search"><i data-lucide="search" width="15" height="15" style="color:var(--text-muted);"></i><input type="text" id="libSearchInput" placeholder="ابحث في الاكاديميات... / Search academies..."></div>
+      <div class="lib-search"><i data-lucide="search" width="15" height="15" style="color:var(--text-muted);"></i><label for="libSearchInput" class="sr-only">Search academies</label><input type="text" id="libSearchInput" placeholder="ابحث في الاكاديميات... / Search academies..."></div>
       <div id="libFilters" style="display:flex; gap:8px; flex-wrap:wrap;">${categories.map((c,i) => `<button class="lib-filter${i===0?' active':''}" data-cat="${c}">${c}</button>`).join('')}</div>
     </div>
     <div class="grid grid-4" id="libGrid"></div>
@@ -17314,7 +17327,7 @@ function renderVocabulary(){
       <p><span class="arabic" style="display:block; margin-bottom:4px;">اقلب البطاقة لترى المعنى بالعربية الفصحى والنطق والمرادفات والاخطا الشايعة.</span><span dir="ltr">Flip a card to see the Arabic (MSA) meaning, pronunciation, synonyms and common mistakes.</span></p>
     </div>
     <div class="lib-toolbar">
-      <div class="lib-search"><i data-lucide="search" width="15" height="15" style="color:var(--text-muted);"></i><input type="text" id="vocabSearch" placeholder="ابحث في المفردات... / Search vocabulary..."></div>
+      <div class="lib-search"><i data-lucide="search" width="15" height="15" style="color:var(--text-muted);"></i><label for="vocabSearch" class="sr-only">Search vocabulary</label><input type="text" id="vocabSearch" placeholder="ابحث في المفردات... / Search vocabulary..."></div>
       <div id="vocabFilters" style="display:flex; gap:8px; flex-wrap:wrap;">${categories.map((c,i)=>`<button class="lib-filter${i===0?' active':''}" data-cat="${c}">${c}</button>`).join('')}</div>
     </div>
     <div class="grid grid-3" id="vocabGrid"></div>`;
@@ -18281,7 +18294,7 @@ function renderBookmarks(){
       <h1><span class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">كل ما حفظته، في مكان واحد.</span>Everything you saved, in one place.</h1>
       <p><span class="arabic" style="display:block; margin-bottom:4px;">الدروس والمفردات والمفضلة، قابلة للبحث ومنظمة.</span>Lessons, vocabulary, and favourites, searchable and organised.</p>
     </div>
-    <div class="lib-search" style="margin-bottom:20px; max-width:420px;"><i data-lucide="search" width="15" height="15" style="color:var(--text-muted);"></i><input type="text" id="bmSearch" placeholder="ابحث في المفضلة... / Search your bookmarks..."></div>
+    <div class="lib-search" style="margin-bottom:20px; max-width:420px;"><i data-lucide="search" width="15" height="15" style="color:var(--text-muted);"></i><label for="bmSearch" class="sr-only">Search bookmarks</label><input type="text" id="bmSearch" placeholder="ابحث في المفضلة... / Search your bookmarks..."></div>
     <div class="card" id="bmList"></div>`;
   function renderList(){
     const q = (document.getElementById('bmSearch').value||'').toLowerCase();
@@ -19688,8 +19701,7 @@ function dashSkillData(){
   var skillCounts = { speaking:{done:0,total:0}, listening:{done:0,total:0}, grammar:{done:0,total:0}, vocabulary:{done:0,total:0} };
   try{
     ACADEMIES.forEach(function(ac){
-      if(!ac || ac.dir === 'ar' && learningDirection() !== 'ar') return;
-      if(ac.dir === 'ar' && learningDirection() !== 'ar') return;
+      if(!ac || (ac.dir === 'ar' && learningDirection() !== 'ar')) return;
       var list = academyLessonList(ac);
       var sk = academySkill(ac.id);
       if(!skillCounts[sk]) return;
