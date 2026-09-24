@@ -156,7 +156,7 @@ body.ui-en .t-ar{ display:none !important; }
 </style>
 </head>
 <body>
-<button id="themeToggle" aria-label="Toggle theme" title="Toggle theme" style="position:fixed;top:14px;right:14px;z-index:100;width:38px;height:38px;border-radius:50%;border:1px solid var(--border);background:var(--surface);color:var(--text-muted);cursor:pointer;font-size:15px;line-height:1;">◐</button>
+<button type="button" id="themeToggle" aria-label="Toggle theme" title="Toggle theme" style="position:fixed;top:14px;right:14px;z-index:100;width:38px;height:38px;border-radius:50%;border:1px solid var(--border);background:var(--surface);color:var(--text-muted);cursor:pointer;font-size:15px;line-height:1;">◐</button>
 
 <header class="site-head">
   <div class="site-logo"><img class="pel-logo" src="brand/pel-wordmark.svg" alt="PEL"><img class="pel-logo-light" src="brand/pel-wordmark-dark.svg" alt="PEL"></div>
@@ -165,7 +165,7 @@ body.ui-en .t-ar{ display:none !important; }
     <div class="arabic t-ar" style="font-size:.8rem; color:var(--text-muted);">دروس انجليزي مخصصة، الاكاديمية</div>
   </div>
 </header>
-<button class="lang-pill" id="verifyLangBtn" aria-label="Switch interface language">EN</button>
+<button type="button" class="lang-pill" id="verifyLangBtn" aria-label="Switch interface language">EN</button>
 
 <main class="wrap">
   <div class="card">
@@ -180,7 +180,7 @@ body.ui-en .t-ar{ display:none !important; }
         <span class="t-ar" style="display:block;">هذه الشهادة اصلية وموثقة من الاكاديمية.</span>
         <span class="t-en" style="display:block;">This certificate is genuine and issued by Personalized English Lessons.</span>
       </div>
-      <button class="btn-ghost" id="okToggleCert" aria-expanded="false" style="margin-top:18px;">
+      <button type="button" class="btn-ghost" id="okToggleCert" aria-expanded="false" style="margin-top:18px;">
         <span class="t-ar">عرض الشهادة كاملة</span><span class="t-en">View full certificate</span>
       </button>
       <div id="okCertWrap" class="cert-preview" style="display:none;margin-top:14px;"></div>
@@ -195,7 +195,7 @@ body.ui-en .t-ar{ display:none !important; }
       <p class="sub"><span class="t-ar" style="display:block;">ما لقينا سجل لهذا الرمز. تاكد من الرمز وحاول مرة ثانية.</span><span class="t-en" style="display:block;">We could not find a record for this code. Double-check it and try again.</span></p>
       <form class="lookup-form" id="badForm">
         <input id="badCode" placeholder="PEL-XXXX-XXXX" autocomplete="off" spellcheck="false" aria-label="Verification code">
-        <button class="btn-gold" type="submit"><span class="t-ar">تحقق</span><span class="t-en">Verify</span></button>
+        <button type="button" class="btn-gold" type="submit"><span class="t-ar">تحقق</span><span class="t-en">Verify</span></button>
       </form>
       <p class="sub" style="margin-top:14px;"><span class="t-ar">تاكد من الرمز المطبوع على شهادتك</span><span class="t-en">Check the code on your certificate</span></p>
     </div>
@@ -207,7 +207,7 @@ body.ui-en .t-ar{ display:none !important; }
       </div>
       <h1><span class="t-ar">خدمة التحقق غير متاحة حاليا</span><span class="t-en">Verification service unavailable</span></h1>
       <p class="sub"><span class="t-ar" style="display:block;">تعذر الاتصال بخدمة التحقق. جرب مرة ثانية بعد قليل.</span><span class="t-en" style="display:block;">We could not reach the verification service. Please try again shortly.</span></p>
-      <button class="btn-ghost" id="retryBtn" style="margin-top:18px;"><span class="t-ar">جرب مرة ثانية</span><span class="t-en">Try again</span></button>
+      <button type="button" class="btn-ghost" id="retryBtn" style="margin-top:18px;"><span class="t-ar">جرب مرة ثانية</span><span class="t-en">Try again</span></button>
     </div>
 
     <!-- lookup prompt (no code yet) -->
@@ -216,7 +216,7 @@ body.ui-en .t-ar{ display:none !important; }
       <p class="sub"><span class="t-ar" style="display:block;">ادخل رمز التحقق الموجود على الشهادة.</span><span class="t-en" style="display:block;">Enter the verification code printed on the certificate.</span></p>
       <form class="lookup-form" id="mainForm">
         <input id="mainCode" placeholder="PEL-XXXX-XXXX" autocomplete="off" spellcheck="false" aria-label="Verification code">
-        <button class="btn-gold" type="submit"><span class="t-ar">تحقق</span><span class="t-en">Verify</span></button>
+        <button type="button" class="btn-gold" type="submit"><span class="t-ar">تحقق</span><span class="t-en">Verify</span></button>
       </form>
       <div style="margin-top:26px; padding-top:20px; border-top:1px solid var(--border);">
         <p class="sub" style="font-size:.78rem;"><span class="t-ar" style="display:block;">كل شهادة صادرة من التطبيق لها رمز تحقق فريد لا يمكن تخمينه.</span><span class="t-en" style="display:block;">Every certificate issued by the app carries a unique, unguessable verification code.</span></p>
@@ -226,7 +226,7 @@ body.ui-en .t-ar{ display:none !important; }
         <p class="sub" style="font-size:.76rem; margin-top:6px;"><span class="t-ar" style="display:block;">كل رقم شهادة فيه تاريخ الاصدار ورقم تحقق (checksum). الرقم المزور ينكشف هنا فورا، بدون قاعدة البيانات.</span><span class="t-en" style="display:block;">Every certificate number embeds its issue date and a checksum digit. A forged number is caught here instantly, with no database lookup.</span></p>
         <form class="lookup-form" id="numForm">
           <input id="numCode" placeholder="PEL-260813-531-9" autocomplete="off" spellcheck="false" aria-label="Certificate number">
-          <button class="btn-gold" type="submit"><span class="t-ar">فحص</span><span class="t-en">Check</span></button>
+          <button type="button" class="btn-gold" type="submit"><span class="t-ar">فحص</span><span class="t-en">Check</span></button>
         </form>
         <div id="numResult" style="margin-top:14px; display:none;"></div>
       </div>
