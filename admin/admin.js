@@ -3061,8 +3061,8 @@ function reports(){
     var r = await rpc('admin_reports', { p_report: $('repSel').value, p_params: {} });
     if(!r.ok){ tbl.innerHTML = errBlock(rpcErrMsg(r)); return; }
   var rows = r.data || [];
-  window.__annRows = {};
-  rows.forEach(function(a){ window.__annRows[a.id] = a; });
+  window.__reportRows = {};
+  rows.forEach(function(a){ window.__reportRows[a.id] = a; });
     currentRows = rows;
     if(!rows.length){ tbl.innerHTML = emptyBlock(t('noData')); return; }
     var headers = Object.keys(rows[0]);
@@ -3275,6 +3275,8 @@ async function announcementsView(){
   var r = await rpc('admin_announcements');
   if(!r.ok){ $('viewArea').innerHTML = errBlock(r.error && r.error.message); return; }
   var rows = r.data || [];
+  window.__annRows = {};
+  rows.forEach(function(a){ window.__annRows[a.id] = a; });
   var html = rows.map(function(a){
     return '<div class="card" style="margin-bottom:14px;">' +
       '<div class="s360-meta" style="margin-top:0;">' + statusChip(a.status) + chip(esc(lang === 'ar' ? (a.priority === 'important' ? 'مهم' : 'عادي') : a.priority), a.priority === 'important' ? 'red' : 'muted') +
