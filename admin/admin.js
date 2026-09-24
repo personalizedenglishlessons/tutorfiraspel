@@ -79,6 +79,7 @@ var I = {
   'whatShouldIDo':{en:'What should I do?', ar:'ماذا افعل الان؟'},
   'studentsTotal':{en:'Total students', ar:'اجمالي الطلاب'},
   'activeStudents':{en:'Active (7d)', ar:'نشط (٧ ايام)'},
+  'onlineNow':{en:'Online now', ar:'متصل الان'},
   'newStudents':{en:'New (30d)', ar:'جدد (٣٠ يوم)'},
   'stalledStudents':{en:'Stalled', ar:'متوقفون'},
   'avgProgress':{en:'Avg lessons', ar:'متوسط الدروس'},
@@ -750,6 +751,7 @@ $('viewArea').innerHTML = pageHead(t('overview'), lang === 'ar' ? 'وش يصير
 
   var kpi = [
     { label:t('studentsTotal'), v:fmtN(tt.students), cls:'accent' },
+    { label:t('onlineNow'), v:fmtN(tt.online), cls: tt.online > 0 ? 'green' : '' },
     { label:t('activeStudents'), v:fmtN(tt.active), cls:'' },
     { label:t('newStudents'), v:fmtN(tt.new_30), cls:'green' },
     { label:t('stalledStudents'), v:fmtN(tt.stalled), cls: tt.stalled > 0 ? 'danger' : '' },
