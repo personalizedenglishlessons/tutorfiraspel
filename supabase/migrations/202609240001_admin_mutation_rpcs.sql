@@ -179,7 +179,7 @@ CREATE OR REPLACE FUNCTION public.admin_create_program(p_payload jsonb)
 RETURNS jsonb LANGUAGE plpgsql SECURITY DEFINER SET search_path = public AS $$
 DECLARE v_row jsonb;
 BEGIN
-  IF NOT has_permission('programs.manage') THEN
+  IF NOT has_permission('curriculum.manage') THEN
     RETURN jsonb_build_object('ok', false, 'error', jsonb_build_object('message', 'Permission denied'));
   END IF;
   INSERT INTO programs (code, name_en, name_ar, price, description, created_at, updated_at)
@@ -201,7 +201,7 @@ CREATE OR REPLACE FUNCTION public.admin_upsert_plan_pricing(p_rows jsonb)
 RETURNS jsonb LANGUAGE plpgsql SECURITY DEFINER SET search_path = public AS $$
 DECLARE v_item jsonb;
 BEGIN
-  IF NOT has_permission('billing.manage') THEN
+  IF NOT has_permission('subscriptions.manage') THEN
     RETURN jsonb_build_object('ok', false, 'error', jsonb_build_object('message', 'Permission denied'));
   END IF;
   FOR v_item IN SELECT * FROM jsonb_array_elements(p_rows)
@@ -262,7 +262,7 @@ CREATE OR REPLACE FUNCTION public.admin_save_assessment_question(p_payload jsonb
 RETURNS jsonb LANGUAGE plpgsql SECURITY DEFINER SET search_path = public AS $$
 DECLARE v_row jsonb; v_id uuid;
 BEGIN
-  IF NOT has_permission('assessment.manage') THEN
+  IF NOT has_permission('curriculum.manage') THEN
     RETURN jsonb_build_object('ok', false, 'error', jsonb_build_object('message', 'Permission denied'));
   END IF;
   v_id := NULLIF(p_payload ->> 'id', '')::uuid;
@@ -297,7 +297,7 @@ CREATE OR REPLACE FUNCTION public.admin_toggle_assessment_question(p_id uuid)
 RETURNS jsonb LANGUAGE plpgsql SECURITY DEFINER SET search_path = public AS $$
 DECLARE v_active boolean;
 BEGIN
-  IF NOT has_permission('assessment.manage') THEN
+  IF NOT has_permission('curriculum.manage') THEN
     RETURN jsonb_build_object('ok', false, 'error', jsonb_build_object('message', 'Permission denied'));
   END IF;
   UPDATE assessment_questions SET active = NOT active WHERE id = p_id RETURNING active INTO v_active;
@@ -309,7 +309,7 @@ $$;
 CREATE OR REPLACE FUNCTION public.admin_delete_assessment_question(p_id uuid)
 RETURNS jsonb LANGUAGE plpgsql SECURITY DEFINER SET search_path = public AS $$
 BEGIN
-  IF NOT has_permission('assessment.manage') THEN
+  IF NOT has_permission('curriculum.manage') THEN
     RETURN jsonb_build_object('ok', false, 'error', jsonb_build_object('message', 'Permission denied'));
   END IF;
   DELETE FROM assessment_questions WHERE id = p_id;
@@ -317,5 +317,19 @@ BEGIN
 END;
 $$;
 
--- Grant execute to authenticated users (permission check inside each function)
-GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO authenticated;
+-- Grant execute on only the new admin mutation functions to authenticated users.
+-- (Permission checks happen inside each function via has_permission().)
+GRANT EXECUTE ON FUNCTION public.admin_add_intervention(jsonb) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.admin_add_student_note(uuid, text, text) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.admin_upsert_student_profile(jsonb) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.admin_add_learning_snapshot(jsonb) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.admin_save_group(jsonb) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.admin_set_group_teacher(uuid, uuid) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.admin_create_live_class(jsonb) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.admin_create_program(jsonb) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.admin_upsert_plan_pricing(jsonb) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.admin_upsert_site_setting(text, jsonb) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.admin_upsert_site_settings_batch(jsonb) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.admin_save_assessment_question(jsonb) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.admin_toggle_assessment_question(uuid) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.admin_delete_assessment_question(uuid) TO authenticated;
