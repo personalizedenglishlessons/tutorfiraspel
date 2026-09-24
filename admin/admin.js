@@ -1706,11 +1706,11 @@ async function saveIntervention(){
   var reasonAr = $('invReasonAr').value.trim();
   if(!titleEn){ toast(t('required'), true); return; }
   var c = client();
-  var { error } = await c.from('interventions').insert({
+  var { data, error } = await c.rpc('admin_add_intervention', { p_payload: {
     user_id: current360Uid, type: type, title_en: titleEn, title_ar: titleAr || titleEn,
-    reason_en: reasonEn, reason_ar: reasonAr, status: 'open', assignee_role: me.role, created_by: me.id
-  });
-  if(error){ toast((error && (error.message || String(error))) || t('permissionDenied'), true); return; }
+    reason_en: reasonEn, reason_ar: reasonAr, assignee_role: me.role
+  }});
+  if(error || (data && data.ok === false)){ toast((error && (error.message || String(error))) || (data && data.error && data.error.message) || t('permissionDenied'), true); return; }
   await audit('intervention.assign', 'student', current360Uid, { type: type, title: titleEn });
   toast(t('saved'));
   reload360();
@@ -1719,22 +1719,21 @@ async function saveNote(){
   var body = $('noteBody').value.trim();
   if(!body){ toast(t('required'), true); return; }
   var c = client();
-  var { error } = await c.from('student_notes').insert({ user_id: current360Uid, author_user_id: me.id, category: 'note', body: body });
-  if(error){ toast((error && (error.message || String(error))) || t('permissionDenied'), true); return; }
+  var { data, error } = await c.rpc('admin_add_student_note', { p_user_id: current360Uid, p_body: body, p_category: 'note' });
+  if(error || (data && data.ok === false)){ toast((error && (error.message || String(error))) || (data && data.error && data.error.message) || t('permissionDenied'), true); return; }
   await audit('student.note', 'student', current360Uid, {});
   toast(t('saved'));
   reload360();
 }
 async function saveProfile(){
   var c = client();
-  var { error } = await c.from('student_profiles').upsert({
+  var { data, error } = await c.rpc('admin_upsert_student_profile', { p_payload: {
     user_id: current360Uid,
     phone: $('prPhone').value.trim(), whatsapp: $('prWhatsapp').value.trim(),
     status: $('prStatus').value, intake: $('prIntake').value.trim(),
-    enrollment_date: $('prEnr').value || null, notes: $('prNotes').value.trim(),
-    updated_at: new Date().toISOString()
-  });
-  if(error){ toast((error && (error.message || String(error))) || t('permissionDenied'), true); return; }
+    enrollment_date: $('prEnr').value || '', notes: $('prNotes').value.trim()
+  }});
+  if(error || (data && data.ok === false)){ toast((error && (error.message || String(error))) || (data && data.error && data.error.message) || t('permissionDenied'), true); return; }
   await audit('student.edit', 'student', current360Uid, { status: $('prStatus').value });
   toast(t('saved'));
   reload360();
@@ -1748,11 +1747,11 @@ async function saveSnapshot(){
   var specs = ['speaking-studio','listening-lounge','grammar-academy','vocabulary-vault','american-accent-lab','writing-workshop'];
   specs.forEach(function(a){ scores[a] = academyProgress(a, completed); });
   var c = client();
-  var { error } = await c.from('learning_snapshots').insert({
+  var { data, error } = await c.rpc('admin_add_learning_snapshot', { p_payload: {
     user_id: current360Uid, snapshot_date: new Date().toISOString().slice(0,10),
     level: level, skill_scores: scores, xp: st.xp || 0, completed_lessons: completed.length
-  });
-  if(error){ toast((error && (error.message || String(error))) || t('permissionDenied'), true); return; }
+  }});
+  if(error || (data && data.ok === false)){ toast((error && (error.message || String(error))) || (data && data.error && data.error.message) || t('permissionDenied'), true); return; }
   await audit('student.snapshot', 'student', current360Uid, {});
   toast(t('snapshotSaved'));
   reload360();
@@ -1937,15 +1936,15 @@ function groupForm(existing){
     };
     if(!payload.name){ toast(t('required'), true); return; }
     var c = client();
-    if(isEdit){
-      var r = await c.from('groups').update(Object.assign({}, payload, { updated_at: new Date().toISOString() })).eq('id', existing.id);
-      if(r.error){ toast(t('permissionDenied'), true); return; }
-      await audit('group.edit', 'group', existing.id, { name: payload.name });
-    }else{
-      var r2 = await c.from('groups').insert(payload);
-      if(r2.error){ toast(t('permissionDenied'), true); return; }
-      await audit('group.create', 'group', (r2.data && r2.data[0] && r2.data[0].id) || '', { name: payload.name });
-    }
+    var rpcPayload = {
+      id: isEdit ? existing.id : '',
+      name: payload.name, teacher_id: payload.teacher_id || '',
+      status: payload.status, description: payload.description || ''
+    };
+    var { data, error } = await c.rpc('admin_save_group', { p_payload: rpcPayload });
+    if(error || (data && data.ok === false)){ toast(t('permissionDenied'), true); return; }
+    var newId = (data && data.data && data.data.id) || (isEdit ? existing.id : '');
+    await audit(isEdit ? 'group.edit' : 'group.create', 'group', newId, { name: payload.name });
     closeModal(s);
     toast(t('saved'));
     groups();
@@ -2073,8 +2072,8 @@ function assignTeacherModal(groupId){
   $('atSave').addEventListener('click', async function(){
     var val = $('atSel').value;
     var c = client();
-    var r = await c.from('groups').update({ teacher_id: val || null, updated_at: new Date().toISOString() }).eq('id', groupId);
-    if(r.error){ toast(t('permissionDenied'), true); return; }
+    var { data, error } = await c.rpc('admin_set_group_teacher', { p_group_id: groupId, p_teacher_id: val || null });
+    if(error || (data && data.ok === false)){ toast(t('permissionDenied'), true); return; }
     await audit('group.teacher', 'group', groupId, { teacher_id: val });
     closeModal(s);
     toast(t('saved'));
@@ -2387,9 +2386,10 @@ function classForm(groupsArr){
       course_id: $('clCourse').value.trim() || null
     };
     var c = client();
-    var r = await c.from('live_classes').insert(payload);
-    if(r.error){ toast(t('permissionDenied'), true); return; }
-    await audit('class.create', 'class', (r.data && r.data[0] && r.data[0].id) || '', { topic: payload.topic });
+    var { data, error } = await c.rpc('admin_create_live_class', { p_payload: payload });
+    if(error || (data && data.ok === false)){ toast(t('permissionDenied'), true); return; }
+    var newId = (data && data.data && data.data.id) || '';
+    await audit('class.create', 'class', newId, { topic: payload.topic });
     closeModal(s);
     toast(t('saved'));
     classes();
@@ -2507,9 +2507,10 @@ function programForm(){
     };
     if(!payload.code || !payload.name_en){ toast(t('required'), true); return; }
     var c = client();
-    var r = await c.from('programs').insert(payload);
-    if(r.error){ toast(t('permissionDenied'), true); return; }
-    await audit('program.create', 'program', (r.data && r.data[0] && r.data[0].id) || '', { code: payload.code });
+    var { data, error } = await c.rpc('admin_create_program', { p_payload: payload });
+    if(error || (data && data.ok === false)){ toast(t('permissionDenied'), true); return; }
+    var newId = (data && data.data && data.data.id) || '';
+    await audit('program.create', 'program', newId, { code: payload.code });
     closeModal(s);
     toast(t('saved'));
     programs();
@@ -2613,16 +2614,14 @@ async function billingView(){
       if(f === 'price' || f === 'weekly_live_classes') byKey[k][f] = +inp.value || 0;
       else byKey[k][f] = inp.checked;
     });
-    await Promise.all(Object.keys(byKey).map(function(k){
-      return c.from('plan_pricing').upsert(byKey[k], {onConflict:'tier,duration_months'}).then(function(r){
-        if(r.error){ console.warn('plan_pricing save',byKey[k],r.error); noteErr(r.error); }
-      }).catch(function(e){ console.warn('plan_pricing save',byKey[k],e); noteErr(e); });
-    }));
+    var rows = Object.keys(byKey).map(function(k){ return byKey[k]; });
+    var { data: ppData, error: ppErr } = await c.rpc('admin_upsert_plan_pricing', { p_rows: rows });
+    if(ppErr || (ppData && ppData.ok === false)){ console.warn('plan_pricing save', ppErr || ppData); noteErr(ppErr || ppData); }
     // index content (awaited so failures are counted accurately)
     await Promise.all(Array.prototype.slice.call(document.querySelectorAll('[data-ix]')).map(function(ta){
       var key = ta.dataset.ix, v = ta.value.trim();
-      return c.from('site_settings').upsert({key:key, value:v}, {onConflict:'key'}).then(function(r){
-        if(r.error){ console.warn('site_settings save',key,r.error); noteErr(r.error); }
+      return c.rpc('admin_upsert_site_setting', { p_key: key, p_value: v }).then(function(r){
+        if(r.error || (r.data && r.data.ok === false)){ console.warn('site_settings save',key,r.error||r.data); noteErr(r.error||r.data); }
       }).catch(function(e){ console.warn('site_settings save',key,e); noteErr(e); });
     }));
     // FAQs (collect rows in DOM order, drop fully-blank ones)
@@ -2633,8 +2632,8 @@ async function billingView(){
       if(q.qEn||q.qAr||q.aEn||q.aAr) faqOut.push(q);
     });
     try{
-      var fr = await c.from('site_settings').upsert({key:'faqs', value:faqOut}, {onConflict:'key'});
-      if(fr.error){ console.warn('site_settings faqs save',fr.error); noteErr(fr.error); }
+      var fr = await c.rpc('admin_upsert_site_setting', { p_key: 'faqs', p_value: faqOut });
+      if(fr.error || (fr.data && fr.data.ok === false)){ console.warn('site_settings faqs save',fr.error||fr.data); noteErr(fr.error||fr.data); }
     }catch(e){ console.warn('site_settings faqs save',e); noteErr(e); }
     await audit('billing.update', 'plan_pricing', '', { cells: Object.keys(byKey).length });
     this.disabled = false; this.textContent = t('save');
@@ -2699,8 +2698,8 @@ async function questionsView(){
 
   function toggleQ(id){
     var q = ROWS.find(function(x){return x.id===id;}); if(!q) return;
-    c.from('assessment_questions').update({active: !q.active}).eq('id', id).then(function(r){
-      if(r.error){ toast(rpcErrMsg(r), true); return; }
+    c.rpc('admin_toggle_assessment_question', { p_id: id }).then(function(r){
+      if(r.error || (r.data && r.data.ok === false)){ toast(rpcErrMsg(r.error||r.data), true); return; }
       audit('question.toggle','assessment_questions',q.code,{active:!q.active});
       toast(t('saved')); loadList();
     });
@@ -2708,8 +2707,8 @@ async function questionsView(){
   function delQ(id){
     var q = ROWS.find(function(x){return x.id===id;});
     if(!window.confirm(lang==='ar'?'حذف هذا السوال للابد؟':'Delete this question permanently?')) return;
-    c.from('assessment_questions').delete().eq('id', id).then(function(r){
-      if(r.error){ toast(rpcErrMsg(r), true); return; }
+    c.rpc('admin_delete_assessment_question', { p_id: id }).then(function(r){
+      if(r.error || (r.data && r.data.ok === false)){ toast(rpcErrMsg(r.error||r.data), true); return; }
       audit('question.delete','assessment_questions',q?q.code:id,{});
       toast(t('saved')); loadList();
     });
@@ -2755,13 +2754,11 @@ async function questionsView(){
         active: $('qf_active').checked
       };
       this.disabled = true; this.textContent = '...';
-      // Edit existing row by id (so changing the code field updates in place
-      // instead of orphaning the old row); insert a brand-new row otherwise.
-      var r = isEdit
-        ? await c.from('assessment_questions').update(row).eq('id', q.id)
-        : await c.from('assessment_questions').insert(row);
+      // Use the admin_save_assessment_question RPC for both insert and update
+      var rpcPayload = Object.assign({}, row, { id: isEdit ? q.id : '' });
+      var { data, error } = await c.rpc('admin_save_assessment_question', { p_payload: rpcPayload });
       this.disabled = false; this.textContent = t('save');
-      if(r.error){ toast(rpcErrMsg(r), true); return; }
+      if(error || (data && data.ok === false)){ toast(rpcErrMsg(error||data), true); return; }
       await audit('question.upsert','assessment_questions',code,{tier:row.tier,level:row.level,difficulty:row.difficulty_rating});
       closeModal(scrim);
       toast(t('saved')); loadList();
@@ -3499,8 +3496,8 @@ async function settingsView(){
       if(fq.qAr || fq.qEn) faqOut.push(fq);
     }
     rows.push({ key:'faqs', value:faqOut });
-    var r2 = await c.from('site_settings').upsert(rows);
-    if(r2.error){ btn.disabled = false; toast((r2.error.message || t('errorGeneric')), true); return; }
+    var r2 = await c.rpc('admin_upsert_site_settings_batch', { p_rows: rows });
+    if(r2.error || (r2.data && r2.data.ok === false)){ btn.disabled = false; toast(((r2.error&&r2.error.message) || (r2.data&&r2.data.error&&r2.data.error.message) || t('errorGeneric')), true); return; }
     audit('settings.update', 'site_settings', 'site_settings', { banner_active: rows[0].value.active, plan_6m_available: rows[3].value, faq_count: faqOut.length });
     toast(lang === 'ar' ? 'تم النشر - يظهر للزوار الان' : 'Published - live for visitors now');
     btn.disabled = false;
