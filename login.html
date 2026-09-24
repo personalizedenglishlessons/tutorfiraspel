@@ -664,8 +664,17 @@ function initSupabase(){
   return supabase;
 }
 
-/* Check for an existing session on load, redirect if already authenticated */
+/* Check for an existing session on load, redirect if already authenticated.
+   Tries cookie-based auth first, falls back to Supabase JS client. */
 window.addEventListener('load', async () => {
+  // Try cookie-based session first
+  if(typeof window.pelAuth === 'function'){
+    try{
+      const sess = await pelAuth('session');
+      if(sess && sess.user){ triggerRedirect(); return; }
+    }catch(e){ /* fall through to legacy check */ }
+  }
+  // Legacy: check Supabase JS client session
   const client = initSupabase();
   if(!client) return;
   const { data } = await client.auth.getSession();
@@ -676,15 +685,27 @@ window.addEventListener('load', async () => {
 
 /* Ask the database who this session belongs to: admins go to the admin
    panel, everyone else to the student app (which renders its own
-   entitlement state - activation, renewal, suspension - if blocked). */
+   entitlement state - activation, renewal, suspension - if blocked).
+   Tries cookie-based API first, falls back to Supabase JS client. */
 async function triggerRedirect(){
   document.getElementById('redirectOverlay').classList.add('show');
   let target = 'app.html';
   try{
-    const client = initSupabase();
-    const { data: st } = await client.rpc('pel_access_state');
-    if(st && st.is_admin) target = 'admin.html';
-  }catch(e){ /* default to the student app */ }
+    // Try cookie-based API first
+    if(typeof window.pelApi === 'function'){
+      const r = await pelApi('pel_access_state');
+      if(r && r.ok && r.data && r.data.is_admin) target = 'admin.html';
+    } else {
+      throw new Error('pelApi not available');
+    }
+  }catch(e){
+    // Legacy: use Supabase JS client
+    try{
+      const client = initSupabase();
+      const { data: st } = await client.rpc('pel_access_state');
+      if(st && st.is_admin) target = 'admin.html';
+    }catch(e2){ /* default to the student app */ }
+  }
   setTimeout(() => { window.location.href = target; }, 900);
 }
 
@@ -712,7 +733,36 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     return;
   }
 
-  // Route through the rate-limited-login edge function for brute-force protection
+  /* Try cookie-based auth first, fall back to rate-limited-login */
+  let cookieLoginOk = false;
+  if(typeof window.pelAuth === 'function'){
+    try{
+      const sess = await pelAuth('login', { email, password, hp: '' });
+      if(sess && sess.user){
+        cookieLoginOk = true;
+      } else if(sess && sess.error){
+        // Cookie auth failed with a specific error - show it
+        setLoading('login', false);
+        let msg = 'Incorrect email or password.';
+        if(sess.error === 'too_many_attempts') msg = 'Too many login attempts. Please try again in 15 minutes.';
+        else if(sess.error === 'invalid_email') msg = 'Please enter a valid email.';
+        else if(sess.error === 'invalid_password') msg = 'Password must be at least 6 characters.';
+        else if(sess.error === 'network_error') msg = 'Network error. Please try again.';
+        showMessage('login', msg, 'error');
+        return;
+      }
+    }catch(e){ /* fall through to legacy login */ }
+  }
+
+  if(cookieLoginOk){
+    if(remembered){ localStorage.setItem('pel-last-email', email); }
+    showSuccess('login');
+    showMessage('login', 'Welcome back. Redirecting to your dashboard.', 'success');
+    triggerRedirect();
+    return;
+  }
+
+  // Legacy: Route through the rate-limited-login edge function for brute-force protection
   const fnUrl = SUPABASE_URL + '/functions/v1/rate-limited-login';
   let fnResp;
   try{
