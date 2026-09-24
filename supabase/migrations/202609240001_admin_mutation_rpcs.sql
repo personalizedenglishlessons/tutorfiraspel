@@ -1,14 +1,11 @@
 -- ============================================================
 -- Admin mutation RPCs — SECURITY DEFINER functions replacing direct table writes
 --
--- Problem: admin.js had ~11 mutation paths writing directly to tables via
+-- Status: APPLIED — all RPCs deployed to live DB and admin.js switched to use them.
+-- Previously admin.js had ~11 mutation paths writing directly to tables via
 -- client().from(table).insert/update/upsert/delete, bypassing the documented
--- "RPC + RLS only" architecture. This migration creates the missing RPCs.
---
--- Status: DRAFT — not yet applied to live DB.
--- Frontend has NOT been switched yet — admin.js still uses direct writes.
--- Apply with: supabase db push (after review)
--- Then update admin.js to call these RPCs instead of direct table writes.
+-- "RPC + RLS only" architecture. This migration created the missing RPCs.
+-- Verified live: all functions present in information_schema.routines.
 --
 -- Tables affected: interventions, student_notes, student_profiles,
 --   learning_snapshots, groups, live_classes, programs, plan_pricing,
