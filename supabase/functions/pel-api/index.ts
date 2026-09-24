@@ -114,10 +114,21 @@ const ALLOWLIST: Record<string, { type: string; description: string }> = {
   "programs_list": { type: "table_select", description: "List programs" },
   "groups_list": { type: "table_select", description: "List groups" },
   "academies_list": { type: "table_select", description: "List academies" },
+  "academies_get": { type: "table_select", description: "List academies" },
   "lessons_list": { type: "table_select", description: "List lessons" },
+  "lessons_get": { type: "table_select", description: "List lessons" },
+  "academy_lessons_get": { type: "table_select", description: "List academy lessons" },
+  "lesson_items_get": { type: "table_select", description: "List lesson items" },
+  "lesson_exercises_get": { type: "table_select", description: "List lesson exercises" },
   "assessment_questions_list": { type: "table_select", description: "List assessment Qs" },
+  "assessment_questions_get": { type: "table_select", description: "List assessment Qs" },
   "site_settings_list": { type: "table_select", description: "List site settings" },
+  "site_settings_get": { type: "table_select", description: "List site settings" },
   "plan_pricing_list": { type: "table_select", description: "List plan pricing" },
+  "plan_pricing_get": { type: "table_select", description: "List plan pricing" },
+  "programs_get": { type: "table_select", description: "List programs" },
+  "groups_get": { type: "table_select", description: "List groups" },
+  "certificates_get": { type: "table_select", description: "List certificates" },
 };
 
 // Table configurations for table operations
@@ -130,13 +141,24 @@ const TABLE_CONFIG: Record<string, { table: string; columns?: string; conflict?:
   "pel_srs_state_set": { table: "pel_srs_state", conflict: "user_id,en" },
   "pel_student_feedback_insert": { table: "pel_student_feedback_events" },
   "certificates_list": { table: "certificates", columns: "id,cert_id,code,student_name,academy_en,academy_ar,level,program_name,completed_at,created_at,status,revoke_reason,user_id,verification_count" },
+  "certificates_get": { table: "certificates", columns: "id,cert_id,code,student_name,academy_en,academy_ar,level,program_name,completed_at,created_at,status,revoke_reason,user_id,verification_count" },
   "programs_list": { table: "programs", columns: "*" },
+  "programs_get": { table: "programs", columns: "*" },
   "groups_list": { table: "groups", columns: "id,name,status" },
+  "groups_get": { table: "groups", columns: "id,name,status" },
   "academies_list": { table: "academies", columns: "*" },
+  "academies_get": { table: "academies", columns: "*" },
   "lessons_list": { table: "lessons", columns: "*" },
+  "lessons_get": { table: "lessons", columns: "*" },
+  "academy_lessons_get": { table: "academy_lessons", columns: "academy_id,lesson_id,sort_order" },
+  "lesson_items_get": { table: "lesson_items", columns: "lesson_id" },
+  "lesson_exercises_get": { table: "lesson_exercises", columns: "lesson_id,type" },
   "assessment_questions_list": { table: "assessment_questions", columns: "*" },
+  "assessment_questions_get": { table: "assessment_questions", columns: "*" },
   "site_settings_list": { table: "site_settings", columns: "key,value" },
+  "site_settings_get": { table: "site_settings", columns: "key,value" },
   "plan_pricing_list": { table: "plan_pricing", columns: "*" },
+  "plan_pricing_get": { table: "plan_pricing", columns: "*" },
 };
 
 Deno.serve(async (req: Request) => {
@@ -213,6 +235,13 @@ Deno.serve(async (req: Request) => {
       if (payload.eq) {
         for (const [col, val] of Object.entries(payload.eq)) {
           url += `&${col}=eq.${encodeURIComponent(String(val))}`;
+        }
+      }
+      if (payload.in) {
+        for (const [col, vals] of Object.entries(payload.in)) {
+          if (Array.isArray(vals)) {
+            url += `&${col}=in.(${vals.map(v => encodeURIComponent(String(v))).join(',')})`;
+          }
         }
       }
       if (payload.order) {

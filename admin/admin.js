@@ -509,14 +509,25 @@ function modal(title, body, wide, footer){
 function closeModal(s){ if(s) s.remove(); }
 function loadIcons(){ if(window.lucide) lucide.createIcons(); }
 
-/* RPC wrapper: returns {ok, data, error} */
+/* RPC wrapper: returns {ok, data, error}.
+   Routes through pelApi when PEL_COOKIE_AUTH is active, falls back
+   to direct Supabase client otherwise. */
 async function rpc(name, args){
+  if(window.PEL_COOKIE_AUTH && typeof window.pelApi === 'function'){
+    try{
+      var r = await pelApi(name, args || {});
+      if(!r.ok) return { ok:false, error:r.error };
+      return { ok:true, data:r.data };
+    }catch(e){
+      return { ok:false, error:e };
+    }
+  }
   var c = client();
   if(!c) return { ok:false, error:'no client' };
   try{
-    var r = await c.rpc(name, args || {});
-    if(r.error) return { ok:false, error:r.error };
-    return { ok:true, data:r.data };
+    var r2 = await c.rpc(name, args || {});
+    if(r2.error) return { ok:false, error:r2.error };
+    return { ok:true, data:r2.data };
   }catch(e){
     return { ok:false, error:e };
   }
@@ -596,11 +607,28 @@ function downloadJSON(obj, filename){
 async function boot(){
   var c = client();
   if(!c){ authGateFail(t('errorGeneric')); return; }
+  
+  // Try cookie-based session first
+  var cookieUser = null;
+  if(typeof window.pelAuth === 'function'){
+    try{
+      var sess = await pelAuth('session');
+      if(sess && sess.user){
+        cookieUser = sess.user;
+        window.PEL_COOKIE_AUTH = true;
+      }
+    }catch(e){}
+  }
+  
   var sess;
-  try{
-    var r = await c.auth.getSession();
-    sess = r.data && r.data.session;
-  }catch(e){}
+  if(cookieUser){
+    sess = { user: cookieUser };
+  } else {
+    try{
+      var r = await c.auth.getSession();
+      sess = r.data && r.data.session;
+    }catch(e){}
+  }
   if(!sess || !sess.user){ window.location.href = 'login.html'; return; }
 
   var roleRes = await rpc('current_user_role');
@@ -636,9 +664,24 @@ async function boot(){
   renderSidebar();
   goTo('overview');
 
-  c.auth.onAuthStateChange(function(event, session){
-    if(event === 'SIGNED_OUT' || !session){ window.location.href = 'login.html'; }
-  });
+  // Periodic cookie session check (replaces onAuthStateChange for cookie auth)
+  if(window.PEL_COOKIE_AUTH){
+    setInterval(async function(){
+      if(!window.PEL_COOKIE_AUTH) return;
+      try{
+        var check = await pelAuth('session');
+        if(!check || !check.user){
+          pelClearSession();
+          window.PEL_COOKIE_AUTH = false;
+          window.location.href = 'login.html';
+        }
+      }catch(e){}
+    }, 300000); // check every 5 minutes
+  } else {
+    c.auth.onAuthStateChange(function(event, session){
+      if(event === 'SIGNED_OUT' || !session){ window.location.href = 'login.html'; }
+    });
+  }
 }
 function authGateFail(msg){
   $('authGate').innerHTML = '<div class="ring"><img class="pel-logo" src="brand/pel-wordmark.svg" alt="PEL"></div><p>' + esc(msg) + '</p>';
@@ -914,7 +957,7 @@ async function loadStPrograms(st){
   var w = $('stProgramWrap'); if(!w) return;
   try{
     var c = client();
-    var r = await c.from('programs').select('id,name_en,name_ar').order('name_en');
+    var r = await pelTableSelect('programs', 'id,name_en,name_ar', { order: 'name_en' });
     var o = '<option value="">' + esc(t('all')) + '</option>' + (r.data || []).map(function(p){
       return '<option value="' + p.id + '">' + esc(lang === 'ar' ? (p.name_ar || p.name_en) : p.name_en) + '</option>';
     }).join('');
@@ -936,7 +979,7 @@ async function loadStGroups(st){
   var w = $('stGroupWrap'); if(!w) return;
   try{
     var c = client();
-    var r = await c.from('groups').select('id,name').eq('status','active').order('name');
+    var r = await pelTableSelect('groups', 'id,name', { eq: { status: 'active' }, order: 'name' });
     var o = '<option value="">' + esc(t('all')) + '</option>' + (r.data || []).map(function(g){
       return '<option value="' + g.id + '">' + esc(g.name) + '</option>';
     }).join('');
@@ -2096,11 +2139,11 @@ async function courses(){
   $('viewArea').innerHTML = pageHead(t('courses'), t('lessonsManagerSub')) + loadingBlock();
   var c = client();
   var res = await Promise.all([
-    c.from('academies').select('*').order('sort_order').order('id'),
-    c.from('lessons').select('*'),
-    c.from('academy_lessons').select('academy_id,lesson_id,sort_order'),
-    c.from('lesson_items').select('lesson_id'),
-    c.from('lesson_exercises').select('lesson_id,type')
+    pelTableSelect('academies', '*', { order: 'sort_order,id' }),
+    pelTableSelect('lessons', '*'),
+    pelTableSelect('academy_lessons', 'academy_id,lesson_id,sort_order'),
+    pelTableSelect('lesson_items', 'lesson_id'),
+    pelTableSelect('lesson_exercises', 'lesson_id,type')
   ]);
   if(res[0].error || res[1].error || res[2].error){ $('viewArea').innerHTML = errBlock(rpcErrMsg({error: res[0].error || res[1].error || res[2].error})); return; }
   _cur.academies = res[0].data || [];
@@ -2326,7 +2369,7 @@ async function classes(){
   $('viewArea').innerHTML = pageHead(t('classes'), lang === 'ar' ? 'الدروس المباشرة والحضور' : 'Live classes and attendance') + loadingBlock();
   var [r, g] = await Promise.all([
     rpc('admin_classes'),
-    client().from('groups').select('id,name,status').eq('status','active')
+    pelTableSelect('groups', 'id,name,status', { eq: { status: 'active' })
   ]);
   if(!r.ok){ $('viewArea').innerHTML = errBlock(rpcErrMsg(r)); return; }
   var rows = r.data || [];
@@ -2451,7 +2494,7 @@ function classStatusModal(classId){
 async function programs(){
   $('viewArea').innerHTML = pageHead(t('programs'), lang === 'ar' ? 'البرامج والاشتراكات' : 'Programs and subscriptions') + loadingBlock();
   var [p, sub] = await Promise.all([
-    client().from('programs').select('*').order('created_at'),
+    pelTableSelect('programs', '*', { order: 'created_at' })
     rpc('admin_subscriptions')
   ]);
   var prog = (p.data || []);
@@ -2530,8 +2573,8 @@ async function billingView(){
     lang==='ar'?'عدل اسعار الباقات ونص الصفحة البداية - التغييرات توصل لـ /index فوراً':'Edit plan prices and index copy - changes reach /index immediately') + loadingBlock();
   var c = client();
   var [pp, ss] = await Promise.all([
-    c.from('plan_pricing').select('*').order('tier').order('duration_months'),
-    c.from('site_settings').select('key,value').in('key', ['hero_headline_ar','hero_headline_en','hero_sub_ar','hero_sub_en','pricing_note_ar','pricing_note_en','faqs'])
+    pelTableSelect('plan_pricing', '*', { order: 'tier,duration_months' }),
+    pelTableSelect('site_settings', 'key,value', { in: { key: ['hero_headline_ar','hero_headline_en','hero_sub_ar','hero_sub_en','pricing_note_ar','pricing_note_en','faqs'] } })
   ]);
   var rows = pp.data || [];
   var kv = {}; (ss.data||[]).forEach(function(r){ kv[r.key] = r.value; });
@@ -2659,7 +2702,7 @@ async function questionsView(){
   await loadList();
 
   async function loadList(){
-    var r = await c.from('assessment_questions').select('*').order('tier').order('difficulty_rating').order('sort_order');
+    var r = await pelTableSelect('assessment_questions', '*', { order: 'tier,difficulty_rating,sort_order' });
     ROWS = r.data || [];
     var addBtn = '<div class="btn-row" style="margin-bottom:16px;"><button class="btn btn-gold btn-sm" id="aqAdd">'+esc(lang==='ar'?'سوال جديد':'New question')+'</button>'+
       '<span class="why">'+(lang==='ar'?'العدد: ':'Count: ')+ROWS.length+'</span></div>';
@@ -2775,7 +2818,7 @@ async function questionsView(){
 async function certificates(){
   $('viewArea').innerHTML = pageHead(t('certificates'), lang === 'ar' ? 'الشهادات والتحقق' : 'Certificates and verification') + loadingBlock();
   var c = client();
-  var r = await c.from('certificates').select('id,cert_id,code,student_name,academy_en,academy_ar,level,program_name,completed_at,created_at,status,revoke_reason,user_id,verification_count').order('created_at',{ascending:false}).limit(200);
+  var r = await pelTableSelect('certificates', 'id,cert_id,code,student_name,academy_en,academy_ar,level,program_name,completed_at,created_at,status,revoke_reason,user_id,verification_count', { order: 'created_at.desc', limit: 200 });
   if(r.error){ $('viewArea').innerHTML = errBlock(rpcErrMsg(r)); return; }
   var rows = r.data || [];
   var html = rows.map(function(x){
@@ -3086,7 +3129,7 @@ async function plansView(){
   $('viewArea').innerHTML = pageHead(t('plans'), lang === 'ar' ? 'الباقات، الاشتراكات، وانتها الوصول - كل شي من الخادم.' : 'Plans, entitlements and expiring access - all server-side.') + loadingBlock();
   var [ov, prog] = await Promise.all([
     rpc('admin_plans_overview'),
-    client().from('programs').select('*').eq('active', true).order('sort_order').order('created_at')
+    pelTableSelect('programs', '*', { eq: { active: true }, order: 'sort_order,created_at' })
   ]);
   if(!ov.ok){ $('viewArea').innerHTML = errBlock(ov.error && ov.error.message); return; }
   var d = ov.data || {};
@@ -3164,7 +3207,7 @@ async function plansView(){
    scattered buttons (s360PlanSave tier/level-only + p360Assign program-only). */
 async function openAssignPlanModal(uid, onDone, curTier, curLevel){
   var c = client();
-  var pr = await c.from('programs').select('*').order('sort_order').order('created_at');
+  var pr = await pelTableSelect('programs', '*', { order: 'sort_order,created_at' });
   var catalog = pr.data || [];
   if(!catalog.length){ toast(t('noData'), true); return; }
   var ms = modal(t('assignPlan'), '' +
@@ -3421,7 +3464,7 @@ async function settingsView(){
   $('viewArea').innerHTML = head + loadingBlock();
   var c = client();
   if(!c){ $('viewArea').innerHTML = errBlock('no client'); return; }
-  var r = await c.from('site_settings').select('key,value');
+  var r = await pelTableSelect('site_settings', 'key,value');
   if(r.error){ $('viewArea').innerHTML = errBlock(r.error.message); return; }
   var map = {};
   (r.data || []).forEach(function(row){ map[row.key] = row.value; });
@@ -3600,7 +3643,16 @@ document.addEventListener('DOMContentLoaded', function(){
   var lg = $('langBtn');
   if(lg) lg.addEventListener('click', function(){ lang = lang === 'ar' ? 'en' : 'ar'; applyLang(true); renderSidebar(); var v = document.querySelector('.side-link.active'); if(v) goTo(v.dataset.view); });
   var lo = $('logoutBtn');
-  if(lo) lo.addEventListener('click', async function(){ var c = client(); if(c) await c.auth.signOut(); window.location.href = 'login.html'; });
+  if(lo) lo.addEventListener('click', async function(){
+    if(window.PEL_COOKIE_AUTH && typeof window.pelAuth === 'function'){
+      try{ await pelAuth('logout'); }catch(e){}
+      pelClearSession();
+      window.PEL_COOKIE_AUTH = false;
+    } else {
+      var c = client(); if(c) await c.auth.signOut();
+    }
+    window.location.href = 'login.html';
+  });
 var mm = $('mobileMenuBtn');
   if(mm) mm.addEventListener('click', function(){ $('sidebar').classList.toggle('mobile-open'); });
   var nav = $('sidebarNav');
