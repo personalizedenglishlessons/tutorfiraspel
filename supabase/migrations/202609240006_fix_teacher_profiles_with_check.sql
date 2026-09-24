@@ -12,6 +12,11 @@
 -- Reference: https://ubserve.com/platform-guides/supabase-security-checklist-ai-built-apps
 -- ═══════════════════════════════════════════════════════════════
 
-ALTER POLICY teacher_profiles_update ON teacher_profiles
+-- Drop and recreate with WITH CHECK (ALTER POLICY failed with 400;
+-- DROP + CREATE works reliably)
+DROP POLICY IF EXISTS teacher_profiles_update ON teacher_profiles;
+
+CREATE POLICY teacher_profiles_update ON teacher_profiles
   FOR UPDATE TO authenticated
+  USING ((auth.uid() = user_id) OR has_permission('teachers.write'::text))
   WITH CHECK ((auth.uid() = user_id) OR has_permission('teachers.write'::text));
