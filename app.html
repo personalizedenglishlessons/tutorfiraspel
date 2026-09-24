@@ -1475,7 +1475,11 @@ function savePelFeedbackEvent(ev){
       grammar_issues: issues,
       score: (typeof ev.score === 'number') ? ev.score : null
     };
-    c.from('pel_student_feedback_events').insert(row).then(()=>{}).catch(()=>{});
+    if(window.PEL_COOKIE_AUTH){
+      pelApi('pel_student_feedback_insert', row).catch(()=>{});
+    } else {
+      c.from('pel_student_feedback_events').insert(row).then(()=>{}).catch(()=>{});
+    }
   }catch(e){}
 }
 
@@ -1549,7 +1553,7 @@ window._pelOverviewTs = 0;
 async function refreshCredits(){
   const cl = client(); if(!cl || !currentUser) return;
   try{
-    const { data, error } = await cl.rpc('student_live_class_overview');
+    const { data, error } = await pelRpc('student_live_class_overview');
     if(!error && data){
       window._pelCredits = data.credits || 0;
       window._pelOverviewCache = data;
@@ -1586,28 +1590,29 @@ async function loadStudentState(){
   // returning student sees their real history on any device, never a
   // leftover from another account or a fabricated default.
   try{
-    const { data: kv } = await c.from('student_data').select('key,value').eq('user_id', currentUser.id);
+    const { data: kv } = await pelTableSelect('student_data', 'key,value', { eq: { user_id: currentUser.id } });
     if(kv){ kv.forEach(row => { try{ localStorage.setItem(row.key, typeof row.value === 'string' ? row.value : JSON.stringify(row.value)); }catch(e){} }); }
   }catch(e){ /* student_data table may not exist yet - local copy stands */ }
-  const { data, error } = await c.from('student_state').select('*').eq('user_id', currentUser.id).maybeSingle();
+  const { data: rows, error } = await pelTableSelect('student_state', '*', { eq: { user_id: currentUser.id } });
+  const data = (rows && rows[0]) || null;
   if(data){ applyStudentStateRow(data); return; }
   const fresh = defaultStudentStateRow();
   applyStudentStateRow(fresh);
   if(!error){
-    try{ await c.from('student_state').upsert({ user_id: currentUser.id, ...fresh, updated_at: new Date().toISOString() }, {onConflict:'user_id'}); }catch(e){ console.warn('[PEL] state save failed:', e.message||e); }
+    try{ await pelTableUpsert('student_state', { user_id: currentUser.id, ...fresh, updated_at: new Date().toISOString() }, 'user_id'); }catch(e){ console.warn('[PEL] state save failed:', e.message||e); }
   }
 }
 async function persistStudentState(){
   const c = client();
   if(!c || !currentUser) return;
   try{
-    await c.from('student_state').upsert({
+    await pelTableUpsert('student_state', {
       user_id: currentUser.id,
       xp: studentStats.xp, streak: studentStats.streak, longest_streak: studentStats.longestStreak, last_study_date: studentStats.lastStudyDate,
       completed_lessons: [...completedLessons], favorites: [...favorites], bookmarks, lesson_notes: lessonNotes,
       vocab_store: vocabStore, notes_store: notesStore, student_prefs: studentPrefs,
       updated_at: new Date().toISOString(),
-    }, {onConflict:'user_id'});
+    }, 'user_id');
   }catch(e){ /* best-effort, the in-memory state for this session is still correct either way */ }
 }
 /* Admin-controlled curriculum: pull the live catalog once per session and
@@ -1720,7 +1725,7 @@ async function loadCurriculum(){
   const c = client();
   if(!c || !window.PEL_ENGINE || !PEL_ENGINE.setCurriculumOverride) return;
   try{
-    const { data, error } = await c.rpc('student_curriculum');
+    const { data, error } = await pelRpc('student_curriculum');
     if(!error && data && Array.isArray(data.academies) && data.academies.length){
       PEL_ENGINE.setCurriculumOverride(data);
       mergeCurriculumAcademies(data);
@@ -1833,7 +1838,7 @@ async function loadSubPlan(){
   const c = client();
   if(!c || !currentUser) return;
   try{
-    const { data, error } = await c.rpc('student_plan_status');
+    const { data, error } = await pelRpc('student_plan_status');
     if(!error && data){
       subPlan = {
         hasPlan: !!data.has_plan,
@@ -2087,8 +2092,8 @@ async function renderHomeIntel(){
     // doesn't block the other from rendering (previously a single try block
     // left the classes section stuck on "Loading..." if announcements threw)
     const [annRes, clsRes] = await Promise.allSettled([
-      c.rpc('student_announcements'),
-      c.rpc('student_my_classes')
+      pelRpc('student_announcements'),
+      pelRpc('student_my_classes')
     ]);
     const ann = annRes.status === 'fulfilled' ? annRes.value : null;
     const cls = clsRes.status === 'fulfilled' ? clsRes.value : null;
@@ -2139,7 +2144,7 @@ async function renderHomeIntel(){
 async function markAnnouncementRead(id){
   const c = client();
   if(!c) return;
-  try{ await c.rpc('student_mark_announcement_read', { p_announcement_id: id }); }catch(e){ console.warn('[PEL] mark read failed:', e.message||e); }
+  try{ await pelRpc('student_mark_announcement_read', { p_announcement_id: id }); }catch(e){ console.warn('[PEL] mark read failed:', e.message||e); }
   renderHomeIntel();
 }
 
@@ -2178,7 +2183,7 @@ function showAnnouncementsModal(){
   const c = client();
   if(!c) return;
   const ar = accountPrefs.lang === 'ar';
-  c.rpc('student_announcements').then(({ data }) => {
+  pelRpc('student_announcements').then(({ data }) => {
     const items = (data && data.items) || [];
     const overlay = document.createElement('div');
     overlay.className = 'modal-scrim';
@@ -2195,7 +2200,7 @@ function showAnnouncementsModal(){
     document.body.appendChild(overlay);
     document.getElementById('annModalClose').addEventListener('click', () => overlay.remove());
     overlay.addEventListener('click', e => { if(e.target === overlay) overlay.remove(); });
-    items.filter(a => !a.read).forEach(a => { c.rpc('student_mark_announcement_read', { p_announcement_id: a.id }).catch(() => {}); });
+    items.filter(a => !a.read).forEach(a => { pelRpc('student_mark_announcement_read', { p_announcement_id: a.id }).catch(() => {}); });
   }).catch(() => {
     toast(ar ? 'ما قدرنا نحمّل الاعلانات.' : 'Could not load announcements.');
   });
@@ -2469,7 +2474,7 @@ const PEL_ACTIVITY = (function(){
     var c = client();
     if(!c) return;
     try{
-      c.rpc('student_touch', {
+      pelRpc('student_touch', {
         p_session_id: getSessionId(),
         p_event_type: eventType || 'heartbeat',
         p_page: (opts && opts.page) || null,
@@ -14197,12 +14202,16 @@ function getLesson(academyId, lessonId){
    ============================================================ */
 function lsGet(key, fallback){ try{ return JSON.parse(localStorage.getItem(key)) ?? fallback; }catch(e){ return fallback; } }
 function lsSet(key, val){ localStorage.setItem(key, JSON.stringify(val));
-  const c = client();
-  if(c){ c.auth.getSession().then(({data}) => {
-    if(data && data.session){
-      c.from('student_data').upsert({ user_id:data.session.user.id, key, value:val }).then(()=>{}).catch(()=>{});
-    }
-  }).catch(()=>{}); }
+  if(window.PEL_COOKIE_AUTH && currentUser){
+    pelTableUpsert('student_data', { user_id: currentUser.id, key, value: val }, 'user_id,key').catch(()=>{});
+  } else {
+    const c = client();
+    if(c){ c.auth.getSession().then(({data}) => {
+      if(data && data.session){
+        c.from('student_data').upsert({ user_id:data.session.user.id, key, value:val }).then(()=>{}).catch(()=>{});
+      }
+    }).catch(()=>{}); }
+  }
 }
 // User-scoped localStorage: prefix keys with userId so data never bleeds between
 // accounts on shared devices. Falls back to legacy key with migration on first read.
@@ -14263,7 +14272,7 @@ function markLessonComplete(academyId, lessonId, stats){
   try{
     const c = client();
     if(c && currentUser){
-      rpcPromise = c.rpc('complete_activity', { p_lesson_id: lessonId, p_stats: stats || null })
+      rpcPromise = pelRpc('complete_activity', { p_lesson_id: lessonId, p_stats: stats || null })
         .then(({ data, error }) => {
           if(error || !data || data.ok === false){
             // Roll back local state if server didn't record the completion
@@ -16734,7 +16743,7 @@ function wirePelPath(root){
       if(!window.confirm(ar_switch_confirm_text())) return;
       try{
         const c = client(); if(!c) return;
-        const r = await c.rpc('student_switch_academy', { p_academy_id: id });
+        const r = await pelRpc('student_switch_academy', { p_academy_id: id });
         if(!r.error && r.data && r.data.ok){
           if(r.data.state && r.data.state.stage) window.PEL_EFFECTIVE_STATE = r.data.state;
           renderLibrary();
@@ -18744,7 +18753,7 @@ async function renderControlCenter(){
   const c = client();
   if(!c || !currentUser){ host.innerHTML = ''; return; }
   let st = null;
-  try{ const { data } = await c.rpc('student_effective_state'); st = data; }catch(e){}
+  try{ const { data } = await pelRpc('student_effective_state'); st = data; }catch(e){}
   if(!st || st.ok === false || !st.stage){ host.innerHTML = ''; return; }
   window.PEL_EFFECTIVE_STATE = st;
   try{ syncFeatureGates(); }catch(e){console.warn('[PEL] syncFeatureGates:',e.message||e);}
@@ -18895,7 +18904,7 @@ function renderActivePath(){
     el.style.opacity = '.45'; el.style.pointerEvents = 'none';
     try{
       const c = client(); if(!c || !currentUser) return;
-      const r = await c.rpc('student_switch_academy', { p_academy_id: id });
+      const r = await pelRpc('student_switch_academy', { p_academy_id: id });
       if(r.error) throw r.error;
       const d = r.data || {};
       if(d.ok === false) throw new Error(d.reason || 'switch failed');
@@ -18911,7 +18920,7 @@ function renderActivePath(){
 function c_rpc_effective_state(){
   const c = client();
   if(!c || !currentUser) return Promise.resolve(false);
-  return c.rpc('student_effective_state').then(({ data, error }) => {
+  return pelRpc('student_effective_state').then(({ data, error }) => {
     if(error || !data || data.ok === false || !data.stage){ return false; }
     window.PEL_EFFECTIVE_STATE = data; return true;
   }).catch(() => false);
@@ -18979,13 +18988,13 @@ async function hydrateServerPlan(user){
    the onboarding draft. */
 function persistPlanDraft(plan){
   if(!plan || !currentUser || !client()) return;
-  try{ client().rpc('student_save_plan_draft', { p_draft: plan }).catch(function(){}); }catch(e){}
+  try{ pelRpc('student_save_plan_draft', { p_draft: plan }).catch(function(){}); }catch(e){}
 }
 async function hydrateLearningState(user){
   window.PEL_PROFILE_PLAN = null;
   if(!currentUser || !client()) return;
   let st = null;
-  try{ const r = await client().rpc('student_get_learning_state'); st = r.data; }catch(e){ return; }
+  try{ const r = await pelRpc('student_get_learning_state'); st = r.data; }catch(e){ return; }
   if(!st || st.ok === false) return;
 
   // Assessment: server wins, but a newer local retake (a visitor re-took the
@@ -18999,7 +19008,7 @@ async function hydrateLearningState(user){
   if(srvAsm && Object.keys(srvAsm).length && srvTime >= locTime){
     try{ localStorage.setItem('pel_assessment', JSON.stringify(srvAsm)); }catch(e){}
   } else if(localAsm && localAsm.track && localAsm.level && locTime > srvTime && !window.PEL_SERVER_PLAN){
-    try{ client().rpc('student_save_assessment', { p_track: localAsm.track, p_level: localAsm.level, p_blob: localAsm }).catch(function(){}); }catch(e){}
+    try{ pelRpc('student_save_assessment', { p_track: localAsm.track, p_level: localAsm.level, p_blob: localAsm }).catch(function(){}); }catch(e){}
   }
 
   // Plan draft: only when there is NO assigned subscription. The assigned plan
@@ -19044,7 +19053,7 @@ async function startNextGuidedLesson(depth){
     const nxt = (st.route_stages || []).find(s => s.id && s.id !== st.stage.id);
     if(nxt){
       try{
-        const r = await client().rpc('student_switch_academy', { p_academy_id: nxt.id });
+        const r = await pelRpc('student_switch_academy', { p_academy_id: nxt.id });
         if(!r.error && r.data && r.data.ok) return startNextGuidedLesson(1);
       }catch(e){}
     }
@@ -19668,7 +19677,7 @@ async function syncCertificateRecords(){
       .map(k => compDates[k]).filter(Boolean).sort();
     const dateRaw = dates.length ? dates[dates.length - 1] : pelDateKey();
     try{
-      const { error } = await c.rpc('issue_certificate', {
+      const { error } = await pelRpc('issue_certificate', {
         p_code: entry.code,
         p_cert_id: cert.certId,
         p_student_name: studentFullName(),
@@ -21029,7 +21038,7 @@ if(window.lucide) lucide.createIcons();
     const cl=c(); if(!cl) return null;
     // Reuse cached overview from refreshCredits if fresh (< 30s old)
     if(window._pelOverviewCache && (Date.now() - (window._pelOverviewTs||0)) < 30000){ OVER=window._pelOverviewCache; return OVER; }
-    try{ const { data, error } = await cl.rpc('student_live_class_overview'); if(error){ console.warn('[PEL] live_class_overview:', error.message||error); return null; } OVER=data;
+    try{ const { data, error } = await pelRpc('student_live_class_overview'); if(error){ console.warn('[PEL] live_class_overview:', error.message||error); return null; } OVER=data;
       // Sync cache + topbar credits pill with the overview data
       if(data && typeof data.credits !== 'undefined'){ window._pelCredits = data.credits; window._pelOverviewCache = data; window._pelOverviewTs = Date.now(); const pill=document.getElementById('topbarCredits'); const num=document.getElementById('topCreditsNum'); if(pill && num){ num.textContent = window._pelCredits; pill.style.display = window._pelCredits > 0 ? '' : 'none'; } const pc=document.getElementById('profileCreditsNum'); if(pc) pc.textContent = window._pelCredits; }
       return data; }
@@ -21122,7 +21131,7 @@ if(window.lucide) lucide.createIcons();
     const cl=c(); if(!cl){ toast({en:'Not ready yet',ar:'لسا جاهز'}); return; }
     btn.disabled=true; const orig=btn.textContent; btn.textContent=ar()?'يرسل...':'Sending...';
     try{
-      const { data, error } = await cl.rpc('request_live_class', { p_service_code:sel.value, p_city_raw:city.value||null, p_preferred_times:times.value||null, p_student_notes:notes.value||null });
+      const { data, error } = await pelRpc('request_live_class', { p_service_code:sel.value, p_city_raw:city.value||null, p_preferred_times:times.value||null, p_student_notes:notes.value||null });
       if(error) throw error;
       toast({en:'Request sent! '+data.credit_cost+' credits debited.', ar:'تم ارسال طلبك! خصم '+data.credit_cost+' رصيد.'}, 'ok');
       city.value=''; times.value=''; notes.value='';
@@ -21138,7 +21147,7 @@ if(window.lucide) lucide.createIcons();
 
   async function markWelcome(){
     const cl=c(); if(!cl) return;
-    try{ await cl.rpc('mark_welcome_seen'); }catch(e){}
+    try{ await pelRpc('mark_welcome_seen'); }catch(e){}
     if(OVER) OVER.welcome_seen=true; render();
     dismissGlobalWelcome();
   }
