@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;500;700&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.50.0/dist/umd/supabase.js" integrity="sha384-K0oxqktRvaThvYgGL4G+OK2Ih6VS6Uyu7j3+7WJgp/uWM0Yv6Xi4YEiw0BB+mPfi" crossorigin="anonymous" defer></script>
-<script src="lib/pel_config.js?v=e4857dea"></script>
+<script src="lib/pel_config.js?v=a5d8e295"></script>
 <style>
 :root{
   --bg:#0E0E10;
@@ -687,17 +687,24 @@ window.addEventListener('load', async () => {
 /* Ask the database who this session belongs to: admins go to the admin
    panel, everyone else to the student app (which renders its own
    entitlement state - activation, renewal, suspension - if blocked).
-   Tries cookie-based API first, falls back to Supabase JS client. */
+   Tries cookie-based API first (only if test flag enabled), falls back to Supabase JS client. */
 async function triggerRedirect(){
   document.getElementById('redirectOverlay').classList.add('show');
   let target = 'app.html';
+  var enableCookieAuth = (localStorage.getItem('pel_cookie_test') === '1') || (new URLSearchParams(window.location.search).get('cookie_auth') === '1');
+  // Propagate cookie test flag via localStorage so it survives redirect
+  if(new URLSearchParams(window.location.search).get('cookie_auth') === '1'){
+    localStorage.setItem('pel_cookie_test', '1');
+  }
   try{
-    // Try cookie-based API first
-    if(typeof window.pelApi === 'function'){
+    // Only try cookie-based API if test flag is enabled
+    if(enableCookieAuth && typeof window.pelApi === 'function'){
       const r = await pelApi('pel_access_state');
       if(r && r.ok && r.data && r.data.is_admin) target = 'admin.html';
+      else if(r && r.ok) { /* not admin, target stays app.html */ }
+      else { throw new Error('pelApi failed'); }
     } else {
-      throw new Error('pelApi not available');
+      throw new Error('cookie auth not enabled');
     }
   }catch(e){
     // Legacy: use Supabase JS client
