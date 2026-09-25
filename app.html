@@ -18,14 +18,14 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.50.0/dist/umd/supabase.js" integrity="sha384-K0oxqktRvaThvYgGL4G+OK2Ih6VS6Uyu7j3+7WJgp/uWM0Yv6Xi4YEiw0BB+mPfi" crossorigin="anonymous" defer></script>
 <script src="lib/daily-lesson.js?v=867bb077" defer></script>
 <script src="lib/pel-personalization.js?v=3611bdbf" defer></script>
-<script src="lib/pel-plans.js?v=8f239d14" defer></script>
-<script src="lib/pel-settings.js?v=1ef07b21" defer></script>
+<script src="lib/pel-plans.js?v=6c0195dc" defer></script>
+<script src="lib/pel-settings.js?v=30360798" defer></script>
 <script src="lib/cert-qr.js?v=a43f19f9" defer></script>
 <script src="lib/cert-sheet.js?v=5278e935" defer></script>
-<script src="lib/pel_config.js?v=a5d8e295"></script>
-<script src="lib/pel_lesson_stage.js?v=901d298c"></script>
-<script src="lib/pel_dashboard_life.js?v=e6f7a4b5"></script>
-<script src="lib/pel_curriculum_path.js?v=b451f595"></script>
+<script src="lib/pel_config.js?v=d66df0a3"></script>
+<script src="lib/pel_lesson_stage.js?v=d8bc0686"></script>
+<script src="lib/pel_dashboard_life.js?v=b1ada245"></script>
+<script src="lib/pel_curriculum_path.js?v=e20f4ada"></script>
 <style>
 /* ============================================================
    DESIGN SYSTEM TOKENS, shared with index.html / login.html
@@ -16322,7 +16322,7 @@ const CORRECT_RULES = [
   { re:/([A-Za-z0-9])\s*$/, fix:(m, c) => c + '.', category:'punctuation',
     ar:'الجملة تنتهي بنقطة.',
     en:'A sentence should end with a period.',
-    why_ar:'في الكتابة، كل جملة كاملة تنتهي بعلامة ترقيم (نقطة، علامة استفهام، او تعجب).',
+    why_ar:'في الكتابة، كل جملة كاملة تنتهي بعلامة ترقيم (نقطة، علامة استفسار، او تعجب).',
     why_en:'In writing, every complete sentence ends with terminal punctuation (a period, question mark, or exclamation).',
     learn:{ ar:'I am fine. How are you?', en:'End statements with a period.' } },
 ];
@@ -17708,8 +17708,8 @@ function renderGrammar(){
     <div class="grid grid-2" id="grammarGrid"></div>
     <div style="margin-top:36px;">
       <div class="page-head" style="margin-bottom:20px;">
-        <span class="eyebrow"><span class="arabic" style="font-size:.95em;">مدرب الاخطاء السعودي</span>، Saudi Mistake Coach</span>
-        <h2 style="font-size:1.3rem; margin-top:8px;"><span class="arabic" style="display:block; font-size:.7em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">الاخطاء اللي يقع فيها المتحدث بالعربية، مع السبب والتمرين.</span><span dir="ltr">The mistakes Arabic speakers make, with the reason and practice.</span></h2>
+        <span class="eyebrow"><span class="arabic" style="font-size:.95em;">مدرب الاخطا السعودي</span>، Saudi Mistake Coach</span>
+        <h2 style="font-size:1.3rem; margin-top:8px;"><span class="arabic" style="display:block; font-size:.7em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">الاخطا اللي يقع فيها المتحدث بالعربية، مع السبب والتمرين.</span><span dir="ltr">The mistakes Arabic speakers make, with the reason and practice.</span></h2>
       </div>
       <div class="grid grid-2" id="coachGrid"></div>
     </div>`;

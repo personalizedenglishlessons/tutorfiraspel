@@ -1086,7 +1086,7 @@ function render360(){
     presInfo += '<span>· ' + esc(lang==='ar'?'اخر دخول':'Last login') + ': ' + esc(fmtDate(presence.last_login_at)) + '</span>';
   }
   if(presence.last_action){
-    presInfo += '<span>· ' + esc(lang==='ar'?'اخر اجراء':'Last action') + ': ' + esc(presence.last_action) + ' (' + esc(relTime(presence.last_action_at)) + ')</span>';
+    presInfo += '<span>· ' + esc(lang==='ar'?'اخر اجرا':'Last action') + ': ' + esc(presence.last_action) + ' (' + esc(relTime(presence.last_action_at)) + ')</span>';
   }
   if(presence.current_lesson_id){
     presInfo += '<span>· ' + esc(lang==='ar'?'الدرس الحالي':'Current lesson') + ': ' + esc(presence.current_lesson_id) + '</span>';
