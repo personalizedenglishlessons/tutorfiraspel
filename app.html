@@ -18817,8 +18817,34 @@ async function renderControlCenter(){
           <span style="font-size:.64rem; color:var(--text-muted); text-align:center; line-height:1.25;"><span class="arabic">تقدم المرحلة</span>، Stage progress</span>
         </div>
       </div>
+    </div>
+    <div class="card" style="padding:16px 20px; display:flex; gap:24px; flex-wrap:wrap; margin-top:12px;">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <i data-lucide="book-open" width="18" height="18" style="color:var(--gold);"></i>
+        <div><b id="ccWordsLearned">—</b> <span style="font-size:.8rem; color:var(--text-muted);"><span class="arabic">كلمة تعلمتها</span>، words learned</span></div>
+      </div>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <i data-lucide="rotate-cw" width="18" height="18" style="color:var(--gold);"></i>
+        <div><b id="ccDueReviews">—</b> <span style="font-size:.8rem; color:var(--text-muted);"><span class="arabic">مراجعة مستحقة</span>， due reviews</span></div>
+      </div>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <i data-lucide="zap" width="18" height="18" style="color:var(--gold);"></i>
+        <div><b>${(studentStats.xp||0).toLocaleString()}</b> <span style="font-size:.8rem; color:var(--text-muted);"><span class="arabic">نقطة خبرة</span>， XP</span></div>
+      </div>
     </div>`;
   lucide.createIcons();
+  // Fill in capability metrics from SRS store (words learned, due reviews).
+  // Research: showing capability metrics (what you can do) beats consumption
+  // metrics (how long you studied) for motivation and retention.
+  try{
+    const srsData = JSON.parse(localStorage.getItem('pel_srs_v1') || '{}');
+    const wordsLearned = Object.keys(srsData).length;
+    const dueReviews = (typeof PEL_STAGE_API !== 'undefined' && PEL_STAGE_API.srsDueList) ? PEL_STAGE_API.srsDueList(999).length : 0;
+    const wlEl = document.getElementById('ccWordsLearned');
+    const drEl = document.getElementById('ccDueReviews');
+    if(wlEl) wlEl.textContent = wordsLearned;
+    if(drEl) drEl.textContent = dueReviews;
+  }catch(e){}
   const sb = document.getElementById('ccStartBtn');
   if(sb && L) sb.addEventListener('click', () => { try{ openLesson(st.stage.id, L.id); }catch(e){} });
 }
