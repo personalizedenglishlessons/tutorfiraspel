@@ -16582,7 +16582,7 @@ function renderQuiz(container, questions, keyPrefix){
   function renderQ(){
     const q = questions[current];
     container.innerHTML = `
-      <p style="font-size:.72rem; color:var(--text-muted); margin-bottom:8px;"><span class="arabic">سوال ${current+1} من ${questions.length}</span>، <span dir="ltr">Question ${current+1} of ${questions.length}</span></p>
+      <p style="font-size:.72rem; color:var(--text-muted); margin-bottom:8px;"><span class="arabic">سوال ${current+1} من ${questions.length}</span><br><span dir="ltr">Question ${current+1} of ${questions.length}</span></p>
       <h4 style="font-size:1.02rem; margin-bottom:16px; display:flex; align-items:flex-start; gap:8px;"><span style="flex:1;" dir="ltr">${q.qEn ? escapeHtml(q.qEn) + (q.qAr ? '<div class="arabic" style="font-size:.85rem;font-weight:400;margin-top:4px;">' + escapeHtml(q.qAr) + '</div>' : '') + (q.qTr ? '<div class="arabic" style="font-size:.76rem;color:var(--gold-soft);margin-top:3px;">' + escapeHtml(q.qTr) + '</div>' : '') : escapeHtml(q.q||'')}</span><button type="button" class="icon-btn speak-btn" data-speak="${escapeHtml((q.qEn||q.q||'').match(/[A-Za-z][A-Za-z\s,?'-.]+$/) ? (q.qEn||q.q||'').match(/[A-Za-z][A-Za-z\s,?'-.]+$/)[0].trim() : '')}" aria-label="Listen" style="flex-shrink:0;width:26px;height:26px;"><i data-lucide="volume-2" width="12" height="12"></i></button></h4>
       <div id="${keyPrefix}-options"></div>`;
     const optWrap = container.querySelector('#'+keyPrefix+'-options');
@@ -17702,8 +17702,8 @@ function renderGrammar(){
   el.innerHTML = `
     <div class="page-head">
       <span class="eyebrow"><span class="arabic" style="font-size:.95em;">اكاديمية القواعد</span>، Grammar Academy</span>
-      <h1><span class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">قواعد اللغة، تُشرح بالطريقة اللي يحتاجها الطالب العربي فعلا.</span><span dir="ltr">Grammar, explained the way Arabic-speaking students actually need it.</span></h1>
-      <p><span class="arabic" style="display:block; margin-bottom:4px;">كل قاعدة تتضمن اكثر خطا يقع فيه المتحدثون بالعربية، وسبب حدوثه.</span><span dir="ltr">Every rule includes the mistake Arabic-speaking learners make most often, and why.</span></p>
+      <h1><span class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">قواعد اللغة، تشرح بالطريقة اللي يحتاجها الطالب العربي فعلا.</span><span dir="ltr">Grammar, explained the way Arabic-speaking students actually need it.</span></h1>
+      <p><span class="arabic" style="display:block; margin-bottom:4px;">كل قاعدة تتضمن اكثر غلطة يقع فيها اللي يتكلم بالعربية، والسبب.</span><span dir="ltr">Every rule includes the mistake Arabic-speaking learners make most often, and why.</span></p>
     </div>
     <div class="grid grid-2" id="grammarGrid"></div>
     <div style="margin-top:36px;">
