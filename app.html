@@ -1740,9 +1740,18 @@ async function revealApp(user){
   await Promise.race([loadCurriculum(), new Promise(r => setTimeout(r, 2500))]);
   await loadStudentState();
   // Mirror the spaced-repetition schedule from/to pel_srs_state (cross-device
-  // continuity). Fire-and-forget: local-first play works even if this fails.
+  // continuity). AWAIT with a 5-second timeout so the review queue uses
+  // fresh server data by the time the user opens a lesson. If sync fails
+  // (offline, RLS error), local cache is used — local-first play still works.
+  // Research: SRS state was previously fire-and-forget, meaning the review
+  // queue could use stale localStorage data if the user cleared browser data
+  // or switched devices. This await ensures server-authoritative SRS state
+  // is merged before any lesson renders.
   try{ if(window.PEL_STAGE_API && typeof window.PEL_STAGE_API.srsSync === 'function'){
-    window.PEL_STAGE_API.srsSync().catch(function(e){ console.warn('[PEL] SRS sync failed:', e.message||e); });
+    await Promise.race([
+      window.PEL_STAGE_API.srsSync().catch(function(e){ console.warn('[PEL] SRS sync failed:', e.message||e); }),
+      new Promise(function(r){ setTimeout(r, 5000); })
+    ]);
   } }catch(e){}
   await loadSubPlan();
   await hydrateServerPlan(user);
