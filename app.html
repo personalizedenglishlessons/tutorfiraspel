@@ -23,7 +23,7 @@
 <script src="lib/cert-qr.js?v=a43f19f9" defer></script>
 <script src="lib/cert-sheet.js?v=5278e935" defer></script>
 <script src="lib/pel_config.js?v=d66df0a3"></script>
-<script src="lib/pel_lesson_stage.js?v=1a498142"></script>
+<script src="lib/pel_lesson_stage.js?v=5dd30f67"></script>
 <script src="lib/pel_dashboard_life.js?v=cf9399c4"></script>
 <script src="lib/pel_curriculum_path.js?v=ce8b099c"></script>
 <style>
@@ -40,6 +40,8 @@
   --shadow-soft:0 20px 60px -20px rgba(0,0,0,.55);
   --shadow-lift:0 30px 90px -25px rgba(0,0,0,.7);
   --gold-glow:0 0 40px -8px rgba(200,169,106,.45);
+  --stage-bar-bg:rgba(23,23,27,.92);
+  --stage-bar-border:var(--border);
   --ease:cubic-bezier(.16,.84,.32,1);
   --dur:300ms;
   --sidebar-w:276px; --sidebar-w-collapsed:80px; --topbar-h:76px; --context-w:320px;
@@ -49,15 +51,17 @@
   --translit-min:0.88rem; --translit-scale:1.05em;
 }
 html[data-theme="light"]{
-  --bg:#F6F2EB; --surface:#FFFCF6; --card:#FFFFFF; --card-elevated:#FFFDF8;
-  --border:#E6DCC8; --text:#1A1712; --text-secondary:#4A4136; --text-muted:#6B6052;
-  --gold:#C8931C; --gold-soft:#E6C258; --bronze:#9A6E16; --emerald:#2F745E;
-  --warning:#B07A2A; --danger:#C25C5C; --success:#2F8A57; --error:#C25C5C;
+  --bg:#F5F1EA; --surface:#FBF8F2; --card:#FFFEFB; --card-elevated:#FAF6EF;
+  --border:#E5DAC8; --text:#1A1712; --text-secondary:#4A4136; --text-muted:#6B6052;
+  --gold:#B8831A; --gold-soft:#D4AE50; --bronze:#9A6E16; --emerald:#2F745E;
+  --warning:#B07A2A; --danger:#B85555; --success:#2F8A57; --error:#B85555;
   --text-faint:#9A9088;
-  --pel-stem:#1A1712; --pel-gold:#C8931C;
-  --shadow-soft:0 20px 55px -24px rgba(40,28,12,.20);
-  --shadow-lift:0 32px 80px -28px rgba(40,28,12,.26);
-  --gold-glow:0 0 40px -10px rgba(200,147,28,.34);
+  --pel-stem:#1A1712; --pel-gold:#B8831A;
+  --shadow-soft:0 20px 55px -24px rgba(40,28,12,.14);
+  --shadow-lift:0 32px 80px -28px rgba(40,28,12,.18);
+  --gold-glow:0 0 40px -10px rgba(184,131,26,.22);
+  --stage-bar-bg:rgba(251,248,242,.88);
+  --stage-bar-border:#E5DAC8;
 }
 *,*::before,*::after{box-sizing:border-box;}
 html{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; text-rendering:optimizeLegibility; font-optical-sizing:auto; font-size:17px; }
@@ -801,14 +805,14 @@ body::before{
   box-shadow: inset 0 1px 0 rgba(255,255,255,.03), 0 14px 34px -22px rgba(0,0,0,.55);
 }
 html[data-theme="light"] .card{
-  background:linear-gradient(180deg, rgba(255,255,255,.75), transparent 40%), var(--card);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 14px 34px -26px rgba(30,25,15,.22);
+  background:linear-gradient(180deg, rgba(255,254,251,.8), transparent 40%), var(--card);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.8), 0 10px 30px -20px rgba(40,28,12,.12);
 }
 .card-elevated{
   background:linear-gradient(180deg, rgba(255,255,255,.028), transparent 40%), var(--card-elevated);
 }
 html[data-theme="light"] .card-elevated{
-  background:linear-gradient(180deg, rgba(255,255,255,.9), transparent 42%), var(--card-elevated);
+  background:linear-gradient(180deg, rgba(255,254,251,.85), transparent 42%), var(--card-elevated);
 }
 .card.hoverable:hover{
   transform:translateY(-5px);
@@ -816,7 +820,7 @@ html[data-theme="light"] .card-elevated{
   box-shadow: inset 0 1px 0 rgba(255,255,255,.04), 0 22px 50px -20px rgba(0,0,0,.6), 0 0 0 1px rgba(200,169,106,.10), 0 10px 44px -18px rgba(200,169,106,.4);
 }
 html[data-theme="light"] .card.hoverable:hover{
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 22px 50px -28px rgba(30,25,15,.3), 0 0 0 1px rgba(200,169,106,.16), 0 10px 44px -20px rgba(168,131,69,.35);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.8), 0 16px 40px -24px rgba(40,28,12,.18), 0 0 0 1px rgba(184,131,26,.14), 0 8px 36px -20px rgba(184,131,26,.2);
 }
 
 /* Buttons: gold gets a sheen sweep and a warmer ring; outline gets a
@@ -845,7 +849,7 @@ html[data-theme="light"] .card.hoverable:hover{
   background:linear-gradient(180deg, rgba(200,169,106,.12), rgba(200,169,106,.03));
   box-shadow: 0 10px 26px -14px rgba(200,169,106,.45);
 }
-html[data-theme="light"] .btn-outline{ background:rgba(255,255,255,.5); }
+html[data-theme="light"] .btn-outline{ background:rgba(255,254,251,.6); border-color:var(--border); }
 
 /* Gold chip: gradient fill instead of flat tint. */
 .chip.gold{
@@ -870,8 +874,8 @@ html[data-theme="light"] .btn-outline{ background:rgba(255,255,255,.5); }
 }
 .tile-icon-sm{ width:38px; height:38px; border-radius:11px; }
 html[data-theme="light"] .tile-icon{
-  background:linear-gradient(135deg, rgba(200,169,106,.32), rgba(168,131,69,.16));
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 6px 18px -10px rgba(168,131,69,.45);
+  background:linear-gradient(135deg, rgba(184,131,26,.22), rgba(154,110,22,.12));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 6px 18px -10px rgba(184,131,26,.3);
 }
 
 /* Sidebar: the logo glows, the active link becomes a soft gold panel. */
@@ -910,9 +914,10 @@ html[data-theme="light"] .tile-icon{
 }
 html[data-theme="light"] #heroCard{
   background:
-    radial-gradient(90% 130% at 100% -20%, rgba(200,169,106,.12), transparent 55%),
-    linear-gradient(165deg, rgba(255,255,255,.9), transparent 50%),
+    radial-gradient(90% 130% at 100% -20%, rgba(184,131,26,.10), transparent 55%),
+    linear-gradient(165deg, rgba(255,254,251,.85), transparent 50%),
     var(--card-elevated);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 20px 50px -24px rgba(40,28,12,.14);
 }
 #heroCard::before{
   content:""; position:absolute; top:0; left:0; right:0; height:2px;
@@ -937,7 +942,7 @@ html[data-theme="light"] #heroCard{
 }
 .lesson-cover-icon{ filter:drop-shadow(0 8px 16px rgba(0,0,0,.5)); }
 .lesson-cover > div{ position:relative; z-index:1; }
-html[data-theme="light"] .academy-card{ box-shadow:0 14px 34px -26px rgba(30,25,15,.25); }
+html[data-theme="light"] .academy-card{ box-shadow:0 10px 30px -20px rgba(40,28,12,.14); }
 .academy-cover::before{
   content:""; position:absolute; inset:0; pointer-events:none;
   background:
@@ -958,12 +963,13 @@ html[data-theme="light"] .academy-card{ box-shadow:0 14px 34px -26px rgba(30,25,
   box-shadow:0 24px 54px -22px rgba(0,0,0,.65), 0 10px 44px -18px rgba(200,169,106,.35);
 }
 html[data-theme="light"] .academy-card:hover{
-  box-shadow:0 24px 54px -30px rgba(30,25,15,.35), 0 10px 44px -20px rgba(168,131,69,.3);
+  box-shadow:0 18px 44px -24px rgba(40,28,12,.18), 0 8px 36px -20px rgba(184,131,26,.2);
 }
 .academy-fav{
   background:rgba(10,10,12,.45);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.12);
 }
+html[data-theme="light"] .academy-fav{ background:rgba(255,254,251,.7); box-shadow:inset 0 1px 0 rgba(255,255,255,.5); }
 
 /* Progress: fills and rings get a gentle glow so progress feels alive. */
 .progress-fill{ box-shadow:0 0 10px rgba(200,169,106,.45), 0 0 2px rgba(200,169,106,.6); }
