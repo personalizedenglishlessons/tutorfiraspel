@@ -742,6 +742,47 @@ body.ui-ar select{ direction:rtl; }
 body.ui-ar .lib-toolbar, body.ui-ar .lib-search{ direction:rtl; }
 body.ui-ar .lib-filter{ direction:rtl; }
 
+/* ---- RTL physical-property fixes (Arabic light + dark mode) ----
+   CSS direction:rtl does NOT flip physical left/right/margin-left/border-right.
+   These overrides mirror every directional property so the Arabic UI is a
+   true mirror of the English one. English interface is untouched. */
+body.ui-ar .sidebar{ border-right:none; border-left:1px solid var(--border); }
+body.ui-ar .sidebar-collapse-btn{ margin-left:0; margin-right:auto; }
+body.ui-ar .side-link.active{ background:linear-gradient(270deg, rgba(200,169,106,.14), transparent); }
+body.ui-ar .side-link.active::before{ left:auto; right:0; }
+html[data-theme="light"] body.ui-ar .side-link.active::before{ box-shadow:0 0 8px rgba(139,108,47,.5); }
+body.ui-ar .side-badge{ right:auto; left:8px; }
+body.ui-ar .context-panel{ border-left:none; border-right:1px solid var(--border); }
+body.ui-ar .kbd{ margin-left:0; margin-right:auto; }
+body.ui-ar .notif-dot{ right:auto; left:9px; }
+body.ui-ar .dropdown{ right:auto; left:0; }
+body.ui-ar .user-menu-wrap .dropdown{ left:auto; right:0; }
+body.ui-ar .notif-wrap .dropdown{ left:auto; right:0; }
+body.ui-ar #toastStack{ right:auto; left:26px; }
+body.ui-ar .modal-close{ right:auto; left:22px; }
+body.ui-ar .qt-fab{ right:auto; left:26px; }
+body.ui-ar .qt-popup{ right:auto; left:26px; }
+body.ui-ar .cert-seal{ right:auto; left:22px; }
+body.ui-ar .academy-fav{ left:auto; right:12px; }
+body.ui-ar .lesson-cover-icon{ right:auto; left:20px; }
+body.ui-ar .roadmap-track{ padding-left:0; padding-right:30px; }
+body.ui-ar .roadmap-dot{ left:auto; right:-30px; }
+body.ui-ar .workspace-nav{ border-right:none; border-left:1px solid var(--border); }
+body.ui-ar .workspace-context{ border-left:none; border-right:1px solid var(--border); }
+body.ui-ar .fb-why{ border-left:none; border-right:2px solid rgba(139,108,47,.3); }
+@media(max-width:980px){
+  body.ui-ar .sidebar{ left:auto; right:0; transform:translateX(100%); }
+  body.ui-ar .sidebar.mobile-open{ transform:translateX(0); }
+  body.ui-ar .context-panel{ right:auto; left:0; transform:translateX(-100%); }
+  body.ui-ar .context-panel.open{ transform:translateX(0); }
+  body.ui-ar .qt-fab{ right:auto; left:26px; }
+  body.ui-ar .qt-popup{ left:12px; right:12px; }
+}
+/* Light-mode RTL: mirror the active-link gradient and hero glow direction */
+html[data-theme="light"] body.ui-ar .side-link.active{ background:linear-gradient(270deg, rgba(139,108,47,.1), rgba(139,108,47,.03) 70%, transparent); }
+html[data-theme="light"] body.ui-ar #heroCard{ background:radial-gradient(90% 130% at 0% -20%, rgba(139,108,47,.06), transparent 55%), radial-gradient(70% 100% at 100% 110%, rgba(29,122,78,.03), transparent 55%), linear-gradient(165deg, rgba(0,0,0,.008), transparent 45%), var(--card-elevated); }
+html[data-theme="light"] body.ui-ar .pel-conv-line.B{ background:linear-gradient(270deg, rgba(139,108,47,.06), transparent 50%), var(--card-elevated); }
+
 /* situation flow (real-life lesson plan) */
 .situation-block{ border:1px solid var(--border); border-radius:14px; padding:16px; margin-top:12px; background:var(--card-elevated); }
 .situation-block:first-of-type{ margin-top:16px; }
