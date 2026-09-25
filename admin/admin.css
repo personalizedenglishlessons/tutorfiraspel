@@ -21,9 +21,9 @@ html[data-theme="light"]{
   --warning:#8B6C2F; --danger:#B8442E; --success:#1D7A4E; --error:#B8442E;
   --text-faint:#AEAEB2;
   --pel-stem:#1D1D1F; --pel-gold:#8B6C2F;
-  --shadow-soft:0 1px 3px rgba(0,0,0,.04);
-  --shadow-lift:0 4px 12px rgba(0,0,0,.06);
-  --gold-glow:none;
+  --shadow-soft:0 1px 2px rgba(0,0,0,.04), 0 4px 16px -8px rgba(0,0,0,.06);
+  --shadow-lift:0 2px 6px rgba(0,0,0,.05), 0 12px 32px -12px rgba(0,0,0,.08);
+  --gold-glow:0 0 24px -8px rgba(139,108,47,.15);
 }
 *,*::before,*::after{box-sizing:border-box;}
 html,body{min-height:100%;}
