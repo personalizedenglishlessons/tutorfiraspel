@@ -199,5 +199,114 @@ check('how_to_say after learn', learnIdx2 !== -1 && howToSayIdx !== -1 && learnI
 var firstPracticeIdx2 = seqTest.findIndex(a => ['recognize','match','fill_blank','arrange_words','spell'].indexOf(a.type) !== -1);
 check('how_to_say before first practice', howToSayIdx !== -1 && firstPracticeIdx2 !== -1 && howToSayIdx < firstPracticeIdx2);
 
+/* ====== SELF-CHECK MASTERY GATE TESTS ====== */
+
+// 19. Self-check mark does not count toward mastery gate stats
+var mockSeq = [
+  { type: 'pronunciation', mode: 'production', item: {en:'test', ar:'اختبار', translit:''} },
+  { type: 'speaking', mode: 'production', sentence: {en:'test', ar:'اختبار', translit:''} },
+  { type: 'fill_blank', mode: 'production' },
+];
+var mockState = {
+  seq: mockSeq, idx: 0, checked: false, correct: undefined,
+  prodTotal: 0, prodOk: 0, prodFirstOk: 0, recTotal: 0, recOk: 0,
+  academyId: 'test', lessonId: 'test-lesson'
+};
+var mockCtx = {
+  s: mockState, self: api.Stage,
+  fb: { className: '', innerHTML: '' },
+  btn: { disabled: false, className: '', innerHTML: '', onclick: null, textContent: '' }
+};
+
+// Mark first activity as self-check (fallback)
+api.Stage.mark(mockCtx, true, true);
+check('self-check does not count prodTotal', mockState.prodTotal === 0);
+check('self-check does not count prodFirstOk', mockState.prodFirstOk === 0);
+check('self-check sets act.selfCheck', mockSeq[0].selfCheck === true);
+check('self-check sets act.counted', mockSeq[0].counted === true);
+
+// Move to next activity and mark as real production
+mockState.idx = 1; mockState.checked = false; mockState.correct = undefined;
+api.Stage.mark(mockCtx, true, false);
+check('real mark counts prodTotal', mockState.prodTotal === 1);
+check('real mark counts prodFirstOk', mockState.prodFirstOk === 1);
+
+// Move to next and mark as real production (incorrect)
+mockState.idx = 2; mockState.checked = false; mockState.correct = undefined;
+api.Stage.mark(mockCtx, false, false);
+check('real wrong counts prodTotal', mockState.prodTotal === 2);
+check('real wrong does not count prodFirstOk', mockState.prodFirstOk === 1);
+
+// 20. Mixed real + self-check: mastery gate uses only real attempts
+// Need prodTotal >= 3 to test the accuracy ratio. Add 2 more real production
+// activities (one correct, one wrong) -> prodTotal=4, prodFirstOk=2 -> 50% < 60%
+var moreSeq = [
+  { type: 'pronunciation', mode: 'production', item: {en:'a',ar:'',translit:''} },
+  { type: 'speaking', mode: 'production', sentence: {en:'b',ar:'',translit:''} },
+  { type: 'fill_blank', mode: 'production' },
+  { type: 'translate', mode: 'production' },
+  { type: 'arrange_words', mode: 'production' },
+];
+var moreState = {
+  seq: moreSeq, idx: 0, checked: false, correct: undefined,
+  prodTotal: 0, prodOk: 0, prodFirstOk: 0, recTotal: 0, recOk: 0,
+  academyId: 'test', lessonId: 'mixed-test'
+};
+var moreCtx = { s: moreState, self: api.Stage, fb: {className:'',innerHTML:''}, btn: {disabled:false,className:'',innerHTML:'',onclick:null,textContent:''} };
+// Activity 0: self-check (should NOT count)
+api.Stage.mark(moreCtx, true, true);
+// Activity 1: real correct
+moreState.idx = 1; moreState.checked = false; moreState.correct = undefined;
+api.Stage.mark(moreCtx, true, false);
+// Activity 2: real correct
+moreState.idx = 2; moreState.checked = false; moreState.correct = undefined;
+api.Stage.mark(moreCtx, true, false);
+// Activity 3: real wrong
+moreState.idx = 3; moreState.checked = false; moreState.correct = undefined;
+api.Stage.mark(moreCtx, false, false);
+// Activity 4: real wrong
+moreState.idx = 4; moreState.checked = false; moreState.correct = undefined;
+api.Stage.mark(moreCtx, false, false);
+// prodTotal=4 (4 real, self-check excluded), prodFirstOk=2 -> 2/4 = 50% < 60%
+check('mixed: prodTotal excludes self-check', moreState.prodTotal === 4);
+check('mixed: prodFirstOk is 2', moreState.prodFirstOk === 2);
+var mixedMastery = moreState.prodTotal < 3 || (moreState.prodFirstOk / moreState.prodTotal) >= 0.6;
+check('mastery gate not met with 50% real (excl self-check)', !mixedMastery);
+
+// 21. Self-check only (no real production): prodTotal < 3 -> gate passes
+var scState = {
+  seq: [{type:'pronunciation',mode:'production'},{type:'speaking',mode:'production'},{type:'minimal_pairs',mode:'production'}],
+  idx: 0, checked: false, correct: undefined,
+  prodTotal: 0, prodOk: 0, prodFirstOk: 0, recTotal: 0, recOk: 0,
+  academyId: 'test', lessonId: 'sc-only'
+};
+var scCtx = { s: scState, self: api.Stage, fb: {className:'',innerHTML:''}, btn: {disabled:false,className:'',innerHTML:'',onclick:null,textContent:''} };
+for(var si=0; si<3; si++){
+  scState.idx = si; scState.checked = false; scState.correct = undefined;
+  api.Stage.mark(scCtx, true, true);
+}
+check('self-check only: prodTotal stays 0', scState.prodTotal === 0);
+check('self-check only: prodFirstOk stays 0', scState.prodFirstOk === 0);
+var scMastery = scState.prodTotal < 3 || (scState.prodFirstOk / scState.prodTotal) >= 0.6;
+check('self-check only: mastery gate passes (prodTotal < 3)', scMastery);
+
+// 22. Retry after self-check: self-check flag prevents retry counting
+// (self-check sets counted=true but not okTracked, so retry-success branch
+// must skip it via !act.selfCheck)
+var retryState = {
+  seq: [{type:'pronunciation',mode:'production'},{type:'fill_blank',mode:'production'}],
+  idx: 0, checked: false, correct: undefined,
+  prodTotal: 0, prodOk: 0, prodFirstOk: 0, recTotal: 0, recOk: 0,
+  academyId: 'test', lessonId: 'retry-test'
+};
+var retryCtx = { s: retryState, self: api.Stage, fb: {className:'',innerHTML:''}, btn: {disabled:false,className:'',innerHTML:'',onclick:null,textContent:''} };
+// First: self-check mark
+api.Stage.mark(retryCtx, true, true);
+// Simulate retry: render() resets checked, then mark again with correct=true
+retryState.checked = false; retryState.correct = undefined;
+api.Stage.mark(retryCtx, true, false);
+check('retry after self-check: prodTotal still 0', retryState.prodTotal === 0);
+check('retry after self-check: prodFirstOk still 0', retryState.prodFirstOk === 0);
+
 console.log('\n' + (fail === 0 ? 'ALL PASS' : (fail + ' FAILED')) + ' (' + pass + ' passed, ' + fail + ' failed)');
 process.exit(fail === 0 ? 0 : 1);

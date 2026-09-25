@@ -1,5 +1,70 @@
 # NEXT STEPS - pick up here
 
+## DONE: Self-check fallback excluded from mastery gate (2026-09-25 session)
+
+### Problem
+When speech recognition was unavailable (no mic), pronunciation, speaking,
+and minimal_pairs activities called `mark(ctx, true)` as a self-check
+fallback. This `true` counted toward `prodFirstOk` in the mastery gate,
+so a student could satisfy the production accuracy requirement (>= 60%
+correct on first try) without actually producing any spoken language —
+just by clicking "Check" after hearing the audio.
+
+### Fix
+1. **`mark()` accepts `fallbackSelfCheck` parameter** (commit below): When
+   `true` AND the activity is `production` mode, the activity is flagged
+   `act.selfCheck = true` and `act.counted = true`, but **not** counted in
+   `prodTotal`, `prodOk`, or `prodFirstOk`. This excludes self-checks from
+   the mastery gate entirely.
+
+2. **All fallback mark calls updated**: Every `mark(ctx, true)` call in the
+   pronunciation, speaking, and minimal_pairs renderers that represents a
+   self-check fallback (no mic, recordAndScore undefined, Check button after
+   mic error) now passes `mark(ctx, true, true)`. The mic callback's
+   `mark(ctx, ok)` is unchanged — real mic results still count normally.
+   The double-mark guard ensures the self-check flag only applies when the
+   mic didn't fire first.
+
+3. **Retry-success branch guarded**: The `else if` branch that counts retry
+   successes now checks `!act.selfCheck`, so a future render can't
+   accidentally count a self-check activity toward `prodOk`.
+
+4. **Session persistence updated**: `saveStageSession` and `applySavedSession`
+   now persist/restore the `selfCheck` flag per activity, so a page reload
+   preserves the exclusion.
+
+5. **Done screen + mastery gate display**: The completion screen shows a
+   "Self-check: N" count when any self-check activities exist. The mastery
+   gate "not met" screen shows a note that self-check activities are not
+   counted. Server stats (`markLessonComplete`) now include
+   `selfCheckCount`.
+
+### Behavior
+- **Self-check only** (all production activities had no mic): `prodTotal`
+  stays 0, which is `< 3`, so the mastery gate doesn't block completion —
+  correct, since we can't penalize students for not having a mic.
+- **Mixed** (some real, some self-check): Only real production activities
+  count toward the mastery ratio. Self-checks are transparently excluded.
+- **All real** (mic available): No change — self-check fallback never fires.
+
+### Tests
+- 16 new assertions in `test_teaching_flow.js` (tests 19-22):
+  - Self-check mark does not increment prodTotal/prodFirstOk
+  - Real mark still increments prodTotal/prodFirstOk
+  - Mixed real + self-check: mastery gate uses only real attempts
+  - Self-check only: mastery gate passes (prodTotal < 3)
+  - Retry after self-check: self-check flag prevents accidental counting
+- Total: 65/65 PASS (13 buildsequence + 52 teaching flow)
+
+### Pending items remaining
+1. **Cross-origin cookie limitation** — GitHub Pages and Supabase are on
+   different domains. Third-party cookies with SameSite=None may be
+   blocked by some browsers (Safari ITP, Firefox private mode).
+2. **Best practices roadmap** — httpOnly cookie sessions may need Edge
+   Function proxy rewrite for full coverage.
+
+---
+
 ## DONE: Pedagogical bug fixes + research-driven improvements (2026-09-25 session)
 
 ### Research basis
@@ -125,11 +190,10 @@ Two Edge Functions deployed to Supabase:
 - `e4fe452` - admin panel migration
 
 ### Still pending
-1. **Self-check does not satisfy mastery** — when mic is unavailable,
-   speaking/pronunciation/minimal_pairs activities still mark `true`. A
-   deeper fix would flag these as `fallbackSelfCheck:true` and exclude them
-   from the mastery gate's `prodFirstOk` counter. Requires wider stats
-   changes.
+1. **Self-check does not satisfy mastery** — DONE (see above session).
+   When mic is unavailable, speaking/pronunciation/minimal_pairs activities
+   are now flagged `fallbackSelfCheck:true` and excluded from the mastery
+   gate's `prodFirstOk` counter.
 2. **Cross-origin cookie limitation** — GitHub Pages and Supabase are on
    different domains. Third-party cookies with SameSite=None may be
    blocked by some browsers (Safari ITP, Firefox private mode). If this
