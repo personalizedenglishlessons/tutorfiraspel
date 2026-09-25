@@ -2276,8 +2276,10 @@ window.addEventListener('load', async () => {
   }
   try{
     // Try cookie-based session first (pel-auth Edge Function)
+    // Only if test flag is enabled — normal users use legacy path
     var cookieUser = null;
-    if(typeof window.pelAuth === 'function'){
+    var enableCookieAuth = (localStorage.getItem('pel_cookie_test') === '1') || (new URLSearchParams(window.location.search).get('cookie_auth') === '1');
+    if(enableCookieAuth && typeof window.pelAuth === 'function'){
       try{
         var sess = await pelAuth('session');
         if(sess && sess.user){

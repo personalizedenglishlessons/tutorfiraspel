@@ -665,10 +665,11 @@ function initSupabase(){
 }
 
 /* Check for an existing session on load, redirect if already authenticated.
-   Tries cookie-based auth first, falls back to Supabase JS client. */
+   Tries cookie-based auth first (if test flag enabled), falls back to Supabase JS client. */
 window.addEventListener('load', async () => {
-  // Try cookie-based session first
-  if(typeof window.pelAuth === 'function'){
+  // Try cookie-based session first (only if test flag enabled)
+  var enableCookieAuth = (localStorage.getItem('pel_cookie_test') === '1') || (new URLSearchParams(window.location.search).get('cookie_auth') === '1');
+  if(enableCookieAuth && typeof window.pelAuth === 'function'){
     try{
       const sess = await pelAuth('session');
       if(sess && sess.user){ triggerRedirect(); return; }
@@ -733,9 +734,12 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     return;
   }
 
-  /* Try cookie-based auth first, fall back to rate-limited-login */
+  /* Try cookie-based auth first, fall back to rate-limited-login.
+     Cookie auth is gated behind a test flag for safety — normal users
+     use the legacy login path until cookie auth is browser-tested. */
   let cookieLoginOk = false;
-  if(typeof window.pelAuth === 'function'){
+  var enableCookieAuth = (localStorage.getItem('pel_cookie_test') === '1') || (new URLSearchParams(window.location.search).get('cookie_auth') === '1');
+  if(enableCookieAuth && typeof window.pelAuth === 'function'){
     try{
       const sess = await pelAuth('login', { email, password, hp: '' });
       if(sess && sess.user){

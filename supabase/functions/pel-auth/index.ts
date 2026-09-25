@@ -33,11 +33,17 @@ const CORS = {
   "Access-Control-Allow-Credentials": "true",
 };
 
-function json(body: unknown, status = 200, extraHeaders: Record<string, string> = {}) {
-  return new Response(JSON.stringify(body), {
-    status,
-    headers: { "content-type": "application/json", ...CORS, ...extraHeaders },
-  });
+function json(body: unknown, status = 200, cookies: string[] = []) {
+  const headers = new Headers();
+  headers.set("content-type", "application/json");
+  headers.set("Access-Control-Allow-Origin", ALLOWED_ORIGIN);
+  headers.set("Access-Control-Allow-Headers", "content-type, x-pel-csrf");
+  headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+  headers.set("Access-Control-Allow-Credentials", "true");
+  for (const c of cookies) {
+    headers.append("Set-Cookie", c);
+  }
+  return new Response(JSON.stringify(body), { status, headers });
 }
 
 function cookieValue(req: Request, name: string): string | null {
@@ -173,32 +179,82 @@ Deno.serve(async (req: Request) => {
       const accessMaxAge = 3600; // 1 hour
       const refreshMaxAge = 604800; // 7 days
 
-      const headers: Record<string, string> = {};
-      headers["set-cookie"] = [
-        setCookie(ACCESS_COOKIE, authData.access_token, accessMaxAge),
-        setCookie(REFRESH_COOKIE, authData.refresh_token, refreshMaxAge),
-        `${CSRF_COOKIE}=${csrf}; Secure; SameSite=None; Path=/; Max-Age=${refreshMaxAge}`,
-      ].join(", ");
-
       return json({
         user: { id: authData.user.id, email: authData.user.email },
         expiresAt: authData.expires_at,
-      }, 200, headers);
+        csrf: csrf,
+      }, 200, [
+        setCookie(ACCESS_COOKIE, authData.access_token, accessMaxAge),
+        setCookie(REFRESH_COOKIE, authData.refresh_token, refreshMaxAge),
+        `${CSRF_COOKIE}=${csrf}; Secure; SameSite=None; Path=/; Max-Age=${refreshMaxAge}`,
+      ]);
     }
 
     case "session": {
       const accessToken = cookieValue(req, ACCESS_COOKIE);
+      const refreshToken = cookieValue(req, REFRESH_COOKIE);
+
+      // If access token is missing but refresh token exists, try to refresh
+      if (!accessToken && refreshToken) {
+        const refreshRes = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=refresh_token`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "apikey": ANON_KEY },
+          body: JSON.stringify({ refresh_token: refreshToken }),
+        });
+        const refreshData = await refreshRes.json();
+
+        if (!refreshData.access_token) {
+          return json({ user: null }, 200, [
+            clearCookie(ACCESS_COOKIE),
+            clearCookie(REFRESH_COOKIE),
+            clearCookie(CSRF_COOKIE),
+          ]);
+        }
+
+        return json({
+          user: { id: refreshData.user.id, email: refreshData.user.email },
+          expiresAt: refreshData.expires_at,
+          csrf: cookieValue(req, CSRF_COOKIE),
+        }, 200, [
+          setCookie(ACCESS_COOKIE, refreshData.access_token, 3600),
+          setCookie(REFRESH_COOKIE, refreshData.refresh_token, 604800),
+        ]);
+      }
+
       if (!accessToken) return json({ user: null });
 
       const jwt = parseJwt(accessToken);
-      if (!jwt) return json({ user: null });
+      if (!jwt) {
+        // Invalid token — try refresh if available
+        if (refreshToken) {
+          const refreshRes = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=refresh_token`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "apikey": ANON_KEY },
+            body: JSON.stringify({ refresh_token: refreshToken }),
+          });
+          const refreshData = await refreshRes.json();
+          if (refreshData.access_token) {
+            return json({
+              user: { id: refreshData.user.id, email: refreshData.user.email },
+              expiresAt: refreshData.expires_at,
+              csrf: cookieValue(req, CSRF_COOKIE),
+            }, 200, [
+              setCookie(ACCESS_COOKIE, refreshData.access_token, 3600),
+              setCookie(REFRESH_COOKIE, refreshData.refresh_token, 604800),
+            ]);
+          }
+        }
+        return json({ user: null }, 200, [
+          clearCookie(ACCESS_COOKIE),
+          clearCookie(REFRESH_COOKIE),
+          clearCookie(CSRF_COOKIE),
+        ]);
+      }
 
-      // Check if expired
+      // Check if expired — try refresh
       const now = Math.floor(Date.now() / 1000);
       if (jwt.exp && jwt.exp < now) {
-        // Try refresh
-        const refreshToken = cookieValue(req, REFRESH_COOKIE);
-        if (!refreshToken) return json({ user: null });
+        if (!refreshToken) return json({ user: null }, 200, [clearCookie(ACCESS_COOKIE)]);
 
         const refreshRes = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=refresh_token`, {
           method: "POST",
@@ -208,39 +264,33 @@ Deno.serve(async (req: Request) => {
         const refreshData = await refreshRes.json();
 
         if (!refreshData.access_token) {
-          // Clear cookies
-          const headers: Record<string, string> = {};
-          headers["set-cookie"] = [
+          return json({ user: null }, 200, [
             clearCookie(ACCESS_COOKIE),
             clearCookie(REFRESH_COOKIE),
             clearCookie(CSRF_COOKIE),
-          ].join(", ");
-          return json({ user: null }, 200, headers);
+          ]);
         }
-
-        // Set refreshed cookies
-        const headers: Record<string, string> = {};
-        headers["set-cookie"] = [
-          setCookie(ACCESS_COOKIE, refreshData.access_token, 3600),
-          setCookie(REFRESH_COOKIE, refreshData.refresh_token, 604800),
-        ].join(", ");
 
         return json({
           user: { id: refreshData.user.id, email: refreshData.user.email },
           expiresAt: refreshData.expires_at,
-        }, 200, headers);
+          csrf: cookieValue(req, CSRF_COOKIE),
+        }, 200, [
+          setCookie(ACCESS_COOKIE, refreshData.access_token, 3600),
+          setCookie(REFRESH_COOKIE, refreshData.refresh_token, 604800),
+        ]);
       }
 
       return json({
         user: { id: jwt.sub, email: jwt.email },
         expiresAt: jwt.exp,
+        csrf: cookieValue(req, CSRF_COOKIE),
       });
     }
 
     case "logout": {
       const refreshToken = cookieValue(req, REFRESH_COOKIE);
       if (refreshToken) {
-        // Revoke the session server-side
         await fetch(`${SUPABASE_URL}/auth/v1/logout`, {
           method: "POST",
           headers: { "Content-Type": "application/json", "apikey": ANON_KEY },
@@ -248,14 +298,11 @@ Deno.serve(async (req: Request) => {
         }).catch(() => {});
       }
 
-      const headers: Record<string, string> = {};
-      headers["set-cookie"] = [
+      return json({ ok: true }, 200, [
         clearCookie(ACCESS_COOKIE),
         clearCookie(REFRESH_COOKIE),
         clearCookie(CSRF_COOKIE),
-      ].join(", ");
-
-      return json({ ok: true }, 200, headers);
+      ]);
     }
 
     default:

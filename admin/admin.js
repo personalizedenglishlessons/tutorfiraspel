@@ -18,6 +18,8 @@ function client(){
   if(window.supabase) supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   return supabase;
 }
+// Expose for pelTableSelect/pelTableUpsert legacy fallback
+window.pelSupabaseClient = function(){ return client(); };
 
 /* ============================================================
    1. STATE
@@ -608,9 +610,10 @@ async function boot(){
   var c = client();
   if(!c){ authGateFail(t('errorGeneric')); return; }
   
-  // Try cookie-based session first
+  // Try cookie-based session first (only if test flag enabled)
   var cookieUser = null;
-  if(typeof window.pelAuth === 'function'){
+  var enableCookieAuth = (localStorage.getItem('pel_cookie_test') === '1') || (new URLSearchParams(window.location.search).get('cookie_auth') === '1');
+  if(enableCookieAuth && typeof window.pelAuth === 'function'){
     try{
       var sess = await pelAuth('session');
       if(sess && sess.user){
@@ -2369,7 +2372,7 @@ async function classes(){
   $('viewArea').innerHTML = pageHead(t('classes'), lang === 'ar' ? 'الدروس المباشرة والحضور' : 'Live classes and attendance') + loadingBlock();
   var [r, g] = await Promise.all([
     rpc('admin_classes'),
-    pelTableSelect('groups', 'id,name,status', { eq: { status: 'active' })
+    pelTableSelect('groups', 'id,name,status', { eq: { status: 'active' } })
   ]);
   if(!r.ok){ $('viewArea').innerHTML = errBlock(rpcErrMsg(r)); return; }
   var rows = r.data || [];
@@ -2494,7 +2497,7 @@ function classStatusModal(classId){
 async function programs(){
   $('viewArea').innerHTML = pageHead(t('programs'), lang === 'ar' ? 'البرامج والاشتراكات' : 'Programs and subscriptions') + loadingBlock();
   var [p, sub] = await Promise.all([
-    pelTableSelect('programs', '*', { order: 'created_at' })
+    pelTableSelect('programs', '*', { order: 'created_at' }),
     rpc('admin_subscriptions')
   ]);
   var prog = (p.data || []);

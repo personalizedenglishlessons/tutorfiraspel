@@ -108,6 +108,63 @@ const ALLOWLIST: Record<string, { type: string; description: string }> = {
   "admin_save_assessment_question": { type: "rpc", description: "Save assessment Q" },
   "admin_upsert_site_settings_batch": { type: "rpc", description: "Batch upsert settings" },
   "audit_action": { type: "rpc", description: "Audit action" },
+  "current_user_role": { type: "rpc", description: "Get current user role" },
+  "my_permissions": { type: "rpc", description: "Get my permissions" },
+  "admin_overview": { type: "rpc", description: "Admin overview" },
+  "admin_students": { type: "rpc", description: "List students" },
+  "admin_students_count": { type: "rpc", description: "Count students" },
+  "admin_student_360": { type: "rpc", description: "Student 360 view" },
+  "admin_student_billing": { type: "rpc", description: "Student billing" },
+  "admin_student_delete": { type: "rpc", description: "Delete student" },
+  "admin_student_plan": { type: "rpc", description: "Student plan" },
+  "admin_student_progression": { type: "rpc", description: "Student progression" },
+  "admin_set_student_plan_level": { type: "rpc", description: "Set student plan level" },
+  "admin_set_role": { type: "rpc", description: "Set user role" },
+  "admin_teachers": { type: "rpc", description: "List teachers" },
+  "admin_team": { type: "rpc", description: "Team list" },
+  "admin_groups": { type: "rpc", description: "List groups" },
+  "admin_group_detail": { type: "rpc", description: "Group detail" },
+  "admin_group_add": { type: "rpc", description: "Add to group" },
+  "admin_group_move": { type: "rpc", description: "Move group" },
+  "admin_group_remove": { type: "rpc", description: "Remove from group" },
+  "admin_classes": { type: "rpc", description: "List classes" },
+  "admin_class_attendance": { type: "rpc", description: "Class attendance" },
+  "admin_class_status": { type: "rpc", description: "Class status" },
+  "admin_attendance_save": { type: "rpc", description: "Save attendance" },
+  "admin_decide_live_class_request": { type: "rpc", description: "Decide live class request" },
+  "admin_live_class_requests": { type: "rpc", description: "Live class requests" },
+  "admin_list_live_class_cities": { type: "rpc", description: "List live class cities" },
+  "admin_manage_live_class_city": { type: "rpc", description: "Manage live class city" },
+  "admin_plans_overview": { type: "rpc", description: "Plans overview" },
+  "admin_plan_status": { type: "rpc", description: "Plan status" },
+  "admin_save_plan": { type: "rpc", description: "Save plan" },
+  "admin_assign_plan": { type: "rpc", description: "Assign plan" },
+  "admin_extend_plan": { type: "rpc", description: "Extend plan" },
+  "admin_subscriptions": { type: "rpc", description: "List subscriptions" },
+  "admin_reports": { type: "rpc", description: "Reports" },
+  "admin_interventions": { type: "rpc", description: "Interventions" },
+  "admin_announcements": { type: "rpc", description: "Announcements" },
+  "admin_create_announcement": { type: "rpc", description: "Create announcement" },
+  "admin_announcement_update": { type: "rpc", description: "Update announcement" },
+  "admin_announcement_delete": { type: "rpc", description: "Delete announcement" },
+  "admin_announcement_stats": { type: "rpc", description: "Announcement stats" },
+  "admin_lesson_save": { type: "rpc", description: "Save lesson" },
+  "admin_lesson_move": { type: "rpc", description: "Move lesson" },
+  "admin_lesson_toggle": { type: "rpc", description: "Toggle lesson" },
+  "admin_lesson_unlink": { type: "rpc", description: "Unlink lesson" },
+  "admin_academy_save": { type: "rpc", description: "Save academy" },
+  "admin_create_student": { type: "rpc", description: "Create student" },
+  "admin_create_teacher": { type: "rpc", description: "Create teacher" },
+  "admin_adjust_credits": { type: "rpc", description: "Adjust credits" },
+  "issue_certificate_admin": { type: "rpc", description: "Issue certificate (admin)" },
+  "issue_certificate_manual": { type: "rpc", description: "Issue certificate (manual)" },
+  "reissue_certificate": { type: "rpc", description: "Reissue certificate" },
+  "revoke_certificate": { type: "rpc", description: "Revoke certificate" },
+  "accept_recommendation": { type: "rpc", description: "Accept recommendation" },
+  "store_recommendation": { type: "rpc", description: "Store recommendation" },
+  "system_health": { type: "rpc", description: "System health" },
+  "teacher_override": { type: "rpc", description: "Teacher override" },
+  "verify_certificate": { type: "rpc", description: "Verify certificate" },
 
   // Admin table reads (RLS-enforced, admin JWT)
   "certificates_list": { type: "table_select", description: "List certificates" },
@@ -261,12 +318,13 @@ Deno.serve(async (req: Request) => {
       const tc = TABLE_CONFIG[op];
       if (!tc) return json({ ok: false, error: "table_config_missing" }, 500);
 
-      const upsertHeaders = { ...headers, "Prefer": `resolution=merge-duplicates,return=representation` };
+      let url = `${SUPABASE_URL}/rest/v1/${tc.table}`;
+      const upsertHeaders: Record<string, string> = { ...headers, "Prefer": `resolution=merge-duplicates,return=representation` };
       if (tc.conflict) {
-        upsertHeaders["Prefer"] = `resolution=merge-duplicates,return=representation,on_conflict=${tc.conflict}`;
+        url += `?on_conflict=${tc.conflict}`;
       }
 
-      const res = await fetch(`${SUPABASE_URL}/rest/v1/${tc.table}`, {
+      const res = await fetch(url, {
         method: "POST",
         headers: upsertHeaders,
         body: JSON.stringify(payload),
