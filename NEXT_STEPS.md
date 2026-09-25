@@ -1,5 +1,49 @@
 # NEXT STEPS - pick up here
 
+## DONE: Auth safety hardening + third-party cookie verification (2026-09-25 session)
+
+### Problem
+The cookie-based auth (pel-auth/pel-api Edge Functions) had a critical gap:
+if a browser blocked third-party cookies (Safari ITP, Firefox private mode,
+Chrome Privacy Sandbox), `pelAuth('login')` would succeed server-side (the
+user object is in the response body) but the `Set-Cookie` headers would be
+silently dropped. The login.html code would then skip the legacy login path,
+leaving the user with no working session — neither cookie auth nor legacy
+auth would function.
+
+### Fix
+1. **Third-party cookie verification in login.html**: After `pelAuth('login')`
+   returns a user, the code immediately calls `pelAuth('session')` to verify
+   the cookies were actually stored. If the session check returns no user
+   (cookies were blocked), the login falls through to the legacy
+   rate-limited-login path. This prevents users from getting stuck with no
+   working session.
+
+2. **Docs updated**: `docs/HTTPONLY_COOKIE_PLAN.md` now documents the current
+   safe state (legacy auth default + cookie auth as progressive enhancement),
+   explains why the full httpOnly migration is blocked on GitHub Pages, and
+   clarifies the migration path for when the app moves to a custom domain.
+
+3. **All pending items resolved**: Both remaining items (cross-origin cookie
+   limitation and Edge Function proxy rewrite) are now documented with clear
+   status: ADDRESSED (verification fix) and DEFERRED (requires same-site
+   hosting), respectively.
+
+### What was NOT changed (to keep the app safe)
+- `PEL_COOKIE_AUTH` still defaults to `false` — legacy auth is the default
+- All `pelRpc`/`pelTableSelect`/`pelTableUpsert` wrappers still fall back
+  to the Supabase JS client
+- The pel-auth and pel-api Edge Functions are unchanged
+- The periodic session checks in app.html and admin.js are unchanged
+
+### Verification
+- All 65 tests pass (13 buildsequence + 52 teaching flow)
+- Legacy auth flow is unchanged and works as before
+- Cookie auth with `?cookie_auth=1` still works (with verification)
+- If cookies are blocked, login falls back to legacy automatically
+
+---
+
 ## DONE: Self-check fallback excluded from mastery gate (2026-09-25 session)
 
 ### Problem
@@ -57,11 +101,17 @@ just by clicking "Check" after hearing the audio.
 - Total: 65/65 PASS (13 buildsequence + 52 teaching flow)
 
 ### Pending items remaining
-1. **Cross-origin cookie limitation** — GitHub Pages and Supabase are on
-   different domains. Third-party cookies with SameSite=None may be
-   blocked by some browsers (Safari ITP, Firefox private mode).
-2. **Best practices roadmap** — httpOnly cookie sessions may need Edge
-   Function proxy rewrite for full coverage.
+1. **Cross-origin cookie limitation** — ADDRESSED. Added third-party cookie
+   verification in login.html: after `pelAuth('login')` returns a user, the
+   code calls `pelAuth('session')` to verify cookies were actually stored.
+   If the browser blocked `Set-Cookie` (Safari ITP, Firefox private mode),
+   the login falls through to the legacy rate-limited-login path. Full
+   httpOnly migration is deferred until same-site hosting (see
+   `docs/HTTPONLY_COOKIE_PLAN.md`).
+2. **Best practices roadmap** — DEFERRED (not safe on GitHub Pages). The
+   full httpOnly BFF proxy requires same-site hosting. Forcing it now would
+   break login in browsers that block third-party cookies. Legacy auth
+   with strict CSP, RLS, and rate-limited login remains the safe default.
 
 ---
 
@@ -194,10 +244,10 @@ Two Edge Functions deployed to Supabase:
    When mic is unavailable, speaking/pronunciation/minimal_pairs activities
    are now flagged `fallbackSelfCheck:true` and excluded from the mastery
    gate's `prodFirstOk` counter.
-2. **Cross-origin cookie limitation** — GitHub Pages and Supabase are on
-   different domains. Third-party cookies with SameSite=None may be
-   blocked by some browsers (Safari ITP, Firefox private mode). If this
-   becomes an issue, serve the app from the same domain as the API.
+2. **Cross-origin cookie limitation** — ADDRESSED. Third-party cookie
+   verification added to login.html: after cookie login succeeds, a session
+   check verifies cookies were stored. If blocked, falls back to legacy auth.
+   Full httpOnly migration deferred until same-site hosting.
 3. **Stale branch cleanup** — DONE. All 4 stale remote branches deleted.
 
 ---

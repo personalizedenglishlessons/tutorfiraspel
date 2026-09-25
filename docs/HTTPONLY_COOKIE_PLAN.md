@@ -1,10 +1,26 @@
 # Session Security: httpOnly Cookie Migration Plan
 
-## Status: Requires architecture migration
+## Status: Legacy auth is the safe default; cookie auth is progressive enhancement
 
 The current auth flow stores Supabase session tokens (access_token + refresh_token)
 in `localStorage` via `supabase.auth.setSession()`. This is the standard approach
 for static sites but exposes tokens to JavaScript-based XSS attacks.
+
+### Current safe state
+
+- **`PEL_COOKIE_AUTH` defaults to `false`** — all users use legacy
+  localStorage auth by default.
+- **Cookie auth is opt-in only** — requires `pel_cookie_test=1` in
+  localStorage or `?cookie_auth=1` URL parameter.
+- **Third-party cookie verification** — after `pelAuth('login')` returns a
+  user, the code immediately calls `pelAuth('session')` to verify the cookies
+  were actually stored. If the browser blocked the `Set-Cookie` headers
+  (Safari ITP, Firefox private mode), the session check returns no user and
+  the login falls through to the legacy rate-limited-login path.
+- **All `pelRpc`/`pelTableSelect`/`pelTableUpsert` wrappers** fall back to
+  the Supabase JS client when `PEL_COOKIE_AUTH` is false.
+- **Periodic session checks** (every 5 min) in app.html and admin.js detect
+  cookie expiry and fall back to legacy auth.
 
 ## Why httpOnly cookies can't be safely added on the current architecture
 
@@ -28,11 +44,21 @@ Setting httpOnly cookies alongside localStorage tokens does **not** improve
 security: XSS can still read tokens from localStorage. It creates a false
 sense of security without eliminating the attack surface.
 
-## What a full fix requires
+## What a full fix requires (deferred — not safe on GitHub Pages)
 
 A real httpOnly solution means JavaScript **never** receives `access_token` or
 `refresh_token`. All Supabase Data API calls must go through a server-side
 proxy that reads httpOnly cookies and injects the Authorization header.
+
+### Why the full migration is blocked
+
+The app is hosted on `personalizedenglishlessons.github.io` (GitHub Pages) and
+the Supabase project is at `lewoochehpiycocvfwtz.supabase.co`. These are
+**different sites** (different registrable domains). A full httpOnly cookie
+migration requires same-site hosting — it cannot be safely completed on GitHub
+Pages because third-party cookies are being progressively blocked by all
+major browsers (Safari ITP, Firefox Total Cookie Protection, Chrome Privacy
+Sandbox). Forcing the migration now would break login in these browsers.
 
 ### Migration path
 1. **Move to a same-site setup**: Deploy the app on a custom domain with a
@@ -86,12 +112,16 @@ While the full migration is pending, the following measures reduce XSS risk:
 
 ## Recommendation
 
-**Short-term**: Keep localStorage-based auth with the current CSP/RLS
-mitigations. The XSS risk is low given the strict CSP.
+**Short-term (current):** Legacy localStorage auth with strict CSP, RLS, and
+rate-limited login. Cookie auth is available as progressive enhancement with
+third-party cookie verification — if cookies are blocked, the app automatically
+falls back to legacy auth. **This is the safe state for GitHub Pages.**
 
-**Medium-term**: When moving to a custom domain (e.g., for the Abha phase
+**Medium-term:** When moving to a custom domain (e.g., for the Abha phase
 or IELTS expansion), implement the BFF proxy pattern described above.
+Same-site cookies (`SameSite=Lax`) will work without third-party cookie
+blocking, and the full httpOnly migration becomes safe to complete.
 
-**Long-term**: Consider migrating to Supabase SSR auth (`@supabase/ssr`)
+**Long-term:** Consider migrating to Supabase SSR auth (`@supabase/ssr`)
 with a server-side rendering framework (Next.js, SvelteKit, etc.) for
 native httpOnly cookie support.

@@ -743,14 +743,31 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
 
   /* Try cookie-based auth first, fall back to rate-limited-login.
      Cookie auth is gated behind a test flag for safety — normal users
-     use the legacy login path until cookie auth is browser-tested. */
+     use the legacy login path until cookie auth is browser-tested.
+
+     CRITICAL: After pelAuth('login') returns a user, we must verify the
+     cookies were actually stored by calling pelAuth('session'). If the
+     browser blocks third-party cookies (Safari ITP, Firefox private mode),
+     the login Edge Function succeeds server-side but the Set-Cookie headers
+     are silently dropped — the user object is in the response body, but no
+     session cookies exist for subsequent pelApi calls. Without this
+     verification, the user would be stuck: cookie auth thinks it succeeded,
+     but no data can be fetched, and the legacy login path is skipped. */
   let cookieLoginOk = false;
   var enableCookieAuth = (localStorage.getItem('pel_cookie_test') === '1') || (new URLSearchParams(window.location.search).get('cookie_auth') === '1');
   if(enableCookieAuth && typeof window.pelAuth === 'function'){
     try{
       const sess = await pelAuth('login', { email, password, hp: '' });
       if(sess && sess.user){
-        cookieLoginOk = true;
+        // Verify cookies were actually stored (third-party cookie check)
+        var verify = await pelAuth('session');
+        if(verify && verify.user){
+          cookieLoginOk = true;
+        } else {
+          // Cookies not stored — third-party cookies likely blocked.
+          // Fall through to legacy login so the user isn't stuck.
+          console.warn('[PEL] Cookie login succeeded but session verification failed — third-party cookies may be blocked. Falling back to legacy auth.');
+        }
       } else if(sess && sess.error){
         // Cookie auth failed with a specific error - show it
         setLoading('login', false);
