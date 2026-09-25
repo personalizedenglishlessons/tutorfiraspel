@@ -24,8 +24,8 @@
 <script src="lib/cert-sheet.js?v=5278e935" defer></script>
 <script src="lib/pel_config.js?v=d66df0a3"></script>
 <script src="lib/pel_lesson_stage.js?v=d8bc0686"></script>
-<script src="lib/pel_dashboard_life.js?v=b1ada245"></script>
-<script src="lib/pel_curriculum_path.js?v=e20f4ada"></script>
+<script src="lib/pel_dashboard_life.js?v=c7029d32"></script>
+<script src="lib/pel_curriculum_path.js?v=95416b28"></script>
 <style>
 /* ============================================================
    DESIGN SYSTEM TOKENS, shared with index.html / login.html
@@ -9761,7 +9761,7 @@ const ACADEMIES = [
   {id:'a0-sentence-building', en:'Sentence Building', ar:'بنا الجمل', translit:'سنتنس بيلدنج', cat:'Foundations', icon:'blocks', from:'#C8A96A', to:'#A88345', difficulty:'Beginner', duration:'2h', lessons:8},
   {id:'a0-question-words', en:'Question Words', ar:'كلمات السوال', translit:'كويستشن وردز', cat:'Foundations', icon:'message-circle-question', from:'#D9B87C', to:'#B08D57', difficulty:'Beginner', duration:'2h', lessons:8},
   {id:'a0-spelling-sounds', en:'Spelling and Sounds', ar:'التهجية والاصوات', translit:'سبيلنج اند ساوندز', cat:'Foundations', icon:'spell-check', from:'#CBB27E', to:'#9C7C46', difficulty:'Beginner', duration:'3h', lessons:10},
-  {id:'a0-error-clinic', en:'Error Clinic', ar:'عيادة الاخطا', translit:'ايرور كلينك', cat:'Foundations', icon:'wand-2', from:'#BFA06A', to:'#8F7040', difficulty:'Beginner', duration:'3h', lessons:9},
+  {id:'a0-error-clinic', en:'Error Clinic', ar:'عيادة الاغلاط', translit:'ايرور كلينك', cat:'Foundations', icon:'wand-2', from:'#BFA06A', to:'#8F7040', difficulty:'Beginner', duration:'3h', lessons:9},
   {id:'a0-social-english', en:'Social English', ar:'الانجليزي الاجتماعي', translit:'سوشل انجلش', cat:'Foundations', icon:'users', from:'#D4B476', to:'#A5854B', difficulty:'Beginner', duration:'2h', lessons:8},
   {id:'english-foundations', en:'English Foundations', ar:'اساسيات الانجليزي', translit:'انجلش فاونديشنز', cat:'Foundations', icon:'graduation-cap', from:'#C8A96A', to:'#A88345', difficulty:'Beginner', duration:'6h', lessons:36},
   {id:'everyday-english', en:'Everyday English', ar:'انجليزي الحياة اليومية', translit:'ايفري دي انجلش', cat:'Foundations', icon:'sun', from:'#D8BD83', to:'#C8A96A', difficulty:'Beginner', duration:'5h', lessons:28},
@@ -17536,7 +17536,7 @@ function renderVocabulary(){
     <div class="page-head">
       <span class="eyebrow"><span class="arabic" style="font-size:.95em;">خزنة المفردات</span>، Vocabulary Vault</span>
       <h1><span class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">كل كلمة، بثلاث لغات.</span><span dir="ltr">Every word, in three languages.</span></h1>
-      <p><span class="arabic" style="display:block; margin-bottom:4px;">اقلب البطاقة لترى المعنى بالعربية الفصحى والنطق والمرادفات والاخطا الشايعة.</span><span dir="ltr">Flip a card to see the Arabic (MSA) meaning, pronunciation, synonyms and common mistakes.</span></p>
+      <p><span class="arabic" style="display:block; margin-bottom:4px;">اقلب البطاقة لترى المعنى بالعربي السعودي والنطق والمرادفات والاغلاط الشايعة.</span><span dir="ltr">Flip a card to see the Arabic (Saudi) meaning, pronunciation, synonyms and common mistakes.</span></p>
     </div>
     <div class="lib-toolbar">
       <div class="lib-search"><i data-lucide="search" width="15" height="15" style="color:var(--text-muted);"></i><label for="vocabSearch" class="sr-only">Search vocabulary</label><input type="text" id="vocabSearch" dir="auto" placeholder="ابحث في المفردات... / Search vocabulary..."></div>
@@ -17708,8 +17708,8 @@ function renderGrammar(){
     <div class="grid grid-2" id="grammarGrid"></div>
     <div style="margin-top:36px;">
       <div class="page-head" style="margin-bottom:20px;">
-        <span class="eyebrow"><span class="arabic" style="font-size:.95em;">مدرب الاخطا السعودي</span>، Saudi Mistake Coach</span>
-        <h2 style="font-size:1.3rem; margin-top:8px;"><span class="arabic" style="display:block; font-size:.7em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">الاخطا اللي يقع فيها المتحدث بالعربية، مع السبب والتمرين.</span><span dir="ltr">The mistakes Arabic speakers make, with the reason and practice.</span></h2>
+        <span class="eyebrow"><span class="arabic" style="font-size:.95em;">مدرب الاغلاط السعودي</span>، Saudi Mistake Coach</span>
+        <h2 style="font-size:1.3rem; margin-top:8px;"><span class="arabic" style="display:block; font-size:.7em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">الاغلاط اللي يقع فيها المتحدث بالعربية، مع السبب والتمرين.</span><span dir="ltr">The mistakes Arabic speakers make, with the reason and practice.</span></h2>
       </div>
       <div class="grid grid-2" id="coachGrid"></div>
     </div>`;
@@ -18688,7 +18688,7 @@ function renderReview(){
     mx.innerHTML = `
       <div class="eyebrow" style="margin:26px 0 12px;"><span class="arabic">اخطا تتكرر عندك</span>، Repeated mistakes</div>
       <div class="card" style="border-color:rgba(210,92,92,.35);">
-        <p style="font-size:.84rem; color:var(--text-secondary); margin-bottom:14px;"><span class="arabic">هذي الاخطا رجعت معك اكثر من مرة بكتابتك. ركز عليها بالدرس الجاي.</span>These mistakes have shown up in your writing more than once. Focus on them in your next lessons.</p>
+        <p style="font-size:.84rem; color:var(--text-secondary); margin-bottom:14px;"><span class="arabic">هذي الاغلاط رجعت معك اكثر من مرة بكتابتك. ركز عليها بالدرس الجاي.</span>These mistakes have shown up in your writing more than once. Focus on them in your next lessons.</p>
         ${missEntries.map(k => `<div class="mini-list-item"><div class="ml-en">${escapeHtml((LEARN_CATEGORIES[k]||{}).en || k)}</div><div class="ml-ar"><span class="arabic">${escapeHtml((LEARN_CATEGORIES[k]||{}).ar || k)}</span></div><span class="chip" style="color:var(--danger); border-color:rgba(210,92,92,.4);">× ${misses[k]}</span></div>`).join('')}
         <button type="button" class="btn-outline" id="reviewMistakesGoWriting" style="margin-top:14px;"><span class="arabic">اطلع على ورشة الكتابة</span>، Open Writing Workshop</button>
       </div>`;
