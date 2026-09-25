@@ -783,6 +783,13 @@ html[data-theme="light"] body.ui-ar .side-link.active{ background:linear-gradien
 html[data-theme="light"] body.ui-ar #heroCard{ background:radial-gradient(90% 130% at 0% -20%, rgba(139,108,47,.06), transparent 55%), radial-gradient(70% 100% at 100% 110%, rgba(29,122,78,.03), transparent 55%), linear-gradient(165deg, rgba(0,0,0,.008), transparent 45%), var(--card-elevated); }
 html[data-theme="light"] body.ui-ar .pel-conv-line.B{ background:linear-gradient(270deg, rgba(139,108,47,.06), transparent 50%), var(--card-elevated); }
 
+/* Dashboard decorative RTL: mirror orbs and shimmer so motion reads right-to-left */
+body.ui-ar #heroCard .pel-dash-orb.o1{ right:auto; left:8%; }
+body.ui-ar #heroCard .pel-dash-orb.o2{ left:auto; right:18%; }
+body.ui-ar #heroCard .pel-dash-orb.o3{ left:auto; right:42%; }
+body.ui-ar .btn-gold .pel-dash-shimmer{ left:auto; right:-130%; animation-name:pelDashShimmerRTL !important; }
+@keyframes pelDashShimmerRTL{ 0%{ right:-130%; } 60%,100%{ right:140%; } }
+
 /* situation flow (real-life lesson plan) */
 .situation-block{ border:1px solid var(--border); border-radius:14px; padding:16px; margin-top:12px; background:var(--card-elevated); }
 .situation-block:first-of-type{ margin-top:16px; }
