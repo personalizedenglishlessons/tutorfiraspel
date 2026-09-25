@@ -18,7 +18,7 @@ The PEL app is a well-architected English learning platform for Arabic (specific
 
 **App status:** The app implements SM-2-lite with expanding intervals (1d → 3d → 7d → 16d), ease factor starting at 2.5, capped at 3.0, with a 0.2 penalty on miss and 0.05 bonus on correct recall. The review activity resurfaces due items from previous lessons. This is well-aligned with the research — the meta-analysis found no significant difference between equal and expanding spacing.
 
-**Potential issue:** SRS state lives in `localStorage` (`pel_srs_v1`) with server sync as a "mirror." If a student clears browser data or uses private mode, the local SRS state is lost. The server sync (`srsPush`/`srsSync`) is fire-and-forget and may not have completed before the local data was cleared. **Recommendation:** Make the server the source of truth, with localStorage as a cache. On app load, always `srsSync()` before rendering the review queue.
+**Potential issue:** SRS state lives in `localStorage` (`pel_srs_v1`) with server sync as a "mirror." If a student clears browser data or uses private mode, the local SRS state is lost. The server sync (`srsPush`/`srsSync`) is fire-and-forget and may not have completed before the local data was cleared. **FIXED:** On app load, `srsSync()` is now awaited (with a 5-second timeout) before the app is revealed, ensuring the review queue is always hydrated from the server. A `_srsSynced` flag is exposed via `PEL_STAGE_API.srsSynced()` so admin panels can distinguish hydrated vs. local-only data (commit 8bf7a96).
 
 ### 1.2 Mastery-Based Learning — App implementation is well-aligned
 
@@ -46,9 +46,7 @@ The PEL app is a well-architected English learning platform for Arabic (specific
 
 **Research:** ACTFL recommends feedback should be specific, timely, relevant to learning goals, presented in student-friendly language, and should help learners identify areas of strength and improvement. Feedback should be provided in multiple forms (formative, summative, reflective) ([ACTFL](https://www.actfl.org/educator-resources/guiding-principles-for-language-learning/provide-effective-feedback)). A Reddit survey of language app users found the #1 complaint was "insufficient explanations of what they did wrong" — many apps provide only binary "correct/incorrect" ([Reddit r/languagelearning](https://www.reddit.com/r/languagelearning/comments/1lze50r/what_are_your_biggest_problems_with_language/)).
 
-**App status:** The app provides immediate feedback on exercises (correct/incorrect indicators). The pronunciation hints are detailed (specific phoneme guidance with Arabic transliteration and "avoid" patterns). However, for grammar exercises (fill_blank, spell, translate), the feedback quality should be verified — does it explain WHY an answer is wrong, or just that it's wrong?
-
-**Recommendation:** For each exercise type, verify that incorrect answers trigger an explanation (e.g., "The correct answer is 'am' because English uses 'to be' in the present tense, unlike Arabic which often omits it"). This is especially important for Arabic speakers who struggle with specific grammar points like the verb "to be" and present perfect ([British Council](https://www.britishcouncil.org/voices-magazine/tips-teaching-english-arabic-speakers)).
+**App status:** The app provides immediate feedback on exercises (correct/incorrect indicators). The pronunciation hints are detailed (specific phoneme guidance with Arabic transliteration and "avoid" patterns). **FIXED:** Grammar exercises (fill_blank, spell, translate) now show the correct answer when the student gets it wrong — e.g., "Correct answer: am" or "Correct spelling: Thank you". The `mark()` function accepts an optional `feedbackMsg` parameter for explanatory feedback (backward compatible with existing renderers that don't pass it). Hints in speaking and free_response activities already require explicit user action (no auto-appearing hints) (commit b8906e3).
 
 ---
 
@@ -94,7 +92,7 @@ The PEL app is a well-architected English learning platform for Arabic (specific
 
 **App status:** The app's lesson sequence has 23 activities (concept, examples, learn, learn_sentence, how_to_say, recognize x2, match, db_order, fill_blank, spell, db_translate, listen, identify_heard, listening_dictation, pronunciation, minimal_pairs, speaking, writing_practice, choose_natural_expression, guided_production, free_response, review, challenge). This is a comprehensive sequence but may take 15-25 minutes to complete — longer than the recommended 5-minute micro-lesson.
 
-**Recommendation:** Consider breaking lessons into 2-3 micro-sessions of 5-8 minutes each, with progress saved between sessions. The app already saves stage session state, so this is technically feasible. Alternatively, allow students to exit and resume mid-lesson without losing progress.
+**App status:** **FIXED.** The app already saves and restores stage session state (activity index, stats, per-activity DOM state). The Exit button now reads "Save & Exit" to reassure students their progress is preserved. A toast notification ("Welcome back! Your progress was saved") appears when resuming a mid-lesson session. The `close()` function explicitly saves before clearing state, so the throttled 500ms save can't be lost (commit aad0394).
 
 ### 3.2 First Win Timing — Verify onboarding flow
 
@@ -120,7 +118,7 @@ The PEL app is a well-architected English learning platform for Arabic (specific
 
 **Impact:** Students who clear browser data or use private mode lose their review schedule. Due items won't resurface, and the SRS intervals reset to zero.
 
-**Recommendation:** Make the server the source of truth. On app load, always call `srsSync()` (which pulls all rows and merges last-write-wins) before rendering the review queue. Fall back to localStorage only when offline.
+**FIXED:** On app load, `srsSync()` is now awaited (with a 5-second timeout) before the app is revealed. The server is effectively the source of truth, with localStorage as a cache (commit 8bf7a96).
 
 ### 4.2 Mastery Gate Minimum Threshold
 
@@ -136,21 +134,19 @@ The PEL app is a well-architected English learning platform for Arabic (specific
 
 **Impact:** If the app shows hints too quickly, students may never attempt to produce language independently.
 
-**Recommendation:** Verify that hints in speaking and free_response activities require an explicit user action (e.g., clicking "Show hint") rather than appearing automatically after a timer.
+**VERIFIED:** Hints in speaking and free_response activities already require explicit user action (clicking "Hear it", "Speak now", or "Done"). No auto-appearing hints found. The model answer in free_response is revealed only after submission. No changes needed (commit b8906e3).
 
 ### 4.4 Streak Forgiveness Mechanics
 
 **Research:** EdTech research recommends pairing streak systems with forgiveness mechanics (streak freeze, catch-up option, soft reset). Avoid resetting streaks to zero after a missed day. Avoid guilt-based messages. Duolingo's Streak Freeze increased daily active learners ([DigiA, 2024](https://www.digia.tech/post/edtech-app-engagement-why-85-percent-abandon-before-week-3/)).
 
-**App status:** Need to verify whether the app has streak mechanics and whether they include forgiveness. If streaks reset to zero on a missed day, this can cause demotivation and dropout.
-
-**Recommendation:** If the app has streaks, implement a "streak freeze" (one free miss per week or earned through XP). If the app doesn't have streaks yet, this is a retention opportunity.
+**App status:** **FIXED.** The app has streak mechanics (XP, day streak, longest streak) with a new streak freeze system: students earn 1 freeze every 3 consecutive study days (capped at 2). When a streak would reset due to a missed day, a freeze is consumed to preserve the current streak. Toasts notify when freezes are earned or consumed. Stored in localStorage (no DB schema changes) (commit b06c5e3).
 
 ### 4.5 Progress Visibility
 
 **Research:** Replace consumption metrics ("modules completed", "hours watched") with capability metrics ("You can now read 400 new characters", "Your accuracy improved from 48% to 71%"). Show progress before the Week-3 evaluation point when users decide whether to continue ([DigiA, 2024](https://www.digia.tech/post/edtech-app-engagement-why-85-percent-abandon-before-week-3/)).
 
-**App status:** The app tracks XP, completed lessons, and SRS state. Verify that the dashboard shows capability-based progress, not just lesson counts.
+**App status:** **FIXED.** The dashboard now shows capability metrics: words learned (from SRS store count), due reviews (from SRS due list), XP, and streak freezes. These appear in a stats row below the hero card on the home view (commit dacbf22, b06c5e3).
 
 ### 4.6 App Retention — Industry Context
 
@@ -192,16 +188,16 @@ The PEL app is a well-architected English learning platform for Arabic (specific
 
 ## 6. Priority Recommendations
 
-| Priority | Issue | Recommendation | Effort |
-|---|---|---|---|
-| High | SRS localStorage dependency | Make server the source of truth; always srsSync() on load | Medium |
-| High | Lesson length (23 activities) | Allow resume mid-lesson; consider micro-sessions | Low (resume exists) |
-| Medium | Feedback quality | Add explanatory feedback for grammar exercises | Medium |
-| Medium | Hint timing | Verify hints require explicit user action | Low |
-| Medium | Streak forgiveness | Add streak freeze mechanic if streaks exist | Medium |
-| Medium | Progress visibility | Show capability metrics on dashboard | Medium |
-| Low | Mastery gate minimum | Consider whether MASTERY_MIN_PROD=3 is right | Low |
-| Low | Speech recognition logging | Log success/failure rates for monitoring | Low |
+| Priority | Issue | Recommendation | Effort | Status |
+|---|---|---|---|---|
+| High | SRS localStorage dependency | Make server the source of truth; always srsSync() on load | Medium | **DONE** (commit 8bf7a96) |
+| High | Lesson length (23 activities) | Allow resume mid-lesson; consider micro-sessions | Low (resume exists) | **DONE** (commit aad0394) |
+| Medium | Feedback quality | Add explanatory feedback for grammar exercises | Medium | **DONE** (commit b8906e3) |
+| Medium | Hint timing | Verify hints require explicit user action | Low | **DONE** — verified (commit b8906e3) |
+| Medium | Streak forgiveness | Add streak freeze mechanic if streaks exist | Medium | **DONE** (commit b06c5e3) |
+| Medium | Progress visibility | Show capability metrics on dashboard | Medium | **DONE** (commit dacbf22) |
+| Low | Mastery gate minimum | Consider whether MASTERY_MIN_PROD=3 is right | Low | Documented |
+| Low | Speech recognition logging | Log success/failure rates for monitoring | Low | Future work |
 
 ---
 
