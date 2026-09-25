@@ -23,7 +23,7 @@
 <script src="lib/cert-qr.js?v=a43f19f9" defer></script>
 <script src="lib/cert-sheet.js?v=5278e935" defer></script>
 <script src="lib/pel_config.js?v=d66df0a3"></script>
-<script src="lib/pel_lesson_stage.js?v=8b508fba"></script>
+<script src="lib/pel_lesson_stage.js?v=82e97ed7"></script>
 <script src="lib/pel_dashboard_life.js?v=cf9399c4"></script>
 <script src="lib/pel_curriculum_path.js?v=ce8b099c"></script>
 <style>
@@ -53,13 +53,13 @@
 html[data-theme="light"]{
   --bg:#F5F5F7; --surface:#FFFFFF; --card:#FFFFFF; --card-elevated:#FAFAFA;
   --border:#D2D2D7; --text:#1D1D1F; --text-secondary:#6E6E73; --text-muted:#86868B;
-  --gold:#8B6C2F; --gold-soft:#B89A5C; --bronze:#7A5F27; --emerald:#1D7A4E;
+  --gold:#0071E3; --gold-soft:#4A9FFF; --bronze:#0051B5; --emerald:#1D7A4E;
   --warning:#8B6C2F; --danger:#B8442E; --success:#1D7A4E; --error:#B8442E;
   --text-faint:#AEAEB2;
-  --pel-stem:#1D1D1F; --pel-gold:#8B6C2F;
+  --pel-stem:#1D1D1F; --pel-gold:#0071E3;
   --shadow-soft:0 1px 2px rgba(0,0,0,.04), 0 4px 16px -8px rgba(0,0,0,.06);
   --shadow-lift:0 2px 6px rgba(0,0,0,.05), 0 12px 32px -12px rgba(0,0,0,.08);
-  --gold-glow:0 0 24px -8px rgba(139,108,47,.15);
+  --gold-glow:0 0 24px -8px rgba(0,113,227,.15);
   --stage-bar-bg:rgba(245,245,247,.82);
   --stage-bar-border:#D2D2D7;
 }
@@ -84,7 +84,7 @@ button{font-family:inherit; cursor:pointer; color:inherit; background:none; bord
 input,select,textarea{font-family:inherit;}
 ul{list-style:none; margin:0; padding:0;}
 ::selection{ background:var(--gold); color:#0E0E10; }
-html[data-theme="light"] ::selection{ background:rgba(139,108,47,.2); color:var(--text); }
+html[data-theme="light"] ::selection{ background:rgba(0,113,227,.2); color:var(--text); }
   .arabic, [dir="rtl"]{ font-family:'Cairo','Tajawal',sans-serif; direction:rtl; line-height:1.95; letter-spacing:0; font-weight:400; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; unicode-bidi:isolate; }
   /* Bigger, more readable Arabic everywhere (captions, chips, body, sidebar).
      Uses a floor with !important so tiny inline sizes (0.68–0.78rem) are raised
@@ -750,7 +750,7 @@ body.ui-ar .sidebar{ border-right:none; border-left:1px solid var(--border); }
 body.ui-ar .sidebar-collapse-btn{ margin-left:0; margin-right:auto; }
 body.ui-ar .side-link.active{ background:linear-gradient(270deg, rgba(200,169,106,.14), transparent); }
 body.ui-ar .side-link.active::before{ left:auto; right:0; }
-html[data-theme="light"] body.ui-ar .side-link.active::before{ box-shadow:0 0 8px rgba(139,108,47,.5); }
+html[data-theme="light"] body.ui-ar .side-link.active::before{ box-shadow:0 0 8px rgba(0,113,227,.5); }
 body.ui-ar .side-badge{ right:auto; left:8px; }
 body.ui-ar .context-panel{ border-left:none; border-right:1px solid var(--border); }
 body.ui-ar .kbd{ margin-left:0; margin-right:auto; }
@@ -769,7 +769,7 @@ body.ui-ar .roadmap-track{ padding-left:0; padding-right:30px; }
 body.ui-ar .roadmap-dot{ left:auto; right:-30px; }
 body.ui-ar .workspace-nav{ border-right:none; border-left:1px solid var(--border); }
 body.ui-ar .workspace-context{ border-left:none; border-right:1px solid var(--border); }
-body.ui-ar .fb-why{ border-left:none; border-right:2px solid rgba(139,108,47,.3); }
+body.ui-ar .fb-why{ border-left:none; border-right:2px solid rgba(0,113,227,.3); }
 @media(max-width:980px){
   body.ui-ar .sidebar{ left:auto; right:0; transform:translateX(100%); }
   body.ui-ar .sidebar.mobile-open{ transform:translateX(0); }
@@ -779,9 +779,9 @@ body.ui-ar .fb-why{ border-left:none; border-right:2px solid rgba(139,108,47,.3)
   body.ui-ar .qt-popup{ left:12px; right:12px; }
 }
 /* Light-mode RTL: mirror the active-link gradient and hero glow direction */
-html[data-theme="light"] body.ui-ar .side-link.active{ background:linear-gradient(270deg, rgba(139,108,47,.1), rgba(139,108,47,.03) 70%, transparent); }
-html[data-theme="light"] body.ui-ar #heroCard{ background:radial-gradient(90% 130% at 0% -20%, rgba(139,108,47,.06), transparent 55%), radial-gradient(70% 100% at 100% 110%, rgba(29,122,78,.03), transparent 55%), linear-gradient(165deg, rgba(0,0,0,.008), transparent 45%), var(--card-elevated); }
-html[data-theme="light"] body.ui-ar .pel-conv-line.B{ background:linear-gradient(270deg, rgba(139,108,47,.06), transparent 50%), var(--card-elevated); }
+html[data-theme="light"] body.ui-ar .side-link.active{ background:linear-gradient(270deg, rgba(0,113,227,.1), rgba(0,113,227,.03) 70%, transparent); }
+html[data-theme="light"] body.ui-ar #heroCard{ background:radial-gradient(90% 130% at 0% -20%, rgba(0,113,227,.06), transparent 55%), radial-gradient(70% 100% at 100% 110%, rgba(29,122,78,.03), transparent 55%), linear-gradient(165deg, rgba(0,0,0,.008), transparent 45%), var(--card-elevated); }
+html[data-theme="light"] body.ui-ar .pel-conv-line.B{ background:linear-gradient(270deg, rgba(0,113,227,.06), transparent 50%), var(--card-elevated); }
 
 /* Dashboard decorative RTL: mirror orbs and shimmer so motion reads right-to-left */
 body.ui-ar #heroCard .pel-dash-orb.o1{ right:auto; left:8%; }
@@ -823,7 +823,7 @@ html[data-theme="light"] body{
   background:
     radial-gradient(1200px 800px at 12% -10%, rgba(0,0,0,.022), transparent 60%),
     radial-gradient(900px 600px at 88% 8%, rgba(0,0,0,.015), transparent 55%),
-    radial-gradient(1000px 800px at 50% 120%, rgba(139,108,47,.018), transparent 65%),
+    radial-gradient(1000px 800px at 50% 120%, rgba(0,113,227,.018), transparent 65%),
     #F5F5F7;
 }
 
@@ -865,8 +865,8 @@ html[data-theme="light"] .card-elevated{
 }
 html[data-theme="light"] .card.hoverable:hover{
   transform:translateY(-4px);
-  box-shadow: 0 2px 6px rgba(0,0,0,.06), 0 12px 32px -12px rgba(0,0,0,.1), 0 0 0 1px rgba(139,108,47,.12);
-  border-color:rgba(139,108,47,.3);
+  box-shadow: 0 2px 6px rgba(0,0,0,.06), 0 12px 32px -12px rgba(0,0,0,.1), 0 0 0 1px rgba(0,113,227,.12);
+  border-color:rgba(0,113,227,.3);
 }
 
 /* Buttons: gold gets a sheen sweep and a warmer ring; outline gets a
@@ -897,23 +897,23 @@ html[data-theme="light"] .card.hoverable:hover{
 }
 html[data-theme="light"] .btn-gold{
   background:linear-gradient(135deg, #9A7B3E 0%, #8B6C2F 50%, #7A5F27 100%);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.2), var(--gold-glow), 0 4px 14px -6px rgba(139,108,47,.4);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.2), var(--gold-glow), 0 4px 14px -6px rgba(0,113,227,.4);
   text-shadow:none;
 }
 html[data-theme="light"] .btn-gold:hover{
   transform:translateY(-2px);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 0 32px -8px rgba(139,108,47,.3), 0 8px 24px -8px rgba(139,108,47,.45);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 0 32px -8px rgba(0,113,227,.3), 0 8px 24px -8px rgba(0,113,227,.45);
 }
 html[data-theme="light"] .btn-outline{
   background:linear-gradient(180deg, rgba(0,0,0,.008), transparent 60%);
   border-color:#D2D2D7;
 }
 html[data-theme="light"] .btn-outline:hover{
-  border-color:rgba(139,108,47,.4);
-  background:linear-gradient(180deg, rgba(139,108,47,.04), transparent 60%);
-  box-shadow: 0 4px 14px -8px rgba(139,108,47,.2);
+  border-color:rgba(0,113,227,.4);
+  background:linear-gradient(180deg, rgba(0,113,227,.04), transparent 60%);
+  box-shadow: 0 4px 14px -8px rgba(0,113,227,.2);
 }
-html[data-theme="light"] .chip.gold{ background:linear-gradient(180deg, rgba(139,108,47,.1), rgba(139,108,47,.05)); box-shadow: inset 0 1px 0 rgba(255,255,255,.5); }
+html[data-theme="light"] .chip.gold{ background:linear-gradient(180deg, rgba(0,113,227,.1), rgba(0,113,227,.05)); box-shadow: inset 0 1px 0 rgba(255,255,255,.5); }
 
 /* Gold chip: gradient fill instead of flat tint. */
 .chip.gold{
@@ -947,10 +947,10 @@ html[data-theme="light"] .tile-icon::after{
 }
 
 html[data-theme="light"] .side-link.active{
-  background:linear-gradient(90deg, rgba(139,108,47,.1), rgba(139,108,47,.03) 70%, transparent);
+  background:linear-gradient(90deg, rgba(0,113,227,.1), rgba(0,113,227,.03) 70%, transparent);
   box-shadow: inset 0 1px 0 rgba(255,255,255,.5);
 }
-html[data-theme="light"] .side-link.active::before{ box-shadow:0 0 8px rgba(139,108,47,.5); }
+html[data-theme="light"] .side-link.active::before{ box-shadow:0 0 8px rgba(0,113,227,.5); }
 html[data-theme="light"] .sidebar{
   background:
     linear-gradient(180deg, rgba(0,0,0,.008), transparent 160px),
@@ -960,10 +960,10 @@ html[data-theme="light"] .topbar{
   background:color-mix(in srgb, var(--bg) 75%, transparent);
   box-shadow:0 1px 0 rgba(0,0,0,.03) inset;
 }
-html[data-theme="light"] .icon-btn:hover{ box-shadow:0 0 0 1px rgba(139,108,47,.2), 0 4px 14px -8px rgba(139,108,47,.25); }
+html[data-theme="light"] .icon-btn:hover{ box-shadow:0 0 0 1px rgba(0,113,227,.2), 0 4px 14px -8px rgba(0,113,227,.25); }
 html[data-theme="light"] .avatar-circle{
   background:linear-gradient(135deg, #B89A5C, var(--gold) 45%, var(--bronze));
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.4), 0 2px 8px -2px rgba(139,108,47,.3);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.4), 0 2px 8px -2px rgba(0,113,227,.3);
 }
 
 /* Hero: layered ambient glow, gold top hairline, corner ornament. */
@@ -978,14 +978,14 @@ html[data-theme="light"] .avatar-circle{
 }
 html[data-theme="light"] #heroCard{
   background:
-    radial-gradient(90% 130% at 100% -20%, rgba(139,108,47,.06), transparent 55%),
+    radial-gradient(90% 130% at 100% -20%, rgba(0,113,227,.06), transparent 55%),
     radial-gradient(70% 100% at 0% 110%, rgba(29,122,78,.03), transparent 55%),
     linear-gradient(165deg, rgba(0,0,0,.008), transparent 45%),
     var(--card-elevated);
   box-shadow: inset 0 1px 0 rgba(255,255,255,.8), var(--shadow-lift);
 }
 html[data-theme="light"] #heroCard::before{
-  background:linear-gradient(90deg, transparent, rgba(139,108,47,.5), rgba(184,154,92,.6), rgba(139,108,47,.5), transparent);
+  background:linear-gradient(90deg, transparent, rgba(0,113,227,.5), rgba(184,154,92,.6), rgba(0,113,227,.5), transparent);
 }
 #heroCard::before{
   content:""; position:absolute; top:0; left:0; right:0; height:2px;
@@ -1079,6 +1079,67 @@ html[data-theme="light"] .writing-editor, html[data-theme="light"] .qt-box texta
 html[data-theme="light"] .article-cover{
   box-shadow: inset 0 1px 0 rgba(255,255,255,.5);
 }
+
+/* ---- Comprehensive gold→blue overrides for light mode ---- */
+html[data-theme="light"] .side-link.active{ background:linear-gradient(90deg, rgba(0,113,227,.1), transparent); }
+html[data-theme="light"] .side-badge{ color:#FFFFFF; box-shadow:0 2px 8px rgba(0,113,227,.3); }
+html[data-theme="light"] .avatar-circle{ color:#FFFFFF; }
+html[data-theme="light"] .card.hoverable:hover{ border-color:rgba(0,113,227,.3); }
+html[data-theme="light"] .btn-gold{ color:#FFFFFF; }
+html[data-theme="light"] .btn-gold:hover{ box-shadow:0 0 32px -8px rgba(0,113,227,.3), 0 8px 24px -8px rgba(0,113,227,.4); }
+html[data-theme="light"] .btn-outline:hover{ border-color:rgba(0,113,227,.4); background:linear-gradient(180deg, rgba(0,113,227,.04), transparent 60%); box-shadow:0 4px 14px -8px rgba(0,113,227,.2); }
+html[data-theme="light"] .btn-ghost:hover{ color:var(--gold); border-color:rgba(0,113,227,.3); }
+html[data-theme="light"] .chip.gold{ background:linear-gradient(180deg, rgba(0,113,227,.1), rgba(0,113,227,.05)); }
+html[data-theme="light"] .toast.gold{ border-color:rgba(0,113,227,.4); }
+html[data-theme="light"] .fab-qt{ color:#FFFFFF; box-shadow:0 4px 14px -6px rgba(0,113,227,.4); }
+html[data-theme="light"] .fab-qt:hover{ box-shadow:0 8px 24px -8px rgba(0,113,227,.45); }
+html[data-theme="light"] .badge-icon-wrap{ background:radial-gradient(circle, rgba(0,113,227,.15), rgba(0,113,227,.04)); border-color:rgba(0,113,227,.25); }
+html[data-theme="light"] .cert-top{ background:linear-gradient(135deg, rgba(0,113,227,.08), transparent 70%); }
+html[data-theme="light"] .heatmap-cell[data-lvl="1"]{ background:rgba(0,113,227,.2); }
+html[data-theme="light"] .heatmap-cell[data-lvl="2"]{ background:rgba(0,113,227,.4); }
+html[data-theme="light"] .heatmap-cell[data-lvl="3"]{ background:rgba(0,113,227,.65); }
+html[data-theme="light"] .roadmap-node.done .roadmap-dot{ color:#FFFFFF; }
+html[data-theme="light"] .roadmap-node.current .roadmap-dot{ box-shadow:0 0 0 4px rgba(0,113,227,.15); }
+html[data-theme="light"] .switch input:checked + .switch-track::before{ background:var(--gold); }
+html[data-theme="light"] .mini-cal-day.studied{ background:rgba(0,113,227,.12); color:var(--gold); }
+html[data-theme="light"] .concept-step:hover{ border-color:rgba(0,113,227,.3); }
+html[data-theme="light"] .concept-num{ color:#FFFFFF; }
+html[data-theme="light"] .concept-ex{ background:rgba(0,113,227,.04); border-color:rgba(0,113,227,.12); }
+html[data-theme="light"] .lib-filter.active{ border-color:var(--gold); color:var(--gold); background:rgba(0,113,227,.06); }
+html[data-theme="light"] .academy-card:hover{ border-color:rgba(0,113,227,.3); }
+html[data-theme="light"] .ws-lesson-link.active{ background:rgba(0,113,227,.08); }
+html[data-theme="light"] .lesson-actions-row .toggled{ border-color:var(--gold); color:var(--gold); background:rgba(0,113,227,.06); }
+html[data-theme="light"] .topic-tile.active{ border-color:var(--gold); background:rgba(0,113,227,.04); }
+html[data-theme="light"] .persona-avatar{ color:#FFFFFF; }
+html[data-theme="light"] .chat-bubble.me{ color:#FFFFFF; }
+html[data-theme="light"] .feedback-block{ background:rgba(0,113,227,.04); border-color:rgba(0,113,227,.15); }
+html[data-theme="light"] .writing-free-card{ border-color:rgba(0,113,227,.3); }
+html[data-theme="light"] .bookmark-type-icon{ background:rgba(0,113,227,.1); }
+html[data-theme="light"] .quiz-option:hover{ border-color:rgba(0,113,227,.4); }
+html[data-theme="light"] .eyebrow::after{ border-color:rgba(0,113,227,.6); }
+html[data-theme="light"] .progress-fill{ box-shadow:0 0 10px rgba(0,113,227,.3), 0 0 2px rgba(0,113,227,.5); }
+html[data-theme="light"] .ring-wrap .prog{ filter:drop-shadow(0 0 6px rgba(0,113,227,.25)); }
+html[data-theme="light"] .week-cell.studied{ background:rgba(0,113,227,.1); border-color:rgba(0,113,227,.3); color:var(--gold); }
+html[data-theme="light"] .week-cell.today{ border-color:var(--gold); box-shadow:0 0 0 1px rgba(0,113,227,.2); }
+html[data-theme="light"] .skill-bar-row:hover{ border-color:rgba(0,113,227,.3); box-shadow:0 8px 24px -12px rgba(0,0,0,.08); }
+
+/* ---- Light mode overrides for dashboard_life hardcoded gold ---- */
+html[data-theme="light"] #heroCard .pel-dash-orb{ background:radial-gradient(circle, rgba(0,113,227,.12), transparent 70%); }
+html[data-theme="light"] #view-home .card.hoverable:hover,
+html[data-theme="light"] #view-home .academy-card:hover,
+html[data-theme="light"] #view-home .topic-tile:hover,
+html[data-theme="light"] #view-home .pel-dash-tool:hover{ box-shadow:0 18px 44px -18px rgba(0,113,227,.2); border-color:rgba(0,113,227,.3); }
+html[data-theme="light"] .ring-wrap .prog{ filter:drop-shadow(0 0 2px rgba(0,113,227,.15)); }
+html[data-theme="light"] .pel-dash-strip::-webkit-scrollbar-thumb{ background:rgba(0,113,227,.25); }
+html[data-theme="light"] .pel-dash-strip::-webkit-scrollbar-thumb:hover{ background:rgba(0,113,227,.4); }
+html[data-theme="light"] .pel-dash-tool .td-ico{ background:linear-gradient(135deg, rgba(0,113,227,.12), rgba(0,113,227,.04)); }
+html[data-theme="light"] .pel-dash-burst{ border-color:rgba(0,113,227,.12); }
+html[data-theme="light"] .pel-dash-burst::before{ background:radial-gradient(120% 120% at 80% 0%, rgba(0,113,227,.05), transparent 60%); }
+html[data-theme="light"] #heroCard .pel-dash-aurora{ background:conic-gradient(from 0deg, rgba(0,113,227,0), rgba(0,113,227,.08), rgba(29,122,78,.04), rgba(74,159,255,.06), rgba(0,113,227,0)); }
+html[data-theme="light"] #view-home.pel-dash-lessonify .chip.gold,
+html[data-theme="light"] #view-home.pel-dash-lessonify .tag-gold{ background:rgba(0,113,227,.08); border-color:rgba(0,113,227,.2); }
+html[data-theme="light"] #view-home.pel-dash-lessonify #heroCard::after{ background:conic-gradient(from 215deg, rgba(0,113,227,.3), rgba(29,122,78,.1), rgba(74,159,255,.25), rgba(0,113,227,.3)); }
+html[data-theme="light"] #view-home.pel-dash-lessonify .card.hoverable .pel-dash-spot{ background:radial-gradient(220px circle at var(--mx,50%) var(--my,50%), rgba(0,113,227,.06), transparent 60%); }
 .topic-tile:hover, .persona-card:hover{ transform:translateY(-4px); }
 .quiz-option:hover{ border-color:rgba(200,169,106,.6); transform:translateY(-1px); }
 

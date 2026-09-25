@@ -17,13 +17,13 @@
 html[data-theme="light"]{
   --bg:#F5F5F7; --surface:#FFFFFF; --card:#FFFFFF; --card-elevated:#FAFAFA;
   --border:#D2D2D7; --text:#1D1D1F; --text-secondary:#6E6E73; --text-muted:#86868B;
-  --gold:#8B6C2F; --gold-soft:#B89A5C; --bronze:#7A5F27; --emerald:#1D7A4E;
+  --gold:#0071E3; --gold-soft:#4A9FFF; --bronze:#0051B5; --emerald:#1D7A4E;
   --warning:#8B6C2F; --danger:#B8442E; --success:#1D7A4E; --error:#B8442E;
   --text-faint:#AEAEB2;
-  --pel-stem:#1D1D1F; --pel-gold:#8B6C2F;
+  --pel-stem:#1D1D1F; --pel-gold:#0071E3;
   --shadow-soft:0 1px 2px rgba(0,0,0,.04), 0 4px 16px -8px rgba(0,0,0,.06);
   --shadow-lift:0 2px 6px rgba(0,0,0,.05), 0 12px 32px -12px rgba(0,0,0,.08);
-  --gold-glow:0 0 24px -8px rgba(139,108,47,.15);
+  --gold-glow:0 0 24px -8px rgba(0,113,227,.15);
 }
 *,*::before,*::after{box-sizing:border-box;}
 html,body{min-height:100%;}
