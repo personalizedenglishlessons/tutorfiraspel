@@ -23,7 +23,7 @@
 <script src="lib/cert-qr.js?v=a43f19f9" defer></script>
 <script src="lib/cert-sheet.js?v=5278e935" defer></script>
 <script src="lib/pel_config.js?v=d66df0a3"></script>
-<script src="lib/pel_lesson_stage.js?v=5dd30f67"></script>
+<script src="lib/pel_lesson_stage.js?v=c37cc2d7"></script>
 <script src="lib/pel_dashboard_life.js?v=cf9399c4"></script>
 <script src="lib/pel_curriculum_path.js?v=ce8b099c"></script>
 <style>
@@ -51,17 +51,17 @@
   --translit-min:0.88rem; --translit-scale:1.05em;
 }
 html[data-theme="light"]{
-  --bg:#F5F1EA; --surface:#FBF8F2; --card:#FFFEFB; --card-elevated:#FAF6EF;
-  --border:#E5DAC8; --text:#1A1712; --text-secondary:#4A4136; --text-muted:#6B6052;
-  --gold:#B8831A; --gold-soft:#D4AE50; --bronze:#9A6E16; --emerald:#2F745E;
-  --warning:#B07A2A; --danger:#B85555; --success:#2F8A57; --error:#B85555;
-  --text-faint:#9A9088;
-  --pel-stem:#1A1712; --pel-gold:#B8831A;
-  --shadow-soft:0 20px 55px -24px rgba(40,28,12,.14);
-  --shadow-lift:0 32px 80px -28px rgba(40,28,12,.18);
-  --gold-glow:0 0 40px -10px rgba(184,131,26,.22);
-  --stage-bar-bg:rgba(251,248,242,.88);
-  --stage-bar-border:#E5DAC8;
+  --bg:#F5F5F7; --surface:#FFFFFF; --card:#FFFFFF; --card-elevated:#FAFAFA;
+  --border:#D2D2D7; --text:#1D1D1F; --text-secondary:#6E6E73; --text-muted:#86868B;
+  --gold:#8B6C2F; --gold-soft:#B89A5C; --bronze:#7A5F27; --emerald:#1D7A4E;
+  --warning:#8B6C2F; --danger:#B8442E; --success:#1D7A4E; --error:#B8442E;
+  --text-faint:#AEAEB2;
+  --pel-stem:#1D1D1F; --pel-gold:#8B6C2F;
+  --shadow-soft:0 1px 3px rgba(0,0,0,.04), 0 1px 2px rgba(0,0,0,.03);
+  --shadow-lift:0 4px 12px rgba(0,0,0,.06), 0 1px 3px rgba(0,0,0,.04);
+  --gold-glow:none;
+  --stage-bar-bg:rgba(245,245,247,.8);
+  --stage-bar-border:#D2D2D7;
 }
 *,*::before,*::after{box-sizing:border-box;}
 html{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; text-rendering:optimizeLegibility; font-optical-sizing:auto; font-size:17px; }
@@ -769,11 +769,7 @@ body{
     var(--bg);
 }
 html[data-theme="light"] body{
-  background:
-    radial-gradient(1100px 700px at 14% -10%, rgba(168,131,69,.07), transparent 60%),
-    radial-gradient(900px 620px at 100% 0%, rgba(63,140,114,.05), transparent 55%),
-    radial-gradient(1000px 800px at 50% 120%, rgba(168,131,69,.06), transparent 65%),
-    var(--bg);
+  background:#F5F5F7;
 }
 
 /* Entitlement gate: full-screen takeover shown instead of the app shell
@@ -805,14 +801,14 @@ body::before{
   box-shadow: inset 0 1px 0 rgba(255,255,255,.03), 0 14px 34px -22px rgba(0,0,0,.55);
 }
 html[data-theme="light"] .card{
-  background:linear-gradient(180deg, rgba(255,254,251,.8), transparent 40%), var(--card);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.8), 0 10px 30px -20px rgba(40,28,12,.12);
+  background:#FFFFFF;
+  box-shadow:0 1px 3px rgba(0,0,0,.04), 0 1px 2px rgba(0,0,0,.03);
 }
 .card-elevated{
   background:linear-gradient(180deg, rgba(255,255,255,.028), transparent 40%), var(--card-elevated);
 }
 html[data-theme="light"] .card-elevated{
-  background:linear-gradient(180deg, rgba(255,254,251,.85), transparent 42%), var(--card-elevated);
+  background:#FAFAFA;
 }
 .card.hoverable:hover{
   transform:translateY(-5px);
@@ -820,7 +816,8 @@ html[data-theme="light"] .card-elevated{
   box-shadow: inset 0 1px 0 rgba(255,255,255,.04), 0 22px 50px -20px rgba(0,0,0,.6), 0 0 0 1px rgba(200,169,106,.10), 0 10px 44px -18px rgba(200,169,106,.4);
 }
 html[data-theme="light"] .card.hoverable:hover{
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.8), 0 16px 40px -24px rgba(40,28,12,.18), 0 0 0 1px rgba(184,131,26,.14), 0 8px 36px -20px rgba(184,131,26,.2);
+  box-shadow:0 4px 12px rgba(0,0,0,.06), 0 1px 3px rgba(0,0,0,.04);
+  border-color:#B0B0B5;
 }
 
 /* Buttons: gold gets a sheen sweep and a warmer ring; outline gets a
@@ -849,7 +846,8 @@ html[data-theme="light"] .card.hoverable:hover{
   background:linear-gradient(180deg, rgba(200,169,106,.12), rgba(200,169,106,.03));
   box-shadow: 0 10px 26px -14px rgba(200,169,106,.45);
 }
-html[data-theme="light"] .btn-outline{ background:rgba(255,254,251,.6); border-color:var(--border); }
+html[data-theme="light"] .btn-outline{ background:#FFFFFF; border-color:#D2D2D7; }
+html[data-theme="light"] .chip.gold{ background:rgba(139,108,47,.1); box-shadow:none; }
 
 /* Gold chip: gradient fill instead of flat tint. */
 .chip.gold{
@@ -874,8 +872,9 @@ html[data-theme="light"] .btn-outline{ background:rgba(255,254,251,.6); border-c
 }
 .tile-icon-sm{ width:38px; height:38px; border-radius:11px; }
 html[data-theme="light"] .tile-icon{
-  background:linear-gradient(135deg, rgba(184,131,26,.22), rgba(154,110,22,.12));
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 6px 18px -10px rgba(184,131,26,.3);
+  background:#F5F5F7;
+  color:var(--gold);
+  box-shadow:none;
 }
 
 /* Sidebar: the logo glows, the active link becomes a soft gold panel. */
@@ -913,11 +912,8 @@ html[data-theme="light"] .tile-icon{
   box-shadow: inset 0 1px 0 rgba(255,255,255,.05), var(--shadow-lift);
 }
 html[data-theme="light"] #heroCard{
-  background:
-    radial-gradient(90% 130% at 100% -20%, rgba(184,131,26,.10), transparent 55%),
-    linear-gradient(165deg, rgba(255,254,251,.85), transparent 50%),
-    var(--card-elevated);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 20px 50px -24px rgba(40,28,12,.14);
+  background:#FFFFFF;
+  box-shadow:0 1px 3px rgba(0,0,0,.04), 0 1px 2px rgba(0,0,0,.03);
 }
 #heroCard::before{
   content:""; position:absolute; top:0; left:0; right:0; height:2px;
@@ -942,7 +938,7 @@ html[data-theme="light"] #heroCard{
 }
 .lesson-cover-icon{ filter:drop-shadow(0 8px 16px rgba(0,0,0,.5)); }
 .lesson-cover > div{ position:relative; z-index:1; }
-html[data-theme="light"] .academy-card{ box-shadow:0 10px 30px -20px rgba(40,28,12,.14); }
+html[data-theme="light"] .academy-card{ box-shadow:0 1px 3px rgba(0,0,0,.04); }
 .academy-cover::before{
   content:""; position:absolute; inset:0; pointer-events:none;
   background:
@@ -963,13 +959,13 @@ html[data-theme="light"] .academy-card{ box-shadow:0 10px 30px -20px rgba(40,28,
   box-shadow:0 24px 54px -22px rgba(0,0,0,.65), 0 10px 44px -18px rgba(200,169,106,.35);
 }
 html[data-theme="light"] .academy-card:hover{
-  box-shadow:0 18px 44px -24px rgba(40,28,12,.18), 0 8px 36px -20px rgba(184,131,26,.2);
+  box-shadow:0 4px 12px rgba(0,0,0,.08);
 }
 .academy-fav{
   background:rgba(10,10,12,.45);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.12);
 }
-html[data-theme="light"] .academy-fav{ background:rgba(255,254,251,.7); box-shadow:inset 0 1px 0 rgba(255,255,255,.5); }
+html[data-theme="light"] .academy-fav{ background:rgba(255,255,255,.8); box-shadow:none; }
 
 /* Progress: fills and rings get a gentle glow so progress feels alive. */
 .progress-fill{ box-shadow:0 0 10px rgba(200,169,106,.45), 0 0 2px rgba(200,169,106,.6); }
@@ -1005,7 +1001,7 @@ html[data-theme="light"] .modal-box, html[data-theme="light"] .palette-box,
 html[data-theme="light"] .dropdown, html[data-theme="light"] .toast,
 html[data-theme="light"] .writing-editor, html[data-theme="light"] .qt-box textarea,
 html[data-theme="light"] .article-cover{
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.8);
+  box-shadow:none;
 }
 .topic-tile:hover, .persona-card:hover{ transform:translateY(-4px); }
 .quiz-option:hover{ border-color:rgba(200,169,106,.6); transform:translateY(-1px); }
