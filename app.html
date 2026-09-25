@@ -14351,21 +14351,30 @@ function awardXp(amount){
   const today = pelDateKey();
   if(studentStats.lastStudyDate !== today){
     const yesterday = pelDateKey(new Date(Date.now() - 86400000));
+    const twoDaysAgo = pelDateKey(new Date(Date.now() - 2*86400000));
+    var freezeUsed = false;
     if(studentStats.lastStudyDate === yesterday){
+      // Consecutive day — increment streak.
       studentStats.streak = studentStats.streak + 1;
-    } else {
-      // Streak would reset — check if we have a freeze available.
+    } else if(studentStats.lastStudyDate === twoDaysAgo){
+      // Missed exactly 1 day — check if we have a freeze available.
       var freezes = getStreakFreezes();
       if(freezes > 0 && studentStats.streak >= 3){
         // Consume a freeze: keep the current streak value.
         setStreakFreezes(freezes - 1);
+        freezeUsed = true;
         try{ if(typeof toast==='function') toast(L('Streak freeze used! Your streak is preserved.','تم استخدام تجميد السلسلة! سلسلتك محفوظة.'), 'info'); }catch(e){}
       } else {
         studentStats.streak = 1;
       }
+    } else {
+      // Missed 2+ days — reset streak entirely.
+      studentStats.streak = 1;
     }
     // Award a freeze every 3 days of study (capped at 2).
-    if(studentStats.streak > 0 && studentStats.streak % 3 === 0){
+    // Only when streak actually incremented to a new multiple of 3,
+    // not when a freeze was consumed (streak stayed the same).
+    if(!freezeUsed && studentStats.streak > 0 && studentStats.streak % 3 === 0){
       var curFreezes = getStreakFreezes();
       if(curFreezes < 2){
         setStreakFreezes(curFreezes + 1);
