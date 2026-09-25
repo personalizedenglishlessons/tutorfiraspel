@@ -142,8 +142,8 @@ python3 -m http.server 8080
 
 ```bash
 node tests/test_buildsequence_iam.js   # 13 tests
-node tests/test_teaching_flow.js       # 31 tests
-# Total: 44/44 PASS
+node tests/test_teaching_flow.js       # 52 tests
+# Total: 65/65 PASS
 ```
 
 ## License
