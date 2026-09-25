@@ -769,15 +769,20 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
           console.warn('[PEL] Cookie login succeeded but session verification failed — third-party cookies may be blocked. Falling back to legacy auth.');
         }
       } else if(sess && sess.error){
-        // Cookie auth failed with a specific error - show it
-        setLoading('login', false);
-        let msg = 'Incorrect email or password.';
-        if(sess.error === 'too_many_attempts') msg = 'Too many login attempts. Please try again in 15 minutes.';
-        else if(sess.error === 'invalid_email') msg = 'Please enter a valid email.';
-        else if(sess.error === 'invalid_password') msg = 'Password must be at least 6 characters.';
-        else if(sess.error === 'network_error') msg = 'Network error. Please try again.';
-        showMessage('login', msg, 'error');
-        return;
+        // Cookie auth failed with a specific error
+        if(sess.error === 'network_error'){
+          // Network error — don't block the user, fall through to legacy
+          console.warn('[PEL] Cookie auth network error — falling back to legacy login.');
+        } else {
+          // Auth-specific errors (bad credentials, rate limit) should be shown
+          setLoading('login', false);
+          let msg = 'Incorrect email or password.';
+          if(sess.error === 'too_many_attempts') msg = 'Too many login attempts. Please try again in 15 minutes.';
+          else if(sess.error === 'invalid_email') msg = 'Please enter a valid email.';
+          else if(sess.error === 'invalid_password') msg = 'Password must be at least 6 characters.';
+          showMessage('login', msg, 'error');
+          return;
+        }
       }
     }catch(e){ /* fall through to legacy login */ }
   }
