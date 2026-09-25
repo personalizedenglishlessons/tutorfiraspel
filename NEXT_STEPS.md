@@ -1,5 +1,52 @@
 # NEXT STEPS - pick up here
 
+## DONE: DB migrations applied + formal Arabic sweep (2026-09-25 session)
+
+### DB migrations (7 applied to live DB)
+All 7 pending migrations from the repo were applied to the live Supabase DB:
+- `202609240002` Drop orphaned complete_activity(text,int,jsonb) overload
+- `202609240003` admin_overview: add online student count (v_online)
+- `202609240004` Add 8 missing indexes (student_presence, subscriptions, etc.)
+- `202609240005` Add 21 FK indexes for JOIN/CASCADE performance
+- `202609240006` Fix teacher_profiles RLS: add WITH CHECK clause (security)
+- `202609240007` Ensure Data API grants on all public tables (Supabase Oct 30 change)
+- `202609250001` Remove hamza from exercise id=728 payload
+
+Total migrations tracked: 32/32.
+
+### Formal Arabic → Saudi dialect sweep
+**Source code (3 commits):**
+1. `ce00238` — Replaced 11 instances of تحدث→تكلم and derivatives across app.html
+   (UI labels, quiz questions, vocab examples, persona names). Left unchanged:
+   the formal-to-dialect replacement array `['اتحدث','اتكلم']` and onboard.js
+   where تحدث means "updates" not "speaks".
+2. `0ddd2bc` — Replaced ta marbuta (ة→ه) across 10 files: الكتابة→الكتابه,
+   المراجعة→المراجعه, المحادثة→المحادثه, القاعدة→القاعده, الاجابة→الاجابه.
+   91 replacements total. Cache busters updated for all modified lib/*.js.
+3. `fbc9c52` — Added formal Arabic terms to SAUDI_SWAPS runtime array so
+   dynamically translated text also gets Saudi dialect treatment.
+
+**DB migration (1 commit):**
+4. `0ec8ff3` — Migration `202609250002`: Replaced formal Arabic ta marbuta in
+   DB text across 4 tables (lessons, lesson_items, lesson_exercises hint + payload).
+   45 instances fixed. Verified 0 remaining after migration.
+
+### Verification
+- All 65 tests pass (13 buildsequence + 52 teaching flow)
+- All syntax checks pass (7 JS files)
+- DB verified clean: 0 hamza, 0 formal ta marbuta, all quiz translations present
+- 33 migrations tracked in schema_migrations
+
+### Remaining pending items
+1. **Merge feature branches** (still deferred):
+   - `feat/admin-create-student` — conflicts in admin/admin.js
+   - `fix/lesson-engine-phase1` — conflicts in app.html
+2. **Best practices roadmap** — httpOnly cookie sessions need Edge Function proxy
+   rewrite (deferred until same-site hosting)
+3. **Live browser testing** — verify all Arabic text changes render correctly
+
+---
+
 ## DONE: Auth safety hardening + third-party cookie verification (2026-09-25 session)
 
 ### Problem
