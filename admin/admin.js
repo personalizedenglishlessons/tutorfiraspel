@@ -288,7 +288,7 @@ var I = {
   'date':{en:'Date', ar:'التاريخ'},
   'openStatus':{en:'Open', ar:'مفتوح'},
   'inProgress':{en:'In progress', ar:'قيد التنفيذ'},
-  'pendingReview':{en:'Pending review', ar:'بانتظار المراجعة'},
+  'pendingReview':{en:'Pending review', ar:'بانتظار المراجعه'},
   'roleStudent':{en:'Student', ar:'طالب'},
   'roleTeacher':{en:'Teacher', ar:'معلم'},
   'roleAdmin':{en:'Administrator', ar:'ادمين'},
@@ -1424,12 +1424,12 @@ function learningHealth(plan, st, kv){
   var out = { weak:[], strong:[], difficulty:null, strength:null, focus:null };
   if(!window.PEL_ENGINE) return out;
   var specs = [
-    {key:'Speaking', ar:'المحادثة', academyId:'speaking-studio'},
+    {key:'Speaking', ar:'المحادثه', academyId:'speaking-studio'},
     {key:'Listening', ar:'الاستماع', academyId:'listening-lounge'},
     {key:'Grammar', ar:'القواعد', academyId:'grammar-academy'},
     {key:'Vocabulary', ar:'المفردات', academyId:'vocabulary-vault'},
     {key:'Pronunciation', ar:'النطق', academyId:'american-accent-lab'},
-    {key:'Writing', ar:'الكتابة', academyId:'writing-workshop'}
+    {key:'Writing', ar:'الكتابه', academyId:'writing-workshop'}
   ];
   var scored = specs.map(function(s){
     return { key:s.key, ar:s.ar, score:academyProgress(s.academyId, completed) };
@@ -1493,12 +1493,12 @@ function renderTabPersonalization(plan){
 function renderTabSkills(plan, st, kv){
   var completed = st.completed_lessons || [];
   var specs = [
-    {key:'Speaking', ar:'المحادثة', academyId:'speaking-studio'},
+    {key:'Speaking', ar:'المحادثه', academyId:'speaking-studio'},
     {key:'Listening', ar:'الاستماع', academyId:'listening-lounge'},
     {key:'Grammar', ar:'القواعد', academyId:'grammar-academy'},
     {key:'Vocabulary', ar:'المفردات', academyId:'vocabulary-vault'},
     {key:'Pronunciation', ar:'النطق', academyId:'american-accent-lab'},
-    {key:'Writing', ar:'الكتابة', academyId:'writing-workshop'}
+    {key:'Writing', ar:'الكتابه', academyId:'writing-workshop'}
   ];
   var scored = specs.map(function(s){
     return { key:s.key, ar:s.ar, score:academyProgress(s.academyId, completed) };
@@ -1574,7 +1574,7 @@ function renderTabInterventions(d){
       '<div class="field"><label>' + esc(t('topic')) + ' (EN)</label><input class="input" id="invTitleEn" placeholder="Workplace Response Practice"></div>' +
       '<div class="field"><label>' + esc(t('topic')) + ' (AR)</label><input class="input" id="invTitleAr" placeholder="تدريب الرد في الدوام"></div>' +
       '<div class="field full"><label>Reason (EN)</label><textarea class="input" id="invReasonEn" rows="2" placeholder="Speaking declined over the last 3 sessions…"></textarea></div>' +
-      '<div class="field full"><label>Reason (AR)</label><textarea class="input" id="invReasonAr" rows="2" placeholder="المحادثة تراجعت باخر ثلاث جلسات…"></textarea></div>' +
+      '<div class="field full"><label>Reason (AR)</label><textarea class="input" id="invReasonAr" rows="2" placeholder="المحادثه تراجعت باخر ثلاث جلسات…"></textarea></div>' +
       '</div><div class="btn-row" style="margin-top:14px;"><button class="btn btn-gold btn-sm" id="invSave">' + esc(t('assign')) + '</button></div></div>';
   }
   return '<div class="card"><div class="reason-list">' + list + '</div></div>' + form;
@@ -2777,7 +2777,7 @@ async function questionsView(){
       '<div class="field full"><label>'+esc(lang==='ar'?'السوال (انجليزي)':'Question (EN)')+'</label><textarea class="input" rows="2" id="qf_qen">'+esc(q?(q.question_en||''):'')+'</textarea></div>'+
       '<div class="field full"><div class="section-title" style="margin:8px 0;">'+esc(lang==='ar'?'الخيارات (4)':'Options (4)')+'</div></div>'+
       [0,1,2,3].map(function(i){ return '<div class="field"><label>'+esc(lang==='ar'?'خيار '+(i+1)+' (عربي)':'Option '+(i+1)+' (AR)')+'</label><input class="input" id="qf_o'+i+'ar" value="'+opt(i,'ar')+'"></div><div class="field"><label>'+esc(lang==='ar'?'خيار '+(i+1)+' (انجليزي)':'Option '+(i+1)+' (EN)')+'</label><input class="input" id="qf_o'+i+'en" value="'+opt(i,'en')+'"></div>'; }).join('')+
-      '<div class="field full"><label>'+esc(lang==='ar'?'الاجابة الصحيحة':'Correct option')+'</label><select class="input" id="qf_correct">'+[0,1,2,3].map(function(i){return '<option value="'+i+'"'+(q&&q.correct_index===i?' selected':'')+'>Option '+(i+1)+'</option>';}).join('')+'</select></div>'+
+      '<div class="field full"><label>'+esc(lang==='ar'?'الاجابه الصحيحة':'Correct option')+'</label><select class="input" id="qf_correct">'+[0,1,2,3].map(function(i){return '<option value="'+i+'"'+(q&&q.correct_index===i?' selected':'')+'>Option '+(i+1)+'</option>';}).join('')+'</select></div>'+
       '<div class="field full"><label>'+esc(lang==='ar'?'الترتيب':'Sort order')+'</label><input class="input" type="number" id="qf_sort" value="'+(q?(q.sort_order||0):0)+'"></div>'+
       '</div>';
     var scrim = modal((isEdit?(lang==='ar'?'تعديل سوال':'Edit question'):(lang==='ar'?'سوال جديد':'New question')), body, true,
@@ -2787,7 +2787,7 @@ async function questionsView(){
       if(!code){ toast(lang==='ar'?'الكود مطلوب':'Code required', true); return; }
       if(!$('qf_qen').value.trim()){ toast(lang==='ar'?'نص السوال الانجليزي مطلوب':'English question text required', true); return; }
       var opts = [0,1,2,3].map(function(i){ return { ar: $('qf_o'+i+'ar').value.trim(), en: $('qf_o'+i+'en').value.trim() }; });
-      if(!opts[$('qf_correct').value].en){ toast(lang==='ar'?'الاجابة الصحيحة ما تنشاف':'Correct option has no text', true); return; }
+      if(!opts[$('qf_correct').value].en){ toast(lang==='ar'?'الاجابه الصحيحة ما تنشاف':'Correct option has no text', true); return; }
       var row = {
         code: code,
         tier: $('qf_tier').value,

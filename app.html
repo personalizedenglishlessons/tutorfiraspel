@@ -16,16 +16,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;500;700&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
 <script src="vendor/lucide.min.js" integrity="sha384-e4/0BB/wmBhpxvLLrbTidvaESiwxgHfoSGUoRd2s9Ho7YmgxiMftfoo51J/Ojyph" crossorigin="anonymous" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.50.0/dist/umd/supabase.js" integrity="sha384-K0oxqktRvaThvYgGL4G+OK2Ih6VS6Uyu7j3+7WJgp/uWM0Yv6Xi4YEiw0BB+mPfi" crossorigin="anonymous" defer></script>
-<script src="lib/daily-lesson.js?v=867bb077" defer></script>
-<script src="lib/pel-personalization.js?v=3611bdbf" defer></script>
+<script src="lib/daily-lesson.js?v=afa82c6c" defer></script>
+<script src="lib/pel-personalization.js?v=0dad1be1" defer></script>
 <script src="lib/pel-plans.js?v=6c0195dc" defer></script>
 <script src="lib/pel-settings.js?v=30360798" defer></script>
 <script src="lib/cert-qr.js?v=a43f19f9" defer></script>
 <script src="lib/cert-sheet.js?v=5278e935" defer></script>
 <script src="lib/pel_config.js?v=d66df0a3"></script>
-<script src="lib/pel_lesson_stage.js?v=1414f63c"></script>
-<script src="lib/pel_dashboard_life.js?v=c7029d32"></script>
-<script src="lib/pel_curriculum_path.js?v=95416b28"></script>
+<script src="lib/pel_lesson_stage.js?v=5aa6d356"></script>
+<script src="lib/pel_dashboard_life.js?v=95e771c6"></script>
+<script src="lib/pel_curriculum_path.js?v=43acd8a4"></script>
 <style>
 /* ============================================================
    DESIGN SYSTEM TOKENS, shared with index.html / login.html
@@ -2824,7 +2824,7 @@ function renderReviewStrip(){
     if(upcoming.length === 0){ strip.style.display = 'none'; return; }
     strip.style.display = '';
     if(body) body.innerHTML = `<b style="font-size:1rem;"><span class="arabic" style="font-weight:400;">كل شي تحت السيطرة</span>، All caught up</b><p style="margin-top:4px; font-size:.8rem; color:var(--text-secondary);"><span class="arabic">الكلمات الجاية بعد يوم، يومين، ثلاثة... راجعها قبل لا تنسى.</span>Next words are scheduled over the coming days so they stick.</p>`;
-    if(btn) btn.innerHTML = '<span class="arabic">شوف قايمة المراجعة</span>، View Queue';
+    if(btn) btn.innerHTML = '<span class="arabic">شوف قايمة المراجعه</span>، View Queue';
   }
 }
 
@@ -9766,13 +9766,13 @@ const ACADEMIES = [
   {id:'english-foundations', en:'English Foundations', ar:'اساسيات الانجليزي', translit:'انجلش فاونديشنز', cat:'Foundations', icon:'graduation-cap', from:'#C8A96A', to:'#A88345', difficulty:'Beginner', duration:'6h', lessons:36},
   {id:'everyday-english', en:'Everyday English', ar:'انجليزي الحياة اليومية', translit:'ايفري دي انجلش', cat:'Foundations', icon:'sun', from:'#D8BD83', to:'#C8A96A', difficulty:'Beginner', duration:'5h', lessons:28},
   {id:'american-conversations', en:'American Conversations', ar:'المحادثات الامريكية', translit:'اميريكن كونفرسيشنز', cat:'Conversation', icon:'message-circle', from:'#3F8C72', to:'#276b53', difficulty:'Intermediate', duration:'7h', lessons:32},
-  {id:'speaking-studio', en:'Speaking Studio', ar:'استوديو المحادثة', translit:'سبيكنج ستوديو', cat:'Conversation', icon:'mic-2', from:'#3F8C72', to:'#C8A96A', difficulty:'Intermediate', duration:'6h', lessons:24},
+  {id:'speaking-studio', en:'Speaking Studio', ar:'استوديو المحادثه', translit:'سبيكنج ستوديو', cat:'Conversation', icon:'mic-2', from:'#3F8C72', to:'#C8A96A', difficulty:'Intermediate', duration:'6h', lessons:24},
   {id:'american-accent-lab', en:'American Accent Lab', ar:'مختبر اللكنة الامريكية', translit:'اميريكن اكسنت لاب', cat:'Skills', icon:'mic', from:'#C8A96A', to:'#D8BD83', difficulty:'Intermediate', duration:'8h', lessons:30},
   {id:'vocabulary-vault', en:'Vocabulary Vault', ar:'خزنة المفردات', translit:'فوكابيولري فولت', cat:'Skills', icon:'book-open', from:'#A88345', to:'#C8A96A', difficulty:'All Levels', duration:'10h', lessons:48},
   {id:'grammar-academy', en:'Grammar Academy', ar:'اكاديمية القواعد', translit:'جرامر اكاديمي', cat:'Skills', icon:'spell-check', from:'#343744', to:'#262833', difficulty:'All Levels', duration:'9h', lessons:40},
   {id:'listening-lounge', en:'Listening Lounge', ar:'ركن الاستماع', translit:'ليسننج لاونج', cat:'Skills', icon:'headphones', from:'#3F8C72', to:'#17171B', difficulty:'Intermediate', duration:'6h', lessons:26},
   {id:'reading-corner', en:'Reading Corner', ar:'ركن القرايه', translit:'ريدنج كورنر', cat:'Skills', icon:'book', from:'#C8A96A', to:'#17171B', difficulty:'Intermediate', duration:'6h', lessons:27},
-  {id:'writing-workshop', en:'Writing Workshop', ar:'ورشة الكتابة', translit:'رايتنج ووركشوب', cat:'Skills', icon:'pen-line', from:'#A88345', to:'#17171B', difficulty:'Advanced', duration:'7h', lessons:22},
+  {id:'writing-workshop', en:'Writing Workshop', ar:'ورشة الكتابه', translit:'رايتنج ووركشوب', cat:'Skills', icon:'pen-line', from:'#A88345', to:'#17171B', difficulty:'Advanced', duration:'7h', lessons:22},
   {id:'travel-english', en:'Travel English', ar:'انجليزي السفر', translit:'ترافل انجلش', cat:'Situational', icon:'plane', from:'#3F8C72', to:'#C8A96A', difficulty:'Intermediate', duration:'5h', lessons:20},
   {id:'business-english', en:'Business English', ar:'انجليزي الاعمال', translit:'بزنس انجلش', cat:'Career', icon:'briefcase', from:'#343744', to:'#C8A96A', difficulty:'Advanced', duration:'8h', lessons:34},
   {id:'workplace-communication', en:'Workplace Communication', ar:'التواصل بالدوام', translit:'وورك بليس كميونيكيشن', cat:'Career', icon:'building-2', from:'#262833', to:'#A88345', difficulty:'Advanced', duration:'6h', lessons:24},
@@ -9960,7 +9960,7 @@ const VOCAB_BANK = [
 {en:'Look forward to', ipa:'/lʊk ˈfɔːrwərd tu/', ar:'يتطلّع الى، ينتظر بشغف', translit:'لوك فوروورد تو', example:{en:'I look forward to the weekend.', ar:'اتطلّع الى نهاية الاسبوع.', translit:'اي لوك فوروورد تو ذا ويك اند.'}, synonyms:'anticipate, await', antonyms:'dread', family:'look, looked forward', collocations:'look forward to doing, look forward to seeing', category:'Phrasal Verbs Lab', difficulty:'Advanced', tip:'Follow it with a noun or -ing verb.', mistake:'Saying "look forward to see" instead of "to seeing."'},
 {en:'Turn out', ipa:'/tɜːrn aʊt/', ar:'ينتج، يتضح', translit:'تيرن اوت', example:{en:'It turned out fine.', ar:'اتضح انه بخير.', translit:'ات تيرند اوت فاين.'}, synonyms:'result, end up', antonyms:'', family:'turn, turned out', collocations:'turn out well, turn out that', category:'Phrasal Verbs Lab', difficulty:'Advanced', tip:'It shows how a situation ends.', mistake:'Confusing it with "turn off."'},
 {en:'Get along', ipa:'/ɡɛt əˈlɒŋ/', ar:'يتفق مع، يتوافق', translit:'گيت الونق', example:{en:'They get along well.', ar:'هما يتفقان جيدًا.', translit:'ذاي گيت الونق ويل.'}, synonyms:'get on, agree', antonyms:'clash, fight', family:'get, got along', collocations:'get along with, get along well', category:'Phrasal Verbs Lab', difficulty:'Advanced', tip:'Use "get along with" for a person.', mistake:'Saying "get along to" instead of "get along with."'},
-{en:'Figure out', ipa:'/ˈfɪɡjər aʊt/', ar:'يفهم، يحلّ', translit:'فيغير اوت', example:{en:'I can\'t figure out the answer.', ar:'لا استطيع ان افهم الاجابة.', translit:'اي كانت فيغير اوت ذا انسر.'}, synonyms:'solve, work out', antonyms:'be confused by', family:'figure, figured out', collocations:'figure out how, figure out what', category:'Phrasal Verbs Lab', difficulty:'Advanced', tip:'It means to understand or solve.', mistake:'Saying "figure out of" instead of "figure out."'},
+{en:'Figure out', ipa:'/ˈfɪɡjər aʊt/', ar:'يفهم، يحلّ', translit:'فيغير اوت', example:{en:'I can\'t figure out the answer.', ar:'لا استطيع ان افهم الاجابه.', translit:'اي كانت فيغير اوت ذا انسر.'}, synonyms:'solve, work out', antonyms:'be confused by', family:'figure, figured out', collocations:'figure out how, figure out what', category:'Phrasal Verbs Lab', difficulty:'Advanced', tip:'It means to understand or solve.', mistake:'Saying "figure out of" instead of "figure out."'},
 {en:'Episode', ipa:'/ˈɛpɪsoʊd/', ar:'حلقة (من مسلسل)', translit:'ابّيسود', example:{en:'This episode was exciting.', ar:'كانت هذه الحلقة مثيرة.', translit:'ذيس ابّيسود واز اكسايتينق.'}, synonyms:'instalment, show', antonyms:'', family:'episode, episodic', collocations:'watch an episode, new episode', category:'TV Series English', difficulty:'Advanced', tip:'A season is made of several episodes.', mistake:'Pronouncing it "eppi-sode."'},
 {en:'Season', ipa:'/ˈsiːzən/', ar:'موسم (من مسلسل)', translit:'سيزِن', example:{en:'Season two is better.', ar:'الموسم الثاني افضل.', translit:'سيزِن تو از بيتر.'}, synonyms:'series run', antonyms:'', family:'season, seasons', collocations:'new season, finale season', category:'TV Series English', difficulty:'Advanced', tip:'A season groups many episodes.', mistake:'Confusing TV season with weather season.'},
 {en:'Spoiler', ipa:'/ˈspɔɪlər/', ar:'كاشف للاحداث، حرق للقصة', translit:'سبويلر', example:{en:'No spoilers, please!', ar:'لا حرق للاحداث من فضلك!', translit:'نو سبويلرز، بليز!'}, synonyms:'reveal, giveaway', antonyms:'teaser', family:'spoil, spoilers', collocations:'spoiler alert, post spoilers', category:'TV Series English', difficulty:'Advanced', tip:'A spoiler reveals what happens later.', mistake:'Posting spoilers without a warning.'},
@@ -11657,7 +11657,7 @@ const LESSON_LIBRARY = {
     ],
     quiz:[
       {qAr:'تدعم نقطة قوتك:', qEn:'You back up a strength:', options:['I am organized, I managed five projects at once.','I am very very organized.','Everyone says I am organized.'], correct:0},
-      {qAr:'"Public speaking" معناها:', qEn:'"Public speaking" means:', options:['الكلام امام الجمهور','الكتابة','الاستماع'], correct:0},
+      {qAr:'"Public speaking" معناها:', qEn:'"Public speaking" means:', options:['الكلام امام الجمهور','الكتابه','الاستماع'], correct:0},
     ],
     summary:'You practiced answering strengths and weaknesses with real examples.',
     takeaway:'جهز مثال واحد حقيقي لكل نقطة قوة, وتدرب تحكيه بالانجليزي.',
@@ -11901,7 +11901,7 @@ const LESSON_LIBRARY = {
     title:'Polite Email Writing', ar:'كتابة ايميل مهذب', translit:'رايتنق ايميل پولايت',
     duration:'9 min', difficulty:'Advanced',
     vocab:[VOCAB_BANK[4], VOCAB_BANK[38]],
-    grammar:{title:'Could You Please', rule:'Politeness in writing comes from modals: Could you please...? Would it be possible to...?', saudi:'التادب بالكتابة من الافعال المساعدة: ممكن لو سمحت؟', wrong:'Send the file.', right:'Could you please send the file?', mistakes:['Writing demands in short imperatives.','Forgetting the subject line.']},
+    grammar:{title:'Could You Please', rule:'Politeness in writing comes from modals: Could you please...? Would it be possible to...?', saudi:'التادب بالكتابه من الافعال المساعدة: ممكن لو سمحت؟', wrong:'Send the file.', right:'Could you please send the file?', mistakes:['Writing demands in short imperatives.','Forgetting the subject line.']},
     conversation:[
       {who:'A', en:'Subject: Quick question about the report', ar:'الموضوع: سوال سريع عن التقرير', translit:'سابجكت: كويك كوستشن اباوت ذا ريبورت'},
       {who:'B', en:'Dear Omar, could you please send the updated report?', ar:'عزيزي عمر، ممكن ترسل التقرير المحدث؟', translit:'دير عمر، كود يو بليز سند ذا اپديتد ريبورت؟'},
@@ -11946,7 +11946,7 @@ const LESSON_LIBRARY = {
     ],
     quiz:[
       {qAr:'"Awesome" معناها:', qEn:'"Awesome" means:', options:['خرافي وممتاز','سي','ممل'], correct:0},
-      {qAr:'وين نستخدم السلانق؟', qEn:'Where is slang appropriate?', options:['مع الاصحاب بالمحادثة','بمقابلة عمل','بايميل رسمي'], correct:0},
+      {qAr:'وين نستخدم السلانق؟', qEn:'Where is slang appropriate?', options:['مع الاصحاب بالمحادثه','بمقابلة عمل','بايميل رسمي'], correct:0},
     ],
     summary:'You learned everyday slang and, just as important, when not to use it.',
     takeaway:'احفظ: awesome, chill, hang out, and keep them out of formal writing.',
@@ -15665,7 +15665,7 @@ window.pelReviewWriting = async function(text, el, opts){
   if(!el) return null;
   text = (text || '').trim();
   if(!/[a-zA-Z]/.test(text)) return null;
-  el.innerHTML = '<div class="feedback-block"><span class="arabic" style="font-size:.82rem;color:var(--text-muted);">جاري المراجعة...</span> <span style="font-size:.82rem;color:var(--text-muted);">Reviewing your writing...</span></div>';
+  el.innerHTML = '<div class="feedback-block"><span class="arabic" style="font-size:.82rem;color:var(--text-muted);">جاري المراجعه...</span> <span style="font-size:.82rem;color:var(--text-muted);">Reviewing your writing...</span></div>';
   let res;
   try{ res = await checkGrammar(text); }
   catch(e){ res = { issues:[], fixed:text, engine:'built-in', analyzed:false }; }
@@ -15689,12 +15689,12 @@ window.pelReviewWriting = async function(text, el, opts){
   // replying to): catches replies that are grammatically fine but wrong for
   // the situation, with a natural model reply. Free, offline, unlimited.
   const cf = (opts.botLine && typeof window.pelConversationFit==='function') ? window.pelConversationFit(text, opts.botLine) : null;
-  const convHtml = cf ? `<div class="fb-section"><h5 class="fb-section-title"><span class="arabic">ملاحظة المحادثة</span>، Conversation fit</h5><p class="arabic fb-ar" style="color:var(--gold-soft);">${escapeHtml(cf.ar)}</p><p class="fb-en">${escapeHtml(cf.en)}</p><div class="fb-fixed" style="margin-top:6px;"><b>${escapeHtml(cf.model.en)}</b> <span class="arabic" style="opacity:.8;">- ${escapeHtml(cf.model.ar)}</span></div></div>` : '';
+  const convHtml = cf ? `<div class="fb-section"><h5 class="fb-section-title"><span class="arabic">ملاحظة المحادثه</span>، Conversation fit</h5><p class="arabic fb-ar" style="color:var(--gold-soft);">${escapeHtml(cf.ar)}</p><p class="fb-en">${escapeHtml(cf.en)}</p><div class="fb-fixed" style="margin-top:6px;"><b>${escapeHtml(cf.model.en)}</b> <span class="arabic" style="opacity:.8;">- ${escapeHtml(cf.model.ar)}</span></div></div>` : '';
   const freeNote = '<span class="chip" style="background:rgba(67,122,34,.12);color:#7BBF45;border:1px solid rgba(67,122,34,.3);font-size:.68rem;"><span class="arabic">مراجعة محلية مجانية</span> · Free local feedback</span>';
   el.innerHTML = `<div class="feedback-block">
       <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
         <span style="font-size:1.1rem;font-weight:700;color:var(--gold);">${cleanScore}%</span>
-        <span class="arabic" style="font-size:.72rem;color:var(--text-muted);">نظافة الكتابة · clean score</span>
+        <span class="arabic" style="font-size:.72rem;color:var(--text-muted);">نظافة الكتابه · clean score</span>
         ${freeNote}
       </div>
       ${verdict}
@@ -16141,19 +16141,19 @@ const CORRECT_RULES = [
   { re:/\bdoes (she|he|it) wants\b/gi, fix:'does $1 want', category:'agreement',
     ar:'بعد does نستخدم "does she want" مو "does she wants".',
     en:'Use "does she want", not "does she wants".',
-    why_ar:'نفس القاعدة: does تحمل الـ s.',
+    why_ar:'نفس القاعده: does تحمل الـ s.',
     why_en:'Same rule: "does" carries the -s.',
     learn:{ ar:'Does he want tea?', en:'Does + want.' } },
   { re:/\bdoes (she|he|it) goes\b/gi, fix:'does $1 go', category:'agreement',
     ar:'بعد does نستخدم "does she go" مو "does she goes".',
     en:'Use "does she go", not "does she goes".',
-    why_ar:'نفس القاعدة: does تحمل الـ s.',
+    why_ar:'نفس القاعده: does تحمل الـ s.',
     why_en:'Same rule: "does" carries the -s.',
     learn:{ ar:'Does he go to the gym?', en:'Does + go.' } },
   { re:/\bdoes (she|he|it) has\b/gi, fix:'does $1 have', category:'agreement',
     ar:'بعد does نستخدم "does she have" مو "does she has".',
     en:'Use "does she have", not "does she has".',
-    why_ar:'نفس القاعدة: does تحمل الـ s.',
+    why_ar:'نفس القاعده: does تحمل الـ s.',
     why_en:'Same rule: "does" carries the -s.',
     learn:{ ar:'Does she have a car?', en:'Does + have.' } },
   { re:/\b(we|they|you) was\b/gi, fix:'$1 were', category:'agreement',
@@ -16254,7 +16254,7 @@ const CORRECT_RULES = [
   { re:/\bpls\b/gi, fix:'please', category:'spelling',
     ar:'«pls» اختصار غير رسمي. الصحيح «please».',
     en:'"pls" is a text abbreviation. Use "please".',
-    why_ar:'اكتب الكلمة كاملة في الكتابة.',
+    why_ar:'اكتب الكلمة كاملة في الكتابه.',
     why_en:'Write the full word in any written work.',
     learn:{ ar:'please = من فضلك.', en:'please = politely ask.' } },
   { re:/\bshouldnt\b/gi, fix:"shouldn't", category:'contractions',
@@ -16322,7 +16322,7 @@ const CORRECT_RULES = [
   { re:/([A-Za-z0-9])\s*$/, fix:(m, c) => c + '.', category:'punctuation',
     ar:'الجملة تنتهي بنقطة.',
     en:'A sentence should end with a period.',
-    why_ar:'في الكتابة، كل جملة كاملة تنتهي بعلامة ترقيم (نقطة، علامة استفسار، او تعجب).',
+    why_ar:'في الكتابه، كل جملة كاملة تنتهي بعلامة ترقيم (نقطة، علامة استفسار، او تعجب).',
     why_en:'In writing, every complete sentence ends with terminal punctuation (a period, question mark, or exclamation).',
     learn:{ ar:'I am fine. How are you?', en:'End statements with a period.' } },
 ];
@@ -16910,7 +16910,7 @@ const CEFR_LEVELS = [
   { id:'A2', en:'English Daily',    ar:'انجليزي اليومي',    color:'#5BA88A', descEn:'Survival English for travel, food, shopping and hotels.', descAr:'انجليزي البقا للسفر والاكل والتسوق والفنادق.' },
   { id:'B1', en:'English Middle',   ar:'انجليزي الوسط',     color:'#C8A96A', descEn:'Real conversations, opinions and everyday fluency.', descAr:'محادثات حقيقية وارا وطلاقة يومية.' },
   { id:'B2', en:'English Strong',   ar:'انجليزي قوي',       color:'#D8BD83', descEn:'Listening, reading, accent and the workplace.', descAr:'الاستماع والقرايه واللكنة والدوام.' },
-  { id:'C1', en:'English High',     ar:'انجليزي عالي',      color:'#A88345', descEn:'Business, writing, idioms and media English.', descAr:'الاعمال والكتابة والتعابير وانجليزي الاعلام.' },
+  { id:'C1', en:'English High',     ar:'انجليزي عالي',      color:'#A88345', descEn:'Business, writing, idioms and media English.', descAr:'الاعمال والكتابه والتعابير وانجليزي الاعلام.' },
   { id:'C2', en:'English Pro',      ar:'انجليزي محترف',     color:'#343744', descEn:'Near-native fluency across every domain.', descAr:'طلاقة شبه اصلية في كل المجالات.' },
 ];
 const ACADEMY_CEFR = {
@@ -16958,12 +16958,12 @@ function cefrShortLabel(code, isAr){ return cefrDisplayName(code, isAr); }
 const GUIDED_TOOL_RULES = {
   vocabulary:    { minLevel:'A0', icon:'book-open',     ar:'المفردات',    en:'Vocabulary',    why:'كل كلمات الدرس' },
   pronunciation: { minLevel:'A0', icon:'mic',          ar:'النطق',       en:'Pronunciation', why:'تدرب على نطق كلمات الدرس' },
-  review:        { minLevel:'A0', icon:'rotate-ccw',   ar:'المراجعة',    en:'Review',        why:'ثبت الكلمات اللي اخذتها' },
+  review:        { minLevel:'A0', icon:'rotate-ccw',   ar:'المراجعه',    en:'Review',        why:'ثبت الكلمات اللي اخذتها' },
   grammar:       { minLevel:'A1', icon:'spell-check',  ar:'القواعد',     en:'Grammar',       why:'افهم تركيب الجمل في الدرس' },
   listening:     { minLevel:'A2', icon:'headphones',   ar:'الاستماع',    en:'Listening',     why:'اسمع وجاوب' },
-  speaking:      { minLevel:'A2', icon:'messages-square', ar:'المحادثة',  en:'Speaking',      why:'تكلم بصوتك' },
+  speaking:      { minLevel:'A2', icon:'messages-square', ar:'المحادثه',  en:'Speaking',      why:'تكلم بصوتك' },
   reading:       { minLevel:'B1', icon:'book-text',    ar:'القرايه',     en:'Reading',       why:'اقرا وتدرب' },
-  writing:       { minLevel:'B1', icon:'pen-line',     ar:'الكتابة',     en:'Writing',       why:'اكتب جملة' },
+  writing:       { minLevel:'B1', icon:'pen-line',     ar:'الكتابه',     en:'Writing',       why:'اكتب جملة' },
 };
 const CEFR_ORDER = ['A0','A1','A2','B1','B2','C1','C2'];
 /* Returns the tools available to a student at their current CEFR level. */
@@ -17479,7 +17479,7 @@ function renderLessonReader(container, academy, lesson){
     </div>` : done && !nextItem ? `
     <div class="lesson-section" style="background:rgba(200,169,106,.07); border:1px solid rgba(200,169,106,.28); border-radius:16px; padding:20px; margin-top:22px;">
       <h3 style="font-size:1.02rem;"><span class="arabic">اكملت هذا المسار</span>، <span dir="ltr">Academy Complete</span></h3>
-      <p style="margin-top:8px; font-size:.86rem; color:var(--text-secondary);"><span class="arabic">ما شا الله، خلصت اخر درس في ${escapeHtml(academy.ar||'')}. راجع الكلمات في المراجعة الذكية، او ابدا اكاديمية ثانية.</span><span dir="ltr">You finished the last lesson of ${escapeHtml(academy.en||'')}. Review your words in Smart Review, or start another academy.</span></p>
+      <p style="margin-top:8px; font-size:.86rem; color:var(--text-secondary);"><span class="arabic">ما شا الله، خلصت اخر درس في ${escapeHtml(academy.ar||'')}. راجع الكلمات في المراجعه الذكية، او ابدا اكاديمية ثانية.</span><span dir="ltr">You finished the last lesson of ${escapeHtml(academy.en||'')}. Review your words in Smart Review, or start another academy.</span></p>
       <button type="button" class="btn-outline" id="lessonNextBtn" style="margin-top:14px;"><span class="arabic">شوف الاكاديميات</span>، <span dir="ltr">Browse Academies</span></button>
     </div>` : ''}
   `;
@@ -17952,7 +17952,7 @@ function renderPronDrill(card, drill){
       if(window.lucide) lucide.createIcons();
       document.getElementById('drill-restart').onclick = () => { levelIndex=0; targetIndex=0; targetScores=[]; levelScores={}; render(); };
       if(nxt) document.getElementById('drill-next').onclick = () => renderPronDrill(card, nxt);
-      if(drill.writingPrompt){ const wp = document.getElementById('drill-wprompt'); if(wp) wp.onclick = () => { const w = drill.writingPrompt; window.PEL_PENDING_PROMPT = 'pron-'+drill.id; goToView('writing'); toast('<span class="arabic">تم اعداد تمرين الكتابة</span>، Writing prompt ready'); }; }
+      if(drill.writingPrompt){ const wp = document.getElementById('drill-wprompt'); if(wp) wp.onclick = () => { const w = drill.writingPrompt; window.PEL_PENDING_PROMPT = 'pron-'+drill.id; goToView('writing'); toast('<span class="arabic">تم اعداد تمرين الكتابه</span>، Writing prompt ready'); }; }
     }
   }
   function advance(){
@@ -18065,7 +18065,7 @@ function renderSpeaking(){
   el.dataset.rendered = '1';
   el.innerHTML = `
     <div class="page-head">
-      <span class="eyebrow"><span class="arabic" style="font-size:.95em;">استوديو المحادثة</span>، Speaking Studio</span>
+      <span class="eyebrow"><span class="arabic" style="font-size:.95em;">استوديو المحادثه</span>، Speaking Studio</span>
       <h1><span class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">تدرب على محادثات حقيقية.</span><span dir="ltr">Practice real conversations.</span></h1>
       <p><span class="arabic" style="display:block; margin-bottom:4px;">اختر مع من تريد التكلم. كل رد يتضمن العربية والانجليزية والنطق.</span><span dir="ltr">Choose who you want to talk to. Every reply includes Arabic, English, and pronunciation.</span></p>
     </div>
@@ -18147,7 +18147,7 @@ function renderSpeaking(){
       const lines = [`<span class="arabic">سمعنا:</span> "${escapeHtml(userText)}"`];
       if(cf){
         lines.splice(1,0,
-          `<p style="margin-top:8px;font-size:.84rem;color:var(--gold-soft);background:rgba(200,169,106,.10);border:1px solid rgba(200,169,106,.35);border-radius:10px;padding:9px 12px;"><span class="arabic">ملاحظة المحادثة:</span> ${escapeHtml(cf.ar)}</p>`+
+          `<p style="margin-top:8px;font-size:.84rem;color:var(--gold-soft);background:rgba(200,169,106,.10);border:1px solid rgba(200,169,106,.35);border-radius:10px;padding:9px 12px;"><span class="arabic">ملاحظة المحادثه:</span> ${escapeHtml(cf.ar)}</p>`+
           `<p style="margin-top:4px;font-size:.8rem;color:var(--text-secondary);"><span class="arabic">رد طبيعي:</span> <b>${escapeHtml(cf.model.en)}</b> <span class="arabic" style="opacity:.8;">- ${escapeHtml(cf.model.ar)}</span></p>`);
       }
       if(reply.meaningAr && reply.meaningAr !== userText && reply.meaningEn && reply.meaningEn !== userText){
@@ -18210,7 +18210,7 @@ function renderSpeaking(){
         // NOTE: app.html's top-level L(en,ar,translit) returns a {en,ar,translit}
         // OBJECT, not a string - assigning it to .title would render
         // '[object Object]'. Use a plain inline ternary on accountPrefs instead.
-        _micBtn.title = (accountPrefs && accountPrefs.lang==='ar') ? 'الكتابة متاحة تحت' : 'Typing is available below';
+        _micBtn.title = (accountPrefs && accountPrefs.lang==='ar') ? 'الكتابه متاحة تحت' : 'Typing is available below';
         _micBtn.style.opacity = '.55';
         _micHint.innerHTML = `<span class="arabic">المايك غير مدعوم على هذا المتصفح - اكتب ردك بالاسفل.</span>، Mic isn\'t supported on this browser - type your reply below.`;
       }
@@ -18348,9 +18348,9 @@ function renderWriting(){
   el.dataset.rendered = '1';
   el.innerHTML = `
     <div class="page-head">
-      <span class="eyebrow"><span class="arabic" style="font-size:.95em;">ورشة الكتابة</span>، Writing Workshop</span>
+      <span class="eyebrow"><span class="arabic" style="font-size:.95em;">ورشة الكتابه</span>، Writing Workshop</span>
       <h1><span class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">اكتب، وخذ مراجعة تفهمك خطاك.</span><span dir="ltr">Write, and get feedback that explains your mistakes.</span></h1>
-      <p><span class="arabic" style="display:block; margin-bottom:4px;">اكتب باي موضوع تحبه، والمراجعة تعطيك: تصحيح، السبب، معنى كتابتك، ونقطة تتعلمها. كل شي مجاني وبلا حدود.</span><span dir="ltr">Write about any topic you like, and the review gives you: corrections, the reason, your meaning, and something to learn. Free and unlimited.</span></p>
+      <p><span class="arabic" style="display:block; margin-bottom:4px;">اكتب باي موضوع تحبه، والمراجعه تعطيك: تصحيح، السبب، معنى كتابتك، ونقطة تتعلمها. كل شي مجاني وبلا حدود.</span><span dir="ltr">Write about any topic you like, and the review gives you: corrections, the reason, your meaning, and something to learn. Free and unlimited.</span></p>
     </div>
     <div class="grid grid-2" id="writingPromptGrid" style="margin-bottom:28px;"></div>
     <div class="card" id="writingEditorCard" style="display:none;"></div>`;
@@ -18378,15 +18378,15 @@ function renderWriting(){
     card.innerHTML = `
       <h3 style="font-size:1.1rem;" dir="ltr">${prompt.title}</h3>
       <p style="margin-top:8px; font-size:.84rem; color:var(--text-muted);" dir="ltr">${prompt.prompt}</p>
-      <textarea class="writing-editor" id="writingArea" dir="auto" placeholder="ابدا الكتابة هنا... / Start writing here..." style="margin-top:16px;"></textarea>
+      <textarea class="writing-editor" id="writingArea" dir="auto" placeholder="ابدا الكتابه هنا... / Start writing here..." style="margin-top:16px;"></textarea>
       <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:12px; flex-wrap:wrap;">
         <span class="arabic" style="font-size:.72rem; color:var(--text-muted);">اكتب ٣ جمل على الاقل عشان الفايدة.</span>
-        <button type="button" class="btn-gold" id="reviewWritingBtn"><span class="arabic">اطلب المراجعة</span>، Get Feedback</button>
+        <button type="button" class="btn-gold" id="reviewWritingBtn"><span class="arabic">اطلب المراجعه</span>، Get Feedback</button>
       </div>
       <div id="writingFeedback"></div>`;
     document.getElementById('reviewWritingBtn').addEventListener('click', () => {
       const text = document.getElementById('writingArea').value.trim();
-      if(!text){ toast('<span class="arabic">اكتب شييا اولا ثم اطلب المراجعة</span>، Write something first, then ask for a review.'); return; }
+      if(!text){ toast('<span class="arabic">اكتب شييا اولا ثم اطلب المراجعه</span>، Write something first, then ask for a review.'); return; }
       runWritingReview(text, document.getElementById('writingFeedback'));
     });
   }
@@ -18445,11 +18445,11 @@ function renderWriting(){
     fb.innerHTML = `
       <div class="feedback-block">
         <div class="fb-head">
-          <h4 style="font-size:.92rem;"><span class="arabic" style="font-weight:400;">ملاحظات المراجعة</span>، Review Feedback</h4>
+          <h4 style="font-size:.92rem;"><span class="arabic" style="font-weight:400;">ملاحظات المراجعه</span>، Review Feedback</h4>
           <span class="arabic" style="font-size:.72rem; color:var(--text-muted);">${words} ${words===1?'كلمة':'كلمات'}، ${sentences} ${sentences===1?'جملة':'جمل'}، ${engineBadge}</span>
         </div>
         <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-top:6px;">
-          <span style="font-size:1.15rem; font-weight:700; color:var(--gold);">${cleanScore}%</span><span class="arabic" style="font-size:.74rem; color:var(--text-muted);">نظافة الكتابة · clean score</span>
+          <span style="font-size:1.15rem; font-weight:700; color:var(--gold);">${cleanScore}%</span><span class="arabic" style="font-size:.74rem; color:var(--text-muted);">نظافة الكتابه · clean score</span>
           ${freeNote}
         </div>
         ${verdict}
@@ -18610,13 +18610,13 @@ function renderReview(){
 
   el.innerHTML = `
     <div class="page-head">
-      <span class="eyebrow"><span class="arabic" style="font-size:.95em;">المراجعة الذكية</span>، Smart Review</span>
+      <span class="eyebrow"><span class="arabic" style="font-size:.95em;">المراجعه الذكية</span>، Smart Review</span>
       <h1><span class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">الكلمات ترجع قبل ما تنساها.</span>Words come back right before you forget them.</h1>
       <p><span class="arabic" style="display:block; margin-bottom:4px;">كل كلمة قابلتها بدروسك ترجع لك هنا بفواصل ذكية: بعد يوم، ثم ثلاثة ايام، ثم اسبوعين. جاوب صح والكلمة تبعد، جاوب خطا وترجع اسرع.</span>Every word you met in your lessons comes back here on a growing schedule. Answer correctly and it moves further out; miss it and it returns sooner.</p>
     </div>
     <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:26px;">
       <span class="chip gold"><span class="arabic">${due.length} جاهزة اليوم</span>، ${due.length} due today</span>
-      <span class="chip emerald"><span class="arabic">${q.length} في قايمة المراجعة</span>، ${q.length} in the queue</span>
+      <span class="chip emerald"><span class="arabic">${q.length} في قايمة المراجعه</span>، ${q.length} in the queue</span>
       <span class="chip"><span class="arabic">${mastered.length} اتقنتها</span>، ${mastered.length} mastered</span>
     </div>
     <div id="reviewDeck"></div>
@@ -18670,7 +18670,7 @@ function renderReview(){
   }else if(q.length){
     deck.innerHTML = `<div class="empty-state" style="margin:0 0 26px;"><i class="empty-icon" data-lucide="calendar-check"></i><h3><span class="arabic" style="display:block; font-size:.8em; font-weight:400; color:var(--text-muted); margin-bottom:4px;">لا توجد كلمات جاهزة اليوم</span>Nothing due today</h3><p><span class="arabic" style="display:block; margin-bottom:4px;">كل شي تحت السيطرة. راجع باقي الكلمات في الايام الجاية.</span>All clear. Your next words are scheduled below.</p></div>`;
   }else{
-    deck.innerHTML = `<div class="empty-state" style="margin:0 0 26px;"><i class="empty-icon" data-lucide="rotate-ccw"></i><h3><span class="arabic" style="display:block; font-size:.8em; font-weight:400; color:var(--text-muted); margin-bottom:4px;">ابدا باول درس</span>Your review queue starts with your first lesson</h3><p><span class="arabic" style="display:block; margin-bottom:4px;">اكمل اي درس، وكلماته بتدخل قايمة المراجعة تلقاييا.</span>Complete any lesson and its vocabulary joins this queue automatically.</p></div>`;
+    deck.innerHTML = `<div class="empty-state" style="margin:0 0 26px;"><i class="empty-icon" data-lucide="rotate-ccw"></i><h3><span class="arabic" style="display:block; font-size:.8em; font-weight:400; color:var(--text-muted); margin-bottom:4px;">ابدا باول درس</span>Your review queue starts with your first lesson</h3><p><span class="arabic" style="display:block; margin-bottom:4px;">اكمل اي درس، وكلماته بتدخل قايمة المراجعه تلقاييا.</span>Complete any lesson and its vocabulary joins this queue automatically.</p></div>`;
   }
 
   const up = document.getElementById('reviewUpcoming');
@@ -18690,7 +18690,7 @@ function renderReview(){
       <div class="card" style="border-color:rgba(210,92,92,.35);">
         <p style="font-size:.84rem; color:var(--text-secondary); margin-bottom:14px;"><span class="arabic">هذي الاغلاط رجعت معك اكثر من مرة بكتابتك. ركز عليها بالدرس الجاي.</span>These mistakes have shown up in your writing more than once. Focus on them in your next lessons.</p>
         ${missEntries.map(k => `<div class="mini-list-item"><div class="ml-en">${escapeHtml((LEARN_CATEGORIES[k]||{}).en || k)}</div><div class="ml-ar"><span class="arabic">${escapeHtml((LEARN_CATEGORIES[k]||{}).ar || k)}</span></div><span class="chip" style="color:var(--danger); border-color:rgba(210,92,92,.4);">× ${misses[k]}</span></div>`).join('')}
-        <button type="button" class="btn-outline" id="reviewMistakesGoWriting" style="margin-top:14px;"><span class="arabic">اطلع على ورشة الكتابة</span>، Open Writing Workshop</button>
+        <button type="button" class="btn-outline" id="reviewMistakesGoWriting" style="margin-top:14px;"><span class="arabic">اطلع على ورشة الكتابه</span>، Open Writing Workshop</button>
       </div>`;
     document.getElementById('reviewMistakesGoWriting').addEventListener('click', () => goToView('writing'));
   }
@@ -18711,11 +18711,11 @@ function saveStudentPrefs(){ persistStudentState(); }
 
 const SKILL_SCORES = [
   {en:'Grammar', ar:'القواعد', academyId:'grammar-academy'},
-  {en:'Speaking', ar:'المحادثة', academyId:'speaking-studio'},
+  {en:'Speaking', ar:'المحادثه', academyId:'speaking-studio'},
   {en:'Pronunciation', ar:'النطق', academyId:'american-accent-lab'},
   {en:'Listening', ar:'الاستماع', academyId:'listening-lounge'},
   {en:'Reading', ar:'القرايه', academyId:'reading-corner'},
-  {en:'Writing', ar:'الكتابة', academyId:'writing-workshop'},
+  {en:'Writing', ar:'الكتابه', academyId:'writing-workshop'},
 ];
 
 const ACHIEVEMENTS = [
@@ -18726,13 +18726,13 @@ const ACHIEVEMENTS = [
   {id:'vocab-expert', en:'Vocabulary Expert', ar:'خبير المفردات', icon:'book-open'},
   {id:'grammar-expert', en:'Grammar Expert', ar:'خبير القواعد', icon:'spell-check'},
   {id:'pronunciation-pro', en:'Pronunciation Pro', ar:'احتراف النطق', icon:'mic'},
-  {id:'conversation-master', en:'Conversation Master', ar:'احتراف المحادثة', icon:'message-circle'},
+  {id:'conversation-master', en:'Conversation Master', ar:'احتراف المحادثه', icon:'message-circle'},
   {id:'business-ready', en:'Business Ready', ar:'جاهز للاعمال', icon:'briefcase'},
   {id:'travel-ready', en:'Travel Ready', ar:'جاهز للسفر', icon:'plane'},
   {id:'american-accent', en:'American Accent', ar:'اللكنة الامريكية', icon:'audio-lines'},
-  {id:'review-25', en:'Review Master 25', ar:'اتقان المراجعة ٢٥', icon:'brain'},
-  {id:'review-50', en:'Review Master 50', ar:'اتقان المراجعة ٥٠', icon:'brain'},
-  {id:'review-100', en:'Review Master 100', ar:'اتقان المراجعة ١٠٠', icon:'brain'},
+  {id:'review-25', en:'Review Master 25', ar:'اتقان المراجعه ٢٥', icon:'brain'},
+  {id:'review-50', en:'Review Master 50', ar:'اتقان المراجعه ٥٠', icon:'brain'},
+  {id:'review-100', en:'Review Master 100', ar:'اتقان المراجعه ١٠٠', icon:'brain'},
   {id:'fluent-speaker', en:'Fluent Speaker', ar:'متكلم بطلاقه', icon:'crown'},
 ];
 function academyProgressById(id){ const a = ACADEMIES.find(x => x.id === id); return a ? a.progress : 0; }
@@ -19417,7 +19417,7 @@ function renderProfile(){
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.7"><path d="M1 4v6h6"/><path d="M3.5 15a9 9 0 1 0 2-9.4L1 10"/></svg>
         </div>
         <div style="flex:1; min-width:200px;" id="reviewStripBody"></div>
-        <button type="button" class="btn-outline" data-goto-view="review" id="reviewStripBtn"><span class="arabic">ابدا المراجعة</span>، Start Review</button>
+        <button type="button" class="btn-outline" data-goto-view="review" id="reviewStripBtn"><span class="arabic">ابدا المراجعه</span>، Start Review</button>
       </div>
     </div>
 
@@ -19427,7 +19427,7 @@ function renderProfile(){
         <div><b id="heroStreakNum" style="font-family:'Fraunces',serif; font-size:1.4rem; color:var(--gold);">0</b><span style="display:block; font-size:.72rem; color:var(--text-muted);"><span class="arabic">سلسلة الايام</span>، Day streak</span></div>
         <div><b id="heroLessonsNum" style="font-family:'Fraunces',serif; font-size:1.4rem;">0</b><span style="display:block; font-size:.72rem; color:var(--text-muted);"><span class="arabic">دروس مكتملة</span>، Lessons completed</span></div>
         <div><b id="heroHoursNum" style="font-family:'Fraunces',serif; font-size:1.4rem;">0</b><span style="display:block; font-size:.72rem; color:var(--text-muted);"><span class="arabic">ساعات الدراسة</span>، Hours studied</span></div>
-        <div><b id="heroReviewDaysNum" style="font-family:'Fraunces',serif; font-size:1.4rem;">0</b><span style="display:block; font-size:.72rem; color:var(--text-muted);"><span class="arabic">ايام المراجعة</span>، Review days</span></div>
+        <div><b id="heroReviewDaysNum" style="font-family:'Fraunces',serif; font-size:1.4rem;">0</b><span style="display:block; font-size:.72rem; color:var(--text-muted);"><span class="arabic">ايام المراجعه</span>، Review days</span></div>
       </div>
       <div id="levelBlock" style="flex-basis:100%;"></div>
       <div id="skillBars" style="flex-basis:100%; margin-top:20px; padding-top:20px; border-top:1px solid var(--border); display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:14px;"></div>
@@ -19976,7 +19976,7 @@ function dashSkillData(){
   });
 
   const specs = [
-    {key:'Speaking', ar:'المحادثة', view:'speaking', icon:'message-circle', tool:'speaking'},
+    {key:'Speaking', ar:'المحادثه', view:'speaking', icon:'message-circle', tool:'speaking'},
     {key:'Listening', ar:'الاستماع', view:'listening', icon:'headphones', tool:'listening'},
     {key:'Grammar', ar:'القواعد', view:'grammar', icon:'spell-check', tool:'grammar'},
     {key:'Vocabulary', ar:'المفردات', view:'vocabulary', icon:'book-open', tool:'vocabulary'},
@@ -20161,7 +20161,7 @@ function renderPlanView(){
   const adapt = E.adaptiveFocus(p, skills);
   const startLvl = E.levelInfo(p.estimatedStartingLevel);
   const goalLvl = E.levelInfo(p.targetLevel);
-  const skillName = s => ({Speaking:'Speaking، المحادثة', Listening:'Listening، الاستماع', Vocabulary:'Vocabulary، المفردات', Grammar:'Grammar، القواعد', Pronunciation:'Pronunciation، النطق', Writing:'Writing، الكتابة'})[s] || s;
+  const skillName = s => ({Speaking:'Speaking، المحادثه', Listening:'Listening، الاستماع', Vocabulary:'Vocabulary، المفردات', Grammar:'Grammar، القواعد', Pronunciation:'Pronunciation، النطق', Writing:'Writing، الكتابه'})[s] || s;
   const stageCount = un.routeLength || r.length;
   const doneN = e.totalLessons - un.remainingLessons;
 
@@ -20213,8 +20213,8 @@ function renderPlanView(){
     </div>` : '';
 
   const adaptNotes = [];
-  if(adapt.improving.length) adaptNotes.push(`<span class="arabic">${adapt.improving.map(s => ({Speaking:'المحادثة',Listening:'الاستماع',Vocabulary:'المفردات',Grammar:'القواعد'})[s.key] || s.key).join(' و ')} تحسنت وخرجت من التركيز المباشر.</span>، ${adapt.improving.map(s => s.key).join(' & ')} improved and left the active focus.`);
-  if(adapt.weak.length) adaptNotes.push(`<span class="arabic">${adapt.weak.map(s => ({Speaking:'المحادثة',Listening:'الاستماع',Vocabulary:'المفردات',Grammar:'القواعد'})[s.key] || s.key).join(' و ')} اضعف من غيرها، دخلت على التركيز.</span>، ${adapt.weak.map(s => s.key).join(' & ')} measured weak, moved into focus.`);
+  if(adapt.improving.length) adaptNotes.push(`<span class="arabic">${adapt.improving.map(s => ({Speaking:'المحادثه',Listening:'الاستماع',Vocabulary:'المفردات',Grammar:'القواعد'})[s.key] || s.key).join(' و ')} تحسنت وخرجت من التركيز المباشر.</span>، ${adapt.improving.map(s => s.key).join(' & ')} improved and left the active focus.`);
+  if(adapt.weak.length) adaptNotes.push(`<span class="arabic">${adapt.weak.map(s => ({Speaking:'المحادثه',Listening:'الاستماع',Vocabulary:'المفردات',Grammar:'القواعد'})[s.key] || s.key).join(' و ')} اضعف من غيرها، دخلت على التركيز.</span>، ${adapt.weak.map(s => s.key).join(' & ')} measured weak, moved into focus.`);
   const adaptHtml = adaptNotes.length
     ? `<div class="card">
         <span class="eyebrow" style="margin:0 0 8px;"><span class="arabic">التركيز التكيفي</span>، Adaptive focus</span>
@@ -20274,7 +20274,7 @@ function dashRecommendation(){
     }
     const due = reviewDueCount();
     if(due > 0){
-      return { view:'review', ctaAr:'ابدا المراجعة', ctaEn:'Start review',
+      return { view:'review', ctaAr:'ابدا المراجعه', ctaEn:'Start review',
         titleAr:`راجع ${due} كلمة`, titleEn:`Review ${due} word${due === 1 ? '' : 's'}`,
         whyAr:'هذي الكلمات رجعت عشان ترسخ قبل ما تنساها.',
         whyEn:'These words are due right before you forget them.' };
@@ -20306,7 +20306,7 @@ function dashRecommendation(){
       whyEn:'The first step unlocks your full personalized dashboard.' };
   }
   if(due > 0){
-    return { view:'review', ctaAr:'ابدا المراجعة', ctaEn:'Start review',
+    return { view:'review', ctaAr:'ابدا المراجعه', ctaEn:'Start review',
       titleAr:`راجع ${due} كلمة`, titleEn:`Review ${due} word${due === 1 ? '' : 's'}`,
       whyAr:'هذي الكلمات رجعت عشان ترسخ قبل ما تنساها. مراجعة سريعة تثبتها.',
       whyEn:'These words are due right before you forget them. A quick pass locks them in.' };
@@ -20316,7 +20316,7 @@ function dashRecommendation(){
   if(missKeys.length){
     const top = missKeys[0];
     const cat = LEARN_CATEGORIES[top] || { en: top, ar: top };
-    return { view:'writing', ctaAr:'افتح ورشة الكتابة', ctaEn:'Open the writing workshop',
+    return { view:'writing', ctaAr:'افتح ورشة الكتابه', ctaEn:'Open the writing workshop',
       titleAr:'اصلح اخطا كتابتك', titleEn:'Fix your writing mistakes',
       whyAr:`"${escapeHtml(cat.ar||'')}" رجعت معك ${misses[top]} مرات. تدرب عليها الحين.`,
       whyEn:`"${escapeHtml(cat.en||'')}" has come back ${misses[top]} time${misses[top] === 1 ? '' : 's'}. Practice it now.` };
@@ -20415,7 +20415,7 @@ function renderWeekCard(){
       ar = 'ابدا سلسلتك بدرس اليوم. الاستمرارية تصنع الفرق.';
       en = 'Start your streak with a lesson today. Consistency is what moves your level.';
     }else if(w.speakGap != null && w.speakGap >= 3){
-      ar = `ما تدربت على المحادثة من ${w.speakGap} ${w.speakGap === 1 ? 'يوم' : 'ايام'}.`;
+      ar = `ما تدربت على المحادثه من ${w.speakGap} ${w.speakGap === 1 ? 'يوم' : 'ايام'}.`;
       en = `You have not practiced speaking in ${w.speakGap} day${w.speakGap === 1 ? '' : 's'}.`;
     }else{
       const best = dashBestWeekday(w.wdCount);
