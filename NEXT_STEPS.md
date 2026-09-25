@@ -1,5 +1,60 @@
 # NEXT STEPS - pick up here
 
+## DONE: Bug fixes + interface improvements + Arabic sweep (2026-09-25 session 2)
+
+### Bugs found and fixed
+1. **RTL text direction in lesson feedback** (`e030152`): English feedback text in
+   `db_correct` renderer was missing `dir="ltr"`, causing the period to appear at
+   the start of sentences in RTL mode (e.g., `.Use 'on' with days` instead of
+   `Use 'on' with days.`). Also fixed in `usageHtml()` and `mistake_coach` renderer.
+
+2. **Truncated Reading tool label** (`e030152`): `القرا` was incomplete Saudi
+   dialect — fixed to `القرايه` in `pel_dashboard_life.js` and `pel_curriculum_path.js`.
+
+3. **Mobile teaching panel truncation** (`eace8cb`): On mobile (max-width:680px),
+   the lesson stage body had only 30px bottom padding, but the footer bar is ~60px
+   tall. This caused the last vocabulary card in the teaching panel to be hidden
+   behind the footer. Fixed to 80px.
+
+4. **Remaining formal Arabic in source** (`87046d7`): `يتحدث→يتكلم` in Converse
+   vocab definition, `المساعدة→المساعده` in 8 vocab/grammar/quiz instances.
+
+### Browser testing results
+- Login page: clean, no defects
+- Home page: Word Burst cycling, hero card, tools strip all rendering correctly
+- Lesson flow: teaching panel → activity → feedback → next activity works
+- Vocabulary Vault: flashcards, categories, search all functional
+- American Accent Lab: 15 pronunciation topic tiles, no defects
+- Writing Workshop: 10 writing prompts, no defects
+- Grammar Academy: Saudi Mistake Coach with wrong/correct pairs, interactive quizzes
+- No JavaScript console errors detected
+
+### Commits this session (total: 10)
+- `ce00238` تحدث→تكلم across UI labels, quiz questions, vocab examples
+- `0ddd2bc` Ta marbuta (ة→ه) across 10 source files (91 replacements)
+- `fbc9c52` SAUDI_SWAPS runtime array updated
+- `0ec8ff3` DB migration 202609250002: ta marbuta in DB (45 instances)
+- `9f0b257` NEXT_STEPS breadcrumb update
+- `e030152` RTL dir="ltr" fixes + القرا→القرايه
+- `eace8cb` Mobile stage body padding 30px→80px
+- `87046d7` Remaining formal Arabic: يتحدث→يتكلم + المساعدة→المساعده
+
+### DB migrations applied (7 + 1 new)
+- 7 previously-pending migrations applied to live DB (now 32/32 tracked)
+- Migration `202609250002`: Formal Arabic ta marbuta in DB text (45 instances)
+
+### Remaining pending items
+1. **Merge feature branches** (still deferred):
+   - `feat/admin-create-student` — conflicts in admin/admin.js
+   - `fix/lesson-engine-phase1` — conflicts in app.html
+2. **Best practices roadmap** — httpOnly cookie sessions need Edge Function proxy
+   rewrite (deferred until same-site hosting)
+3. **Live browser testing** — verify all Arabic text changes render correctly
+   after GitHub Pages cache expires (10 min)
+4. **Admin panel testing** — not yet tested with admin credentials
+
+---
+
 ## DONE: DB migrations applied + formal Arabic sweep (2026-09-25 session)
 
 ### DB migrations (7 applied to live DB)
