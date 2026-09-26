@@ -23,7 +23,7 @@
 <script src="lib/cert-qr.js?v=a43f19f9" defer></script>
 <script src="lib/cert-sheet.js?v=ece713aa" defer></script>
 <script src="lib/pel_config.js?v=d66df0a3"></script>
-<script src="lib/pel_lesson_stage.js?v=0c020509"></script>
+<script src="lib/pel_lesson_stage.js?v=64ea108a"></script>
 <script src="lib/pel_dashboard_life.js?v=d42ab032"></script>
 <script src="lib/pel_curriculum_path.js?v=e4c5c297"></script>
 <style>
@@ -3101,7 +3101,7 @@ function renderComingSoon(viewId){
       <h2>${copy.title}</h2>
       <p class="arabic" style="font-size:1rem; margin-top:6px;">${escapeHtml(copy.ar||'')}</p>
       <p>${copy.desc}</p>
-      <span class="chip gold"><span class="arabic">تصل في المرحله الجاه</span>، Arriving in the next build phase</span>
+      <span class="chip gold"><span class="arabic">تصل في المرحله الجايه</span>، Arriving in the next build phase</span>
     </div>`;
 }
 
@@ -11632,7 +11632,7 @@ const LESSON_LIBRARY = {
     conversation:[
       {who:'You', en:'Could I have an extra pillow and a blanket?', ar:'ممكن مخده اضافيه وغطاو؟', translit:'كود اي هاف وين اكسترا پيلو اند ا بلانكت؟'},
       {who:'Receptionist', en:'Of course, I will send them right up.', ar:'اكيد، بابعثهم لك الحين.', translit:'اوف كورس، اي ويل سند ذيم رايت اپ.'},
-      {who:'You', en:'And can you call a taxi for 8 am tomorrow?', ar:'وممكن تكلمون لي تكسي الساعه ثمانانيه الصبح بكره؟', translit:'اند كان يو كول ا تاكسي فور ايت اي ام تومورو؟'},
+      {who:'You', en:'And can you call a taxi for 8 am tomorrow?', ar:'وممكن تكلمون لي تكسي الساعه ثمان الصبح بكره؟', translit:'اند كان يو كول ا تاكسي فور ايت اي ام تومورو؟'},
       {who:'Receptionist', en:'Sure, I will note it down. Anything else?', ar:'اكيد، باسجله. فيه شي ثاني؟', translit:'شور، اي ويل نوت ات داون. اني ثينق الس؟'},
     ],
     quiz:[
@@ -11669,8 +11669,8 @@ const LESSON_LIBRARY = {
     conversation:[
       {who:'A', en:'Good evening, I would like to book a table for four.', ar:'مسا الخير، ابي احجز طاوله لاربعه.', translit:'قود ايڤنينق، اي وود لايك تو بوك ا تيبل فور فور.'},
       {who:'B', en:'For what time, please?', ar:'لاي ساعه لو سمحت؟', translit:'فور وات تايم، بليز؟'},
-      {who:'A', en:'Eight thirty tonight, under the name Salem.', ar:'ثمانانيه ونص الليله، باسم سالم.', translit:'ايت ثيرتي تونايت، اندر ذا نيم سالم.'},
-      {who:'B', en:'Perfect, a table for four at eight thirty. See you then.', ar:'ممتاز، طاوله لاربعه الساعه ثمانانيه ونص. نشوفكم.', translit:'بيرفكت، ا تيبل فور فور ات ايت ثيرتي. سي يو ذن.'},
+      {who:'A', en:'Eight thirty tonight, under the name Salem.', ar:'ثمان ونص الليله، باسم سالم.', translit:'ايت ثيرتي تونايت، اندر ذا نيم سالم.'},
+      {who:'B', en:'Perfect, a table for four at eight thirty. See you then.', ar:'ممتاز، طاوله لاربعه الساعه ثمان ونص. نشوفكم.', translit:'بيرفكت، ا تيبل فور فور ات ايت ثيرتي. سي يو ذن.'},
     ],
     quiz:[
       {qAr:'تحجز طاوله لاربعه:', qEn:'You book a table for four:', options:['I would like to book a table for four.','We want table four.','Book table now.'], correct:0},
@@ -16451,14 +16451,14 @@ const CORRECT_RULES = [
   { re:/\bcan able to\b/gi, fix:'can', category:'modals',
     ar:'"can" تكفي، ما نحتاج "able to" بعدها: "I can come".',
     en:'"Can" already means able to: say "I can come", not "I can able to come".',
-    why_ar:'can نفسها تعني يقدر، فومثلن able to تكرار.',
+    why_ar:'can نفسها تعني يقدر، فمثلن able to تكرار.',
     why_en:'"Can" already expresses ability.',
     learn:{ ar:'I can help you.', en:'can + base verb.' } },
   // ---- comparatives ----
   { re:/\bmore better\b/gi, fix:'better', category:'comparatives',
     ar:'لا نضع more قبل better، الكلمه تكفي.',
     en:'Never say "more better". Just say "better".',
-    why_ar:'better هي المقارنه بحد ذاتها، فومثلن more تكرار.',
+    why_ar:'better هي المقارنه بحد ذاتها، فمثلن more تكرار.',
     why_en:'"Better" is already the comparative form.',
     learn:{ ar:'This is better.', en:'better, not more better.' } },
   { re:/\bmore good\b/gi, fix:'better', category:'comparatives',
@@ -16531,19 +16531,19 @@ const CORRECT_RULES = [
   { re:/\brepeat again\b/gi, fix:'repeat', category:'word-choice',
     ar:'"repeat" وحدها تكفي، ما نحتاج again بعدها.',
     en:'"Repeat" already means say again: just say "repeat".',
-    why_ar:'repeat نفسها معناها كرر، فومثلن again تكرار.',
+    why_ar:'repeat نفسها معناها كرر، فمثلن again تكرار.',
     why_en:'"Repeat" already includes the idea of again.',
     learn:{ ar:'Can you repeat that?', en:'repeat, not repeat again.' } },
   { re:/\breturn back\b/gi, fix:'return', category:'word-choice',
     ar:'"return" وحدها تكفي، ما نحتاج back بعدها.',
     en:'"Return" already means go back: just say "return".',
-    why_ar:'return معناها يرجع، فومثلن back تكرار.',
+    why_ar:'return معناها يرجع، فمثلن back تكرار.',
     why_en:'"Return" already means go back.',
     learn:{ ar:'I will return tomorrow.', en:'return, not return back.' } },
   { re:/\benter inside\b/gi, fix:'enter', category:'word-choice',
     ar:'"enter" وحدها تكفي، ما نحتاج inside بعدها.',
     en:'"Enter" already means go inside: just say "enter".',
-    why_ar:'enter معناها يدخل، فومثلن inside تكرار.',
+    why_ar:'enter معناها يدخل، فمثلن inside تكرار.',
     why_en:'"Enter" already means go inside.',
     learn:{ ar:'Please enter the room.', en:'enter, not enter inside.' } },
   { re:/\bexplained me (the|this|that|my|how|why|what)\b/gi, fix:'explained $1 to me', category:'word-choice',
