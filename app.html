@@ -2842,6 +2842,7 @@ const navGroups = [
      levels (B1-C2) to a beginner is confusing and demotivating. The cefr
      view is kept as an internal route but not advertised. */
   { label:{en:'Progress', ar:'تقدمك'}, items:[
+    {id:'vocabulary', en:'Vocabulary Vault', ar:'خزنة المفردات', icon:'book-open'},
     {id:'review', en:'Smart Review', ar:'مراجعه ذكيه', icon:'rotate-ccw'},
     {id:'bookmarks', en:'Bookmarks', ar:'المفضله', icon:'bookmark'},
     {id:'achievements', en:'Achievements', ar:'الانجازات', icon:'award'},
@@ -17217,7 +17218,6 @@ function cefrShortLabel(code, isAr){ return cefrDisplayName(code, isAr); }
    for gating — guidedToolsForLevel() returns all tools.
    ============================================================ */
 const GUIDED_TOOL_RULES = {
-  vocabulary:    { minLevel:'A0', icon:'book-open',     ar:'المفردات',    en:'Vocabulary',    why:'كل كلمات الدرس' },
   pronunciation: { minLevel:'A0', icon:'mic',          ar:'النطق',       en:'Pronunciation', why:'تدرب على نطق كلمات الدرس' },
   review:        { minLevel:'A0', icon:'rotate-ccw',   ar:'المراجعه',    en:'Review',        why:'ثبت الكلمات اللي اخذتها' },
   grammar:       { minLevel:'A1', icon:'spell-check',  ar:'القواعد',     en:'Grammar',       why:'افهم تركيب الجمل في الدرس' },
@@ -20452,7 +20452,7 @@ function dashSkillData(){
     {key:'Listening', ar:'الاستماع', view:'listening', icon:'headphones', tool:'listening'},
     {key:'Grammar', ar:'القواعد', view:'grammar', icon:'spell-check', tool:'grammar'},
     {key:'Vocabulary', ar:'المفردات', view:'vocabulary', icon:'book-open', tool:'vocabulary'},
-  ].filter(s => _unlocked.indexOf(s.tool) !== -1);
+  ];
 
   const out = specs.map(s => {
     var sk = s.tool;
