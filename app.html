@@ -1716,8 +1716,8 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
             </div>
             <div class="card">
               <h3 style="font-size:1.05rem;">Notifications <span class="arabic" style="font-size:.85em; font-weight:400;">· الاشعارات</span></h3>
-              <p style="margin-top:8px; font-size:.84rem; color:var(--text-muted);"><span class="arabic" style="display:block;">تذعشانرات يوميه وتنبيهات الاستمرار.</span>Daily reminders and streak alerts.</p>
-              <div class="setting-row"><div class="sr-label"><b>Daily study reminder</b><span class="arabic">تذعشانر الدراسه اليومي</span></div><label class="switch"><input type="checkbox" id="notifToggle" checked><span class="switch-track"></span></label></div>
+              <p style="margin-top:8px; font-size:.84rem; color:var(--text-muted);"><span class="arabic" style="display:block;">اشعارات يوميه وتنبيهات الاستمرار.</span>Daily reminders and streak alerts.</p>
+              <div class="setting-row"><div class="sr-label"><b>Daily study reminder</b><span class="arabic">اشعار الدراسه اليومي</span></div><label class="switch"><input type="checkbox" id="notifToggle" checked><span class="switch-track"></span></label></div>
               <div class="setting-row"><div class="sr-label"><b>Streak risk alerts</b><span class="arabic">تنبيه خطر فقدان الاستمرار</span></div><label class="switch"><input type="checkbox" id="streakToggle" checked><span class="switch-track"></span></label></div>
             </div>
             <div class="card">
@@ -12466,7 +12466,7 @@ const LESSON_LIBRARY = {
     conversation:[
       {who:'A', en:'How do you review your English?', ar:'عشان تراجع انجليزيك؟', translit:'هاو دو يو ريفيو يور انجلش؟'},
       {who:'B', en:'I explain lessons to my brother out loud.', ar:'اشرح الدروس لاخوي بصوت عالي.', translit:'اي اكسبلين ليسنز تو ماي براذر اوت لاود.'},
-      {who:'A', en:'That is smart, teaching forces clarity.', ar:'ذا شي ذعشان، الشرح يفرض الوضوح.', translit:'ذات از سمارت، تيتشنق فورسز لاريتي.'},
+      {who:'A', en:'That is smart, teaching forces clarity.', ar:'ذا شي ذكيه، الشرح يفرض الوضوح.', translit:'ذات از سمارت، تيتشنق فورسز لاريتي.'},
       {who:'B', en:'Exactly, and I notice my gaps fast.', ar:'بالضبط، واكتشف ثغراتي بسرعه.', translit:'اگزكتلي، اند اي نوتيس ماي قابس فاست.'},
     ],
     quiz:[
@@ -20136,7 +20136,7 @@ function renderProfile(){
     </div>
 
     <div class="eyebrow" style="margin-bottom:14px;"><span class="arabic">الاحصاييات</span>، Statistics</div>
-    <div class="grid" style="grid-template-columns:repeat(6,1fr); margin-bottom:30px;" id="profileStatsGrid"></div>
+    <div class="grid" style="grid-template-columns:repeat(auto-fit, minmax(140px, 1fr)); margin-bottom:30px;" id="profileStatsGrid"></div>
 
     <div class="card card-elevated" style="display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin-bottom:30px;">
       <div style="display:flex;align-items:center;gap:14px;">
