@@ -219,11 +219,11 @@ body.ui-en .t-ar{ display:none !important; }
         <button class="btn-gold" type="submit"><span class="t-ar">تحقق</span><span class="t-en">Verify</span></button>
       </form>
       <div style="margin-top:26px; padding-top:20px; border-top:1px solid var(--border);">
-        <p class="sub" style="font-size:.78rem;"><span class="t-ar" style="display:block;">كل شهاده صادره من التطبيق لها رمز تحقق فريد لا تقدر تخمينه.</span><span class="t-en" style="display:block;">Every certificate issued by the app carries a unique, unguessable verification code.</span></p>
+        <p class="sub" style="font-size:.78rem;"><span class="t-ar" style="display:block;">كل شهاده صادره من التطبيق لها رمز تحقق فريد لا تيمكنر تخمينه.</span><span class="t-en" style="display:block;">Every certificate issued by the app carries a unique, unguessable verification code.</span></p>
       </div>
       <div style="margin-top:22px; padding-top:20px; border-top:1px solid var(--border);">
         <p style="font-size:.78rem; font-weight:700; color:var(--text-secondary);"><span class="t-ar">فحص رقم الشهاده</span><span class="t-en">Validate a certificate number</span></p>
-        <p class="sub" style="font-size:.76rem; margin-top:6px;"><span class="t-ar" style="display:block;">كل رقم شهاده فيه تاريخ الاصدار ورقم تحقق (checksum). الرقم المزور ينكشف هنا فورا، بدون قاعده البيانات.</span><span class="t-en" style="display:block;">Every certificate number embeds its issue date and a checksum digit. A forged number is caught here instantly, with no database lookup.</span></p>
+        <p class="sub" style="font-size:.76rem; margin-top:6px;"><span class="t-ar" style="display:block;">كل رقم شهاده فيه تاريخ الاصدار ورقم تحقق (checksum). الرقم المزور ينكشف هنا فورا، ببدون قاعده البيانات.</span><span class="t-en" style="display:block;">Every certificate number embeds its issue date and a checksum digit. A forged number is caught here instantly, with no database lookup.</span></p>
         <form class="lookup-form" id="numForm">
           <input id="numCode" placeholder="PEL-260813-531-9" autocomplete="off" spellcheck="false" aria-label="Certificate number">
           <button class="btn-gold" type="submit"><span class="t-ar">فحص</span><span class="t-en">Check</span></button>
@@ -241,7 +241,7 @@ body.ui-en .t-ar{ display:none !important; }
 </main>
 
 <footer class="site-foot">
-  <span class="t-ar" style="display:block;">التحقق بنحذف مباشره من سجل الشهادات الرسمي، ولا تقدر تزوير الشهادات.</span>
+  <span class="t-ar" style="display:block;">التحقق بنحذف مباشره من سجل الشهادات الرسمي، ولا تيمكنر تزوير الشهادات.</span>
   <span class="t-en" style="display:block;">Verification runs against the official certificate registry. Certificates cannot be forged.</span>
 </footer>
 
@@ -412,7 +412,7 @@ document.getElementById('numForm').addEventListener('submit', function(e){
   const raw = document.getElementById('numCode').value.trim();
   const m = String(raw).toUpperCase().match(/^PEL-(\d{6})-(\d{3})-(\d)$/);
   if(!m){
-    showNumResult(false, 'الصيغه غير صحيحه.', 'Wrong format. Expected PEL-YYMMDD-SSS-C, e.g. PEL-260813-531-9.');
+    showNumResult(false, 'الصيغه غير صحه.', 'Wrong format. Expected PEL-YYMMDD-SSS-C, e.g. PEL-260813-531-9.');
     return;
   }
   if(validCertNumber(raw)){
@@ -420,7 +420,7 @@ document.getElementById('numForm').addEventListener('submit', function(e){
     showNumResult(true, 'رقم سليم: تاريخ الاصدار ' + d.slice(0,2) + '/' + d.slice(2,4) + '/' + '20' + d.slice(0,2) + ' ورقم التحقق مطابق.',
       'Valid number: issued ' + '20' + d.slice(0,2) + '-' + d.slice(2,4) + '-' + d.slice(4,6) + ', checksum matches. Authenticity still requires the secret verification code.');
   }else{
-    showNumResult(false, 'رقم مزور او تالف: خانه التحقق غير مطابقه.', 'This number is forged or corrupted: the checksum digit does not match.');
+    showNumResult(false, 'رقم مزور او تالين: خانه التحقق غير مطابقه.', 'This number is forged or corrupted: the checksum digit does not match.');
   }
 });
 document.getElementById('retryBtn').addEventListener('click', () => {

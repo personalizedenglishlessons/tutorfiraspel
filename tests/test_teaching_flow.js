@@ -43,8 +43,8 @@ function norm(s){ return String(s||'').toLowerCase().replace(/[^a-z0-9 ]/g,'').t
 function makeLesson(opts){
   opts = opts || {};
   const vocab = opts.vocab || [
-    { en:'tired', ar:'متعوب', translit:'تايرد', example:{en:'I am tired today.', ar:'انا متعب اليوم.'}, sentences:[] },
-    { en:'happy', ar:'سعيد', translit:'هابي', example:{en:'She is happy.', ar:'هي سعيده.'}, sentences:[] },
+    { en:'tired', ar:'متعوب', translit:'تايرد', example:{en:'I am tired today.', ar:'انا تعبان اليوم.'}, sentences:[] },
+    { en:'happy', ar:'مبسوط', translit:'هابي', example:{en:'She is happy.', ar:'هي مبسوطه.'}, sentences:[] },
     { en:'ready', ar:'جاهز', translit:'ريدي', example:{en:'Are you ready?', ar:'هل انت جاهز؟'}, sentences:[] },
     { en:'busy', ar:'مشغول', translit:'بيزي', example:{en:'He is busy now.', ar:'هو مشغول الحين.'}, sentences:[] },
   ];
@@ -109,7 +109,7 @@ check('pron cat returns null (no trap)', phRandom === null);
 var lesson1 = makeLesson({
   notes: [{en:'Test rule', ar:'قاعده'}],
   exampleSentences: [{en:'This is a test sentence.', ar:'هذا اختبار.'}],
-  conversation: [{en:'I am fine.', ar:'انا بخير.'}, {en:'I am ready.', ar:'انا جاهز.'}, {en:'I am tired.', ar:'انا متعب.'}],
+  conversation: [{en:'I am fine.', ar:'انا بخير.'}, {en:'I am ready.', ar:'انا جاهز.'}, {en:'I am tired.', ar:'انا تعبان.'}],
 });
 var seq1 = buildSequence(lesson1, 'test-lesson');
 var cexIdx = seq1.findIndex(a => a.type === 'concept_examples');
