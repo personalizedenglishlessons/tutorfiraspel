@@ -177,7 +177,7 @@ body.ui-en .t-ar{ display:none !important; }
       <div id="okVerifyCard" class="verify-card" style="margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:12px 24px;text-align:start;"></div>
       <div id="okIdCheck" style="margin-top:14px; display:none; font-size:.76rem; line-height:1.7;"></div>
       <div class="genuine">
-        <span class="t-ar" style="display:block;">هذه الشهاده اصلية وموثقه من الاكاديميه.</span>
+        <span class="t-ar" style="display:block;">هذي الشهاده اصليه وموثقه من الاكاديميه.</span>
         <span class="t-en" style="display:block;">This certificate is genuine and issued by Personalized English Lessons.</span>
       </div>
       <button type="button" class="btn-ghost" id="okToggleCert" aria-expanded="false" style="margin-top:18px;">
@@ -191,8 +191,8 @@ body.ui-en .t-ar{ display:none !important; }
       <div class="seal bad">
         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>
       </div>
-      <h1><span class="t-ar">تعذر التحقق من هذه الشهاده</span><span class="t-en">Unable to verify this certificate</span></h1>
-      <p class="sub"><span class="t-ar" style="display:block;">ما لقينا سجل لهذا الرمز. تاكد من الرمز وحاول مره ثانية.</span><span class="t-en" style="display:block;">We could not find a record for this code. Double-check it and try again.</span></p>
+      <h1><span class="t-ar">تعذر التحقق من هذي الشهاده</span><span class="t-en">Unable to verify this certificate</span></h1>
+      <p class="sub"><span class="t-ar" style="display:block;">ما لقينا سجل لذا الرمز. تاكد من الرمز وحاول مره ثانيه.</span><span class="t-en" style="display:block;">We could not find a record for this code. Double-check it and try again.</span></p>
       <form class="lookup-form" id="badForm">
         <input id="badCode" placeholder="PEL-XXXX-XXXX" autocomplete="off" spellcheck="false" aria-label="Verification code">
         <button class="btn-gold" type="submit"><span class="t-ar">تحقق</span><span class="t-en">Verify</span></button>
@@ -205,9 +205,9 @@ body.ui-en .t-ar{ display:none !important; }
       <div class="seal bad">
         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.7 3.86a2 2 0 00-3.4 0z"/></svg>
       </div>
-      <h1><span class="t-ar">خدمة التحقق غير متاحه حاليا</span><span class="t-en">Verification service unavailable</span></h1>
-      <p class="sub"><span class="t-ar" style="display:block;">تعذر الاتصال بخدمة التحقق. جرب مره ثانية بعد قليل.</span><span class="t-en" style="display:block;">We could not reach the verification service. Please try again shortly.</span></p>
-      <button type="button" class="btn-ghost" id="retryBtn" style="margin-top:18px;"><span class="t-ar">جرب مره ثانية</span><span class="t-en">Try again</span></button>
+      <h1><span class="t-ar">خدمه التحقق غير متاحه حاليا</span><span class="t-en">Verification service unavailable</span></h1>
+      <p class="sub"><span class="t-ar" style="display:block;">تعذر الاتصال بخدمه التحقق. جرب مره ثانيه بعد قليل.</span><span class="t-en" style="display:block;">We could not reach the verification service. Please try again shortly.</span></p>
+      <button type="button" class="btn-ghost" id="retryBtn" style="margin-top:18px;"><span class="t-ar">جرب مره ثانيه</span><span class="t-en">Try again</span></button>
     </div>
 
     <!-- lookup prompt (no code yet) -->
@@ -219,7 +219,7 @@ body.ui-en .t-ar{ display:none !important; }
         <button class="btn-gold" type="submit"><span class="t-ar">تحقق</span><span class="t-en">Verify</span></button>
       </form>
       <div style="margin-top:26px; padding-top:20px; border-top:1px solid var(--border);">
-        <p class="sub" style="font-size:.78rem;"><span class="t-ar" style="display:block;">كل شهاده صادرة من التطبيق لها رمز تحقق فريد لا يمكن تخمينه.</span><span class="t-en" style="display:block;">Every certificate issued by the app carries a unique, unguessable verification code.</span></p>
+        <p class="sub" style="font-size:.78rem;"><span class="t-ar" style="display:block;">كل شهاده صادره من التطبيق لها رمز تحقق فريد لا يمكن تخمينه.</span><span class="t-en" style="display:block;">Every certificate issued by the app carries a unique, unguessable verification code.</span></p>
       </div>
       <div style="margin-top:22px; padding-top:20px; border-top:1px solid var(--border);">
         <p style="font-size:.78rem; font-weight:700; color:var(--text-secondary);"><span class="t-ar">فحص رقم الشهاده</span><span class="t-en">Validate a certificate number</span></p>
@@ -412,7 +412,7 @@ document.getElementById('numForm').addEventListener('submit', function(e){
   const raw = document.getElementById('numCode').value.trim();
   const m = String(raw).toUpperCase().match(/^PEL-(\d{6})-(\d{3})-(\d)$/);
   if(!m){
-    showNumResult(false, 'الصيغه غير صحيحة.', 'Wrong format. Expected PEL-YYMMDD-SSS-C, e.g. PEL-260813-531-9.');
+    showNumResult(false, 'الصيغه غير صحيحه.', 'Wrong format. Expected PEL-YYMMDD-SSS-C, e.g. PEL-260813-531-9.');
     return;
   }
   if(validCertNumber(raw)){
@@ -420,7 +420,7 @@ document.getElementById('numForm').addEventListener('submit', function(e){
     showNumResult(true, 'رقم سليم: تاريخ الاصدار ' + d.slice(0,2) + '/' + d.slice(2,4) + '/' + '20' + d.slice(0,2) + ' ورقم التحقق مطابق.',
       'Valid number: issued ' + '20' + d.slice(0,2) + '-' + d.slice(2,4) + '-' + d.slice(4,6) + ', checksum matches. Authenticity still requires the secret verification code.');
   }else{
-    showNumResult(false, 'رقم مزور او تالف: خانة التحقق غير مطابقة.', 'This number is forged or corrupted: the checksum digit does not match.');
+    showNumResult(false, 'رقم مزور او تالف: خانه التحقق غير مطابقه.', 'This number is forged or corrupted: the checksum digit does not match.');
   }
 });
 document.getElementById('retryBtn').addEventListener('click', () => {

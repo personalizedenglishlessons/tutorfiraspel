@@ -510,12 +510,12 @@ function applyLoginLang(lang){
   // Apply bilingual text
   var ar = lang === 'ar';
   var T = {
-    '.back-home .label': ar?'العودة للمنصه':'Back to Academy',
+    '.back-home .label': ar?'العوده للمنصه':'Back to Academy',
     '.brand-heading': ar?'<em>كمل من وين وقفت</em>':'Welcome back. <em>Pick up where you left off.</em>',
     '.brand-copy': ar?'ادخل اكاديميتك الخاصه. انجليزي امريكي، بشرح بالعربي، مع الاستاذ فراس.':'Step into your private academy. American English, explained in your language, guided by Tutor Firas.',
     '.panel-label': ar?'دخول الطلاب':'Student Login',
     '.form-title': ar?'تسجيل الدخول':'Sign In',
-    '.form-sub': ar?'للطلاب المسجلين. سجل دخولك للوحة التحكم.':'For enrolled students. Sign in to your dashboard.',
+    '.form-sub': ar?'للطلاب المسجلين. سجل دخولك للوحه التحكم.':'For enrolled students. Sign in to your dashboard.',
     'label[for="loginEmail"]': ar?'البريد الالكتروني':'Email Address',
     'label[for="loginPassword"]': ar?'كلمه المرور':'Password',
     '#rememberToggle': ar?'<span class="checkbox" id="rememberCheckbox"></span> تذكرني':'<span class="checkbox" id="rememberCheckbox"></span> Remember me',
@@ -524,7 +524,7 @@ function applyLoginLang(lang){
     '.security-badge:nth-of-type(1)': ar?'تسجيل مشفر':'Encrypted Login',
     '.security-badge:nth-of-type(2)': ar?'وصول خاص للطلاب':'Private Student Access',
     '.trust-strip p': ar?'طلاب يتعلمون مع الاستاذ فراس.':'Students learning with Tutor Firas.',
-    '.redirect-overlay p': ar?'نفتح لوحة التحكم...':'Opening your dashboard...'
+    '.redirect-overlay p': ar?'نفتح لوحه التحكم...':'Opening your dashboard...'
   };
   Object.keys(T).forEach(function(sel){
     var el = document.querySelector(sel);
@@ -535,7 +535,7 @@ function applyLoginLang(lang){
   });
   // Benefit items
   var benefits = document.querySelectorAll('.benefit-item');
-  var benAr = ['ميات الدروس من الواقع','مدرب كتابه','تدريب المحادثه','تدريب النطق','شرح بالعربي السعودي','نطق عربي للحروف','بنا المفردات','اكاديميه القواعد','تتبع التقدم','لوحة تحكم خاصه'];
+  var benAr = ['ميات الدروس من الواقع','مدرب كتابه','تدريب المحادثه','تدريب النطق','شرح بالعربي السعودي','نطق عربي للحروف','بنا المفردات','اكاديميه القواعد','تتبع التقدم','لوحه تحكم خاصه'];
   var benEn = ['Hundreds of real-world lessons','Writing feedback coach','Speaking practice','Pronunciation training','Saudi Arabian Arabic explanations','Arabic transliteration','Vocabulary builder','Grammar academy','Progress tracking','Private dashboard'];
   var benArr = ar ? benAr : benEn;
   benefits.forEach(function(el, i){
@@ -550,7 +550,7 @@ function applyLoginLang(lang){
   pills.forEach(function(el, i){ if(pillArr[i]) el.textContent = pillArr[i]; });
   // Mini cards
   var mc = document.querySelectorAll('.mini-card');
-  var mcAr = [['درس اليوم','في المطار'],['سلسلة الايام','٧ ايام متتالية · واصل'],['المفردات','١٢ كلمه جديده هذا الاسبوع'],['تصحيح الكتابه','اصلاحان اليوم'],['اللهجه الامريكيه','water · واتر']];
+  var mcAr = [['درس اليوم','في المطار'],['سلسله الايام','٧ ايام متتاليه · واصل'],['المفردات','١٢ كلمه جديده ذا الاسبوع'],['تصحيح الكتابه','اصلاحان اليوم'],['اللهجه الامريكيه','water · واتر']];
   var mcEn = [['Lesson of the Day','At the Airport'],['Daily Streaks','7 days in a row · keep it up'],['Vocabulary','12 new words this week'],['Writing Feedback','2 fixes explained today'],['American Accent','water · واتر']];
   var mcArr = ar ? mcAr : mcEn;
   mc.forEach(function(el, i){
