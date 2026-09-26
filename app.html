@@ -703,7 +703,8 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
 .flashcard{ position:relative; width:100%; height:100%; transition:transform .6s var(--ease); transform-style:preserve-3d; cursor:pointer; }
 .flashcard.flipped{ transform:rotateY(180deg); }
 .flashcard-face{ position:absolute; inset:0; backface-visibility:hidden; border-radius:20px; border:1px solid var(--border); background:var(--card-elevated); padding:26px; display:flex; flex-direction:column; }
-.flashcard-back{ transform:rotateY(180deg); overflow-y:auto; }
+.flashcard-back{ transform:rotateY(180deg); overflow-y:auto; scrollbar-width:none; -ms-overflow-style:none; }
+.flashcard-back::-webkit-scrollbar{ display:none; }
 .vocab-word{ font-size:1.7rem; }
 .vocab-ipa{ color:var(--text-muted); font-size:.86rem; margin-top:8px; }
 .vocab-cat{ margin-top:auto; }
@@ -752,9 +753,9 @@ body.ui-ar .vv-stat .lbl{ letter-spacing:0; text-transform:none; font-family:'Ca
 .vv-card-inner.active{ opacity:1; pointer-events:auto; }
 .vv-card-inner.flipped{ transform:rotateY(180deg); }
 .vv-card-face{ position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; background:linear-gradient(180deg,rgba(255,255,255,.018),transparent 34%),var(--card); border:1px solid var(--border); border-radius:24px; padding:36px; display:flex; flex-direction:column; box-shadow:inset 0 1px 0 rgba(255,255,255,.03),0 24px 80px -24px rgba(0,0,0,.6); }
-.vv-card-back{ transform:rotateY(180deg); overflow-y:auto; scrollbar-width:thin; }
-.vv-card-back::-webkit-scrollbar{ width:5px; }
-.vv-card-back::-webkit-scrollbar-thumb{ background:var(--border); border-radius:3px; }
+.vv-card-back{ transform:rotateY(180deg); overflow-y:auto; scrollbar-width:none; -ms-overflow-style:none; }
+.vv-card-back::-webkit-scrollbar{ display:none; }
+@media(min-width:1900px){ .vv-card-scene{ min-height:560px; } .vv-card-face{ padding:44px; } }
 .vv-card-top{ display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; }
 .vv-card-cat{ font-size:.76rem; font-weight:600; color:var(--gold); letter-spacing:.06em; text-transform:uppercase; background:rgba(200,169,106,.08); border:1px solid rgba(200,169,106,.2); padding:6px 14px; border-radius:999px; }
 body.ui-ar .vv-card-cat{ letter-spacing:0; text-transform:none; font-family:'Cairo','Tajawal',sans-serif; }
@@ -21956,7 +21957,7 @@ if(window.lucide) lucide.createIcons();
       '<div class="pel-form-card"><h3>'+esc(A?'اطلب حصه':'Request a class')+'</h3>'+
         '<label class="pel-field"><span>'+(esc(A?'نوع الحصه':'Class type'))+'</span><select id="pelSvc">'+opts+'</select></label>'+
         '<div class="pel-row"><label class="pel-field"><span>'+(esc(A?'مدينتك':'Your city'))+'</span><input id="pelCity" type="text" dir="auto" placeholder="'+esc(A?'اكتب مدينتك':'Type your city')+'"></label></div>'+
-        '<label class="pel-field"><span>'+(esc(A?'اوقات مناسبه لك':'Preferred times'))+'</span><input id="pelTimes" type="text" dir="auto" placeholder="'+esc(A?'مثال: المسا، نهايه الاسبوع':'e.g. evenings, weekends')+'"></label>'+
+        '<label class="pel-field"><span>'+(esc(A?'اوقات مناسبه لك *':'Preferred times *'))+'</span><input id="pelTimes" type="text" dir="auto" required placeholder="'+esc(A?'مثال: المسا، نهايه الاسبوع':'e.g. evenings, weekends')+'"></label>'+
         '<label class="pel-field"><span>'+(esc(A?'ملاحظات':'Notes'))+'</span><textarea id="pelNotes" rows="2" dir="auto" placeholder="'+esc(A?'اي شي تبي الاستاذ يعرفه':'Anything you want the teacher to know')+'"></textarea></label>'+
         '<div class="pel-form-foot"><span id="pelCost"></span><button type="button" class="btn-gold" id="pelSubmit" disabled>'+esc(A?'اطلب الحصه':'Request class')+'</button></div>'+
         '<p class="pel-form-hint" id="pelHint"></p>'+
@@ -21972,6 +21973,7 @@ if(window.lucide) lucide.createIcons();
   function bindForm(){
     const v=document.getElementById('view-liveClasses'); if(!v) return;
     const sel=v.querySelector('#pelSvc'); const city=v.querySelector('#pelCity');
+    const times=v.querySelector('#pelTimes');
     const costEl=v.querySelector('#pelCost'); const hint=v.querySelector('#pelHint'); const btn=v.querySelector('#pelSubmit');
     function refresh(){
       if(!sel) return;
@@ -21979,12 +21981,22 @@ if(window.lucide) lucide.createIcons();
       const cost=+opt.dataset.cost; const inp=!!(+opt.dataset.inperson); const bal=OVER?OVER.credits:0; const A=ar();
       costEl.textContent=(A?'التكلفه: ':'Cost: ')+cost+' '+(A?'رصيد':'credits')+' - '+(A?'رصيدك: ':'Balance: ')+bal;
       const aff = bal>=cost;
-      btn.disabled=!aff;
-      if(inp){ city.style.display=''; city.required=true; hint.textContent = A ? 'الحصه الحضوريه متوفره في النماص بس. اكتب مدينتك.' : 'In-person classes are available in Al Namas only. Type your city.'; }
-      else { city.style.display=''; city.required=false; hint.textContent=''; }
-      if(!aff) hint.textContent = A ? 'ما عندك رصيد كافي لهالحصه.' : 'You do not have enough credits for this class.';
+      const hasTimes = times && times.value.trim().length>0;
+      const hasCity = city && city.value.trim().length>0;
+      const fieldsOk = hasTimes && (!inp || hasCity);
+      btn.disabled = !aff || !fieldsOk;
+      if(inp){ city.style.display=''; city.required=true; }
+      else { city.style.display=''; city.required=false; }
+      // Build hint message
+      if(!aff){ hint.textContent = A ? 'ما عندك رصيد كافي لهالحصه.' : 'You do not have enough credits for this class.'; }
+      else if(!hasTimes){ hint.textContent = A ? 'اكتب اوقات مناسبه لك عشان يقدر الاستاذ يحدد معاك.' : 'Enter your preferred times so the teacher can schedule with you.'; }
+      else if(inp && !hasCity){ hint.textContent = A ? 'اكتب مدينتك للحصه الحضوريه.' : 'Type your city for in-person classes.'; }
+      else if(inp){ hint.textContent = A ? 'الحصه الحضوريه متوفره في النماص بس.' : 'In-person classes are available in Al Namas only.'; }
+      else { hint.textContent=''; }
     }
     sel && sel.addEventListener('change', refresh);
+    times && times.addEventListener('input', refresh);
+    city && city.addEventListener('input', refresh);
     refresh();
     btn && btn.addEventListener('click', submitRequest);
   }
@@ -21994,7 +22006,12 @@ if(window.lucide) lucide.createIcons();
     const sel=v.querySelector('#pelSvc'); const city=v.querySelector('#pelCity'); const times=v.querySelector('#pelTimes'); const notes=v.querySelector('#pelNotes'); const btn=v.querySelector('#pelSubmit');
     if(!sel) return;
     const cl=c(); if(!cl){ toast({en:'Not ready yet',ar:'لسا جاهز'}); return; }
-    btn.disabled=true; const orig=btn.textContent; btn.textContent=ar()?'يرسل...':'Sending...';
+    const A=ar();
+    // Validate required fields before submitting
+    if(!times.value.trim()){ toast({en:'Enter your preferred times first.', ar:'اكتب اوقات مناسبه لك الاول.'}, 'error'); times.focus(); return; }
+    const opt=sel.options[sel.selectedIndex];
+    if(opt && +opt.dataset.inperson && !city.value.trim()){ toast({en:'Type your city for in-person classes.', ar:'اكتب مدينتك للحصه الحضوريه.'}, 'error'); city.focus(); return; }
+    btn.disabled=true; const orig=btn.textContent; btn.textContent=A?'يرسل...':'Sending...';
     try{
       const { data, error } = await pelRpc('request_live_class', { p_service_code:sel.value, p_city_raw:city.value||null, p_preferred_times:times.value||null, p_student_notes:notes.value||null });
       if(error) throw error;
