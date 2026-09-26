@@ -142,7 +142,7 @@ var I = {
   'notes':{en:'Notes', ar:'ملاحظات'},
   'activity':{en:'Live & activity', ar:'النشاط والدروس المباشره'},
   'interventionList':{en:'Interventions', ar:'التدخلات'},
-  'addNote':{en:'Add note', ar:'ومثلن ملاحظه'},
+  'addNote':{en:'Add note', ar:'اضف ملاحظه'},
   'noteBody':{en:'Note…', ar:'الملاحظه…'},
   'assignIntervention':{en:'Assign intervention', ar:'اسناد تدخل'},
   'overrideRec':{en:'Override recommendation', ar:'تجاوز التوصيه'},
