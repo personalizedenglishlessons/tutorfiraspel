@@ -26,6 +26,15 @@ payloads (وشنو→وش, يختر→يخلص).
 پ for P in translits, ة→ه, no hamza, عشانك as "how are you" greeting, زين,
 مررره, تخالين (you think), كاونسالينج/مودالينج translits.
 
+### Addendum (2026-09-26 session 2): Saudi-standards-only sweep
+- Removed ALL non-Saudi dialect words (مش, دلوقتي, شلون, بدي, فين, ليه, وايد,
+  خالص, كفايه-as-proficiency) — scan covered Egyptian/Iraqi/Levantine/Kuwaiti markers
+- Removed every Saudi attribution: 'غلطه شايعه عند السعوديين' → 'عند ناس كثيرين',
+  'Saudis say X' → 'We say X', 'Saudi Tip' → 'Dialect Tip'
+- Testimonials: Cairo/Kuwait/Dubai personas → Jeddah/Riyadh with Saudi dialect
+- DB migration 202609260002 applied + verified (7 rows: ex 763/706/1561, items 853/1504/2681)
+- Commits: 7ce0b04, fb5fc9f
+
 ### Known minor items (not bugs, deferred)
 - Mobile: stage header subtitle truncates with ellipsis (by design)
 - Word-order tiles right-align when wrapping on narrow screens (cosmetic)
