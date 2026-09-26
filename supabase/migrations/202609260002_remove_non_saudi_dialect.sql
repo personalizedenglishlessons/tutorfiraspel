@@ -31,8 +31,8 @@ SET payload = replace(payload::text, '"ar": "مشكور جدا"', '"ar": "مشك
 WHERE id = 706 AND payload::text LIKE '%مشكور جدا%';
 
 UPDATE public.lesson_exercises
-SET payload = replace(payload::text, 'مش "latte"', 'مو "latte"')::jsonb
-WHERE id = 1561 AND payload::text LIKE '% مش "latte"%';
+SET payload = jsonb_set(payload, '{why_ar}', to_jsonb(replace(payload->>'why_ar', ' مش ', ' مو ')))
+WHERE id = 1561 AND payload->>'why_ar' LIKE '% مش %';
 
 -- 2. lesson_items
 UPDATE public.lesson_items
