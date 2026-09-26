@@ -17,13 +17,13 @@
 <script src="vendor/lucide.min.js" integrity="sha384-e4/0BB/wmBhpxvLLrbTidvaESiwxgHfoSGUoRd2s9Ho7YmgxiMftfoo51J/Ojyph" crossorigin="anonymous" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.50.0/dist/umd/supabase.js" integrity="sha384-K0oxqktRvaThvYgGL4G+OK2Ih6VS6Uyu7j3+7WJgp/uWM0Yv6Xi4YEiw0BB+mPfi" crossorigin="anonymous" defer></script>
 <script src="lib/daily-lesson.js?v=ceff8463" defer></script>
-<script src="lib/pel-personalization.js?v=7c328f7a" defer></script>
+<script src="lib/pel-personalization.js?v=ede0d8a5" defer></script>
 <script src="lib/pel-plans.js?v=bc153457" defer></script>
 <script src="lib/pel-settings.js?v=f0132cbb" defer></script>
 <script src="lib/cert-qr.js?v=d202324c" defer></script>
-<script src="lib/cert-sheet.js?v=10e4ab4b" defer></script>
+<script src="lib/cert-sheet.js?v=34827423" defer></script>
 <script src="lib/pel_config.js?v=deec3e10"></script>
-<script src="lib/pel_lesson_stage.js?v=37ef3845"></script>
+<script src="lib/pel_lesson_stage.js?v=eaeb5410"></script>
 <script src="lib/pel_dashboard_life.js?v=6218ecfa"></script>
 <script src="lib/pel_curriculum_path.js?v=4fdca572"></script>
 <style>
@@ -488,6 +488,9 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
 @media(max-width:640px){
   .qt-fab{ right:26px; bottom:90px; }
   .qt-popup{ left:12px; right:12px; bottom:12px; width:auto; max-height:80vh; }
+  .dash-stats-bar{ gap:14px !important; padding:12px 14px !important; overflow-x:auto; flex-wrap:nowrap !important; -webkit-overflow-scrolling:touch; }
+  .dash-stats-bar > div{ flex-shrink:0; }
+  .dash-stats-bar .arabic{ font-size:.72rem; }
 }
 
 /* ============================================================
@@ -4046,8 +4049,8 @@ const PHON_DICT = {
 'bugs':'باقز',
 'build':'بيلد',
 'builder':'بيلدر',
-'building':'بيلدينج',
-'buildings':'بيلدينجز',
+'building':'بيعندينج',
+'buildings':'بيعندينجز',
 'built':'بيلت',
 'bukkake':'بوكوكي',
 'bulgaria':'بالقيريا',
@@ -5661,7 +5664,7 @@ const PHON_DICT = {
 'hockey':'هوكي',
 'hold':'هولد',
 'holder':'هولدر',
-'holding':'هولدينج',
+'holding':'هوعندينج',
 'holds':'هولدز',
 'hole':'هول',
 'holiday':'هولادي',
@@ -9027,7 +9030,7 @@ const RP_SCRIPTS = {
     ],
     faq: [
       { match: /(checkout|تسليم)/, reply: L('Checkout is at noon, and you can leave your bags with us.', 'التسليم الظهر، وتقدر تترك شنطك عندنا.', 'تشيك اوت از ات نون، اند يو كان ليف يور باجز وذ اس.') },
-      { match: /(breakfast|فطور)/, reply: L('Breakfast is served from 7 to 10 AM.', 'الفطور من ٧ الى ١٠ الصباح.', 'بريكفاست از سيرڤد فروم 7 تو 10 اي ام.') },
+      { match: /(breakfast|فطور)/, reply: L('Breakfast is served from 7 to 10 AM.', 'الفطور من ٧ لـ ١٠ الصباح.', 'بريكفاست از سيرڤد فروم 7 تو 10 اي ام.') },
       { match: /(wifi|واي فاي)/, reply: L('The wifi password is on your room key card.', 'رمز الواي فاي على بطاقه غرفتك.', 'ذا واي فاي پاسوورد از اون يور روم كي كارد.') }
     ]
   },
@@ -9042,7 +9045,7 @@ const RP_SCRIPTS = {
     ],
     faq: [
       { match: /(which gate|gate number|بوابه)/, reply: L('Your gate is printed on your boarding pass.', 'البوابه مكتوبه على بطاقه الصعود.', 'يور قيت از پرينتد اون يور بوردينق پاس.') },
-      { match: /(luggage|baggage|شنته|حقايب)/, reply: L('Please place your bags on the belt.', 'حط شنطك على الحزام لو سمحت.', 'بليز پليس يور باجز اون ذا بيلت.') }
+      { match: /(luggage|baggage|شنته|فعلايب)/, reply: L('Please place your bags on the belt.', 'حط شنطك على الحزام لو سمحت.', 'بليز پليس يور باجز اون ذا بيلت.') }
     ]
   },
   'taxi-driver': {
@@ -9061,7 +9064,7 @@ const RP_SCRIPTS = {
     faq: [
       { match: /(how much|fare|بكم|الاجره)/, reply: L('The fare is about 40 riyals for this trip.', 'الاجره تقريب ٤٠ ريال لهذي الرحه.', 'ذا فير از اباوت فورتي ريالز فور ذيس تريپ.') },
       { match: /(credit card|كارت|بطاقه)/, reply: L('Yes, we accept cards.', 'ايه، نقبل الكروت.', 'يس، وي اكسپت كاردز.') },
-      { match: /(airport|مطار)/, reply: L('To the airport it takes about thirty minutes.', 'الى المطار تقريب ثلاثين دقيقه.', 'تو ذا ايرپورت ات تيكس اباوت ثرتي مينتس.') }
+      { match: /(airport|مطار)/, reply: L('To the airport it takes about thirty minutes.', 'لـ المطار تقريب ثلاثين دقيقه.', 'تو ذا ايرپورت ات تيكس اباوت ثرتي مينتس.') }
     ]
   },
   'doctor': {
@@ -9215,7 +9218,7 @@ const RP_SCRIPTS = {
       { key:'wrap', wrap: L('Goodbye.', 'مع السلامه.', 'قودباي.') }
     ],
     faq: [
-      { match: /(open|ساعات)/, reply: L('We are open from 9 AM to 4 PM.', 'دوامنا من ٩ الصباح الى ٤ العصر.', 'وي ار اوپن فروم 9 اي ام تو 4 پي ام.') },
+      { match: /(open|ساعات)/, reply: L('We are open from 9 AM to 4 PM.', 'دوامنا من ٩ الصباح لـ ٤ العصر.', 'وي ار اوپن فروم 9 اي ام تو 4 پي ام.') },
       { match: /(open an account|حساب)/, reply: L('You can open an account with your ID and 100 riyals.', 'تقدر تفتح حساب بهويتك و١٠٠ ريال.', 'يو كان اوپن ان اكاونت وذ يور اي دي اند ون هاندرید ريالز.') }
     ]
   },
@@ -9266,7 +9269,7 @@ const RP_SCRIPTS = {
     ],
     faq: [
       { match: /(salary|راتب)/, reply: L('The salary range is 5,000 to 7,000 per month.', 'الراتب بين ٥٠٠٠ و٧٠٠٠ شهريا.', 'ذا سالري رينج از فايڤ تو سفن ثاوزند پير مانث.') },
-      { match: /(hours|دوام)/, reply: L('Working hours are from 9 to 5, Sunday to Thursday.', 'الدوام من ٩ الى ٥، من الاحد الى الخميس.', 'وركنق اورز ار فروم نوين تو فايڤ، صندي تو ثرزدي.') }
+      { match: /(hours|دوام)/, reply: L('Working hours are from 9 to 5, Sunday to Thursday.', 'الدوام من ٩ لـ ٥، من الاحد لـ الخميس.', 'وركنق اورز ار فروم نوين تو فايڤ، صندي تو ثرزدي.') }
     ]
   },
   'police-officer': {
@@ -10287,7 +10290,7 @@ const VOCAB_BANK = [
   {en:'Negotiate', ipa:'/nɪˈɡoʊʃieɪt/', ar:'يتفاوض', translit:'نيقوشييت', example:{en:'We negotiated a better price.', ar:'تفاوضنا على سعر افضل.', translit:'وي نيقوشييتد ا بيتر برايس.'}, synonyms:'Bargain, discuss', antonyms:'Concede', family:'negotiation, negotiator', collocations:'negotiate a deal, negotiate a price', category:'Business English', difficulty:'Advanced', tip:'Common in salary and price conversations.', synonyms_ar:'فاوض، ناقش', antonyms_ar:'تنازل', family_ar:'تفاوض، مفاوض', collocations_ar:'فاوض على صفقه، فاوض على سعر', tip_ar:'كلمه شايعه في محادثات الراتب والاسعار', mistake:'Confusing "negotiate" with "argue," negotiating is calm and respectful.'},
   {en:'Deadline', ipa:'/ˈdɛdlaɪn/', ar:'موعد نهايي', translit:'دد لوين', example:{en:'The deadline is next Thursday.', ar:'الموعد النهايي يوم الخميس الجاي.', translit:'ذا دد لوين از نكست ثيرزداي.'}, synonyms:'Due date', antonyms:'-', family:'-', collocations:'meet a deadline, miss a deadline', category:'Workplace Communication', difficulty:'Intermediate', tip:'Very common word in office English.', synonyms_ar:'موعد نهايي', antonyms_ar:'تمديد', family_ar:'موعد نهايي، مواعيد نهاييه', collocations_ar:'حققت الموعد، فاتك الموعد', tip_ar:'الموعد النهايي هو اخر وقت للتسليم', mistake:'Saying "the last date" instead of "the deadline."'},
   {en:'Itinerary', ipa:'/aɪˈtɪnəˌrɛri/', ar:'خط سير الرحه', translit:'ايتنراري', example:{en:'Can you send me the itinerary?', ar:'ممكن ترسل لي خط سير الرحه؟', translit:'كان يو سند مي ذا ايتنراري؟'}, synonyms:'Travel plan, schedule', antonyms:'-', family:'-', collocations:'travel itinerary, daily itinerary', category:'Travel English', difficulty:'Advanced', tip:'A slightly formal word, common with travel agents and hotels.', synonyms_ar:'خط سير، جدول', antonyms_ar:'-', family_ar:'-', collocations_ar:'خط سير رحه، خط سير يومي', tip_ar:'كلمه شوي راقيه، شايعه مع وكلا السفر والفنادق', mistake:'Mispronouncing as "eye-tin-uh-ree," it is "eye-TIN-uh-rer-ee."'},
-  {en:'Refund', ipa:'/ˈriːfʌnd/', ar:'استرجاع المبلغ', translit:'ريفَند', example:{en:'I would like a refund for this item.', ar:'ابي استرجاع المبلغ لذا الغرض.', translit:'اي وود لايك ا ريفَند فور ذيس ابنحذف.'}, synonyms:'Reimbursement', antonyms:'Charge', family:'refunded, refunding', collocations:'request a refund, full refund', category:'Shopping English', difficulty:'Intermediate', tip:'Noun stress is on the first syllable, verb stress moves to the second: "please REfund me" vs "a REfund."', synonyms_ar:'استرجاع المبلغ', antonyms_ar:'رسوم', family_ar:'مسترجع، يسترجع', collocations_ar:'اطلب استرجاع، استرجاع كامل', tip_ar:'الاسم تشديد على اول جز، الفعل تشديد على ثاني جز', mistake:'Asking "give me back money" instead of "I would like a refund."'},
+  {en:'Refund', ipa:'/ˈriːfʌnd/', ar:'استرجاع المبلغ', translit:'ريفَند', example:{en:'I would like a refund for this item.', ar:'ابي استرجاع المبلغ لذلك الغرض.', translit:'اي وود لايك ا ريفَند فور ذيس ابنحذف.'}, synonyms:'Reimbursement', antonyms:'Charge', family:'refunded, refunding', collocations:'request a refund, full refund', category:'Shopping English', difficulty:'Intermediate', tip:'Noun stress is on the first syllable, verb stress moves to the second: "please REfund me" vs "a REfund."', synonyms_ar:'استرجاع المبلغ', antonyms_ar:'رسوم', family_ar:'مسترجع، يسترجع', collocations_ar:'اطلب استرجاع، استرجاع كامل', tip_ar:'الاسم تشديد على اول جز، الفعل تشديد على ثاني جز', mistake:'Asking "give me back money" instead of "I would like a refund."'},
   {en:'Layover', ipa:'/ˈleɪˌoʊvər/', ar:'توقف بين رحلتين', translit:'لاي اوڤر', example:{en:'We have a two hour layover in Dubai.', ar:'عندنا توقف ساعتين في دبي.', translit:'وي هاف ا تو اور لاي اوڤر ان دبي.'}, synonyms:'Stopover', antonyms:'Direct flight', family:'-', collocations:'short layover, long layover', category:'Airport English', difficulty:'Intermediate', tip:'Very common word at check-in counters.', synonyms_ar:'توقف بين رحلتين', antonyms_ar:'رحله مباشره', family_ar:'-', collocations_ar:'توقف قصير، توقف طويل', tip_ar:'كلمه شايعه عند كاونتر تسجيل الدخول', mistake:'Using "stop" alone instead of "layover" or "stopover."'},
   {en:'Complimentary', ipa:'/ˌkɑːmplɪˈmɛntəri/', ar:'مجاني، مقدم كهديه', translit:'كامبلمنتري', example:{en:'Breakfast is complimentary at this hotel.', ar:'الفطور مجاني في ذا الفندق.', translit:'بريكفاست از كامبلمنتري ات ذيس هوتيل.'}, synonyms:'Free, gratis', antonyms:'Paid', family:'compliment, complimented', collocations:'complimentary breakfast, complimentary wifi', category:'Hotel English', difficulty:'Advanced', tip:'Do not confuse with "complementary" (matching), spelled with an e.', synonyms_ar:'مجاني، هديه', antonyms_ar:'مدفوع', family_ar:'مجامله', collocations_ar:'فطور مجاني، واي فاي مجاني', tip_ar:'لا تخلط بينها وبين complementary اللي معناها متكامل', mistake:'Saying "free" is fine casually, but hotels prefer "complimentary."'},
   {en:'Symptom', ipa:'/ˈsɪmptəm/', ar:'عرض، اعراض', translit:'سمبتم', example:{en:'What are your symptoms today?', ar:'وش الاعراض اللي عندك اليوم؟', translit:'وات ار يور سمبتمز تودي؟'}, synonyms:'Sign, indication', antonyms:'-', family:'symptomatic', collocations:'main symptom, common symptoms', category:'Hospital English', difficulty:'Intermediate', tip:'The p is silent-ish, softly pronounced: SIMP-tuhm.', synonyms_ar:'عَرَض مرضي', antonyms_ar:'', family_ar:'عَرَض، عرضي', collocations_ar:'عَرَض خفيف، عَرَض شايع', tip_ar:'العَرَض اشاره على المرض', mistake:'Saying "sympton" without the final m sound.'},
@@ -10301,7 +10304,7 @@ const VOCAB_BANK = [
   {en:'Currency', ipa:'/ˈkɜːrənsi/', ar:'عمله', translit:'كيرنسي', example:{en:'Which currency should I use in Turkey?', ar:'اي عمله استخدم في تركيا؟', translit:'ويتش كيرنسي شود اي يوز ان تركي؟'}, synonyms:'Money, tender', antonyms:'-', family:'-', collocations:'foreign currency, local currency', category:'Travel English', difficulty:'Intermediate', tip:'Most ATMs ask which currency to charge, choose local.', synonyms_ar:'عمله', antonyms_ar:'-', family_ar:'-', collocations_ar:'عمله اجنبيه، عمله محليه', tip_ar:'اكثر ATM يسال عن نوع الشغله، اختار المحليه', mistake:'Saying "cash" when you mean the type of money, currency.'},
   {en:'Side Dish', ipa:'/saɪd dɪʃ/', ar:'طبق جانبي', translit:'سايد ديش', example:{en:'Does the grilled chicken come with a side dish?', ar:'الدجاج المشوي يجي معه طبق جانبي؟', translit:'داز ذا قريلد تشكن كم وذ ا سايد ديش؟'}, synonyms:'Accompaniment', antonyms:'Main course', family:'-', collocations:'side salad, side of fries', category:'Restaurant English', difficulty:'Beginner', tip:'"With a side of fries" is the natural way to ask.', synonyms_ar:'طبق جانبي', antonyms_ar:'طبق رييسي', family_ar:'-', collocations_ar:'سلطه جانبيه، بطاطا جانبيه', tip_ar:'with a side of fries هي الطريقه الطبيعيه للطلب', mistake:'Saying "small dish" instead of "side dish."'},
   {en:'The Check', ipa:'/ðə tʃek/', ar:'الحساب (فاتوره المطعم)', translit:'ذا تشيك', example:{en:'Could we have the check, please?', ar:'ممكن الحساب لو سمحت؟', translit:'كود وي هاف ذا تشيك، بليز؟'}, synonyms:'The bill', antonyms:'-', family:'-', collocations:'ask for the check, pay the check', category:'Restaurant English', difficulty:'Beginner', tip:'In the US you ask for "the check", in the UK it is "the bill."', synonyms_ar:'الحساب', antonyms_ar:'-', family_ar:'-', collocations_ar:'اطلب الحساب، ادفع الحساب', tip_ar:'في امريكا تقول the check وفي بريطانيا the bill', mistake:'Saying "the account" instead of "the check" or "the bill."'},
-  {en:'Tip', ipa:'/tɪp/', ar:'بقشيش', translit:'تيب', example:{en:'Is the tip included in the total?', ar:'البقشيش داخل في الاجمالي؟', translit:'از ذا تيب انكلودد ان ذا توتل؟'}, synonyms:'Gratuity', antonyms:'-', family:'tipping, tipped', collocations:'leave a tip, generous tip', category:'Restaurant English', difficulty:'Intermediate', tip:'In the US, 15 to 20 percent is the usual tip at sit-down restaurants.', synonyms_ar:'بقشيش', antonyms_ar:'-', family_ar:'بقشيش، بقشيش', collocations_ar:'اعطي بقشيش، بقشيش كريم', tip_ar:'في امريكا 15 الى 20 بالميه عاده البقشيش بالمطاعم', mistake:'Leaving no tip and not knowing why the waiter looks upset.'},
+  {en:'Tip', ipa:'/tɪp/', ar:'بقشيش', translit:'تيب', example:{en:'Is the tip included in the total?', ar:'البقشيش داخل في الاجمالي؟', translit:'از ذا تيب انكلودد ان ذا توتل؟'}, synonyms:'Gratuity', antonyms:'-', family:'tipping, tipped', collocations:'leave a tip, generous tip', category:'Restaurant English', difficulty:'Intermediate', tip:'In the US, 15 to 20 percent is the usual tip at sit-down restaurants.', synonyms_ar:'بقشيش', antonyms_ar:'-', family_ar:'بقشيش، بقشيش', collocations_ar:'اعطي بقشيش، بقشيش كريم', tip_ar:'في امريكا 15 لـ 20 بالميه عاده البقشيش بالمطاعم', mistake:'Leaving no tip and not knowing why the waiter looks upset.'},
   {en:'Allergy', ipa:'/ˈælərdʒi/', ar:'حساسيه', translit:'الرجي', example:{en:'I have a peanut allergy, is that safe?', ar:'عندي حساسيه فول سوداني، ذا امن؟', translit:'اي هاف ا پينَت الرجي، از ذات سيف؟'}, synonyms:'Intolerance', antonyms:'-', family:'allergic, allergist', collocations:'food allergy, allergic to', category:'Restaurant English', difficulty:'Intermediate', tip:'Always say "I am allergic to..." clearly, allergies are taken seriously.', synonyms_ar:'حساسيه', antonyms_ar:'-', family_ar:'حساس، حساسيه', collocations_ar:'حساسيه طعام، حساس لـ', tip_ar:'دايما قول عندي حساسيه من... بوضوح، الحساسيه شي مهم', mistake:'Saying "I have allergy" without "an" before it.'},
   {en:'Prescription', ipa:'/prɪˈskrɪpʃən/', ar:'روشته، وصفه طبيه', translit:'بريسكربشن', example:{en:'The doctor gave me a prescription for antibiotics.', ar:'الدكتور عطاني روشته مضادات حيويه.', translit:'ذا داكتور قيف مي ا بريسكربشن فور انتيبايتكس.'}, synonyms:'Medical order', antonyms:'-', family:'prescribe, prescribed', collocations:'fill a prescription, prescription medication', category:'Hospital English', difficulty:'Advanced', tip:'"Fill a prescription" means getting the medicine from the pharmacy.', synonyms_ar:'روشته، وصفه طبيه', antonyms_ar:'-', family_ar:'يوصف، موصوف', collocations_ar:'صرف روشته، دوا بروشته', tip_ar:'fill a prescription يعني تاخذ الدوا من الصيدليه', mistake:'Saying "recipe" instead of "prescription" at the pharmacy.'},
   {en:'Painkiller', ipa:'/ˈpeɪnˌkɪlər/', ar:'مسكن الم', translit:'پين كيلر', example:{en:'Do you have something for a headache, a painkiller?', ar:'عندك شي للصداع، مسكن؟', translit:'دو يو هاف سمثنق فور ا هيديك، ا پين كيلر؟'}, synonyms:'Pain reliever', antonyms:'-', family:'-', collocations:'take a painkiller, strong painkiller', category:'Hospital English', difficulty:'Intermediate', tip:'In a pharmacy, ask for the active ingredient, e.g. "ibuprofen."', synonyms_ar:'مسكن الم', antonyms_ar:'-', family_ar:'-', collocations_ar:'خذ مسكن، مسكن قوي', tip_ar:'في الصيدليه اسال عن الماده الفعاله مثل ibuprofen', mistake:'Saying "pain medicine" is fine, "painkiller" is more natural.'},
@@ -10358,7 +10361,7 @@ const VOCAB_BANK = [
 {en:'Adjective', ipa:'/ˈædʒɪktɪv/', ar:'نعت، صفه', translit:'ادجيكتيف', example:{en:'"Tall" is an adjective.', ar:'"Tall" صفه.', translit:'تول از ان ادجيكتيف.'}, synonyms:'describing word', antonyms:'', family:'adjective', collocations:'comparative adjective, descriptive adjective', category:'Grammar Academy', difficulty:'Intermediate', tip:'Adjectives come before nouns: "a tall man."', synonyms_ar:'نعت، صفه', antonyms_ar:'', family_ar:'صفه', collocations_ar:'صفه مقارنه، صفه وصفيه', tip_ar:'الصفات تجي قبل الاسما: a tall man', mistake:'Saying "a man tall" instead of "a tall man."'},
 {en:'Tense', ipa:'/tɛns/', ar:'زمن الفعل (ماضي/مضارع)', translit:'تينس', example:{en:'Use the past tense for finished actions.', ar:'استخدم زمن الماضي للافعال المنتهيه.', translit:'يوز ذا باست تينس فور فينيشد اكشنز.'}, synonyms:'verb form, time', antonyms:'', family:'tense, tenses', collocations:'past tense, present tense', category:'Grammar Academy', difficulty:'Intermediate', tip:'Tense shows when an action happens.', synonyms_ar:'زمن الفعل', antonyms_ar:'', family_ar:'زمن، ازمنه', collocations_ar:'زمن الماضي، زمن المضارع', tip_ar:'الزمن يبين متى صار الفعل', mistake:'Mixing "went" and "go" in the same time frame.'},
 {en:'Subject', ipa:'/ˈsʌbdʒɪkt/', ar:'الشخص اللي يسوي الفعل', translit:'سَبجيكت', example:{en:'The subject comes before the verb.', ar:'الشخص ياتي قبل الفعل.', translit:'ذا سَبجيكت كامز بي فور ذا فِرب.'}, synonyms:'doer, agent', antonyms:'object', family:'subject, subjective', collocations:'subject of the sentence', category:'Grammar Academy', difficulty:'Intermediate', tip:'Ask "who?" to find the subject.', synonyms_ar:'الفاعل', antonyms_ar:'المفعول', family_ar:'فاعل، فاعلي', collocations_ar:'فاعل الجمله', tip_ar:'اسال من؟ عشان تلاقي الفاعل', mistake:'Confusing subject with object.'},
-{en:'Accent', ipa:'/ˈæksənt/', ar:'لهجه، طريقه نطق', translit:'اكسينت', example:{en:'She has a strong American accent.', ar:'لديها لهجه امريكيه واضحه.', translit:'شي هاز ا سترونق امريكان اكسينت.'}, synonyms:'dialect, pronunciation', antonyms:'', family:'accent, accented', collocations:'strong accent, soft accent', category:'Listening Lounge', difficulty:'Intermediate', tip:'Accents are normal; clarity matters more.', synonyms_ar:'لهجه، طريقه نطق', antonyms_ar:'', family_ar:'لهجه، بسون', collocations_ar:'لهجه قويه، لهجه خفيفه', tip_ar:'اللهجات طبيعيه؛ الوضوح اهم', mistake:'Thinking an accent means bad English.'},
+{en:'Accent', ipa:'/ˈæksənt/', ar:'لهجه، طريقه نطق', translit:'اكسينت', example:{en:'She has a strong American accent.', ar:'عنديها لهجه امريكيه واضحه.', translit:'شي هاز ا سترونق امريكان اكسينت.'}, synonyms:'dialect, pronunciation', antonyms:'', family:'accent, accented', collocations:'strong accent, soft accent', category:'Listening Lounge', difficulty:'Intermediate', tip:'Accents are normal; clarity matters more.', synonyms_ar:'لهجه، طريقه نطق', antonyms_ar:'', family_ar:'لهجه، بسون', collocations_ar:'لهجه قويه، لهجه خفيفه', tip_ar:'اللهجات طبيعيه؛ الوضوح اهم', mistake:'Thinking an accent means bad English.'},
 {en:'Audio', ipa:'/ˈɔːdi.oʊ/', ar:'صوت مسجل', translit:'اوديو', example:{en:'The audio is too quiet.', ar:'الصوت المسجّل منخفض جدًا.', translit:'ذا اوديو از تو كوايت.'}, synonyms:'sound, recording', antonyms:'silence', family:'audio, audiovisual', collocations:'audio clip, play the audio', category:'Listening Lounge', difficulty:'Intermediate', tip:'Good audio helps you catch every word.', synonyms_ar:'صوت مسجل', antonyms_ar:'صمت', family_ar:'صوتي، سمعاي بصري', collocations_ar:'مقطع صوتي، شغّل الصوت', tip_ar:'الصوت الواضح يساعدك تلتقط كل كلمه', mistake:'Saying "the audios" as a plural noun.'},
 {en:'Replay', ipa:'/ˌriːˈpleɪ/', ar:'اعاده، يشغّل مره ثانيه', translit:'ري بلاي', example:{en:'Replay the part you missed.', ar:'اعد تشغيل الجزا اللي فاتك.', translit:'ري بلاي ذا بارت يو ميست.'}, synonyms:'play again, repeat', antonyms:'skip', family:'replay, replayed', collocations:'replay a clip, hit replay', category:'Listening Lounge', difficulty:'Intermediate', tip:'Replay hard parts until they feel easy.', synonyms_ar:'اعاده تشغيل', antonyms_ar:'تخطّي', family_ar:'يعيد، معاد', collocations_ar:'اعد تشغيل مقطع، اضغط اعاده', tip_ar:'اعد الاجزا الصعبه لين تصير سهله', mistake:'Moving on without replaying unclear parts.'},
 {en:'Mumble', ipa:'/ˈmʌmbəl/', ar:'يهمس، يتكلم بغير وضوح', translit:'مَمبَل', example:{en:'Don\'t mumble; speak clearly.', ar:'لا تهمس؛ تكلم بوضوح.', translit:'دونت مَمبَل؛ سبيك كليرلي.'}, synonyms:'mutter, whisper', antonyms:'enunciate, shout', family:'mumble, mumbled', collocations:'mumble words, mumble to yourself', category:'Listening Lounge', difficulty:'Intermediate', tip:'Open your mouth more to avoid mumbling.', synonyms_ar:'يهمس، يتكلم بغير وضوح', antonyms_ar:'ينطق بوضوح، يصرخ', family_ar:'يهمس، مهموم', collocations_ar:'يهمس كلمات، يهمس لنفسه', tip_ar:'افتح فمك اكثر عشان ما تهمس', mistake:'Mumbling from nervousness and losing the listener.'},
@@ -10389,7 +10392,7 @@ const VOCAB_BANK = [
 {en:'Under the weather', ipa:'/ˈʌndər ðə ˈwɛðər/', ar:'متوعّك، غير بصحه زينه', translit:'اندر ذا ويذر', example:{en:'I feel under the weather today.', ar:'احس بالتوعك اليوم.', translit:'اي فيل اندر ذا ويذر توداي.'}, synonyms:'a bit sick, unwell', antonyms:'healthy, fit', family:'weather', collocations:'feel under the weather', category:'Idioms Library', difficulty:'Advanced', tip:'It means feeling slightly ill.', synonyms_ar:'متوعك', antonyms_ar:'صحي', family_ar:'طقس', collocations_ar:'يحس بتوعك', tip_ar:'تعني يحس شوي مريض', mistake:'Thinking it is about the climate.'},
 {en:'Once in a blue moon', ipa:'/wʌns ɪn ə bluː muːn/', ar:'نادرًا جدًا', translit:'ونس ان ا بلو مون', example:{en:'We meet once in a blue moon.', ar:'نلتقي نادرًا جدًا.', translit:'وي ميت ونس ان ا بلو مون.'}, synonyms:'rarely, seldom', antonyms:'often, frequently', family:'moon', collocations:'happen once in a blue moon', category:'Idioms Library', difficulty:'Advanced', tip:'It means almost never.', synonyms_ar:'نادرا مره', antonyms_ar:'غالبا', family_ar:'قمر', collocations_ar:'يصير نادرا مره', tip_ar:'تعني تقريب ابدا', mistake:'Using it for something that happens often.'},
 {en:'Give up', ipa:'/ɡɪv ʌp/', ar:'يستسلم، يتوقف عن', translit:'گيف اب', example:{en:'Don\'t give up on your dreams.', ar:'لا تتخلَّ عن احلامك.', translit:'دونت گيف اب اون يور دريمز.'}, synonyms:'quit, surrender', antonyms:'keep going, persevere', family:'give, gave up', collocations:'give up on, give up trying', category:'Phrasal Verbs Lab', difficulty:'Advanced', tip:'"Give up" means to stop trying.', synonyms_ar:'يستسلم', antonyms_ar:'يكمل', family_ar:'يعطي، استسلم', collocations_ar:'استسلم على، توقف عن المحاوله', tip_ar:'give up تعني توقف عن المحاوله', mistake:'Saying "give up to" instead of "give up on."'},
-{en:'Look forward to', ipa:'/lʊk ˈfɔːrwərd tu/', ar:'يتطلّع الى، ينتظر بشغف', translit:'لوك فوروورد تو', example:{en:'I look forward to the weekend.', ar:'اتطلّع الى نهايه الاسبوع.', translit:'اي لوك فوروورد تو ذا ويك اند.'}, synonyms:'anticipate, await', antonyms:'dread', family:'look, looked forward', collocations:'look forward to doing, look forward to seeing', category:'Phrasal Verbs Lab', difficulty:'Advanced', tip:'Follow it with a noun or -ing verb.', synonyms_ar:'يتطلع الى', antonyms_ar:'يخاف من', family_ar:'ينظر، تطلع', collocations_ar:'يتطلع لعمل، يتطلع لرويه', tip_ar:'لسهها اسم او فعل ing', mistake:'Saying "look forward to see" instead of "to seeing."'},
+{en:'Look forward to', ipa:'/lʊk ˈfɔːrwərd tu/', ar:'يتطلّع لـ، ينتظر بشغف', translit:'لوك فوروورد تو', example:{en:'I look forward to the weekend.', ar:'اتطلّع لـ نهايه الاسبوع.', translit:'اي لوك فوروورد تو ذا ويك اند.'}, synonyms:'anticipate, await', antonyms:'dread', family:'look, looked forward', collocations:'look forward to doing, look forward to seeing', category:'Phrasal Verbs Lab', difficulty:'Advanced', tip:'Follow it with a noun or -ing verb.', synonyms_ar:'يتطلع لـ', antonyms_ar:'يخاف من', family_ar:'ينظر، تطلع', collocations_ar:'يتطلع لعمل، يتطلع لرويه', tip_ar:'لسهها اسم او فعل ing', mistake:'Saying "look forward to see" instead of "to seeing."'},
 {en:'Turn out', ipa:'/tɜːrn aʊt/', ar:'ينتج، يتضح', translit:'تيرن اوت', example:{en:'It turned out fine.', ar:'اتضح انه بخير.', translit:'ات تيرند اوت فوين.'}, synonyms:'result, end up', antonyms:'', family:'turn, turned out', collocations:'turn out well, turn out that', category:'Phrasal Verbs Lab', difficulty:'Advanced', tip:'It shows how a situation ends.', synonyms_ar:'ينتج، يتضح', antonyms_ar:'', family_ar:'يقلب، اتضح', collocations_ar:'اتضح انه، طلع', tip_ar:'تبين كيف الموقف ينتهي', mistake:'Confusing it with "turn off."'},
 {en:'Get along', ipa:'/ɡɛt əˈlɒŋ/', ar:'يتفق مع، يتوافق', translit:'گيت الونق', example:{en:'They get along well.', ar:'هما يتفقان زينًا.', translit:'ذاي گيت الونق ويل.'}, synonyms:'get on, agree', antonyms:'clash, fight', family:'get, got along', collocations:'get along with, get along well', category:'Phrasal Verbs Lab', difficulty:'Advanced', tip:'Use "get along with" for a person.', synonyms_ar:'يتفق مع', antonyms_ar:'يتعارك', family_ar:'يجيب، اتفق', collocations_ar:'يتفق مع، يتفقون', tip_ar:'استخدم get along with للشخص', mistake:'Saying "get along to" instead of "get along with."'},
 {en:'Figure out', ipa:'/ˈfɪɡjər aʊt/', ar:'يفهم، يحلّ', translit:'فيغير اوت', example:{en:'I can\'t figure out the answer.', ar:'لا استطيع ان افهم الاجابه.', translit:'اي كانت فيغير اوت ذا انسر.'}, synonyms:'solve, work out', antonyms:'be confused by', family:'figure, figured out', collocations:'figure out how, figure out what', category:'Phrasal Verbs Lab', difficulty:'Advanced', tip:'It means to understand or solve.', synonyms_ar:'يفهم، يحل', antonyms_ar:'يتحيّر', family_ar:'شكل، فهم', collocations_ar:'افهم كيف، افهم وش', tip_ar:'تعني يفهم او يحل', mistake:'Saying "figure out of" instead of "figure out."'},
@@ -10419,7 +10422,7 @@ const VOCAB_BANK = [
 {en:'Good morning', ipa:'/ɡʊd ˈmɔːrnɪŋ/', ar:'صباح الخير', translit:'قود مورنينق', example:{en:'Good morning, everyone.', ar:'صباح الخير جميعًا.', translit:'قود مورنينق، افريوان.'}, synonyms:'morning greeting', antonyms:'good night', family:'morning', collocations:'say good morning, good morning to you', category:'Greetings', difficulty:'Beginner', tip:'Use it before noon.', synonyms_ar:'صباح الخير', antonyms_ar:'تصبح على خير', family_ar:'صباح', collocations_ar:'قل صباح الخير، صباح الخير لك', tip_ar:'استخدمها قبل الظهر', mistake:'Saying "good morning" in the evening.'},
 {en:'Thank you', ipa:'/θæŋk juː/', ar:'شكرا لك', translit:'ثانك يو', example:{en:'Thank you for your help.', ar:'شكرا لك على مساعدتك.', translit:'ثانك يو فور يور هيلب.'}, synonyms:'thanks, much obliged', antonyms:'', family:'thank, thanks', collocations:'say thank you, thank you so much', category:'Greetings', difficulty:'Beginner', tip:'"Thank you" shows gratitude.', synonyms_ar:'شكرا لك', antonyms_ar:'', family_ar:'شكرا، شكر', collocations_ar:'قل شكرا، شكرا جزيلا', tip_ar:'شكرا تظهر الامتنان', mistake:'Forgetting to thank someone who helped.'},
 {en:'Invitation', ipa:'/ˌɪnvɪˈteɪʃən/', ar:'دعوه', translit:'انفيتيهيشِن', example:{en:'Thank you for the invitation.', ar:'شكرا على الدعوه.', translit:'ثانك يو فور ذا انفيتيهيشِن.'}, synonyms:'invite, summons', antonyms:'rejection', family:'invite, invited', collocations:'accept an invitation, send an invitation', category:'Conversations', difficulty:'Intermediate', tip:'An invitation asks someone to come.', synonyms_ar:'دعوه', antonyms_ar:'رفض', family_ar:'يدعو، مدعو', collocations_ar:'اقبل دعوه، ابعت دعوه', tip_ar:'الدعوه تطلب من احد يجي', mistake:'Forgetting to RSVP to an invitation.'},
-{en:'Host', ipa:'/hoʊst/', ar:'مضيف', translit:'هوست', example:{en:'Our host welcomed everyone.', ar:'مضيفنا رحّب بالجميع.', translit:'اور هوست وِلكَمد افريوان.'}, synonyms:'host, entertainer', antonyms:'guest', family:'host, hosted', collocations:'play host, host a gathering', category:'Conversations', difficulty:'Intermediate', tip:'The host receives the guests.', synonyms_ar:'مضيف', antonyms_ar:'ضيف', family_ar:'مضيف، استضاف', collocations_ar:'استضاف، استضاف تجمع', tip_ar:'المضيف يستقبل الضيوف', mistake:'Confusing host (person) with host (a lot).'},
+{en:'Host', ipa:'/hoʊst/', ar:'مضيف', translit:'هوست', example:{en:'Our host welcomed everyone.', ar:'مضيفنا رحّب بالكل.', translit:'اور هوست وِلكَمد افريوان.'}, synonyms:'host, entertainer', antonyms:'guest', family:'host, hosted', collocations:'play host, host a gathering', category:'Conversations', difficulty:'Intermediate', tip:'The host receives the guests.', synonyms_ar:'مضيف', antonyms_ar:'ضيف', family_ar:'مضيف، استضاف', collocations_ar:'استضاف، استضاف تجمع', tip_ar:'المضيف يستقبل الضيوف', mistake:'Confusing host (person) with host (a lot).'},
 {en:'Guest', ipa:'/ɡɛst/', ar:'ضيف', translit:'گست', example:{en:'We have guests tonight.', ar:'عندنا ضيوف الليله.', translit:'وي هاف گستس تونايت.'}, synonyms:'visitor', antonyms:'host', family:'guest, guests', collocations:'welcome a guest, house guest', category:'Conversations', difficulty:'Intermediate', tip:'A guest is someone you invited.', synonyms_ar:'ضيف', antonyms_ar:'مضيف', family_ar:'ضيف، ضيوف', collocations_ar:'رحب بضيف، ضيف بالبيت', tip_ar:'الضيف هو احد مدعو', mistake:'Confusing "guest" with "quest."'},
 {en:'Gathering', ipa:'/ˈɡæðərɪŋ/', ar:'تجمع، مجلس', translit:'گاذرينق', example:{en:'The family gathering was lovely.', ar:'كان تجمع العايله لطيفًا.', translit:'ذا فاميلي گاذرينق واز لافلي.'}, synonyms:'meetup, assembly', antonyms:'dispersal', family:'gather, gathering', collocations:'family gathering, social gathering', category:'Conversations', difficulty:'Intermediate', tip:'A gathering is people meeting together.', synonyms_ar:'تجمع، مجلس', antonyms_ar:'تفرق', family_ar:'يجتمع، تجمع', collocations_ar:'تجمع عايلي، تجمع اجتماعي', tip_ar:'التجمع هو ناس يجتمعون مع بعض', mistake:'Calling every gathering a "party."'},
 {en:'Hospitality', ipa:'/ˌhɒspɪˈtæləti/', ar:'كرم الضيافه', translit:'هوسبيتاليتي', example:{en:'Arab hospitality is famous.', ar:'كرم الضيافه العربي معروف.', translit:'ساودي هوسبيتاليتي از فيمس.'}, synonyms:'welcome, generosity', antonyms:'coldness', family:'hospitable, hospitality', collocations:'show hospitality, generous hospitality', category:'Conversations', difficulty:'Intermediate', tip:'Hospitality is warm welcoming of guests.', synonyms_ar:'كرم الضيافه', antonyms_ar:'برود', family_ar:'ضيافي، ضيافه', collocations_ar:'اظهر ضيافه، ضيافه كريمه', tip_ar:'الضيافه هي استقبال الضيوف بحراره', mistake:'Confusing it with "hospital."'},
@@ -10435,7 +10438,7 @@ const VOCAB_BANK = [
 {en:'Checkup', ipa:'/ˈtʃɛkʌp/', ar:'فحص طبي دوري', translit:'تشيك اب', example:{en:'Get a yearly checkup.', ar:'اجرِ فحصًا سنويًا.', translit:'گيت ا ييرلي تشيك اب.'}, synonyms:'examination, screening', antonyms:'', family:'check, checkup', collocations:'routine checkup, medical checkup', category:'Hospital English', difficulty:'Intermediate', tip:'A checkup catches problems early.', synonyms_ar:'فحص طبي دوري', antonyms_ar:'', family_ar:'يفحص، فحص', collocations_ar:'فحص دوري، فحص طبي', tip_ar:'الفحص يكشف المشاكل بدري', mistake:'Skipping checkups when you feel fine.'},
 {en:'Ticket', ipa:'/ˈtɪkɪt/', ar:'تذكره', translit:'تيكيت', example:{en:'Show your ticket at the gate.', ar:'اعرض تذكرتك عند البوابه.', translit:'شو يور تيكيت ات ذا گيت.'}, synonyms:'pass, boarding card', antonyms:'', family:'ticket, tickets', collocations:'book a ticket, plane ticket', category:'Travel English', difficulty:'Beginner', tip:'Keep your ticket ready at the gate.', synonyms_ar:'تذكره', antonyms_ar:'', family_ar:'تذكره، تذاكر', collocations_ar:'احجز تذكره، تذكره طياره', tip_ar:'خلي تذكرتك جاهزه عند البوابه', mistake:'Losing the ticket before boarding.'},
 {en:'Passport', ipa:'/ˈpæspɔːrt/', ar:'جواز سفر', translit:'باسبورت', example:{en:'Your passport, please.', ar:'جواز سفرك لو سمحت.', translit:'يور باسبورت، بليز.'}, synonyms:'ID, travel document', antonyms:'', family:'passport, passports', collocations:'show your passport, renew a passport', category:'Travel English', difficulty:'Beginner', tip:'Check your passport\'s expiry date.', synonyms_ar:'جواز سفر', antonyms_ar:'', family_ar:'جواز، جوازات', collocations_ar:'اعرض جوازك، جدد جواز', tip_ar:'تاكد من تاريخ انتها الجواز', mistake:'Traveling with an expired passport.'},
-{en:'Luggage', ipa:'/ˈlʌɡɪdʒ/', ar:'امتعه، حقايب', translit:'لَگيج', example:{en:'Where is the luggage?', ar:'وين الامتعه؟', translit:'وير از ذا لَگيج؟'}, synonyms:'bags, baggage', antonyms:'', family:'luggage', collocations:'pack luggage, luggage allowance', category:'Travel English', difficulty:'Beginner', tip:'Luggage is uncountable; don\'t say "luggages."', synonyms_ar:'امتعه، حقايب', antonyms_ar:'', family_ar:'امتعه', collocations_ar:'حزم الامتعه، وزن الامتعه المسموح', tip_ar:'luggage ما تعد؛ لا تقل luggages', mistake:'Saying "luggages" with an -s.'},
+{en:'Luggage', ipa:'/ˈlʌɡɪdʒ/', ar:'امتعه، فعلايب', translit:'لَگيج', example:{en:'Where is the luggage?', ar:'وين الامتعه؟', translit:'وير از ذا لَگيج؟'}, synonyms:'bags, baggage', antonyms:'', family:'luggage', collocations:'pack luggage, luggage allowance', category:'Travel English', difficulty:'Beginner', tip:'Luggage is uncountable; don\'t say "luggages."', synonyms_ar:'امتعه، فعلايب', antonyms_ar:'', family_ar:'امتعه', collocations_ar:'حزم الامتعه، وزن الامتعه المسموح', tip_ar:'luggage ما تعد؛ لا تقل luggages', mistake:'Saying "luggages" with an -s.'},
 {en:'Boarding', ipa:'/ˈbɔːrdɪŋ/', ar:'صعود (الطايره)', translit:'بوردينق', example:{en:'Boarding starts now.', ar:'الصعود يبدا الحين.', translit:'بوردينق ستارتس ناو.'}, synonyms:'embarking, getting on', antonyms:'disembarking', family:'board, boarding', collocations:'boarding pass, boarding gate', category:'Travel English', difficulty:'Beginner', tip:'Boarding is getting on the plane.', synonyms_ar:'صعود الطايره', antonyms_ar:'نزول', family_ar:'يصعد، صعود', collocations_ar:'تذكره الصعود، بوابه الصعود', tip_ar:'الصعود يعني تركب الطايره', mistake:'Confusing boarding with landing.'},
 {en:'Departure', ipa:'/dɪˈpɑːrtʃər/', ar:'مغادره، اقلاع', translit:'ديبارتشَر', example:{en:'Departure is at six.', ar:'المغادره الساعه السادسه.', translit:'ديبارتشَر از ات سيكس.'}, synonyms:'leaving, takeoff', antonyms:'arrival', family:'depart, departure', collocations:'departure time, departure gate', category:'Travel English', difficulty:'Beginner', tip:'Departure is when you leave.', synonyms_ar:'مغادره، اقلاع', antonyms_ar:'وصول', family_ar:'يغادر، مغادره', collocations_ar:'وقت المغادره، بوابه المغادره', tip_ar:'المغادره هي لما تروح', mistake:'Confusing departure with arrival.'},
 {en:'Etiquette', ipa:'/ˈɛtɪkɛt/', ar:'اداب، اتيكيت', translit:'اتيكيت', example:{en:'Learn mosque etiquette.', ar:'تعلّم اداب المسجد.', translit:'ليرن موسك اتيكيت.'}, synonyms:'manners, customs', antonyms:'rudeness', family:'etiquette', collocations:'proper etiquette, dress etiquette', category:'Mosque Etiquette', difficulty:'Intermediate', tip:'Etiquette is polite behavior in a place.', synonyms_ar:'اداب، اتيكيت', antonyms_ar:'قله ادب', family_ar:'اتيكيت', collocations_ar:'اتيكيت صحيح، اتيكيت لبس', tip_ar:'الاتيكيت هو تصرف مهذب في مكان', mistake:'Pronouncing it "etti-ket."'},
@@ -10592,7 +10595,7 @@ window.SAUDI_MISTAKE_COACH = [
         titleEn: 'is with plural subjects',
         wrong: 'The students is here.',
         correct: 'The students are here.',
-        whyAr: 'خلط is و are شايع لان العربي ما يفرق بين المفرد والجمع بالفعل.',
+        whyAr: 'خلط is و are شايع لان العربي ما يفرق بين المفرد والجمع فعلا.',
         ruleAr: 'he/she/it + is، we/you/they + are، I + am.',
         practice: [
           {q:'They ___ my friends.', options:['is','are','am','be'], correct:1},
@@ -10892,7 +10895,7 @@ const GRAMMAR_TOPICS = [
   {id:'prepositions-time', title:'Prepositions of Time: In, On, At', rule:'Use "in" for months and years, "on" for days and dates, "at" for exact times.', saudi:'in للشهور والسنين، on للايام والتواريخ، at للوقت بالضبط زي الساعه.', wrong:'I will call you in Monday at 3pm... on 3pm.', right:'I will call you on Monday at 3pm.', mistakes:['Saying "in Monday" instead of "on Monday."', "Saying \"on 5 o'clock\" instead of \"at 5 o'clock.\""]},
   {id:'comparatives', title:'Comparatives and Superlatives', rule:'Add "-er" for short adjectives and "more" for longer ones. Use "-est" or "most" for superlatives.', saudi:'للصفات القصيره نزيد er، وللصفات الطويله نستخدم more قبلها.', wrong:'This hotel is more good than that one.', right:'This hotel is better than that one.', mistakes:['Saying "more good" instead of "better."','Doubling comparison: "more better" or "most best."']},
   {id:'question-formation', title:'Question Formation', rule:'Most questions need an auxiliary verb (do, does, did, is, are) before the subject.', saudi:'الاساله الحينجليزيه تحتاج كلمه مساعده قبل الشخص، وذا مختلف عن ترتيب الجمله العربيه.', wrong:'You like coffee?', right:'Do you like coffee?', mistakes:['Forgetting the auxiliary verb "do/does" in questions.','Using statement word order with a question mark only.']},
-  {id:'present-simple', title:'Present Simple', rule:'Use present simple for habits, routines, and facts. Add -s to the verb with he, she, it.', saudi:'الحاضر البسيط للاشيا اللي تسويها باستمرار ولحقايق ثابته. مع he/she/it يضاف s للفعل.', wrong:'He work every day.', right:'He works every day.', mistakes:['Forgetting the -s with he/she/it.','Using present simple for something happening right now: "I work now" instead of "I am working now."']},
+  {id:'present-simple', title:'Present Simple', rule:'Use present simple for habits, routines, and facts. Add -s to the verb with he, she, it.', saudi:'الحاضر البسيط للاشيا اللي تسويها باستمرار ولفعلايق ثابته. مع he/she/it يضاف s للفعل.', wrong:'He work every day.', right:'He works every day.', mistakes:['Forgetting the -s with he/she/it.','Using present simple for something happening right now: "I work now" instead of "I am working now."']},
   {id:'past-simple', title:'Past Simple', rule:'Use past simple for finished actions with a clear past time. Regular verbs end in -ed, irregular verbs change form.', saudi:'الماضي البسيط للاشيا اللي خلصت ووقتها محدد. الافعال العاديه تزيد ed والافعال الشاذه تتغير.', wrong:'I didn\'t went to work yesterday.', right:'I didn\'t go to work yesterday.', mistakes:['Using the past form after "didn\'t": "I didn\'t went."','Saying "I am agree" instead of "I agree" in past discussions.']},
   {id:'future-plans', title:'Future: Will vs Going To', rule:'Use "going to" for plans and intentions you already decided, "will" for decisions made at the moment of speaking and promises.', saudi:'going to للخطط اللي قررتها من قبل، و will للقرار اللي تاخذه لحظتها او لوعد.', wrong:'I will travel to Jeddah next week, I bought the tickets.', right:'I am going to travel to Jeddah next week, I bought the tickets.', mistakes:['Using "will" for a plan you already made, where "going to" fits better.','Saying "I will going to" by mixing both forms.']},
   {id:'prepositions-place', title:'Prepositions of Place: In, On, At', rule:'Use "at" for a specific point, "on" for a surface, "in" for an enclosed space.', saudi:'at لنقطه محدده (عند الباب)، on لسطح (فوق الطاوله)، in لمكان مغلق (داخل السياره).', wrong:'I am waiting on the bus stop.', right:'I am waiting at the bus stop.', mistakes:['Using "on" for locations that take "at" (bus stop, the door).','Using "in" for streets: "I live in King Street" instead of "on King Street."']},
@@ -11041,7 +11044,7 @@ const READING_ARTICLES = [
     {en:'A good business plan explains the product, the customer, and the budget.', ar:'خطه الشغل الزينه توضح المنتج والعميل والميزانيه.', translit:'ا قود بزنس بلان اكسبلينز ذا برودكت، ذا كستمر، اند ذا بدجت.'},
   ]},
   {id:'health', topic:'Health', title:'Sleep and Focus', body:[
-    {en:'Good sleep improves memory, mood, and focus during the day.', ar:'النوم الزين يحسن الذاكره والمزاج والتركيز خلال اليوم.', translit:'قود سليب امبروڤز ميموري، مود، اند فوكس دورنق ذا داي.'},
+    {en:'Good sleep improves memory, mood, and focus during the day.', ar:'النوم الزين يحسن الذلككره والمزاج والتركيز خلال اليوم.', translit:'قود سليب امبروڤز ميموري، مود، اند فوكس دورنق ذا داي.'},
     {en:'Doctors recommend a consistent bedtime, even on weekends.', ar:'الدكاتره ينصحون بوقت نوم ثابت، حتى في نهايه الاسبوع.', translit:'داكترز ركمند ا كنسستنت بدتايم، ايڤن اون ويكيندز.'},
   ]},
   {id:'first-job', topic:'Work', title:'My First Job', body:[
@@ -11174,7 +11177,7 @@ const FLAGSHIP_LESSONS = {
       {who:'You', en:'Hi, I have a reservation under Al-Otaibi.', ar:'هلا، عندي حجز باسم العتيبي.', translit:'هاي، اي هاف ا ريزرڤيشن اندر العتيبي.'},
       {who:'Receptionist', en:'Yes, a king suite for three nights.', ar:'ايه، جناح بسرير كبير لثلاث ليالي.', translit:'يس، ا كينق سويت فور ثري نايتس.'},
       {who:'You', en:'Is breakfast complimentary?', ar:'الفطور مجاني؟', translit:'از بريكفاست كامبلمنتري؟'},
-      {who:'Receptionist', en:'Yes, from seven to ten in the lobby restaurant.', ar:'ايه، من سبعه الى عشره في مطعم اللوبي.', translit:'يس، فروم سڤن تو تِن ان ذا لوبي ريسترانت.'},
+      {who:'Receptionist', en:'Yes, from seven to ten in the lobby restaurant.', ar:'ايه، من سبعه لـ عشره في مطعم اللوبي.', translit:'يس، فروم سڤن تو تِن ان ذا لوبي ريسترانت.'},
     ],
     quiz:[
       {qAr:'وش معنى "Complimentary" بالفندق؟', qEn:'"Complimentary" in a hotel means...', options:['Extra charge applies','Included for free','Only for VIP guests'], correct:1},
@@ -11613,7 +11616,7 @@ const LESSON_LIBRARY = {
     grammar:{title:'Present Perfect for Problems', rule:'Describe what happened with present perfect: The air conditioner has stopped working.', saudi:'لوصف مشكله حصلت: المكيف وقف شغله.', wrong:'The AC is stop working.', right:'The air conditioner has stopped working.', mistakes:['Using "is" with a past form: "is stop."','Not saying when they need it fixed: "by this evening."']},
     conversation:[
       {who:'You', en:'I am sorry to bother you, but the air conditioner in my room is not working.', ar:'اسف على الازعاج، بس المكيف بغرفتي ما يشتغل.', translit:'ايم سوري تو باذر يو، بات ذا اير كنديشنر ان ماي روم از نات ووركنق.'},
-      {who:'Receptionist', en:'I am sorry about that. What room number?', ar:'اسف لذا. رقم الغرفه كم؟', translit:'ايم سوري اباوت ذات. وات روم نمبر؟'},
+      {who:'Receptionist', en:'I am sorry about that. What room number?', ar:'اسف لذلك. رقم الغرفه كم؟', translit:'ايم سوري اباوت ذات. وات روم نمبر؟'},
       {who:'You', en:'Room 305. Could someone check it this evening?', ar:'غرفه 305. ممكن احد يفحصها هالليله؟', translit:'روم ثري او فايڤ. كود سموان تشيك ات ذيس ايڤنينق؟'},
       {who:'Receptionist', en:'I will send someone in ten minutes. If not, we can move you.', ar:'بابعث احد خلال عشر دقايق. ولو ما صارت، نقدر ننقلك.', translit:'اي ويل سند سموان ان تِن مينتس. اف نات، وي كان موڤ يو.'},
     ],
@@ -12085,7 +12088,7 @@ const LESSON_LIBRARY = {
       {who:'Interviewer', en:'What is your greatest strength?', ar:'وش اقوى نقطه فيك؟', translit:'وات از يور قريتست سترينقث؟'},
       {who:'You', en:'I am organized. I handled five projects at once last year.', ar:'انا منظم. ادرت خمس مشاريع مره وحده السنه اللي فاتت.', translit:'ايم اورقنايزد. اي هاندلد فايڤ پراجكتس ات وانست لاست يير.'},
       {who:'Interviewer', en:'And a weakness you are working on?', ar:'ونقطه ضعف تشتغل عليها؟', translit:'اند ا ويكنس يو ار ووركنق اون؟'},
-      {who:'You', en:'Public speaking, so I joined a club to practice weekly.', ar:'الكلام امام الناس، لذا انضممت لنادي اتمرن فيه اسبوعيًا.', translit:'پابلك سبيكنق، سو اي جويند ا كلاب تو پراكسيس ويكلي.'},
+      {who:'You', en:'Public speaking, so I joined a club to practice weekly.', ar:'الكلام امام الناس، لذلك انضممت لنادي اتمرن فيه اسبوعيًا.', translit:'پابلك سبيكنق، سو اي جويند ا كلاب تو پراكسيس ويكلي.'},
     ],
     quiz:[
       {qAr:'تدعم نقطه قوتك:', qEn:'You back up a strength:', options:['I am organized, I managed five projects at once.','I am very very organized.','Everyone says I am organized.'], correct:0},
@@ -12103,7 +12106,7 @@ const LESSON_LIBRARY = {
       {who:'A', en:'Dear Ms. Sara, thank you for the interview today.', ar:'عزيزتي الاستاذه ساره، شكرا على المقابله اليوم.', translit:'دير مسترز سارا، ثانك يو فور ذا انترڤيو تودي.'},
       {who:'B', en:'I enjoyed learning about the team and the role.', ar:'استمتعت بالتعرف على الفريق والوظيفه.', translit:'اي انجويد ليرنق اباوت ذا تيم اند ذا رول.'},
       {who:'A', en:'I look forward to hearing from you. Best regards, Omar.', ar:'اتطلع لسماع ردكم. مع تحياتي، عمر.', translit:'اي لوك فوروارد تو هيرنق فروم يو. بست ريقاردز، عمر.'},
-      {who:'B', en:'(The polite email is what gets you remembered.)', ar:'(الايميل المهذب هو اللي يخليك من الذاكرين.)', translit:''},
+      {who:'B', en:'(The polite email is what gets you remembered.)', ar:'(الايميل المهذب هو اللي يخليك من الذلككرين.)', translit:''},
     ],
     quiz:[
       {qAr:'اجمل متابعه لسه المقابله:', qEn:'The best follow-up says:', options:['Thank you for the interview, I look forward to hearing from you.','Did I get the job?','Hurry up with the answer.'], correct:0},
@@ -12219,7 +12222,7 @@ const LESSON_LIBRARY = {
       {qAr:'النفي الصحيح:', qEn:'The correct contraction is:', options:['I don\'t want to miss it.','I amn\'t want to miss it.','I don\'t to want miss it.'], correct:0},
     ],
     summary:'You practiced contractions, the difference between textbook English and spoken English.',
-    takeaway:'حول ٥ جمل رسميه عندك الى كلام يومي: I am الى I\'m، do not الى don\'t.',
+    takeaway:'حول ٥ جمل رسميه عندك لـ كلام يومي: I am لـ I\'m، do not لـ don\'t.',
   },
   'word-stress-basics': {
     title:'Word Stress Basics', ar:'اساسيات التشديد', translit:'وورد سترس بيسكس',
@@ -12746,7 +12749,7 @@ const LESSON_LIBRARY = {
       {en:'I have a sister', ar:'عندي اخت', translit:'indi ukht', tip:'Same pattern for a sister.'},
       {en:'Married', ar:'متزوج', translit:'mitzawwij', tip:'For a man. A woman says mitzawwija.'},
     ],
-    grammar:{title:'Possession with indi', rule:'Arabic speakers say "indi" (I have) for family and possessions, far more natural than the MSA "ladayya".', saudi:'عندي = عندي اخ، عندي سياره. ما حد يقول لدي بالشارع.', wrong:'Use formal MSA "ladayya akhun" for I have a brother.', right:'"Indi akh wahed wa ukhtayn." (I have one brother and two sisters.)', mistakes:['Using MSA possession words in daily talk.','Forgetting gender: mitzawwij for him, mitzawwija for her.']},
+    grammar:{title:'Possession with indi', rule:'Arabic speakers say "indi" (I have) for family and possessions, far more natural than the MSA "ladayya".', saudi:'عندي = عندي اخ، عندي سياره. ما حد يقول عندي بالشارع.', wrong:'Use formal MSA "ladayya akhun" for I have a brother.', right:'"Indi akh wahed wa ukhtayn." (I have one brother and two sisters.)', mistakes:['Using MSA possession words in daily talk.','Forgetting gender: mitzawwij for him, mitzawwija for her.']},
     conversation:[
       {who:'A', ar:'عندك اخوان؟', translit:'indak ikhwan?', en:'Do you have brothers?'},
       {who:'B', ar:'ايه، عندي اخوين وثلاث اخوات.', translit:'ay, indi akhween wa thalath akhawat', en:'Yes, I have two brothers and three sisters.'},
@@ -13300,7 +13303,7 @@ const LESSON_LIBRARY = {
 
 /* ------- Family Life (saudi-family) ------- */
   'sa-family-parents': {
-    title:'Talking to Parents Respectfully', ar:'الكلام مع الوالدين', translit:'alkalam maa alwalidayn', dir:'ar',
+    title:'Talking to Parents Respectfully', ar:'الكلام مع الواعندين', translit:'alkalam maa alwalidayn', dir:'ar',
     duration:'7 min', difficulty:'Beginner',
     vocab:[
       {en:'My father', ar:'ابوي', translit:'abuwi', tip:'The warm, everyday word for my father, abuwi not the formal abi.'},
@@ -13416,11 +13419,11 @@ const LESSON_LIBRARY = {
     duration:'7 min', difficulty:'Intermediate',
     vocab:[
       {en:'My children', ar:'عيالي', translit:'ayaali', tip:'The natural word for my kids, much warmer than the formal awlaadi.'},
-      {en:'My son', ar:'ولدي', translit:'waladi', tip:'My boy, used by both parents.'},
+      {en:'My son', ar:'وعندي', translit:'waladi', tip:'My boy, used by both parents.'},
       {en:'My daughter', ar:'بنتي', translit:'binti', tip:'My girl.'},
       {en:'He is grown up', ar:'كبر', translit:'kibar', tip:'Said proudly about a child who has grown.'},
     ],
-    grammar:{title:'Possession with kids', rule:'Kids are talked about with the possessive ending: waladi (my son), binti (my daughter), ayaali (my children).', saudi:'عيالي وولدي وبنتي، كلمات دافيه تستخدم كل يوم.', wrong:'Use the formal awlaadi (my children) in everyday talk.', right:'"Ayaali kibar hassa." (My children are grown up now.)', mistakes:['Saying awlaadi instead of ayaali, it sounds stiff.','Forgetting the gender: waladi for a boy, binti for a girl.']},
+    grammar:{title:'Possession with kids', rule:'Kids are talked about with the possessive ending: waladi (my son), binti (my daughter), ayaali (my children).', saudi:'عيالي ووعندي وبنتي، كلمات دافيه تستخدم كل يوم.', wrong:'Use the formal awlaadi (my children) in everyday talk.', right:'"Ayaali kibar hassa." (My children are grown up now.)', mistakes:['Saying awlaadi instead of ayaali, it sounds stiff.','Forgetting the gender: waladi for a boy, binti for a girl.']},
     conversation:[
       {who:'A', ar:'عندك عيال؟', translit:'indak ayaal?', en:'Do you have children?'},
       {who:'B', ar:'ايه، ولد وبنت.', translit:'ay, walad wa bint', en:'Yes, a boy and a girl.'},
@@ -13432,9 +13435,9 @@ const LESSON_LIBRARY = {
       {qAr:'بنتك وش اسمها بالعاميه؟', qEn:'What do you call your daughter?', options:['بنتي / Binti','ابنتي / Ibnti','الفتاه / Alfata'], correct:0},
     ],
     summary:'You learned the warm possessive words People use for their children.',
-    takeaway:'ولدي وبنتي وعيالي، ثلاث كلمات تفتح قلوب الابا.',
+    takeaway:'وعندي وبنتي وعيالي، ثلاث كلمات تفتح قلوب الابا.',
     situation:{
-      hear:[{ar:'عندك عيال؟', translit:'indak ayaal?', en:'Do you have kids?'},{ar:'ولدي بمدرسه.', translit:'waladi bimadrasa', en:'My son is at school.'}],
+      hear:[{ar:'عندك عيال؟', translit:'indak ayaal?', en:'Do you have kids?'},{ar:'وعندي بمدرسه.', translit:'waladi bimadrasa', en:'My son is at school.'}],
       say:[{ar:'عندي بنت وحده.', translit:'indi bint wahda', en:'I have one daughter.'}],
       recover:[{ar:'كم عمر ولدك؟', translit:'kam umur waladak?', en:'How old is your son?'}],
     },
@@ -13656,7 +13659,7 @@ const LESSON_LIBRARY = {
       {who:'Agent', ar:'مباشره ولا فيها توقف؟', translit:'mubashara walla feeha tawaqquf?', en:'Direct or with a stop?'},
     ],
     quiz:[
-      {qAr:'كيف تقول تذكره الى جده؟', qEn:'How do you say a ticket to Jeddah?', options:['تذكره لين جده / Ticket to Jeddah','تذكره من جده / Ticket from Jeddah','جده تذكره / Jeddah ticket'], correct:0},
+      {qAr:'كيف تقول تذكره لـ جده؟', qEn:'How do you say a ticket to Jeddah?', options:['تذكره لين جده / Ticket to Jeddah','تذكره من جده / Ticket from Jeddah','جده تذكره / Jeddah ticket'], correct:0},
       {qAr:'وش تسال عن الرحه؟', qEn:'What do you ask about the flight?', options:['مباشره ولا فيها توقف؟ / Direct or with a stop?','وين الفندق؟ / Where is the hotel?','كم عمرك؟ / How old are you?'], correct:0},
     ],
     summary:'You learned the flight booking exchange: destination with lin, timing, and the direct question.',
@@ -14946,8 +14949,8 @@ function cleanupRecognition(){
 }
 function micErrorMessage(code){
   const m = {
-    'not-allowed': 'الوصول للمايك ممنوع، فعّل صلاحيه المايكروفون لذا الموقع من اغيردات المتصفح.',
-    'permission-denied': 'الوصول للمايك ممنوع، فعّل صلاحيه المايكروفون لذا الموقع من اغيردات المتصفح.',
+    'not-allowed': 'الوصول للمايك ممنوع، فعّل صلاحيه المايكروفون لذلك الموقع من اغيردات المتصفح.',
+    'permission-denied': 'الوصول للمايك ممنوع، فعّل صلاحيه المايكروفون لذلك الموقع من اغيردات المتصفح.',
     'audio-capture': 'ما قدرنا نلقى مايكروفون، تاكد انه موصول وشغّال.',
     'network': 'فيه مشكله بالشبكه مع محرك الصوت. اضغط "نطقتها" للتقدم، او جرب مره ثانيه.',
     'no-speech': 'ما سمعنا اي صوت، جرب تتكلم اقرب للمايك.',
@@ -16597,7 +16600,7 @@ const CORRECT_RULES = [
   { re:/\bI have (\d+) years old\b/gi, fix:'I am $1 years old', category:'word-choice',
     ar:'بالحينجليزي نقول "I am 25 years old" مو "I have 25 years old".',
     en:'Say "I am 25 years old", not "I have 25 years old".',
-    why_ar:'العمر بالحينجليزي يوصف بالفعل am مو have.',
+    why_ar:'العمر بالحينجليزي يوصف فعلا am مو have.',
     why_en:'English uses the verb "to be" for age, not "to have".',
     learn:{ ar:'I am 25 years old.', en:'Age uses "to be": I am, you are, he is.' } },
   { re:/\bmore (taller|bigger|smaller|faster|slower|happier|easier|harder|younger|older|longer|shorter|stronger|weaker|cheaper|quieter|louder|closer|higher|lower|warmer|colder|richer|poorer|safer|simpler)\b/gi, fix:'$1', category:'comparatives',
@@ -16936,7 +16939,7 @@ function repairSentences(text, nlpImpl, issues){
 const SAUDI_SWAPS = [
   // longest patterns first, so "تريد ان تفعل" never gets split by "تريد" alone
   ['ماذا تريد ان تفعل', 'وش تبي تسوي'], ['تريد ان تفعل', 'تبي تسوي'],
-  ['بت اذهب الى', 'بروح لـ'], ['بت اذهب', 'بروح'],
+  ['بت اذهب لـ', 'بروح لـ'], ['بت اذهب', 'بروح'],
   ['اريد ان اذهب', 'ابي اروح'], ['اريد ان', 'ابي'],
   ['اريد', 'ابي'], ['نريد', 'نبغى'], ['تريد', 'تبي'], ['يريد', 'يبي'],
   ['ماذا تريد', 'وش تبي'], ['ماذا تفعل', 'وش تسوي'], ['ماذا', 'وش'],
@@ -16945,7 +16948,7 @@ const SAUDI_SWAPS = [
   ['يوما ما', 'يوم من الايام'], ['في يوم ما', 'يوم من الايام'],
   ['بلد اخر', 'بلد ثاني'], ['شي اخر', 'شي ثاني'], ['مره اخرى', 'مره ثانية'],
   ['ان اذهب', 'اروح'], ['اذهب', 'اروح'], ['يذهب', 'يروح'], ['ذهبت', 'رحت'], ['ذهب', 'راح'],
-  ['الى بلد', 'لبلد'], ['الى مكان', 'لمكان'], ['الى ال', 'لل'], ['الى', 'لـ'],
+  ['لـ بلد', 'لبلد'], ['لـ مكان', 'لمكان'], ['لـ ال', 'لل'], ['لـ', 'لـ'],
   ['بس', 'بس'], ['بسن', 'بسن'], ['بسن', 'بسن'], ['الحين', 'الحين'],
   ['غدا', 'بكرة'], ['امس', 'امس'], ['اين', 'وين'], ['لماذا', 'ليش'],
   ['نعم', 'ايه'], ['لازم ان', 'لازم'], ['لازم', 'لازم'],
@@ -16957,7 +16960,7 @@ const SAUDI_SWAPS = [
   ['جيد مره', 'زين مره'], ['جيد', 'زين'], ['جيده', 'زينة'],
   ['سعيد', 'مبسوط'], ['حزين', 'زعلان'], ['غاضب', 'معصب'], ['خايف', 'خايف'],
   ['متعب', 'تعبان'], ['جايع', 'جوعان'], ['نايم', 'نايم'], ['مستيقظ', 'صاحي'],
-  ['قريبا', 'قريب'], ['ربما', 'تقدر'], ['بالتاكيد', 'اكيد'],
+  ['قريبا', 'قريب'], ['ربما', 'تقدر'], ['اكيد', 'اكيد'],
   ['حسنا', 'طيب'], ['تماما', 'تمام'], ['اعتقد', 'اظن'], ['اشعر', 'احس'],
   ['ارى', 'اشوف'], ['اتحدث', 'اتكلم'],
   ['هذي', 'هذي'], ['ذاك', 'ذاك'], ['هولا', 'هذول'],
@@ -17566,7 +17569,7 @@ function renderCefrPath(){
     }).join('');
     return `<div class="cefr-level"><div class="cefr-node" style="background:${lvl.color};">${CEFR_LEVELS.indexOf(lvl)+1}</div><div class="cefr-level-body"><div class="cefr-level-title"><h3>${isAr?esc(lvl.ar):esc(lvl.en)}</h3></div><p class="cefr-level-desc">${isAr?esc(lvl.descAr):esc(lvl.descEn)}</p><div class="cefr-units">${units||`<div class=\"cefr-empty\">${L('Content for this level is coming.','محتوى ذا المستوى قادم.')}</div>`}</div></div></div>`;
   }).join('');
-  el.innerHTML = `<div class="page-head"><span class="eyebrow"><span class="arabic" style="font-size:.95em;">المستويات</span>، English Levels</span><h1><span class="arabic" style="display:block;font-size:.62em;font-weight:400;color:var(--text-secondary);margin-bottom:4px;">مسار واحد واضح من البدايه الى الاحتراف.</span>One clear path, Starter to Pro.</h1><p><span class="arabic" style="display:block;margin-bottom:4px;">سبع مراحل واضحه، كل واحده تبني على اللي قبلها.</span>Seven clear steps, each one building on the last.</p></div><div class="cefr-path">${levelsHtml}</div>`;
+  el.innerHTML = `<div class="page-head"><span class="eyebrow"><span class="arabic" style="font-size:.95em;">المستويات</span>، English Levels</span><h1><span class="arabic" style="display:block;font-size:.62em;font-weight:400;color:var(--text-secondary);margin-bottom:4px;">مسار واحد واضح من البدايه لـ الاحتراف.</span>One clear path, Starter to Pro.</h1><p><span class="arabic" style="display:block;margin-bottom:4px;">سبع مراحل واضحه، كل واحده تبني على اللي قبلها.</span>Seven clear steps, each one building on the last.</p></div><div class="cefr-path">${levelsHtml}</div>`;
   el.querySelectorAll('.cefr-chip:not(.locked)').forEach(b => { b.onclick = () => { if(typeof openLesson==='function') openLesson(b.dataset.academy, b.dataset.lesson); }; });
   el.querySelectorAll('.cefr-skill-node:not([disabled])').forEach(b => { b.onclick = () => { if(b.dataset.lesson && typeof openLesson==='function') openLesson(b.dataset.academy, b.dataset.lesson); }; });
   el.querySelectorAll('.cefr-unit-head').forEach(h => { h.onclick = () => { const ac=resolveAcademyById(h.dataset.academy); if(!ac) return; const first=(academyLessonList(ac)[0]||{}); if(first.id && typeof openLesson==='function') openLesson(h.dataset.academy, first.id); }; });
@@ -17646,7 +17649,7 @@ function renderWorkspace(){
         <h4><span class="arabic">مفردات ذا الدرس</span>، Vocabulary in this Lesson</h4>
         <div id="wsVocabMini" style="margin-bottom:22px;"></div>
         <h4><span class="arabic">ملاحظات</span>، Notes</h4>
-        <textarea id="wsNotes" dir="auto" placeholder="اكتب ملاحظه خاصه لذا الدرس... / Write a private note for this lesson..." style="width:100%; min-height:100px; background:var(--card-elevated); border:1px solid var(--border); border-radius:12px; padding:12px; color:var(--text); font-size:.82rem;"></textarea>
+        <textarea id="wsNotes" dir="auto" placeholder="اكتب ملاحظه خاصه لذلك الدرس... / Write a private note for this lesson..." style="width:100%; min-height:100px; background:var(--card-elevated); border:1px solid var(--border); border-radius:12px; padding:12px; color:var(--text); font-size:.82rem;"></textarea>
         <button type="button" class="btn-ghost-sm" id="wsSaveNote" style="margin-top:8px;"><span class="arabic">حفظ الملاحظه</span>، Save Note</button>
       </aside>
     </div>`;
@@ -19637,7 +19640,7 @@ async function renderControlCenter(){
         </div>
       </div>
     </div>
-    <div class="card" style="padding:16px 20px; display:flex; gap:24px; flex-wrap:wrap; margin-top:12px;">
+    <div class="card dash-stats-bar" style="padding:16px 20px; display:flex; gap:24px; flex-wrap:wrap; margin-top:12px;">
       <div style="display:flex; align-items:center; gap:8px;">
         <i data-lucide="book-open" width="18" height="18" style="color:var(--gold);"></i>
         <div><b id="ccWordsLearned">—</b> <span style="font-size:.8rem; color:var(--text-muted);"><span class="arabic">كلمه تعلمتها</span>، words learned</span></div>
