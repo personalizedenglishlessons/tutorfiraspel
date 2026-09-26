@@ -69,7 +69,7 @@ var I = {
   'certs':{en:'Certs', ar:'شهادات'},
   'attention':{en:'Attention', ar:'يحتاج انتباه'},
   'openStudent':{en:'Open student', ar:'فتح الطالب'},
-  'noResults':{en:'No students match these filters.', ar:'لا يوجد طلاب مطابقين.'},
+  'noResults':{en:'No students match these filters.', ar:'لا فيه طلاب مطابقين.'},
   'new':{en:'New', ar:'جديد'}, 'active':{en:'Active', ar:'نشط'}, 'stalled':{en:'Stalled', ar:'متوقف'}, 'inactive':{en:'Inactive', ar:'غير نشط'}, 'suspended':{en:'Suspended', ar:'موقوف'},
   'issued':{en:'Issued', ar:'مصدره'}, 'revoked':{en:'Revoked', ar:'ملغاه'}, 'reissued':{en:'Reissued', ar:'اعيد اصدارها'}, 'draft':{en:'Draft', ar:'مسوده'},
   'present':{en:'Present', ar:'حاضر'}, 'absent':{en:'Absent', ar:'غايب'}, 'late':{en:'Late', ar:'متاخر'}, 'excused':{en:'Excused', ar:'بعذر'},
@@ -94,7 +94,7 @@ var I = {
   'recentCerts':{en:'Recent certificates', ar:'اخر الشهادات'},
   'courseDistribution':{en:'Current course distribution', ar:'توزيع المسارات الحاليه'},
   'recentAudit':{en:'Recent admin actions', ar:'اخر اجراوات الاداره'},
-  'noData':{en:'No data yet', ar:'لا توجد بيانات بعد'},
+  'noData':{en:'No data yet', ar:'ما فيه بيانات لسه'},
   'back':{en:'Back', ar:'رجوع'},
   'signOut':{en:'Sign out', ar:'تسجيل الخروج'},
   'forbiddenTitle':{en:'Access denied', ar:'الوصول مرفوض'},
@@ -151,7 +151,7 @@ var I = {
   'whyPEL':{en:'Why PEL recommends this', ar:'ليش يوصي بيل بذا'},
   'todayRec':{en:'Current recommendation', ar:'التوصيه الحاليه'},
   'takeSnapshot':{en:'Save monthly snapshot', ar:'حفظ لقطه شهره'},
-  'snapshotSaved':{en:'Snapshot saved', ar:'تم حفظ اللقطه'},
+  'snapshotSaved':{en:'Snapshot saved', ar:'حفظنا اللقطه'},
   'preview':{en:'View student experience', ar:'معوينه تجربه الطالب'},
   'previewNote':{en:'Read-only preview - nothing on the student account changes.', ar:'معوينه للقرايه بس - ما يصير اي تغيير على حساب الطالب.'},
   'weakAreas':{en:'Weak areas', ar:'المواضع الضعيفه'},
@@ -232,10 +232,10 @@ var I = {
   'recVsProd':{en:'Recognition vs Production', ar:'الاسترجاع مقابل الحينتاج'},
   'recVsProdHint':{en:'First-try production is the mastery signal - how often the student can USE the language, not just recognize it.', ar:'الحينتاج من اول محاوله هو موشر الاتقان - قدره الطالب على استخدام اللغه، وليس التعرف عليها بس.'},
   'recognition':{en:'Recognition', ar:'الاسترجاع'},
-  'production':{en:'Production (eventual)', ar:'الحينتاج (بعد المحاول شيت)'},
+  'production':{en:'Production (eventual)', ar:'الحينتاج (لسه المحاول شيت)'},
   'productionFirst':{en:'Production (first try)', ar:'الحينتاج (اول محاوله)'},
   'recentLessons':{en:'Recent lessons', ar:'احدث الدروس'},
-  'noStatsYet':{en:'No exercise stats recorded yet. They appear after the first lesson completion.', ar:'لا توجد احصاييات بعد. تظهر بعد امثلل اول درس.'},
+  'noStatsYet':{en:'No exercise stats recorded yet. They appear after the first lesson completion.', ar:'ما فيه احصاييات لسه. تظهر لسه امثلل اول درس.'},
   'lastStudy':{en:'Last study day', ar:'اخر يوم دراسه'},
   'longestStreak':{en:'Longest streak', ar:'اطول استمرار'},
   'permissionDenied':{en:'Permission denied.', ar:'صلاحيه مرفوضه.'},
@@ -250,13 +250,13 @@ var I = {
   'superAdminOf':{en:'Super admin', ar:'مشرف عام'},
   'langLabel':{en:'Interface', ar:'الواجهه'},
   'required':{en:'Required', ar:'مطلوب'},
-  'noCertificates':{en:'No certificates yet', ar:'لا توجد شهادات بعد'},
-  'noInterventions':{en:'No interventions yet', ar:'لا توجد تدخلات بعد'},
-  'noNotes':{en:'No notes yet', ar:'لا توجد ملاحظات بعد'},
-  'noSubscriptions':{en:'No program subscription yet', ar:'لا يوجد اشتراك برنامج بعد'},
-  'noAttendance':{en:'No live class records yet', ar:'لا توجد سجلات دروس مباشره بعد'},
-  'noTimeline':{en:'No activity recorded yet', ar:'لا يوجد نشاط مسجل بعد'},
-  'noRecommendations':{en:'No stored recommendations yet', ar:'لا توجد توصيات محفوظه بعد'},
+  'noCertificates':{en:'No certificates yet', ar:'ما فيه شهادات لسه'},
+  'noInterventions':{en:'No interventions yet', ar:'ما فيه تدخلات لسه'},
+  'noNotes':{en:'No notes yet', ar:'ما فيه ملاحظات لسه'},
+  'noSubscriptions':{en:'No program subscription yet', ar:'لا فيه اشتراك برنامج لسه'},
+  'noAttendance':{en:'No live class records yet', ar:'ما فيه سجلات دروس مباشره لسه'},
+  'noTimeline':{en:'No activity recorded yet', ar:'لا فيه نشاط مسجل لسه'},
+  'noRecommendations':{en:'No stored recommendations yet', ar:'ما فيه توصيات محفوظه لسه'},
   'attentionLabel':{en:'Only attention', ar:'الحينتباه بس'},
   'apply':{en:'Apply', ar:'تطبيق'},
   'reset':{en:'Reset', ar:'مسح'},
@@ -287,7 +287,7 @@ var I = {
   'createdAt':{en:'Created', ar:'انشي في'},
   'date':{en:'Date', ar:'التاريخ'},
   'openStatus':{en:'Open', ar:'مفتوح'},
-  'inProgress':{en:'In progress', ar:'قيد التنفيذ'},
+  'inProgress':{en:'In progress', ar:'جاري التنفيذ'},
   'pendingReview':{en:'Pending review', ar:'بانتظار المراجعه'},
   'roleStudent':{en:'Student', ar:'طالب'},
   'roleTeacher':{en:'Teacher', ar:'معلم'},
@@ -314,7 +314,7 @@ var I = {
   'diffAll':{en:'All levels', ar:'كل المستويات'},
 'academyCount':{en:'%d academies', ar:'%d اكاديميات'},
   'lesson':{en:'Lesson', ar:'درس'},
-  'noCourses':{en:'No course data available.', ar:'لا توجد بيانات مسارات.'},
+  'noCourses':{en:'No course data available.', ar:'ما فيه بيانات مسارات.'},
   'lessonsManagerSub':{en:'Add, edit, reorder and hide lessons - changes reach every student instantly.', ar:'اضف وعدل ورتب واخفي الدروس - التغييرات توصل لكل طالب فوراً.'},
   'newAcademy':{en:'New academy', ar:'اكاديميه جديده'},
   'newLesson':{en:'New lesson', ar:'درس جديد'},
@@ -335,11 +335,11 @@ var I = {
   'moveDown':{en:'Move down', ar:'لاسفل'},
   'academy':{en:'Academy', ar:'الاكاديميه'},
   'confirmUnlink':{en:'Remove this lesson from this academy? Students lose access to it there.', ar:'ازاله ذا الدرس من الاكاديميه؟ الطلاب يفقدون الوصول له هنا.'},
-  'lessonSaved':{en:'Lesson saved.', ar:'تم حفظ الدرس.'},
-  'curriculumUpdated':{en:'Curriculum updated.', ar:'تم تحديث المنهج.'},
+  'lessonSaved':{en:'Lesson saved.', ar:'حفظنا الدرس.'},
+  'curriculumUpdated':{en:'Curriculum updated.', ar:'حدثنا المنهج.'},
   'select':{en:'Select', ar:'اختيار'},
   'open':{en:'Open', ar:'مفتوح'},
-  'in_progress':{en:'In progress', ar:'قيد التنفيذ'},
+  'in_progress':{en:'In progress', ar:'جاري التنفيذ'},
   'resolved':{en:'Resolved', ar:'محلول'},
 'm':{en:'',ar:''},
   'plans':{en:'Plans', ar:'الباقات'},
@@ -388,7 +388,7 @@ var I = {
   'deliveredTo':{en:'Delivered to %d students', ar:'وصل لـ %d طالب'},
   'readCount':{en:'Read', ar:'مقرو'},
   'unreadCount':{en:'Unread', ar:'غير مقرو'},
-  'noAnnouncements':{en:'No announcements yet.', ar:'لا توجد اعلانات بعد.'},
+  'noAnnouncements':{en:'No announcements yet.', ar:'ما فيه اعلانات لسه.'},
   'link':{en:'Link', ar:'رابط'},
   'scheduleFor':{en:'Schedule for (optional)', ar:'جدوله (اختياري)'},
   'expiresAt':{en:'Expires at (optional)', ar:'انتها الصلاحيه (اختياري)'},
@@ -402,11 +402,11 @@ var I = {
   'extended':{en:'Extended', ar:'مددت'},
   'scheduledLbl':{en:'Scheduled', ar:'محدده'},
   'planNote':{en:'Access expires automatically on the end date (server-enforced). Renewing never resets progress.', ar:'ينتهي الوصول تلقايياً بتاريخ النهايه (تطبيق من الخادم). التجديد لا يمسّ تقدمك.'},
-  'notificationSent':{en:'Announcement sent.', ar:'تم ارسال الاعلان.'},
-  'planSaved':{en:'Plan saved.', ar:'تم حفظ الباقه.'},
+  'notificationSent':{en:'Announcement sent.', ar:'ارسلنا الاعلان.'},
+  'planSaved':{en:'Plan saved.', ar:'حفظنا الباقه.'},
   'planAssigned':{en:'Plan assigned.', ar:'تم اسناد الباقه.'},
   'planExtended':{en:'Plan extended.', ar:'تم تمديد الباقه.'},
-  'planStatusChanged':{en:'Plan status updated.', ar:'تم تحديث حاله الباقه.'},
+  'planStatusChanged':{en:'Plan status updated.', ar:'حدثنا حاله الباقه.'},
   'entLabel':{en:'Entitlement', ar:'الباقه'},
   'entAny':{en:'All entitlements', ar:'كل الحالات'},
   'entExpiring7':{en:'Expiring ≤7 days', ar:'ينتهي خلال ٧ ايام'},
@@ -787,7 +787,7 @@ $('viewArea').innerHTML = pageHead(t('overview'), lang === 'ar' ? 'وش يصير
   if((tt.expiring || 0) > 0) actions.push({ warn:true, icon:'hourglass', txt: (lang === 'ar' ? (tt.expiring + ' برنامج ينتهي خلال ١٤ يوم - جدد او كلم الطالب') : (tt.expiring + ' program(s) end within 14 days - renew or reach out') ) });
   if(actions.length === 0){
     if((d.attention || []).length > 0) actions.push({ txt: lang === 'ar' ? (d.attention.length + ' طالب يحتاج انتباه') : (d.attention.length + ' students need attention') });
-    if((d.upcoming_classes || []).length > 0) actions.push({ txt: lang === 'ar' ? (d.upcoming_classes.length + ' دروس مباشره قادمه - سجل الحضور بعدها') : (d.upcoming_classes.length + ' upcoming live classes') });
+    if((d.upcoming_classes || []).length > 0) actions.push({ txt: lang === 'ar' ? (d.upcoming_classes.length + ' دروس مباشره قادمه - سجل الحضور لسهها') : (d.upcoming_classes.length + ' upcoming live classes') });
     if((tt.certificates_30 || 0) > 0) actions.push({ txt: lang === 'ar' ? (tt.certificates_30 + ' شهاده صدرت ذا الشهر') : (tt.certificates_30 + ' certificates issued this month') });
     if((tt.stalled || 0) > 0) actions.push({ txt: lang === 'ar' ? (tt.stalled + ' طالب متوقف - افتح ملفاتهم وشوف السبب') : (tt.stalled + ' stalled students - open their profiles') });
   }
@@ -1019,7 +1019,7 @@ async function loadStudents(st){
       '<td class="num"><span class="mobile-label">' + esc(t('streak')) + '</span>' + fmtN(s.streak) + 'd</td>' +
       '<td class="num"><span class="mobile-label">' + esc(t('progress')) + '</span>' + fmtN(s.completed_lessons) + '</td>' +
       '<td><span class="mobile-label">' + esc(t('lastActive')) + '</span>' + onlineBadge + ' <span style="font-size:.74rem;">' + relTime(s.last_active) + '</span></td>' +
-      '<td><span class="mobile-label">' + esc(t('program')) + '</span>' + (s.program_name ? '<div style="font-weight:600;">' + esc(s.program_name) + '</div>' : '-') + (s.plan_status ? '<div style="margin-top:4px;">' + planStatusChip(s.plan_status) + (s.plan_days_left != null && ['active','expiring'].indexOf(s.plan_status) !== -1 ? ' <span style="font-size:.68rem; color:var(--text-muted);">' + esc(t('daysLeft').replace('%d', arNum(s.plan_days_left))) + '</span>' : '') + '</div>' : '<div style="margin-top:4px;"><span class="chip muted">' + esc(lang==='ar'?'لا توجد باقه':'No plan') + '</span></div>') + '</td>' +
+      '<td><span class="mobile-label">' + esc(t('program')) + '</span>' + (s.program_name ? '<div style="font-weight:600;">' + esc(s.program_name) + '</div>' : '-') + (s.plan_status ? '<div style="margin-top:4px;">' + planStatusChip(s.plan_status) + (s.plan_days_left != null && ['active','expiring'].indexOf(s.plan_status) !== -1 ? ' <span style="font-size:.68rem; color:var(--text-muted);">' + esc(t('daysLeft').replace('%d', arNum(s.plan_days_left))) + '</span>' : '') + '</div>' : '<div style="margin-top:4px;"><span class="chip muted">' + esc(lang==='ar'?'ما فيه باقه':'No plan') + '</span></div>') + '</td>' +
       '<td><span class="mobile-label">' + esc(t('certs')) + '</span>' + fmtN(s.cert_count) + '</td>' +
       '<td><span class="mobile-label">' + esc(t('attention')) + '</span>' + attention + '</td>' +
       '</tr>';
@@ -1180,7 +1180,7 @@ var tabs = [
             return '<div class="reason-item"><div style="flex:1;">'+esc(l.reason||'-')+'<div class="why">'+esc(fmtDate(l.created_at))+'</div></div>' +
               '<b style="color:'+(l.delta>=0?'var(--green, #437A22)':'var(--danger,#c0392b)')+';">'+esc(d)+'</b>' +
               '<span class="chip muted">'+esc(lang==='ar'?'الرصيد':'bal')+' '+esc(l.balance_after)+'</span></div>';
-          }).join('') : emptyBlock(lang==='ar'?'لا يوجد عمليات بعد':'No transactions yet')) +
+          }).join('') : emptyBlock(lang==='ar'?'لا فيه عمليات لسه':'No transactions yet')) +
         '</div>';
       // wire +/- buttons
       host.querySelectorAll('[data-cred-add]').forEach(function(btn){
@@ -1213,7 +1213,7 @@ var tabs = [
             if(chips){ var lastChip = chips.querySelector('.chip.green'); if(lastChip) lastChip.textContent = (b.live_class_credits||0)+' '+(lang==='ar'?'رصيد حصص':'class credits'); }
             // Update ledger
             var led = $('credLedger');
-            if(led){ led.innerHTML = ledger.length ? ledger.map(function(l){ var d=l.delta>=0?'+'+l.delta:l.delta; return '<div class="reason-item"><div style="flex:1;">'+esc(l.reason||'-')+'<div class="why">'+esc(fmtDate(l.created_at))+'</div></div><b style="color:'+(l.delta>=0?'var(--green, #437A22)':'var(--danger,#c0392b)')+';">'+esc(d)+'</b><span class="chip muted">'+esc(lang==='ar'?'الرصيد':'bal')+' '+esc(l.balance_after)+'</span></div>'; }).join('') : emptyBlock(lang==='ar'?'لا يوجد عمليات بعد':'No transactions yet'); }
+            if(led){ led.innerHTML = ledger.length ? ledger.map(function(l){ var d=l.delta>=0?'+'+l.delta:l.delta; return '<div class="reason-item"><div style="flex:1;">'+esc(l.reason||'-')+'<div class="why">'+esc(fmtDate(l.created_at))+'</div></div><b style="color:'+(l.delta>=0?'var(--green, #437A22)':'var(--danger,#c0392b)')+';">'+esc(d)+'</b><span class="chip muted">'+esc(lang==='ar'?'الرصيد':'bal')+' '+esc(l.balance_after)+'</span></div>'; }).join('') : emptyBlock(lang==='ar'?'لا فيه عمليات لسه':'No transactions yet'); }
             deltaInput.value = '';
             reasonInput.value = '';
           }catch(e){ toast(lang==='ar'?'خطا غير متوقع':'Unexpected error', true); }
@@ -1251,11 +1251,11 @@ var tabs = [
   if(delBtn){
     delBtn.addEventListener('click', async function(){
       if(!confirm(lang === 'ar' ? 'بنحذف حذف حساب الطالب وكل بياناته نهائيا (تبقى الشهادات بس). متابعه؟' : 'This permanently deletes the student account and ALL their history (certificates are kept). Continue?')){ return; }
-      if(!confirm(lang === 'ar' ? 'تاكيد اخوير: ذا الاجرا لا يمكن التراجع عنه.' : 'Final confirmation: this cannot be undone.')){ return; }
+      if(!confirm(lang === 'ar' ? 'تاكيد اخوير: ذا الاجرا لا تقدر التراجع عنه.' : 'Final confirmation: this cannot be undone.')){ return; }
       delBtn.disabled = true;
       var r = await rpc('admin_student_delete', { p_user_id: current360Uid });
       if(!r.ok){ delBtn.disabled = false; toast((r.error && r.error.message) || t('permissionDenied'), true); return; }
-      toast(lang === 'ar' ? 'تم حذف الطالب. تبقت شهاداته للتحقق.' : 'Student deleted. Certificates remain verifiable.');
+      toast(lang === 'ar' ? 'حذفنا الطالب. تبقت شهاداته للتحقق.' : 'Student deleted. Certificates remain verifiable.');
       current360 = null; current360Uid = null;
       if(typeof students === 'function'){ students(); } else { location.reload(); }
     });
@@ -1457,11 +1457,11 @@ function renderTabPersonalization(plan){
   var help = '<div class="notice" style="margin-bottom:14px;"><div style="font-weight:600;">' + esc(lang==='ar'?'من وين تجي هذي المعلومات؟':'Where this data comes from') + '</div>' +
     '<div style="margin-top:6px; font-size:.8rem; color:var(--text-muted); line-height:1.7;">' +
     esc(lang==='ar'
-      ? 'هذي خطه الطالب اللي يبنيها بنفسه: يجاوب على اساله الاهداف والوقت اليومي اول ما يدخل التطبيق او من صفحه البدايه. اذا بنى خطته، تشوف هنا هدفه ووقته ووتيرته. اذا الفضا فاضي، يعني الطالب ما بنى خطته بعد - اساله يدخل التطبيق ويبنيها، وبتقدر بعدها تسند له الباقه المناسبه.'
+      ? 'هذي خطه الطالب اللي يبنيها بنفسه: يجاوب على اساله الاهداف والوقت اليومي اول ما يدخل التطبيق او من صفحه البدايه. اذا بنى خطته، تشوف هنا هدفه ووقته ووتيرته. اذا الفضا فاضي، يعني الطالب ما بنى خطته لسه - اساله يدخل التطبيق ويبنيها، وبتقدر لسهها تسند له الباقه المناسبه.'
       : 'This is the plan the student builds themselves: they answer the goal and daily-time questions on first sign-in or from the home page. Once built, you see their goal, pace and route here. If this is empty, the student has not built their plan yet - have them sign in and build it, then assign the right plan.') +
     '</div></div>';
   if(!plan || !plan.profile){
-    return help + '<div class="card"><div class="sub">' + esc(lang==='ar'?'ذا الطالب ما بنى خطته بعد. يبنيها اول ما يدخل التطبيق.':'This student has not built their plan yet. They build it the first time they sign in.') + '</div></div>';
+    return help + '<div class="card"><div class="sub">' + esc(lang==='ar'?'ذا الطالب ما بنى خطته لسه. يبنيها اول ما يدخل التطبيق.':'This student has not built their plan yet. They build it the first time they sign in.') + '</div></div>';
   }
   var p = plan.profile, e = plan.estimate;
   var items = [
@@ -1608,7 +1608,7 @@ function renderTabActivity(st, kv, d){
     return '<div class="reason-item"><span class="badge-dot ' + dotClass + '" style="margin-top:5px;"></span>' +
       '<div><div>' + esc(label) + (detail ? ' · ' + detail : '') + '</div>' +
       '<span class="why">' + esc(relTime(e.created_at)) + '</span></div></div>';
-  }).join('') || '<div class="sub">' + esc(lang==='ar'?'لا يوجد نشاط':'No activity') + '</div>';
+  }).join('') || '<div class="sub">' + esc(lang==='ar'?'لا فيه نشاط':'No activity') + '</div>';
 
   return '<div class="grid grid-2"><div><div class="section-title">' + esc(t('recentCompletions')) + ' (' + fmtN(studyDays.length) + ' ' + esc(t('totalLessons')) + ')</div><div class="card"><div class="reason-list">' + recent + '</div></div></div>' +
     '<div><div class="section-title">' + esc(lang==='ar'?'النشاط الحديث':'Recent Activity') + '</div><div class="card"><div class="reason-list">' + activityEvents + '</div></div></div></div>' +
@@ -2225,7 +2225,7 @@ function academyCard(a){
         '<button class="btn btn-ghost btn-sm" data-ac-toggle="' + esc(a.id) + '">' + (a.active ? esc(t('hide')) : esc(t('show'))) + '</button></span>' : '') +
     '</summary>' +
     '<div style="padding:0 20px 18px; border-top:1px solid rgba(200,169,106,.25);">' +
-      (rows || '<p style="color:var(--text-muted); font-size:.85rem; padding-top:12px;">' + esc(lang === 'ar' ? 'لا توجد دروس بعد.' : 'No lessons yet.') + '</p>') +
+      (rows || '<p style="color:var(--text-muted); font-size:.85rem; padding-top:12px;">' + esc(lang === 'ar' ? 'ما فيه دروس لسه.' : 'No lessons yet.') + '</p>') +
     '</div>' +
   '</details>';
 }
@@ -2709,7 +2709,7 @@ async function questionsView(){
     ROWS = r.data || [];
     var addBtn = '<div class="btn-row" style="margin-bottom:16px;"><button class="btn btn-gold btn-sm" id="aqAdd">'+esc(lang==='ar'?'سوال جديد':'New question')+'</button>'+
       '<span class="why">'+(lang==='ar'?'العدد: ':'Count: ')+ROWS.length+'</span></div>';
-    if(!ROWS.length){ $('viewArea').innerHTML = pageHead(title, sub) + addBtn + emptyBlock(lang==='ar'?'لا توجد اساله بعد':'No questions yet'); wire(); return; }
+    if(!ROWS.length){ $('viewArea').innerHTML = pageHead(title, sub) + addBtn + emptyBlock(lang==='ar'?'ما فيه اساله لسه':'No questions yet'); wire(); return; }
     var tierLbl = function(t){ return t==='exam_prep'?(lang==='ar'?'تجهيز اختبارات':'Exam Prep'):(lang==='ar'?'البدايه':'Beginner'); };
     var rowsHtml = ROWS.map(function(q){
       var opts = q.options || [];
@@ -3349,7 +3349,7 @@ async function announcementsView(){
       if(!confirm(lang === 'ar' ? 'حذف ذا الاعلان نهائيا؟' : 'Permanently delete this announcement?')){ return; }
       var r = await rpc('admin_announcement_delete', { p_id: id });
       if(!r.ok){ toast((r.error && r.error.message) || t('permissionDenied'), true); return; }
-      toast(lang === 'ar' ? 'تم حذف الاعلان.' : 'Announcement deleted.');
+      toast(lang === 'ar' ? 'حذفنا الاعلان.' : 'Announcement deleted.');
       announcementsView();
     });
   });
@@ -3456,7 +3456,7 @@ function editAnnouncementForm(a){
       p_active: $('anEActive').checked
     });
     if(!r.ok){ btn.disabled = false; toast((r.error && r.error.message) || t('permissionDenied'), true); return; }
-    closeModal(s); toast(lang === 'ar' ? 'تم حفظ التعديلات.' : 'Changes saved.');
+    closeModal(s); toast(lang === 'ar' ? 'حفظنا التعديلات.' : 'Changes saved.');
     announcementsView();
   });
 }
@@ -3674,7 +3674,7 @@ var LC_SVC = {
   private_online_40:{en:'Private online (40m)', ar:'خاصه اونلوين (40د)'},
   in_person_40:{en:'In-person (40m)', ar:'حضوريه (40د)'}
 };
-var LC_ST = {pending:{en:'Pending',ar:'قيد الحينتظار'},approved:{en:'Approved',ar:'مقبوله'},declined:{en:'Declined',ar:'مرفوضه'},cancelled:{en:'Cancelled',ar:'ملغيه'}};
+var LC_ST = {pending:{en:'Pending',ar:'جاري الحينتظار'},approved:{en:'Approved',ar:'مقبوله'},declined:{en:'Declined',ar:'مرفوضه'},cancelled:{en:'Cancelled',ar:'ملغيه'}};
 function lcSvcLabel(code){ var m=LC_SVC[code]||{}; return lang==='ar'?(m.ar||code):(m.en||code); }
 function lcStLabel(st){ var m=LC_ST[st]||{en:st,ar:st}; return lang==='ar'?m.ar:m.en; }
 
@@ -3726,14 +3726,14 @@ function lcRender(){
           '<button class="btn btn-outline btn-sm" data-lc-decide="'+esc(r.id)+'|0">'+esc(A?'رفض':'Decline')+'</button>'+
         '</div>' : '')+
     '</div>';
-  }).join('') : '<div class="card" style="padding:24px;">'+emptyBlock(A?'لا توجد طلبات حاليا':'No requests right now')+'</div>';
+  }).join('') : '<div class="card" style="padding:24px;">'+emptyBlock(A?'ما فيه طلبات حاليا':'No requests right now')+'</div>';
 
   var cityRows = lcState.cities.length ? lcState.cities.map(function(c){
     return '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);">'+
       '<span>'+esc(c.city_name)+' <span class="chip '+(c.in_person_available?'green':'muted')+'">'+esc(c.in_person_available?(A?'متوفره':'Available'):(A?'متوقفه':'Off'))+'</span></span>'+
       '<button class="btn btn-outline btn-sm" data-lc-city-toggle="'+esc(c.id)+'" data-on="'+(c.in_person_available?1:0)+'">'+esc(c.in_person_available?(A?'ايقاف':'Disable'):(A?'تفعيل':'Enable'))+'</button>'+
     '</div>';
-  }).join('') : emptyBlock(A?'لا توجد مدن بعد':'No cities yet');
+  }).join('') : emptyBlock(A?'ما فيه مدن لسه':'No cities yet');
 
   host.innerHTML = pageHead(A?'طلبات الحصص':'Class Requests', A?'رصيد الحصص وطلبات الحصص المباشره':'Live class credit requests and cities') +
     '<div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;">'+filtBtn('pending')+filtBtn('all')+'</div>'+

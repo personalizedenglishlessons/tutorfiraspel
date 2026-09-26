@@ -1227,10 +1227,10 @@ section{ padding-top:70px; padding-bottom:70px; }
           <div style="padding-left:10px;"><div class="route-label">اليوم</div><div style="font-size:.9rem; margin-top:3px;">تبدا محادثه في الشغل</div></div>
         </div>
         <div class="pp-route">
-          <div style="padding-left:10px;"><div class="route-label">بعدها</div><div style="font-size:.9rem; margin-top:3px;">تسال زميلك عن مساعده</div></div>
+          <div style="padding-left:10px;"><div class="route-label">لسهها</div><div style="font-size:.9rem; margin-top:3px;">تسال زميلك عن مساعده</div></div>
         </div>
         <div class="pp-route">
-          <div style="padding-left:10px;"><div class="route-label">بعدين</div><div style="font-size:.9rem; margin-top:3px;">اجتماعات، عملا، مقابلات</div></div>
+          <div style="padding-left:10px;"><div class="route-label">لسهين</div><div style="font-size:.9rem; margin-top:3px;">اجتماعات، عملا، مقابلات</div></div>
         </div>
       </div>
     </div>
@@ -1370,7 +1370,7 @@ section{ padding-top:70px; padding-bottom:70px; }
         html += '</ul>';
         var waText = ar ? ('السلام عليكم، ابي اشترك بباقه '+dl+' من خطه '+(tier==='exam_prep'?'التجهيز للاختبارات':'ابد من الصفر')+' بـ '+r.price+' ريال. وش طريقه الدفع؟') : ('Hello, I want the '+dl+' plan ('+tier+') at '+r.price+' SAR. How do I pay?');
         html += '<a href="'+waLink(waText)+'" target="_blank" rel="noopener" class="'+(r.featured?'btn-gold':'btn-outline')+' magnetic" data-magnetic>'+(ar?'سجل عن طريق واتساب':'Enroll via WhatsApp')+'</a>';
-        html += '<div style="margin-top:10px;font-size:.72rem;color:var(--text-muted);text-align:center;">'+(ar?'التنشيط خلال دقايق بعد التاكيد اليدوي':'Activation within minutes after manual confirmation')+'</div>';
+        html += '<div style="margin-top:10px;font-size:.72rem;color:var(--text-muted);text-align:center;">'+(ar?'التنشيط خلال دقايق لسه التاكيد اليدوي':'Activation within minutes after manual confirmation')+'</div>';
         html += '</div>';
       }
       html += '</div>'; // subgrid
@@ -1379,7 +1379,7 @@ section{ padding-top:70px; padding-bottom:70px; }
     // manual credit purchase callout
     html += '<div style="margin-top:34px;padding:24px;border:1px dashed rgba(200,169,106,.4);border-radius:20px;text-align:center;background:rgba(200,169,106,.04);">';
     html += '<div style="font-weight:700;font-size:1rem;">'+(ar?'تبي حصص اكثر؟':'Want extra live classes?')+'</div>';
-    html += '<p class="'+(ar?'arabic':'')+'" style="font-size:.86rem;color:var(--text-muted);margin:8px auto 16px;max-width:520px;line-height:1.7;">'+(ar?'تشتري حصص اضافيه عبر واتساب. كل شي يتم يدوياً.':'Buy class credits manually via WhatsApp after payment confirmation. No online payment, everything is processed manually.')+'</p>';
+    html += '<p class="'+(ar?'arabic':'')+'" style="font-size:.86rem;color:var(--text-muted);margin:8px auto 16px;max-width:520px;line-height:1.7;">'+(ar?'تشتري حصص اضافيه عبر واتساب. كل شي بنحذف يدوياً.':'Buy class credits manually via WhatsApp after payment confirmation. No online payment, everything is processed manually.')+'</p>';
     var credWa = ar ? 'السلام عليكم، ابي اشتري رصيد حصص مباشره اضافيه. وش المتوفر؟' : 'Hello, I want to buy extra live class credits. What is available?';
     html += '<a href="'+waLink(credWa)+'" target="_blank" rel="noopener" class="btn-outline magnetic" data-magnetic>'+(ar?'اشتر رصيد حصص عن طريق واتساب':'Buy class credits via WhatsApp')+'</a>';
     html += '</div>';
@@ -1543,12 +1543,12 @@ function applyIndexLang(lang){
   // section heads - bilingual (preserve structure, just translate)
   var heads=[
     {sel:'#features .section-head h2', ar:'اكاديميه مبنيه على صوتك، مو على منهج جاهز.', en:'An academy built around your voice, not a ready curriculum.'},
-    {sel:'#features .section-head p', ar:'كل جز من المنصه يخدم هدف واحد: تنتقل من التردد للطلاقه، محادثه صادقه بعد محادثه.', en:'Every part of the platform serves one goal: move you from hesitation to fluency, one honest conversation at a time.'},
+    {sel:'#features .section-head p', ar:'كل جز من المنصه يخدم هدف واحد: تنتقل من التردد للطلاقه، محادثه صادقه لسه محادثه.', en:'Every part of the platform serves one goal: move you from hesitation to fluency, one honest conversation at a time.'},
     {sel:'#curriculum .section-head h2', ar:'منصه مصممه مثل معلم خاص، ومبنيه مثل برنامج احترافي.', en:'A platform designed like a private tutor, built like pro software.'},
     {sel:'#curriculum .section-head p', ar:'كل اداه يحتاجها طالب جاد، مرتبه حول لوحه تحكم خاصه فيك.', en:'Every tool a serious learner needs, organized around your personal dashboard.'},
     {sel:'#stories .section-head h2', ar:'قالو عن تجربتهم', en:'What they say about it'},
     {sel:'.proof .section-head h2', ar:'انجليزي تستخدمه برا التطبيق', en:'English you use outside the app'},
-    {sel:'.proof .section-head p', ar:'مو درجات وشهادات بس، مواقف حقيقيه تصير اسهل يوم بعد يوم', en:'Not just scores and certificates, real situations that get easier day by day'}
+    {sel:'.proof .section-head p', ar:'مو درجات وشهادات بس، مواقف حقيقيه تصير اسهل يوم لسه يوم', en:'Not just scores and certificates, real situations that get easier day by day'}
   ];
   heads.forEach(function(h){ var el=document.querySelector(h.sel); if(el) setLang(el, h.ar, h.en); });
   var pathBtns=document.querySelectorAll('[data-open-path] span');
@@ -1596,7 +1596,7 @@ function applyIndexLang(lang){
   var ppH2=document.querySelector('#personalPreview h2');
   if(ppH2) ppH2.textContent = lang==='ar' ? 'اختبار دقيقتين يحدد مستواك وهدفك' : 'Tell us what you need, we build the path';
   var ppCols=document.querySelectorAll('#personalPreview .reveal > div');
-  var ppAr={say:'انت تقول', items:['ابي انجليزي للشغل','المحادثه صعبه علي','اقدر ادرس 20 دقيقه يوميا'], build:'PEL يبني', path:'انجليزي الشغل', focus:'تركيزك: محادثه واستماع', todayL:'اليوم', todayV:'تبدا محادثه في الشغل', nextL:'بعدها', nextV:'تسال زميلك عن مساعده', laterL:'بعدين', laterV:'اجتماعات، عملا، مقابلات'};
+  var ppAr={say:'انت تقول', items:['ابي انجليزي للشغل','المحادثه صعبه علي','اقدر ادرس 20 دقيقه يوميا'], build:'PEL يبني', path:'انجليزي الشغل', focus:'تركيزك: محادثه واستماع', todayL:'اليوم', todayV:'تبدا محادثه في الشغل', nextL:'لسهها', nextV:'تسال زميلك عن مساعده', laterL:'لسهين', laterV:'اجتماعات، عملا، مقابلات'};
   var ppEn={say:'You tell PEL', items:['I need English for work','Speaking is hard for me','I can study 20 minutes a day'], build:'PEL builds', path:'Workplace English', focus:'Focus: speaking + listening', todayL:'Today', todayV:'Start a conversation at work', nextL:'Next', nextV:'Ask a coworker for help', laterL:'Later', laterV:'Meetings, customers, interviews'};
   var ppData = lang==='ar'?ppAr:ppEn;
   if(ppCols.length>=2){
@@ -1629,7 +1629,7 @@ function applyIndexLang(lang){
   var ppPathFocus=document.querySelector('#personalPreview .pp-build div[style*="font-size:.78rem"]');
   if(ppPathFocus) ppPathFocus.textContent = lang==='ar' ? 'تركيزك: محادثه واستماع' : 'Focus: speaking + listening';
   var ppRoutes=document.querySelectorAll('#personalPreview .pp-route');
-  var ppRouteAr=[{l:'اليوم',v:'تبدا محادثه في الشغل'},{l:'بعدها',v:'تسال زميلك عن مساعده'},{l:'بعدين',v:'اجتماعات، عملا، مقابلات'}];
+  var ppRouteAr=[{l:'اليوم',v:'تبدا محادثه في الشغل'},{l:'لسهها',v:'تسال زميلك عن مساعده'},{l:'لسهين',v:'اجتماعات، عملا، مقابلات'}];
   var ppRouteEn=[{l:'Today',v:'Start a conversation at work'},{l:'Next',v:'Ask a coworker for help'},{l:'Later',v:'Meetings, customers, interviews'}];
   ppRoutes.forEach(function(r,i){ var arr=lang==='ar'?ppRouteAr:ppRouteEn; if(!arr[i])return; var lbl=r.querySelector('.route-label'); if(lbl) lbl.textContent=arr[i].l; var val=r.querySelector('div[style*="font-size:.9rem"]'); if(val) val.textContent=arr[i].v; });
   var ppBtn=document.querySelector('#personalPreview .btn-gold span');
@@ -1752,7 +1752,7 @@ function applyIndexLang(lang){
   var outHead=document.querySelector('.proof .section-head h2');
   if(outHead) outHead.textContent = lang==='ar' ? 'انجليزي تستخدمه برا التطبيق' : 'English you use outside the app';
   var outP=document.querySelector('.proof .section-head p');
-  if(outP) outP.textContent = lang==='ar' ? 'مو درجات وشهادات بس، مواقف حقيقيه تصير اسهل يوم بعد يوم' : 'Not just scores and certificates, real situations that get easier day by day';
+  if(outP) outP.textContent = lang==='ar' ? 'مو درجات وشهادات بس، مواقف حقيقيه تصير اسهل يوم لسه يوم' : 'Not just scores and certificates, real situations that get easier day by day';
   var outCards=document.querySelectorAll('.outcome-grid .card');
   var outAr=[{t:'تتكلم في شغلك',d:'اجتماع، مكالمه، ايميل، ترد وانت واثق'},{t:'تطلب وتسافر',d:'مطار، مطعم، فندق، بدون ما تتلخبط'},{t:'تفهم اللي تسمعه',d:'مقطع، سوالف، تعليمات، تلقط المعنى بسرعه'},{t:'تكتب بدون تردد',d:'رساله، طلب، وصف، كلامك واضح'}];
   var outEn=[{t:'Speak at work',d:'Meeting, call, email, you reply with confidence'},{t:'Order and travel',d:'Airport, restaurant, hotel, no confusion'},{t:'Understand what you hear',d:'Clips, small talk, instructions, you catch the meaning fast'},{t:'Write without hesitation',d:'Message, request, description, clear'}];
@@ -1775,7 +1775,7 @@ function applyIndexLang(lang){
   // remaining section heads (setLang keeps dir in sync)
   var moreHeads=[
     {sel:'.course-section .section-head h2', ar:'مسارات مختلفه، وخطه وحده تناسبك', en:'Different tracks, one plan that fits you'},
-    {sel:'.course-section .section-head p', ar:'تشوف كل شي بعد ما تسجل. هذي لمحه بسيطه', en:'You see everything after you enroll. This is a quick look'},
+    {sel:'.course-section .section-head p', ar:'تشوف كل شي لسه ما تسجل. هذي لمحه بسيطه', en:'You see everything after you enroll. This is a quick look'},
     {sel:'#timeline .section-head h2', ar:'كيف تتعلم معنا', en:'How you learn with us'},
     {sel:'#stories .section-head h2', ar:'قالو عن تجربتهم', en:'What they say about it'},
     {sel:'.lesson-preview-head h2', ar:'لمحه عن شكل الدرس، مو الدرس نفسه', en:'A glimpse of a lesson, not the lesson itself'}
@@ -1810,7 +1810,7 @@ function applyIndexLang(lang){
     var sec=courseGridEl.closest('section');
     if(sec){
       var ch2=sec.querySelector('h2'); if(ch2) ch2.textContent = lang==='ar' ? 'مسارات متعدده، وخطه واحده مبنيه على مقاسك.' : 'Multiple paths, one plan built for you.';
-      var cp=sec.querySelector('p.arabic'); if(cp) cp.textContent = lang==='ar' ? 'التفاصيل الكامله تفتح بعد التسجيل. هذي لمحه بسيطه عن الاتجاه العام.' : 'Full details unlock after enrollment. This is a brief overview.';
+      var cp=sec.querySelector('p.arabic'); if(cp) cp.textContent = lang==='ar' ? 'التفاصيل الكامله تفتح لسه التسجيل. هذي لمحه بسيطه عن الاتجاه العام.' : 'Full details unlock after enrollment. This is a brief overview.';
     }
   }
   // daily strip
@@ -1827,9 +1827,9 @@ function applyIndexLang(lang){
   // (old lesson-card head references removed - replaced by feature tabs)
   // testimonials bilingual
   var testiAr=[
-    {name:'رهف العتيبي',role:'موظفه موارد بشريه الرياض',quote:'كنت كل ما صار عندنا اجتماع مع اجانب اسكت واخلي غيري يتكلم بعد فتره مع الاستاذ فراس صرت ارد واتكلم بثقه وحتى مديري لاحظ الفرق'},
+    {name:'رهف العتيبي',role:'موظفه موارد بشريه الرياض',quote:'كنت كل ما صار عندنا اجتماع مع اجانب اسكت واخلي غيري يتكلم لسه فتره مع الاستاذ فراس صرت ارد واتكلم بثقه وحتى مديري لاحظ الفرق'},
     {name:'علي القحطاني',role:'طالب جامعاي الدمام',quote:'كنت اذا جاني برزنتيشن بالحينجليزي اقعد احفظ الكلام كله قبل اعرضه الحين صرت اتكلم من راسي اكثر وما عاد اخاف اذا نسيت جمله'},
-    {name:'لينا حسن',role:'صيدلانيه دبي',quote:'شغلي كله بالحينجليزي بس كنت احيانا اتردد اذا احتجت اشرح شي بالتفصيل لمريض الفرق بعد الدروس ان كلامي صار اسلس وثقتي اكبر'},
+    {name:'لينا حسن',role:'صيدلانيه دبي',quote:'شغلي كله بالحينجليزي بس كنت احيانا اتردد اذا احتجت اشرح شي بالتفصيل لمريض الفرق لسه الدروس ان كلامي صار اسلس وثقتي اكبر'},
     {name:'يوسف عبدالسلام',role:'مطور برامج القاهره',quote:'القراوه عندي كانت كويسه لكن الكلام لا اول ما يدخل ميتنج ابقى ساكت دلوقتي بقيت اشارك عادي حتى لو غلطت بكمل ومبقتش اخاف من الموضوع'},
     {name:'دانه العمري',role:'طالبه ثانوي جده',quote:'كنت احب الحينجليزي بس اذا طلبت مني الابله اتكلم قدام الفصل اتوتر مره الحين صرت اجاوب بدون ما افكر كثير واحس نفسي ارتحت صراحه مررره ما قصر'},
     {name:'خالد الهاجري',role:'مدير مبيعات الكويت',quote:'اسافر كثير بحكم الشغل ودايم احتاج اتكلم مع عملا من برا قبل كنت افكر بكل جمله قبل اقولها الحين الامور تمشي بشكل طبيعي وايد'}
@@ -1853,7 +1853,7 @@ function applyIndexLang(lang){
   var whH2=document.querySelector('#whatHappens h2');
   if(whH2) whH2.textContent = lang==='ar' ? 'من رساله واتساب الى اول درس' : 'From WhatsApp message to first lesson';
   var whP=document.querySelector('#whatHappens .section-head p');
-  if(whP) whP.textContent = lang==='ar' ? 'ما فيه تعقيد. ثلاث خطوات واضحه، وانت داخل المنصه' : 'No complexity. Three clear steps, and you are inside.';
+  if(whP) whP.textContent = lang==='ar' ? 'ما فيه تعجاري. ثلاث خطوات واضحه، وانت داخل المنصه' : 'No complexity. Three clear steps, and you are inside.';
   var whCards=document.querySelectorAll('#whatHappens .card');
   var whAr=[
     {t:'نفعّل حسابك',d:'ترسل لنا واتساب، ناكد الدفع ونفعل حسابك خلال دقايق، توصلك رساله دخول'},
