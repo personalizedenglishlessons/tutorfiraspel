@@ -18,12 +18,12 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.50.0/dist/umd/supabase.js" integrity="sha384-K0oxqktRvaThvYgGL4G+OK2Ih6VS6Uyu7j3+7WJgp/uWM0Yv6Xi4YEiw0BB+mPfi" crossorigin="anonymous" defer></script>
 <script src="lib/daily-lesson.js?v=28b77f77" defer></script>
 <script src="lib/pel-personalization.js?v=e735feb3" defer></script>
-<script src="lib/pel-plans.js?v=9f1687ba" defer></script>
+<script src="lib/pel-plans.js?v=bc153457" defer></script>
 <script src="lib/pel-settings.js?v=f0132cbb" defer></script>
 <script src="lib/cert-qr.js?v=d202324c" defer></script>
 <script src="lib/cert-sheet.js?v=36e2abcd" defer></script>
 <script src="lib/pel_config.js?v=deec3e10"></script>
-<script src="lib/pel_lesson_stage.js?v=088ed6f2"></script>
+<script src="lib/pel_lesson_stage.js?v=3d2838e0"></script>
 <script src="lib/pel_dashboard_life.js?v=a97b4272"></script>
 <script src="lib/pel_curriculum_path.js?v=8f764b80"></script>
 <style>
@@ -1753,7 +1753,7 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
             <div class="card" style="grid-column:1/-1;">
               <h3 style="font-size:1.05rem;">My Plan <span class="arabic" style="font-size:.85em; font-weight:400;">· خطتي</span></h3>
               <p style="margin-top:8px; font-size:.84rem; color:var(--text-muted); line-height:1.7;">
-                <span class="arabic" style="display:block;">عدّل ايقاعك اليومي وعدد ايام الاسبوع، واعيد بنا التيمكنير من مسارك الينعلي. الدروس اللي خلصتها تبقى محفوظه.</span>
+                <span class="arabic" style="display:block;">عدّل ايقاعك اليومي وعدد ايام الاسبوع، واعيد بنا التقدير من مسارك الفعلي. الدروس اللي خلصتها تبقى محفوظه.</span>
                 Adjust your daily pace and weekly frequency - the estimate rebuilds from your real route. Completed lessons stay yours.
               </p>
               <div id="planAdjustWrap" style="margin-top:14px;"></div>
@@ -2358,7 +2358,7 @@ function renderAccessGate(){
   } else if(st === 'expired' || st === 'cancelled'){
     icon = 'hourglass';
     title = ar ? 'خلصت باقتك' : 'Your plan has ended';
-    body = ar ? 'الدروس وقفت عنك الحين. لا تشيل هم، تيمكنمك وشهاداتك كلها محفوظه، جدد باقتك وترجع تكمل من نفس المكان اللي وقفت عنه.' : 'Your lessons are paused. Don’t worry - progress and certificates are saved. Renew and continue right where you left off.';
+    body = ar ? 'الدروس وقفت عنك الحين. لا تشيل هم، تقدمك وشهاداتك كلها محفوظه، جدد باقتك وترجع تكمل من نفس المكان اللي وقفت عنه.' : 'Your lessons are paused. Don’t worry - progress and certificates are saved. Renew and continue right where you left off.';
   } else if(st === 'suspended'){
     icon = 'shield-alert';
     title = ar ? 'حسابك موقوف شوي' : 'Your account is paused';
@@ -2488,7 +2488,7 @@ function renderSubBanner(){
       '<div style="display:flex; gap:16px; align-items:center; flex-wrap:wrap;">' +
       '<div class="tile-icon" style="margin:0;"><i data-lucide="lock" width="18" height="18"></i></div>' +
       '<div style="flex:1; min-width:200px;"><b>' + (ar ? 'خلصت باقتك' : 'Your lesson access has ended') + '</b>' +
-      '<div style="font-size:.8rem; color:var(--text-secondary); margin-top:3px;">' + (ar ? 'حسابك وتيمكنمك وشهاداتك كلها محفوظه، جدد باقتك وترجع تكمل من نفس المكان.' : 'Your account, progress and certificates are safe. Renew your plan to resume exactly where you left off.') + '</div></div>' +
+      '<div style="font-size:.8rem; color:var(--text-secondary); margin-top:3px;">' + (ar ? 'حسابك وتقدمك وشهاداتك كلها محفوظه، جدد باقتك وترجع تكمل من نفس المكان.' : 'Your account, progress and certificates are safe. Renew your plan to resume exactly where you left off.') + '</div></div>' +
       '<button type="button" class="btn-gold" id="subRenewBtn">' + (ar ? 'جدد باقتك الحين' : 'Renew Your Plan') + '</button>' +
       '</div></div>';
   } else if(subPlan.status === 'expiring'){
@@ -2605,7 +2605,7 @@ function showRenewal(){
     '<div style="max-width:1080px; width:100%;">' +
       '<div style="display:flex; justify-content:space-between; align-items:center; gap:14px; margin-bottom:18px; color:var(--text); flex-wrap:wrap;">' +
         '<div><h2 style="font-size:1.3rem;">' + (ar ? 'جدد باقتك او اشترك' : 'Renew or subscribe') + '</h2>' +
-        '<div style="font-size:.85rem; color:var(--text-muted); margin-top:4px;">' + (ar ? 'تيمكنمك وشهاداتك كلها محفوظه، ترجع تكمل من نفس المكان.' : 'Your progress and certificates are safe - you resume right where you stopped.') + '</div></div>' +
+        '<div style="font-size:.85rem; color:var(--text-muted); margin-top:4px;">' + (ar ? 'تقدمك وشهاداتك كلها محفوظه، ترجع تكمل من نفس المكان.' : 'Your progress and certificates are safe - you resume right where you stopped.') + '</div></div>' +
         '<button type="button" class="btn-ghost" id="renewalClose">' + (ar ? 'اغلاق' : 'Close') + '</button>' +
       '</div>' +
       '<div style="display:flex; gap:16px; flex-wrap:wrap; justify-content:center; align-items:stretch;">' + cards + '</div>' +
@@ -3024,7 +3024,7 @@ const navGroups = [
      routes students through the right academies automatically. Showing locked
      levels (B1-C2) to a beginner is confusing and demotivating. The cefr
      view is kept as an internal route but not advertised. */
-  { label:{en:'Progress', ar:'تيمكنمك'}, items:[
+  { label:{en:'Progress', ar:'تقدمك'}, items:[
     {id:'vocabulary', en:'Vocabulary Vault', ar:'خزنه الكلمات', icon:'book-open'},
     {id:'review', en:'Smart Review', ar:'مراجعه ذعشانه', icon:'rotate-ccw'},
     {id:'bookmarks', en:'Bookmarks', ar:'المفضله', icon:'bookmark'},
@@ -9114,7 +9114,7 @@ const RP_SCRIPTS = {
   'manager': {
     role: 'Manager', studentRole: 'employee',
     steps: [
-      { key:'progress', expect:'open', ask: L("Let's go over your progress this month.", 'خلنا نراجع تيمكنمك ذا الشهر.', 'ليتس قو اوڤر يور بروقرس ذيس مانث.'),
+      { key:'progress', expect:'open', ask: L("Let's go over your progress this month.", 'خلنا نراجع تقدمك ذا الشهر.', 'ليتس قو اوڤر يور بروقرس ذيس مانث.'),
         any: { next: 1, reply: L('Good work. Is there anything you need help with?', 'شغل ممتاز. فيه شي محتاج مساعده فيه؟', 'قود وورك. از ذير انيثينق يو نيد هيلپ وذ؟') } },
       { key:'help', expect:'yesno', ask: L('Is there anything you need help with?', 'فيه شي محتاج مساعده فيه؟', 'از ذير انيثينق يو نيد هيلپ وذ؟'),
         yes: { next: 'wrap', reply: L('Tell me what you need and I will arrange it.', 'قولي وش تحتاج وبنسويه.', 'تيل مي وات يو نيد اند اي ويل اريينج ات.') },
@@ -9364,7 +9364,7 @@ const RP_ALT = {
     'payment.any': L('Thanks very much. Have a lovely day!', 'شكرا جزيلا. يومك حلو!', 'ثانكس ڤري مچ. هاف ا لوڤلي داي!')
   },
   'manager': {
-    'progress.any': L('Solid progress. Do you need any support from me?', 'تيمكنم ممتاز. محتاج دعم مني؟', 'سوليد پروقرس. دو يو نيد اني سپورت فروم مي؟'),
+    'progress.any': L('Solid progress. Do you need any support from me?', 'تقدم ممتاز. محتاج دعم مني؟', 'سوليد پروقرس. دو يو نيد اني سپورت فروم مي؟'),
     'help.yes': L('Of course, tell me what you need and I will handle it.', 'اعشاند، قول لي وش تحتاج وانا اتولى.', 'اوف كورس، تيل مي وات يو نيد اند اي ويل هاندل ات.'),
     'help.no': L('Excellent, keep it going.', 'ممتاز، كمل.', 'اكسيلنت، عشانپ ات قوينق.'),
     'help.any': L('Alright, I will take care of it.', 'طيب، انا بتحمل المسووليه.', 'اولرايت، اي ويل تيك عشانر اوف ات.')
@@ -10987,7 +10987,7 @@ const SPEAKING_PERSONAS = [
   {id:'taxi-driver', title:'Taxi Driver', icon:'car', opener:{en:'Where are you headed today?', ar:'وين وجهتك اليوم؟', translit:'وير ار يو هيدد تودي؟'}},
   {id:'doctor', title:'Doctor', icon:'stethoscope', opener:{en:'What symptoms have you been having?', ar:'وش الاعراض اللي عندك؟', translit:'وات سمبتمز هاف يو بين هافينج؟'}},
   {id:'cashier', title:'Cashier', icon:'shopping-bag', opener:{en:'Did you find everything you needed?', ar:'لقيت كل اللي تبيه؟', translit:'ديد يو فويند اڤري ثينج يو نيدد؟'}},
-  {id:'manager', title:'Manager', icon:'briefcase', opener:{en:"Let's go over your progress this month.", ar:'خلنا نراجع تيمكنمك ذا الشهر.', translit:'ليتس قو اوڤر يور بروقرس ذيس مانث.'}},
+  {id:'manager', title:'Manager', icon:'briefcase', opener:{en:"Let's go over your progress this month.", ar:'خلنا نراجع تقدمك ذا الشهر.', translit:'ليتس قو اوڤر يور بروقرس ذيس مانث.'}},
   {id:'teacher', title:'Teacher', icon:'graduation-cap', opener:{en:"Do you have any questions about today's lesson?", ar:'عندك اساله على درس اليوم؟', translit:'دو يو هاف اني كوستشنز اباوت تودييز لسن؟'}},
   {id:'friend', title:'Friend', icon:'smile', opener:{en:'Hey, long time no see, how have you been?', ar:'هلا والله، من زمان، اخبارك؟', translit:'هاي، لونق تايم نو سي، هاو هاف يو بين؟'}},
   {id:'customer', title:'Customer', icon:'user', opener:{en:'Excuse me, can you help me find something?', ar:'لو سمحت، تقدر تساعدني الاقي شي؟', translit:'اكسعشانوز مي، كان يو هيلب مي فويند سمثنق؟'}},
@@ -13688,7 +13688,7 @@ const LESSON_LIBRARY = {
     ],
     quiz:[
       {qAr:'عشانف تسال عن البوابه؟', qEn:'How do you ask about the gate?', options:['وين البوابه؟ / Where is the gate?','بكم؟ / How much?','وين الحمام؟ / Where is the bathroom?'], correct:0},
-      {qAr:'وش تيمكنم عند الصعود؟', qEn:'What do you show at boarding?', options:['الجواز والتذكره / Passport and ticket','الماوس / The mouse','المفتاح / The key'], correct:0},
+      {qAr:'وش تقدم عند الصعود؟', qEn:'What do you show at boarding?', options:['الجواز والتذكره / Passport and ticket','الماوس / The mouse','المفتاح / The key'], correct:0},
     ],
     summary:'You learned the airport questions: gate, boarding time, and showing your passport.',
     takeaway:'وين البوابه + متى الصعود = سفر سلس.',
@@ -14952,7 +14952,7 @@ function micErrorMessage(code){
     'not-allowed': 'الوصول للمايك ممنوع، فعّل صلاحيه المايكروفون لذلك الموقع من اغيردات المتصفح.',
     'permission-denied': 'الوصول للمايك ممنوع، فعّل صلاحيه المايكروفون لذلك الموقع من اغيردات المتصفح.',
     'audio-capture': 'ما يمكنرنا نلقى مايكروفون، تاكد انه موصول وشغّال.',
-    'network': 'فيه مشكله بالشبكه مع محرك الصوت. اضغط "نطقتها" للتيمكنم، او جرب مره ثانيه.',
+    'network': 'فيه مشكله بالشبكه مع محرك الصوت. اضغط "نطقتها" للتقدم، او جرب مره ثانيه.',
     'no-speech': 'ما سمعنا اي صوت، جرب تتكلم اقرب للمايك.',
     'aborted': 'توقف التسجيل، جرب مره ثانيه.',
   };
@@ -15510,7 +15510,7 @@ const ADJ_AFTER_COPULA = ['fine','good','great','bad','happy','sad','angry','tir
 const LOCAL_RULES = [
   {
     id:'participle-before-aux', category:'word-order',
-    ar:'ترتيب الينعلين مقلوب: نقول "has been" مو "been has".',
+    ar:'ترتيب الفعلين مقلوب: نقول "has been" مو "been has".',
     en:'The verb order is flipped: "has been", not "been has".',
     whyAr:'been هي التصريف الثالث، وتيجي لسه has/have، مو قبلها.',
     whyEn:'"Been" is the past participle and comes after the auxiliary has/have.',
@@ -16961,7 +16961,7 @@ const SAUDI_SWAPS = [
   ['مبسوط', 'مبسوط'], ['زعلان', 'زعلان'], ['معصب', 'معصب'], ['خايف', 'خايف'],
   ['تعبان', 'تعبان'], ['جايع', 'جوعان'], ['نايم', 'نايم'], ['مستيقظ', 'صاحي'],
   ['قريبا', 'قريب'], ['يمكن', 'تقدر'], ['اعشاند', 'اعشاند'],
-  ['حسنا', 'طيب'], ['تماما', 'تمام'], ['اعتيمكن', 'اظن'], ['اشعر', 'احس'],
+  ['حسنا', 'طيب'], ['تماما', 'تمام'], ['اعتقد', 'اظن'], ['اشعر', 'احس'],
   ['ارى', 'اشوف'], ['اتحدث', 'اتكلم'],
   ['هذي', 'هذي'], ['ذاك', 'ذاك'], ['هولا', 'هذول'],
   ['اللي', 'اللي'], ['اللي', 'اللي'], ['اللي', 'اللي'],
@@ -17255,7 +17255,7 @@ function wirePelPath(root){
 }
 function ar_switch_confirm_text(){
   return learningDirection() === 'ar'
-    ? 'تبديل المسار النشط؟ يبقى تيمكنمك محفوظاً وتقدر الرجوع في اي وقت.'
+    ? 'تبديل المسار النشط؟ يبقى تقدمك محفوظاً وتقدر الرجوع في اي وقت.'
     : 'Switch your active academy? All progress is kept and you can switch back anytime.';
 }
 function renderLibrary(){
@@ -17644,7 +17644,7 @@ function renderWorkspace(){
       </nav>
       <div class="workspace-center" id="wsCenter"></div>
       <aside class="workspace-context">
-        <h4><span class="arabic">التيمكنم المصغر</span>، Mini Progress</h4>
+        <h4><span class="arabic">التقدم المصغر</span>، Mini Progress</h4>
         <div class="ring-wrap small" style="margin-bottom:20px;"><svg viewBox="0 0 64 64"><circle class="track" cx="32" cy="32" r="26"></circle><circle class="prog" cx="32" cy="32" r="26" stroke-dasharray="163" style="stroke-dashoffset:${163 - (163*academy.progress/100)};"></circle></svg><div class="ring-center"><b>${academy.progress}%</b></div></div>
         <h4><span class="arabic">مفردات ذا الدرس</span>، Vocabulary in this Lesson</h4>
         <div id="wsVocabMini" style="margin-bottom:22px;"></div>
@@ -18012,7 +18012,7 @@ function renderVocabulary(){
     'Vocabulary Vault':'بنك الكلمات','Workplace':'الشغل'
   };
   // Difficulty levels in 
-  const VV_DIFF_AR = {'Beginner':'مبتدا','Intermediate':'وسط','Advanced':'متيمكنم','All Levels':'كلها'};
+  const VV_DIFF_AR = {'Beginner':'مبتدا','Intermediate':'وسط','Advanced':'متقدم','All Levels':'كلها'};
   el.innerHTML = `
     <div class="page-head">
       <span class="eyebrow"><span class="arabic" style="font-size:.95em;">بنك الكلمات</span>، Vocabulary Vault</span>
@@ -18073,7 +18073,7 @@ function renderVocabulary(){
   const VV_COLLECTIONS = [
     {id:'everyday', icon:'sun', en:'Everyday Words', ar:'كلمات يوميه', desc_en:'Common words for daily life', desc_ar:'كلمات تستخدمها كل يوم', filter: v => v.difficulty==='Beginner'},
     {id:'beginners', icon:'graduation-cap', en:'Essential for Beginners', ar:'اساسيات للمبتديين', desc_en:'Start here — the most useful words', desc_ar:'ابدا من هنا — انفع الكلمات', filter: v => v.difficulty==='Beginner' || v.difficulty==='Intermediate'},
-    {id:'advanced', icon:'zap', en:'Advanced Vocabulary', ar:'كلمات متيمكنمه', desc_en:'Challenge yourself with harder words', desc_ar:'تحدى نفسك بكلمات اصعب', filter: v => v.difficulty==='Advanced'},
+    {id:'advanced', icon:'zap', en:'Advanced Vocabulary', ar:'كلمات متقدمه', desc_en:'Challenge yourself with harder words', desc_ar:'تحدى نفسك بكلمات اصعب', filter: v => v.difficulty==='Advanced'},
     {id:'all', icon:'library', en:'All Words', ar:'كل الكلمات', desc_en:'Browse the full vocabulary bank', desc_ar:'شوف كل الكلمات', filter: () => true},
   ];
   const collectionGrid = document.getElementById('vvCollectionGrid');
@@ -18199,7 +18199,7 @@ function renderVocabulary(){
         .replace(/المجموع/g,'الكل')                             // total → all
         .replace(/الحياه اليوميه/g,'كل يوم')                   // daily life → kul yom
         .replace(/تصفح/g,'شوف')                                 // browse → shoof
-        .replace(/متيمكنمه/g,'صعبه شوي')                         // advanced → hard a bit
+        .replace(/متقدمه/g,'صعبه شوي')                         // advanced → hard a bit
         .replace(/اختر/g,'اختار')                                // choose → ikhtar
         .replace(/ابدا/g,'ابدا')                                // start (fix hamza)
         .replace(/الدراسه/g,'دراسه')                           // study
@@ -18760,7 +18760,7 @@ function renderPronunciation(){
       <span class="eyebrow"><span class="arabic" style="font-size:.95em;">استوديو النطق</span>، Pronunciation Studio</span>
       <h1 class="arabic" style="font-size:1.6em;">مختبر البسه الامريعشانه.</h1>
       <div style="margin-top:6px; font-family:'Fraunces',serif; font-size:1.1rem; color:var(--text-secondary);" dir="ltr">American Accent Lab.</div>
-      <p style="margin-top:10px;"><span class="arabic">استمع، كرر، سجل صوتك، وقارن، موضوع بموضوع. الدرجات تيمكنيريه لانها تعتمد على التعرف الصوتي للمتصفح، وليست تقييم نطق معتمد.</span><br><span dir="ltr">Listen, repeat, record yourself, and compare, topic by topic. Scores are an approximate practice estimate from browser speech recognition, not a certified pronunciation assessment.</span></p>
+      <p style="margin-top:10px;"><span class="arabic">استمع، كرر، سجل صوتك، وقارن، موضوع بموضوع. الدرجات تقديريه لانها تعتمد على التعرف الصوتي للمتصفح، وليست تقييم نطق معتمد.</span><br><span dir="ltr">Listen, repeat, record yourself, and compare, topic by topic. Scores are an approximate practice estimate from browser speech recognition, not a certified pronunciation assessment.</span></p>
     </div>
     <div class="grid grid-3" id="pronTopicGrid" style="margin-bottom:28px;"></div>
     <div class="card" id="pronPracticeCard"></div>
@@ -19636,7 +19636,7 @@ async function renderControlCenter(){
         </svg>
         <div style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px;">
           <b style="font-size:1.7rem; line-height:1; color:var(--gold); font-weight:700;">${pct}%</b>
-          <span style="font-size:.64rem; color:var(--text-muted); text-align:center; line-height:1.25;"><span class="arabic">تيمكنم المرحله</span>، Stage progress</span>
+          <span style="font-size:.64rem; color:var(--text-muted); text-align:center; line-height:1.25;"><span class="arabic">تقدم المرحله</span>، Stage progress</span>
         </div>
       </div>
     </div>
@@ -19763,7 +19763,7 @@ function renderActivePath(){
     e.stopPropagation();
     const id = el.getAttribute('data-switch-ac');
     const okGo = window.confirm(ar
-      ? 'تبديل المسار النشط؟ يبقى تيمكنمك محفوظاً وتقدر الرجوع في اي وقت.'
+      ? 'تبديل المسار النشط؟ يبقى تقدمك محفوظاً وتقدر الرجوع في اي وقت.'
       : 'Switch your active academy? All progress is kept and you can switch back anytime.');
     if(!okGo) return;
     el.style.opacity = '.45'; el.style.pointerEvents = 'none';
@@ -20177,7 +20177,7 @@ function renderProfile(){
       </div>
     </div>
 
-    <div class="eyebrow" style="margin-bottom:14px;"><span class="arabic" style="font-size:.95em;">نشاطك وتيمكنمك</span>، Your Activity &amp; Progress</div>
+    <div class="eyebrow" style="margin-bottom:14px;"><span class="arabic" style="font-size:.95em;">نشاطك وتقدمك</span>، Your Activity &amp; Progress</div>
 
     <!-- WEEK + FOCUS (moved from home page) -->
     <div class="grid grid-2" style="align-items:stretch; margin-bottom:30px;">
@@ -20303,7 +20303,7 @@ function renderAchievements(){
     <div class="page-head">
       <span class="eyebrow"><span class="arabic" style="font-size:.95em;">الانجازات</span>، Achievements</span>
       <h1><span class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">حصلت على ${earnedCount} من ${ACHIEVEMENTS.length}.</span>${earnedCount} of ${ACHIEVEMENTS.length} earned.</h1>
-      <p><span class="arabic" style="display:block; margin-bottom:4px;">تيمكنير للاستمراريه والاتقان، لا للحيل.</span>Recognition for consistency and mastery, not gimmicks.</p>
+      <p><span class="arabic" style="display:block; margin-bottom:4px;">تقدير للاستمراريه والاتقان، لا للحيل.</span>Recognition for consistency and mastery, not gimmicks.</p>
     </div>
     <div class="grid grid-4" id="achievementsGrid"></div>`;
   document.getElementById('achievementsGrid').innerHTML = ACHIEVEMENTS.map(a => `
@@ -21020,7 +21020,7 @@ function renderPlanView(){
         <div style="display:flex; flex-direction:column; gap:10px;">${stagesHtml}</div>
       </div>
       <div class="card">
-        <span class="eyebrow" style="margin:0 0 8px;"><span class="arabic">التيمكنير الزمني</span>، Time estimate</span>
+        <span class="eyebrow" style="margin:0 0 8px;"><span class="arabic">التقدير الزمني</span>، Time estimate</span>
         <div style="display:flex; flex-direction:column; gap:10px; margin-top:10px;">
           <div style="display:flex; justify-content:space-between; font-size:.85rem;"><span><span class="arabic">طول المسار</span>، Route length</span><b style="color:var(--gold-soft);">~${e.weeks} <span class="arabic">اسابيع</span>، weeks</b></div>
           <div style="display:flex; justify-content:space-between; font-size:.85rem;"><span><span class="arabic">ايام دراسه</span>، Study days</span><b style="color:var(--gold-soft);">${e.days}</b></div>
@@ -21034,7 +21034,7 @@ function renderPlanView(){
         ${adaptHtml}
         <div class="card">
           <span class="eyebrow" style="margin:0 0 8px;"><span class="arabic">عدّل خطتك</span>، Adjust your plan</span>
-          <p style="font-size:.82rem; color:var(--text-muted); line-height:1.7;"><span class="arabic" style="display:block;">غيّر ايقاعك اليومي وعدد ايام الاسبوع في الاعدادات، واعيد بنا التيمكنير.</span>Change your daily pace and weekly frequency in settings - the estimate rebuilds.</p>
+          <p style="font-size:.82rem; color:var(--text-muted); line-height:1.7;"><span class="arabic" style="display:block;">غيّر ايقاعك اليومي وعدد ايام الاسبوع في الاعدادات، واعيد بنا التقدير.</span>Change your daily pace and weekly frequency in settings - the estimate rebuilds.</p>
           <button type="button" class="btn-outline" data-goto-view="settings" style="margin-top:12px;"><span class="arabic">افتح الاعدادات</span>، Open settings</button>
         </div>
       </div>

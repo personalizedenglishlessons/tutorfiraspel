@@ -1169,7 +1169,7 @@ section{ padding-top:70px; padding-bottom:70px; }
         <div class="trust-item"><span class="dot"></span>الاستاذ فراس يعلمك بنفسه</div>
         <div class="trust-item"><span class="dot"></span>كل درس بالعربي</div>
         <div class="trust-item"><span class="dot"></span>تتعلم من مواقف حقيقيه</div>
-        <div class="trust-item"><span class="dot"></span>تشوف تيمكنمك يوم بيوم</div>
+        <div class="trust-item"><span class="dot"></span>تشوف تقدمك يوم بيوم</div>
       </div>
     </div>
 
@@ -1303,7 +1303,7 @@ section{ padding-top:70px; padding-bottom:70px; }
   function meta(t){
     return t==='exam_prep' ? {
       nameEn:'Exam Prep', nameAr:'التجهيز للاختبارات',
-      termEn:'Advanced - STEP, TOEFL, IELTS', termAr:'متيمكنم - STEP و TOEFL و IELTS',
+      termEn:'Advanced - STEP, TOEFL, IELTS', termAr:'متقدم - STEP و TOEFL و IELTS',
       descEn:'For advanced students targeting STEP, TOEFL and IELTS.', descAr:'للي جاهزين يختبرون: STEP، TOEFL، و IELTS.',
       featEn:['Focused prep for STEP, TOEFL, IELTS','Practice with real exam-style questions','Key vocabulary for your target test','Translation and writing correction'],
       featAr:['تجهيز مخصص لكل اختبار','اسله محاكاه حقيقيه زي الامتحان','كلمات ومصطلحات مركزه على الاختبار','ترجمه فوريه وتصح كتابتك']
@@ -1877,7 +1877,7 @@ function applyIndexLang(lang){
   var loopH2=document.querySelector('#learningLoop h2');
   if(loopH2) loopH2.textContent = lang==='ar' ? 'تقييم، تخصيص، تعلم، ممارسه' : 'Assess, personalize, learn, practice';
   var loopP=document.querySelector('#learningLoop p');
-  if(loopP) loopP.textContent = lang==='ar' ? 'كل خطوه تبني على اللي قبلها، وتيمكنمك يرجع للنظام' : 'Each step builds on the last, and your progress feeds back into the system.';
+  if(loopP) loopP.textContent = lang==='ar' ? 'كل خطوه تبني على اللي قبلها، وتقدمك يرجع للنظام' : 'Each step builds on the last, and your progress feeds back into the system.';
   // live teaching bilingual
   var liveH2=document.querySelector('#liveTeaching h2');
   if(liveH2) liveH2.textContent = lang==='ar' ? 'من الدرس للحصه المباشره للحياه' : 'From lesson to live class to real life';
@@ -1912,7 +1912,7 @@ function applyIndexLang(lang){
     {t:'خصص',d:'خطه على مقاس هدفك'},
     {t:'اتعلم',d:'دروس من مواقف حقيقيه'},
     {t:'مارس',d:'محادثه وكتابه يوميا'},
-    {t:'تيمكنم',d:'تتبع وملاحظات ترجع للخطه'}
+    {t:'تقدم',d:'تتبع وملاحظات ترجع للخطه'}
   ];
   var loopEn=[
     {t:'Assess',d:'Light questions about your level'},
@@ -2134,11 +2134,11 @@ const faqs = [
   {qAr:'ايمكنر ادرس من الجوال؟', aAr:'اعشاند. المنصه تشتغل على الجوال والتابلت. تكمّل من وين ما وقفت.', qEn:'Can I study on my phone?', aEn:'Yes. The platform works on phones and tablets. You pick up where you left off.'},
   {qAr:'كم مده الاشتراك؟', aAr:'شهر، شهرين، او 3 اشهر. انت تختار. خلال هالينتره كل الدروس متاحه لك.', qEn:'How long is the subscription?', aEn:'One month, two months, or three months. You choose. All lessons are available to you during that time.'},
   {qAr:'تقدرون تترجمون لي؟', aAr:'اي والله. تترجم اي كلمه او جمله وانت تتعلم. واذا كتبت شي، نصحح لك ونقولك وين الغلط.', qEn:'Can you translate for me?', aEn:'Yes. You can translate any word or sentence while you learn. And if you write something, we correct it and show you where the mistakes are.'},
-  {qAr:'اشوف تيمكنمي؟', aAr:'اي والله. لوحتك تشوف وين وصلت في المحادثه والاستماع والمفردات، اسبوع باسبوع.', qEn:'Can I see my progress?', aEn:'Yes. Your dashboard shows where you are in speaking, listening, and vocabulary, week by week.'},
+  {qAr:'اشوف تقدمي؟', aAr:'اي والله. لوحتك تشوف وين وصلت في المحادثه والاستماع والمفردات، اسبوع باسبوع.', qEn:'Can I see my progress?', aEn:'Yes. Your dashboard shows where you are in speaking, listening, and vocabulary, week by week.'},
   {qAr:'كم سعر الاشتراك؟', aAr:'مسارين: ابد من الصفر يبدا من 800 ريال بالشهر، والتجهيز للاختبارات يبدا من 1000 ريال. كل الباقات فيها حصص مباشره. تدفع عبر واتساب ونتفعّل حسابك خلال دقايق. شوف الباقات بالتفصيل فوق.', qEn:'How much?', aEn:'Two tracks: Start From Zero starts at 800 SAR/month, Exam Prep starts at 1000 SAR/month. All plans include live classes. Pay via WhatsApp, activated in minutes. See the plans above for details.'},
   {qAr:'الباقات فيها حصص مباشره؟', aAr:'اي والله. كل باقه فيها حصه مباشره كل اسبوع على الاقل. باقات التجهيز للاختبارات فيها من حصه لـ 3 حصص بالاسبوع. تبي اكثر؟ تشتري رصيد حصص عبر واتساب.', qEn:'Do plans include live classes?', aEn:'Yes. Every plan includes at least one live class per week. Exam Prep plans include 1-3 classes per week. Want more? Buy extra class credits via WhatsApp.'},
   {qAr:'عشانف اسجل؟', aAr:'راسلنا واتساب، نرسل لك تفاصيل الدفع ونتفعّل حسابك بسرعه.', qEn:'How do I enroll?', aEn:'Message us on WhatsApp, we send payment details and activate your account quickly.'},
-  {qAr:'ايش يصير لما تخلص باقتي؟', aAr:'حسابك وتيمكنمك يبقى محفوظ. بس يوقف الوصول للدروس. تجدد من لوحتك او تراسلنا واتساب ونفعل لك باقه جديده.', qEn:'What happens when my plan ends?', aEn:'Your account and progress stay saved. Lesson access pauses. Renew from your dashboard or message us on WhatsApp for a new plan.'},
+  {qAr:'ايش يصير لما تخلص باقتي؟', aAr:'حسابك وتقدمك يبقى محفوظ. بس يوقف الوصول للدروس. تجدد من لوحتك او تراسلنا واتساب ونفعل لك باقه جديده.', qEn:'What happens when my plan ends?', aEn:'Your account and progress stay saved. Lesson access pauses. Renew from your dashboard or message us on WhatsApp for a new plan.'},
 ];
 const faqList = document.getElementById('faqList');
 function renderFaqs(){

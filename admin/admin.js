@@ -64,7 +64,7 @@ var I = {
   'email':{en:'Email', ar:'البريد'},
   'xp':{en:'XP', ar:'نقاط'},
   'streak':{en:'Streak', ar:'الاستمرار'},
-  'progress':{en:'Progress', ar:'التيمكنم'},
+  'progress':{en:'Progress', ar:'التقدم'},
   'lastActive':{en:'Last active', ar:'اخر نشاط'},
   'certs':{en:'Certs', ar:'شهادات'},
   'attention':{en:'Attention', ar:'يحتاج انتباه'},
@@ -161,7 +161,7 @@ var I = {
   'currentConcern':{en:'Current concern', ar:'القلق الحالي'},
   'recommendedFocus':{en:'Recommended focus', ar:'الترعشانز الموصى به'},
   'whyRoute':{en:'Why PEL built this route', ar:'ليش بنى بيل ذا المسار'},
-  'routeDuration':{en:'Estimated route duration', ar:'المده التيمكنيريه للمسار'},
+  'routeDuration':{en:'Estimated route duration', ar:'المده التقديريه للمسار'},
   'remainingStage':{en:'%d lessons left in current stage', ar:'باقي %d درس في المرحله الحاليه'},
   'goal':{en:'Learning goal', ar:'هدف التعلم'},
   'dailyMin':{en:'Daily minutes', ar:'الدقايق اليوميه'},
@@ -310,7 +310,7 @@ var I = {
   'levels':{en:'Level %s', ar:'المستوى %s'},
   'diffBeginner':{en:'Beginner', ar:'مبتدي'},
   'diffIntermediate':{en:'Intermediate', ar:'متوسط'},
-  'diffAdvanced':{en:'Advanced', ar:'متيمكنم'},
+  'diffAdvanced':{en:'Advanced', ar:'متقدم'},
   'diffAll':{en:'All levels', ar:'كل المستويات'},
 'academyCount':{en:'%d academies', ar:'%d اكاديميات'},
   'lesson':{en:'Lesson', ar:'درس'},
@@ -401,7 +401,7 @@ var I = {
   'assigned':{en:'Assigned', ar:'اسندت'},
   'extended':{en:'Extended', ar:'مددت'},
   'scheduledLbl':{en:'Scheduled', ar:'محدده'},
-  'planNote':{en:'Access expires automatically on the end date (server-enforced). Renewing never resets progress.', ar:'ينتهي الوصول تلقايياً بتاريخ النهايه (تطبيق من الخادم). التجديد لا يمسّ تيمكنمك.'},
+  'planNote':{en:'Access expires automatically on the end date (server-enforced). Renewing never resets progress.', ar:'ينتهي الوصول تلقايياً بتاريخ النهايه (تطبيق من الخادم). التجديد لا يمسّ تقدمك.'},
   'notificationSent':{en:'Announcement sent.', ar:'ارسلنا الاعلان.'},
   'planSaved':{en:'Plan saved.', ar:'حفظنا الباقه.'},
   'planAssigned':{en:'Plan assigned.', ar:'تم اسناد الباقه.'},
@@ -1146,7 +1146,7 @@ var tabs = [
       var b = (r.data && r.data.billing) || {};
       var ledger = (r.data && r.data.ledger) || [];
       var tierAr = b.tier==='exam_prep'?'التجهيز للاختبارات':(b.tier==='start_from_zero'?'ابد من الصفر':'-');
-      var trackAr = b.assessed_track==='exam_prep'?'متيمكنم':(b.assessed_track==='start_from_zero'?'مبتدي':'-');
+      var trackAr = b.assessed_track==='exam_prep'?'متقدم':(b.assessed_track==='start_from_zero'?'مبتدي':'-');
       host.innerHTML =
         '<div class="section-title" style="margin-top:0;">'+(lang==='ar'?'الباقه والرصيد':'Plan & credits')+'</div>' +
         '<div class="s360-meta" style="margin-bottom:10px;">' +
@@ -1207,7 +1207,7 @@ var tabs = [
             if(r3.ok && r3.data){ b = r3.data.billing || {}; ledger = r3.data.ledger || []; }
             // Re-render the entire billing section to ensure UI is fresh
             var tierAr2 = b.tier==='exam_prep'?'التجهيز للاختبارات':(b.tier==='start_from_zero'?'ابد من الصفر':'-');
-            var trackAr2 = b.assessed_track==='exam_prep'?'متيمكنم':(b.assessed_track==='start_from_zero'?'مبتدي':'-');
+            var trackAr2 = b.assessed_track==='exam_prep'?'متقدم':(b.assessed_track==='start_from_zero'?'مبتدي':'-');
             // Update credits chip
             var chips = host.querySelector('.s360-meta');
             if(chips){ var lastChip = chips.querySelector('.chip.green'); if(lastChip) lastChip.textContent = (b.live_class_credits||0)+' '+(lang==='ar'?'رصيد حصص':'class credits'); }
