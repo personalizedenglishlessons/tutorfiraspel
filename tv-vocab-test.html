@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PEL Vocabulary Vault — TV Mode (Test)</title>
+<link rel="icon" href="brand/pel-favicon.svg">
+<style>
+:root{
+  --bg:#131316; --surface:#1A1A1F; --card:#1E1E24; --card-elevated:#232329;
+  --border:rgba(255,255,255,.08); --text:#F4F0E6; --text-muted:#8B8678; --text-secondary:#B0AB9C;
+  --gold:#C8A96A; --gold-soft:#D8BD83; --gold-glow:0 0 24px rgba(200,169,106,.18);
+  --ease:cubic-bezier(.22,.61,.36,1); --dur:.5s;
+  --radius:24px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);
+  font-family:'Inter','Segoe UI',system-ui,sans-serif;-webkit-font-smoothing:antialiased;}
+body{display:flex;align-items:center;justify-content:center;}
+
+/* ===== TV Card Stage ===== */
+#stage{
+  position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+  perspective:1200px;
+}
+
+.card{
+  position:absolute;width:min(880px,86vw);min-height:min(480px,64vh);
+  background:linear-gradient(165deg,rgba(255,255,255,.03),transparent 45%),var(--card);
+  border:1px solid var(--border);border-radius:var(--radius);
+  box-shadow:0 30px 80px -30px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.05);
+  padding:clamp(32px,5vw,60px);display:flex;flex-direction:column;
+  transform-style:preserve-3d;
+  transition:transform .6s var(--ease),opacity .4s var(--ease);
+}
+.card.enter-from-right{transform:translateX(120%) rotateY(15deg);opacity:0;}
+.card.enter-from-left{transform:translateX(-120%) rotateY(-15deg);opacity:0;}
+.card.exit-to-left{transform:translateX(-120%) rotateY(-15deg);opacity:0;}
+.card.exit-to-right{transform:translateX(120%) rotateY(15deg);opacity:0;}
+.card.active{transform:translateX(0) rotateY(0);opacity:1;}
+
+/* gold top hairline */
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;
+  border-radius:var(--radius) var(--radius) 0 0;
+  background:linear-gradient(90deg,transparent,var(--gold),var(--gold-soft),var(--gold),transparent);}
+
+/* ===== Card Content ===== */
+.card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:clamp(20px,3vh,36px);}
+.card-category{font-size:.8rem;font-weight:600;color:var(--gold);letter-spacing:.08em;text-transform:uppercase;
+  background:rgba(200,169,106,.1);border:1px solid rgba(200,169,106,.2);padding:6px 14px;border-radius:999px;}
+.card-difficulty{font-size:.72rem;color:var(--text-muted);font-weight:500;}
+.card-difficulty span{color:var(--gold);}
+
+.card-word-section{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:8px;}
+.card-word{font-family:'Fraunces',Georgia,serif;font-size:clamp(2.5rem,7vw,4.5rem);font-weight:700;
+  letter-spacing:-.02em;line-height:1.1;color:var(--text);}
+.card-ipa{font-size:clamp(1rem,2vw,1.3rem);color:var(--gold-soft);font-family:monospace;}
+.card-translit{font-size:clamp(1rem,2.2vw,1.4rem);color:var(--text-secondary);direction:ltr;}
+.card-arabic{font-family:'Cairo','Tajawal',sans-serif;font-size:clamp(1.8rem,4.5vw,2.8rem);
+  direction:rtl;color:var(--text);margin-top:6px;line-height:1.4;}
+
+/* flip back side */
+.card-back{display:none;}
+.card.flipped .card-front{display:none;}
+.card.flipped .card-back{display:flex;flex-direction:column;gap:clamp(14px,2vh,24px);}
+
+.card-back .example-en{font-size:clamp(1.1rem,2.5vw,1.5rem);font-weight:500;line-height:1.5;text-align:center;direction:ltr;}
+.card-back .example-ar{font-family:'Cairo','Tajawal',sans-serif;font-size:clamp(1.1rem,2.5vw,1.4rem);
+  direction:rtl;text-align:center;color:var(--text-secondary);line-height:1.6;}
+.card-back .example-tr{font-size:clamp(.9rem,1.8vw,1.1rem);color:var(--gold-soft);direction:ltr;text-align:center;}
+.card-back .divider{height:1px;background:var(--border);margin:4px 0;}
+.card-back .meta-row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;}
+.card-back .meta-chip{font-size:.78rem;padding:6px 12px;border-radius:10px;background:var(--card-elevated);
+  border:1px solid var(--border);color:var(--text-secondary);}
+.card-back .meta-chip b{color:var(--gold);font-weight:600;}
+.card-back .tip{font-size:clamp(.85rem,1.6vw,1rem);color:var(--text-muted);text-align:center;line-height:1.6;
+  background:rgba(200,169,106,.06);border:1px solid rgba(200,169,106,.12);border-radius:14px;padding:12px 18px;}
+
+/* ===== Nav Bar ===== */
+#nav{
+  position:fixed;bottom:0;left:0;right:0;height:clamp(64px,9vh,88px);
+  display:flex;align-items:center;justify-content:space-between;padding:0 clamp(20px,4vw,48px);
+  background:linear-gradient(0deg,rgba(19,19,22,.98),rgba(19,19,22,.7) 70%,transparent);
+  z-index:100;
+}
+.nav-btn{
+  background:var(--card);border:1px solid var(--border);color:var(--text);
+  width:clamp(48px,6vw,64px);height:clamp(48px,6vw,64px);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  transition:all .25s var(--ease);flex-shrink:0;
+}
+.nav-btn:hover{border-color:var(--gold);color:var(--gold);box-shadow:var(--gold-glow);}
+.nav-btn:active{transform:scale(.94);}
+.nav-btn svg{width:24px;height:24px;}
+.nav-btn.flip-btn{border-radius:16px;width:auto;padding:0 20px;font-size:.82rem;font-weight:600;gap:8px;}
+
+.nav-center{display:flex;flex-direction:column;align-items:center;gap:6px;}
+.nav-progress{font-size:.78rem;color:var(--text-muted);font-weight:500;letter-spacing:.04em;}
+.nav-dots{display:flex;gap:6px;}
+.nav-dot{width:8px;height:8px;border-radius:50%;background:var(--border);transition:all .3s var(--ease);cursor:pointer;}
+.nav-dot.active{background:var(--gold);width:24px;border-radius:4px;}
+.nav-dot:hover{background:var(--text-muted);}
+
+/* ===== Top Bar ===== */
+#topbar{
+  position:fixed;top:0;left:0;right:0;padding:clamp(16px,3vh,24px) clamp(20px,4vw,48px);
+  display:flex;align-items:center;justify-content:space-between;z-index:100;
+  background:linear-gradient(180deg,rgba(19,19,22,.95),transparent);
+}
+#topbar .brand{display:flex;align-items:center;gap:10px;font-family:'Fraunces',serif;font-size:1rem;color:var(--gold);}
+#topbar .brand img{height:22px;}
+#topbar .hint{font-size:.72rem;color:var(--text-muted);display:flex;gap:12px;align-items:center;}
+#topbar .hint kbd{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:2px 8px;font-size:.7rem;font-family:monospace;}
+
+/* ===== TV Hint Overlay ===== */
+#hint-overlay{
+  position:fixed;inset:0;background:rgba(19,19,22,.92);z-index:200;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:24px;
+  transition:opacity .4s var(--ease);
+}
+#hint-overlay.hidden{opacity:0;pointer-events:none;}
+#hint-overlay h2{font-family:'Fraunces',serif;font-size:clamp(1.4rem,3vw,2rem);color:var(--gold);}
+.hint-grid{display:grid;grid-template-columns:auto auto;gap:14px 24px;font-size:.9rem;color:var(--text-secondary);}
+.hint-grid kbd{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:4px 12px;
+  font-family:monospace;font-size:.8rem;color:var(--gold);text-align:center;justify-self:center;}
+.hint-grid span{align-self:center;}
+#hint-overlay button{
+  background:linear-gradient(135deg,var(--gold),var(--gold-soft));color:#171412;border:none;
+  padding:12px 32px;border-radius:14px;font-size:.9rem;font-weight:700;cursor:pointer;
+  transition:all .25s var(--ease);
+}
+#hint-overlay button:hover{filter:brightness(1.08);box-shadow:var(--gold-glow);}
+
+/* ===== Responsive ===== */
+@media(max-width:640px){
+  .card{min-height:auto;padding:24px 20px 80px;}
+  #topbar .hint{display:none;}
+  .nav-btn.flip-btn span{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- Top bar -->
+<div id="topbar">
+  <div class="brand"><img src="brand/pel-wordmark.svg" alt="PEL"> <span>Vocabulary Vault · TV Mode</span></div>
+  <div class="hint">
+    <span><kbd>←</kbd> <kbd>→</kbd> Navigate</span>
+    <span><kbd>↑</kbd> <kbd>↓</kbd> Flip card</span>
+    <span><kbd>Space</kbd> Next</span>
+  </div>
+</div>
+
+<!-- Card stage -->
+<div id="stage"></div>
+
+<!-- Nav bar -->
+<div id="nav">
+  <button class="nav-btn" id="prevBtn" aria-label="Previous">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+  </button>
+  <div class="nav-center">
+    <div class="nav-dots" id="navDots"></div>
+    <div class="nav-progress" id="navProgress">1 / 12</div>
+  </div>
+  <button class="nav-btn flip-btn" id="flipBtn" aria-label="Flip card">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px"><path d="M3 12a9 9 0 1 0 9-9"/><path d="M3 4v5h5"/></svg>
+    <span>Flip</span>
+  </button>
+</div>
+
+<!-- Hint overlay (shows on load) -->
+<div id="hint-overlay">
+  <h2>Vocabulary Vault — TV Mode</h2>
+  <div class="hint-grid">
+    <kbd>← →</kbd><span>Previous / Next card</span>
+    <kbd>↑ ↓</kbd><span>Flip card (front / back)</span>
+    <kbd>Space</kbd><span>Next card</span>
+    <kbd>Enter</kbd><span>Flip card</span>
+  </div>
+  <button id="startBtn">Start</button>
+</div>
+
+<script>
+// ===== Sample Vocabulary Data (from VOCAB_BANK) =====
+const VOCAB = [
+  {en:'Reservation', ipa:'/ˌrɛzərˈveɪʃən/', ar:'حجز', translit:'ريزرڤيشِن',
+    example:{en:'I have a reservation for two.', ar:'عندي حجز لشخصين.', translit:'اي هاف ا ريزرڤيشن فور تو.'},
+    synonyms:'Booking', antonyms:'Cancellation', family:'reserve, reserved',
+    collocations:'make a reservation, confirm a reservation', category:'Restaurant English', difficulty:'Intermediate',
+    tip:'Many Arabic speakers say "booking" instead, both are fine, "reservation" sounds more formal.'},
+  {en:'Confident', ipa:'/ˈkɑːnfɪdənt/', ar:'واثق', translit:'كانفدنت',
+    example:{en:'She feels confident speaking English now.', ar:'صارت تحس بثقه وهي تتكلم انجليزي.', translit:'شي فيلز كانفدنت سبيكنج انجلش ناو.'},
+    synonyms:'Self-assured, certain', antonyms:'Nervous, unsure', family:'confidence, confidently',
+    collocations:'feel confident, sound confident', category:'General', difficulty:'Beginner',
+    tip:'Stress the first syllable: CON-fi-dent.'},
+  {en:'Appointment', ipa:'/əˈpɔɪntmənt/', ar:'موعد', translit:'ابوينتمنت',
+    example:{en:'I need to make a doctor appointment.', ar:'لازم احجز موعد عند الدكتور.', translit:'اي نيد تو ميك ا دكتور ابوينتمنت.'},
+    synonyms:'Meeting, booking', antonyms:'-', family:'appoint, appointed',
+    collocations:'make an appointment, cancel an appointment', category:'Hospital English', difficulty:'Intermediate',
+    tip:'In Arabic we usually just say "موعد" for both a meeting and a doctor visit.'},
+  {en:'Negotiate', ipa:'/nɪˈɡoʊʃieɪt/', ar:'يتفاوض', translit:'نيقوشييت',
+    example:{en:'We negotiated a better price.', ar:'تفاوضنا على سعر افضل.', translit:'وي نيقوشييتد ا بيتر برايس.'},
+    synonyms:'Bargain, discuss', antonyms:'Concede', family:'negotiation, negotiator',
+    collocations:'negotiate a deal, negotiate a price', category:'Business English', difficulty:'Advanced',
+    tip:'Common in salary and price conversations.'},
+  {en:'Deadline', ipa:'/ˈdɛdlaɪn/', ar:'موعد نهايي', translit:'دد لاين',
+    example:{en:'The deadline is next Thursday.', ar:'الموعد النهايي يوم الخميس الجاي.', translit:'ذا دد لاين از نكست ثيرزداي.'},
+    synonyms:'Due date', antonyms:'-', family:'-',
+    collocations:'meet a deadline, miss a deadline', category:'Workplace', difficulty:'Intermediate',
+    tip:'Very common word in office English.'},
+  {en:'Complimentary', ipa:'/ˌkɑːmplɪˈmɛntəri/', ar:'مجاني، مقدم كهدية', translit:'كامبلمنتري',
+    example:{en:'Breakfast is complimentary at this hotel.', ar:'الفطور مجاني في هذا الفندق.', translit:'بريكفاست از كامبلمنتري ات ذيس هوتيل.'},
+    synonyms:'Free, gratis', antonyms:'Paid', family:'compliment, complimented',
+    collocations:'complimentary breakfast, complimentary wifi', category:'Hotel English', difficulty:'Advanced',
+    tip:'Do not confuse with "complementary" (matching), spelled with an e.'},
+  {en:'Symptom', ipa:'/ˈsɪmptəm/', ar:'عرض، اعراض', translit:'سمبتم',
+    example:{en:'What are your symptoms today?', ar:'وش الاعراض اللي عندك اليوم؟', translit:'وات ار يور سمبتمز تودي؟'},
+    synonyms:'Sign, indication', antonyms:'-', family:'symptomatic',
+    collocations:'main symptom, common symptoms', category:'Hospital English', difficulty:'Intermediate',
+    tip:'The p is silent-ish, softly pronounced: SIMP-tuhm.'},
+  {en:'Colleague', ipa:'/ˈkɑːliːɡ/', ar:'زميل بالعمل', translit:'كولييج',
+    example:{en:'My colleague will join the meeting.', ar:'زميلي بينضم للاجتماع.', translit:'ماي كولييج ويل جوين ذا ميتنج.'},
+    synonyms:'Coworker', antonyms:'-', family:'-',
+    collocations:'close colleague, former colleague', category:'Workplace', difficulty:'Intermediate',
+    tip:'More professional than "coworker."'},
+  {en:'Punctual', ipa:'/ˈpʌŋktʃuəl/', ar:'يلتزم بالمواعيد', translit:'بنكتشول',
+    example:{en:'He is always punctual for meetings.', ar:'دايم يلتزم بالوقت في الاجتماعات.', translit:'هي از اولويز بنكتشول فور ميتنجز.'},
+    synonyms:'On time, prompt', antonyms:'Late, tardy', family:'punctuality',
+    collocations:'punctual arrival', category:'Business English', difficulty:'Advanced',
+    tip:'Highly valued in American workplace culture.'},
+  {en:'Receipt', ipa:'/rɪˈsiːt/', ar:'ايصال، فاتوره', translit:'ريسيت',
+    example:{en:'Can I get a receipt, please?', ar:'ممكن الايصال لو سمحت؟', translit:'كان اي قيت ا ريسيت، بليز؟'},
+    synonyms:'Bill, invoice', antonyms:'-', family:'receive, received',
+    collocations:'keep the receipt, get a receipt', category:'Shopping English', difficulty:'Intermediate',
+    tip:'The p is silent, say "ri-SEET."'},
+  {en:'Warranty', ipa:'/ˈwɔːrənti/', ar:'ضمان', translit:'وارنتي',
+    example:{en:'This phone is still under warranty.', ar:'هذا الجوال ما زال تحت الضمان.', translit:'ذيس فون از سِتل اندر وارنتي.'},
+    synonyms:'Guarantee', antonyms:'-', family:'warrant',
+    collocations:'under warranty, warranty period', category:'Shopping English', difficulty:'Advanced',
+    tip:'"Under warranty" means it is still covered for repairs.'},
+  {en:'Feedback', ipa:'/ˈfiːdbæk/', ar:'ملاحظات، راي', translit:'فيدباك',
+    example:{en:'Could you give me some feedback on my report?', ar:'ممكن تعطيني ملاحظات على تقريري؟', translit:'كود يو قيف مي سم فيدباك اون ماي ريبورت؟'},
+    synonyms:'Comments, input', antonyms:'-', family:'-',
+    collocations:'give feedback, positive feedback', category:'Business English', difficulty:'Advanced',
+    tip:'"Constructive feedback" means helpful, not harsh, criticism.'},
+];
+
+// ===== TV Card Engine =====
+(function(){
+  const stage = document.getElementById('stage');
+  const navDots = document.getElementById('navDots');
+  const navProgress = document.getElementById('navProgress');
+  const prevBtn = document.getElementById('prevBtn');
+  const flipBtn = document.getElementById('flipBtn');
+  const hintOverlay = document.getElementById('hint-overlay');
+  const startBtn = document.getElementById('startBtn');
+
+  let current = 0;
+  let flipped = false;
+  let cards = [];
+  let transitioning = false;
+
+  function buildCard(v){
+    const card = document.createElement('div');
+    card.className = 'card enter-from-right';
+    card.innerHTML = `
+      <div class="card-top">
+        <span class="card-category">${v.category}</span>
+        <span class="card-difficulty">Level: <span>${v.difficulty}</span></span>
+      </div>
+      <div class="card-word-section card-front">
+        <div class="card-word">${v.en}</div>
+        <div class="card-ipa">${v.ipa}</div>
+        <div class="card-translit">${v.translit}</div>
+        <div class="card-arabic">${v.ar}</div>
+      </div>
+      <div class="card-word-section card-back">
+        <div class="example-en">"${v.example.en}"</div>
+        <div class="example-ar">${v.example.ar}</div>
+        <div class="example-tr">${v.example.translit}</div>
+        <div class="divider"></div>
+        <div class="meta-row">
+          <span class="meta-chip"><b>Synonyms:</b> ${v.synonyms}</span>
+          ${v.antonyms !== '-' ? `<span class="meta-chip"><b>Antonyms:</b> ${v.antonyms}</span>` : ''}
+        </div>
+        <div class="meta-row">
+          <span class="meta-chip"><b>Family:</b> ${v.family}</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-chip"><b>Collocations:</b> ${v.collocations}</span>
+        </div>
+        <div class="divider"></div>
+        <div class="tip">💡 ${v.tip}</div>
+      </div>
+    `;
+    return card;
+  }
+
+  function buildDots(){
+    navDots.innerHTML = VOCAB.map((_, i) =>
+      `<div class="nav-dot${i === 0 ? ' active' : ''}" data-idx="${i}"></div>`
+    ).join('');
+    navDots.querySelectorAll('.nav-dot').forEach(d => {
+      d.addEventListener('click', () => goTo(+d.dataset.idx));
+    });
+  }
+
+  function showCard(idx, dir){
+    if(transitioning) return;
+    if(idx < 0 || idx >= VOCAB.length) return;
+    transitioning = true;
+    flipped = false;
+
+    const oldCard = cards[current];
+    const newCard = cards[idx];
+
+    // Position new card off-screen
+    newCard.className = 'card ' + (dir > 0 ? 'enter-from-right' : 'enter-from-left');
+
+    // Force reflow
+    void newCard.offsetWidth;
+
+    // Animate out old card
+    if(oldCard && oldCard !== newCard){
+      oldCard.className = 'card ' + (dir > 0 ? 'exit-to-left' : 'exit-to-right');
+    }
+
+    // Animate in new card
+    requestAnimationFrame(() => {
+      newCard.className = 'card active';
+    });
+
+    // Update dots
+    navDots.querySelectorAll('.nav-dot').forEach((d, i) => {
+      d.classList.toggle('active', i === idx);
+    });
+    navProgress.textContent = `${idx + 1} / ${VOCAB.length}`;
+
+    current = idx;
+    setTimeout(() => { transitioning = false; }, 600);
+  }
+
+  function next(){
+    if(current < VOCAB.length - 1) showCard(current + 1, 1);
+  }
+  function prev(){
+    if(current > 0) showCard(current - 1, -1);
+  }
+  function flip(){
+    flipped = !flipped;
+    cards[current].classList.toggle('flipped', flipped);
+  }
+  function goTo(idx){
+    if(idx === current) return;
+    showCard(idx, idx > current ? 1 : -1);
+  }
+
+  // Build all cards
+  VOCAB.forEach(v => {
+    const c = buildCard(v);
+    stage.appendChild(c);
+    cards.push(c);
+  });
+
+  // Show first card
+  cards[0].className = 'card active';
+
+  buildDots();
+
+  // Navigation
+  prevBtn.addEventListener('click', prev);
+
+  // Build next button dynamically (we need a next button too)
+  const nextBtn = document.createElement('button');
+  nextBtn.className = 'nav-btn';
+  nextBtn.setAttribute('aria-label', 'Next');
+  nextBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>';
+  nextBtn.addEventListener('click', next);
+  // Insert next button before flip button
+  flipBtn.parentNode.insertBefore(nextBtn, flipBtn);
+
+  flipBtn.addEventListener('click', flip);
+
+  // Keyboard navigation (TV remote maps to arrow keys)
+  document.addEventListener('keydown', (e) => {
+    if(hintOverlay.classList.contains('hidden') === false && e.key === 'Enter'){
+      startBtn.click();
+      return;
+    }
+    switch(e.key){
+      case 'ArrowRight':
+      case 'ArrowDown':
+      case ' ':
+        e.preventDefault();
+        next();
+        break;
+      case 'ArrowLeft':
+      case 'ArrowUp':
+        e.preventDefault();
+        if(e.key === 'ArrowUp'){ flip(); }
+        else { prev(); }
+        break;
+      case 'Enter':
+        e.preventDefault();
+        flip();
+        break;
+    }
+  });
+
+  // Start
+  startBtn.addEventListener('click', () => {
+    hintOverlay.classList.add('hidden');
+  });
+
+  // Click anywhere on card to flip
+  stage.addEventListener('click', (e) => {
+    if(e.target.closest('.card')) flip();
+  });
+})();
+</script>
+</body>
+</html>
