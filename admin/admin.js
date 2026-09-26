@@ -190,7 +190,7 @@ var I = {
   'moveFromWaitlist':{en:'Move into group', ar:'نقل للمجموعه'},
   'addStudent':{en:'Add student', ar:'ومثلن طالب'},
   'createStudent':{en:'Create student', ar:'انشا طالب'},
-  'createStudentDesc':{en:'Create an account the student can sign in with. Set their name, email, and a password (min 8 chars).', ar:'انشا حساب ييمكنر الطالب يدخل فيه. حدد اسمه، ايميله، وكلمه مرور (٨ احرف على الاقل).'},
+  'createStudentDesc':{en:'Create an account the student can sign in with. Set their name, email, and a password (min 8 chars).', ar:'انشا حساب يقدر الطالب يدخل فيه. حدد اسمه، ايميله، وكلمه مرور (٨ احرف على الاقل).'},
   'studentEmail':{en:'Email', ar:'البريد الالكتروني'},
   'studentPassword':{en:'Password', ar:'كلمه المرور'},
   'pwMinLen':{en:'At least 8 characters', ar:'٨ احرف على الاقل'},
@@ -230,7 +230,7 @@ var I = {
   'totalLessons':{en:'Total lessons', ar:'اجمالي الدروس'},
   'completedCount':{en:'Completed lessons', ar:'الدروس المنجزه'},
   'recVsProd':{en:'Recognition vs Production', ar:'الاسترجاع مقابل الانتاج'},
-  'recVsProdHint':{en:'First-try production is the mastery signal - how often the student can USE the language, not just recognize it.', ar:'الانتاج من اول محاوله هو موشر الاتقان - يمكنره الطالب على استخدام اللغه، وليس التعرف عليها بس.'},
+  'recVsProdHint':{en:'First-try production is the mastery signal - how often the student can USE the language, not just recognize it.', ar:'الانتاج من اول محاوله هو موشر الاتقان - يقدر الطالب يستخدم اللغه، وليس التعرف عليها بس.'},
   'recognition':{en:'Recognition', ar:'الاسترجاع'},
   'production':{en:'Production (eventual)', ar:'الانتاج (لسه المحاول شيت)'},
   'productionFirst':{en:'Production (first try)', ar:'الانتاج (اول محاوله)'},
@@ -1011,6 +1011,9 @@ async function loadStudents(st){
   var trs = rows.map(function(s){
     var attention = s.needs_attention ? '<span class="chip ' + (s.days_inactive >= 14 ? 'red' : 'warn') + '">' + esc(t('needsAttention')) + '</span>' : '<span class="chip muted">-</span>';
     var onlineBadge = s.is_online ? '<span class="chip green" style="font-size:.62rem;padding:1px 6px;">' + esc(lang==='ar'?'متصل':'Online') + '</span>' : '<span class="chip muted" style="font-size:.62rem;padding:1px 6px;">' + esc(lang==='ar'?'غير متصل':'Offline') + '</span>';
+    var seenTxt = s.is_online ? esc(lang==='ar'?'الحين':'now') : esc(relTime(s.last_seen || s.last_active));
+    var seenTitle = s.last_seen ? ' title="' + esc(fmtDate(s.last_seen)) + '"' : '';
+    var loginTxt = s.last_login ? '<div style="font-size:.68rem;color:var(--text-muted);">↑ ' + esc(lang==='ar'?'دخول':'login') + ' ' + esc(relTime(s.last_login)) + '</div>' : '';
     return '<tr>' +
       '<td><span class="mobile-label">' + esc(t('name')) + '</span><a class="row-link" data-open-student="' + s.id + '">' + esc(s.full_name) + '</a>' + (s.email ? '<div style="font-size:.68rem; color:var(--text-muted);">' + esc(s.email) + '</div>' : '') + '</td>' +
       '<td><span class="mobile-label">' + esc(t('status')) + '</span>' + statusChip(s.status || 'new') + '</td>' +
@@ -1018,7 +1021,7 @@ async function loadStudents(st){
       '<td class="num"><span class="mobile-label">XP</span>' + fmtN(s.xp) + '</td>' +
       '<td class="num"><span class="mobile-label">' + esc(t('streak')) + '</span>' + fmtN(s.streak) + 'd</td>' +
       '<td class="num"><span class="mobile-label">' + esc(t('progress')) + '</span>' + fmtN(s.completed_lessons) + '</td>' +
-      '<td><span class="mobile-label">' + esc(t('lastActive')) + '</span>' + onlineBadge + ' <span style="font-size:.74rem;">' + relTime(s.last_active) + '</span></td>' +
+      '<td><span class="mobile-label">' + esc(t('lastActive')) + '</span>' + onlineBadge + ' <span style="font-size:.74rem;"' + seenTitle + '>' + seenTxt + '</span>' + loginTxt + '</td>' +
       '<td><span class="mobile-label">' + esc(t('program')) + '</span>' + (s.program_name ? '<div style="font-weight:600;">' + esc(s.program_name) + '</div>' : '-') + (s.plan_status ? '<div style="margin-top:4px;">' + planStatusChip(s.plan_status) + (s.plan_days_left != null && ['active','expiring'].indexOf(s.plan_status) !== -1 ? ' <span style="font-size:.68rem; color:var(--text-muted);">' + esc(t('daysLeft').replace('%d', arNum(s.plan_days_left))) + '</span>' : '') + '</div>' : '<div style="margin-top:4px;"><span class="chip muted">' + esc(lang==='ar'?'ما فيه باقه':'No plan') + '</span></div>') + '</td>' +
       '<td><span class="mobile-label">' + esc(t('certs')) + '</span>' + fmtN(s.cert_count) + '</td>' +
       '<td><span class="mobile-label">' + esc(t('attention')) + '</span>' + attention + '</td>' +
@@ -1082,14 +1085,20 @@ function render360(){
   var presence = d.presence || {};
   var presBadge = presence.is_online ? '<span class="chip green" style="font-size:.7rem;">' + esc(lang==='ar'?'متصل الحين':'Online now') + '</span>' : '<span class="chip muted" style="font-size:.7rem;">' + esc(lang==='ar'?'غير متصل':'Offline') + '</span>';
   var presInfo = '';
-  if(presence.last_login_at){
-    presInfo += '<span>· ' + esc(lang==='ar'?'اخر دخول':'Last login') + ': ' + esc(fmtDate(presence.last_login_at)) + '</span>';
+  if(presence.last_seen_at){
+    presInfo += '<span>· ' + esc(lang==='ar'?'اخر ظهور':'Last seen') + ': ' + (presence.is_online ? esc(lang==='ar'?'الحين':'now') : esc(relTime(presence.last_seen_at))) + ' (' + esc(fmtDate(presence.last_seen_at)) + ')</span>';
   }
-  if(presence.last_action){
-    presInfo += '<span>· ' + esc(lang==='ar'?'اخر اجرا':'Last action') + ': ' + esc(presence.last_action) + ' (' + esc(relTime(presence.last_action_at)) + ')</span>';
+  if(presence.last_login_at){
+    presInfo += '<span>· ' + esc(lang==='ar'?'اخر دخول':'Last login') + ': ' + esc(relTime(presence.last_login_at)) + ' (' + esc(fmtDate(presence.last_login_at)) + ')</span>';
+  }
+  if(presence.current_page){
+    presInfo += '<span>· ' + esc(lang==='ar'?'الصفحه الحاليه':'On page') + ': ' + esc(presence.current_page) + '</span>';
   }
   if(presence.current_lesson_id){
     presInfo += '<span>· ' + esc(lang==='ar'?'الدرس الحالي':'Current lesson') + ': ' + esc(presence.current_lesson_id) + '</span>';
+  }
+  if(presence.last_action && !presence.is_online){
+    presInfo += '<span>· ' + esc(lang==='ar'?'اخر اجرا':'Last action') + ': ' + esc(presence.last_action) + ' (' + esc(relTime(presence.last_action_at)) + ')</span>';
   }
   if(presence.session_duration_seconds != null){
     var mins = Math.floor(presence.session_duration_seconds / 60);
@@ -3764,7 +3773,7 @@ function lcWire(){
     b.disabled = true; var orig = b.textContent; b.textContent = lang==='ar'?'...':'...';
     var r = await rpc('admin_decide_live_class_request', { p_request_id:id, p_approve:approve, p_note:note });
     b.disabled = false; b.textContent = orig;
-    if(!r.ok){ toast(lang==='ar'?(approve?'ما يمكنرنا نقبل الطلب':'ما يمكنرنا نرفض الطلب'):(approve?'Could not approve':'Could not decline'), true); return; }
+    if(!r.ok){ toast(lang==='ar'?(approve?'ما قدرنا نقبل الطلب':'ما قدرنا نرفض الطلب'):(approve?'Could not approve':'Could not decline'), true); return; }
     await audit('liveclass.'+(approve?'approve':'decline'), 'live_class_request', id, { note:note });
     toast(lang==='ar'?(approve?'تم قبول الطلب':'تم رفض الطلب')+(approve?'':' - تم ارجاع الرصيد'):(approve?'Request approved':'Request declined - credit refunded'));
     await lcLoad();
@@ -3774,7 +3783,7 @@ function lcWire(){
     var on = b.getAttribute('data-on') === '1';
     var city = (lcState.cities.find(function(c){ return c.id === id; })||{}).city_name || '';
     var r = await rpc('admin_manage_live_class_city', { p_city_name:city, p_available:!on });
-    if(!r.ok){ toast(lang==='ar'?'ما يمكنرنا نحدث المدينه':'Could not update city', true); return; }
+    if(!r.ok){ toast(lang==='ar'?'ما قدرنا نحدث المدينه':'Could not update city', true); return; }
     await audit('liveclass.city.toggle', 'live_class_city', id, { city:city, available:!on });
     await lcLoad();
   }); });
@@ -3784,7 +3793,7 @@ function lcWire(){
     if(!name){ toast(lang==='ar'?'اكتب اسم المدينه':'Type a city name', true); return; }
     var avail = $('lcCityAvail').checked;
     var r = await rpc('admin_manage_live_class_city', { p_city_name:name, p_available:avail });
-    if(!r.ok){ toast(lang==='ar'?'ما يمكنرنا نضيف المدينه':'Could not add city', true); return; }
+    if(!r.ok){ toast(lang==='ar'?'ما قدرنا نضيف المدينه':'Could not add city', true); return; }
     await audit('liveclass.city.add', 'live_class_city', null, { city:name, available:avail });
     $('lcCityName').value = '';
     toast(lang==='ar'?'تمت ومثلن المدينه':'City added');

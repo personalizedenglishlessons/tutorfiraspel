@@ -23,7 +23,7 @@
 <script src="lib/cert-qr.js?v=d202324c" defer></script>
 <script src="lib/cert-sheet.js?v=36e2abcd" defer></script>
 <script src="lib/pel_config.js?v=deec3e10"></script>
-<script src="lib/pel_lesson_stage.js?v=ab2dc46e"></script>
+<script src="lib/pel_lesson_stage.js?v=3495bf0c"></script>
 <script src="lib/pel_dashboard_life.js?v=769f4110"></script>
 <script src="lib/pel_curriculum_path.js?v=4fdca572"></script>
 <style>
@@ -2146,7 +2146,7 @@ async function ensureRouteAllows(academyId){
   // Fail closed: if a signed-in student's route state could not be loaded we
   // cannot verify STEP isolation, so do not open the lesson.
   if(!window.PEL_EFFECTIVE_STATE && typeof currentUser !== 'undefined' && currentUser && typeof client === 'function' && client()){
-    try{ toast('<span class="arabic">ما يمكنرنا نحمّل مسارك</span>، Could not load your plan. Please retry.'); }catch(e){}
+    try{ toast('<span class="arabic">ما قدرنا نحمّل مسارك</span>، Could not load your plan. Please retry.'); }catch(e){}
     return false;
   }
   if(isStepStudent()){
@@ -10260,7 +10260,12 @@ function featuredLesson(){
   try{
     const st = window.PEL_EFFECTIVE_STATE;
     if(st && st.stage && st.lessons && st.lessons.length){
-      const L = st.lessons.find(x => x.state === 'available') || st.lessons[0];
+      // Rotate the daily card through the student's available lessons so it
+      // feels fresh each day; the sequential path stays on "كمل تعلمك" /
+      // nextLesson(). Falls back to the first available lesson.
+      const avail = st.lessons.filter(x => x.state === 'available');
+      const _di = parseInt(new Intl.DateTimeFormat('en-CA', {timeZone:'Asia/Riyadh'}).format(new Date()).replace(/-/g,'')) % 100000;
+      const L = (avail.length > 1 ? avail[_di % avail.length] : (avail[0] || st.lessons[0]));
       if(L && L.id){
         return { academy: st.stage.id, lesson: L.id,
                  en: L.title_en || L.en || L.title || '',
@@ -17300,7 +17305,7 @@ function renderLibrary(){
   if(currentUser && client() && !window.PEL_EFFECTIVE_STATE){
     el.innerHTML = '<div class="empty-state" style="padding:90px 20px;text-align:center;"><h3 style="margin:0;"><span class="arabic" style="display:block;margin-bottom:4px;">نحمّل مسارك</span>Loading your plan...</h3></div>';
     const failState = () => {
-      el.innerHTML = '<div class="empty-state" style="padding:90px 20px;text-align:center;"><h3 style="margin:0 0 8px;"><span class="arabic" style="display:block;margin-bottom:4px;">ما يمكنرنا نحمّل مسارك</span>Could not load your plan.</h3><button type="button" class="btn-outline" id="pelRetryRoute" style="margin-top:8px;"><span class="arabic" style="display:block;">حاول مره ثانية</span>Retry</button></div>';
+      el.innerHTML = '<div class="empty-state" style="padding:90px 20px;text-align:center;"><h3 style="margin:0 0 8px;"><span class="arabic" style="display:block;margin-bottom:4px;">ما قدرنا نحمّل مسارك</span>Could not load your plan.</h3><button type="button" class="btn-outline" id="pelRetryRoute" style="margin-top:8px;"><span class="arabic" style="display:block;">حاول مره ثانية</span>Retry</button></div>';
       const b = document.getElementById('pelRetryRoute'); if(b) b.addEventListener('click', renderLibrary);
     };
     c_rpc_effective_state().then(ok => { if(ok && window.PEL_EFFECTIVE_STATE){ renderLibrary(); } else { failState(); } }).catch(failState);
