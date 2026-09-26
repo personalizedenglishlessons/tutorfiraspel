@@ -1283,7 +1283,7 @@ section{ padding-top:70px; padding-bottom:70px; }
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5"/><path d="M21 11.5a8.5 8.5 0 0 0-8.5-8.5"/></svg>
         </div>
         <div style="font-weight:700; font-size:.95rem;">تستخدمها بالحيا</div>
-        <div style="margin-top:6px; font-size:.8rem; color:var(--text-muted); line-height:1.6;">تستخدمه بشغلك وسفرك وسوالينك</div>
+        <div style="margin-top:6px; font-size:.8rem; color:var(--text-muted); line-height:1.6;">تستخدمه بشغلك وسفرك وسوالفك</div>
       </div>
     </div>
   </div>
@@ -1642,7 +1642,7 @@ function applyIndexLang(lang){
   var ltH2c=document.querySelector('#liveTeaching h2');
   if(ltH2c) ltH2c.textContent = lang==='ar' ? 'من الدرس للحصه المباشره للحياه' : 'From a lesson, to a live class, to real life';
   var ltSteps=document.querySelectorAll('#liveTeaching .lt-step');
-  var ltAr=[{t:'اتعلم في PEL',d:'دروس قصيره من حياتك اليوميه'},{t:'تتمرن مع الاستاذ',d:'تتدرب مع الاستاذ فراس كل اسبوع'},{t:'تستخدمها بالحيا',d:'تستخدمه بشغلك وسفرك وسوالينك'}];
+  var ltAr=[{t:'اتعلم في PEL',d:'دروس قصيره من حياتك اليوميه'},{t:'تتمرن مع الاستاذ',d:'تتدرب مع الاستاذ فراس كل اسبوع'},{t:'تستخدمها بالحيا',d:'تستخدمه بشغلك وسفرك وسوالفك'}];
   var ltEn=[{t:'Learn in PEL',d:'2-minute lessons from situations that happen to you'},{t:'Practice with a teacher',d:'Live group session every week'},{t:'Use it in real life',d:'Work, travel, everyday talk'}];
   ltSteps.forEach(function(step,i){ var arr=lang==='ar'?ltAr:ltEn; if(!arr[i])return; var tEl=step.querySelector('div[style*="font-weight:700"]'); if(tEl) tEl.textContent=arr[i].t; var dEl=step.querySelector('div[style*="color:var(--text-muted)"]'); if(dEl) dEl.textContent=arr[i].d; });
   // any remaining “ابني مسار تعلمي” buttons not covered by data-open-path span
@@ -1736,7 +1736,7 @@ function applyIndexLang(lang){
   var ppP=document.querySelector('#personalPreview .section-head p');
   if(ppP) ppP.textContent = lang==='ar' ? 'PEL ما يعطي الكل نفس الدروس. قل لنا وش تبي الانجليزي لاجله، ونبني لك خطه على مقاس هدفك ومستواك ووقتك' : 'PEL does not give everyone the same lessons. Tell us what you need English for, and we build a plan around your goal, level and time.';
   var ppCards=document.querySelectorAll('#personalPreview .card');
-  var ppAr=[{k:'شغل',t:'انجليزي الشغل',d:'ترعشانزك: محادثه<br>وقتك: 20 دقيقه يوميا<br>مواقف: اجتماع، ايميل، مكالمه'},{k:'سفر',t:'انجليزي السفر',d:'ترعشانزك: استماع<br>وقتك: 15 دقيقه يوميا<br>مواقف: مطار، فندق، مطعم'},{k:'سوالين يوميه',t:'انجليزي يومي',d:'ترعشانزك: محادثه<br>وقتك: 15 دقيقه يوميا<br>مواقف: سوالين، طلبات، مساعده'}];
+  var ppAr=[{k:'شغل',t:'انجليزي الشغل',d:'ترعشانزك: محادثه<br>وقتك: 20 دقيقه يوميا<br>مواقف: اجتماع، ايميل، مكالمه'},{k:'سفر',t:'انجليزي السفر',d:'ترعشانزك: استماع<br>وقتك: 15 دقيقه يوميا<br>مواقف: مطار، فندق، مطعم'},{k:'سوالف يوميه',t:'انجليزي يومي',d:'ترعشانزك: محادثه<br>وقتك: 15 دقيقه يوميا<br>مواقف: سوالف، طلبات، مساعده'}];
   var ppEn=[{k:'Work',t:'Work English',d:'Focus: speaking<br>Time: 20 min a day<br>Situations: meeting, email, call'},{k:'Travel',t:'Travel English',d:'Focus: listening<br>Time: 15 min a day<br>Situations: airport, hotel, restaurant'},{k:'Everyday',t:'Everyday English',d:'Focus: conversation<br>Time: 15 min a day<br>Situations: small talk, requests, help'}];
   ppCards.forEach(function(card,i){
     var data = lang==='ar'?ppAr[i]:ppEn[i];
@@ -1754,7 +1754,7 @@ function applyIndexLang(lang){
   var outP=document.querySelector('.proof .section-head p');
   if(outP) outP.textContent = lang==='ar' ? 'مو درجات وشهادات بس، مواقف حقيقيه تصير اسهل يوم لسه يوم' : 'Not just scores and certificates, real situations that get easier day by day';
   var outCards=document.querySelectorAll('.outcome-grid .card');
-  var outAr=[{t:'تتكلم في شغلك',d:'اجتماع، مكالمه، ايميل، ترد وانت واثق'},{t:'تطلب وتسافر',d:'مطار، مطعم، فندق، ببدون ما تتلخبط'},{t:'تفهم اللي تسمعه',d:'مقطع، سوالين، تعليمات، تلقط المعنى بسرعه'},{t:'تكتب ببدون تردد',d:'رساله، طلب، وصف، لامك واضح'}];
+  var outAr=[{t:'تتكلم في شغلك',d:'اجتماع، مكالمه، ايميل، ترد وانت واثق'},{t:'تطلب وتسافر',d:'مطار، مطعم، فندق، ببدون ما تتلخبط'},{t:'تفهم اللي تسمعه',d:'مقطع، سوالف، تعليمات، تلقط المعنى بسرعه'},{t:'تكتب ببدون تردد',d:'رساله، طلب، وصف، لامك واضح'}];
   var outEn=[{t:'Speak at work',d:'Meeting, call, email, you reply with confidence'},{t:'Order and travel',d:'Airport, restaurant, hotel, no confusion'},{t:'Understand what you hear',d:'Clips, small talk, instructions, you catch the meaning fast'},{t:'Write without hesitation',d:'Message, request, description, clear'}];
   outCards.forEach(function(card,i){
     var data = lang==='ar'?outAr[i]:outEn[i];
@@ -1827,9 +1827,9 @@ function applyIndexLang(lang){
   // (old lesson-card head references removed - replaced by feature tabs)
   // testimonials bilingual
   var testiAr=[
-    {name:'رهف العتيبي',role:'موظفه موارد بشريه الرياض',quote:'كنت كل ما صار عندنا اجتماع مع اجانب اسكت واخلي غيري يتكلم لسه فتره مع الاستاذ فراس صرت ارد واتكلم بثقه وحتى مديري لاحظ الينرق'},
+    {name:'رهف العتيبي',role:'موظفه موارد بشريه الرياض',quote:'كنت كل ما صار عندنا اجتماع مع اجانب اسكت واخلي غيري يتكلم لسه فتره مع الاستاذ فراس صرت ارد واتكلم بثقه وحتى مديري لاحظ الفرق'},
     {name:'علي القحطاني',role:'طالب جامعاي الدمام',quote:'كنت اذا جاني برزنتيشن بالانجليزي اقعد احفظ الكلام كله قبل اعرضه الحين صرت اتكلم من راسي اكثر وما عاد اخاف اذا نسيت جمله'},
-    {name:'لينا حسن',role:'صيدلانيه دبي',quote:'شغلي كله بالانجليزي بس كنت احيانا اتردد اذا احتجت اشرح شي بالتفصيل لمريض الينرق لسه الدروس ان لامي صار اسلس وثقتي اكبر'},
+    {name:'لينا حسن',role:'صيدلانيه دبي',quote:'شغلي كله بالانجليزي بس كنت احيانا اتردد اذا احتجت اشرح شي بالتفصيل لمريض الفرق لسه الدروس ان لامي صار اسلس وثقتي اكبر'},
     {name:'يوسف عبدالسلام',role:'مطور برامج القاهره',quote:'القراوه عندي كانت كويسه لكن الكلام لا اول ما يدخل ميتنج ابقى ساكت دلوقتي بقيت اشارك عادي حتى لو غلطت بكمل ومبقتش اخاف من الموضوع'},
     {name:'دانه العمري',role:'طالبه ثانوي جده',quote:'كنت احب الانجليزي بس اذا طلبت مني الابله اتكلم قدام الينصل اتوتر مره الحين صرت اجاوب ببدون ما افكر كثير واحس نفسي ارتحت صراحه مررره ما قصر'},
     {name:'خالد الهاجري',role:'مدير مبيعات الكويت',quote:'اسافر كثير بحكم الشغل ودايم احتاج اتكلم مع عملا من برا قبل كنت افكر بكل جمله قبل اقولها الحين الامور تمشي بشكل طبيعي وايد'}

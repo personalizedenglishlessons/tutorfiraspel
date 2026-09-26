@@ -81,7 +81,7 @@ LESSONS += [L("b2-pack2-01","Nuanced Opinions","الاراء المرموقة","
       "Formal inversion for conditionals.","قلب رسمي للشرط."),
   ],
   [
-    CH("Which is third conditional?","وشنو الشرط الثالث؟",[
+    CH("Which is third conditional?","ووش الشرط الثالث؟",[
       {"t":"If I had known, I would have called","ok":True},{"t":"If it rains, I will go","ok":False},{"t":"If I were rich, I would travel","ok":False}]),
     TR("I would have helped you.","كنت ساعدتك",["كنت ساعدتك","كان ساعدتك"]),
   ],
@@ -103,7 +103,7 @@ LESSONS += [L("b2-pack2-01","Nuanced Opinions","الاراء المرموقة","
       "Formal request opener.","افتتاح طلب رسمي."),
   ],
   [
-    CH("Which is formal?","وشنو الرسمي؟",[
+    CH("Which is formal?","ووش الرسمي؟",[
       {"t":"I will purchase the items","ok":True},{"t":"I will buy the stuff","ok":False},{"t":"Gimme the things","ok":False}]),
     TR("The kids are playing.","العيايل يلعبون",["العيايل يلعبون","الاطفال يلعبون"]),
   ],
@@ -148,7 +148,7 @@ LESSONS += [L("c1-pack2-01","Advanced Collocations","التلازمات المت
       "Strong collocation with 'show'.","تلازم قوي مع 'show'."),
   ],
   [
-    CH("Which is correct?","وشنو الصح؟",[
+    CH("Which is correct?","ووش الصح؟",[
       {"t":"make a decision","ok":True},{"t":"do a decision","ok":False},{"t":"take a decision","ok":True}]),
     TR("Take the cost into account.","خذ التكلفة بعين الاعتبار",["خذ التكلفة بعين الاعتبار","اعتبر التكلفة"]),
   ],
@@ -281,7 +281,7 @@ LESSONS += [L("c2-pack2-01","Idiomatic Mastery and Nuance","اتقان الاص�
       "Inverted conditional past.","شرط ماضي مقلوب."),
   ],
   [
-    CH("Which uses inversion?","وشنو يستخدم القلب؟",[
+    CH("Which uses inversion?","ووش يستخدم القلب؟",[
       {"t":"Seldom have I seen such skill","ok":True},{"t":"I have seldom seen such skill","ok":False},{"t":"Such skill is rare","ok":False}]),
     TR("Not only did she sing, but she also danced.","ليست فقط غنت بل رقصت ايضا",["ليست فقط غنت بل رقصت ايضا","ليس فقط غنت بل رقصت ايضا"]),
   ],
@@ -348,7 +348,7 @@ LESSONS += [L("step-pack2-01","STEP Reading: Skimming Long Passages","ستيب �
       "Subject-verb agreement rule.","قاعدة تطابق الفاعل والفعل."),
   ],
   [
-    CH("Which is present perfect?","وشنو المضارع التام؟",[
+    CH("Which is present perfect?","ووش المضارع التام؟",[
       {"t":"I have finished the work","ok":True},{"t":"I finished the work","ok":False},{"t":"I will finish the work","ok":False}]),
     TR("She worked yesterday.","اشتغلت امس",["اشتغلت امس","اشتغلت امبارح"]),
   ],
@@ -393,7 +393,7 @@ LESSONS += [L("step-pack2-01","STEP Reading: Skimming Long Passages","ستيب �
   ],
   [
     CH("Why eliminate wrong options first?","ليش تستبعد الخيارات الغلط اول؟",[
-      {"t":"عشان تقلل الخيارات وتختار اسرع","ok":True},{"t":"عشان يختر عليك الوقت","ok":False},{"t":"عشان تستريح","ok":False}]),
+      {"t":"عشان تقلل الخيارات وتختار اسرع","ok":True},{"t":"عشان يخلص عليك الوقت","ok":False},{"t":"عشان تستريح","ok":False}]),
     TR("Find the error in the sentence.","لقي الخطا بالجملة",["لقي الخطا بالجملة","جد الخطا بالجملة"]),
   ],
   ["exam-strategy","error-recognition"],["Spot errors quickly under time pressure"],["exam-prep","practice"],prereqs=["step-pack2-01"])]
