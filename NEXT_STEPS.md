@@ -49,6 +49,27 @@ corrupted 'بدون' to 'ببدون' on every Vocabulary Vault flashcard at rend
 time (example sentences, synonyms, family, collocations, tips). Now a no-op
 keep. Also removed the dead `.replace(/يمكنر/g,'يمكنر')` line.
 
+
+### Session continuation (commits 1e6c22b, c293d12, 6c5ebc1)
+1. **Lesson of the Day rotation could never rotate** (1e6c22b): the stage
+   gates lessons strictly sequentially (available = rn <= done+1), so
+   exactly ONE lesson is ever 'available' — de68104's rotation among
+   available lessons was dead code. Pool is now available + completed
+   lessons in the CURRENT stage (daily review picks, labeled مراجعه);
+   locked lessons excluded.
+2. **Admin 360 curriculum** (c293d12, 6c5ebc1): render360 loads
+   student_curriculum (54 academies) via PEL_ENGINE.setCurriculumOverride.
+   skillScoresAll now aggregates over the DB catalog — the student's
+   completed lessons live in granular stage academies (a1-present-simple,
+   step-exam-prep...) that the static ACADEMY_META mirror (30) misses
+   entirely, which is why skills stayed 0%. academyName/lessonName consult
+   dbAcademy/dbLesson for real display names. Progression line label
+   fixed (درس منجز), 2 more mangled i18n strings fixed.
+3. **Student lesson flow verified live end-to-end** (testmail1): resume at
+   27/28 -> teach panel -> recall 6/6 -> challenge quick question -> lesson
+   complete toast -> XP 250->300 server-side -> stage 0/23 -> 1/23 ->
+   auto-advance to next lesson. Zero console errors across 290 CDP events.
+
 ### Deliberately NOT changed (house style / later legit simplifications)
 عشانك؟ greeting, بعدين/بعدها/الجاه/ومثلن/صح/اغلط dialect forms,
 پ for P in translits, الانجليزي (old pre-corruption commit itself had
