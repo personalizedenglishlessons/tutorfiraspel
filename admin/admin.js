@@ -40,7 +40,7 @@ var I = {
   'operations':{en:'Operations', ar:'الشغليات'},
   'trust':{en:'Trust', ar:'الموثوقيه'},
   'students':{en:'Students', ar:'الطلاب'},
-  'teachers':{en:'Teachers', ar:'المعلمين'},
+  'teachers':{en:'Teachers', ar:'الاستاذين'},
   'groups':{en:'Groups', ar:'المجموعات'},
   'courses':{en:'Courses', ar:'المسارات'},
   'interventions':{en:'Interventions', ar:'التدخلات'},
@@ -55,7 +55,7 @@ var I = {
   'status':{en:'Status', ar:'الحاله'},
   'level':{en:'Level', ar:'المستوى'},
   'program':{en:'Program', ar:'البرنامج'},
-  'teacher':{en:'Teacher', ar:'المعلم'},
+  'teacher':{en:'Teacher', ar:'الاستاذ'},
   'group':{en:'Group', ar:'المجموعه'},
   'certStatus':{en:'Certificate', ar:'الشهاده'},
   'all':{en:'All', ar:'الكل'},
@@ -73,9 +73,9 @@ var I = {
   'new':{en:'New', ar:'جديد'}, 'active':{en:'Active', ar:'نشط'}, 'stalled':{en:'Stalled', ar:'متوقف'}, 'inactive':{en:'Inactive', ar:'غير نشط'}, 'suspended':{en:'Suspended', ar:'موقوف'},
   'issued':{en:'Issued', ar:'مصدره'}, 'revoked':{en:'Revoked', ar:'ملغاه'}, 'reissued':{en:'Reissued', ar:'اعيد اصدارها'}, 'draft':{en:'Draft', ar:'مسوده'},
   'present':{en:'Present', ar:'حاضر'}, 'absent':{en:'Absent', ar:'غايب'}, 'late':{en:'Late', ar:'متاخر'}, 'excused':{en:'Excused', ar:'بعذر'},
-  'scheduled':{en:'Scheduled', ar:'مجدول'}, 'completed':{en:'Completed', ar:'مكتمل'}, 'cancelled':{en:'Cancelled', ar:'ملغي'}, 'rescheduled':{en:'Rescheduled', ar:'اعيدت جدولته'},
+  'scheduled':{en:'Scheduled', ar:'محدد'}, 'completed':{en:'Completed', ar:'مكتمل'}, 'cancelled':{en:'Cancelled', ar:'ملغي'}, 'rescheduled':{en:'Rescheduled', ar:'اعيدت جدولته'},
   'needsAttention':{en:'Needs attention', ar:'يحتاج انتباه'},
-  'inactiveReason':{en:'No activity for %d days', ar:'لا نشاط منذ %d يوم'},
+  'inactiveReason':{en:'No activity for %d days', ar:'ما فيه نشاط من %d يوم'},
   'missedLiveReason':{en:'%d missed live sessions (30d)', ar:'%d دروس مباشره مفقوده (٣٠ يوم)'},
   'expiringReason':{en:'Program ends in %d days', ar:'ينتهي البرنامج خلال %d يوم'},
   'whatShouldIDo':{en:'What should I do?', ar:'وش افعل الحين؟'},
@@ -86,7 +86,7 @@ var I = {
   'stalledStudents':{en:'Stalled', ar:'متوقفون'},
   'avgProgress':{en:'Avg lessons', ar:'متوسط الدروس'},
   'certsIssued':{en:'Certificates', ar:'الشهادات'},
-  'teachersCount':{en:'Teachers', ar:'المعلمين'},
+  'teachersCount':{en:'Teachers', ar:'الاستاذين'},
   'groupsCount':{en:'Active groups', ar:'المجموعات النشطه'},
   'upcomingClasses':{en:'Upcoming classes', ar:'الدروس القادمه'},
   'expiringPrograms':{en:'Programs expiring (14d)', ar:'برامج تنتهي (١٤ يوم)'},
@@ -109,9 +109,9 @@ var I = {
   'edit':{en:'Edit', ar:'تعديل'},
   'errorGeneric':{en:'Something went wrong. Try again.', ar:'حدث خطا. حاول مره ثانيه.'},
   'noPermission':{en:'You do not have permission for this action.', ar:'ليس لديك صلاحيه لذا الاجرا.'},
-  'verifyCode':{en:'Verify code', ar:'تحقق من الرمز'},
+  'verifyCode':{en:'Verify code', ar:'تاكد من الرمز'},
   'code':{en:'Code', ar:'الرمز'},
-  'issuedAt':{en:'Issued', ar:'صدرت في'},
+  'issuedAt':{en:'Issued', ar:'طلعت في'},
   'revokeReason':{en:'Reason for revocation', ar:'سبب الالغا'},
   'revoke':{en:'Revoke', ar:'الغا'},
   'reissue':{en:'Reissue', ar:'اعاده اصدار'},
@@ -131,7 +131,7 @@ var I = {
   'verifyResult':{en:'Verification result', ar:'نتيجه التحقق'},
   'valid':{en:'Valid', ar:'صالحه'}, 'invalid':{en:'Invalid / revoked', ar:'غير صالحه / ملغاه'},
   'print':{en:'Print', ar:'طباعه'},
-  'blocked':{en:'Popup blocked. Allow popups for this site to print.', ar:'تم حظر النافذه المنبثقه. اسمح بالنوافذ المنبثقه لذا الموقع للطباعه.'},
+  'blocked':{en:'Popup blocked. Allow popups for this site to print.', ar:'انحظر النافذه المنبثقه. اسمح بالنوافذ المنبثقه لذا الموقع للطباعه.'},
   'student360':{en:'Student 360', ar:'ملف الطالب'},
   'profile':{en:'Profile', ar:'الملف'},
   'learningHealth':{en:'Learning health', ar:'صحه التعلم'},
@@ -153,7 +153,7 @@ var I = {
   'takeSnapshot':{en:'Save monthly snapshot', ar:'حفظ لقطه شهره'},
   'snapshotSaved':{en:'Snapshot saved', ar:'تم حفظ اللقطه'},
   'preview':{en:'View student experience', ar:'معوينه تجربه الطالب'},
-  'previewNote':{en:'Read-only preview - nothing on the student account changes.', ar:'معوينه للقراوه بس - لا يحدث اي تغيير على حساب الطالب.'},
+  'previewNote':{en:'Read-only preview - nothing on the student account changes.', ar:'معوينه للقرايه بس - ما يصير اي تغيير على حساب الطالب.'},
   'weakAreas':{en:'Weak areas', ar:'المواضع الضعيفه'},
   'strongAreas':{en:'Strong areas', ar:'المواضع القويه'},
   'mainDifficulty':{en:'Main difficulty', ar:'الاكثر صعوبه'},
@@ -190,11 +190,11 @@ var I = {
   'moveFromWaitlist':{en:'Move into group', ar:'نقل للمجموعه'},
   'addStudent':{en:'Add student', ar:'اضافه طالب'},
   'createStudent':{en:'Create student', ar:'انشا طالب'},
-  'createStudentDesc':{en:'Create an account the student can sign in with. Set their name, email, and a password (min 8 chars).', ar:'انشي حساب يقدر الطالب يدخل فيه. حدد اسمه، ايميله، وكلمه مرور (٨ احرف على الاقل).'},
+  'createStudentDesc':{en:'Create an account the student can sign in with. Set their name, email, and a password (min 8 chars).', ar:'انشا حساب يقدر الطالب يدخل فيه. حدد اسمه، ايميله، وكلمه مرور (٨ احرف على الاقل).'},
   'studentEmail':{en:'Email', ar:'البريد الالكتروني'},
   'studentPassword':{en:'Password', ar:'كلمه المرور'},
   'pwMinLen':{en:'At least 8 characters', ar:'٨ احرف على الاقل'},
-  'studentCreated':{en:'Student created. Share the email and password with them.', ar:'تم انشا الطالب. شارك الايميل وكلمه المرور معه.'},
+  'studentCreated':{en:'Student created. Share the email and password with them.', ar:'انشا الطالب. شارك الايميل وكلمه المرور معه.'},
   'removeStudent':{en:'Remove', ar:'ازاله'},
   'assignTeacher':{en:'Assign teacher', ar:'اسناد معلم'},
   'schedule':{en:'Schedule', ar:'الجدول'},
@@ -280,7 +280,7 @@ var I = {
   'duration':{en:'Duration', ar:'المده'},
   'sessionsRemaining':{en:'Remaining', ar:'المتبقيه'},
   'changeRole':{en:'Change role', ar:'تغيير الدور'},
-  'confirmChange':{en:'Are you sure? This is recorded in the audit log.', ar:'متاكد؟ سيتم تسجيل ذاك في سجل التدقيق.'},
+  'confirmChange':{en:'Are you sure? This is recorded in the audit log.', ar:'متاكد؟ بنحذف تسجيل ذاك في سجل التدقيق.'},
   'refresh':{en:'Refresh', ar:'تحديث'},
   'checks':{en:'Checks', ar:'الفحوصات'},
   'type':{en:'Type', ar:'النوع'},
@@ -348,7 +348,7 @@ var I = {
   'activePlans':{en:'Active plans', ar:'باقات نشطه'},
   'expiringSoon':{en:'Expiring soon (7d)', ar:'تنتهي قريبً (٧ ايام)'},
   'expiredPlans':{en:'Expired plans', ar:'باقات منتهيه'},
-  'scheduledPlans':{en:'Scheduled plans', ar:'باقات مجدوله'},
+  'scheduledPlans':{en:'Scheduled plans', ar:'باقات محدده'},
   'suspendedPlans':{en:'Suspended plans', ar:'باقات موقوفه'},
   'expired':{en:'Expired', ar:'منتهيه'},
   'daysLeft':{en:'%d days left', ar:'متبقي %d يوم'},
@@ -400,7 +400,7 @@ var I = {
   'reactivated':{en:'Reactivated', ar:'اعيد تفعيلها'},
   'assigned':{en:'Assigned', ar:'اسندت'},
   'extended':{en:'Extended', ar:'مددت'},
-  'scheduledLbl':{en:'Scheduled', ar:'مجدوله'},
+  'scheduledLbl':{en:'Scheduled', ar:'محدده'},
   'planNote':{en:'Access expires automatically on the end date (server-enforced). Renewing never resets progress.', ar:'ينتهي الوصول تلقايياً بتاريخ النهايه (تطبيق من الخادم). التجديد لا يمسّ تقدمك.'},
   'notificationSent':{en:'Announcement sent.', ar:'تم ارسال الاعلان.'},
   'planSaved':{en:'Plan saved.', ar:'تم حفظ الباقه.'},
@@ -706,7 +706,7 @@ var NAV = [
   { label:'overview', items:[ {id:'overview', en:'Overview', ar:'نظره عامه', icon:'layout-dashboard'} ] },
   { label:'people', items:[
     {id:'students', en:'Students', ar:'الطلاب', icon:'users'},
-    {id:'teachers', en:'Teachers', ar:'المعلمين', icon:'user-check'},
+    {id:'teachers', en:'Teachers', ar:'الاستاذين', icon:'user-check'},
     {id:'groups', en:'Groups', ar:'المجموعات', icon:'layers'},
   ]},
   { label:'learning', items:[
@@ -1117,7 +1117,7 @@ function render360(){
     '</div>' +
     '<div class="btn-row">' +
     '<button class="btn btn-outline btn-sm" id="s360Preview">' + esc(t('preview')) + '</button>' +
-    (hasPerm('students.manage') ? '<button class="btn btn-danger btn-sm" id="s360Delete">' + esc(lang === 'ar' ? 'حذف الطالب نهايياً' : 'Delete student permanently') + '</button>' : '') +
+    (hasPerm('students.manage') ? '<button class="btn btn-danger btn-sm" id="s360Delete">' + esc(lang === 'ar' ? 'حذف الطالب نهائيا' : 'Delete student permanently') + '</button>' : '') +
     '<button class="btn btn-ghost btn-sm" data-goback="">' + esc(t('back')) + '</button>' +
     '</div></div>';
 
@@ -1250,7 +1250,7 @@ var tabs = [
   var delBtn = $('s360Delete');
   if(delBtn){
     delBtn.addEventListener('click', async function(){
-      if(!confirm(lang === 'ar' ? 'سيتم حذف حساب الطالب وكل بياناته نهايياً (تبقى الشهادات بس). متابعه؟' : 'This permanently deletes the student account and ALL their history (certificates are kept). Continue?')){ return; }
+      if(!confirm(lang === 'ar' ? 'بنحذف حذف حساب الطالب وكل بياناته نهائيا (تبقى الشهادات بس). متابعه؟' : 'This permanently deletes the student account and ALL their history (certificates are kept). Continue?')){ return; }
       if(!confirm(lang === 'ar' ? 'تاكيد اخوير: ذا الاجرا لا يمكن التراجع عنه.' : 'Final confirmation: this cannot be undone.')){ return; }
       delBtn.disabled = true;
       var r = await rpc('admin_student_delete', { p_user_id: current360Uid });
@@ -2359,7 +2359,7 @@ async function interventions(){
       (i.reason_en ? '<span class="why">' + esc(lang === 'ar' ? i.reason_ar : i.reason_en) + '</span>' : '') +
       '</div></div>';
   }).join('') || emptyBlock(t('noInterventions'));
-  $('viewArea').innerHTML = pageHead(t('interventions'), lang === 'ar' ? 'تدخلات المعلمين والاداره' : 'Teacher and admin interventions') +
+  $('viewArea').innerHTML = pageHead(t('interventions'), lang === 'ar' ? 'تدخلات الاستاذين والاداره' : 'Teacher and admin interventions') +
     '<div class="card"><div class="reason-list">' + html + '</div></div>';
   loadIcons();
   wireStudentLinks();
@@ -3346,7 +3346,7 @@ async function announcementsView(){
     b.addEventListener('click', async function(){
       var id = b.getAttribute('data-del');
       var a = window.__annRows[id] || {};
-      if(!confirm(lang === 'ar' ? 'حذف ذا الاعلان نهايياً؟' : 'Permanently delete this announcement?')){ return; }
+      if(!confirm(lang === 'ar' ? 'حذف ذا الاعلان نهائيا؟' : 'Permanently delete this announcement?')){ return; }
       var r = await rpc('admin_announcement_delete', { p_id: id });
       if(!r.ok){ toast((r.error && r.error.message) || t('permissionDenied'), true); return; }
       toast(lang === 'ar' ? 'تم حذف الاعلان.' : 'Announcement deleted.');
