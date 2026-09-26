@@ -330,7 +330,7 @@ LESSONS += [
 AC = "b2-professional-comm"
 LESSONS += [
  L("b2pro-email-tone", "Professional Email Tone", "نبرة الايميل المهني", "B2", AC,
-   [W("regards", "مع خالص التحية", "ريقاردز"), W("attached", "مرفق", "اتا تشد"),
+   [W("regards", "تحياتي", "ريقاردز"), W("attached", "مرفق", "اتا تشد"),
     E("Keep emails short, polite, and clear.", "خلي الايميلات قصيرة ومهذبة وواضحة."),
     S("Please find the report attached.", "تجد التقرير مرفق.", "بليز فايند ذا ريبورت اتا تشد"),
     S("I look forward to your reply.", "بانتظار ردك.", "اي لوك فوروورد تو يور ريبلاي")],

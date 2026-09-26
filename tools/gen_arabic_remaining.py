@@ -5,7 +5,7 @@ import json
 
 # 30 choose exercises: (id, arabic_question)
 CHOOSE = [
-    (763, "مش كبير يعني:"),
+    (763, "مو كبير يعني:"),
     (698, "احتاج ___ ساعة عشان اخلص."),
     (727, "كنت جوعان، ___ سويت ساندويتش."),
     (730, "___ هو صغير، يدير الفريق."),
@@ -151,7 +151,7 @@ ORDER = [
     (750, "رتب بالانجليزي:"),  # Build this in English:
     (703, "رتب: صباح الخير."),  # Build it: Good morning.
     (708, "رتب: اسمي سارة."),  # Build it: My name is Sara.
-    (706, "رتب: مشكور وايد."),  # Build it: Thank you very much.
+    (706, "رتب: مشكور مره."),  # Build it: Thank you very much.
     (780, "رتب بالانجليزي:"),  # Build this in English:
     (735, "رتب: الاسبوع اللي راح رحت جدة."),  # Build it: Last week I went to Jeddah.
     (697, "رتب: فيه كرسيين."),  # Build it: There are two chairs.
