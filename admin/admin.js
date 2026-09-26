@@ -116,7 +116,7 @@ var I = {
   'revoke':{en:'Revoke', ar:'الغا'},
   'reissue':{en:'Reissue', ar:'اعاده اصدار'},
   'issueCert':{en:'Issue certificate', ar:'اصدار شهاده'},
-  'manualRecipient':{en:'Manual recipient (no account)', ar:'مستلم يدوي (ببدون حساب)'},
+  'manualRecipient':{en:'Manual recipient (no account)', ar:'مستلم يدوي (بدون حساب)'},
   'existingStudent':{en:'Existing student', ar:'طالب مسجل'},
   'completionDate':{en:'Completion date', ar:'تاريخ الامثلل'},
   'issueDate':{en:'Issue date', ar:'تاريخ الاصدار'},
@@ -235,7 +235,7 @@ var I = {
   'recognition':{en:'Recognition', ar:'الاسترجاع'},
   'production':{en:'Production (eventual)', ar:'الانتاج (لسه المحاول شيت)'},
   'productionFirst':{en:'Production (first try)', ar:'الانتاج (اول محاوله)'},
-  'recentLessons':{en:'Recent lessons', ar:'واحدث الدروس'},
+  'recentLessons':{en:'Recent lessons', ar:'احداث الدروس'},
   'noStatsYet':{en:'No exercise stats recorded yet. They appear after the first lesson completion.', ar:'ما فيه احصاييات لسه. تظهر لسه امثلل اول درس.'},
   'lastStudy':{en:'Last study day', ar:'اخر يوم دراسه'},
   'longestStreak':{en:'Longest streak', ar:'اطول استمرار'},
@@ -271,7 +271,7 @@ var I = {
   'dismissRec':{en:'Dismiss', ar:'تجاهل'},
   'replacementLesson':{en:'Replacement lesson', ar:'الدرس البديل'},
   'strengthWord':{en:'Strength', ar:'قوه'},
-  'weekday_0':{en:'Sun',ar:'الواحد'},'weekday_1':{en:'Mon',ar:'الاثنين'},'weekday_2':{en:'Tue',ar:'الثلاثا'},'weekday_3':{en:'Wed',ar:'الاربعا'},'weekday_4':{en:'Thu',ar:'الخميس'},'weekday_5':{en:'Fri',ar:'الجمعه'},'weekday_6':{en:'Sat',ar:'السبت'},
+  'weekday_0':{en:'Sun',ar:'الاحد'},'weekday_1':{en:'Mon',ar:'الاثنين'},'weekday_2':{en:'Tue',ar:'الثلاثا'},'weekday_3':{en:'Wed',ar:'الاربعا'},'weekday_4':{en:'Thu',ar:'الخميس'},'weekday_5':{en:'Fri',ar:'الجمعه'},'weekday_6':{en:'Sat',ar:'السبت'},
   'course':{en:'Course', ar:'المسار'},
   'memberCount':{en:'Members', ar:'الاعضا'},
   'members':{en:'Members', ar:'الاعضا'},
@@ -335,7 +335,7 @@ var I = {
   'moveUp':{en:'Move up', ar:'لاعلى'},
   'moveDown':{en:'Move down', ar:'لاسفل'},
   'academy':{en:'Academy', ar:'الاكاديميه'},
-  'confirmUnlink':{en:'Remove this lesson from this academy? Students lose access to it there.', ar:'ازاله ذا الدرس من الاكاديميه؟ الطلاب يفقبدون الوصول له هنا.'},
+  'confirmUnlink':{en:'Remove this lesson from this academy? Students lose access to it there.', ar:'ازاله ذا الدرس من الاكاديميه؟ الطلاب يفقدون الوصول له هنا.'},
   'lessonSaved':{en:'Lesson saved.', ar:'حفظنا الدرس.'},
   'curriculumUpdated':{en:'Curriculum updated.', ar:'حدثنا المنهج.'},
   'select':{en:'Select', ar:'اختيار'},
@@ -353,7 +353,7 @@ var I = {
   'suspendedPlans':{en:'Suspended plans', ar:'باقات موقوفه'},
   'expired':{en:'Expired', ar:'منتهيه'},
   'daysLeft':{en:'%d days left', ar:'متبقي %d يوم'},
-  'noPlan':{en:'No plan', ar:'ببدون باقه'},
+  'noPlan':{en:'No plan', ar:'بدون باقه'},
   'assignPlan':{en:'Assign plan', ar:'اسناد باقه'},
   'newPlan':{en:'New plan', ar:'باقه جديده'},
   'planCatalog':{en:'Plan catalog', ar:'كتالوج الباقات'},
@@ -379,7 +379,7 @@ var I = {
   'message':{en:'Message', ar:'الرساله'},
   'audience':{en:'Audience', ar:'الجمهور'},
   'everyone':{en:'All students', ar:'كل الطلاب'},
-  'specificStudents':{en:'Specific students', ar:'طلاب محدبدون'},
+  'specificStudents':{en:'Specific students', ar:'طلاب محددون'},
   'selectStudents':{en:'Select students', ar:'اختر الطلاب'},
   'priority':{en:'Priority', ar:'الاولويه'},
   'important':{en:'Important', ar:'مهم'},
@@ -413,7 +413,7 @@ var I = {
   'entExpiring7':{en:'Expiring ≤7 days', ar:'ينتهي خلال ٧ ايام'},
   'entExpiring30':{en:'Expiring ≤30 days', ar:'ينتهي خلال ٣٠ يوم'},
   'entExpired':{en:'Expired', ar:'منتهيه'},
-  'entNoPlan':{en:'No plan', ar:'ببدون باقه'},
+  'entNoPlan':{en:'No plan', ar:'بدون باقه'},
   'entSuspended':{en:'Suspended', ar:'موقوفه'},
   'seeAll':{en:'See all', ar:'عرض الكل'},
 };
@@ -3612,7 +3612,7 @@ async function renderTabPlan(d){
 
   var statusLine;
   if(!has){
-    statusLine = '<div class="notice"><div>' + (lang === 'ar' ? 'ذا الطالب ببدون باقه حالياً.' : 'This student has no active plan.') + '</div></div>';
+    statusLine = '<div class="notice"><div>' + (lang === 'ar' ? 'ذا الطالب بدون باقه حالياً.' : 'This student has no active plan.') + '</div></div>';
   } else {
     var planName = lang === 'ar' ? (plan.name_ar || plan.name_en) : plan.name_en;
     statusLine = '<div class="s360-meta" style="margin-top:0;">' + planStatusChip(ps.status) + chip(esc(planName), 'gold') +

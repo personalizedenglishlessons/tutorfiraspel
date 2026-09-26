@@ -1,5 +1,68 @@
 # NEXT STEPS - pick up here
 
+## DONE: Admin student-360 fixes + new corruption families sweep (2026-09-27 session)
+
+### Admin student 360 (commit a98f426 + this commit)
+1. **admin_student_progression RPC failed for every admin** — it checked
+   has_permission('students.view'), a permission that exists NOWHERE in
+   role_permissions (table uses students.read/write/manage). The 360-header
+   progression line (stage/level/lesson/completed count) never rendered.
+   Migration 202609270001 -> checks students.read; applied to live DB.
+2. Skills tab showed 0% everywhere for core-curriculum students —
+   academyProgress() only counted the 6 named academies. Added
+   skillScoresAll(): every academy maps to a primary skill (default
+   vocabulary), aggregates across ALL academies (mirrors app.html
+   dashSkillData fix). learningHealth uses it too.
+3. Personalization tab: 'undefinedw · undefinedd' — estimate object stores
+   weeks/days, not totalWeeks/totalStudyDays. 'تقريب %D دقيقه' raw %d
+   placeholder -> new estDaily key.
+4. 360 header 'C2 → C2' chip showed target twice -> now
+   estimatedStartingLevel → targetLevel ('A1 → C2').
+5. Billing track chip 'المسار -' for assessed_track='step' -> added ستيپ label.
+
+### NEW corruption families found + fixed (this commit, source only — DB verified clean)
+Recovered originals from 57f466b^ by signature-anchored line diffing
+(English/code parts of each line as the anchor — corruption never touched them):
+- **د→بد insertion**: ببدون→بدون (74), بدونالد→دونالد, بدونت→دونت,
+  انبدونيجا→اندونيجا, يصعبدون→يصعدون, ينابدونك→ينادونك, يربدون→يردون,
+  ساعبدوني→ساعدوني, يزيبدون→يزيدون, يفقبدون→يفقدون, محدبدون→محددون
+- **قد/قدم→مكن**: ميمكنر→مقدر, يمكنرنا→قدرنا, ييمكنر→يقدر, ميمكنمًا→مقدمًا,
+  يمكنيم→قديم, بيمكنمك→بقدمك, لويمكن→لوقد, يمكنّيش→قدّيش, + more
+- **ك dropped**: لام→كلام, لاسيك→كلاسيك, لاسروم→كلاسروم, لاودي→كلاودي,
+  كتشن→كيتشن, كلو→كيلو, ويكند→ويكيند, كالوفورنيا→كالافورنيا,
+  انسايلاپيديا→انسايكلاپيديا, کولد→كولد (Persian kaf)
+- **كيف→عشان leftovers**: 39 line-verified restores (كيف الدوام/النوم/تنطق...)
+  عشانك greeting kept (house style). عشبسستري→كيماستري, عشبسكال→كيماكال
+- **ا→وا before احد/احداث**: واحداث→احداث, الواحداث→الاحداث ( weekdays
+  الاحد, 'واحدث الدروس'→'احدث الدروس' etc.)
+- **ف→وف**: الوفكار→الافكار, الوفطار→الافطار, الوفضل→الافضل
+- **one-offs**: التصح→التصحيح, الكلًا→جميعًا, للالكل→للجميع, الانوي→الينوي,
+  يبانن→يبدون, باوليا→بالعليا, لاريفوينق→كلاريفوينق, انڤايربسنت→انڤايرنمنت,
+  ڤايلنس→ڤايولنس, كالاندر→كاليندر, لاهم→كلاهم, القدام→الامام, بلامك→بكلامك,
+  لللام→للكلام, يحك→يحكي, والاناره→والانوار, نداخل→نضمن, اغلطيك→اخطايك,
+  اغلطيي→اخطايي, تتغلطه→تتخطاه, الومثلن→الاضافه, المعشانه→الملكيه,
+  تشولات→تشوكلات, كاردقدام→كاردامام, ماكسقدام→ماكسامام, مينقدام→مينامام
+
+### RUNTIME corruption killed (root cause of recurring ببدون)
+vvSaudiClean() in app.html had `.replace(/بدون/g,'ببدون')` — it actively
+corrupted 'بدون' to 'ببدون' on every Vocabulary Vault flashcard at render
+time (example sentences, synonyms, family, collocations, tips). Now a no-op
+keep. Also removed the dead `.replace(/يمكنر/g,'يمكنر')` line.
+
+### Deliberately NOT changed (house style / later legit simplifications)
+عشانك؟ greeting, بعدين/بعدها/الجاه/ومثلن/صح/اغلط dialect forms,
+پ for P in translits, الانجليزي (old pre-corruption commit itself had
+الحينجليزي garbage — current is the fixed version).
+
+### Verification
+- All 3 test files pass (52/52 + build sequence + audit same 2 pre-existing advisories)
+- node --check on all lib/*.js
+- Live DB scanned: lesson_items, lesson_exercises, words, lessons, academies,
+  announcements + 13 more tables = 0 hits, no migration needed
+- Cache busters bumped: pel-personalization (8b3a91d5), pel_lesson_stage
+  (c7e2404f), onboard (1f9d04ab), pel-assessment (42c08bd9)
+
+
 ## DONE: Full mangled-word recovery + DB migration (2026-09-26 session)
 
 ### Root cause found

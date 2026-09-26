@@ -30,9 +30,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;500;700&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
 <script src="lib/daily-lesson.js?v=4de3f5bb" defer></script>
-<script src="lib/pel-personalization.js?v=261257c2" defer></script>
-<script src="lib/onboard.js?v=675e2760" defer></script>
-<script src="lib/pel-assessment.js?v=5835e2f4" defer></script>
+<script src="lib/pel-personalization.js?v=8b3a91d5" defer></script>
+<script src="lib/onboard.js?v=1f9d04ab" defer></script>
+<script src="lib/pel-assessment.js?v=42c08bd9" defer></script>
 <style>
 :root{
   --bg:#0E0E10;
@@ -1234,7 +1234,7 @@ section{ padding-top:70px; padding-bottom:70px; }
         </div>
       </div>
     </div>
-    <div style="text-align:center; margin-top:24px; font-size:.82rem; color:var(--text-muted);">ببدون تسجيل، تشوف نتيجتك قبل ما تدفع</div>
+    <div style="text-align:center; margin-top:24px; font-size:.82rem; color:var(--text-muted);">بدون تسجيل، تشوف نتيجتك قبل ما تدفع</div>
   </div>
 </section>
 
@@ -1471,7 +1471,7 @@ section{ padding-top:70px; padding-bottom:70px; }
 <!-- consent notice bar (local-only storage disclosure, dismissible) -->
 <div class="consent-bar" id="consentBar" role="dialog" aria-label="اشعار الخصوصيه">
   <div class="consent-text">
-    <span class="arabic" style="display:block;">منصتنا تخزّن على جهازك بس: المظهر، لغه الواجهه، وجلسه الدخول. ما نستخدم ملفات تتبع ولا نشارك بياناتك مع اي واحد.</span>
+    <span class="arabic" style="display:block;">منصتنا تخزّن على جهازك بس: المظهر، لغه الواجهه، وجلسه الدخول. ما نستخدم ملفات تتبع ولا نشارك بياناتك مع اي احد.</span>
     <span style="font-size:.76rem; color:var(--text-muted);">We store only your theme, language and sign-in session on this device. No tracking, no data sharing.</span>
   </div>
   <div class="consent-actions">
@@ -1589,7 +1589,7 @@ function applyIndexLang(lang){
   var personalHint=document.querySelector('#personalPreview p[style*="font-size:.88rem"]');
   if(personalHint) personalHint.textContent = lang==='ar' ? 'اساله سريعه، كل جواب يغير توصيتك. مستواك وهدفك ووقتك كلها تدخل في حساب الخطه' : 'Quick questions, each answer changes your recommendation. Your level, goal and time all shape your plan.';
   var personalSubNote=document.querySelector('#personalPreview div[style*="font-size:.76rem"]');
-  if(personalSubNote) personalSubNote.textContent = lang==='ar' ? 'ببدون تسجيل، نتيجتك تطلع قدامك على طول' : 'No signup needed, your result shows right away.';
+  if(personalSubNote) personalSubNote.textContent = lang==='ar' ? 'بدون تسجيل، نتيجتك تطلع قدامك على طول' : 'No signup needed, your result shows right away.';
   // compact plan preview bilingual
   var ppHead=document.querySelector('#personalPreview .eyebrow');
   if(ppHead) ppHead.textContent = lang==='ar' ? 'خطتك على مقاسك' : '2-minute test finds your level and goal';
@@ -1635,7 +1635,7 @@ function applyIndexLang(lang){
   var ppBtn=document.querySelector('#personalPreview .btn-gold span');
   if(ppBtn) ppBtn.textContent = lang==='ar' ? 'اعرف بدايتي' : 'Find my starting point';
   var ppNote=document.querySelector('#personalPreview div[style*="font-size:.82rem"]');
-  if(ppNote) ppNote.textContent = lang==='ar' ? 'ببدون تسجيل، نتيجتك تطلع قدامك على طول' : 'No signup needed, see your result before you pay';
+  if(ppNote) ppNote.textContent = lang==='ar' ? 'بدون تسجيل، نتيجتك تطلع قدامك على طول' : 'No signup needed, see your result before you pay';
   // live teaching bilingual
   var ltHead=document.querySelector('#liveTeaching .eyebrow');
   if(ltHead) ltHead.textContent = lang==='ar' ? 'تعلم وممارسه' : 'Learn & practice';
@@ -1754,7 +1754,7 @@ function applyIndexLang(lang){
   var outP=document.querySelector('.proof .section-head p');
   if(outP) outP.textContent = lang==='ar' ? 'مو درجات وشهادات بس، مواقف حقيقيه تصير اسهل يوم لسه يوم' : 'Not just scores and certificates, real situations that get easier day by day';
   var outCards=document.querySelectorAll('.outcome-grid .card');
-  var outAr=[{t:'تتكلم في شغلك',d:'اجتماع، مكالمه، ايميل، ترد وانت واثق'},{t:'تطلب وتسافر',d:'مطار، مطعم، فندق، ببدون ما تتلخبط'},{t:'تفهم اللي تسمعه',d:'مقطع، سوالف، تعليمات، تلقط المعنى بسرعه'},{t:'تكتب ببدون تردد',d:'رساله، طلب، وصف، لامك واضح'}];
+  var outAr=[{t:'تتكلم في شغلك',d:'اجتماع، مكالمه، ايميل، ترد وانت واثق'},{t:'تطلب وتسافر',d:'مطار، مطعم، فندق، بدون ما تتلخبط'},{t:'تفهم اللي تسمعه',d:'مقطع، سوالف، تعليمات، تلقط المعنى بسرعه'},{t:'تكتب بدون تردد',d:'رساله، طلب، وصف، كلامك واضح'}];
   var outEn=[{t:'Speak at work',d:'Meeting, call, email, you reply with confidence'},{t:'Order and travel',d:'Airport, restaurant, hotel, no confusion'},{t:'Understand what you hear',d:'Clips, small talk, instructions, you catch the meaning fast'},{t:'Write without hesitation',d:'Message, request, description, clear'}];
   outCards.forEach(function(card,i){
     var data = lang==='ar'?outAr[i]:outEn[i];
@@ -1776,7 +1776,7 @@ function applyIndexLang(lang){
   var moreHeads=[
     {sel:'.course-section .section-head h2', ar:'مسارات مختلفه، وخطه وحده تناسبك', en:'Different tracks, one plan that fits you'},
     {sel:'.course-section .section-head p', ar:'تشوف كل شي لسه ما تسجل. هذي لمحه بسيطه', en:'You see everything after you enroll. This is a quick look'},
-    {sel:'#timeline .section-head h2', ar:'عشان تتعلم معنا', en:'How you learn with us'},
+    {sel:'#timeline .section-head h2', ar:'كيف تتعلم معنا', en:'How you learn with us'},
     {sel:'#stories .section-head h2', ar:'قالو عن تجربتهم', en:'What they say about it'},
     {sel:'.lesson-preview-head h2', ar:'لمحه عن شكل الدرس، مو الدرس نفسه', en:'A glimpse of a lesson, not the lesson itself'}
   ];
@@ -1788,7 +1788,7 @@ function applyIndexLang(lang){
     {t:'خطتك الخاصه',d:'تتابع خطه مبنيه على اهدافك انت بالضبط'},
     {t:'التمرين اليومي',d:'تتمرن يومياً بمحادثات وتمارين تناسب مستواك بالضبط'},
     {t:'بنا الثقه',d:'تتحول الاجابات الصحه لمحادثه طبيعيه'},
-    {t:'الطلاقه',d:'تتكلم انجليزي ببدون ما تترجم بالراس'}
+    {t:'الطلاقه',d:'تتكلم انجليزي بدون ما تترجم بالراس'}
   ];
   var tStepsEn=[
     {t:'Enroll',d:'Join the academy and meet your private teacher'},
@@ -1829,9 +1829,9 @@ function applyIndexLang(lang){
   var testiAr=[
     {name:'رهف العتيبي',role:'موظفه موارد بشريه الرياض',quote:'كنت كل ما صار عندنا اجتماع مع اجانب اسكت واخلي غيري يتكلم لسه فتره مع الاستاذ فراس صرت ارد واتكلم بثقه وحتى مديري لاحظ الفرق'},
     {name:'علي القحطاني',role:'طالب جامعاي الدمام',quote:'كنت اذا جاني برزنتيشن بالانجليزي اقعد احفظ الكلام كله قبل اعرضه الحين صرت اتكلم من راسي اكثر وما عاد اخاف اذا نسيت جمله'},
-    {name:'لينا حسن',role:'صيدلانيه جده',quote:'شغلي كله بالانجليزي بس كنت احيانا اتردد اذا احتجت اشرح شي بالتفصيل لمريض الفرق لسه الدروس ان لامي صار اسلس وثقتي اكبر'},
+    {name:'لينا حسن',role:'صيدلانيه جده',quote:'شغلي كله بالانجليزي بس كنت احيانا اتردد اذا احتجت اشرح شي بالتفصيل لمريض الفرق لسه الدروس ان كلامي صار اسلس وثقتي اكبر'},
     {name:'يوسف عبدالسلام',role:'مطور برامج جده',quote:'القرايه عندي كانت كويسه لكن الكلام لا. اول ما يدخل ميتنج كنت اسكت، الحين اشارك عادي حتى لو غلطت بكمل وما عاد اخاف من الموضوع'},
-    {name:'دانه العمري',role:'طالبه ثانوي جده',quote:'كنت احب الانجليزي بس اذا طلبت مني الابله اتكلم قدام الفصل اتوتر مره الحين صرت اجاوب ببدون ما افكر كثير واحس نفسي ارتحت صراحه مررره ما قصر'},
+    {name:'دانه العمري',role:'طالبه ثانوي جده',quote:'كنت احب الانجليزي بس اذا طلبت مني الابله اتكلم قدام الفصل اتوتر مره الحين صرت اجاوب بدون ما افكر كثير واحس نفسي ارتحت صراحه مررره ما قصر'},
     {name:'خالد الهاجري',role:'مدير مبيعات الرياض',quote:'اسافر كثير بحكم الشغل ودايم احتاج اتكلم مع عملا من برا. قبل كنت افكر بكل جمله قبل اقولها، الحين الامور ماشيه بشكل طبيعي'}
   ];
   var testiEn=[
@@ -1953,7 +1953,7 @@ function applyIndexLang(lang){
   var footNote=document.querySelector('.footer-col p.arabic');
   if(footNote) footNote.textContent = lang==='ar' ? 'راسلنا واتساب وبنرد عليك بتفاصيل الاشتراك' : 'Message us on WhatsApp and we will reply with details and the right price';
   var consentAr=document.querySelector('#consentBar .arabic');
-  if(consentAr){ consentAr.textContent = 'منصتنا تخزّن على جهازك بس: المظهر، لغه الواجهه، وجلسه الدخول. ما نستخدم ملفات تتبع ولا نشارك بياناتك مع اي واحد.'; consentAr.style.display = lang==='ar' ? 'block' : 'none'; }
+  if(consentAr){ consentAr.textContent = 'منصتنا تخزّن على جهازك بس: المظهر، لغه الواجهه، وجلسه الدخول. ما نستخدم ملفات تتبع ولا نشارك بياناتك مع اي احد.'; consentAr.style.display = lang==='ar' ? 'block' : 'none'; }
   var consentEn=document.querySelector('#consentBar span[style*="font-size:.76rem"]');
   if(consentEn) consentEn.style.display = lang==='ar' ? 'none' : 'block';
   var consentLink=document.querySelector('.consent-link');
