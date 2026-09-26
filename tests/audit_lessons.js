@@ -71,7 +71,7 @@ function makeLessonForTopic(topic) {
     title: topic.title,
     ar: topic.ar,
     vocab: [
-      { en:'hello', ar:'هلو', translit:'هلو', example:{en:'Hello, how are you?', ar:'هلو، عشانف حالك؟'}, sentences:[] },
+      { en:'hello', ar:'هلو', translit:'هلو', example:{en:'Hello, how are you?', ar:'هلو، عشان حالك؟'}, sentences:[] },
       { en:'thank you', ar:'شكرا', translit:'ثانك يو', example:{en:'Thank you very much.', ar:'شكرا جزيلا.'}, sentences:[] },
       { en:'please', ar:'من فضلك', translit:'بليز', example:{en:'Please help me.', ar:'من فضلك ساعدني.'}, sentences:[] },
       { en:'sorry', ar:'آسف', translit:'سوري', example:{en:'I am sorry.', ar:'انا آسف.'}, sentences:[] },
@@ -79,12 +79,12 @@ function makeLessonForTopic(topic) {
     dbNotes: [{ en:'Basic greeting words', ar:'كلمات التحيه الاساسيه' }],
     conversation: [
       { en:'Hello!', ar:'هلو!' },
-      { en:'How are you?', ar:'عشانف حالك؟' },
+      { en:'How are you?', ar:'عشان حالك؟' },
       { en:'I am fine, thank you.', ar:'انا بخير، شكرا.' },
       { en:'Nice to meet you.', ar:'تشرفت بمعرفتك.' },
     ],
     exampleSentences: [
-      { en:'Hello, how are you today?', ar:'هلو، عشانف حالك اليوم؟' },
+      { en:'Hello, how are you today?', ar:'هلو، عشان حالك اليوم؟' },
       { en:'Thank you for your help.', ar:'شكرا على مساعدتك.' },
     ],
     quiz: [{ question: 'Choose the correct greeting', options: [{text:'Hello', ok:true}, {text:'Goodbye', ok:false}, {text:'Tree', ok:false}] }],
