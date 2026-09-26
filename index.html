@@ -1178,7 +1178,7 @@ section{ padding-top:70px; padding-bottom:70px; }
         <div class="phrase-scene" id="phraseScene">
           <span class="phrase-tag">في الشغل</span>
           <div class="phrase-en" id="phraseEn" dir="ltr">Could you send me the details?</div>
-          <div class="phrase-ar" id="phraseAr" dir="rtl">تيمكنر ترسل لي التفاصيل؟</div>
+          <div class="phrase-ar" id="phraseAr" dir="rtl">تقدر ترسل لي التفاصيل؟</div>
           <div class="phrase-phon" id="phrasePhon" dir="rtl">كود يو سند مي ذا ديتيلز</div>
         </div>
         <div class="phrase-dots" id="phraseDots"></div>
@@ -1589,7 +1589,7 @@ function applyIndexLang(lang){
   var personalHint=document.querySelector('#personalPreview p[style*="font-size:.88rem"]');
   if(personalHint) personalHint.textContent = lang==='ar' ? 'اساله سريعه، كل جواب يغير توصيتك. مستواك وهدفك ووقتك كلها تدخل في حساب الخطه' : 'Quick questions, each answer changes your recommendation. Your level, goal and time all shape your plan.';
   var personalSubNote=document.querySelector('#personalPreview div[style*="font-size:.76rem"]');
-  if(personalSubNote) personalSubNote.textContent = lang==='ar' ? 'ببدون تسجيل، نتيجتك تطلع يمكنامك على طول' : 'No signup needed, your result shows right away.';
+  if(personalSubNote) personalSubNote.textContent = lang==='ar' ? 'ببدون تسجيل، نتيجتك تطلع قدامك على طول' : 'No signup needed, your result shows right away.';
   // compact plan preview bilingual
   var ppHead=document.querySelector('#personalPreview .eyebrow');
   if(ppHead) ppHead.textContent = lang==='ar' ? 'خطتك على مقاسك' : '2-minute test finds your level and goal';
@@ -1635,7 +1635,7 @@ function applyIndexLang(lang){
   var ppBtn=document.querySelector('#personalPreview .btn-gold span');
   if(ppBtn) ppBtn.textContent = lang==='ar' ? 'اعرف بدايتي' : 'Find my starting point';
   var ppNote=document.querySelector('#personalPreview div[style*="font-size:.82rem"]');
-  if(ppNote) ppNote.textContent = lang==='ar' ? 'ببدون تسجيل، نتيجتك تطلع يمكنامك على طول' : 'No signup needed, see your result before you pay';
+  if(ppNote) ppNote.textContent = lang==='ar' ? 'ببدون تسجيل، نتيجتك تطلع قدامك على طول' : 'No signup needed, see your result before you pay';
   // live teaching bilingual
   var ltHead=document.querySelector('#liveTeaching .eyebrow');
   if(ltHead) ltHead.textContent = lang==='ar' ? 'تعلم وممارسه' : 'Learn & practice';
@@ -1828,10 +1828,10 @@ function applyIndexLang(lang){
   // testimonials bilingual
   var testiAr=[
     {name:'رهف العتيبي',role:'موظفه موارد بشريه الرياض',quote:'كنت كل ما صار عندنا اجتماع مع اجانب اسكت واخلي غيري يتكلم لسه فتره مع الاستاذ فراس صرت ارد واتكلم بثقه وحتى مديري لاحظ الينرق'},
-    {name:'علي القحطاني',role:'طالب جامعاي الدمام',quote:'كنت اذا جاني برزنتيشن بالانجليزي اقعد احفظ اللام كله قبل اعرضه الحين صرت اتكلم من راسي اكثر وما عاد اخاف اذا نسيت جمله'},
+    {name:'علي القحطاني',role:'طالب جامعاي الدمام',quote:'كنت اذا جاني برزنتيشن بالانجليزي اقعد احفظ الكلام كله قبل اعرضه الحين صرت اتكلم من راسي اكثر وما عاد اخاف اذا نسيت جمله'},
     {name:'لينا حسن',role:'صيدلانيه دبي',quote:'شغلي كله بالانجليزي بس كنت احيانا اتردد اذا احتجت اشرح شي بالتفصيل لمريض الينرق لسه الدروس ان لامي صار اسلس وثقتي اكبر'},
-    {name:'يوسف عبدالسلام',role:'مطور برامج القاهره',quote:'القراوه عندي كانت كويسه لكن اللام لا اول ما يدخل ميتنج ابقى ساكت دلوقتي بقيت اشارك عادي حتى لو غلطت بكمل ومبقتش اخاف من الموضوع'},
-    {name:'دانه العمري',role:'طالبه ثانوي جده',quote:'كنت احب الانجليزي بس اذا طلبت مني الابله اتكلم يمكنام الينصل اتوتر مره الحين صرت اجاوب ببدون ما افكر كثير واحس نفسي ارتحت صراحه مررره ما قصر'},
+    {name:'يوسف عبدالسلام',role:'مطور برامج القاهره',quote:'القراوه عندي كانت كويسه لكن الكلام لا اول ما يدخل ميتنج ابقى ساكت دلوقتي بقيت اشارك عادي حتى لو غلطت بكمل ومبقتش اخاف من الموضوع'},
+    {name:'دانه العمري',role:'طالبه ثانوي جده',quote:'كنت احب الانجليزي بس اذا طلبت مني الابله اتكلم قدام الينصل اتوتر مره الحين صرت اجاوب ببدون ما افكر كثير واحس نفسي ارتحت صراحه مررره ما قصر'},
     {name:'خالد الهاجري',role:'مدير مبيعات الكويت',quote:'اسافر كثير بحكم الشغل ودايم احتاج اتكلم مع عملا من برا قبل كنت افكر بكل جمله قبل اقولها الحين الامور تمشي بشكل طبيعي وايد'}
   ];
   var testiEn=[
@@ -2085,7 +2085,7 @@ window.addEventListener('storage', function(e){ if(e.key==='pel_account_prefs') 
 /* PHRASE ROTATION - auto-rotating real-world English phrases */
 (function(){
   var phrases = [
-    { tag:'في الشغل', en:'Could you send me the details?', ar:'تيمكنر ترسل لي التفاصيل؟', phon:'كود يو سند مي ذا ديتيلز' },
+    { tag:'في الشغل', en:'Could you send me the details?', ar:'تقدر ترسل لي التفاصيل؟', phon:'كود يو سند مي ذا ديتيلز' },
     { tag:'في المطار', en:'How long does it take?', ar:'كم ياخذ وقت؟', phon:'هاو لونغ داز ات تيك' },
     { tag:'في المطعم', en:'Can I get the receipt?', ar:'ممكن اليناتوره؟', phon:'كان اي جيت ذا ريسيت' },
     { tag:'تعارف', en:'Nice to meet you', ar:'فرصه مبسوطه', phon:'نايس تو ميت يو' },
@@ -2133,7 +2133,7 @@ const faqs = [
   {qAr:'الشرح بالعربي؟', aAr:'اي والله. كل درس مشروح بالعربي، والكلمات الجديده مكتوب نطقها بجانبها.', qEn:'Is it explained in Arabic?', aEn:'Yes. Every lesson is explained in Arabic, and new words have their pronunciation written next to them.'},
   {qAr:'ايمكنر ادرس من الجوال؟', aAr:'اعشاند. المنصه تشتغل على الجوال والتابلت. تكمّل من وين ما وقفت.', qEn:'Can I study on my phone?', aEn:'Yes. The platform works on phones and tablets. You pick up where you left off.'},
   {qAr:'كم مده الاشتراك؟', aAr:'شهر، شهرين، او 3 اشهر. انت تختار. خلال هالينتره كل الدروس متاحه لك.', qEn:'How long is the subscription?', aEn:'One month, two months, or three months. You choose. All lessons are available to you during that time.'},
-  {qAr:'تيمكنرون تترجمون لي؟', aAr:'اي والله. تترجم اي كلمه او جمله وانت تتعلم. واذا كتبت شي، نصحح لك ونقولك وين الغلط.', qEn:'Can you translate for me?', aEn:'Yes. You can translate any word or sentence while you learn. And if you write something, we correct it and show you where the mistakes are.'},
+  {qAr:'تقدرون تترجمون لي؟', aAr:'اي والله. تترجم اي كلمه او جمله وانت تتعلم. واذا كتبت شي، نصحح لك ونقولك وين الغلط.', qEn:'Can you translate for me?', aEn:'Yes. You can translate any word or sentence while you learn. And if you write something, we correct it and show you where the mistakes are.'},
   {qAr:'اشوف تيمكنمي؟', aAr:'اي والله. لوحتك تشوف وين وصلت في المحادثه والاستماع والمفردات، اسبوع باسبوع.', qEn:'Can I see my progress?', aEn:'Yes. Your dashboard shows where you are in speaking, listening, and vocabulary, week by week.'},
   {qAr:'كم سعر الاشتراك؟', aAr:'مسارين: ابد من الصفر يبدا من 800 ريال بالشهر، والتجهيز للاختبارات يبدا من 1000 ريال. كل الباقات فيها حصص مباشره. تدفع عبر واتساب ونتفعّل حسابك خلال دقايق. شوف الباقات بالتفصيل فوق.', qEn:'How much?', aEn:'Two tracks: Start From Zero starts at 800 SAR/month, Exam Prep starts at 1000 SAR/month. All plans include live classes. Pay via WhatsApp, activated in minutes. See the plans above for details.'},
   {qAr:'الباقات فيها حصص مباشره؟', aAr:'اي والله. كل باقه فيها حصه مباشره كل اسبوع على الاقل. باقات التجهيز للاختبارات فيها من حصه لـ 3 حصص بالاسبوع. تبي اكثر؟ تشتري رصيد حصص عبر واتساب.', qEn:'Do plans include live classes?', aEn:'Yes. Every plan includes at least one live class per week. Exam Prep plans include 1-3 classes per week. Want more? Buy extra class credits via WhatsApp.'},
