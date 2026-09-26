@@ -2258,8 +2258,8 @@ async function renderHomeIntel(){
         body = items.slice(0,3).map(a => {
           return '<div class="reason-item" style="cursor:pointer;" data-ann="' + a.id + '"' + (a.link ? ' data-ann-link="' + escapeHtml(a.link) + '"' : '') + '>' +
             '<span class="badge-dot ' + (a.read ? 'muted' : 'gold') + '" style="margin-top:5px;"></span>' +
-            '<div style="flex:1;"><div style="font-weight:600;">' + escapeHtml(a.title) + (a.priority === 'important' ? ' <span class="chip red">!</span>' : '') + (a.link ? ' <span class="chip">' + (ar ? 'رابط ↗' : 'link ↗') + '</span>' : '') + '</div>' +
-            '<span class="why">' + escapeHtml(a.message) + '</span></div></div>';
+            '<div style="flex:1;"><div style="font-weight:600;">' + escapeHtml(saudiifyAr(a.title)) + (a.priority === 'important' ? ' <span class="chip red">!</span>' : '') + (a.link ? ' <span class="chip">' + (ar ? 'رابط ↗' : 'link ↗') + '</span>' : '') + '</div>' +
+            '<span class="why">' + escapeHtml(saudiifyAr(a.message)) + '</span></div></div>';
         }).join('') +
         '<div style="margin-top:10px;"><button type="button" class="btn-ghost-sm" id="annAllBtn">' + (ar ? 'شوف الكل' : 'View all') + '</button></div>';
       } else {
@@ -2280,7 +2280,7 @@ async function renderHomeIntel(){
       if(next.length){
         rows = next.map(x => {
           return '<div class="reason-item"><span class="badge-dot green" style="margin-top:5px;"></span>' +
-            '<div><div style="font-weight:600;">' + escapeHtml(x.topic || '-') + (x.group_name ? '، ' + escapeHtml(x.group_name) : '') + '</div>' +
+            '<div><div style="font-weight:600;">' + escapeHtml(saudiifyAr(x.topic || '-')) + (x.group_name ? '، ' + escapeHtml(saudiifyAr(x.group_name)) : '') + '</div>' +
             '<span class="why">' + escapeHtml(x.date) + (x.time ? ' ' + escapeHtml(x.time) : '') + '</span></div></div>';
         }).join('');
       } else {
@@ -2339,8 +2339,8 @@ function showAnnouncementsModal(){
     overlay.className = 'modal-scrim';
     const rows = items.map(a => {
       return '<div class="card" style="margin-bottom:12px; ' + (a.read ? '' : 'border-color:rgba(200,169,106,.5);') + '">' +
-        '<div style="display:flex; justify-content:space-between; gap:10px; align-items:flex-start;"><b>' + escapeHtml(a.title) + '</b>' + (a.read ? '' : '<span class="chip gold">' + (ar ? 'جديد' : 'New') + '</span>') + '</div>' +
-        '<div style="font-size:.85rem; color:var(--text-secondary); margin-top:6px;">' + escapeHtml(a.message) + '</div>' +
+        '<div style="display:flex; justify-content:space-between; gap:10px; align-items:flex-start;"><b>' + escapeHtml(saudiifyAr(a.title)) + '</b>' + (a.read ? '' : '<span class="chip gold">' + (ar ? 'جديد' : 'New') + '</span>') + '</div>' +
+        '<div style="font-size:.85rem; color:var(--text-secondary); margin-top:6px;">' + escapeHtml(saudiifyAr(a.message)) + '</div>' +
         (a.link && /^https?:\/\//i.test(a.link) ? '<a class="btn-ghost-sm" href="' + escapeHtml(a.link) + '" target="_blank" rel="noopener" style="margin-top:10px; display:inline-block;">' + (ar ? 'افتح الرابط ↗' : 'Open link ↗') + '</a>' : '') +
         '<div style="font-size:.72rem; color:var(--text-muted); margin-top:8px;">' + (a.created_at ? new Date(a.created_at).toLocaleDateString() : '') + '</div>' +
         '</div>';
