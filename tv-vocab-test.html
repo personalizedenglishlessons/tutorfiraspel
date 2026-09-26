@@ -11,15 +11,16 @@
   --border:rgba(255,255,255,.08); --text:#F4F0E6; --text-muted:#8B8678; --text-secondary:#B0AB9C;
   --gold:#C8A96A; --gold-soft:#D8BD83; --gold-glow:0 0 24px rgba(200,169,106,.18);
   --green:#3F8C72; --red:#C46F56; --blue:#4A9FFF;
-  --ease:cubic-bezier(.22,.61,.36,1); --dur:.5s;
-  --radius:24px;
+  --ease:cubic-bezier(.22,.61,.36,1); --dur:.5s; --radius:24px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);
   font-family:'Inter','Segoe UI',system-ui,sans-serif;-webkit-font-smoothing:antialiased;}
 body{display:flex;align-items:center;justify-content:center;}
 
-/* ===== Ambient background ===== */
+/* Arabic mode font */
+body.ar{font-family:'Cairo','Tajawal',sans-serif;}
+
 #ambient{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
 #ambient .orb{position:absolute;border-radius:50%;filter:blur(60px);opacity:.15;animation:drift 16s ease-in-out infinite;}
 #ambient .orb1{width:400px;height:400px;background:var(--gold);top:-100px;right:-50px;}
@@ -28,30 +29,26 @@ body{display:flex;align-items:center;justify-content:center;}
 @keyframes drift{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(40px,-30px) scale(1.1);}}
 
 /* ===== Category Selection Screen ===== */
-#category-screen{
-  position:relative;z-index:2;width:100%;height:100%;display:flex;flex-direction:column;
+#category-screen{position:relative;z-index:2;width:100%;height:100%;display:flex;flex-direction:column;
   align-items:center;justify-content:center;padding:clamp(40px,6vh,80px) clamp(20px,4vw,60px);
-  transition:opacity .4s var(--ease),transform .4s var(--ease);
-}
+  transition:opacity .4s var(--ease),transform .4s var(--ease);}
 #category-screen.hidden{opacity:0;transform:scale(.96);pointer-events:none;}
-
 .cat-header{text-align:center;margin-bottom:clamp(32px,5vh,56px);}
 .cat-header .eyebrow{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:12px;}
+body.ar .cat-header .eyebrow{letter-spacing:0;text-transform:none;font-size:.8rem;}
 .cat-header h1{font-family:'Fraunces',Georgia,serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;letter-spacing:-.02em;line-height:1.2;}
+body.ar .cat-header h1{font-family:'Cairo','Tajawal',sans-serif;letter-spacing:0;}
 .cat-header p{font-size:.92rem;color:var(--text-muted);margin-top:12px;max-width:480px;}
-
 .cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;width:100%;max-width:860px;}
-
-.cat-card{
-  background:linear-gradient(165deg,rgba(255,255,255,.03),transparent 45%),var(--card);
+.cat-card{background:linear-gradient(165deg,rgba(255,255,255,.03),transparent 45%),var(--card);
   border:1px solid var(--border);border-radius:18px;padding:24px;cursor:pointer;
-  display:flex;flex-direction:column;gap:8px;transition:all .3s var(--ease);position:relative;overflow:hidden;
-}
+  display:flex;flex-direction:column;gap:8px;transition:all .3s var(--ease);position:relative;overflow:hidden;}
 .cat-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--cat-color,var(--gold));}
 .cat-card:hover{border-color:var(--cat-color,var(--gold));transform:translateY(-4px);box-shadow:0 18px 44px -18px var(--cat-color,var(--gold));}
 .cat-card:active{transform:translateY(-1px) scale(.99);}
 .cat-card .cat-icon{font-size:1.6rem;line-height:1;}
 .cat-card .cat-name{font-family:'Fraunces',serif;font-size:1.05rem;font-weight:600;color:var(--text);line-height:1.3;}
+body.ar .cat-card .cat-name{font-family:'Cairo','Tajawal',sans-serif;}
 .cat-card .cat-count{font-size:.76rem;color:var(--text-muted);}
 .cat-card .cat-count b{color:var(--cat-color,var(--gold));}
 
@@ -71,78 +68,73 @@ body{display:flex;align-items:center;justify-content:center;}
 .cat-card[data-cat="Driving English"]{--cat-color:#4A9FFF;}
 .cat-card[data-cat="Hotel English"]{--cat-color:#7B6FEB;}
 
-/* ===== Progress bar (top) ===== */
+/* ===== Top controls (always visible) ===== */
+#top-controls{position:fixed;top:clamp(16px,3vh,24px);left:clamp(20px,4vw,48px);z-index:120;display:flex;gap:8px;}
+.lang-toggle{background:var(--card);border:1px solid var(--border);color:var(--text-secondary);
+  padding:8px 16px;border-radius:12px;cursor:pointer;font-size:.78rem;font-weight:600;
+  display:flex;align-items:center;gap:6px;transition:all .25s var(--ease);}
+.lang-toggle:hover{border-color:var(--gold);color:var(--gold);}
+.lang-toggle .current{color:var(--gold);}
+
+/* ===== Progress bar ===== */
 #progress-bar{position:fixed;top:0;left:0;right:0;height:3px;background:rgba(255,255,255,.05);z-index:150;display:none;}
 #progress-bar.show{display:block;}
 #progress-bar .fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-soft));
   border-radius:0 3px 3px 0;transition:width .6s var(--ease);box-shadow:0 0 12px var(--gold);}
 
 /* ===== Top Bar ===== */
-#topbar{
-  position:fixed;top:0;left:0;right:0;padding:clamp(16px,3vh,24px) clamp(20px,4vw,48px);
+#topbar{position:fixed;top:0;left:0;right:0;padding:clamp(16px,3vh,24px) clamp(20px,4vw,48px);
   display:none;align-items:center;justify-content:space-between;z-index:100;
-  background:linear-gradient(180deg,rgba(19,19,22,.95),transparent);
-}
+  background:linear-gradient(180deg,rgba(19,19,22,.95),transparent);}
 #topbar.show{display:flex;}
+#topbar .left-group{display:flex;align-items:center;gap:12px;}
+.back-btn{background:var(--card);border:1px solid var(--border);color:var(--text-secondary);
+  width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:all .25s var(--ease);}
+.back-btn:hover{border-color:var(--gold);color:var(--gold);}
+.back-btn svg{width:18px;height:18px;}
 #topbar .brand{display:flex;align-items:center;gap:10px;font-family:'Fraunces',serif;font-size:1rem;color:var(--gold);}
+body.ar #topbar .brand{font-family:'Cairo','Tajawal',sans-serif;}
 #topbar .brand img{height:22px;}
 #topbar .brand .cat-label{color:var(--text-muted);font-size:.78rem;font-family:'Inter',sans-serif;font-weight:500;}
+body.ar #topbar .brand .cat-label{font-family:'Cairo','Tajawal',sans-serif;}
 #topbar .stats{display:flex;gap:16px;align-items:center;}
 #topbar .stat{display:flex;flex-direction:column;align-items:center;gap:2px;}
 #topbar .stat .num{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:700;color:var(--gold);}
+body.ar #topbar .stat .num{font-family:'Cairo','Tajawal',sans-serif;}
 #topbar .stat .lbl{font-size:.62rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em;}
+body.ar #topbar .stat .lbl{letter-spacing:0;text-transform:none;}
 #topbar .stat .num.countup{animation:popIn .4s var(--ease);}
 @keyframes popIn{0%{transform:scale(.7);opacity:0;}100%{transform:scale(1);opacity:1;}}
-
 #topbar .controls{display:flex;gap:8px;}
-.ctrl-btn{
-  background:var(--card);border:1px solid var(--border);color:var(--text-secondary);
+.ctrl-btn{background:var(--card);border:1px solid var(--border);color:var(--text-secondary);
   width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;
-  cursor:pointer;transition:all .25s var(--ease);font-size:.72rem;font-weight:600;
-}
+  cursor:pointer;transition:all .25s var(--ease);font-size:.72rem;font-weight:600;}
 .ctrl-btn:hover{border-color:var(--gold);color:var(--gold);}
 .ctrl-btn.active{background:rgba(200,169,106,.12);border-color:var(--gold);color:var(--gold);}
 .ctrl-btn svg{width:18px;height:18px;}
 .ctrl-btn.wide{width:auto;padding:0 14px;gap:6px;}
 
-.back-btn{
-  background:var(--card);border:1px solid var(--border);color:var(--text-secondary);
-  width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;
-  cursor:pointer;transition:all .25s var(--ease);
-}
-.back-btn:hover{border-color:var(--gold);color:var(--gold);}
-.back-btn svg{width:18px;height:18px;}
-
 /* ===== Card Stage ===== */
-#stage{
-  position:relative;width:100%;height:100%;display:none;align-items:center;justify-content:center;
-  perspective:1400px;z-index:1;
-}
+#stage{position:relative;width:100%;height:100%;display:none;align-items:center;justify-content:center;
+  perspective:1400px;z-index:1;}
 #stage.show{display:flex;}
-
-.card-wrap{
-  position:relative;width:min(880px,86vw);min-height:min(480px,64vh);
-  transform-style:preserve-3d;
-  transition:transform .6s var(--ease),opacity .4s var(--ease);
-}
+.card-wrap{position:relative;width:min(880px,86vw);min-height:min(480px,64vh);
+  transform-style:preserve-3d;transition:transform .6s var(--ease),opacity .4s var(--ease);}
 .card-wrap.enter-from-right{transform:translateX(120%) rotateY(15deg);opacity:0;}
 .card-wrap.enter-from-left{transform:translateX(-120%) rotateY(-15deg);opacity:0;}
 .card-wrap.exit-to-left{transform:translateX(-120%) rotateY(-15deg);opacity:0;}
 .card-wrap.exit-to-right{transform:translateX(120%) rotateY(15deg);opacity:0;}
 .card-wrap.active{transform:translateX(0) rotateY(0);opacity:1;}
 .card-wrap.flipped{transform:rotateY(180deg);}
-
-.card{
-  position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+.card{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
   background:linear-gradient(165deg,rgba(255,255,255,.03),transparent 45%),var(--card);
   border:1px solid var(--border);border-radius:var(--radius);
   box-shadow:0 30px 80px -30px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.05);
-  padding:clamp(32px,5vw,60px);display:flex;flex-direction:column;overflow:hidden;
-}
+  padding:clamp(32px,5vw,60px);display:flex;flex-direction:column;overflow:hidden;}
 .card::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;
   background:linear-gradient(90deg,transparent,var(--cat-color,var(--gold)),var(--gold-soft),var(--cat-color,var(--gold)),transparent);}
 .card-back{transform:rotateY(180deg);}
-
 .card[data-cat="Restaurant English"]{--cat-color:#E8956B;}
 .card[data-cat="Hospital English"]{--cat-color:#4A9FFF;}
 .card[data-cat="Business English"]{--cat-color:#C8A96A;}
@@ -159,14 +151,13 @@ body{display:flex;align-items:center;justify-content:center;}
 .card[data-cat="Driving English"]{--cat-color:#4A9FFF;}
 .card[data-cat="Hotel English"]{--cat-color:#7B6FEB;}
 
-/* ===== Card Front ===== */
 .card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:clamp(16px,2vh,28px);}
 .card-category{font-size:.76rem;font-weight:600;color:var(--cat-color,var(--gold));letter-spacing:.06em;text-transform:uppercase;
   background:color-mix(in srgb,var(--cat-color,var(--gold)) 12%,transparent);border:1px solid color-mix(in srgb,var(--cat-color,var(--gold)) 25%,transparent);
   padding:6px 14px;border-radius:999px;}
+body.ar .card-category{letter-spacing:0;text-transform:none;font-family:'Cairo','Tajawal',sans-serif;}
 .card-difficulty{font-size:.72rem;color:var(--text-muted);font-weight:500;}
 .card-difficulty span{color:var(--cat-color,var(--gold));}
-
 .card-word-section{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:8px;}
 .card-word{font-family:'Fraunces',Georgia,serif;font-size:clamp(2.5rem,7vw,4.5rem);font-weight:700;
   letter-spacing:-.02em;line-height:1.1;color:var(--text);}
@@ -174,21 +165,18 @@ body{display:flex;align-items:center;justify-content:center;}
 .card-translit{font-size:clamp(1rem,2.2vw,1.4rem);color:var(--text-secondary);direction:ltr;}
 .card-arabic{font-family:'Cairo','Tajawal',sans-serif;font-size:clamp(1.8rem,4.5vw,2.8rem);
   direction:rtl;color:var(--text);margin-top:6px;line-height:1.4;}
-
-.speak-btn{
-  margin-top:16px;background:var(--card-elevated);border:1px solid var(--border);color:var(--gold);
+.speak-btn{margin-top:16px;background:var(--card-elevated);border:1px solid var(--border);color:var(--gold);
   width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;
-  transition:all .25s var(--ease);
-}
+  transition:all .25s var(--ease);}
 .speak-btn:hover{background:rgba(200,169,106,.12);border-color:var(--gold);box-shadow:var(--gold-glow);}
 .speak-btn:active{transform:scale(.92);}
 .speak-btn svg{width:22px;height:22px;}
 .speak-btn.speaking{animation:pulse 1s ease-in-out infinite;}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(200,169,106,.4);}50%{box-shadow:0 0 0 12px rgba(200,169,106,0);}}
 
-/* ===== Card Back ===== */
 .card-back-content{flex:1;display:flex;flex-direction:column;gap:clamp(12px,2vh,20px);justify-content:center;}
 .card-back-content .example-label{font-size:.72rem;color:var(--cat-color,var(--gold));text-transform:uppercase;letter-spacing:.08em;font-weight:600;text-align:center;}
+body.ar .card-back-content .example-label{letter-spacing:0;text-transform:none;}
 .card-back-content .example-en{font-size:clamp(1.1rem,2.5vw,1.5rem);font-weight:500;line-height:1.5;text-align:center;direction:ltr;}
 .card-back-content .example-ar{font-family:'Cairo','Tajawal',sans-serif;font-size:clamp(1.1rem,2.5vw,1.4rem);
   direction:rtl;text-align:center;color:var(--text-secondary);line-height:1.6;}
@@ -197,30 +185,26 @@ body{display:flex;align-items:center;justify-content:center;}
 .card-back-content .meta-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;}
 .card-back-content .meta-chip{font-size:.74rem;padding:5px 11px;border-radius:10px;background:var(--card-elevated);
   border:1px solid var(--border);color:var(--text-secondary);}
+body.ar .card-back-content .meta-chip{font-family:'Cairo','Tajawal',sans-serif;direction:rtl;}
 .card-back-content .meta-chip b{color:var(--cat-color,var(--gold));font-weight:600;}
 .card-back-content .tip{font-size:clamp(.82rem,1.5vw,.95rem);color:var(--text-muted);text-align:center;line-height:1.6;
   background:color-mix(in srgb,var(--cat-color,var(--gold)) 6%,transparent);border:1px solid color-mix(in srgb,var(--cat-color,var(--gold)) 12%,transparent);
   border-radius:14px;padding:12px 18px;}
+body.ar .card-back-content .tip{font-family:'Cairo','Tajawal',sans-serif;direction:rtl;}
 
 /* ===== Nav Bar ===== */
-#nav{
-  position:fixed;bottom:0;left:0;right:0;height:clamp(64px,9vh,88px);
+#nav{position:fixed;bottom:0;left:0;right:0;height:clamp(64px,9vh,88px);
   display:none;align-items:center;justify-content:space-between;padding:0 clamp(20px,4vw,48px);
-  background:linear-gradient(0deg,rgba(19,19,22,.98),rgba(19,19,22,.7) 70%,transparent);
-  z-index:100;
-}
+  background:linear-gradient(0deg,rgba(19,19,22,.98),rgba(19,19,22,.7) 70%,transparent);z-index:100;}
 #nav.show{display:flex;}
-.nav-btn{
-  background:var(--card);border:1px solid var(--border);color:var(--text);
+.nav-btn{background:var(--card);border:1px solid var(--border);color:var(--text);
   width:clamp(48px,6vw,64px);height:clamp(48px,6vw,64px);border-radius:50%;
   display:flex;align-items:center;justify-content:center;cursor:pointer;
-  transition:all .25s var(--ease);flex-shrink:0;
-}
+  transition:all .25s var(--ease);flex-shrink:0;}
 .nav-btn:hover{border-color:var(--gold);color:var(--gold);box-shadow:var(--gold-glow);}
 .nav-btn:active{transform:scale(.94);}
 .nav-btn:disabled{opacity:.3;cursor:not-allowed;}
 .nav-btn svg{width:24px;height:24px;}
-
 .nav-center{display:flex;flex-direction:column;align-items:center;gap:6px;}
 .nav-dots{display:flex;gap:6px;max-width:300px;overflow:hidden;}
 .nav-dot{width:8px;height:8px;border-radius:50%;background:var(--border);transition:all .3s var(--ease);cursor:pointer;flex-shrink:0;}
@@ -228,65 +212,64 @@ body{display:flex;align-items:center;justify-content:center;}
 .nav-dot:hover{background:var(--text-muted);}
 .nav-progress{font-size:.78rem;color:var(--text-muted);font-weight:500;letter-spacing:.04em;}
 
-/* ===== Auto-play indicator ===== */
-#autoplay-pulse{
-  position:fixed;top:clamp(16px,3vh,24px);left:50%;transform:translateX(-50%);z-index:110;
+/* ===== Auto-play ===== */
+#autoplay-pulse{position:fixed;top:clamp(16px,3vh,24px);left:50%;transform:translateX(-50%);z-index:110;
   background:var(--card);border:1px solid var(--gold);color:var(--gold);
   padding:6px 16px;border-radius:999px;font-size:.72rem;font-weight:600;display:none;align-items:center;gap:8px;
-  box-shadow:var(--gold-glow);
-}
+  box-shadow:var(--gold-glow);}
 #autoplay-pulse.show{display:flex;animation:fadeIn .3s var(--ease);}
 #autoplay-pulse .dot{width:8px;height:8px;border-radius:50%;background:var(--gold);animation:blink 1.5s ease-in-out infinite;}
 @keyframes blink{0%,100%{opacity:.3;}50%{opacity:1;}}
 @keyframes fadeIn{from{opacity:0;transform:translateX(-50%) translateY(-10px);}to{opacity:1;transform:translateX(-50%) translateY(0);}}
 
-/* ===== Completion overlay ===== */
-#complete-overlay{
-  position:fixed;inset:0;background:rgba(19,19,22,.95);z-index:200;display:none;
-  align-items:center;justify-content:center;flex-direction:column;gap:20px;backdrop-filter:blur(8px);
-}
+/* ===== Completion ===== */
+#complete-overlay{position:fixed;inset:0;background:rgba(19,19,22,.95);z-index:200;display:none;
+  align-items:center;justify-content:center;flex-direction:column;gap:20px;backdrop-filter:blur(8px);}
 #complete-overlay.show{display:flex;animation:fadeIn .4s var(--ease);}
 #complete-overlay .icon{font-size:4rem;animation:bounce 1s var(--ease);}
 @keyframes bounce{0%{transform:scale(0) rotate(-10deg);}60%{transform:scale(1.2) rotate(5deg);}100%{transform:scale(1) rotate(0);}}
 #complete-overlay h2{font-family:'Fraunces',serif;font-size:clamp(1.6rem,3.5vw,2.4rem);color:var(--gold);}
+body.ar #complete-overlay h2{font-family:'Cairo','Tajawal',sans-serif;}
 #complete-overlay p{font-size:.9rem;color:var(--text-muted);text-align:center;line-height:1.6;}
+body.ar #complete-overlay p{font-family:'Cairo','Tajawal',sans-serif;direction:rtl;}
 #complete-overlay .actions{display:flex;gap:12px;margin-top:8px;flex-wrap:wrap;justify-content:center;}
-#complete-overlay button{
-  background:var(--card);border:1px solid var(--border);color:var(--text);
-  padding:12px 24px;border-radius:14px;font-size:.88rem;font-weight:600;cursor:pointer;transition:all .25s var(--ease);
-}
+#complete-overlay button{background:var(--card);border:1px solid var(--border);color:var(--text);
+  padding:12px 24px;border-radius:14px;font-size:.88rem;font-weight:600;cursor:pointer;transition:all .25s var(--ease);}
+body.ar #complete-overlay button{font-family:'Cairo','Tajawal',sans-serif;}
 #complete-overlay button.primary{background:linear-gradient(135deg,var(--gold),var(--gold-soft));color:#171412;border:none;}
 #complete-overlay button:hover{border-color:var(--gold);transform:translateY(-2px);}
 #complete-overlay button.primary:hover{box-shadow:var(--gold-glow);}
 
-/* ===== Confetti ===== */
 #confetti{position:fixed;inset:0;pointer-events:none;z-index:199;overflow:hidden;}
 .confetti-piece{position:absolute;width:10px;height:10px;animation:fall 3s linear forwards;}
 @keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:0;}}
 
-/* ===== Responsive ===== */
 @media(max-width:640px){
   .cat-grid{grid-template-columns:1fr 1fr;}
   .card{min-height:auto;padding:24px 20px 80px;}
   #topbar .stats{display:none;}
   #topbar .controls .ctrl-btn.wide span{display:none;}
 }
-@media(max-width:380px){
-  .cat-grid{grid-template-columns:1fr;}
-}
+@media(max-width:380px){.cat-grid{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
 
-<!-- Ambient orbs -->
 <div id="ambient"><div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div></div>
+
+<!-- Language toggle (always visible) -->
+<div id="top-controls">
+  <button class="lang-toggle" id="langToggle">
+    <span class="current" id="langCurrent">EN</span> / <span id="langOther">ع</span>
+  </button>
+</div>
 
 <!-- Category Selection Screen -->
 <div id="category-screen">
   <div class="cat-header">
-    <div class="eyebrow">Vocabulary Vault · TV Mode</div>
-    <h1>Pick a category</h1>
-    <p>Choose a word set to study. Each session focuses on one topic so you build real vocabulary depth.</p>
+    <div class="eyebrow" data-en="Vocabulary Vault · TV Mode" data-ar="خزنة المفردات · وضع التلفزيون">Vocabulary Vault · TV Mode</div>
+    <h1 data-en="Pick a category" data-ar="اختر تصنيف">Pick a category</h1>
+    <p data-en="Choose a word set to study. Each session focuses on one topic so you build real vocabulary depth." data-ar="اختر مجموعة كلمات تبي تدرسها. كل جلسة تركز على موضوع واحد عشان تبني فهم عميق للمفردات.">Choose a word set to study. Each session focuses on one topic so you build real vocabulary depth.</p>
   </div>
   <div class="cat-grid" id="catGrid"></div>
 </div>
@@ -294,10 +277,10 @@ body{display:flex;align-items:center;justify-content:center;}
 <!-- Progress bar -->
 <div id="progress-bar"><div class="fill" id="progressFill" style="width:0%"></div></div>
 
-<!-- Top bar (card mode) -->
+<!-- Top bar -->
 <div id="topbar">
-  <div style="display:flex;align-items:center;gap:12px;">
-    <button class="back-btn" id="backToCatBtn" aria-label="Back to categories">
+  <div class="left-group">
+    <button class="back-btn" id="backToCatBtn" aria-label="Back">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
     </button>
     <div class="brand">
@@ -306,8 +289,8 @@ body{display:flex;align-items:center;justify-content:center;}
     </div>
   </div>
   <div class="stats">
-    <div class="stat"><div class="num" id="statSeen">0</div><div class="lbl">Seen</div></div>
-    <div class="stat"><div class="num" id="statTotal">0</div><div class="lbl">Total</div></div>
+    <div class="stat"><div class="num" id="statSeen">0</div><div class="lbl" data-en="Seen" data-ar="شفت">Seen</div></div>
+    <div class="stat"><div class="num" id="statTotal">0</div><div class="lbl" data-en="Total" data-ar="المجموع">Total</div></div>
   </div>
   <div class="controls">
     <button class="ctrl-btn" id="shuffleBtn" title="Shuffle" aria-label="Shuffle">
@@ -315,18 +298,15 @@ body{display:flex;align-items:center;justify-content:center;}
     </button>
     <button class="ctrl-btn wide" id="autoBtn" title="Auto-play" aria-label="Auto-play">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-      <span>Auto</span>
+      <span data-en="Auto" data-ar="تلقائي">Auto</span>
     </button>
   </div>
 </div>
 
-<!-- Auto-play indicator -->
-<div id="autoplay-pulse"><span class="dot"></span> Auto-play · <span id="autoCountdown">3</span>s</div>
+<div id="autoplay-pulse"><span class="dot"></span> <span data-en="Auto-play" data-ar="تلقائي">Auto-play</span> · <span id="autoCountdown">3</span>s</div>
 
-<!-- Card stage -->
 <div id="stage"></div>
 
-<!-- Nav bar -->
 <div id="nav">
   <button class="nav-btn" id="prevBtn" aria-label="Previous" disabled>
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
@@ -340,216 +320,379 @@ body{display:flex;align-items:center;justify-content:center;}
   </button>
 </div>
 
-<!-- Confetti -->
 <div id="confetti"></div>
 
-<!-- Completion overlay -->
 <div id="complete-overlay">
   <div class="icon">🎉</div>
-  <h2>Great job!</h2>
-  <p>You finished all <b id="completeCount">0</b> words in this set.<br>Want to go again or pick a new category?</p>
+  <h2 data-en="Great job!" data-ar="احسنت!">Great job!</h2>
+  <p data-en="You finished all" data-ar="خلصت كل">You finished all</p>
   <div class="actions">
-    <button id="replayBtn" class="primary">Replay</button>
-    <button id="shuffleReplayBtn">Shuffle & Replay</button>
-    <button id="newCatBtn">Pick New Category</button>
+    <button id="replayBtn" class="primary" data-en="Replay" data-ar="مرة ثانية">Replay</button>
+    <button id="shuffleReplayBtn" data-en="Shuffle & Replay" data-ar="اخلط وابدأ">Shuffle & Replay</button>
+    <button id="newCatBtn" data-en="Pick New Category" data-ar="اختر تصنيف ثاني">Pick New Category</button>
   </div>
 </div>
 
 <script>
-// ===== Sample Vocabulary Data (from VOCAB_BANK) =====
+// ===== Vocabulary Data with Saudi Arabic translations =====
 const VOCAB = [
   {en:'Reservation', ipa:'/ˌrɛzərˈveɪʃən/', ar:'حجز', translit:'ريزرڤيشِن',
     example:{en:'I have a reservation for two.', ar:'عندي حجز لشخصين.', translit:'اي هاف ا ريزرڤيشن فور تو.'},
-    synonyms:'Booking', antonyms:'Cancellation', family:'reserve, reserved',
-    collocations:'make a reservation, confirm a reservation', category:'Restaurant English', difficulty:'Intermediate',
-    tip:'Many Arabic speakers say "booking" instead, both are fine, "reservation" sounds more formal.'},
+    synonyms:'Booking', synonyms_ar:'حجز، حجز مسبق',
+    antonyms:'Cancellation', antonyms_ar:'الغاء',
+    family:'reserve, reserved', family_ar:'احجز، محجوز',
+    collocations:'make a reservation, confirm a reservation', collocations_ar:'احجز، اكد الحجز',
+    category:'Restaurant English', difficulty:'Intermediate', difficulty_ar:'متوسط',
+    tip:'Many Arabic speakers say "booking" instead, both are fine, "reservation" sounds more formal.',
+    tip_ar:'ناس كثير يقولون booking بس reservation احلى واكثر رسمية.'},
   {en:'Confident', ipa:'/ˈkɑːnfɪdənt/', ar:'واثق', translit:'كانفدنت',
     example:{en:'She feels confident speaking English now.', ar:'صارت تحس بثقه وهي تتكلم انجليزي.', translit:'شي فيلز كانفدنت سبيكنج انجلش ناو.'},
-    synonyms:'Self-assured, certain', antonyms:'Nervous, unsure', family:'confidence, confidently',
-    collocations:'feel confident, sound confident', category:'General', difficulty:'Beginner',
-    tip:'Stress the first syllable: CON-fi-dent.'},
+    synonyms:'Self-assured, certain', synonyms_ar:'متاكد من نفسه، جازم',
+    antonyms:'Nervous, unsure', antonyms_ar:'متوتر، مو متاكد',
+    family:'confidence, confidently', family_ar:'ثقه، بثقه',
+    collocations:'feel confident, sound confident', collocations_ar:'تحس بثقه، يبان واثق',
+    category:'General', difficulty:'Beginner', difficulty_ar:'مبتدئ',
+    tip:'Stress the first syllable: CON-fi-dent.',
+    tip_ar:'النبر على المقطع الاول: CON-fi-dent.'},
   {en:'Appointment', ipa:'/əˈpɔɪntmənt/', ar:'موعد', translit:'ابوينتمنت',
     example:{en:'I need to make a doctor appointment.', ar:'لازم احجز موعد عند الدكتور.', translit:'اي نيد تو ميك ا دكتور ابوينتمنت.'},
-    synonyms:'Meeting, booking', antonyms:'-', family:'appoint, appointed',
-    collocations:'make an appointment, cancel an appointment', category:'Hospital English', difficulty:'Intermediate',
-    tip:'In Arabic we usually just say "موعد" for both a meeting and a doctor visit.'},
+    synonyms:'Meeting, booking', synonyms_ar:'اجتماع، حجز',
+    antonyms:'-', antonyms_ar:'-',
+    family:'appoint, appointed', family_ar:'يعين، معين',
+    collocations:'make an appointment, cancel an appointment', collocations_ar:'احجز موعد، الغي موعد',
+    category:'Hospital English', difficulty:'Intermediate', difficulty_ar:'متوسط',
+    tip:'In Arabic we usually just say "موعد" for both a meeting and a doctor visit.',
+    tip_ar:'احنا نقول موعد للاجتماع وللدكتور، نفس الكلمه.'},
   {en:'Negotiate', ipa:'/nɪˈɡoʊʃieɪt/', ar:'يتفاوض', translit:'نيقوشييت',
     example:{en:'We negotiated a better price.', ar:'تفاوضنا على سعر افضل.', translit:'وي نيقوشييتد ا بيتر برايس.'},
-    synonyms:'Bargain, discuss', antonyms:'Concede', family:'negotiation, negotiator',
-    collocations:'negotiate a deal, negotiate a price', category:'Business English', difficulty:'Advanced',
-    tip:'Common in salary and price conversations.'},
+    synonyms:'Bargain, discuss', synonyms_ar:'مساوم، ناقش',
+    antonyms:'Concede', antonyms_ar:'يستسلم',
+    family:'negotiation, negotiator', family_ar:'تفاوض، مفاوض',
+    collocations:'negotiate a deal, negotiate a price', collocations_ar:'فاوض على صفقه، فاوض على سعر',
+    category:'Business English', difficulty:'Advanced', difficulty_ar:'متقدم',
+    tip:'Common in salary and price conversations.',
+    tip_ar:'كلمه شائعة في محادثات الراتب والاسعار.'},
   {en:'Deadline', ipa:'/ˈdɛdlaɪn/', ar:'موعد نهايي', translit:'دد لاين',
     example:{en:'The deadline is next Thursday.', ar:'الموعد النهايي يوم الخميس الجاي.', translit:'ذا دد لاين از نكست ثيرزداي.'},
-    synonyms:'Due date', antonyms:'-', family:'-',
-    collocations:'meet a deadline, miss a deadline', category:'Workplace', difficulty:'Intermediate',
-    tip:'Very common word in office English.'},
+    synonyms:'Due date', synonyms_ar:'تاريخ الاستحقاق',
+    antonyms:'-', antonyms_ar:'-',
+    family:'-', family_ar:'-',
+    collocations:'meet a deadline, miss a deadline', collocations_ar:'تلحق الموعد، تفوت الموعد',
+    category:'Workplace', difficulty:'Intermediate', difficulty_ar:'متوسط',
+    tip:'Very common word in office English.',
+    tip_ar:'كلمه شائعة جدا في انجليزي المكاتب.'},
   {en:'Complimentary', ipa:'/ˌkɑːmplɪˈmɛntəri/', ar:'مجاني، مقدم كهدية', translit:'كامبلمنتري',
     example:{en:'Breakfast is complimentary at this hotel.', ar:'الفطور مجاني في هذا الفندق.', translit:'بريكفاست از كامبلمنتري ات ذيس هوتيل.'},
-    synonyms:'Free, gratis', antonyms:'Paid', family:'compliment, complimented',
-    collocations:'complimentary breakfast, complimentary wifi', category:'Hotel English', difficulty:'Advanced',
-    tip:'Do not confuse with "complementary" (matching), spelled with an e.'},
+    synonyms:'Free, gratis', synonyms_ar:'مجاني، بدون مقابل',
+    antonyms:'Paid', antonyms_ar:'مدفوع',
+    family:'compliment, complimented', family_ar:'مجامل، جامل',
+    collocations:'complimentary breakfast, complimentary wifi', collocations_ar:'فطور مجاني، نت مجاني',
+    category:'Hotel English', difficulty:'Advanced', difficulty_ar:'متقدم',
+    tip:'Do not confuse with "complementary" (matching), spelled with an e.',
+    tip_ar:'لا تخلط بينها وبين complementary اللي معناها مكمل، تنكتب بحرف e.'},
   {en:'Symptom', ipa:'/ˈsɪmptəm/', ar:'عرض، اعراض', translit:'سمبتم',
     example:{en:'What are your symptoms today?', ar:'وش الاعراض اللي عندك اليوم؟', translit:'وات ار يور سمبتمز تودي؟'},
-    synonyms:'Sign, indication', antonyms:'-', family:'symptomatic',
-    collocations:'main symptom, common symptoms', category:'Hospital English', difficulty:'Intermediate',
-    tip:'The p is silent-ish, softly pronounced: SIMP-tuhm.'},
+    synonyms:'Sign, indication', synonyms_ar:'عاهه، دلاله',
+    antonyms:'-', antonyms_ar:'-',
+    family:'symptomatic', family_ar:'عرضي',
+    collocations:'main symptom, common symptoms', collocations_ar:'العرض الرئيسي، اعراض شائعه',
+    category:'Hospital English', difficulty:'Intermediate', difficulty_ar:'متوسط',
+    tip:'The p is silent-ish, softly pronounced: SIMP-tuhm.',
+    tip_ar:'حرف الـ p شبه ساكن، انطقها: SIMP-tuhm.'},
   {en:'Colleague', ipa:'/ˈkɑːliːɡ/', ar:'زميل بالعمل', translit:'كولييج',
     example:{en:'My colleague will join the meeting.', ar:'زميلي بينضم للاجتماع.', translit:'ماي كولييج ويل جوين ذا ميتنج.'},
-    synonyms:'Coworker', antonyms:'-', family:'-',
-    collocations:'close colleague, former colleague', category:'Workplace', difficulty:'Intermediate',
-    tip:'More professional than "coworker."'},
+    synonyms:'Coworker', synonyms_ar:'زميل عمل',
+    antonyms:'-', antonyms_ar:'-',
+    family:'-', family_ar:'-',
+    collocations:'close colleague, former colleague', collocations_ar:'زميل قريب، زميل سابق',
+    category:'Workplace', difficulty:'Intermediate', difficulty_ar:'متوسط',
+    tip:'More professional than "coworker."',
+    tip_ar:'اكثر رسمية من coworker.'},
   {en:'Punctual', ipa:'/ˈpʌŋktʃuəl/', ar:'يلتزم بالمواعيد', translit:'بنكتشول',
     example:{en:'He is always punctual for meetings.', ar:'دايم يلتزم بالوقت في الاجتماعات.', translit:'هي از اولويز بنكتشول فور ميتنجز.'},
-    synonyms:'On time, prompt', antonyms:'Late, tardy', family:'punctuality',
-    collocations:'punctual arrival', category:'Business English', difficulty:'Advanced',
-    tip:'Highly valued in American workplace culture.'},
+    synonyms:'On time, prompt', synonyms_ar:'بالوقت، سريع',
+    antonyms:'Late, tardy', antonyms_ar:'متاخر',
+    family:'punctuality', family_ar:'الالتزام بالوقت',
+    collocations:'punctual arrival', collocations_ar:'وصول بالوقت',
+    category:'Business English', difficulty:'Advanced', difficulty_ar:'متقدم',
+    tip:'Highly valued in American workplace culture.',
+    tip_ar:'مهم جدا في ثقافة العمل الامريكيه.'},
   {en:'Receipt', ipa:'/rɪˈsiːt/', ar:'ايصال، فاتوره', translit:'ريسيت',
     example:{en:'Can I get a receipt, please?', ar:'ممكن الايصال لو سمحت؟', translit:'كان اي قيت ا ريسيت، بليز؟'},
-    synonyms:'Bill, invoice', antonyms:'-', family:'receive, received',
-    collocations:'keep the receipt, get a receipt', category:'Shopping English', difficulty:'Intermediate',
-    tip:'The p is silent, say "ri-SEET."'},
+    synonyms:'Bill, invoice', synonyms_ar:'فاتوره، حساب',
+    antonyms:'-', antonyms_ar:'-',
+    family:'receive, received', family_ar:'استلم، مستلم',
+    collocations:'keep the receipt, get a receipt', collocations_ar:'احتفظ بالايصال، خذ ايصال',
+    category:'Shopping English', difficulty:'Intermediate', difficulty_ar:'متوسط',
+    tip:'The p is silent, say "ri-SEET."',
+    tip_ar:'حرف الـ p ساكن، انطقها: ri-SEET.'},
   {en:'Warranty', ipa:'/ˈwɔːrənti/', ar:'ضمان', translit:'وارنتي',
     example:{en:'This phone is still under warranty.', ar:'هذا الجوال ما زال تحت الضمان.', translit:'ذيس فون از سِتل اندر وارنتي.'},
-    synonyms:'Guarantee', antonyms:'-', family:'warrant',
-    collocations:'under warranty, warranty period', category:'Shopping English', difficulty:'Advanced',
-    tip:'"Under warranty" means it is still covered for repairs.'},
+    synonyms:'Guarantee', synonyms_ar:'ضمان، كفاله',
+    antonyms:'-', antonyms_ar:'-',
+    family:'warrant', family_ar:'يضمن',
+    collocations:'under warranty, warranty period', collocations_ar:'تحت الضمان، فترة الضمان',
+    category:'Shopping English', difficulty:'Advanced', difficulty_ar:'متقدم',
+    tip:'"Under warranty" means it is still covered for repairs.',
+    tip_ar:'under warranty يعني لسه محمي للصيانه.'},
   {en:'Feedback', ipa:'/ˈfiːdbæk/', ar:'ملاحظات، راي', translit:'فيدباك',
     example:{en:'Could you give me some feedback on my report?', ar:'ممكن تعطيني ملاحظات على تقريري؟', translit:'كود يو قيف مي سم فيدباك اون ماي ريبورت؟'},
-    synonyms:'Comments, input', antonyms:'-', family:'-',
-    collocations:'give feedback, positive feedback', category:'Business English', difficulty:'Advanced',
-    tip:'"Constructive feedback" means helpful, not harsh, criticism.'},
+    synonyms:'Comments, input', synonyms_ar:'تعليقات، راي',
+    antonyms:'-', antonyms_ar:'-',
+    family:'-', family_ar:'-',
+    collocations:'give feedback, positive feedback', collocations_ar:'اعطي ملاحظات، ملاحظات ايجابيه',
+    category:'Business English', difficulty:'Advanced', difficulty_ar:'متقدم',
+    tip:'"Constructive feedback" means helpful, not harsh, criticism.',
+    tip_ar:'constructive feedback يعني ملاحظات مفيده مو نقد قاسي.'},
   {en:'Side Dish', ipa:'/saɪd dɪʃ/', ar:'طبق جانبي', translit:'سايد ديش',
     example:{en:'Does the grilled chicken come with a side dish?', ar:'الدجاج المشوي يجي معه طبق جانبي؟', translit:'داز ذا قريلد تشكن كم وذ ا سايد ديش؟'},
-    synonyms:'Accompaniment', antonyms:'Main course', family:'-',
-    collocations:'side salad, side of fries', category:'Restaurant English', difficulty:'Beginner',
-    tip:'"With a side of fries" is the natural way to ask.'},
+    synonyms:'Accompaniment', synonyms_ar:'مرافق، اضافه',
+    antonyms:'Main course', antonyms_ar:'الطبق الرئيسي',
+    family:'-', family_ar:'-',
+    collocations:'side salad, side of fries', collocations_ar:'سلطه جانبيه، بطاطس جانبيه',
+    category:'Restaurant English', difficulty:'Beginner', difficulty_ar:'مبتدئ',
+    tip:'"With a side of fries" is the natural way to ask.',
+    tip_ar:'with a side of fries الطريقه الطبيعيه تطلب فيها.'},
   {en:'The Check', ipa:'/ðə tʃek/', ar:'الحساب (فاتوره المطعم)', translit:'ذا تشيك',
     example:{en:'Could we have the check, please?', ar:'ممكن الحساب لو سمحت؟', translit:'كود وي هاف ذا تشيك، بليز؟'},
-    synonyms:'The bill', antonyms:'-', family:'-',
-    collocations:'ask for the check, pay the check', category:'Restaurant English', difficulty:'Beginner',
-    tip:'In the US you ask for "the check", in the UK it is "the bill."'},
+    synonyms:'The bill', synonyms_ar:'الفاتوره، الحساب',
+    antonyms:'-', antonyms_ar:'-',
+    family:'-', family_ar:'-',
+    collocations:'ask for the check, pay the check', collocations_ar:'اطلب الحساب، ادفع الحساب',
+    category:'Restaurant English', difficulty:'Beginner', difficulty_ar:'مبتدئ',
+    tip:'In the US you ask for "the check", in the UK it is "the bill."',
+    tip_ar:'في امريكا تقول the check وفي بريطانيا the bill.'},
   {en:'Tip', ipa:'/tɪp/', ar:'بقشيش', translit:'تيب',
     example:{en:'Is the tip included in the total?', ar:'البقشيش داخل في الاجمالي؟', translit:'از ذا تيب انكلودد ان ذا توتل؟'},
-    synonyms:'Gratuity', antonyms:'-', family:'tipping, tipped',
-    collocations:'leave a tip, generous tip', category:'Restaurant English', difficulty:'Intermediate',
-    tip:'In the US, 15 to 20 percent is the usual tip at sit-down restaurants.'},
+    synonyms:'Gratuity', synonyms_ar:'بقشيش، اكراميه',
+    antonyms:'-', antonyms_ar:'-',
+    family:'tipping, tipped', family_ar:'يدفع بقشيش، دفع بقشيش',
+    collocations:'leave a tip, generous tip', collocations_ar:'اترك بقشيش، بقشيش كريم',
+    category:'Restaurant English', difficulty:'Intermediate', difficulty_ar:'متوسط',
+    tip:'In the US, 15 to 20 percent is the usual tip at sit-down restaurants.',
+    tip_ar:'في امريكا ١٥ الى ٢٠ بالميه هو البقشيش المعتاد بالمطاعم.'},
   {en:'Allergy', ipa:'/ˈælərdʒi/', ar:'حساسية', translit:'الرجي',
     example:{en:'I have a peanut allergy, is that safe?', ar:'عندي حساسية فول سوداني، هذا امن؟', translit:'اي هاف ا پينَت الرجي، از ذات سيف؟'},
-    synonyms:'Intolerance', antonyms:'-', family:'allergic, allergist',
-    collocations:'food allergy, allergic to', category:'Hospital English', difficulty:'Intermediate',
-    tip:'Always say "I am allergic to..." clearly, allergies are taken seriously.'},
+    synonyms:'Intolerance', synonyms_ar:'عدم تحمل',
+    antonyms:'-', antonyms_ar:'-',
+    family:'allergic, allergist', family_ar:'حساسيه، طبيب حساسيه',
+    collocations:'food allergy, allergic to', collocations_ar:'حساسية طعام، حساس من',
+    category:'Hospital English', difficulty:'Intermediate', difficulty_ar:'متوسط',
+    tip:'Always say "I am allergic to..." clearly, allergies are taken seriously.',
+    tip_ar:'دايم قول I am allergic to بوضوح، الحساسية شيء يؤخذ على محمل الجد.'},
   {en:'Prescription', ipa:'/prɪˈskrɪpʃən/', ar:'روشتة، وصفة طبية', translit:'بريسكربشن',
     example:{en:'The doctor gave me a prescription for antibiotics.', ar:'الدكتور عطاني روشتة مضادات حيوية.', translit:'ذا داكتور قيف مي ا بريسكربشن فور انتيبايتكس.'},
-    synonyms:'Medical order', antonyms:'-', family:'prescribe, prescribed',
-    collocations:'fill a prescription, prescription medication', category:'Hospital English', difficulty:'Advanced',
-    tip:'"Fill a prescription" means getting the medicine from the pharmacy.'},
+    synonyms:'Medical order', synonyms_ar:'طلب طبي',
+    antonyms:'-', antonyms_ar:'-',
+    family:'prescribe, prescribed', family_ar:'يصف، موصوف',
+    collocations:'fill a prescription, prescription medication', collocations_ar:'تصريف الروشته، دواء بروشته',
+    category:'Hospital English', difficulty:'Advanced', difficulty_ar:'متقدم',
+    tip:'"Fill a prescription" means getting the medicine from the pharmacy.',
+    tip_ar:'fill a prescription يعني تاخذ الدواء من الصيدليه.'},
   {en:'Insurance', ipa:'/ɪnˈʃʊrəns/', ar:'تامين', translit:'انشورنس',
     example:{en:'Does my insurance cover this visit?', ar:'التامين يغطي هذي الزياره؟', translit:'داز ماي انشورنس كڤر ذيس ڤيزت؟'},
-    synonyms:'Coverage', antonyms:'-', family:'insure, insured',
-    collocations:'health insurance, insurance policy', category:'Hospital English', difficulty:'Advanced',
-    tip:'"Is this covered?" is the quick way to ask about insurance.'},
+    synonyms:'Coverage', synonyms_ar:'تغطيه',
+    antonyms:'-', antonyms_ar:'-',
+    family:'insure, insured', family_ar:'يؤمن، مؤمن عليه',
+    collocations:'health insurance, insurance policy', collocations_ar:'تامين صحي، بوليصه تامين',
+    category:'Hospital English', difficulty:'Advanced', difficulty_ar:'متقدم',
+    tip:'"Is this covered?" is the quick way to ask about insurance.',
+    tip_ar:'Is this covered? طريقه سريعه تسال فيها عن التغطيه.'},
   {en:'Discount', ipa:'/ˈdɪskaʊnt/', ar:'خصم', translit:'ديسكاونت',
     example:{en:'Is there a discount if I pay in cash?', ar:'فيه خصم لو دفعت كاش؟', translit:'از ذير ا ديسكاونت اف اي پي ان كاش؟'},
-    synonyms:'Reduction, markdown', antonyms:'Surcharge', family:'discount, discounted',
-    collocations:'get a discount, student discount', category:'Shopping English', difficulty:'Intermediate',
-    tip:'"On sale" means the price is reduced right now.'},
+    synonyms:'Reduction, markdown', synonyms_ar:'تخفيض، تنزيل',
+    antonyms:'Surcharge', antonyms_ar:'رسوم اضافيه',
+    family:'discount, discounted', family_ar:'يخفض، مخفض',
+    collocations:'get a discount, student discount', collocations_ar:'خذ خصم، خصم طالب',
+    category:'Shopping English', difficulty:'Intermediate', difficulty_ar:'متوسط',
+    tip:'"On sale" means the price is reduced right now.',
+    tip_ar:'on sale يعني السعر مخفض الحين.'},
   {en:'Fitting Room', ipa:'/ˈfɪtɪŋ ruːm/', ar:'غرفه القياس', translit:'فيتينج روم',
     example:{en:'Where is the fitting room?', ar:'وين غرفه القياس؟', translit:'وير از ذا فيتينج روم؟'},
-    synonyms:'Dressing room', antonyms:'-', family:'fit, fitted',
-    collocations:'try it on, fitting room', category:'Shopping English', difficulty:'Beginner',
-    tip:'"Can I try this on?" is the phrase you need before the room.'},
+    synonyms:'Dressing room', synonyms_ar:'غرفه تبديل',
+    antonyms:'-', antonyms_ar:'-',
+    family:'fit, fitted', family_ar:'يناسب، مناسب',
+    collocations:'try it on, fitting room', collocations_ar:'جربه، غرفه قياس',
+    category:'Shopping English', difficulty:'Beginner', difficulty_ar:'مبتدئ',
+    tip:'"Can I try this on?" is the phrase you need before the room.',
+    tip_ar:'Can I try this on? الجمله اللي تحتاجها قبل الغرفه.'},
   {en:'Exchange Rate', ipa:'/ɪksˈtʃeɪndʒ reɪt/', ar:'سعر الصرف', translit:'اكس تشينج ريت',
     example:{en:'What is the exchange rate today?', ar:'كم سعر الصرف اليوم؟', translit:'وات از ذا اكس تشينج ريت تودي؟'},
-    synonyms:'Conversion rate', antonyms:'-', family:'exchange, exchanged',
-    collocations:'exchange rate, exchange money', category:'Travel English', difficulty:'Intermediate',
-    tip:'Airport counters usually give worse rates than banks.'},
+    synonyms:'Conversion rate', synonyms_ar:'سعر التحويل',
+    antonyms:'-', antonyms_ar:'-',
+    family:'exchange, exchanged', family_ar:'يصرف، مصروف',
+    collocations:'exchange rate, exchange money', collocations_ar:'سعر الصرف، صرف فلوس',
+    category:'Travel English', difficulty:'Intermediate', difficulty_ar:'متوسط',
+    tip:'Airport counters usually give worse rates than banks.',
+    tip_ar:'بوابات المطار عادة تعطي اسعار اسوء من البنوك.'},
   {en:'Currency', ipa:'/ˈkɜːrənsi/', ar:'عملة', translit:'كيرنسي',
     example:{en:'Which currency should I use in Turkey?', ar:'اي عملة استخدم في تركيا؟', translit:'ويتش كيرنسي شود اي يوز ان تركي؟'},
-    synonyms:'Money, tender', antonyms:'-', family:'-',
-    collocations:'foreign currency, local currency', category:'Travel English', difficulty:'Intermediate',
-    tip:'Most ATMs ask which currency to charge, choose local.'},
+    synonyms:'Money, tender', synonyms_ar:'فلوس، نقد',
+    antonyms:'-', antonyms_ar:'-',
+    family:'-', family_ar:'-',
+    collocations:'foreign currency, local currency', collocations_ar:'عملة اجنبيه، عملة محليه',
+    category:'Travel English', difficulty:'Intermediate', difficulty_ar:'متوسط',
+    tip:'Most ATMs ask which currency to charge, choose local.',
+    tip_ar:'معظم الصرافات تسال اي عملة تسحب، اختار المحليه.'},
   {en:'Speed Limit', ipa:'/spiːd ˈlɪmɪt/', ar:'السرعه القصوى', translit:'سبيد ليمت',
     example:{en:'The speed limit here is one hundred.', ar:'السرعه القصوى هنا مية.', translit:'ذا سبيد ليمت هير از ون هاندرِد.'},
-    synonyms:'Speed cap', antonyms:'-', family:'limit, limited',
-    collocations:'speed limit sign, exceed the speed limit', category:'Driving English', difficulty:'Beginner',
-    tip:'On US roads limits are in miles, not kilometers.'},
+    synonyms:'Speed cap', synonyms_ar:'حد السرعه',
+    antonyms:'-', antonyms_ar:'-',
+    family:'limit, limited', family_ar:'حد، محدود',
+    collocations:'speed limit sign, exceed the speed limit', collocations_ar:'لافته السرعه، تجاوز السرعه',
+    category:'Driving English', difficulty:'Beginner', difficulty_ar:'مبتدئ',
+    tip:'On US roads limits are in miles, not kilometers.',
+    tip_ar:'في طرق امريكا السرعه بالاميال مو الكيلومترات.'},
   {en:'Detour', ipa:'/ˈdiːtʊr/', ar:'تحويلة', translit:'ديتور',
     example:{en:'There is a detour, the road is closed.', ar:'فيه تحويلة، الطريق مسدود.', translit:'ذير از ا ديتور، ذا رود از كلوزد.'},
-    synonyms:'Diversion, reroute', antonyms:'Direct route', family:'detour, detoured',
-    collocations:'take a detour, traffic detour', category:'Driving English', difficulty:'Intermediate',
-    tip:'You will often see a yellow sign with "Detour" on it.'},
+    synonyms:'Diversion, reroute', synonyms_ar:'مسار بديل، تغيير مسار',
+    antonyms:'Direct route', antonyms_ar:'مسار مباشر',
+    family:'detour, detoured', family_ar:'يحول، محول',
+    collocations:'take a detour, traffic detour', collocations_ar:'خذ تحويلة، تحويلة مرور',
+    category:'Driving English', difficulty:'Intermediate', difficulty_ar:'متوسط',
+    tip:'You will often see a yellow sign with "Detour" on it.',
+    tip_ar:'غالبا تشوف لافته صفرا مكتوب عليها Detour.'},
   {en:'Fire Escape', ipa:'/faɪər ɪˈskeɪp/', ar:'مخرج الحريق', translit:'فاير اسكيب',
     example:{en:'Where is the fire escape?', ar:'وين مخرج الحريق؟', translit:'وير از ذا فاير اسكيب؟'},
-    synonyms:'Emergency exit', antonyms:'-', family:'escape, escaped',
-    collocations:'fire escape route, fire exit', category:'Emergency English', difficulty:'Intermediate',
-    tip:'Hotels must show the fire escape route on the back of the door.'},
+    synonyms:'Emergency exit', synonyms_ar:'مخرج الطوارئ',
+    antonyms:'-', antonyms_ar:'-',
+    family:'escape, escaped', family_ar:'يهرب، هارب',
+    collocations:'fire escape route, fire exit', collocations_ar:'مسار مخرج الحريق، مخرج حريق',
+    category:'Emergency English', difficulty:'Intermediate', difficulty_ar:'متوسط',
+    tip:'Hotels must show the fire escape route on the back of the door.',
+    tip_ar:'الفنادق لازم تعرض مسار مخرج الحريق خلف الباب.'},
   {en:'Interviewer', ipa:'/ˈɪntərˌvjuːər/', ar:'المقابل (الشخص اللي يقابل)', translit:'انترڤيوَر',
     example:{en:'The interviewer asked about my experience.', ar:'المقابل سالني عن خبرتي.', translit:'ذا انترڤيوَر اسكت اباوت ماي اكسبيرينس.'},
-    synonyms:'Recruiter, hiring manager', antonyms:'Interviewee', family:'interview, interviewed',
-    collocations:'interview process, job interview', category:'Job Interview Academy', difficulty:'Advanced',
-    tip:'The person answering is the interviewee, the one asking is the interviewer.'},
+    synonyms:'Recruiter, hiring manager', synonyms_ar:'موظف التوظيف، مدير التوظيف',
+    antonyms:'Interviewee', antonyms_ar:'المقابل (اللي يتقابل)',
+    family:'interview, interviewed', family_ar:'يقابل، مقابَل',
+    collocations:'interview process, job interview', collocations_ar:'عملية المقابله، مقابلة عمل',
+    category:'Job Interview Academy', difficulty:'Advanced', difficulty_ar:'متقدم',
+    tip:'The person answering is the interviewee, the one asking is the interviewer.',
+    tip_ar:'اللي يجاوب هو interviewee واللي يسأل هو interviewer.'},
   {en:'Overtime', ipa:'/ˈoʊvərtaɪm/', ar:'دوام اضافي', translit:'اوڤرتيم',
     example:{en:'I worked overtime all week.', ar:'دوّمت اضافي كل الاسبوع.', translit:'اي ووركت اوڤرتيم اول ويك.'},
-    synonyms:'Extra hours', antonyms:'-', family:'-',
-    collocations:'work overtime, overtime pay', category:'Workplace', difficulty:'Intermediate',
-    tip:'"Time and a half" means one and a half times your normal pay.'},
+    synonyms:'Extra hours', synonyms_ar:'ساعات اضافيه',
+    antonyms:'-', antonyms_ar:'-',
+    family:'-', family_ar:'-',
+    collocations:'work overtime, overtime pay', collocations_ar:'اشتغل اضافي، اجرة الاضافي',
+    category:'Workplace', difficulty:'Intermediate', difficulty_ar:'متوسط',
+    tip:'"Time and a half" means one and a half times your normal pay.',
+    tip_ar:'time and a half يعني نص ساعه ونصف اجرتك العاديه.'},
   {en:'Raise', ipa:'/reɪz/', ar:'زياده راتب', translit:'ريز',
     example:{en:'I asked my manager for a raise.', ar:'طلبت من مديري زياده راتب.', translit:'اي اسكت ماي مانجر فور ا ريز.'},
-    synonyms:'Pay increase', antonyms:'Pay cut', family:'raise, raised',
-    collocations:'get a raise, ask for a raise', category:'Workplace', difficulty:'Intermediate',
-    tip:'"I would like to discuss my salary" is the polite opener.'},
+    synonyms:'Pay increase', synonyms_ar:'زياده راتب',
+    antonyms:'Pay cut', antonyms_ar:'تخفيض راتب',
+    family:'raise, raised', family_ar:'يزيد، زاد',
+    collocations:'get a raise, ask for a raise', collocations_ar:'اخذ زياده، اطلب زياده',
+    category:'Workplace', difficulty:'Intermediate', difficulty_ar:'متوسط',
+    tip:'"I would like to discuss my salary" is the polite opener.',
+    tip_ar:'I would like to discuss my salary طريقة مهذبه عشان تفتح الموضوع.'},
   {en:'Father', ipa:'/ˈfɑːðər/', ar:'اب', translit:'فاذر',
     example:{en:'My father works in a hospital.', ar:'ابوي يشتغل بمستشفى.', translit:'ماي فاذر ووركس ان ا هاسبیتل.'},
-    synonyms:'Dad', antonyms:'-', family:'fatherhood',
-    collocations:'my father, father and son', category:'Family', difficulty:'Beginner',
-    tip:'The "th" is soft, like in "the": FA-ther.'},
+    synonyms:'Dad', synonyms_ar:'ابوي، يبه',
+    antonyms:'-', antonyms_ar:'-',
+    family:'fatherhood', family_ar:'الابوه',
+    collocations:'my father, father and son', collocations_ar:'ابوي، اب وابن',
+    category:'Family', difficulty:'Beginner', difficulty_ar:'مبتدئ',
+    tip:'The "th" is soft, like in "the": FA-ther.',
+    tip_ar:'حرف الـ th ناعم زي كلمه the: FA-ther.'},
   {en:'Mother', ipa:'/ˈmʌðər/', ar:'ام', translit:'ماذر',
     example:{en:'My mother cooks the best food.', ar:'امي تطبخ احلى اكل.', translit:'ماي ماذر كوكس ذا بيست فود.'},
-    synonyms:'Mom', antonyms:'-', family:'motherhood',
-    collocations:'my mother, mother tongue', category:'Family', difficulty:'Beginner',
-    tip:'Same soft "th" as father: MU-ther.'},
+    synonyms:'Mom', synonyms_ar:'امي، يمه',
+    antonyms:'-', antonyms_ar:'-',
+    family:'motherhood', family_ar:'الامومه',
+    collocations:'my mother, mother tongue', collocations_ar:'امي، اللغه الام',
+    category:'Family', difficulty:'Beginner', difficulty_ar:'مبتدئ',
+    tip:'Same soft "th" as father: MU-ther.',
+    tip_ar:'نفس الـ th الناعم زي father: MU-ther.'},
   {en:'Red', ipa:'/rɛd/', ar:'احمر', translit:'ريد',
     example:{en:'The car is red.', ar:'السياره حمرا.', translit:'ذا كار از ريد.'},
-    synonyms:'Crimson', antonyms:'-', family:'reddish',
-    collocations:'red car, light red', category:'Colors', difficulty:'Beginner',
-    tip:'One short syllable, keep it quick.'},
+    synonyms:'Crimson', synonyms_ar:'قرمزي',
+    antonyms:'-', antonyms_ar:'-',
+    family:'reddish', family_ar:'محمر',
+    collocations:'red car, light red', collocations_ar:'سياره حمرا، احمر فاتح',
+    category:'Colors', difficulty:'Beginner', difficulty_ar:'مبتدئ',
+    tip:'One short syllable, keep it quick.',
+    tip_ar:'مقطع واحد قصير، انطقها بسرعه.'},
   {en:'Blue', ipa:'/bluː/', ar:'ازرق', translit:'بلو',
     example:{en:'The sky is blue today.', ar:'السما زرقا اليوم.', translit:'ذا سكاي از بلو تودي.'},
-    synonyms:'Azure', antonyms:'-', family:'bluish',
-    collocations:'blue sky, dark blue', category:'Colors', difficulty:'Beginner',
-    tip:'One long vowel sound: bloo.'},
+    synonyms:'Azure', synonyms_ar:'سماوي',
+    antonyms:'-', antonyms_ar:'-',
+    family:'bluish', family_ar:'زرقاوي',
+    collocations:'blue sky, dark blue', collocations_ar:'سما زرقا، ازرق غامق',
+    category:'Colors', difficulty:'Beginner', difficulty_ar:'مبتدئ',
+    tip:'One long vowel sound: bloo.',
+    tip_ar:'صوت حرف متحرك طويل: bloo.'},
   {en:'Morning', ipa:'/ˈmɔːrnɪŋ/', ar:'صباح', translit:'مورنينق',
     example:{en:'I drink coffee in the morning.', ar:'اشرب قهوه بالصبح.', translit:'اي درينك كوفي ان ذا مورنينق.'},
-    synonyms:'Dawn', antonyms:'Evening', family:'mornings',
-    collocations:'in the morning, early morning', category:'Daily Life', difficulty:'Beginner',
-    tip:'Stress the first syllable: MORN-ing.'},
+    synonyms:'Dawn', synonyms_ar:'فجر',
+    antonyms:'Evening', antonyms_ar:'مساء',
+    family:'mornings', family_ar:'صباحات',
+    collocations:'in the morning, early morning', collocations_ar:'بالصبح، الصبح بدري',
+    category:'Daily Life', difficulty:'Beginner', difficulty_ar:'مبتدئ',
+    tip:'Stress the first syllable: MORN-ing.',
+    tip_ar:'النبر على المقطع الاول: MORN-ing.'},
   {en:'Coffee', ipa:'/ˈkɔːfi/', ar:'قهوه', translit:'كوفي',
     example:{en:'I make coffee every morning.', ar:'اسوي قهوه كل صباح.', translit:'اي ميك كوفي ايڤري مورنينق.'},
-    synonyms:'Espresso', antonyms:'-', family:'coffees',
-    collocations:'cup of coffee, make coffee', category:'Daily Life', difficulty:'Beginner',
-    tip:'Two clear syllables: COFF-ee.'},
+    synonyms:'Espresso', synonyms_ar:'اسبريسو',
+    antonyms:'-', antonyms_ar:'-',
+    family:'coffees', family_ar:'قهوات',
+    collocations:'cup of coffee, make coffee', collocations_ar:'كوب قهوه، سو قهوه',
+    category:'Daily Life', difficulty:'Beginner', difficulty_ar:'مبتدئ',
+    tip:'Two clear syllables: COFF-ee.',
+    tip_ar:'مقطعين واضحين: COFF-ee.'},
 ];
 
-// ===== Category icons =====
+// ===== Category names in Arabic =====
+const CAT_AR = {
+  'Restaurant English': 'انجليزي المطاعم',
+  'Hospital English': 'انجليزي المستشفى',
+  'Business English': 'انجليزي الاعمال',
+  'Airport English': 'انجليزي المطار',
+  'Shopping English': 'انجليزي التسوق',
+  'Travel English': 'انجليزي السفر',
+  'Workplace': 'انجليزي الشغل',
+  'Job Interview Academy': 'مقابلات العمل',
+  'Family': 'العائله',
+  'Colors': 'الالوان',
+  'Daily Life': 'الحياة اليوميه',
+  'General': 'عام',
+  'Emergency English': 'انجليزي الطوارئ',
+  'Driving English': 'انجليزي القياده',
+  'Hotel English': 'انجليزي الفنادق',
+};
+
 const CAT_ICONS = {
-  'Restaurant English': '🍽️',
-  'Hospital English': '🏥',
-  'Business English': '💼',
-  'Airport English': '✈️',
-  'Shopping English': '🛍️',
-  'Travel English': '🌍',
-  'Workplace': '🏢',
-  'Job Interview Academy': '🎤',
-  'Family': '👨‍👩‍👦',
-  'Colors': '🎨',
-  'Daily Life': '☕',
-  'General': '📚',
-  'Emergency English': '🚨',
-  'Driving English': '🚗',
-  'Hotel English': '🏨',
+  'Restaurant English':'🍽️','Hospital English':'🏥','Business English':'💼','Airport English':'✈️',
+  'Shopping English':'🛍️','Travel English':'🌍','Workplace':'🏢','Job Interview Academy':'🎤',
+  'Family':'👨‍👩‍👦','Colors':'🎨','Daily Life':'☕','General':'📚','Emergency English':'🚨',
+  'Driving English':'🚗','Hotel English':'🏨',
+};
+
+// ===== UI strings =====
+const UI = {
+  pick_category: {en:'Pick a category', ar:'اختر تصنيف'},
+  subtitle: {en:'Choose a word set to study. Each session focuses on one topic so you build real vocabulary depth.',
+    ar:'اختر مجموعة كلمات تبي تدرسها. كل جلسة تركز على موضوع واحد عشان تبني فهم عميق للمفردات.'},
+  seen: {en:'Seen', ar:'شفت'},
+  total: {en:'Total', ar:'المجموع'},
+  example: {en:'Example', ar:'مثال'},
+  synonyms: {en:'Synonyms', ar:'مرادفات'},
+  antonyms: {en:'Antonyms', ar:'متضادات'},
+  family: {en:'Family', ar:'عائله الكلمه'},
+  collocations: {en:'Collocations', ar:'تلازمات'},
+  great_job: {en:'Great job!', ar:'احسنت!'},
+  finished: {en:'You finished all', ar:'خلصت كل'},
+  words: {en:'words in this set.', ar:'كلمه في هالمجموعه.'},
+  replay: {en:'Replay', ar:'مرة ثانية'},
+  shuffle_replay: {en:'Shuffle & Replay', ar:'اخلط وابدأ'},
+  new_cat: {en:'Pick New Category', ar:'اختر تصنيف ثاني'},
+  auto_play: {en:'Auto-play', ar:'تلقائي'},
 };
 
 // ===== App State =====
+let lang = 'en'; // 'en' or 'ar'
 const catScreen = document.getElementById('category-screen');
 const catGrid = document.getElementById('catGrid');
 const stage = document.getElementById('stage');
@@ -575,6 +718,9 @@ const newCatBtn = document.getElementById('newCatBtn');
 const confettiLayer = document.getElementById('confetti');
 const statSeen = document.getElementById('statSeen');
 const statTotal = document.getElementById('statTotal');
+const langToggle = document.getElementById('langToggle');
+const langCurrent = document.getElementById('langCurrent');
+const langOther = document.getElementById('langOther');
 
 let currentCategory = null;
 let deck = [];
@@ -589,55 +735,53 @@ let autoTimer = null;
 let countdownTimer = null;
 let muted = false;
 
-// ===== Build category selection screen =====
+function t(key){ return UI[key] ? UI[key][lang] : key; }
+
+// ===== Language toggle =====
+function setLang(l){
+  lang = l;
+  document.body.classList.toggle('ar', l === 'ar');
+  document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr';
+  document.documentElement.lang = l === 'ar' ? 'ar' : 'en';
+  langCurrent.textContent = l === 'ar' ? 'ع' : 'EN';
+  langOther.textContent = l === 'ar' ? 'EN' : 'ع';
+  // Update all data-en/data-ar elements
+  document.querySelectorAll('[data-en]').forEach(el => {
+    el.textContent = el.dataset[l];
+  });
+  // Rebuild category screen and cards
+  buildCategoryScreen();
+  if(currentCategory) rebuildCards();
+}
+
+langToggle.addEventListener('click', () => setLang(lang === 'en' ? 'ar' : 'en'));
+
+// ===== Category screen =====
 function buildCategoryScreen(){
   const cats = {};
-  VOCAB.forEach(v => {
-    if(!cats[v.category]) cats[v.category] = 0;
-    cats[v.category]++;
-  });
-
+  VOCAB.forEach(v => { if(!cats[v.category]) cats[v.category] = 0; cats[v.category]++; });
   catGrid.innerHTML = Object.entries(cats).sort((a,b) => b[1] - a[1]).map(([cat, count]) => {
     const icon = CAT_ICONS[cat] || '📚';
+    const catName = lang === 'ar' ? (CAT_AR[cat] || cat) : cat;
     return `<div class="cat-card" data-cat="${cat}">
       <div class="cat-icon">${icon}</div>
-      <div class="cat-name">${cat}</div>
-      <div class="cat-count"><b>${count}</b> word${count > 1 ? 's' : ''}</div>
+      <div class="cat-name">${catName}</div>
+      <div class="cat-count"><b>${count}</b> ${lang === 'ar' ? 'كلمه' : 'word'}${count > 1 ? (lang === 'ar' ? '' : 's') : ''}</div>
     </div>`;
   }).join('');
-
   catGrid.querySelectorAll('.cat-card').forEach(card => {
     card.addEventListener('click', () => startDeck(card.dataset.cat));
   });
 }
 
-// ===== Start a category deck =====
 function startDeck(category){
   currentCategory = category;
   deck = VOCAB.filter(v => v.category === category);
   order = deck.map((_, i) => i);
-
-  catLabel.textContent = category;
+  catLabel.textContent = lang === 'ar' ? (CAT_AR[category] || category) : category;
   statTotal.textContent = deck.length;
   completeCount.textContent = deck.length;
-
-  // Build cards
-  stage.innerHTML = '';
-  cardWraps = [];
-  order.forEach(i => {
-    const c = buildCard(deck[i]);
-    stage.appendChild(c);
-    cardWraps.push(c);
-  });
-  cardWraps[0].className = 'card-wrap active';
-
-  buildDots();
-  current = 0;
-  flipped = false;
-  seen.clear();
-  updateProgress();
-
-  // Show card UI, hide category screen
+  rebuildCards();
   catScreen.classList.add('hidden');
   setTimeout(() => {
     stage.classList.add('show');
@@ -647,7 +791,22 @@ function startDeck(category){
   }, 200);
 }
 
-// ===== Back to category screen =====
+function rebuildCards(){
+  stage.innerHTML = '';
+  cardWraps = [];
+  order.forEach(i => {
+    const c = buildCard(deck[i]);
+    stage.appendChild(c);
+    cardWraps.push(c);
+  });
+  if(cardWraps.length) cardWraps[0].className = 'card-wrap active';
+  buildDots();
+  current = 0;
+  flipped = false;
+  seen.clear();
+  updateProgress();
+}
+
 function backToCategories(){
   stopAutoPlay();
   stage.classList.remove('show');
@@ -658,15 +817,22 @@ function backToCategories(){
   catScreen.classList.remove('hidden');
 }
 
-// ===== Card builder =====
 function buildCard(v){
   const wrap = document.createElement('div');
   wrap.className = 'card-wrap enter-from-right';
+  const catName = lang === 'ar' ? (CAT_AR[v.category] || v.category) : v.category;
+  const diff = lang === 'ar' ? v.difficulty_ar : v.difficulty;
+  const syn = lang === 'ar' ? v.synonyms_ar : v.synonyms;
+  const ant = lang === 'ar' ? v.antonyms_ar : v.antonyms;
+  const fam = lang === 'ar' ? v.family_ar : v.family;
+  const coll = lang === 'ar' ? v.collocations_ar : v.collocations;
+  const tip = lang === 'ar' ? v.tip_ar : v.tip;
+
   wrap.innerHTML = `
     <div class="card card-front" data-cat="${v.category}">
       <div class="card-top">
-        <span class="card-category">${v.category}</span>
-        <span class="card-difficulty">Level: <span>${v.difficulty}</span></span>
+        <span class="card-category">${catName}</span>
+        <span class="card-difficulty">${lang === 'ar' ? 'المستوى' : 'Level'}: <span>${diff}</span></span>
       </div>
       <div class="card-word-section">
         <div class="card-word">${v.en}</div>
@@ -681,24 +847,24 @@ function buildCard(v){
     <div class="card card-back" data-cat="${v.category}">
       <div class="card-top">
         <span class="card-category">${v.en}</span>
-        <span class="card-difficulty">${v.difficulty}</span>
+        <span class="card-difficulty">${diff}</span>
       </div>
       <div class="card-back-content">
-        <div class="example-label">Example</div>
+        <div class="example-label">${t('example')}</div>
         <div class="example-en">"${v.example.en}"</div>
         <div class="example-ar">${v.example.ar}</div>
         <div class="example-tr">${v.example.translit}</div>
         <div class="divider"></div>
         <div class="meta-row">
-          <span class="meta-chip"><b>Synonyms:</b> ${v.synonyms}</span>
-          ${v.antonyms !== '-' ? `<span class="meta-chip"><b>Antonyms:</b> ${v.antonyms}</span>` : ''}
+          <span class="meta-chip"><b>${t('synonyms')}:</b> ${syn}</span>
+          ${ant !== '-' ? `<span class="meta-chip"><b>${t('antonyms')}:</b> ${ant}</span>` : ''}
         </div>
         <div class="meta-row">
-          <span class="meta-chip"><b>Family:</b> ${v.family}</span>
-          <span class="meta-chip"><b>Collocations:</b> ${v.collocations}</span>
+          <span class="meta-chip"><b>${t('family')}:</b> ${fam}</span>
+          <span class="meta-chip"><b>${t('collocations')}:</b> ${coll}</span>
         </div>
         <div class="divider"></div>
-        <div class="tip">💡 ${v.tip}</div>
+        <div class="tip">💡 ${tip}</div>
       </div>
     </div>
   `;
@@ -735,161 +901,86 @@ function showCard(idx, dir){
   if(idx < 0 || idx >= order.length) return;
   transitioning = true;
   flipped = false;
-
   const oldWrap = cardWraps[current];
   const newWrap = cardWraps[idx];
-
   newWrap.className = 'card-wrap ' + (dir > 0 ? 'enter-from-right' : 'enter-from-left');
   void newWrap.offsetWidth;
-
   if(oldWrap && oldWrap !== newWrap){
     oldWrap.className = 'card-wrap ' + (dir > 0 ? 'exit-to-left' : 'exit-to-right');
   }
-
-  requestAnimationFrame(() => {
-    newWrap.className = 'card-wrap active';
-  });
-
+  requestAnimationFrame(() => { newWrap.className = 'card-wrap active'; });
   current = idx;
   updateProgress();
   setTimeout(() => { transitioning = false; }, 600);
 }
 
-// ===== Flip-then-advance =====
 function flipThenAdvance(){
   if(transitioning) return;
   if(!flipped){
     flip();
     setTimeout(() => {
-      if(current < order.length - 1){
-        showCard(current + 1, 1);
-      } else {
-        showCompletion();
-      }
+      if(current < order.length - 1) showCard(current + 1, 1);
+      else showCompletion();
     }, 2200);
   } else {
-    if(current < order.length - 1){
-      showCard(current + 1, 1);
-    } else {
-      showCompletion();
-    }
+    if(current < order.length - 1) showCard(current + 1, 1);
+    else showCompletion();
   }
 }
-
 function next(){
   if(current < order.length - 1) flipThenAdvance();
   else if(!flipped) flipThenAdvance();
   else showCompletion();
 }
-function prev(){
-  if(current > 0) showCard(current - 1, -1);
-}
-function flip(){
-  flipped = !flipped;
-  cardWraps[current].classList.toggle('flipped', flipped);
-}
+function prev(){ if(current > 0) showCard(current - 1, -1); }
+function flip(){ flipped = !flipped; cardWraps[current].classList.toggle('flipped', flipped); }
 function goTo(idx){
   if(idx === current) { flip(); return; }
   stopAutoPlay();
   showCard(idx, idx > current ? 1 : -1);
 }
 
-// ===== Audio pronunciation =====
 function speak(text){
   if(muted || !('speechSynthesis' in window)) return;
   try{
     speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
-    u.lang = 'en-US';
-    u.rate = 0.85;
-    u.pitch = 1;
+    u.lang = 'en-US'; u.rate = 0.85; u.pitch = 1;
     speechSynthesis.speak(u);
     const btn = document.querySelector(`[data-speak="${text}"]`);
-    if(btn){
-      btn.classList.add('speaking');
-      u.onend = () => btn.classList.remove('speaking');
-    }
+    if(btn){ btn.classList.add('speaking'); u.onend = () => btn.classList.remove('speaking'); }
   }catch(e){}
 }
 
-// ===== Shuffle =====
 function shuffle(){
   order.sort(() => Math.random() - 0.5);
-  stage.innerHTML = '';
-  cardWraps = [];
-  order.forEach(i => {
-    const c = buildCard(deck[i]);
-    stage.appendChild(c);
-    cardWraps.push(c);
-  });
-  cardWraps[0].className = 'card-wrap active';
-  current = 0;
-  flipped = false;
-  seen.clear();
-  buildDots();
-  updateProgress();
+  rebuildCards();
   shuffleBtn.classList.add('active');
   setTimeout(() => shuffleBtn.classList.remove('active'), 600);
   stopAutoPlay();
 }
 
-// ===== Auto-play =====
-function startAutoPlay(){
-  autoPlay = true;
-  autoBtn.classList.add('active');
-  autoPulse.classList.add('show');
-  scheduleAutoAdvance();
-}
-function stopAutoPlay(){
-  autoPlay = false;
-  autoBtn.classList.remove('active');
-  autoPulse.classList.remove('show');
-  if(autoTimer) clearTimeout(autoTimer);
-  if(countdownTimer) clearInterval(countdownTimer);
-}
-function toggleAutoPlay(){
-  if(autoPlay) stopAutoPlay();
-  else startAutoPlay();
-}
+function startAutoPlay(){ autoPlay = true; autoBtn.classList.add('active'); autoPulse.classList.add('show'); scheduleAutoAdvance(); }
+function stopAutoPlay(){ autoPlay = false; autoBtn.classList.remove('active'); autoPulse.classList.remove('show'); if(autoTimer) clearTimeout(autoTimer); if(countdownTimer) clearInterval(countdownTimer); }
+function toggleAutoPlay(){ if(autoPlay) stopAutoPlay(); else startAutoPlay(); }
 function scheduleAutoAdvance(){
   if(!autoPlay) return;
-  let count = 3;
-  autoCountdown.textContent = count;
-  countdownTimer = setInterval(() => {
-    count--;
-    autoCountdown.textContent = count;
-    if(count <= 0) clearInterval(countdownTimer);
-  }, 1000);
-  autoTimer = setTimeout(() => {
-    next();
-    if(current < order.length - 1 || !seen.has(order.length - 1)){
-      scheduleAutoAdvance();
-    }
-  }, 3000);
+  let count = 3; autoCountdown.textContent = count;
+  countdownTimer = setInterval(() => { count--; autoCountdown.textContent = count; if(count <= 0) clearInterval(countdownTimer); }, 1000);
+  autoTimer = setTimeout(() => { next(); if(current < order.length - 1 || !seen.has(order.length - 1)) scheduleAutoAdvance(); }, 3000);
 }
 
-// ===== Completion =====
-function showCompletion(){
-  stopAutoPlay();
-  completeOverlay.classList.add('show');
-  fireConfetti();
-}
+function showCompletion(){ stopAutoPlay(); completeOverlay.classList.add('show'); fireConfetti(); }
 function hideCompletion(){ completeOverlay.classList.remove('show'); }
 function replay(shuffleFirst){
   hideCompletion();
   if(shuffleFirst) shuffle();
   else {
-    cardWraps.forEach((c, i) => {
-      c.className = i === 0 ? 'card-wrap active' : 'card-wrap enter-from-right';
-    });
-    current = 0;
-    flipped = false;
-    seen.clear();
-    updateProgress();
+    cardWraps.forEach((c, i) => { c.className = i === 0 ? 'card-wrap active' : 'card-wrap enter-from-right'; });
+    current = 0; flipped = false; seen.clear(); updateProgress();
   }
 }
 
-// ===== Confetti =====
 function fireConfetti(){
   const colors = ['#C8A96A','#D8BD83','#3F8C72','#4A9FFF','#E86BA8','#E8956B'];
   for(let i = 0; i < 80; i++){
@@ -907,7 +998,7 @@ function fireConfetti(){
   }
 }
 
-// ===== Event listeners =====
+// ===== Events =====
 prevBtn.addEventListener('click', () => { stopAutoPlay(); prev(); });
 nextBtn.addEventListener('click', () => { stopAutoPlay(); next(); });
 shuffleBtn.addEventListener('click', shuffle);
@@ -923,62 +1014,35 @@ stage.addEventListener('click', (e) => {
   if(e.target.closest('.card-wrap')) flip();
 });
 
-// ===== Keyboard navigation =====
 document.addEventListener('keydown', (e) => {
-  // Category screen: Enter or Space selects first category
   if(!catScreen.classList.contains('hidden')){
-    if(e.key === 'Enter' || e.key === ' '){
-      const firstCard = catGrid.querySelector('.cat-card');
-      if(firstCard) firstCard.click();
-      return;
-    }
+    if(e.key === 'Enter' || e.key === ' '){ const firstCard = catGrid.querySelector('.cat-card'); if(firstCard) firstCard.click(); return; }
     return;
   }
-  // Completion screen
   if(completeOverlay.classList.contains('show')){
     if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); replay(false); return; }
     return;
   }
   switch(e.key){
-    case 'ArrowRight':
-    case ' ':
-      e.preventDefault(); stopAutoPlay(); next(); break;
-    case 'ArrowLeft':
-      e.preventDefault(); stopAutoPlay(); prev(); break;
-    case 'ArrowUp':
-    case 'ArrowDown':
-    case 'Enter':
-      e.preventDefault(); flip(); break;
-    case 'a': case 'A':
-      e.preventDefault(); toggleAutoPlay(); break;
-    case 's': case 'S':
-      e.preventDefault(); shuffle(); break;
-    case 'm': case 'M':
-      e.preventDefault(); muted = !muted;
-      if(muted && speechSynthesis) speechSynthesis.cancel();
-      break;
-    case 'Escape':
-      e.preventDefault(); backToCategories(); break;
+    case 'ArrowRight': case ' ': e.preventDefault(); stopAutoPlay(); next(); break;
+    case 'ArrowLeft': e.preventDefault(); stopAutoPlay(); prev(); break;
+    case 'ArrowUp': case 'ArrowDown': case 'Enter': e.preventDefault(); flip(); break;
+    case 'a': case 'A': e.preventDefault(); toggleAutoPlay(); break;
+    case 's': case 'S': e.preventDefault(); shuffle(); break;
+    case 'm': case 'M': e.preventDefault(); muted = !muted; if(muted && speechSynthesis) speechSynthesis.cancel(); break;
+    case 'Escape': e.preventDefault(); backToCategories(); break;
   }
 });
 
-// ===== Touch / swipe =====
 let touchStartX = 0, touchStartY = 0;
-document.addEventListener('touchstart', (e) => {
-  touchStartX = e.touches[0].clientX;
-  touchStartY = e.touches[0].clientY;
-}, {passive: true});
+document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; touchStartY = e.touches[0].clientY; }, {passive: true});
 document.addEventListener('touchend', (e) => {
   if(!catScreen.classList.contains('hidden')) return;
   if(completeOverlay.classList.contains('show')) return;
   const dx = e.changedTouches[0].clientX - touchStartX;
   const dy = e.changedTouches[0].clientY - touchStartY;
-  if(Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)){
-    stopAutoPlay();
-    if(dx > 0) prev(); else next();
-  } else if(Math.abs(dy) > 60 && Math.abs(dy) > Math.abs(dx)){
-    flip();
-  }
+  if(Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)){ stopAutoPlay(); if(dx > 0) prev(); else next(); }
+  else if(Math.abs(dy) > 60 && Math.abs(dy) > Math.abs(dx)){ flip(); }
 }, {passive: true});
 
 // ===== Init =====
