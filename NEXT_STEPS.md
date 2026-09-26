@@ -70,6 +70,21 @@ keep. Also removed the dead `.replace(/يمكنر/g,'يمكنر')` line.
    complete toast -> XP 250->300 server-side -> stage 0/23 -> 1/23 ->
    auto-advance to next lesson. Zero console errors across 290 CDP events.
 
+### Exhaustive corruption sweep + permanent audit tool (2026-09-27, 1e6b07a+)
+Ran an exhaustive never-in-baseline token diff over all 18 corrupted files
+(10,959 unique current tokens vs 57f466b^): 109 never-seen tokens reviewed
+one by one. Found and fixed the last defects:
+- 10 truncated الجا/الجاه words across admin.js, onboard.js,
+  pel-assessment.js, pel-personalization.js, pel_dashboard_life.js,
+  pel_lesson_stage.js (Next/Upcoming labels, الخطوه الجايه, للتمرين الجاي)
+- يبانن→يبدون، بسط→انماط، الكلًا→الكل، التكي→التكيفي، ونتك→ونتكيف،
+  ربط احداث→ربط بعدين، يداخل (warranty family_ar)→ضمان
+**NEW: `python3 tools/audit_corruption.py`** — encodes all 22 verified garbage
+patterns (families + one-offs + truncations) and sweeps the whole repo in
+seconds; exit 1 on any hit. `--sql` prints the DB sweep query. Run it before
+every push. DB re-verified clean (all lesson_items hits were ممكن/يمكن
+substrings and legit كيفك greetings).
+
 ### Deliberately NOT changed (house style / later legit simplifications)
 عشانك؟ greeting, بعدين/بعدها/الجاه/ومثلن/صح/اغلط dialect forms,
 پ for P in translits, الانجليزي (old pre-corruption commit itself had

@@ -17,14 +17,14 @@
 <script src="vendor/lucide.min.js" integrity="sha384-e4/0BB/wmBhpxvLLrbTidvaESiwxgHfoSGUoRd2s9Ho7YmgxiMftfoo51J/Ojyph" crossorigin="anonymous" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.50.0/dist/umd/supabase.js" integrity="sha384-K0oxqktRvaThvYgGL4G+OK2Ih6VS6Uyu7j3+7WJgp/uWM0Yv6Xi4YEiw0BB+mPfi" crossorigin="anonymous" defer></script>
 <script src="lib/daily-lesson.js?v=e944dc59" defer></script>
-<script src="lib/pel-personalization.js?v=e3af6b4d" defer></script>
+<script src="lib/pel-personalization.js?v=f8f804a9" defer></script>
 <script src="lib/pel-plans.js?v=31e23e3b" defer></script>
 <script src="lib/pel-settings.js?v=30360798" defer></script>
 <script src="lib/cert-qr.js?v=a43f19f9" defer></script>
 <script src="lib/cert-sheet.js?v=ece713aa" defer></script>
 <script src="lib/pel_config.js?v=d66df0a3"></script>
-<script src="lib/pel_lesson_stage.js?v=64ea108a"></script>
-<script src="lib/pel_dashboard_life.js?v=d42ab032"></script>
+<script src="lib/pel_lesson_stage.js?v=a5bb1af6"></script>
+<script src="lib/pel_dashboard_life.js?v=950ac8f3"></script>
 <script src="lib/pel_curriculum_path.js?v=e4c5c297"></script>
 <style>
 /* ============================================================
@@ -11031,7 +11031,7 @@ const SPEAKING_PERSONAS = [
   {id:'coworker', title:'Coworker', icon:'users', opener:{en:'Hey, do you want to grab lunch together?', ar:'هلا، تبغى نتعشى مع بعض؟', translit:'هاي، دو يو وانت تو قراب لانش توقذر؟'}},
   {id:'job-interviewer', title:'Job Interviewer', icon:'user-check', opener:{en:'Thanks for coming in. Tell me about yourself.', ar:'شكرا لحضورك. عرفني عن نفسك.', translit:'ثانكس فور كمنق ان. تيل مي اباوت يورسلف.'}},
   {id:'police-officer', title:'Police Officer', icon:'shield', opener:{en:'Good evening, can I see your ID, please?', ar:'مسا الخير، ممكن اشوف الهويه لو سمحت؟', translit:'قود ايڤنينج، كان اي سي يور اي دي، بليز؟'}},
-  {id:'tour-guide', title:'Tour Guide', icon:'map', opener:{en:'Welcome everyone. We start the tour in ten minutes.', ar:'حياكم الكلًا. نبدا الجوله لسه عشر دقايق.', translit:'ويلكم اڤري ون. وي ستارت ذا تور ان تِن مينتس.'}},
+  {id:'tour-guide', title:'Tour Guide', icon:'map', opener:{en:'Welcome everyone. We start the tour in ten minutes.', ar:'حياكم الكل. نبدا الجوله لسه عشر دقايق.', translit:'ويلكم اڤري ون. وي ستارت ذا تور ان تِن مينتس.'}},
 ];
 
 /* ---- listening lounge tracks ---- */
@@ -11073,7 +11073,7 @@ const READING_ARTICLES = [
     {en:'Visitors often start their day at the historic Pike Place Market.', ar:'الزوار غالبًا يبدون يومهم في سوق بايك بليس التاريخي.', translit:'ڤيزيتورز اوفن ستارت ذير داي ات ذا هيستوريك بايك بليس ماركت.'},
   ]},
   {id:'business', topic:'Business', title:'Starting a Small Business', body:[
-    {en:'Many entrepreneurs begin with a simple idea and a clear plan.', ar:'كثير من رواد الاعمال يبانن بفكره بسيطه وخطه واضحه.', translit:'ميني انتربرنورز بيقين وذ ا سمبل ايدي اند ا كلير بلان.'},
+    {en:'Many entrepreneurs begin with a simple idea and a clear plan.', ar:'كثير من رواد الاعمال يبدون بفكره بسيطه وخطه واضحه.', translit:'ميني انتربرنورز بيقين وذ ا سمبل ايدي اند ا كلير بلان.'},
     {en:'A good business plan explains the product, the customer, and the budget.', ar:'خطه الشغل الزينه توضح المنتج والعميل والميزانيه.', translit:'ا قود بزنس بلان اكسبلينز ذا برودكت، ذا كستمر، اند ذا بدجت.'},
   ]},
   {id:'health', topic:'Health', title:'Sleep and Focus', body:[
@@ -11597,7 +11597,7 @@ const LESSON_LIBRARY = {
       {who:'You', en:'Excuse me, is the flight to Riyadh delayed?', ar:'لو سمحت، رحه الرياض متاخره؟', translit:'اكسكوز مي، از ذا فلايت تو رياض ديليدد؟'},
       {who:'Agent', en:'Yes, about two hours due to the weather.', ar:'ايه، تقريبًا ساعتين عشان الجو.', translit:'يس، اباوت تو اورز دو تو ذا ويذر.'},
       {who:'You', en:'I have a connection in Jeddah. Will I make it?', ar:'عندي رحه ربط بجده. بلحق عليها؟', translit:'اي هاف ا كونكشن ان جده. ويل اي ميك ات؟'},
-      {who:'Agent', en:'Let me rebook you on a later connection, no extra charge.', ar:'خلني اعيد حجزك على رحه ربط احداث، بدون رسوم.', translit:'ليت مي ريبوك يو اون ا ليتر كونكشن، نو اكسترا تشارج.'},
+      {who:'Agent', en:'Let me rebook you on a later connection, no extra charge.', ar:'خلني اعيد حجزك على رحه ربط بعدين، بدون رسوم.', translit:'ليت مي ريبوك يو اون ا ليتر كونكشن، نو اكسترا تشارج.'},
     ],
     quiz:[
       {qAr:'كيف تسال عن التاخير؟', qEn:'How do you ask about a delay?', options:['Is the flight delayed?','Flight delay how much?','Why flight late, tell?'], correct:0},
@@ -17856,7 +17856,7 @@ function renderLessonReader(container, academy, lesson){
         const s = sectionNoteText(n.en||'', n.ar||'');
         return {en:n.en, ar:n.ar, tr:n.tr, sections:s};
       });
-      let html = '<div class="lesson-section"><h3><span class="arabic">لاحظ</span>، Notice</h3><p class="lesson-section-sub"><span class="arabic" style="display:block;">بسط وقواعد مختصره، بالعاميه والانجليزي.</span><span dir="ltr">Compact patterns and rules, in  Arabic and English.</span></p>';
+      let html = '<div class="lesson-section"><h3><span class="arabic">لاحظ</span>، Notice</h3><p class="lesson-section-sub"><span class="arabic" style="display:block;">انماط وقواعد مختصره، بالعاميه والانجليزي.</span><span dir="ltr">Compact patterns and rules, in  Arabic and English.</span></p>';
       sections.forEach(ns => {
         if(ns.sections.rule.length){
           html += '<div class="concept-section-label" dir="ltr">Rule</div>';
@@ -21046,7 +21046,7 @@ function renderPlanView(){
   if(adapt.weak.length) adaptNotes.push(`<span class="arabic">${adapt.weak.map(s => ({Speaking:'المحادثه',Listening:'الاستماع',Vocabulary:'الكلمات',Grammar:'القواعد'})[s.key] || s.key).join(' و ')} اضعف من غيرها، دخلت على التركيز.</span>، ${adapt.weak.map(s => s.key).join(' & ')} measured weak, moved into focus.`);
   const adaptHtml = adaptNotes.length
     ? `<div class="card">
-        <span class="eyebrow" style="margin:0 0 8px;"><span class="arabic">التركيز التكي</span>، Adaptive focus</span>
+        <span class="eyebrow" style="margin:0 0 8px;"><span class="arabic">التركيز التكيفي</span>، Adaptive focus</span>
         <p style="font-size:.84rem; color:var(--text-secondary); line-height:1.8;">${adaptNotes.join('<br>')}</p>
       </div>`
     : '';
