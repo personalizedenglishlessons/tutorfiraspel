@@ -223,6 +223,7 @@ var I = {
   'selectedReport':{en:'Choose a report', ar:'اختر تقرير'},
   'generateSnapshot':{en:'Snapshot history', ar:'سجل اللقطات'},
   'est':{en:'Est. %d min', ar:'تقريب %d دقيقه'},
+  'estDaily':{en:'Est. daily pace', ar:'التقدير اليومي'},
   'lessonsDone':{en:'%d lessons done', ar:'%d درس منجز'},
   'ofRoute':{en:'of route', ar:'من المسار'},
   'nextLesson':{en:'Next lesson', ar:'الدرس الجا'},
@@ -576,6 +577,37 @@ function academyProgress(academyId, completed){
   if(!ids.length) return 0;
   var done = (completed || []).filter(function(k){ return k.indexOf(academyId + '::') === 0; }).length;
   return Math.min(100, Math.round(100 * done / ids.length));
+}
+/* Skill progress aggregated across ALL academies (mirrors app.html
+   dashSkillData): every academy maps to a primary skill, anything unmapped
+   counts as vocabulary, so core-curriculum / STEP students no longer show
+   0% on every skill bar the way they did when only the six named academies
+   were counted. */
+var SKILL_OF_ACADEMY = {
+  'speaking-studio':'Speaking', 'american-conversations':'Speaking', 'saudi-conversations':'Speaking',
+  'listening-lounge':'Listening',
+  'grammar-academy':'Grammar',
+  'american-accent-lab':'Pronunciation',
+  'writing-workshop':'Writing'
+};
+function skillScoresAll(completed){
+  var counts = { Speaking:{done:0,total:0}, Listening:{done:0,total:0}, Grammar:{done:0,total:0},
+                 Vocabulary:{done:0,total:0}, Pronunciation:{done:0,total:0}, Writing:{done:0,total:0} };
+  var done = {};
+  (completed || []).forEach(function(k){ done[k] = 1; });
+  var meta = (window.PEL_ENGINE && PEL_ENGINE.ACADEMY_META) || {};
+  Object.keys(meta).forEach(function(aid){
+    var c = counts[SKILL_OF_ACADEMY[aid] || 'Vocabulary'];
+    if(!c) return;
+    var ids = (PEL_ENGINE.academyLessons) ? (PEL_ENGINE.academyLessons(aid) || []) : [];
+    c.total += ids.length;
+    ids.forEach(function(lid){ if(done[aid + '::' + lid]) c.done++; });
+  });
+  return counts;
+}
+function skillPct(counts, key){
+  var c = counts[key] || {done:0,total:0};
+  return c.total ? Math.min(100, Math.round(100 * c.done / c.total)) : 0;
 }
 function csvExport(rows, filename){
   if(!rows || !rows.length){ toast(t('noData'), true); return; }
@@ -1115,7 +1147,7 @@ function render360(){
       presBadge +
       statusChip(p.status || 'new') + chip(esc(lvlName(p.level || (prof && prof.estimatedStartingLevel) || 'A1')), 'gold') +
       (p.role ? chip(esc(lang === 'ar' ? ((I[p.role+'Of']||{}).ar||p.role) : p.role), 'bronze') : '') +
-      (prog ? chip(esc((lang === 'ar' ? prof.targetLevel : prof.targetLevel)) + ' → ' + esc(prof && prof.targetLevel), '') : '') +
+      ((prog && prof && prof.targetLevel) ? chip(esc(lvlName(prof.estimatedStartingLevel || 'A1')) + ' → ' + esc(lvlName(prof.targetLevel)), '') : '') +
       (p.program_name ? chip(esc(p.program_name), 'green') : '') +
       '<span class="chip muted">' + esc(relTime(st.updated_at || p.created_at)) + '</span>' +
     '</div>' +
@@ -1155,7 +1187,7 @@ var tabs = [
       var b = (r.data && r.data.billing) || {};
       var ledger = (r.data && r.data.ledger) || [];
       var tierAr = b.tier==='exam_prep'?'التجهيز للاختبارات':(b.tier==='start_from_zero'?'ابد من الصفر':'-');
-      var trackAr = b.assessed_track==='exam_prep'?'متقدم':(b.assessed_track==='start_from_zero'?'مبتدي':'-');
+      var trackAr = b.assessed_track==='exam_prep'?'متقدم':(b.assessed_track==='start_from_zero'?'مبتدي':(b.assessed_track==='step'?'ستيپ':'-'));
       host.innerHTML =
         '<div class="section-title" style="margin-top:0;">'+(lang==='ar'?'الباقه والرصيد':'Plan & credits')+'</div>' +
         '<div class="s360-meta" style="margin-bottom:10px;">' +
@@ -1216,7 +1248,7 @@ var tabs = [
             if(r3.ok && r3.data){ b = r3.data.billing || {}; ledger = r3.data.ledger || []; }
             // Re-render the entire billing section to ensure UI is fresh
             var tierAr2 = b.tier==='exam_prep'?'التجهيز للاختبارات':(b.tier==='start_from_zero'?'ابد من الصفر':'-');
-            var trackAr2 = b.assessed_track==='exam_prep'?'متقدم':(b.assessed_track==='start_from_zero'?'مبتدي':'-');
+            var trackAr2 = b.assessed_track==='exam_prep'?'متقدم':(b.assessed_track==='start_from_zero'?'مبتدي':(b.assessed_track==='step'?'ستيپ':'-'));
             // Update credits chip
             var chips = host.querySelector('.s360-meta');
             if(chips){ var lastChip = chips.querySelector('.chip.green'); if(lastChip) lastChip.textContent = (b.live_class_credits||0)+' '+(lang==='ar'?'رصيد حصص':'class credits'); }
@@ -1440,8 +1472,9 @@ function learningHealth(plan, st, kv){
     {key:'Pronunciation', ar:'النطق', academyId:'american-accent-lab'},
     {key:'Writing', ar:'الكتابه', academyId:'writing-workshop'}
   ];
+  var _sc = skillScoresAll(completed);
   var scored = specs.map(function(s){
-    return { key:s.key, ar:s.ar, score:academyProgress(s.academyId, completed) };
+    return { key:s.key, ar:s.ar, score:skillPct(_sc, s.key) };
   });
   out.weak = scored.filter(function(s){ return s.score > 0 && s.score < 40; });
   out.strong = scored.filter(function(s){ return s.score >= 70; });
@@ -1481,8 +1514,8 @@ function renderTabPersonalization(plan){
     [t('weeklyFreq'), p.weeklyFrequency + '/7', null],
     [t('contexts'), (p.realLifeContexts || []).join(', '), null],
     [t('weaknesses'), (p.weaknesses || []).join(', '), null],
-    [t('routeDuration'), (e ? e.totalWeeks : '') + 'w · ' + (e ? e.totalStudyDays : '') + 'd', null],
-    [t('est'), e ? e.dailyMinutes + ' min/day' : '', null]
+    [t('routeDuration'), (e && e.weeks != null) ? (arNum(e.weeks) + 'w · ' + arNum(e.days) + 'd') : '', null],
+    [t('estDaily'), e ? (lang === 'ar' ? arNum(e.dailyMinutes) + ' دقيقه/يوم' : e.dailyMinutes + ' min/day') : '', null]
   ];
   var kv = items.filter(function(i){ return i[1] || i[2]; }).map(function(i){
     var v = lang === 'ar' ? (i[2] || i[1]) : i[1];
@@ -1509,8 +1542,9 @@ function renderTabSkills(plan, st, kv){
     {key:'Pronunciation', ar:'النطق', academyId:'american-accent-lab'},
     {key:'Writing', ar:'الكتابه', academyId:'writing-workshop'}
   ];
+  var _sc = skillScoresAll(completed);
   var scored = specs.map(function(s){
-    return { key:s.key, ar:s.ar, score:academyProgress(s.academyId, completed) };
+    return { key:s.key, ar:s.ar, score:skillPct(_sc, s.key) };
   });
   var bars = scored.map(function(s){
     var cls = s.score >= 70 ? 'green' : s.score < 40 && s.score > 0 ? 'red' : '';
