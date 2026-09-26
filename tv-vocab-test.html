@@ -5,115 +5,98 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PEL Vocabulary Vault — TV Mode (Test)</title>
 <link rel="icon" href="brand/pel-favicon.svg">
+<script src="vendor/lucide.min.js" defer></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#131316; --surface:#1A1A1F; --card:#1E1E24; --card-elevated:#232329;
-  --border:rgba(255,255,255,.08); --text:#F4F0E6; --text-muted:#8B8678; --text-secondary:#B0AB9C;
-  --gold:#C8A96A; --gold-soft:#D8BD83; --gold-glow:0 0 24px rgba(200,169,106,.18);
-  --green:#3F8C72; --red:#C46F56; --blue:#4A9FFF;
-  --ease:cubic-bezier(.22,.61,.36,1); --dur:.5s; --radius:24px;
+  --bg:#0E0E10; --surface:#17171B; --card:#1E1F25; --card-elevated:#262833;
+  --border:#343744; --text:#F7F4EF; --text-secondary:#D0CBC4; --text-muted:#9B98A2;
+  --text-faint:#6B6872;
+  --gold:#C8A96A; --gold-soft:#D8BD83; --bronze:#A88345; --emerald:#3F8C72;
+  --warning:#D89C3D; --danger:#D25C5C; --success:#42A36A;
+  --shadow-soft:0 20px 60px -20px rgba(0,0,0,.55);
+  --shadow-lift:0 30px 90px -25px rgba(0,0,0,.7);
+  --gold-glow:0 0 40px -8px rgba(200,169,106,.45);
+  --ease:cubic-bezier(.16,.84,.32,1); --dur:300ms;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);
-  font-family:'Inter','Segoe UI',system-ui,sans-serif;-webkit-font-smoothing:antialiased;}
+  font-family:'Plus Jakarta Sans',sans-serif;-webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;}
 body{display:flex;align-items:center;justify-content:center;}
-
-/* Arabic mode font */
 body.ar{font-family:'Cairo','Tajawal',sans-serif;}
+h1,h2,h3{font-family:'Fraunces',serif;font-weight:500;letter-spacing:-.02em;line-height:1.18;}
+body.ar h1,body.ar h2,body.ar h3{font-family:'Cairo','Tajawal',sans-serif;letter-spacing:0;}
+.arabic,[dir="rtl"]{font-family:'Cairo','Tajawal',sans-serif;direction:rtl;line-height:1.95;letter-spacing:0;font-weight:400;}
+[data-lucide]{width:18px;height:18px;}
 
-#ambient{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
-#ambient .orb{position:absolute;border-radius:50%;filter:blur(60px);opacity:.15;animation:drift 16s ease-in-out infinite;}
-#ambient .orb1{width:400px;height:400px;background:var(--gold);top:-100px;right:-50px;}
-#ambient .orb2{width:300px;height:300px;background:var(--green);bottom:-80px;left:-60px;animation-delay:-5s;}
-#ambient .orb3{width:200px;height:200px;background:var(--blue);top:40%;left:50%;animation-delay:-10s;}
-@keyframes drift{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(40px,-30px) scale(1.1);}}
-
-/* ===== Category Selection Screen ===== */
-#category-screen{position:relative;z-index:2;width:100%;height:100%;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;padding:clamp(40px,6vh,80px) clamp(20px,4vw,60px);
-  transition:opacity .4s var(--ease),transform .4s var(--ease);}
-#category-screen.hidden{opacity:0;transform:scale(.96);pointer-events:none;}
-.cat-header{text-align:center;margin-bottom:clamp(32px,5vh,56px);}
-.cat-header .eyebrow{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:12px;}
-body.ar .cat-header .eyebrow{letter-spacing:0;text-transform:none;font-size:.8rem;}
-.cat-header h1{font-family:'Fraunces',Georgia,serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;letter-spacing:-.02em;line-height:1.2;}
-body.ar .cat-header h1{font-family:'Cairo','Tajawal',sans-serif;letter-spacing:0;}
-.cat-header p{font-size:.92rem;color:var(--text-muted);margin-top:12px;max-width:480px;}
-.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;width:100%;max-width:860px;}
-.cat-card{background:linear-gradient(165deg,rgba(255,255,255,.03),transparent 45%),var(--card);
-  border:1px solid var(--border);border-radius:18px;padding:24px;cursor:pointer;
-  display:flex;flex-direction:column;gap:8px;transition:all .3s var(--ease);position:relative;overflow:hidden;}
-.cat-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--cat-color,var(--gold));}
-.cat-card:hover{border-color:var(--cat-color,var(--gold));transform:translateY(-4px);box-shadow:0 18px 44px -18px var(--cat-color,var(--gold));}
-.cat-card:active{transform:translateY(-1px) scale(.99);}
-.cat-card .cat-icon{font-size:1.6rem;line-height:1;}
-.cat-card .cat-name{font-family:'Fraunces',serif;font-size:1.05rem;font-weight:600;color:var(--text);line-height:1.3;}
-body.ar .cat-card .cat-name{font-family:'Cairo','Tajawal',sans-serif;}
-.cat-card .cat-count{font-size:.76rem;color:var(--text-muted);}
-.cat-card .cat-count b{color:var(--cat-color,var(--gold));}
-
-.cat-card[data-cat="Restaurant English"]{--cat-color:#E8956B;}
-.cat-card[data-cat="Hospital English"]{--cat-color:#4A9FFF;}
-.cat-card[data-cat="Business English"]{--cat-color:#C8A96A;}
-.cat-card[data-cat="Airport English"]{--cat-color:#7B6FEB;}
-.cat-card[data-cat="Shopping English"]{--cat-color:#E86BA8;}
-.cat-card[data-cat="Travel English"]{--cat-color:#3F8C72;}
-.cat-card[data-cat="Workplace"]{--cat-color:#D8BD83;}
-.cat-card[data-cat="Job Interview Academy"]{--cat-color:#C46F56;}
-.cat-card[data-cat="Family"]{--cat-color:#E8956B;}
-.cat-card[data-cat="Colors"]{--cat-color:#7B6FEB;}
-.cat-card[data-cat="Daily Life"]{--cat-color:#3F8C72;}
-.cat-card[data-cat="General"]{--cat-color:#C8A96A;}
-.cat-card[data-cat="Emergency English"]{--cat-color:#C46F56;}
-.cat-card[data-cat="Driving English"]{--cat-color:#4A9FFF;}
-.cat-card[data-cat="Hotel English"]{--cat-color:#7B6FEB;}
-
-/* ===== Top controls (always visible) ===== */
-#top-controls{position:fixed;top:clamp(16px,3vh,24px);left:clamp(20px,4vw,48px);z-index:120;display:flex;gap:8px;}
+/* ===== Language toggle ===== */
+#top-controls{position:fixed;top:clamp(16px,3vh,24px);left:clamp(20px,4vw,48px);z-index:120;}
 .lang-toggle{background:var(--card);border:1px solid var(--border);color:var(--text-secondary);
-  padding:8px 16px;border-radius:12px;cursor:pointer;font-size:.78rem;font-weight:600;
-  display:flex;align-items:center;gap:6px;transition:all .25s var(--ease);}
+  padding:8px 16px;border-radius:13px;cursor:pointer;font-size:.78rem;font-weight:600;
+  display:flex;align-items:center;gap:8px;transition:border-color .3s var(--ease),color .3s var(--ease);}
 .lang-toggle:hover{border-color:var(--gold);color:var(--gold);}
 .lang-toggle .current{color:var(--gold);}
+.lang-toggle [data-lucide]{width:15px;height:15px;}
+
+/* ===== Category Selection ===== */
+#category-screen{position:relative;z-index:2;width:100%;height:100%;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;padding:clamp(40px,6vh,80px) clamp(20px,4vw,60px);}
+#category-screen.hidden{display:none;}
+.cat-header{text-align:center;margin-bottom:clamp(32px,5vh,56px);max-width:560px;}
+.cat-header .eyebrow{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:12px;}
+body.ar .cat-header .eyebrow{letter-spacing:0;text-transform:none;font-family:'Cairo','Tajawal',sans-serif;font-size:.8rem;}
+.cat-header h1{font-size:clamp(1.8rem,4vw,2.8rem);}
+.cat-header p{font-size:.92rem;color:var(--text-muted);margin-top:12px;line-height:1.6;}
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;width:100%;max-width:860px;}
+.cat-card{background:linear-gradient(180deg,rgba(255,255,255,.018),transparent 34%),var(--card);
+  border:1px solid var(--border);border-radius:16px;padding:20px;cursor:pointer;
+  display:flex;flex-direction:column;gap:10px;transition:.3s var(--ease);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.03);}
+.cat-card:hover{border-color:var(--gold);transform:translateY(-3px);box-shadow:var(--shadow-soft);}
+.cat-card:active{transform:translateY(-1px);}
+.cat-card .cat-icon{width:40px;height:40px;border-radius:13px;flex-shrink:0;
+  background:linear-gradient(135deg,rgba(216,189,131,.36),rgba(168,131,69,.2) 60%,rgba(200,169,106,.12));
+  color:var(--gold-soft);display:flex;align-items:center;justify-content:center;}
+.cat-card .cat-icon [data-lucide]{width:20px;height:20px;}
+.cat-card .cat-name{font-family:'Fraunces',serif;font-size:1.05rem;font-weight:500;color:var(--text);line-height:1.3;}
+body.ar .cat-card .cat-name{font-family:'Cairo','Tajawal',sans-serif;}
+.cat-card .cat-count{font-size:.76rem;color:var(--text-muted);}
+.cat-card .cat-count b{color:var(--gold);}
 
 /* ===== Progress bar ===== */
 #progress-bar{position:fixed;top:0;left:0;right:0;height:3px;background:rgba(255,255,255,.05);z-index:150;display:none;}
 #progress-bar.show{display:block;}
-#progress-bar .fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-soft));
-  border-radius:0 3px 3px 0;transition:width .6s var(--ease);box-shadow:0 0 12px var(--gold);}
+#progress-bar .fill{height:100%;background:var(--gold);transition:width .6s var(--ease);}
 
 /* ===== Top Bar ===== */
 #topbar{position:fixed;top:0;left:0;right:0;padding:clamp(16px,3vh,24px) clamp(20px,4vw,48px);
   display:none;align-items:center;justify-content:space-between;z-index:100;
-  background:linear-gradient(180deg,rgba(19,19,22,.95),transparent);}
+  background:linear-gradient(180deg,rgba(14,14,16,.95),transparent);}
 #topbar.show{display:flex;}
 #topbar .left-group{display:flex;align-items:center;gap:12px;}
 .back-btn{background:var(--card);border:1px solid var(--border);color:var(--text-secondary);
-  width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;
-  cursor:pointer;transition:all .25s var(--ease);}
+  width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:border-color .3s var(--ease),color .3s var(--ease);flex-shrink:0;}
 .back-btn:hover{border-color:var(--gold);color:var(--gold);}
-.back-btn svg{width:18px;height:18px;}
-#topbar .brand{display:flex;align-items:center;gap:10px;font-family:'Fraunces',serif;font-size:1rem;color:var(--gold);}
-body.ar #topbar .brand{font-family:'Cairo','Tajawal',sans-serif;}
+.back-btn [data-lucide]{width:18px;height:18px;}
+#topbar .brand{display:flex;align-items:center;gap:10px;}
 #topbar .brand img{height:22px;}
-#topbar .brand .cat-label{color:var(--text-muted);font-size:.78rem;font-family:'Inter',sans-serif;font-weight:500;}
-body.ar #topbar .brand .cat-label{font-family:'Cairo','Tajawal',sans-serif;}
+#topbar .brand .cat-label{color:var(--text-muted);font-size:.78rem;font-weight:500;}
 #topbar .stats{display:flex;gap:16px;align-items:center;}
 #topbar .stat{display:flex;flex-direction:column;align-items:center;gap:2px;}
-#topbar .stat .num{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:700;color:var(--gold);}
+#topbar .stat .num{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:500;color:var(--gold);}
 body.ar #topbar .stat .num{font-family:'Cairo','Tajawal',sans-serif;}
 #topbar .stat .lbl{font-size:.62rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em;}
-body.ar #topbar .stat .lbl{letter-spacing:0;text-transform:none;}
-#topbar .stat .num.countup{animation:popIn .4s var(--ease);}
-@keyframes popIn{0%{transform:scale(.7);opacity:0;}100%{transform:scale(1);opacity:1;}}
+body.ar #topbar .stat .lbl{letter-spacing:0;text-transform:none;font-family:'Cairo','Tajawal',sans-serif;}
 #topbar .controls{display:flex;gap:8px;}
 .ctrl-btn{background:var(--card);border:1px solid var(--border);color:var(--text-secondary);
-  width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;
-  cursor:pointer;transition:all .25s var(--ease);font-size:.72rem;font-weight:600;}
+  width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:border-color .3s var(--ease),color .3s var(--ease);flex-shrink:0;}
 .ctrl-btn:hover{border-color:var(--gold);color:var(--gold);}
 .ctrl-btn.active{background:rgba(200,169,106,.12);border-color:var(--gold);color:var(--gold);}
-.ctrl-btn svg{width:18px;height:18px;}
-.ctrl-btn.wide{width:auto;padding:0 14px;gap:6px;}
+.ctrl-btn [data-lucide]{width:18px;height:18px;}
 
 /* ===== Card Stage ===== */
 #stage{position:relative;width:100%;height:100%;display:none;align-items:center;justify-content:center;
@@ -128,143 +111,122 @@ body.ar #topbar .stat .lbl{letter-spacing:0;text-transform:none;}
 .card-wrap.active{transform:translateX(0) rotateY(0);opacity:1;}
 .card-wrap.flipped{transform:rotateY(180deg);}
 .card{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
-  background:linear-gradient(165deg,rgba(255,255,255,.03),transparent 45%),var(--card);
-  border:1px solid var(--border);border-radius:var(--radius);
-  box-shadow:0 30px 80px -30px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.05);
-  padding:clamp(32px,5vw,60px);display:flex;flex-direction:column;overflow:hidden;}
-.card::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,transparent,var(--cat-color,var(--gold)),var(--gold-soft),var(--cat-color,var(--gold)),transparent);}
+  background:linear-gradient(180deg,rgba(255,255,255,.018),transparent 34%),var(--card);
+  border:1px solid var(--border);border-radius:20px;padding:clamp(32px,5vw,60px);
+  display:flex;flex-direction:column;overflow:hidden;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.03),0 30px 80px -30px rgba(0,0,0,.8);}
 .card-back{transform:rotateY(180deg);}
-.card[data-cat="Restaurant English"]{--cat-color:#E8956B;}
-.card[data-cat="Hospital English"]{--cat-color:#4A9FFF;}
-.card[data-cat="Business English"]{--cat-color:#C8A96A;}
-.card[data-cat="Airport English"]{--cat-color:#7B6FEB;}
-.card[data-cat="Shopping English"]{--cat-color:#E86BA8;}
-.card[data-cat="Travel English"]{--cat-color:#3F8C72;}
-.card[data-cat="Workplace"]{--cat-color:#D8BD83;}
-.card[data-cat="Job Interview Academy"]{--cat-color:#C46F56;}
-.card[data-cat="Family"]{--cat-color:#E8956B;}
-.card[data-cat="Colors"]{--cat-color:#7B6FEB;}
-.card[data-cat="Daily Life"]{--cat-color:#3F8C72;}
-.card[data-cat="General"]{--cat-color:#C8A96A;}
-.card[data-cat="Emergency English"]{--cat-color:#C46F56;}
-.card[data-cat="Driving English"]{--cat-color:#4A9FFF;}
-.card[data-cat="Hotel English"]{--cat-color:#7B6FEB;}
 
 .card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:clamp(16px,2vh,28px);}
-.card-category{font-size:.76rem;font-weight:600;color:var(--cat-color,var(--gold));letter-spacing:.06em;text-transform:uppercase;
-  background:color-mix(in srgb,var(--cat-color,var(--gold)) 12%,transparent);border:1px solid color-mix(in srgb,var(--cat-color,var(--gold)) 25%,transparent);
+.card-category{font-size:.76rem;font-weight:600;color:var(--gold);letter-spacing:.06em;text-transform:uppercase;
+  background:rgba(200,169,106,.08);border:1px solid rgba(200,169,106,.2);
   padding:6px 14px;border-radius:999px;}
 body.ar .card-category{letter-spacing:0;text-transform:none;font-family:'Cairo','Tajawal',sans-serif;}
 .card-difficulty{font-size:.72rem;color:var(--text-muted);font-weight:500;}
-.card-difficulty span{color:var(--cat-color,var(--gold));}
+.card-difficulty span{color:var(--gold);}
+
 .card-word-section{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:8px;}
-.card-word{font-family:'Fraunces',Georgia,serif;font-size:clamp(2.5rem,7vw,4.5rem);font-weight:700;
+.card-word{font-family:'Fraunces',Georgia,serif;font-size:clamp(2.5rem,7vw,4.5rem);font-weight:500;
   letter-spacing:-.02em;line-height:1.1;color:var(--text);}
 .card-ipa{font-size:clamp(1rem,2vw,1.3rem);color:var(--gold-soft);font-family:monospace;}
 .card-translit{font-size:clamp(1rem,2.2vw,1.4rem);color:var(--text-secondary);direction:ltr;}
 .card-arabic{font-family:'Cairo','Tajawal',sans-serif;font-size:clamp(1.8rem,4.5vw,2.8rem);
   direction:rtl;color:var(--text);margin-top:6px;line-height:1.4;}
 .speak-btn{margin-top:16px;background:var(--card-elevated);border:1px solid var(--border);color:var(--gold);
-  width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;
-  transition:all .25s var(--ease);}
-.speak-btn:hover{background:rgba(200,169,106,.12);border-color:var(--gold);box-shadow:var(--gold-glow);}
-.speak-btn:active{transform:scale(.92);}
-.speak-btn svg{width:22px;height:22px;}
+  width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;
+  transition:border-color .3s var(--ease),color .3s var(--ease);}
+.speak-btn:hover{border-color:var(--gold);color:var(--gold);}
+.speak-btn [data-lucide]{width:20px;height:20px;}
 .speak-btn.speaking{animation:pulse 1s ease-in-out infinite;}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(200,169,106,.4);}50%{box-shadow:0 0 0 12px rgba(200,169,106,0);}}
 
 .card-back-content{flex:1;display:flex;flex-direction:column;gap:clamp(12px,2vh,20px);justify-content:center;}
-.card-back-content .example-label{font-size:.72rem;color:var(--cat-color,var(--gold));text-transform:uppercase;letter-spacing:.08em;font-weight:600;text-align:center;}
-body.ar .card-back-content .example-label{letter-spacing:0;text-transform:none;}
+.card-back-content .example-label{font-size:.72rem;color:var(--gold);text-transform:uppercase;letter-spacing:.08em;font-weight:600;text-align:center;}
+body.ar .card-back-content .example-label{letter-spacing:0;text-transform:none;font-family:'Cairo','Tajawal',sans-serif;}
 .card-back-content .example-en{font-size:clamp(1.1rem,2.5vw,1.5rem);font-weight:500;line-height:1.5;text-align:center;direction:ltr;}
 .card-back-content .example-ar{font-family:'Cairo','Tajawal',sans-serif;font-size:clamp(1.1rem,2.5vw,1.4rem);
   direction:rtl;text-align:center;color:var(--text-secondary);line-height:1.6;}
 .card-back-content .example-tr{font-size:clamp(.9rem,1.8vw,1.1rem);color:var(--gold-soft);direction:ltr;text-align:center;}
 .card-back-content .divider{height:1px;background:var(--border);margin:2px 0;}
-.card-back-content .meta-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;}
-.card-back-content .meta-chip{font-size:.74rem;padding:5px 11px;border-radius:10px;background:var(--card-elevated);
-  border:1px solid var(--border);color:var(--text-secondary);}
-body.ar .card-back-content .meta-chip{font-family:'Cairo','Tajawal',sans-serif;direction:rtl;}
-.card-back-content .meta-chip b{color:var(--cat-color,var(--gold));font-weight:600;}
+.card-back-content .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.card-back-content .meta-item{background:var(--card-elevated);border:1px solid var(--border);border-radius:13px;padding:12px 14px;}
+.card-back-content .meta-item .meta-label{font-size:.68rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-bottom:4px;}
+body.ar .card-back-content .meta-item .meta-label{letter-spacing:0;text-transform:none;font-family:'Cairo','Tajawal',sans-serif;}
+.card-back-content .meta-item .meta-val{font-size:.82rem;color:var(--text-secondary);line-height:1.5;}
+body.ar .card-back-content .meta-item .meta-val{font-family:'Cairo','Tajawal',sans-serif;direction:rtl;}
 .card-back-content .tip{font-size:clamp(.82rem,1.5vw,.95rem);color:var(--text-muted);text-align:center;line-height:1.6;
-  background:color-mix(in srgb,var(--cat-color,var(--gold)) 6%,transparent);border:1px solid color-mix(in srgb,var(--cat-color,var(--gold)) 12%,transparent);
-  border-radius:14px;padding:12px 18px;}
+  background:rgba(200,169,106,.05);border:1px solid rgba(200,169,106,.12);
+  border-radius:14px;padding:14px 18px;}
 body.ar .card-back-content .tip{font-family:'Cairo','Tajawal',sans-serif;direction:rtl;}
 
 /* ===== Nav Bar ===== */
 #nav{position:fixed;bottom:0;left:0;right:0;height:clamp(64px,9vh,88px);
   display:none;align-items:center;justify-content:space-between;padding:0 clamp(20px,4vw,48px);
-  background:linear-gradient(0deg,rgba(19,19,22,.98),rgba(19,19,22,.7) 70%,transparent);z-index:100;}
+  background:linear-gradient(0deg,rgba(14,14,16,.98),rgba(14,14,16,.7) 70%,transparent);z-index:100;}
 #nav.show{display:flex;}
 .nav-btn{background:var(--card);border:1px solid var(--border);color:var(--text);
-  width:clamp(48px,6vw,64px);height:clamp(48px,6vw,64px);border-radius:50%;
+  width:clamp(48px,6vw,56px);height:clamp(48px,6vw,56px);border-radius:50%;
   display:flex;align-items:center;justify-content:center;cursor:pointer;
-  transition:all .25s var(--ease);flex-shrink:0;}
-.nav-btn:hover{border-color:var(--gold);color:var(--gold);box-shadow:var(--gold-glow);}
-.nav-btn:active{transform:scale(.94);}
+  transition:border-color .3s var(--ease),color .3s var(--ease);flex-shrink:0;}
+.nav-btn:hover{border-color:var(--gold);color:var(--gold);}
+.nav-btn:active{transform:scale(.96);}
 .nav-btn:disabled{opacity:.3;cursor:not-allowed;}
-.nav-btn svg{width:24px;height:24px;}
+.nav-btn [data-lucide]{width:22px;height:22px;}
 .nav-center{display:flex;flex-direction:column;align-items:center;gap:6px;}
 .nav-dots{display:flex;gap:6px;max-width:300px;overflow:hidden;}
-.nav-dot{width:8px;height:8px;border-radius:50%;background:var(--border);transition:all .3s var(--ease);cursor:pointer;flex-shrink:0;}
+.nav-dot{width:8px;height:8px;border-radius:50%;background:var(--border);transition:.3s var(--ease);cursor:pointer;flex-shrink:0;}
 .nav-dot.active{background:var(--gold);width:24px;border-radius:4px;}
 .nav-dot:hover{background:var(--text-muted);}
-.nav-progress{font-size:.78rem;color:var(--text-muted);font-weight:500;letter-spacing:.04em;}
+.nav-progress{font-size:.78rem;color:var(--text-muted);font-weight:500;}
 
 /* ===== Auto-play ===== */
 #autoplay-pulse{position:fixed;top:clamp(16px,3vh,24px);left:50%;transform:translateX(-50%);z-index:110;
   background:var(--card);border:1px solid var(--gold);color:var(--gold);
-  padding:6px 16px;border-radius:999px;font-size:.72rem;font-weight:600;display:none;align-items:center;gap:8px;
-  box-shadow:var(--gold-glow);}
-#autoplay-pulse.show{display:flex;animation:fadeIn .3s var(--ease);}
+  padding:6px 16px;border-radius:999px;font-size:.72rem;font-weight:600;display:none;align-items:center;gap:8px;}
+#autoplay-pulse.show{display:flex;}
 #autoplay-pulse .dot{width:8px;height:8px;border-radius:50%;background:var(--gold);animation:blink 1.5s ease-in-out infinite;}
 @keyframes blink{0%,100%{opacity:.3;}50%{opacity:1;}}
-@keyframes fadeIn{from{opacity:0;transform:translateX(-50%) translateY(-10px);}to{opacity:1;transform:translateX(-50%) translateY(0);}}
 
 /* ===== Completion ===== */
-#complete-overlay{position:fixed;inset:0;background:rgba(19,19,22,.95);z-index:200;display:none;
+#complete-overlay{position:fixed;inset:0;background:rgba(14,14,16,.95);z-index:200;display:none;
   align-items:center;justify-content:center;flex-direction:column;gap:20px;backdrop-filter:blur(8px);}
-#complete-overlay.show{display:flex;animation:fadeIn .4s var(--ease);}
-#complete-overlay .icon{font-size:4rem;animation:bounce 1s var(--ease);}
-@keyframes bounce{0%{transform:scale(0) rotate(-10deg);}60%{transform:scale(1.2) rotate(5deg);}100%{transform:scale(1) rotate(0);}}
-#complete-overlay h2{font-family:'Fraunces',serif;font-size:clamp(1.6rem,3.5vw,2.4rem);color:var(--gold);}
-body.ar #complete-overlay h2{font-family:'Cairo','Tajawal',sans-serif;}
+#complete-overlay.show{display:flex;}
+#complete-overlay .icon-wrap{width:64px;height:64px;border-radius:20px;
+  background:linear-gradient(135deg,rgba(200,169,106,.18),rgba(200,169,106,.05));
+  border:1px solid rgba(200,169,106,.35);color:var(--gold);display:flex;align-items:center;justify-content:center;}
+#complete-overlay .icon-wrap [data-lucide]{width:32px;height:32px;}
+#complete-overlay h2{font-size:clamp(1.6rem,3.5vw,2.4rem);color:var(--gold);}
 #complete-overlay p{font-size:.9rem;color:var(--text-muted);text-align:center;line-height:1.6;}
 body.ar #complete-overlay p{font-family:'Cairo','Tajawal',sans-serif;direction:rtl;}
 #complete-overlay .actions{display:flex;gap:12px;margin-top:8px;flex-wrap:wrap;justify-content:center;}
 #complete-overlay button{background:var(--card);border:1px solid var(--border);color:var(--text);
-  padding:12px 24px;border-radius:14px;font-size:.88rem;font-weight:600;cursor:pointer;transition:all .25s var(--ease);}
+  padding:12px 24px;border-radius:14px;font-size:.88rem;font-weight:600;cursor:pointer;
+  transition:border-color .3s var(--ease),color .3s var(--ease);font-family:inherit;}
 body.ar #complete-overlay button{font-family:'Cairo','Tajawal',sans-serif;}
 #complete-overlay button.primary{background:linear-gradient(135deg,var(--gold),var(--gold-soft));color:#171412;border:none;}
-#complete-overlay button:hover{border-color:var(--gold);transform:translateY(-2px);}
+#complete-overlay button:hover{border-color:var(--gold);color:var(--gold);}
 #complete-overlay button.primary:hover{box-shadow:var(--gold-glow);}
-
-#confetti{position:fixed;inset:0;pointer-events:none;z-index:199;overflow:hidden;}
-.confetti-piece{position:absolute;width:10px;height:10px;animation:fall 3s linear forwards;}
-@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:0;}}
 
 @media(max-width:640px){
   .cat-grid{grid-template-columns:1fr 1fr;}
   .card{min-height:auto;padding:24px 20px 80px;}
   #topbar .stats{display:none;}
-  #topbar .controls .ctrl-btn.wide span{display:none;}
+  .card-back-content .meta-grid{grid-template-columns:1fr;}
 }
 @media(max-width:380px){.cat-grid{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
 
-<div id="ambient"><div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div></div>
-
-<!-- Language toggle (always visible) -->
+<!-- Language toggle -->
 <div id="top-controls">
   <button class="lang-toggle" id="langToggle">
-    <span class="current" id="langCurrent">EN</span> / <span id="langOther">ع</span>
+    <i data-lucide="languages"></i>
+    <span class="current" id="langCurrent">EN</span>
   </button>
 </div>
 
-<!-- Category Selection Screen -->
+<!-- Category Selection -->
 <div id="category-screen">
   <div class="cat-header">
     <div class="eyebrow" data-en="Vocabulary Vault · TV Mode" data-ar="خزنة المفردات · وضع التلفزيون">Vocabulary Vault · TV Mode</div>
@@ -281,7 +243,7 @@ body.ar #complete-overlay button{font-family:'Cairo','Tajawal',sans-serif;}
 <div id="topbar">
   <div class="left-group">
     <button class="back-btn" id="backToCatBtn" aria-label="Back">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <i data-lucide="arrow-left"></i>
     </button>
     <div class="brand">
       <img src="brand/pel-wordmark.svg" alt="PEL">
@@ -294,11 +256,10 @@ body.ar #complete-overlay button{font-family:'Cairo','Tajawal',sans-serif;}
   </div>
   <div class="controls">
     <button class="ctrl-btn" id="shuffleBtn" title="Shuffle" aria-label="Shuffle">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
+      <i data-lucide="shuffle"></i>
     </button>
-    <button class="ctrl-btn wide" id="autoBtn" title="Auto-play" aria-label="Auto-play">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-      <span data-en="Auto" data-ar="تلقائي">Auto</span>
+    <button class="ctrl-btn" id="autoBtn" title="Auto-play" aria-label="Auto-play">
+      <i data-lucide="play"></i>
     </button>
   </div>
 </div>
@@ -309,23 +270,21 @@ body.ar #complete-overlay button{font-family:'Cairo','Tajawal',sans-serif;}
 
 <div id="nav">
   <button class="nav-btn" id="prevBtn" aria-label="Previous" disabled>
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    <i data-lucide="chevron-left"></i>
   </button>
   <div class="nav-center">
     <div class="nav-dots" id="navDots"></div>
     <div class="nav-progress" id="navProgress">1 / 0</div>
   </div>
   <button class="nav-btn" id="nextBtn" aria-label="Next">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+    <i data-lucide="chevron-right"></i>
   </button>
 </div>
 
-<div id="confetti"></div>
-
 <div id="complete-overlay">
-  <div class="icon">🎉</div>
+  <div class="icon-wrap"><i data-lucide="check-circle-2"></i></div>
   <h2 data-en="Great job!" data-ar="احسنت!">Great job!</h2>
-  <p data-en="You finished all" data-ar="خلصت كل">You finished all</p>
+  <p id="completeMsg"></p>
   <div class="actions">
     <button id="replayBtn" class="primary" data-en="Replay" data-ar="مرة ثانية">Replay</button>
     <button id="shuffleReplayBtn" data-en="Shuffle & Replay" data-ar="اخلط وابدأ">Shuffle & Replay</button>
@@ -334,7 +293,7 @@ body.ar #complete-overlay button{font-family:'Cairo','Tajawal',sans-serif;}
 </div>
 
 <script>
-// ===== Vocabulary Data with Saudi Arabic translations =====
+// ===== Vocabulary Data =====
 const VOCAB = [
   {en:'Reservation', ipa:'/ˌrɛzərˈveɪʃən/', ar:'حجز', translit:'ريزرڤيشِن',
     example:{en:'I have a reservation for two.', ar:'عندي حجز لشخصين.', translit:'اي هاف ا ريزرڤيشن فور تو.'},
@@ -663,148 +622,133 @@ const CAT_AR = {
   'Hotel English': 'انجليزي الفنادق',
 };
 
+// Lucide icon names for each category
 const CAT_ICONS = {
-  'Restaurant English':'🍽️','Hospital English':'🏥','Business English':'💼','Airport English':'✈️',
-  'Shopping English':'🛍️','Travel English':'🌍','Workplace':'🏢','Job Interview Academy':'🎤',
-  'Family':'👨‍👩‍👦','Colors':'🎨','Daily Life':'☕','General':'📚','Emergency English':'🚨',
-  'Driving English':'🚗','Hotel English':'🏨',
+  'Restaurant English':'utensils',
+  'Hospital English':'stethoscope',
+  'Business English':'briefcase',
+  'Airport English':'plane',
+  'Shopping English':'shopping-bag',
+  'Travel English':'globe',
+  'Workplace':'building-2',
+  'Job Interview Academy':'user-check',
+  'Family':'users',
+  'Colors':'palette',
+  'Daily Life':'coffee',
+  'General':'book-open',
+  'Emergency English':'shield-alert',
+  'Driving English':'car',
+  'Hotel English':'bed-double',
 };
 
-// ===== UI strings =====
 const UI = {
-  pick_category: {en:'Pick a category', ar:'اختر تصنيف'},
-  subtitle: {en:'Choose a word set to study. Each session focuses on one topic so you build real vocabulary depth.',
-    ar:'اختر مجموعة كلمات تبي تدرسها. كل جلسة تركز على موضوع واحد عشان تبني فهم عميق للمفردات.'},
-  seen: {en:'Seen', ar:'شفت'},
-  total: {en:'Total', ar:'المجموع'},
-  example: {en:'Example', ar:'مثال'},
-  synonyms: {en:'Synonyms', ar:'مرادفات'},
-  antonyms: {en:'Antonyms', ar:'متضادات'},
-  family: {en:'Family', ar:'عائله الكلمه'},
-  collocations: {en:'Collocations', ar:'تلازمات'},
-  great_job: {en:'Great job!', ar:'احسنت!'},
-  finished: {en:'You finished all', ar:'خلصت كل'},
-  words: {en:'words in this set.', ar:'كلمه في هالمجموعه.'},
-  replay: {en:'Replay', ar:'مرة ثانية'},
-  shuffle_replay: {en:'Shuffle & Replay', ar:'اخلط وابدأ'},
-  new_cat: {en:'Pick New Category', ar:'اختر تصنيف ثاني'},
-  auto_play: {en:'Auto-play', ar:'تلقائي'},
+  seen:{en:'Seen',ar:'شفت'}, total:{en:'Total',ar:'المجموع'},
+  example:{en:'Example',ar:'مثال'},
+  synonyms:{en:'Synonyms',ar:'مرادفات'}, antonyms:{en:'Antonyms',ar:'متضادات'},
+  family:{en:'Family',ar:'عائله الكلمه'}, collocations:{en:'Collocations',ar:'تلازمات'},
+  great_job:{en:'Great job!',ar:'احسنت!'},
+  replay:{en:'Replay',ar:'مرة ثانية'},
+  shuffle_replay:{en:'Shuffle & Replay',ar:'اخلط وابدأ'},
+  new_cat:{en:'Pick New Category',ar:'اختر تصنيف ثاني'},
 };
 
-// ===== App State =====
-let lang = 'en'; // 'en' or 'ar'
-const catScreen = document.getElementById('category-screen');
-const catGrid = document.getElementById('catGrid');
-const stage = document.getElementById('stage');
-const topbar = document.getElementById('topbar');
-const nav = document.getElementById('nav');
-const progressBar = document.getElementById('progress-bar');
-const navDots = document.getElementById('navDots');
-const navProgress = document.getElementById('navProgress');
-const progressFill = document.getElementById('progressFill');
-const prevBtn = document.getElementById('prevBtn');
-const nextBtn = document.getElementById('nextBtn');
-const shuffleBtn = document.getElementById('shuffleBtn');
-const autoBtn = document.getElementById('autoBtn');
-const autoPulse = document.getElementById('autoplay-pulse');
-const autoCountdown = document.getElementById('autoCountdown');
-const backToCatBtn = document.getElementById('backToCatBtn');
-const catLabel = document.getElementById('catLabel');
-const completeOverlay = document.getElementById('complete-overlay');
-const completeCount = document.getElementById('completeCount');
-const replayBtn = document.getElementById('replayBtn');
-const shuffleReplayBtn = document.getElementById('shuffleReplayBtn');
-const newCatBtn = document.getElementById('newCatBtn');
-const confettiLayer = document.getElementById('confetti');
-const statSeen = document.getElementById('statSeen');
-const statTotal = document.getElementById('statTotal');
-const langToggle = document.getElementById('langToggle');
-const langCurrent = document.getElementById('langCurrent');
-const langOther = document.getElementById('langOther');
+let lang='en';
+const catScreen=document.getElementById('category-screen');
+const catGrid=document.getElementById('catGrid');
+const stage=document.getElementById('stage');
+const topbar=document.getElementById('topbar');
+const nav=document.getElementById('nav');
+const progressBar=document.getElementById('progress-bar');
+const navDots=document.getElementById('navDots');
+const navProgress=document.getElementById('navProgress');
+const progressFill=document.getElementById('progressFill');
+const prevBtn=document.getElementById('prevBtn');
+const nextBtn=document.getElementById('nextBtn');
+const shuffleBtn=document.getElementById('shuffleBtn');
+const autoBtn=document.getElementById('autoBtn');
+const autoPulse=document.getElementById('autoplay-pulse');
+const autoCountdown=document.getElementById('autoCountdown');
+const backToCatBtn=document.getElementById('backToCatBtn');
+const catLabel=document.getElementById('catLabel');
+const completeOverlay=document.getElementById('complete-overlay');
+const completeMsg=document.getElementById('completeMsg');
+const replayBtn=document.getElementById('replayBtn');
+const shuffleReplayBtn=document.getElementById('shuffleReplayBtn');
+const newCatBtn=document.getElementById('newCatBtn');
+const statSeen=document.getElementById('statSeen');
+const statTotal=document.getElementById('statTotal');
+const langToggle=document.getElementById('langToggle');
+const langCurrent=document.getElementById('langCurrent');
 
-let currentCategory = null;
-let deck = [];
-let order = [];
-let current = 0;
-let flipped = false;
-let cardWraps = [];
-let transitioning = false;
-let seen = new Set();
-let autoPlay = false;
-let autoTimer = null;
-let countdownTimer = null;
-let muted = false;
+let currentCategory=null, deck=[], order=[], current=0, flipped=false, cardWraps=[], transitioning=false;
+let seen=new Set(), autoPlay=false, autoTimer=null, countdownTimer=null;
 
-function t(key){ return UI[key] ? UI[key][lang] : key; }
+function t(k){return UI[k]?UI[k][lang]:k;}
 
-// ===== Language toggle =====
+function refreshIcons(){if(window.lucide)lucide.createIcons();}
+
 function setLang(l){
-  lang = l;
-  document.body.classList.toggle('ar', l === 'ar');
-  document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr';
-  document.documentElement.lang = l === 'ar' ? 'ar' : 'en';
-  langCurrent.textContent = l === 'ar' ? 'ع' : 'EN';
-  langOther.textContent = l === 'ar' ? 'EN' : 'ع';
-  // Update all data-en/data-ar elements
-  document.querySelectorAll('[data-en]').forEach(el => {
-    el.textContent = el.dataset[l];
-  });
-  // Rebuild category screen and cards
+  lang=l;
+  document.body.classList.toggle('ar',l==='ar');
+  document.documentElement.dir=l==='ar'?'rtl':'ltr';
+  document.documentElement.lang=l==='ar'?'ar':'en';
+  langCurrent.textContent=l==='ar'?'ع':'EN';
+  document.querySelectorAll('[data-en]').forEach(el=>{el.textContent=el.dataset[l];});
   buildCategoryScreen();
-  if(currentCategory) rebuildCards();
+  if(currentCategory)rebuildCards();
+  setTimeout(refreshIcons,50);
 }
 
-langToggle.addEventListener('click', () => setLang(lang === 'en' ? 'ar' : 'en'));
+langToggle.addEventListener('click',()=>setLang(lang==='en'?'ar':'en'));
 
-// ===== Category screen =====
 function buildCategoryScreen(){
-  const cats = {};
-  VOCAB.forEach(v => { if(!cats[v.category]) cats[v.category] = 0; cats[v.category]++; });
-  catGrid.innerHTML = Object.entries(cats).sort((a,b) => b[1] - a[1]).map(([cat, count]) => {
-    const icon = CAT_ICONS[cat] || '📚';
-    const catName = lang === 'ar' ? (CAT_AR[cat] || cat) : cat;
+  const cats={};
+  VOCAB.forEach(v=>{if(!cats[v.category])cats[v.category]=0;cats[v.category]++;});
+  catGrid.innerHTML=Object.entries(cats).sort((a,b)=>b[1]-a[1]).map(([cat,count])=>{
+    const icon=CAT_ICONS[cat]||'book-open';
+    const catName=lang==='ar'?(CAT_AR[cat]||cat):cat;
+    const wordLabel=lang==='ar'?'كلمه':'word'+(count>1?'s':'');
     return `<div class="cat-card" data-cat="${cat}">
-      <div class="cat-icon">${icon}</div>
+      <div class="cat-icon"><i data-lucide="${icon}"></i></div>
       <div class="cat-name">${catName}</div>
-      <div class="cat-count"><b>${count}</b> ${lang === 'ar' ? 'كلمه' : 'word'}${count > 1 ? (lang === 'ar' ? '' : 's') : ''}</div>
+      <div class="cat-count"><b>${count}</b> ${wordLabel}</div>
     </div>`;
   }).join('');
-  catGrid.querySelectorAll('.cat-card').forEach(card => {
-    card.addEventListener('click', () => startDeck(card.dataset.cat));
+  catGrid.querySelectorAll('.cat-card').forEach(card=>{
+    card.addEventListener('click',()=>startDeck(card.dataset.cat));
   });
+  refreshIcons();
 }
 
 function startDeck(category){
-  currentCategory = category;
-  deck = VOCAB.filter(v => v.category === category);
-  order = deck.map((_, i) => i);
-  catLabel.textContent = lang === 'ar' ? (CAT_AR[category] || category) : category;
-  statTotal.textContent = deck.length;
-  completeCount.textContent = deck.length;
+  currentCategory=category;
+  deck=VOCAB.filter(v=>v.category===category);
+  order=deck.map((_,i)=>i);
+  catLabel.textContent=lang==='ar'?(CAT_AR[category]||category):category;
+  statTotal.textContent=deck.length;
   rebuildCards();
   catScreen.classList.add('hidden');
-  setTimeout(() => {
+  setTimeout(()=>{
     stage.classList.add('show');
     topbar.classList.add('show');
     nav.classList.add('show');
     progressBar.classList.add('show');
-  }, 200);
+    refreshIcons();
+  },200);
 }
 
 function rebuildCards(){
-  stage.innerHTML = '';
-  cardWraps = [];
-  order.forEach(i => {
-    const c = buildCard(deck[i]);
+  stage.innerHTML='';
+  cardWraps=[];
+  order.forEach(i=>{
+    const c=buildCard(deck[i]);
     stage.appendChild(c);
     cardWraps.push(c);
   });
-  if(cardWraps.length) cardWraps[0].className = 'card-wrap active';
+  if(cardWraps.length)cardWraps[0].className='card-wrap active';
   buildDots();
-  current = 0;
-  flipped = false;
-  seen.clear();
-  updateProgress();
+  current=0;flipped=false;seen.clear();updateProgress();
+  refreshIcons();
 }
 
 function backToCategories(){
@@ -818,21 +762,22 @@ function backToCategories(){
 }
 
 function buildCard(v){
-  const wrap = document.createElement('div');
-  wrap.className = 'card-wrap enter-from-right';
-  const catName = lang === 'ar' ? (CAT_AR[v.category] || v.category) : v.category;
-  const diff = lang === 'ar' ? v.difficulty_ar : v.difficulty;
-  const syn = lang === 'ar' ? v.synonyms_ar : v.synonyms;
-  const ant = lang === 'ar' ? v.antonyms_ar : v.antonyms;
-  const fam = lang === 'ar' ? v.family_ar : v.family;
-  const coll = lang === 'ar' ? v.collocations_ar : v.collocations;
-  const tip = lang === 'ar' ? v.tip_ar : v.tip;
+  const wrap=document.createElement('div');
+  wrap.className='card-wrap enter-from-right';
+  const catName=lang==='ar'?(CAT_AR[v.category]||v.category):v.category;
+  const diff=lang==='ar'?v.difficulty_ar:v.difficulty;
+  const syn=lang==='ar'?v.synonyms_ar:v.synonyms;
+  const ant=lang==='ar'?v.antonyms_ar:v.antonyms;
+  const fam=lang==='ar'?v.family_ar:v.family;
+  const coll=lang==='ar'?v.collocations_ar:v.collocations;
+  const tip=lang==='ar'?v.tip_ar:v.tip;
+  const levelLabel=lang==='ar'?'المستوى':'Level';
 
-  wrap.innerHTML = `
-    <div class="card card-front" data-cat="${v.category}">
+  wrap.innerHTML=`
+    <div class="card card-front">
       <div class="card-top">
         <span class="card-category">${catName}</span>
-        <span class="card-difficulty">${lang === 'ar' ? 'المستوى' : 'Level'}: <span>${diff}</span></span>
+        <span class="card-difficulty">${levelLabel}: <span>${diff}</span></span>
       </div>
       <div class="card-word-section">
         <div class="card-word">${v.en}</div>
@@ -840,11 +785,11 @@ function buildCard(v){
         <div class="card-translit">${v.translit}</div>
         <div class="card-arabic">${v.ar}</div>
         <button class="speak-btn" data-speak="${v.en}" aria-label="Pronounce ${v.en}">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+          <i data-lucide="volume-2"></i>
         </button>
       </div>
     </div>
-    <div class="card card-back" data-cat="${v.category}">
+    <div class="card card-back">
       <div class="card-top">
         <span class="card-category">${v.en}</span>
         <span class="card-difficulty">${diff}</span>
@@ -855,16 +800,28 @@ function buildCard(v){
         <div class="example-ar">${v.example.ar}</div>
         <div class="example-tr">${v.example.translit}</div>
         <div class="divider"></div>
-        <div class="meta-row">
-          <span class="meta-chip"><b>${t('synonyms')}:</b> ${syn}</span>
-          ${ant !== '-' ? `<span class="meta-chip"><b>${t('antonyms')}:</b> ${ant}</span>` : ''}
+        <div class="meta-grid">
+          <div class="meta-item">
+            <div class="meta-label">${t('synonyms')}</div>
+            <div class="meta-val">${syn}</div>
+          </div>
+          ${ant!=='-'?`<div class="meta-item">
+            <div class="meta-label">${t('antonyms')}</div>
+            <div class="meta-val">${ant}</div>
+          </div>`:''}
         </div>
-        <div class="meta-row">
-          <span class="meta-chip"><b>${t('family')}:</b> ${fam}</span>
-          <span class="meta-chip"><b>${t('collocations')}:</b> ${coll}</span>
+        <div class="meta-grid">
+          <div class="meta-item">
+            <div class="meta-label">${t('family')}</div>
+            <div class="meta-val">${fam}</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">${t('collocations')}</div>
+            <div class="meta-val">${coll}</div>
+          </div>
         </div>
         <div class="divider"></div>
-        <div class="tip">💡 ${tip}</div>
+        <div class="tip">${tip}</div>
       </div>
     </div>
   `;
@@ -872,181 +829,168 @@ function buildCard(v){
 }
 
 function buildDots(){
-  navDots.innerHTML = order.map((_, i) =>
-    `<div class="nav-dot${i === 0 ? ' active' : ''}" data-idx="${i}"></div>`
+  navDots.innerHTML=order.map((_,i)=>
+    `<div class="nav-dot${i===0?' active':''}" data-idx="${i}"></div>`
   ).join('');
-  navDots.querySelectorAll('.nav-dot').forEach(d => {
-    d.addEventListener('click', () => goTo(+d.dataset.idx));
+  navDots.querySelectorAll('.nav-dot').forEach(d=>{
+    d.addEventListener('click',()=>goTo(+d.dataset.idx));
   });
 }
 
 function updateProgress(){
-  const pct = order.length ? ((current + 1) / order.length) * 100 : 0;
-  progressFill.style.width = pct + '%';
-  navProgress.textContent = `${current + 1} / ${order.length}`;
-  navDots.querySelectorAll('.nav-dot').forEach((d, i) => {
-    d.classList.toggle('active', i === current);
+  const pct=order.length?((current+1)/order.length)*100:0;
+  progressFill.style.width=pct+'%';
+  navProgress.textContent=`${current+1} / ${order.length}`;
+  navDots.querySelectorAll('.nav-dot').forEach((d,i)=>{
+    d.classList.toggle('active',i===current);
   });
-  prevBtn.disabled = current === 0;
-  nextBtn.disabled = current === order.length - 1;
+  prevBtn.disabled=current===0;
+  nextBtn.disabled=current===order.length-1;
   seen.add(current);
-  statSeen.textContent = seen.size;
-  statSeen.classList.remove('countup');
-  void statSeen.offsetWidth;
-  statSeen.classList.add('countup');
+  statSeen.textContent=seen.size;
 }
 
-function showCard(idx, dir){
-  if(transitioning) return;
-  if(idx < 0 || idx >= order.length) return;
-  transitioning = true;
-  flipped = false;
-  const oldWrap = cardWraps[current];
-  const newWrap = cardWraps[idx];
-  newWrap.className = 'card-wrap ' + (dir > 0 ? 'enter-from-right' : 'enter-from-left');
+function showCard(idx,dir){
+  if(transitioning)return;
+  if(idx<0||idx>=order.length)return;
+  transitioning=true;flipped=false;
+  const oldWrap=cardWraps[current];
+  const newWrap=cardWraps[idx];
+  newWrap.className='card-wrap '+(dir>0?'enter-from-right':'enter-from-left');
   void newWrap.offsetWidth;
-  if(oldWrap && oldWrap !== newWrap){
-    oldWrap.className = 'card-wrap ' + (dir > 0 ? 'exit-to-left' : 'exit-to-right');
+  if(oldWrap&&oldWrap!==newWrap){
+    oldWrap.className='card-wrap '+(dir>0?'exit-to-left':'exit-to-right');
   }
-  requestAnimationFrame(() => { newWrap.className = 'card-wrap active'; });
-  current = idx;
-  updateProgress();
-  setTimeout(() => { transitioning = false; }, 600);
+  requestAnimationFrame(()=>{newWrap.className='card-wrap active';});
+  current=idx;updateProgress();
+  setTimeout(()=>{transitioning=false;},600);
 }
 
 function flipThenAdvance(){
-  if(transitioning) return;
+  if(transitioning)return;
   if(!flipped){
     flip();
-    setTimeout(() => {
-      if(current < order.length - 1) showCard(current + 1, 1);
+    setTimeout(()=>{
+      if(current<order.length-1)showCard(current+1,1);
       else showCompletion();
-    }, 2200);
+    },2200);
   } else {
-    if(current < order.length - 1) showCard(current + 1, 1);
+    if(current<order.length-1)showCard(current+1,1);
     else showCompletion();
   }
 }
 function next(){
-  if(current < order.length - 1) flipThenAdvance();
-  else if(!flipped) flipThenAdvance();
+  if(current<order.length-1)flipThenAdvance();
+  else if(!flipped)flipThenAdvance();
   else showCompletion();
 }
-function prev(){ if(current > 0) showCard(current - 1, -1); }
-function flip(){ flipped = !flipped; cardWraps[current].classList.toggle('flipped', flipped); }
+function prev(){if(current>0)showCard(current-1,-1);}
+function flip(){flipped=!flipped;cardWraps[current].classList.toggle('flipped',flipped);}
 function goTo(idx){
-  if(idx === current) { flip(); return; }
+  if(idx===current){flip();return;}
   stopAutoPlay();
-  showCard(idx, idx > current ? 1 : -1);
+  showCard(idx,idx>current?1:-1);
 }
 
 function speak(text){
-  if(muted || !('speechSynthesis' in window)) return;
+  if(!('speechSynthesis'in window))return;
   try{
     speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(text);
-    u.lang = 'en-US'; u.rate = 0.85; u.pitch = 1;
+    const u=new SpeechSynthesisUtterance(text);
+    u.lang='en-US';u.rate=0.85;u.pitch=1;
     speechSynthesis.speak(u);
-    const btn = document.querySelector(`[data-speak="${text}"]`);
-    if(btn){ btn.classList.add('speaking'); u.onend = () => btn.classList.remove('speaking'); }
+    const btn=document.querySelector(`[data-speak="${text}"]`);
+    if(btn){btn.classList.add('speaking');u.onend=()=>btn.classList.remove('speaking');}
   }catch(e){}
 }
 
 function shuffle(){
-  order.sort(() => Math.random() - 0.5);
+  order.sort(()=>Math.random()-.5);
   rebuildCards();
   shuffleBtn.classList.add('active');
-  setTimeout(() => shuffleBtn.classList.remove('active'), 600);
+  setTimeout(()=>shuffleBtn.classList.remove('active'),600);
   stopAutoPlay();
 }
 
-function startAutoPlay(){ autoPlay = true; autoBtn.classList.add('active'); autoPulse.classList.add('show'); scheduleAutoAdvance(); }
-function stopAutoPlay(){ autoPlay = false; autoBtn.classList.remove('active'); autoPulse.classList.remove('show'); if(autoTimer) clearTimeout(autoTimer); if(countdownTimer) clearInterval(countdownTimer); }
-function toggleAutoPlay(){ if(autoPlay) stopAutoPlay(); else startAutoPlay(); }
+function startAutoPlay(){autoPlay=true;autoBtn.classList.add('active');autoPulse.classList.add('show');scheduleAutoAdvance();}
+function stopAutoPlay(){autoPlay=false;autoBtn.classList.remove('active');autoPulse.classList.remove('show');if(autoTimer)clearTimeout(autoTimer);if(countdownTimer)clearInterval(countdownTimer);}
+function toggleAutoPlay(){if(autoPlay)stopAutoPlay();else startAutoPlay();}
 function scheduleAutoAdvance(){
-  if(!autoPlay) return;
-  let count = 3; autoCountdown.textContent = count;
-  countdownTimer = setInterval(() => { count--; autoCountdown.textContent = count; if(count <= 0) clearInterval(countdownTimer); }, 1000);
-  autoTimer = setTimeout(() => { next(); if(current < order.length - 1 || !seen.has(order.length - 1)) scheduleAutoAdvance(); }, 3000);
+  if(!autoPlay)return;
+  let count=3;autoCountdown.textContent=count;
+  countdownTimer=setInterval(()=>{count--;autoCountdown.textContent=count;if(count<=0)clearInterval(countdownTimer);},1000);
+  autoTimer=setTimeout(()=>{
+    next();
+    if(current<order.length-1||!seen.has(order.length-1))scheduleAutoAdvance();
+  },3000);
 }
 
-function showCompletion(){ stopAutoPlay(); completeOverlay.classList.add('show'); fireConfetti(); }
-function hideCompletion(){ completeOverlay.classList.remove('show'); }
+function showCompletion(){
+  stopAutoPlay();
+  const wordCount=deck.length;
+  const w=lang==='ar'?'كلمه':'word'+(wordCount>1?'s':'');
+  completeMsg.textContent=lang==='ar'
+    ?`خلصت كل ${wordCount} ${w} في هالمجموعه.`
+    :`You finished all ${wordCount} ${w} in this set.`;
+  completeOverlay.classList.add('show');
+}
+function hideCompletion(){completeOverlay.classList.remove('show');}
 function replay(shuffleFirst){
   hideCompletion();
-  if(shuffleFirst) shuffle();
-  else {
-    cardWraps.forEach((c, i) => { c.className = i === 0 ? 'card-wrap active' : 'card-wrap enter-from-right'; });
-    current = 0; flipped = false; seen.clear(); updateProgress();
+  if(shuffleFirst)shuffle();
+  else{
+    cardWraps.forEach((c,i)=>{c.className=i===0?'card-wrap active':'card-wrap enter-from-right';});
+    current=0;flipped=false;seen.clear();updateProgress();
   }
 }
 
-function fireConfetti(){
-  const colors = ['#C8A96A','#D8BD83','#3F8C72','#4A9FFF','#E86BA8','#E8956B'];
-  for(let i = 0; i < 80; i++){
-    const piece = document.createElement('div');
-    piece.className = 'confetti-piece';
-    piece.style.left = Math.random() * 100 + '%';
-    piece.style.top = '-10px';
-    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
-    piece.style.animationDelay = Math.random() * 0.5 + 's';
-    piece.style.animationDuration = (2 + Math.random() * 2) + 's';
-    piece.style.transform = `rotate(${Math.random() * 360}deg)`;
-    if(Math.random() > 0.5) piece.style.borderRadius = '50%';
-    confettiLayer.appendChild(piece);
-    setTimeout(() => piece.remove(), 5000);
-  }
-}
+prevBtn.addEventListener('click',()=>{stopAutoPlay();prev();});
+nextBtn.addEventListener('click',()=>{stopAutoPlay();next();});
+shuffleBtn.addEventListener('click',shuffle);
+autoBtn.addEventListener('click',toggleAutoPlay);
+backToCatBtn.addEventListener('click',backToCategories);
+replayBtn.addEventListener('click',()=>replay(false));
+shuffleReplayBtn.addEventListener('click',()=>replay(true));
+newCatBtn.addEventListener('click',backToCategories);
 
-// ===== Events =====
-prevBtn.addEventListener('click', () => { stopAutoPlay(); prev(); });
-nextBtn.addEventListener('click', () => { stopAutoPlay(); next(); });
-shuffleBtn.addEventListener('click', shuffle);
-autoBtn.addEventListener('click', toggleAutoPlay);
-backToCatBtn.addEventListener('click', backToCategories);
-replayBtn.addEventListener('click', () => replay(false));
-shuffleReplayBtn.addEventListener('click', () => replay(true));
-newCatBtn.addEventListener('click', backToCategories);
-
-stage.addEventListener('click', (e) => {
-  const speakBtn = e.target.closest('[data-speak]');
-  if(speakBtn){ e.stopPropagation(); speak(speakBtn.dataset.speak); return; }
-  if(e.target.closest('.card-wrap')) flip();
+stage.addEventListener('click',(e)=>{
+  const speakBtn=e.target.closest('[data-speak]');
+  if(speakBtn){e.stopPropagation();speak(speakBtn.dataset.speak);return;}
+  if(e.target.closest('.card-wrap'))flip();
 });
 
-document.addEventListener('keydown', (e) => {
+document.addEventListener('keydown',(e)=>{
   if(!catScreen.classList.contains('hidden')){
-    if(e.key === 'Enter' || e.key === ' '){ const firstCard = catGrid.querySelector('.cat-card'); if(firstCard) firstCard.click(); return; }
+    if(e.key==='Enter'||e.key===' '){const firstCard=catGrid.querySelector('.cat-card');if(firstCard)firstCard.click();return;}
     return;
   }
   if(completeOverlay.classList.contains('show')){
-    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); replay(false); return; }
+    if(e.key==='Enter'||e.key===' '){e.preventDefault();replay(false);return;}
     return;
   }
   switch(e.key){
-    case 'ArrowRight': case ' ': e.preventDefault(); stopAutoPlay(); next(); break;
-    case 'ArrowLeft': e.preventDefault(); stopAutoPlay(); prev(); break;
-    case 'ArrowUp': case 'ArrowDown': case 'Enter': e.preventDefault(); flip(); break;
-    case 'a': case 'A': e.preventDefault(); toggleAutoPlay(); break;
-    case 's': case 'S': e.preventDefault(); shuffle(); break;
-    case 'm': case 'M': e.preventDefault(); muted = !muted; if(muted && speechSynthesis) speechSynthesis.cancel(); break;
-    case 'Escape': e.preventDefault(); backToCategories(); break;
+    case'ArrowRight':case' ':e.preventDefault();stopAutoPlay();next();break;
+    case'ArrowLeft':e.preventDefault();stopAutoPlay();prev();break;
+    case'ArrowUp':case'ArrowDown':case'Enter':e.preventDefault();flip();break;
+    case'a':case'A':e.preventDefault();toggleAutoPlay();break;
+    case's':case'S':e.preventDefault();shuffle();break;
+    case'Escape':e.preventDefault();backToCategories();break;
   }
 });
 
-let touchStartX = 0, touchStartY = 0;
-document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; touchStartY = e.touches[0].clientY; }, {passive: true});
-document.addEventListener('touchend', (e) => {
-  if(!catScreen.classList.contains('hidden')) return;
-  if(completeOverlay.classList.contains('show')) return;
-  const dx = e.changedTouches[0].clientX - touchStartX;
-  const dy = e.changedTouches[0].clientY - touchStartY;
-  if(Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)){ stopAutoPlay(); if(dx > 0) prev(); else next(); }
-  else if(Math.abs(dy) > 60 && Math.abs(dy) > Math.abs(dx)){ flip(); }
-}, {passive: true});
+let touchStartX=0,touchStartY=0;
+document.addEventListener('touchstart',(e)=>{touchStartX=e.touches[0].clientX;touchStartY=e.touches[0].clientY;},{passive:true});
+document.addEventListener('touchend',(e)=>{
+  if(!catScreen.classList.contains('hidden'))return;
+  if(completeOverlay.classList.contains('show'))return;
+  const dx=e.changedTouches[0].clientX-touchStartX;
+  const dy=e.changedTouches[0].clientY-touchStartY;
+  if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)){stopAutoPlay();if(dx>0)prev();else next();}
+  else if(Math.abs(dy)>60&&Math.abs(dy)>Math.abs(dx)){flip();}
+},{passive:true});
 
-// ===== Init =====
 buildCategoryScreen();
+setTimeout(refreshIcons,100);
 </script>
 </body>
 </html>
