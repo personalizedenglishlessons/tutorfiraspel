@@ -90,7 +90,7 @@ var I = {
   'groupsCount':{en:'Active groups', ar:'المجموعات النشطه'},
   'upcomingClasses':{en:'Upcoming classes', ar:'الدروس الجاه'},
   'expiringPrograms':{en:'Programs expiring (14d)', ar:'برامج تنتهي (١٤ يوم)'},
-  'recentCompletions':{en:'Recent completions', ar:'اخر الحينجازات'},
+  'recentCompletions':{en:'Recent completions', ar:'اخر الانجازات'},
   'recentCerts':{en:'Recent certificates', ar:'اخر الشهادات'},
   'courseDistribution':{en:'Current course distribution', ar:'توزيع المسارات الحاليه'},
   'recentAudit':{en:'Recent admin actions', ar:'اخر اجراوات الاداره'},
@@ -184,7 +184,7 @@ var I = {
   'groupName':{en:'Group', ar:'المجموعه'},
   'capacity':{en:'Capacity', ar:'السعه'},
   'roster':{en:'Roster', ar:'القايمه'},
-  'waitlist':{en:'Waitlist', ar:'قايمه الحينتظار'},
+  'waitlist':{en:'Waitlist', ar:'قايمه الانتظار'},
   'availableSeats':{en:'%d seats left', ar:'باقي %d مقاعد'},
   'groupFull':{en:'Group is full', ar:'المجموعه ممتليه'},
   'moveFromWaitlist':{en:'Move into group', ar:'نقل للمجموعه'},
@@ -229,11 +229,11 @@ var I = {
   'stage':{en:'Stage', ar:'المرحله'},
   'totalLessons':{en:'Total lessons', ar:'اجمالي الدروس'},
   'completedCount':{en:'Completed lessons', ar:'الدروس المنجزه'},
-  'recVsProd':{en:'Recognition vs Production', ar:'الاسترجاع مقابل الحينتاج'},
-  'recVsProdHint':{en:'First-try production is the mastery signal - how often the student can USE the language, not just recognize it.', ar:'الحينتاج من اول محاوله هو موشر الاتقان - يمكنره الطالب على استخدام اللغه، وليس التعرف عليها بس.'},
+  'recVsProd':{en:'Recognition vs Production', ar:'الاسترجاع مقابل الانتاج'},
+  'recVsProdHint':{en:'First-try production is the mastery signal - how often the student can USE the language, not just recognize it.', ar:'الانتاج من اول محاوله هو موشر الاتقان - يمكنره الطالب على استخدام اللغه، وليس التعرف عليها بس.'},
   'recognition':{en:'Recognition', ar:'الاسترجاع'},
-  'production':{en:'Production (eventual)', ar:'الحينتاج (لسه المحاول شيت)'},
-  'productionFirst':{en:'Production (first try)', ar:'الحينتاج (اول محاوله)'},
+  'production':{en:'Production (eventual)', ar:'الانتاج (لسه المحاول شيت)'},
+  'productionFirst':{en:'Production (first try)', ar:'الانتاج (اول محاوله)'},
   'recentLessons':{en:'Recent lessons', ar:'واحدث الدروس'},
   'noStatsYet':{en:'No exercise stats recorded yet. They appear after the first lesson completion.', ar:'ما فيه احصاييات لسه. تظهر لسه امثلل اول درس.'},
   'lastStudy':{en:'Last study day', ar:'اخر يوم دراسه'},
@@ -257,7 +257,7 @@ var I = {
   'noAttendance':{en:'No live class records yet', ar:'ما فيه سجلات دروس مباشره لسه'},
   'noTimeline':{en:'No activity recorded yet', ar:'لا فيه نشاط مسجل لسه'},
   'noRecommendations':{en:'No stored recommendations yet', ar:'ما فيه توصيات محفوظه لسه'},
-  'attentionLabel':{en:'Only attention', ar:'الحينتباه بس'},
+  'attentionLabel':{en:'Only attention', ar:'الانتباه بس'},
   'apply':{en:'Apply', ar:'تطبيق'},
   'reset':{en:'Reset', ar:'مسح'},
   'loadMore':{en:'Load more', ar:'المزيد'},
@@ -787,7 +787,7 @@ $('viewArea').innerHTML = pageHead(t('overview'), lang === 'ar' ? 'وش يصير
   if((tt.expiring || 0) > 0) actions.push({ warn:true, icon:'hourglass', txt: (lang === 'ar' ? (tt.expiring + ' برنامج ينتهي خلال ١٤ يوم - جدد او كلم الطالب') : (tt.expiring + ' program(s) end within 14 days - renew or reach out') ) });
   if(actions.length === 0){
     if((d.attention || []).length > 0) actions.push({ txt: lang === 'ar' ? (d.attention.length + ' طالب يحتاج انتباه') : (d.attention.length + ' students need attention') });
-    if((d.upcoming_classes || []).length > 0) actions.push({ txt: lang === 'ar' ? (d.upcoming_classes.length + ' دروس مباشره قادمه - سجل الحضور لسهها') : (d.upcoming_classes.length + ' upcoming live classes') });
+    if((d.upcoming_classes || []).length > 0) actions.push({ txt: lang === 'ar' ? (d.upcoming_classes.length + ' دروس مباشره قادمه - سجل الحضور بعدها') : (d.upcoming_classes.length + ' upcoming live classes') });
     if((tt.certificates_30 || 0) > 0) actions.push({ txt: lang === 'ar' ? (tt.certificates_30 + ' شهاده صدرت ذا الشهر') : (tt.certificates_30 + ' certificates issued this month') });
     if((tt.stalled || 0) > 0) actions.push({ txt: lang === 'ar' ? (tt.stalled + ' طالب متوقف - افتح ملفاتهم وشوف السبب') : (tt.stalled + ' stalled students - open their profiles') });
   }
@@ -1457,7 +1457,7 @@ function renderTabPersonalization(plan){
   var help = '<div class="notice" style="margin-bottom:14px;"><div style="font-weight:600;">' + esc(lang==='ar'?'من وين تجي هذي المعلومات؟':'Where this data comes from') + '</div>' +
     '<div style="margin-top:6px; font-size:.8rem; color:var(--text-muted); line-height:1.7;">' +
     esc(lang==='ar'
-      ? 'هذي خطه الطالب اللي يبنيها بنفسه: يجاوب على اساله الاهداف والوقت اليومي اول ما يدخل التطبيق او من صفحه البدايه. اذا بنى خطته، تشوف هنا هدفه ووقته ووتيرته. اذا الينضا فاضي، يعني الطالب ما بنى خطته لسه - اساله يدخل التطبيق ويبنيها، وبتيمكنر لسهها تسند له الباقه المناسبه.'
+      ? 'هذي خطه الطالب اللي يبنيها بنفسه: يجاوب على اساله الاهداف والوقت اليومي اول ما يدخل التطبيق او من صفحه البدايه. اذا بنى خطته، تشوف هنا هدفه ووقته ووتيرته. اذا الينضا فاضي، يعني الطالب ما بنى خطته لسه - اساله يدخل التطبيق ويبنيها، وبتيمكنر بعدها تسند له الباقه المناسبه.'
       : 'This is the plan the student builds themselves: they answer the goal and daily-time questions on first sign-in or from the home page. Once built, you see their goal, pace and route here. If this is empty, the student has not built their plan yet - have them sign in and build it, then assign the right plan.') +
     '</div></div>';
   if(!plan || !plan.profile){
@@ -2785,7 +2785,7 @@ async function questionsView(){
     $('qfSave').addEventListener('click', async function(){
       var code = $('qf_code').value.trim();
       if(!code){ toast(lang==='ar'?'الكود مطلوب':'Code required', true); return; }
-      if(!$('qf_qen').value.trim()){ toast(lang==='ar'?'نص السوال الحينجليزي مطلوب':'English question text required', true); return; }
+      if(!$('qf_qen').value.trim()){ toast(lang==='ar'?'نص السوال الانجليزي مطلوب':'English question text required', true); return; }
       var opts = [0,1,2,3].map(function(i){ return { ar: $('qf_o'+i+'ar').value.trim(), en: $('qf_o'+i+'en').value.trim() }; });
       if(!opts[$('qf_correct').value].en){ toast(lang==='ar'?'الاجابه الصحه ما تنشاف':'Correct option has no text', true); return; }
       var row = {
@@ -3492,7 +3492,7 @@ async function settingsView(){
       '<div class="form-grid" style="margin-top:14px;">' +
         '<div class="field full">' + chk('stBannerActive', 'تشغيل الشريط', 'Banner enabled', b.active !== false) + '</div>' +
         '<div class="field full"><label>' + esc(lang === 'ar' ? 'النص بالعربي' : 'Arabic text') + '</label><textarea class="input" id="stBannerAr" rows="2" dir="rtl">' + esc(b.ar || '') + '</textarea></div>' +
-        '<div class="field full"><label>' + esc(lang === 'ar' ? 'النص بالحينجليزي' : 'English text') + '</label><textarea class="input" id="stBannerEn" rows="2">' + esc(b.en || '') + '</textarea></div>' +
+        '<div class="field full"><label>' + esc(lang === 'ar' ? 'النص بالانجليزي' : 'English text') + '</label><textarea class="input" id="stBannerEn" rows="2">' + esc(b.en || '') + '</textarea></div>' +
         '<div class="field full"><label>' + esc(t('link')) + '</label><input class="input" id="stBannerLink" value="' + esc(b.link || '') + '" placeholder="https://wa.me/9665XXXXXXXX" dir="ltr"></div>' +
       '</div>' +
       '<div class="s360-meta" style="margin-top:18px;"><span class="chip bronze">' + esc(lang === 'ar' ? 'خيارات' : 'Flags') + '</span></div>' +
@@ -3506,7 +3506,7 @@ async function settingsView(){
       '<div class="s360-meta" style="margin-top:0;"><span class="chip gold">' + esc(lang === 'ar' ? 'الاساله الشايعه - الصفحه البدايه' : 'Homepage FAQs') + '</span></div>' +
       '<p style="margin:10px 0 0; font-size:.76rem; color:var(--text-muted); line-height:1.7;">' +
         esc(lang === 'ar'
-          ? 'كل سطر = سوال|جواب. لازم نفس عدد الاسطر بالعربي والحينجليزي وبنفس الترتيب.'
+          ? 'كل سطر = سوال|جواب. لازم نفس عدد الاسطر بالعربي والانجليزي وبنفس الترتيب.'
           : 'One FAQ per line, format question|answer. Arabic and English must have the same number of lines in the same order.') +
       '</p>' +
       '<div class="form-grid" style="margin-top:12px;">' +
@@ -3531,7 +3531,7 @@ async function settingsView(){
     var arL = faqParse($('stFaqAr').value), enL = faqParse($('stFaqEn').value);
     if(arL.length !== enL.length){
       btn.disabled = false;
-      toast(lang === 'ar' ? 'عدد اسطر الاساله مختلف بين العربي والحينجليزي - سوهم نفس العدد.' : 'FAQ line count differs between Arabic and English - make them match.', true);
+      toast(lang === 'ar' ? 'عدد اسطر الاساله مختلف بين العربي والانجليزي - سوهم نفس العدد.' : 'FAQ line count differs between Arabic and English - make them match.', true);
       return;
     }
     var faqOut = [];
@@ -3674,7 +3674,7 @@ var LC_SVC = {
   private_online_40:{en:'Private online (40m)', ar:'خاصه اونلوين (40د)'},
   in_person_40:{en:'In-person (40m)', ar:'حضوريه (40د)'}
 };
-var LC_ST = {pending:{en:'Pending',ar:'جاري الحينتظار'},approved:{en:'Approved',ar:'مقبوله'},declined:{en:'Declined',ar:'مرفوضه'},cancelled:{en:'Cancelled',ar:'ملغيه'}};
+var LC_ST = {pending:{en:'Pending',ar:'جاري الانتظار'},approved:{en:'Approved',ar:'مقبوله'},declined:{en:'Declined',ar:'مرفوضه'},cancelled:{en:'Cancelled',ar:'ملغيه'}};
 function lcSvcLabel(code){ var m=LC_SVC[code]||{}; return lang==='ar'?(m.ar||code):(m.en||code); }
 function lcStLabel(st){ var m=LC_ST[st]||{en:st,ar:st}; return lang==='ar'?m.ar:m.en; }
 

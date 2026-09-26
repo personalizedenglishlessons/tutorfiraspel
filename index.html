@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://lewoochehpiycocvfwtz.supabase.co https://api.supabase.co; base-uri 'self'; form-action 'self'; object-src 'none';">
-<title>PEL، Personalized English Lessons، تعلم الحينجليزيه الامريعشانه بثقه</title>
+<title>PEL، Personalized English Lessons، تعلم الانجليزيه الامريعشانه بثقه</title>
 <link rel="canonical" href="index.html">
 <link rel="icon" type="image/svg+xml" href="brand/pel-favicon.svg?v=2">
 <link rel="icon" type="image/png" sizes="32x32" href="brand/favicon-32.png?v=2">
@@ -12,9 +12,9 @@
 <link rel="apple-touch-icon" href="brand/apple-touch-icon.png?v=2">
 <link rel="manifest" href="brand/manifest.webmanifest">
 <meta name="theme-color" content="#0E0E10">
-<meta name="description" content="منصه خاصه لتعلم الحينجليزيه الامريعشانه للناطقين بالعربي مع الاستاذ فراس دروس مرتبه وشرح بسيط يناسب الكل المستويات">
+<meta name="description" content="منصه خاصه لتعلم الانجليزيه الامريعشانه للناطقين بالعربي مع الاستاذ فراس دروس مرتبه وشرح بسيط يناسب الكل المستويات">
 <meta property="og:title" content="PEL · Personalized English Lessons">
-<meta property="og:description" content="تعلم الحينجليزيه الامريعشانه بثقه مع الاستاذ فراس دروس مرتبه منهج امريعشان وشرح بالعربي.">
+<meta property="og:description" content="تعلم الانجليزيه الامريعشانه بثقه مع الاستاذ فراس دروس مرتبه منهج امريعشان وشرح بالعربي.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="brand/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -1227,10 +1227,10 @@ section{ padding-top:70px; padding-bottom:70px; }
           <div style="padding-left:10px;"><div class="route-label">اليوم</div><div style="font-size:.9rem; margin-top:3px;">تبدا محادثه في الشغل</div></div>
         </div>
         <div class="pp-route">
-          <div style="padding-left:10px;"><div class="route-label">لسهها</div><div style="font-size:.9rem; margin-top:3px;">تسال زميلك عن مساعده</div></div>
+          <div style="padding-left:10px;"><div class="route-label">بعدها</div><div style="font-size:.9rem; margin-top:3px;">تسال زميلك عن مساعده</div></div>
         </div>
         <div class="pp-route">
-          <div style="padding-left:10px;"><div class="route-label">لسهين</div><div style="font-size:.9rem; margin-top:3px;">اجتماعات، عملا، مقابلات</div></div>
+          <div style="padding-left:10px;"><div class="route-label">بعدين</div><div style="font-size:.9rem; margin-top:3px;">اجتماعات، عملا، مقابلات</div></div>
         </div>
       </div>
     </div>
@@ -1596,7 +1596,7 @@ function applyIndexLang(lang){
   var ppH2=document.querySelector('#personalPreview h2');
   if(ppH2) ppH2.textContent = lang==='ar' ? 'اختبار دقيقتين يحدد مستواك وهدفك' : 'Tell us what you need, we build the path';
   var ppCols=document.querySelectorAll('#personalPreview .reveal > div');
-  var ppAr={say:'انت تقول', items:['ابي انجليزي للشغل','المحادثه صعبه علي','ايمكنر ادرس 20 دقيقه يوميا'], build:'PEL يبني', path:'انجليزي الشغل', focus:'ترعشانزك: محادثه واستماع', todayL:'اليوم', todayV:'تبدا محادثه في الشغل', nextL:'لسهها', nextV:'تسال زميلك عن مساعده', laterL:'لسهين', laterV:'اجتماعات، عملا، مقابلات'};
+  var ppAr={say:'انت تقول', items:['ابي انجليزي للشغل','المحادثه صعبه علي','ايمكنر ادرس 20 دقيقه يوميا'], build:'PEL يبني', path:'انجليزي الشغل', focus:'ترعشانزك: محادثه واستماع', todayL:'اليوم', todayV:'تبدا محادثه في الشغل', nextL:'بعدها', nextV:'تسال زميلك عن مساعده', laterL:'بعدين', laterV:'اجتماعات، عملا، مقابلات'};
   var ppEn={say:'You tell PEL', items:['I need English for work','Speaking is hard for me','I can study 20 minutes a day'], build:'PEL builds', path:'Workplace English', focus:'Focus: speaking + listening', todayL:'Today', todayV:'Start a conversation at work', nextL:'Next', nextV:'Ask a coworker for help', laterL:'Later', laterV:'Meetings, customers, interviews'};
   var ppData = lang==='ar'?ppAr:ppEn;
   if(ppCols.length>=2){
@@ -1629,7 +1629,7 @@ function applyIndexLang(lang){
   var ppPathFocus=document.querySelector('#personalPreview .pp-build div[style*="font-size:.78rem"]');
   if(ppPathFocus) ppPathFocus.textContent = lang==='ar' ? 'ترعشانزك: محادثه واستماع' : 'Focus: speaking + listening';
   var ppRoutes=document.querySelectorAll('#personalPreview .pp-route');
-  var ppRouteAr=[{l:'اليوم',v:'تبدا محادثه في الشغل'},{l:'لسهها',v:'تسال زميلك عن مساعده'},{l:'لسهين',v:'اجتماعات، عملا، مقابلات'}];
+  var ppRouteAr=[{l:'اليوم',v:'تبدا محادثه في الشغل'},{l:'بعدها',v:'تسال زميلك عن مساعده'},{l:'بعدين',v:'اجتماعات، عملا، مقابلات'}];
   var ppRouteEn=[{l:'Today',v:'Start a conversation at work'},{l:'Next',v:'Ask a coworker for help'},{l:'Later',v:'Meetings, customers, interviews'}];
   ppRoutes.forEach(function(r,i){ var arr=lang==='ar'?ppRouteAr:ppRouteEn; if(!arr[i])return; var lbl=r.querySelector('.route-label'); if(lbl) lbl.textContent=arr[i].l; var val=r.querySelector('div[style*="font-size:.9rem"]'); if(val) val.textContent=arr[i].v; });
   var ppBtn=document.querySelector('#personalPreview .btn-gold span');
@@ -1734,7 +1734,7 @@ function applyIndexLang(lang){
   var ppH2=document.querySelector('#personalPreview h2');
   if(ppH2) ppH2.textContent = lang==='ar' ? 'كل وواحد يتعلم بطريقه غير' : 'Everyone learns differently';
   var ppP=document.querySelector('#personalPreview .section-head p');
-  if(ppP) ppP.textContent = lang==='ar' ? 'PEL ما يعطي الكل نفس الدروس. قل لنا وش تبي الحينجليزي لاجله، ونبني لك خطه على مقاس هدفك ومستواك ووقتك' : 'PEL does not give everyone the same lessons. Tell us what you need English for, and we build a plan around your goal, level and time.';
+  if(ppP) ppP.textContent = lang==='ar' ? 'PEL ما يعطي الكل نفس الدروس. قل لنا وش تبي الانجليزي لاجله، ونبني لك خطه على مقاس هدفك ومستواك ووقتك' : 'PEL does not give everyone the same lessons. Tell us what you need English for, and we build a plan around your goal, level and time.';
   var ppCards=document.querySelectorAll('#personalPreview .card');
   var ppAr=[{k:'شغل',t:'انجليزي الشغل',d:'ترعشانزك: محادثه<br>وقتك: 20 دقيقه يوميا<br>مواقف: اجتماع، ايميل، مكالمه'},{k:'سفر',t:'انجليزي السفر',d:'ترعشانزك: استماع<br>وقتك: 15 دقيقه يوميا<br>مواقف: مطار، فندق، مطعم'},{k:'سوالين يوميه',t:'انجليزي يومي',d:'ترعشانزك: محادثه<br>وقتك: 15 دقيقه يوميا<br>مواقف: سوالين، طلبات، مساعده'}];
   var ppEn=[{k:'Work',t:'Work English',d:'Focus: speaking<br>Time: 20 min a day<br>Situations: meeting, email, call'},{k:'Travel',t:'Travel English',d:'Focus: listening<br>Time: 15 min a day<br>Situations: airport, hotel, restaurant'},{k:'Everyday',t:'Everyday English',d:'Focus: conversation<br>Time: 15 min a day<br>Situations: small talk, requests, help'}];
@@ -1828,10 +1828,10 @@ function applyIndexLang(lang){
   // testimonials bilingual
   var testiAr=[
     {name:'رهف العتيبي',role:'موظفه موارد بشريه الرياض',quote:'كنت كل ما صار عندنا اجتماع مع اجانب اسكت واخلي غيري يتكلم لسه فتره مع الاستاذ فراس صرت ارد واتكلم بثقه وحتى مديري لاحظ الينرق'},
-    {name:'علي القحطاني',role:'طالب جامعاي الدمام',quote:'كنت اذا جاني برزنتيشن بالحينجليزي اقعد احفظ اللام كله قبل اعرضه الحين صرت اتكلم من راسي اكثر وما عاد اخاف اذا نسيت جمله'},
-    {name:'لينا حسن',role:'صيدلانيه دبي',quote:'شغلي كله بالحينجليزي بس كنت احيانا اتردد اذا احتجت اشرح شي بالتفصيل لمريض الينرق لسه الدروس ان لامي صار اسلس وثقتي اكبر'},
+    {name:'علي القحطاني',role:'طالب جامعاي الدمام',quote:'كنت اذا جاني برزنتيشن بالانجليزي اقعد احفظ اللام كله قبل اعرضه الحين صرت اتكلم من راسي اكثر وما عاد اخاف اذا نسيت جمله'},
+    {name:'لينا حسن',role:'صيدلانيه دبي',quote:'شغلي كله بالانجليزي بس كنت احيانا اتردد اذا احتجت اشرح شي بالتفصيل لمريض الينرق لسه الدروس ان لامي صار اسلس وثقتي اكبر'},
     {name:'يوسف عبدالسلام',role:'مطور برامج القاهره',quote:'القراوه عندي كانت كويسه لكن اللام لا اول ما يدخل ميتنج ابقى ساكت دلوقتي بقيت اشارك عادي حتى لو غلطت بكمل ومبقتش اخاف من الموضوع'},
-    {name:'دانه العمري',role:'طالبه ثانوي جده',quote:'كنت احب الحينجليزي بس اذا طلبت مني الابله اتكلم يمكنام الينصل اتوتر مره الحين صرت اجاوب ببدون ما افكر كثير واحس نفسي ارتحت صراحه مررره ما قصر'},
+    {name:'دانه العمري',role:'طالبه ثانوي جده',quote:'كنت احب الانجليزي بس اذا طلبت مني الابله اتكلم يمكنام الينصل اتوتر مره الحين صرت اجاوب ببدون ما افكر كثير واحس نفسي ارتحت صراحه مررره ما قصر'},
     {name:'خالد الهاجري',role:'مدير مبيعات الكويت',quote:'اسافر كثير بحكم الشغل ودايم احتاج اتكلم مع عملا من برا قبل كنت افكر بكل جمله قبل اقولها الحين الامور تمشي بشكل طبيعي وايد'}
   ];
   var testiEn=[
