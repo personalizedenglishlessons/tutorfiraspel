@@ -23,7 +23,7 @@
 <script src="lib/cert-qr.js?v=d202324c" defer></script>
 <script src="lib/cert-sheet.js?v=36e2abcd" defer></script>
 <script src="lib/pel_config.js?v=deec3e10"></script>
-<script src="lib/pel_lesson_stage.js?v=5e035944"></script>
+<script src="lib/pel_lesson_stage.js?v=eca70838"></script>
 <script src="lib/pel_dashboard_life.js?v=769f4110"></script>
 <script src="lib/pel_curriculum_path.js?v=4fdca572"></script>
 <style>
@@ -8934,7 +8934,7 @@ function detectIntent(text){
 const SMART_REPLIES = {
   refusal:  { en:'No problem at all, we can work something out. What would you like to do?', ar:'ولا يهمك، نيمكنر نعدّل الوضع. وش تحب نسوي؟', translit:'نو بروبلم ات اول، وي كان وورك سمثنق اوت. وات وود يو لايك تو دو؟' },
   agreement:{ en:'Perfect, that works for me. Anything else I can help with?', ar:'ممتاز، ذا يضبط معاي. فيه شي ثاني ايمكنر اساعدك فيه؟', translit:'بيرفكت، ذات ووركس فور مي. انيثينق الس اي كان هيلب وذ؟' },
-  greeting: { en:'Hello, nice to see you! How can I help you today?', ar:'اهلين، فرصه مبسوطه اشوفك! عشان ايمكنر اساعدك اليوم؟', translit:'هالو، نايس تو سي يو! هاو كان اي هيلب يو تودي؟' },
+  greeting: { en:'Hello, nice to see you! How can I help you today?', ar:'اهلين، فرصه مبسوطه اشوفك! كيف اقدر اساعدك اليوم؟', translit:'هالو، نايس تو سي يو! هاو كان اي هيلب يو تودي؟' },
   thanks:   { en:"You're most welcome. Is there anything else you need?", ar:'العفو، ولا يهمك. فيه شي ثاني تبغاه؟', translit:'يور موست ويلكم. از ذير انيثينق الس يو نيد؟' },
   question: { en:'Good question, let me help you with that. What exactly would you like to know?', ar:'سوال ممتاز، خلني اساعدك فيه. وش بالضبط تبغى تعرف؟', translit:'قود كوستشن، ليت مي هيلب يو وذ ذات. وات اكزاكلي وود يو لايك تو نو؟' },
   request:  { en:'Of course, I will take care of that right away. Anything else?', ar:'اكيد، باعتني في ذا الحين. فيه شي ثاني؟', translit:'اوف كورس، اي ويل تيك كير اوف ذات رايت اوي. انيثينق الس؟' },
@@ -9042,7 +9042,7 @@ const RP_SCRIPTS = {
     faq: [
       { match: /(checkout|تسليم)/, reply: L('Checkout is at noon, and you can leave your bags with us.', 'التسليم الظهر، وتقدر تترك شنطك عندنا.', 'تشيك اوت از ات نون، اند يو كان ليف يور باجز وذ اس.') },
       { match: /(breakfast|فطور)/, reply: L('Breakfast is served from 7 to 10 AM.', 'الفطور من ٧ لـ ١٠ الصباح.', 'بريكفاست از سيرڤد فروم 7 تو 10 اي ام.') },
-      { match: /(wifi|واي فاي)/, reply: L('The wifi password is on your room key card.', 'رمز الواي فاي على بطاقه غرفتك.', 'ذا واي فاي پاسوورد از اون يور روم عشان كارد.') }
+      { match: /(wifi|واي فاي)/, reply: L('The wifi password is on your room key card.', 'رمز الواي فاي على بطاقه غرفتك.', 'ذا واي فاي پاسوورد از اون يور روم كي كارد.') }
     ]
   },
   'airport-officer': {
@@ -9142,7 +9142,7 @@ const RP_SCRIPTS = {
     steps: [
       { key:'questions', expect:'yesno', ask: L("Do you have any questions about today's lesson?", 'عندك اساله على درس اليوم؟', 'دو يو هاف اني كوستشنز اباوت تودييز لسن؟'),
         yes: { next: 1, reply: L('Go ahead, what is your question?', 'تفضل، وش سوالك؟', 'قو اهيد، وات از يور كوستشن؟') },
-        no: { next: 2, reply: L('Great. Let us review the key words. Repeat after me.', 'ممتاز. خلنا نراجع الكلمات المهمه. كرر وراي.', 'قريت. ليت اس ريفيو ذا عشان ووردز. ريپيت افتير مي.') } },
+        no: { next: 2, reply: L('Great. Let us review the key words. Repeat after me.', 'ممتاز. خلنا نراجع الكلمات المهمه. كرر وراي.', 'قريت. ليت اس ريفيو ذا كي ووردز. ريپيت افتير مي.') } },
       { key:'question', expect:'open', ask: L('What is your question?', 'وش سوالك؟', 'وات از يور كوستشن؟'),
         any: { next: 2, reply: L('That is a great question. Let me explain it clearly.', 'سوال ممتاز. خلني اشرحه زين.', 'ذات از ا قريت كوستشن. ليت مي اكسپلين ات كليرلي.') } },
       { key:'practice', expect:'yesno', ask: L('Do you want to practice the dialogue now?', 'تبي نتمرن على الحوار الحين؟', 'دو يو وانت تو پرکتیس ذا دايالوق ناو؟'),
@@ -9219,7 +9219,7 @@ const RP_SCRIPTS = {
   'bank-teller': {
     role: 'Bank Teller', studentRole: 'customer',
     steps: [
-      { key:'need', expect:'open', ask: L('Good morning, how can I help you today?', 'صباح الخير، عشان ايمكنر اساعدك اليوم؟', 'قود مورننج، هاو كان اي هيلپ يو تودي؟'),
+      { key:'need', expect:'open', ask: L('Good morning, how can I help you today?', 'صباح الخير، كيف اقدر اساعدك اليوم؟', 'قود مورننج، هاو كان اي هيلپ يو تودي؟'),
         any: { next: 1, reply: L('Of course. Could I see your ID, please?', 'اكيد. ممكن اشوف هويتك لو سمحت؟', 'اوف كورس. كود اي سي يور اي دي، بليز؟') } },
       { key:'id', expect:'open', ask: L('Could I see your ID, please?', 'ممكن اشوف هويتك لو سمحت؟', 'كود اي سي يور اي دي، بليز؟'),
         any: { next: 2, reply: L('Thank you. One moment while I process that.', 'شكرا. لحظه وانا اجهزها.', 'ثانك يو. ون مومنت ويل اي پروسس ذات.') } },
@@ -10362,7 +10362,7 @@ const VOCAB_BANK = [
 {en:'Small talk', ipa:'/ˌsmɔːl ˈtɔːk/', ar:'حديث ودي مهذّب، ثرثره لطيفه', translit:'سمول توك', example:{en:'We made small talk about the weather.', ar:'دار بيننا حديث ودي عن الطقس.', translit:'وي ميد سمول توك اباوت ذا ويذر.'}, synonyms:'chitchat, banter', antonyms:'deep talk, silence', family:'talk, talking', collocations:'make small talk, engage in small talk', category:'American Conversations', difficulty:'Intermediate', tip:'Small talk opens doors before serious talk.', synonyms_ar:'ثرثره لطيفه', antonyms_ar:'حديث عميق، صمت', family_ar:'يتكلم، يتكلم', collocations_ar:'سوي ثرثره، ابدا ثرثره', tip_ar:'الثرثره تفتح ابواب قبل الكلام الجدي', mistake:'Saying "do small talk" instead of "make small talk."'},
 {en:'Hang out', ipa:'/ˈhæŋ ˌaʊt/', ar:'يقضي وقتًا مع، يتسكّع', translit:'هانق اوت', example:{en:'We hang out at the mall on weekends.', ar:'نتسكع في المول اخر الاسبوع.', translit:'وي هانق اوت ات ذا مول اون ويك اندز.'}, synonyms:'spend time, chill', antonyms:'avoid, stay away', family:'hang, hanging out', collocations:'hang out with, hang out at', category:'American Conversations', difficulty:'Intermediate', tip:'In past tense it becomes "hung out."', synonyms_ar:'يقضي وقت مع، يتسكع', antonyms_ar:'يتجنب', family_ar:'يتسكع، يتسكع', collocations_ar:'تسكع مع، تسكع في', tip_ar:'بالماضي تصير hung out', mistake:'Saying "hangouted" instead of "hung out."'},
 {en:'By the way', ipa:'/baɪ ðə ˈweɪ/', ar:'على فكره، بالمناسبه', translit:'باي ذا وي', example:{en:'By the way, did you call her?', ar:'على فكره، هل اتصلت بها؟', translit:'باي ذا وي، ديد يو كول هر؟'}, synonyms:'incidentally, speaking of which', antonyms:'', family:'way, ways', collocations:'by the way, just by the way', category:'American Conversations', difficulty:'Intermediate', tip:'Use it to add a side note mid-conversation.', synonyms_ar:'على فكره', antonyms_ar:'', family_ar:'طريق، طرق', collocations_ar:'على فكره، بس على فكره', tip_ar:'استخدمها عشان تضيف ملاحظه جانبيه بالكلام', mistake:'Writing "bytheway" as one word instead of three.'},
-{en:'What\'s up', ipa:'/ˈwɒts ʌp/', ar:'ما الاخبار؟ عشان الحال؟', translit:'واتس اب', example:{en:'Hey, what\'s up?', ar:'اهلًا، ما الاخبار؟', translit:'هي، واتس اب؟'}, synonyms:'how\'s it going, what\'s new', antonyms:'', family:'up', collocations:'what\'s up with, what\'s up man', category:'American Conversations', difficulty:'Intermediate', tip:'It\'s a greeting, not a real question about problems.', synonyms_ar:'ما الاخبار؟ عشان الحال؟', antonyms_ar:'', family_ar:'فوق', collocations_ar:'ما الخبار مع، وش اخبارك', tip_ar:'هي تحيه مو سوال حقيقي عن المشاكل', mistake:'Answering with a long story instead of "not much, you?"'},
+{en:'What\'s up', ipa:'/ˈwɒts ʌp/', ar:'ما الاخبار؟ وش الحال؟', translit:'واتس اب', example:{en:'Hey, what\'s up?', ar:'اهلًا، ما الاخبار؟', translit:'هي، واتس اب؟'}, synonyms:'how\'s it going, what\'s new', antonyms:'', family:'up', collocations:'what\'s up with, what\'s up man', category:'American Conversations', difficulty:'Intermediate', tip:'It\'s a greeting, not a real question about problems.', synonyms_ar:'ما الاخبار؟ وش الحال؟', antonyms_ar:'', family_ar:'فوق', collocations_ar:'ما الخبار مع، وش اخبارك', tip_ar:'هي تحيه مو سوال حقيقي عن المشاكل', mistake:'Answering with a long story instead of "not much, you?"'},
 {en:'Fluency', ipa:'/ˈfluːənsi/', ar:'طلاقه، سلاسه في الكلام', translit:'فلونسي', example:{en:'Her fluency in English improved fast.', ar:'تحسّنت طلاقتها في الانجليزيه بسرعه.', translit:'هر فلونسي ان انجلش امبروفد فاست.'}, synonyms:'smoothness, flow', antonyms:'hesitation, stumbling', family:'fluent, fluently', collocations:'speak with fluency, build fluency', category:'Speaking Studio', difficulty:'Intermediate', tip:'Fluency is about flow, not perfect grammar.', synonyms_ar:'طلاقه، سلاسه', antonyms_ar:'تردد، تلعثم', family_ar:'طليق، بطلاقه', collocations_ar:'تكلم بطلاقه، ابني طلاقتك', tip_ar:'الطلاقه عن الانسياب مو القواعد الممتازه', mistake:'Stopping at every small mistake kills fluency.'},
 {en:'Pronunciation', ipa:'/prəˌnʌnsiˈeɪʃən/', ar:'النطق، طريقه لفظ الكلمات', translit:'برنانسييهيشِن', example:{en:'His pronunciation is very clear.', ar:'نطقه واضح جدًا.', translit:'هيز برنانسييهيشِن از فيري كلير.'}, synonyms:'articulation, diction', antonyms:'mispronunciation', family:'pronounce, pronounced', collocations:'clear pronunciation, improve pronunciation', category:'Speaking Studio', difficulty:'Intermediate', tip:'The word itself has no "o" after the "n."', synonyms_ar:'النطق', antonyms_ar:'غلط نطق', family_ar:'ينطق، منطوق', collocations_ar:'نطق واضح، حسّن نطقك', tip_ar:'الكلمه نفسها ما فيها o لسه n', mistake:'Spelling it "pronounciation."'},
 {en:'Pause', ipa:'/pɔːz/', ar:'وقفه، توقف قصير', translit:'بوز', example:{en:'Take a short pause to breathe.', ar:'خذ وقفه قصيره لتتنفس.', translit:'تيك ا شورت بوز تو بريث.'}, synonyms:'break, stop', antonyms:'continue, rush', family:'pause, paused, pausing', collocations:'take a pause, pause for effect', category:'Speaking Studio', difficulty:'Intermediate', tip:'A pause adds power to your words.', synonyms_ar:'وقفه، توقف قصير', antonyms_ar:'يكمل، يستعجل', family_ar:'وقفه، توقف', collocations_ar:'خذ وقفه، وقفه للتاثير', tip_ar:'الوقفه تعطي قوه للامك', mistake:'Filling every pause with "um" and "uh."'},
@@ -10512,8 +10512,8 @@ window.SAUDI_MISTAKE_COACH = [
         titleEn: 'Overusing the with plurals',
         wrong: 'The dogs are loyal animals.',
         correct: 'Dogs are loyal animals.',
-        whyAr: 'بالعربي نقول اللاب وفيه وفا. بس بالانجليزي اذا تتكلم عن شي عام (مو لاب محدده)، ما تستخدم the.',
-        ruleAr: 'الجمع العام (مو محدد) = ببدون the. اللاب المحدده = the dogs.',
+        whyAr: 'بالعربي نقول الكلاب وفيه وفا. بس بالانجليزي اذا تتكلم عن شي عام (مو كلاب محدده)، ما تستخدم the.',
+        ruleAr: 'الجمع العام (مو محدد) = ببدون the. الكلاب المحدده = the dogs.',
         practice: [
           {q:'___ cats are independent.', options:['The','—','A','An'], correct:1},
           {q:'I love ___ music.', options:['the','—','a','an'], correct:1},
@@ -11015,7 +11015,7 @@ const SPEAKING_PERSONAS = [
   {id:'customer', title:'Customer', icon:'user', opener:{en:'Excuse me, can you help me find something?', ar:'لو سمحت، تقدر تساعدني الاقي شي؟', translit:'اكسكوز مي، كان يو هيلب مي فويند سمثنق؟'}},
   {id:'receptionist-clinic', title:'Clinic Receptionist', icon:'clipboard', opener:{en:'Do you have an appointment today?', ar:'عندك موعد اليوم؟', translit:'دو يو هاف ان ابوينتمنت تودي؟'}},
   {id:'neighbour', title:'Neighbour', icon:'home', opener:{en:'Good morning, moving in today?', ar:'صباح الخير، بتنتقلون اليوم؟', translit:'قود مورننج، مووينج ان تودي؟'}},
-  {id:'bank-teller', title:'Bank Teller', icon:'landmark', opener:{en:'Good morning, how can I help you today?', ar:'صباح الخير، عشان ايمكنر اساعدك اليوم؟', translit:'قود مورننج، هاو كان اي هيلب يو تودي؟'}},
+  {id:'bank-teller', title:'Bank Teller', icon:'landmark', opener:{en:'Good morning, how can I help you today?', ar:'صباح الخير، كيف اقدر اساعدك اليوم؟', translit:'قود مورننج، هاو كان اي هيلب يو تودي؟'}},
   {id:'flight-attendant', title:'Flight Attendant', icon:'plane', opener:{en:'Welcome aboard. Would you like something to drink?', ar:'اهلاً بكم على متن الرحه. تبي شي تشربه؟', translit:'ويلكم ابورد. وود يو لايك سمثنق تو درينك؟'}},
   {id:'coworker', title:'Coworker', icon:'users', opener:{en:'Hey, do you want to grab lunch together?', ar:'هلا، تبغى نتعشى مع بعض؟', translit:'هاي، دو يو وانت تو قراب لانش توقذر؟'}},
   {id:'job-interviewer', title:'Job Interviewer', icon:'user-check', opener:{en:'Thanks for coming in. Tell me about yourself.', ar:'شكرا لحضورك. عرفني عن نفسك.', translit:'ثانكس فور كمنق ان. تيل مي اباوت يورسلف.'}},
@@ -11134,7 +11134,7 @@ const FLAGSHIP_LESSONS = {
       {who:'B', en:"I'm from Riyadh. What about you?", ar:'انا من الرياض. وانتِ؟', translit:'ايم فروم رياض. وات اباوت يو؟'},
     ],
     quiz:[
-      {qAr:'عشان تسال شخص من وين هو بطريقه صح؟', qEn:'How do you correctly ask someone where they are from?', options:['You from where?','Where are you from?','From where you are?'], correct:1},
+      {qAr:'كيف تسال شخص من وين هو بطريقه صح؟', qEn:'How do you correctly ask someone where they are from?', options:['You from where?','Where are you from?','From where you are?'], correct:1},
       {qAr:'وش الرد المهذب على "Nice to meet you"؟', qEn:'What is a polite reply to "Nice to meet you"?', options:['Nice to meet you too.','Me too meet.','You too nice.'], correct:0},
     ],
     summary:'You practiced greeting someone new, exchanging names, and asking where they are from, three phrases you will use constantly in real conversations.',
@@ -11229,10 +11229,10 @@ const LESSON_LIBRARY = {
     ],
     quiz:[
       {qAr:'كم عدد الحروف الانجليزيه؟', qEn:'How many letters are in the English alphabet?', options:['26','28','32'], correct:0},
-      {qAr:'عشان ترد لو واحد سالك عن هجا اسمك؟', qEn:'How do you reply when asked to spell your name?', options:['I spell it letter by letter.','I write it fast.','I say it loudly.'], correct:0},
+      {qAr:'كيف ترد لو واحد سالك عن حروف اسمك؟', qEn:'How do you reply when asked to spell your name?', options:['I spell it letter by letter.','I write it fast.','I say it loudly.'], correct:0},
     ],
     summary:'You learned that English spelling and sound are different, and how to spell your name clearly letter by letter.',
-    takeaway:'تدرب على هجا اسمك ثلاث مرات بصوت عالي، فبتحتاجها في كل استماره وموعد.',
+    takeaway:'تدرب على كتابه اسمك حرف حرف ثلاث مرات بصوت عالي، فبتحتاجها في كل استماره وموعد.',
   },
   'greetings-goodbye': {
     title:'Greetings and Goodbyes', ar:'التحيه والوداع', translit:'قريتينقز اند قود بايز',
@@ -11264,7 +11264,7 @@ const LESSON_LIBRARY = {
       {who:'B', en:'About three years. What about you?', ar:'تقريبًا ثلاث سنوات. وانت؟', translit:'اباوت ثري ييرز. وات اباوت يو؟'},
     ],
     quiz:[
-      {qAr:'عشان تعرف عن مهنتك بطريقه طبيعيه؟', qEn:'How do you naturally say your job?', options:['I work in IT.','I am work IT.','IT work I.'], correct:0},
+      {qAr:'كيف تعرف عن مهنتك بطريقه طبيعيه؟', qEn:'How do you naturally say your job?', options:['I work in IT.','I am work IT.','IT work I.'], correct:0},
       {qAr:'وش معنى "Nice to meet you"؟', qEn:'What does "Nice to meet you" mean?', options:['Pleased to know you','Goodbye','How old are you'], correct:0},
     ],
     summary:'You practiced introducing yourself, stating your job, and asking the other person the same question back.',
@@ -11282,7 +11282,7 @@ const LESSON_LIBRARY = {
       {who:'B', en:'Fifty dollars, about one hundred and eighty five riyals.', ar:'خمسين دولار، تقريبًا ميه وخمسه وثمانين ريال.', translit:'فيفتي دولارز، اباوت وان هاندرِد اند ايتي فايڤ رايلز.'},
     ],
     quiz:[
-      {qAr:'عشان تكتب الرابع من يوليو بالامريكي؟', qEn:'How do you write July 4th in American English?', options:['4/7/2025','7/4/2025','2025/4/7'], correct:1},
+      {qAr:'كيف تكتب الرابع من يوليو بالامريكي؟', qEn:'How do you write July 4th in American English?', options:['4/7/2025','7/4/2025','2025/4/7'], correct:1},
       {qAr:'قول "ميه وخمسه وثمانون ريال" بالانجليزي:', qEn:'One hundred and eighty five riyals is:', options:['185','1085','10085'], correct:0},
     ],
     summary:'You practiced saying dates the American way and prices in English, both directions.',
@@ -11336,7 +11336,7 @@ const LESSON_LIBRARY = {
       {who:'B', en:'Maybe, the sky is getting cloudy.', ar:'ممكن، السما صارت مغيمه.', translit:'ميباي، ذا سكاي از قيتنق لاودي.'},
     ],
     quiz:[
-      {qAr:'عشان تصف يوم ممطر طبيعيًا؟', qEn:'How do you naturally describe a rainy day?', options:['It is rainy today.','It is rain today.','Today rainy is.'], correct:0},
+      {qAr:'كيف تصف يوم ممطر طبيعيًا؟', qEn:'How do you naturally describe a rainy day?', options:['It is rainy today.','It is rain today.','Today rainy is.'], correct:0},
       {qAr:'وش معنى "Tell me about it" هنا؟', qEn:'In this talk "Tell me about it" means...', options:['I agree with you completely','Tell me the story','I do not believe you'], correct:0},
     ],
     summary:'You learned the most common small-talk opener in English, the weather, with natural reactions.',
@@ -11355,7 +11355,7 @@ const LESSON_LIBRARY = {
     ],
     quiz:[
       {qAr:'اي جمله صح؟', qEn:'Which sentence is correct?', options:['My father have three brothers.','My father has three brothers.','My father having three brothers.'], correct:1},
-      {qAr:'عشان تسال واحد عن اخوانه؟', qEn:'How do you ask about someone\'s siblings?', options:['Do you have any siblings?','Are you siblings?','How siblings you have?'], correct:0},
+      {qAr:'كيف تسال واحد عن اخوانه؟', qEn:'How do you ask about someone\'s siblings?', options:['Do you have any siblings?','Are you siblings?','How siblings you have?'], correct:0},
     ],
     summary:'You practiced talking about your family with have/has and asking about siblings.',
     takeaway:'جهز جمله عن كل فرد بعايلتك: عندي اخ... اسمه... يشتغل...',
@@ -11408,7 +11408,7 @@ const LESSON_LIBRARY = {
       {who:'B', en:'Sure, count me in. What time?', ar:'اكيد، عدني معاكم. كم الساعه؟', translit:'شور، كاونت مي ان. وات تايم؟'},
     ],
     quiz:[
-      {qAr:'عشان تدعي صاحبك للعشاو؟', qEn:'How do you invite a friend to dinner?', options:['Do you want to grab dinner?','You grab dinner?','Dinner with me now?'], correct:0},
+      {qAr:'كيف تدعي صاحبك للعشاو؟', qEn:'How do you invite a friend to dinner?', options:['Do you want to grab dinner?','You grab dinner?','Dinner with me now?'], correct:0},
       {qAr:'وش يعني "Count me in"؟', qEn:'"Count me in" means...', options:['I am joining','Count the money','I am busy'], correct:0},
     ],
     summary:'You practiced inviting friends naturally and accepting with "count me in."',
@@ -11463,7 +11463,7 @@ const LESSON_LIBRARY = {
       {who:'B', en:'I think so, let me check my schedule and confirm.', ar:'اتوقع، خلني اشيك على جدولي وااكد لك.', translit:'اي ثينك سو، ليت مي تشيك ماي شيدجول اند كونفيرم.'},
     ],
     quiz:[
-      {qAr:'عشان تطلب خدمه بادب؟', qEn:'How do you ask a favor politely?', options:['Could you do me a favor?','Do me a favor now.','Favor, please.'], correct:0},
+      {qAr:'كيف تطلب خدمه بادب؟', qEn:'How do you ask a favor politely?', options:['Could you do me a favor?','Do me a favor now.','Favor, please.'], correct:0},
       {qAr:'"Would you mind..." بعدها وش؟', qEn:'"Would you mind" is followed by:', options:['The -ing form','The infinitive with to','The past tense'], correct:0},
     ],
     summary:'You practiced asking for favors politely and responding when someone asks you.',
@@ -11500,7 +11500,7 @@ const LESSON_LIBRARY = {
     ],
     quiz:[
       {qAr:'اي جمله صح عن امس؟', qEn:'Which is correct about yesterday?', options:['Yesterday we visited the museum.','Yesterday we have visited the museum.','Yesterday we visit the museum.'], correct:0},
-      {qAr:'عشان تسال عن رحه واحد؟', qEn:'How do you ask about someone\'s trip?', options:['How was your trip?','How is your trip?','How will be your trip?'], correct:0},
+      {qAr:'كيف تسال عن رحه واحد؟', qEn:'How do you ask about someone\'s trip?', options:['How was your trip?','How is your trip?','How will be your trip?'], correct:0},
     ],
     summary:'You practiced telling short stories in past simple and asking about past trips.',
     takeaway:'احك لواحد عن يومك امس بثلاث جمل ماضيه.',
@@ -11535,7 +11535,7 @@ const LESSON_LIBRARY = {
       {who:'B', en:'3.75 riyals per dollar, so seven hundred fifty riyals.', ar:'ثلاثه وسبعين وسبعين هلله للدولار، يعني سبعميه وخمسين ريال.', translit:'ثري پوينت سفنتي فايڤ رايلز پير دولار، سو سڤن هاندرِد فيفتي رايلز.'},
     ],
     quiz:[
-      {qAr:'عشان تسال عن سعر الصرف؟', qEn:'How do you ask about the exchange rate?', options:['What is your exchange rate today?','How many is the exchange rate?','What rate you have?'], correct:0},
+      {qAr:'كيف تسال عن سعر الصرف؟', qEn:'How do you ask about the exchange rate?', options:['What is your exchange rate today?','How many is the exchange rate?','What rate you have?'], correct:0},
       {qAr:'"How much" نستخدمها مع:', qEn:'"How much" is used with:', options:['Money and uncountable nouns','Countable objects only','People'], correct:0},
     ],
     summary:'You practiced exchanging money, asking the rate, and doing the math out loud.',
@@ -11572,7 +11572,7 @@ const LESSON_LIBRARY = {
     ],
     quiz:[
       {qAr:'"Please take out your laptop" معناها:', qEn:'"Please take out your laptop" means:', options:['اخرج اللابتوب من الشنطه','اشحن اللابتوب','اقفل اللابتوب'], correct:0},
-      {qAr:'عشان تسال لو في شي ممنوع؟', qEn:'How do you ask if something is allowed?', options:['Is this allowed to bring?','This allowed?','Am I allow this?'], correct:0},
+      {qAr:'كيف تسال لو في شي ممنوع؟', qEn:'How do you ask if something is allowed?', options:['Is this allowed to bring?','This allowed?','Am I allow this?'], correct:0},
     ],
     summary:'You practiced understanding security instructions and cooperating smoothly.',
     takeaway:'في المره الجايه بالمطار، ركز على الاوامر: place, remove, take out.',
@@ -11589,7 +11589,7 @@ const LESSON_LIBRARY = {
       {who:'Agent', en:'Let me rebook you on a later connection, no extra charge.', ar:'خلني اعيد حجزك على رحه ربط واحدث، ببدون رسوم.', translit:'ليت مي ريبوك يو اون ا ليتر كونكشن، نو اكسترا تشارج.'},
     ],
     quiz:[
-      {qAr:'عشان تسال عن التاخير؟', qEn:'How do you ask about a delay?', options:['Is the flight delayed?','Flight delay how much?','Why flight late, tell?'], correct:0},
+      {qAr:'كيف تسال عن التاخير؟', qEn:'How do you ask about a delay?', options:['Is the flight delayed?','Flight delay how much?','Why flight late, tell?'], correct:0},
       {qAr:'"Connection" بالمطار تعني:', qEn:'"Connection" at the airport means:', options:['رحه ربط','بوابه','مطار'], correct:0},
     ],
     summary:'You practiced handling delays, asking about connections, and getting rebooked.',
@@ -11601,13 +11601,13 @@ const LESSON_LIBRARY = {
     vocab:[VOCAB_BANK[0], VOCAB_BANK[8]],
     grammar:{title:'Present Perfect for Booking', rule:'Confirm your booking with present perfect: I have a reservation, or I have booked a room.', saudi:'لتاكيد الحجز: عندي حجز، انا حجزت غرفه.', wrong:'I book a room last week.', right:'I have booked a room, or I have a reservation.', mistakes:['Using present simple for a past booking: "I book a room."','Forgetting the article: "I have reservation" instead of "a reservation."']},
     conversation:[
-      {who:'Receptionist', en:'Welcome to the Grand Hotel, how can I help?', ar:'حياك الله في فندق جراند، عشان ايمكنر اساعدك؟', translit:'ويلكم تو ذا قراند هوتيل، هاو كان اي هيلب؟'},
+      {who:'Receptionist', en:'Welcome to the Grand Hotel, how can I help?', ar:'حياك الله في فندق جراند، كيف اقدر اساعدك؟', translit:'ويلكم تو ذا قراند هوتيل، هاو كان اي هيلب؟'},
       {who:'You', en:'Hi, I have a reservation under Al-Otaibi.', ar:'هلا، عندي حجز باسم العتيبي.', translit:'هاي، اي هاف ا ريزرڤيشن اندر العتيبي.'},
       {who:'Receptionist', en:'Let me pull it up. A king room for three nights, correct?', ar:'خلني اشيك. غرفه بسرير كبير ثلاث ليالي، صح؟', translit:'ليت مي پول ات اپ. ا كينق روم فور ثري نايتس، كوركت؟'},
       {who:'You', en:'Yes, and is breakfast included?', ar:'ايه، والفطور داخل؟', translit:'يس، اند از بريكفاست انكلودد؟'},
     ],
     quiz:[
-      {qAr:'عشان توكد حجزك؟', qEn:'How do you confirm your booking?', options:['I have a reservation under Al-Otaibi.','I book a room last week.','Reservation I have.'], correct:0},
+      {qAr:'كيف توكد حجزك؟', qEn:'How do you confirm your booking?', options:['I have a reservation under Al-Otaibi.','I book a room last week.','Reservation I have.'], correct:0},
       {qAr:'"Complimentary breakfast" معناها:', qEn:'"Complimentary breakfast" means:', options:['فطور مجاني','فطور مدفوع','فطور متاخر'], correct:0},
     ],
     summary:'You practiced checking in, confirming the room, and asking about what is included.',
@@ -11644,7 +11644,7 @@ const LESSON_LIBRARY = {
     ],
     quiz:[
       {qAr:'توصف مشكله المكيف:', qEn:'Describe the AC problem:', options:['The air conditioner is not working.','The air conditioner is not work.','The air no work.'], correct:0},
-      {qAr:'عشان تعتذر عن الازعاج؟', qEn:'How do you apologize for bothering someone?', options:['I am sorry to bother you.','You are bothered.','Sorry you.'], correct:0},
+      {qAr:'كيف تعتذر عن الازعاج؟', qEn:'How do you apologize for bothering someone?', options:['I am sorry to bother you.','You are bothered.','Sorry you.'], correct:0},
     ],
     summary:'You practiced reporting room problems calmly and asking for a fix with a deadline.',
     takeaway:'احفظ: I am sorry to bother you, but...',
@@ -11680,7 +11680,7 @@ const LESSON_LIBRARY = {
       {who:'You', en:'Yes, please. And a bottle of water, no ice.', ar:'ايه لو سمحت. وقاروره ما ببدون ثلج.', translit:'يس، بليز. اند ا بوتل اوف ووتر، نو ايس.'},
     ],
     quiz:[
-      {qAr:'عشان تطلب بادب؟', qEn:'How do you order politely?', options:['I will have the grilled chicken, please.','Give me chicken.','Chicken now.'], correct:0},
+      {qAr:'كيف تطلب بادب؟', qEn:'How do you order politely?', options:['I will have the grilled chicken, please.','Give me chicken.','Chicken now.'], correct:0},
       {qAr:'"A side salad" تعني:', qEn:'"A side salad" means:', options:['سلطه جانبيه','سلطه كبيره','سلطه فواكه'], correct:0},
     ],
     summary:'You practiced ordering a full meal: main dish, sides, and drinks.',
@@ -11764,7 +11764,7 @@ const LESSON_LIBRARY = {
     vocab:[VOCAB_BANK[2], VOCAB_BANK[9]],
     grammar:{title:'Present Continuous for Plans', rule:'Book with present continuous: I am calling to make an appointment. Future: I am free on Monday.', saudi:'عند الحجز: انا اتصل عشان احجز موعد.', wrong:'I want appointment for today.', right:'I would like to make an appointment for today.', mistakes:['Dropping the article: "make appointment" instead of "make an appointment."','Not saying the reason when booking, it helps the clinic.']},
     conversation:[
-      {who:'Receptionist', en:'Good morning, how can I help?', ar:'صباح الخير، عشان ايمكنر اساعدك؟', translit:'قود مورننج، هاو كان اي هيلب؟'},
+      {who:'Receptionist', en:'Good morning, how can I help?', ar:'صباح الخير، كيف اقدر اساعدك؟', translit:'قود مورننج، هاو كان اي هيلب؟'},
       {who:'You', en:'I would like to make an appointment with Dr. Ali.', ar:'ابي احجز موعد مع الدكتور علي.', translit:'اي وود لايك تو ميك ان ابوينتمنت وذ دكتور علي.'},
       {who:'Receptionist', en:'Is it urgent or a regular check-up?', ar:'عاجل وللا فحص روتيني؟', translit:'از ات ارجنت اور ا ريقولر تشيك اپ؟'},
       {who:'You', en:'It is not urgent, any time tomorrow works.', ar:'مو عاجل، اي وقت بكره يناسبني.', translit:'ات از نات ارجنت، اني تايم تومورو ووركس.'},
@@ -12018,7 +12018,7 @@ const LESSON_LIBRARY = {
     grammar:{title:'Phone Call Phrases', rule:'Use standard call phrases: This is Ahmed speaking. May I ask who is calling? I will put you through.', saudi:'عبارات المكالمات: معاك احمد، ممكن اعرف مع من اتكلم؟ باحولك على المسوول.', wrong:'Who are you?', right:'May I ask who is calling?', mistakes:['Being abrupt at the start of a business call.','Not confirming the purpose: "Could you tell me the reason for your call?"']},
     conversation:[
       {who:'A', en:'Hello, this is Sara from the marketing team.', ar:'السلام عليكم، معاك ساره من فريق التسويق.', translit:'هيلو، ذيس از سارا فروم ذا ماركتنق تيم.'},
-      {who:'B', en:'Good morning, how can I help you?', ar:'صباح الخير، عشان ايمكنر اساعدك؟', translit:'قود مورننج، هاو كان اي هيلب يو؟'},
+      {who:'B', en:'Good morning, how can I help you?', ar:'صباح الخير، كيف اقدر اساعدك؟', translit:'قود مورننج، هاو كان اي هيلب يو؟'},
       {who:'A', en:'Could I speak with the manager, please?', ar:'ممكن اتكلم مع المدير لو سمحت؟', translit:'كود اي سبيك وذ ذا مانجر، بليز؟'},
       {who:'B', en:'One moment, I will put you through.', ar:'لحظه، باحولك عليه.', translit:'وان موومنت، اي ويل پوت يو ثرو.'},
     ],
@@ -12559,7 +12559,7 @@ const LESSON_LIBRARY = {
     ],
     quiz:[
       {qAr:'وش تقول للرد على هلا؟', qEn:'What do you reply to "Hala"?', options:['هلا بك / Hala bik','وش تبي / What do you want','لا شكرا / No thanks'], correct:0},
-      {qAr:'عشان تسال امراه عن حالها؟', qEn:'How do you ask a woman how she is?', options:['عشانك؟ keefik','عشانك؟ keefak','وينك؟ weenik'], correct:0},
+      {qAr:'كيف تسال امراه عن حالها؟', qEn:'How do you ask a woman how she is?', options:['عشانك؟ keefik','عشانك؟ keefak','وينك؟ weenik'], correct:0},
     ],
     summary:'You learned the real greeting and its natural reply, including how the same question changes for a man and a woman.',
     takeaway:'اول كلمه تقولها باي موقف بالعربيه: هلا. ردها هلا.',
@@ -12667,7 +12667,7 @@ const LESSON_LIBRARY = {
       {who:'B', ar:'تشرفنا انا لسه.', translit:'tsharrafna ana baad', en:'Nice to meet you too.'},
     ],
     quiz:[
-      {qAr:'عشان تسال عن اسم الرجل؟', qEn:'How do you ask a man his name?', options:['وش اسمك؟ wesh ismak','وش اسمك؟ wesh ismik','اسمي؟ ismi?'], correct:0},
+      {qAr:'كيف تسال عن اسم الرجل؟', qEn:'How do you ask a man his name?', options:['وش اسمك؟ wesh ismak','وش اسمك؟ wesh ismik','اسمي؟ ismi?'], correct:0},
       {qAr:'وش تقول لسه ما تسمع الاسم؟', qEn:'What do you say after hearing the name?', options:['تشرفنا / Nice to meet you','وين؟ / Where?','طيب / OK'], correct:0},
     ],
     summary:'You practiced the short, natural introduction: name, question, and tsharrafna.',
@@ -12723,7 +12723,7 @@ const LESSON_LIBRARY = {
       {who:'Driver', ar:'بكم؟ عشرين.', translit:'bikam? ishreen', en:'How much? Twenty.'},
     ],
     quiz:[
-      {qAr:'عشان تطلب من السواق ياخذك للمطار؟', qEn:'How do you ask the driver to take you to the airport?', options:['ودني المطار / Take me to the airport','المطار وين؟ / Where is the airport?','انا طيار / I am a pilot'], correct:0},
+      {qAr:'كيف تطلب من السواق ياخذك للمطار؟', qEn:'How do you ask the driver to take you to the airport?', options:['ودني المطار / Take me to the airport','المطار وين؟ / Where is the airport?','انا طيار / I am a pilot'], correct:0},
       {qAr:'وش تسال قبل ما تطلع؟', qEn:'What do you ask before starting?', options:['بكم؟ / How much?','وين السوق؟ / Where is the market?','كم الساعه؟ / What time is it?'], correct:0},
     ],
     summary:'You learned the short taxi phrases People use daily: destination, stop here, and the price question.',
@@ -12751,7 +12751,7 @@ const LESSON_LIBRARY = {
       {who:'Seller', ar:'خلاص، ميتين وخمسين.', translit:'khalaas, miateen wa khamseen', en:'Fine, two fifty.'},
     ],
     quiz:[
-      {qAr:'عشان تسال عن السعر؟', qEn:'How do you ask the price?', options:['بكم ذا؟ / How much is this?','وين ذا؟ / Where is this?','متى ذا؟ / When is this?'], correct:0},
+      {qAr:'كيف تسال عن السعر؟', qEn:'How do you ask the price?', options:['بكم ذا؟ / How much is this?','وين ذا؟ / Where is this?','متى ذا؟ / When is this?'], correct:0},
       {qAr:'وين ينفع تتفاوض على السعر؟', qEn:'Where can you negotiate?', options:['السوق والمحلات الصغيره / Souq and small shops','السوبرماركت / Supermarket','المول الكبير / Big mall'], correct:0},
     ],
     summary:'You learned the real market exchange: the price question, the reaction, and where negotiation actually works.',
@@ -12779,8 +12779,8 @@ const LESSON_LIBRARY = {
       {who:'B', ar:'اهلي بالرياض.', translit:'ahli bialriyadh', en:'My family is in Riyadh.'},
     ],
     quiz:[
-      {qAr:'عشان تقول "عندي اخ"؟', qEn:'How do you say "I have a brother"?', options:['عندي اخ / Indi akh','انا اخ / Ana akh','اخ عند / Akh ind'], correct:0},
-      {qAr:'عشان تقول عن المراه المتزوجه؟', qEn:'How do you say a woman is married?', options:['متزوجه / Mitzawwija','متزوج / Mitzawwij','زواج / Zawaj'], correct:0},
+      {qAr:'كيف تقول "عندي اخ"؟', qEn:'How do you say "I have a brother"?', options:['عندي اخ / Indi akh','انا اخ / Ana akh','اخ عند / Akh ind'], correct:0},
+      {qAr:'كيف تقول عن المراه المتزوجه؟', qEn:'How do you say a woman is married?', options:['متزوجه / Mitzawwija','متزوج / Mitzawwij','زواج / Zawaj'], correct:0},
     ],
     summary:'You learned the natural possession pattern (indi) and the gender endings for talking about family.',
     takeaway:'عندي + الاخوه، ومتزوج/متزوجه حسب اللي قدامك.',
@@ -12807,7 +12807,7 @@ const LESSON_LIBRARY = {
       {who:'B', ar:'ماشي، تم. نتفق بكره.', translit:'maashi, tam. nitafiq bukra', en:'OK, deal. We will agree tomorrow.'},
     ],
     quiz:[
-      {qAr:'عشان تقترح الخروج؟', qEn:'How do you suggest going out?', options:['نطلع؟ / Shall we go out?','انا خارج / I am out','وين انت؟ / Where are you?'], correct:0},
+      {qAr:'كيف تقترح الخروج؟', qEn:'How do you suggest going out?', options:['نطلع؟ / Shall we go out?','انا خارج / I am out','وين انت؟ / Where are you?'], correct:0},
       {qAr:'وش تقول لما توافق على الخطه؟', qEn:'What do you say when agreeing?', options:['ماشي / OK deal','لا / No','وين؟ / Where?'], correct:0},
     ],
     summary:'You learned how People make casual plans: nitla + place, and the two ways to confirm.',
@@ -12835,7 +12835,7 @@ const LESSON_LIBRARY = {
       {who:'You', ar:'سلطه، والحساب لسه ما نخلص.', translit:'salata, walhisab baad ma nkhalis', en:'Salad, and the bill when we finish.'},
     ],
     quiz:[
-      {qAr:'عشان تطلب من الجارسون؟', qEn:'How do you order from the waiter?', options:['ابي اطلب / I want to order','انا ابي طلب / Formal request','جيب اكل / Bring food'], correct:0},
+      {qAr:'كيف تطلب من الجارسون؟', qEn:'How do you order from the waiter?', options:['ابي اطلب / I want to order','انا ابي طلب / Formal request','جيب اكل / Bring food'], correct:0},
       {qAr:'وش تقول لما تبي الحساب؟', qEn:'What do you say for the bill?', options:['الحساب لو سمحت / The bill please','وين الباب؟ / Where is the door?','شكرا على الاكل / Thanks for the food'], correct:0},
     ],
     summary:'You learned the natural order flow: abi atlub, the follow-up question, and the bill request.',
@@ -12863,7 +12863,7 @@ const LESSON_LIBRARY = {
       {who:'B', ar:'اها، تمام. شكرا.', translit:'aha, tamaam. shukran', en:'Ah, OK. Thanks.'},
     ],
     quiz:[
-      {qAr:'عشان تطلب الاعاده بادب؟', qEn:'How do you politely ask for repetition?', options:['ممكن تعيد؟ / Can you repeat?','وش؟ / What?','لا / No'], correct:0},
+      {qAr:'كيف تطلب الاعاده بادب؟', qEn:'How do you politely ask for repetition?', options:['ممكن تعيد؟ / Can you repeat?','وش؟ / What?','لا / No'], correct:0},
       {qAr:'وش تسوي لو ما فهمت كلمه وحده؟', qEn:'What do you do if you miss one word?', options:['تسال وش معناها؟ / Ask its meaning','تسكت / Stay quiet','تمشي / Walk away'], correct:0},
     ],
     summary:'You learned the recovery phrases that keep any conversation alive when you miss something.',
@@ -12948,7 +12948,7 @@ const LESSON_LIBRARY = {
     ],
     quiz:[
       {qAr:'وش تقول للي ياخذ مشروبه؟', qEn:'What do you say to someone getting their drink?', options:['بالعافيه / Enjoy','وين؟ / Where?','لا / No'], correct:0},
-      {qAr:'عشان تسال عن اقتراح؟', qEn:'How do you ask for a recommendation?', options:['وش تنصحني؟ / What do you recommend?','بكم؟ / How much?','وين؟ / Where?'], correct:0},
+      {qAr:'كيف تسال عن اقتراح؟', qEn:'How do you ask for a recommendation?', options:['وش تنصحني؟ / What do you recommend?','بكم؟ / How much?','وين؟ / Where?'], correct:0},
     ],
     summary:'You learned the light social talk that turns a coffee run into a real interaction.',
     takeaway:'الزحمه + وش تنصحني + بالعافيه = سوالف كوفي كامله.',
@@ -12976,7 +12976,7 @@ const LESSON_LIBRARY = {
     ],
     quiz:[
       {qAr:'وش يجاوبك الكاشير عن طريقه الدفع؟', qEn:'What does the cashier ask about payment?', options:['كارت ولا كاش؟ / Card or cash?','وين تسكن؟ / Where do you live?','كم عمرك؟ / How old are you?'], correct:0},
-      {qAr:'عشان تطلب الفاتوره؟', qEn:'How do you ask for the receipt?', options:['الفاتوره لو سمحت / The receipt please','وين الباب؟ / Where is the door?','شكرا بس / Thanks only'], correct:0},
+      {qAr:'كيف تطلب الفاتوره؟', qEn:'How do you ask for the receipt?', options:['الفاتوره لو سمحت / The receipt please','وين الباب؟ / Where is the door?','شكرا بس / Thanks only'], correct:0},
     ],
     summary:'You learned the fast payment exchange and the two questions every cashier will ask.',
     takeaway:'كارت ولا كاش، والفاتوره لو سمحت.',
@@ -13004,7 +13004,7 @@ const LESSON_LIBRARY = {
     ],
     quiz:[
       {qAr:'وش اول سوال بالدوام؟', qEn:'What is the first work question?', options:['عشان الدوام؟ / How is work?','كم راتبك؟ / What is your salary?','وش سرك؟ / What is your secret?'], correct:0},
-      {qAr:'عشان ترد على السوال بطريقه خفيف؟', qEn:'How do you answer lightly?', options:['زحمه شغل بس تمام / Busy but fine','افصل بكره / I quit tomorrow','لا تسالني / Do not ask'], correct:0},
+      {qAr:'كيف ترد على السوال بطريقه خفيف؟', qEn:'How do you answer lightly?', options:['زحمه شغل بس تمام / Busy but fine','افصل بكره / I quit tomorrow','لا تسالني / Do not ask'], correct:0},
     ],
     summary:'You learned the daily work greeting ritual and how to answer without starting a meeting.',
     takeaway:'عشان الدوام + زحمه شغل = سوالف دوام جاهزه.',
@@ -13031,7 +13031,7 @@ const LESSON_LIBRARY = {
       {who:'B', ar:'بجي ان شا الله، لسه المغرب.', translit:'bji inshallah, baad almaghrib', en:'I will come God willing, after Maghrib.'},
     ],
     quiz:[
-      {qAr:'عشان تدعو صاحبك لعشاو؟', qEn:'How do you invite a friend to dinner?', options:['تعال عندنا فيه عشا / Come over, there is dinner','وين اكلت؟ / Where did you eat?','انا مشغول / I am busy'], correct:0},
+      {qAr:'كيف تدعو صاحبك لعشاو؟', qEn:'How do you invite a friend to dinner?', options:['تعال عندنا فيه عشا / Come over, there is dinner','وين اكلت؟ / Where did you eat?','انا مشغول / I am busy'], correct:0},
       {qAr:'وش الرد الطبيعي على الدعوه؟', qEn:'What is the natural reply to an invitation?', options:['بجي ان شا الله / I will come God willing','مستحيل / Impossible','لا اسالك / Do not ask me'], correct:0},
     ],
     summary:'You learned the direct, warm invitation and the easy way to accept.',
@@ -13059,8 +13059,8 @@ const LESSON_LIBRARY = {
       {who:'B', ar:'اكيد، انا معاك.', translit:'akeed, ana maak', en:'Definitely, I am with you.'},
     ],
     quiz:[
-      {qAr:'عشان تبدا رايك باللهجه؟', qEn:'How do you open your opinion naturally?', options:['بصراحه / Honestly','بحسب رايي المتواضع / In my humble opinion','وفقا للمصادر / According to sources'], correct:0},
-      {qAr:'عشان تقول "انا معاك"؟', qEn:'How do you say "I agree"?', options:['انا معاك / Ana maak','انا ضدك / Against you','لا اعرف / I do not know'], correct:0},
+      {qAr:'كيف تبدا رايك باللهجه؟', qEn:'How do you open your opinion naturally?', options:['بصراحه / Honestly','بحسب رايي المتواضع / In my humble opinion','وفقا للمصادر / According to sources'], correct:0},
+      {qAr:'كيف تقول "انا معاك"؟', qEn:'How do you say "I agree"?', options:['انا معاك / Ana maak','انا ضدك / Against you','لا اعرف / I do not know'], correct:0},
     ],
     summary:'You learned the direct opinion pattern and the follow-up agreement check.',
     takeaway:'بصراحه اشوف + انت معاي؟ = راي كامل.',
@@ -13088,7 +13088,7 @@ const LESSON_LIBRARY = {
     ],
     quiz:[
       {qAr:'وش الرد الطبيعي على الاعتذار؟', qEn:'What is the natural reply to an apology?', options:['ما عليك / It is fine','وين؟ / Where?','شكرا / Thanks'], correct:0},
-      {qAr:'عشان تتحمل المسووليه؟', qEn:'How do you take responsibility?', options:['الغلطه مني / My fault','مو انا / Not me','الظروف / Circumstances'], correct:0},
+      {qAr:'كيف تتحمل المسووليه؟', qEn:'How do you take responsibility?', options:['الغلطه مني / My fault','مو انا / Not me','الظروف / Circumstances'], correct:0},
     ],
     summary:'You learned the fast apology: aasif, the reason, and the forgiving reply.',
     takeaway:'اسف + سبب قصير، والرد دايم: ما عليك.',
@@ -13115,7 +13115,7 @@ const LESSON_LIBRARY = {
       {who:'B', ar:'ان شا الله مره جايه.', translit:'inshallah marra jayya', en:'God willing next time.'},
     ],
     quiz:[
-      {qAr:'عشان ترفض ببدون ما تجرح؟', qEn:'How do you refuse without hurting?', options:['عندي ارتباط / I have commitments','لا وخلاص / No and done','مستحيل / Impossible'], correct:0},
+      {qAr:'كيف ترفض ببدون ما تجرح؟', qEn:'How do you refuse without hurting?', options:['عندي ارتباط / I have commitments','لا وخلاص / No and done','مستحيل / Impossible'], correct:0},
       {qAr:'وش يخفف الرفض؟', qEn:'What softens a refusal?', options:['ان شا الله مره جايه / Maybe next time','ما راح اطلع ابدا / Never going out','لا تسالني / Do not ask'], correct:0},
     ],
     summary:'You learned the soft refusal: honest, polite, and never blunt.',
@@ -13143,7 +13143,7 @@ const LESSON_LIBRARY = {
       {who:'B', ar:'خلصت الساعه اربعه، ورجعت البيت.', translit:'khalast alsaa arbaa, wa rjaat albait', en:'I finished at four and came home.'},
     ],
     quiz:[
-      {qAr:'عشان تقول "استيقظت" بالعاميه؟', qEn:'How do you say "I woke up" in dialect?', options:['صحيت / Saheet','استيقظت / Formal','قمت ولا شي / Nothing'], correct:0},
+      {qAr:'كيف تقول "استيقظت" بالعاميه؟', qEn:'How do you say "I woke up" in dialect?', options:['صحيت / Saheet','استيقظت / Formal','قمت ولا شي / Nothing'], correct:0},
       {qAr:'وش الفعل اللي يغطي "رحت"؟', qEn:'Which verb covers "I went"?', options:['رحت / Ruht','اروح بكره / Future','ذاهب / Going'], correct:0},
     ],
     summary:'You learned the three verbs that tell any the day and how to keep the story natural.',
@@ -13199,8 +13199,8 @@ const LESSON_LIBRARY = {
       {who:'B', ar:'انا معاك، بس نحتاج تعديل بسيط.', translit:'ana maak, bas nahtaaj taadeel baseet', en:'I agree, but we need a small adjustment.'},
     ],
     quiz:[
-      {qAr:'عشان تفتح الاجتماع؟', qEn:'How do you open the meeting?', options:['يلا نبدا / Let us start','وين البكرهو؟ / Where is lunch?','انا تعبان / I am tired'], correct:0},
-      {qAr:'عشان تاخذ راي زميلك؟', qEn:'How do you ask a colleague for their view?', options:['وش رايك؟ / What is your view?','سو لي قهوه / Make me coffee','اسكت / Be quiet'], correct:0},
+      {qAr:'كيف تفتح الاجتماع؟', qEn:'How do you open the meeting?', options:['يلا نبدا / Let us start','وين البكرهو؟ / Where is lunch?','انا تعبان / I am tired'], correct:0},
+      {qAr:'كيف تاخذ راي زميلك؟', qEn:'How do you ask a colleague for their view?', options:['وش رايك؟ / What is your view?','سو لي قهوه / Make me coffee','اسكت / Be quiet'], correct:0},
     ],
     summary:'You learned the meeting phrases that keep you participating in any office.',
     takeaway:'نبدا، وش رايك، انا معاك = حضور كامل بالاجتماع.',
@@ -13228,7 +13228,7 @@ const LESSON_LIBRARY = {
     ],
     quiz:[
       {qAr:'وش تسال قبل ما تطلب مساعده؟', qEn:'What do you ask before asking for help?', options:['عندك وقت؟ / Do you have time?','بكم؟ / How much?','وين مديرك؟ / Where is your manager?'], correct:0},
-      {qAr:'عشان تطلب المساعده بادب؟', qEn:'How do you ask for help politely?', options:['ممكن تساعدني؟ / Can you help me?','ساعدني الحين / Help me now','افهم علي / Understand me'], correct:0},
+      {qAr:'كيف تطلب المساعده بادب؟', qEn:'How do you ask for help politely?', options:['ممكن تساعدني؟ / Can you help me?','ساعدني الحين / Help me now','افهم علي / Understand me'], correct:0},
     ],
     summary:'You learned the polite help request sequence: time check, then the ask, with the natural yes.',
     takeaway:'عندك وقت؟ بعدين ممكن تساعدني؟ = طلب مهذب.',
@@ -13255,7 +13255,7 @@ const LESSON_LIBRARY = {
       {who:'You', ar:'طيب، اليوم اخر الدوام.', translit:'tayyib, alyoum akher aldawam', en:'OK, today by end of work.'},
     ],
     quiz:[
-      {qAr:'عشان تسال عن موعد التسليم؟', qEn:'How do you ask about the due date?', options:['متى اخر موعد؟ / When is it due?','بكم؟ / How much?','وين؟ / Where?'], correct:0},
+      {qAr:'كيف تسال عن موعد التسليم؟', qEn:'How do you ask about the due date?', options:['متى اخر موعد؟ / When is it due?','بكم؟ / How much?','وين؟ / Where?'], correct:0},
       {qAr:'وش تقول لما تحتاج وقت اكثر؟', qEn:'What do you say when you need more time?', options:['ابي وقت اكثر / I need more time','ما ايمكنر اصلا / I cannot at all','خلاص انا جاهز / I am ready'], correct:0},
     ],
     summary:'You learned the deadline questions and the honest way to ask for more time.',
@@ -13283,8 +13283,8 @@ const LESSON_LIBRARY = {
       {who:'B', ar:'تمام، باراجعه.', translit:'tamaam, baraajeh', en:'OK, I will review it.'},
     ],
     quiz:[
-      {qAr:'عشان تبدا الملاحظه؟', qEn:'How do you open feedback?', options:['بمدح الشغل / With praise','بالمشكله / With the problem','بالصمت / With silence'], correct:0},
-      {qAr:'عشان تقول يحتاج تحسين؟', qEn:'How do you say it needs improvement?', options:['يحتاج تحسين / Needs improvement','ذا فاشل / This failed','ما ينفع ابدا / Never works'], correct:0},
+      {qAr:'كيف تبدا الملاحظه؟', qEn:'How do you open feedback?', options:['بمدح الشغل / With praise','بالمشكله / With the problem','بالصمت / With silence'], correct:0},
+      {qAr:'كيف تقول يحتاج تحسين؟', qEn:'How do you say it needs improvement?', options:['يحتاج تحسين / Needs improvement','ذا فاشل / This failed','ما ينفع ابدا / Never works'], correct:0},
     ],
     summary:'You learned the praise-first feedback pattern that keeps colleagues engaged.',
     takeaway:'مدح + تحسين + تشجيع = ملاحظه مهنيه.',
@@ -13311,8 +13311,8 @@ const LESSON_LIBRARY = {
       {who:'Other', ar:'تمام، باراجعك لسه شوي.', translit:'tamaam, barajeek baad shway', en:'Fine, I will call you back shortly.'},
     ],
     quiz:[
-      {qAr:'عشان تفتح مكالمه الشغل؟', qEn:'How do you open a work call?', options:['السلام عليكم / Peace be upon you','هلا / Hi','ايوه / Yeah'], correct:0},
-      {qAr:'عشان تسال مين المتصل؟', qEn:'How do you ask who is calling?', options:['مين معاي؟ / Who is with me?','كم عمرك؟ / How old are you?','وين؟ / Where?'], correct:0},
+      {qAr:'كيف تفتح مكالمه الشغل؟', qEn:'How do you open a work call?', options:['السلام عليكم / Peace be upon you','هلا / Hi','ايوه / Yeah'], correct:0},
+      {qAr:'كيف تسال مين المتصل؟', qEn:'How do you ask who is calling?', options:['مين معاي؟ / Who is with me?','كم عمرك؟ / How old are you?','وين؟ / Where?'], correct:0},
     ],
     summary:'You learned the work call ritual: greeting, who is this, and the short matter.',
     takeaway:'السلام عليكم + مين معاي + الموضوع = مكالمه عمل كامله.',
@@ -13341,7 +13341,7 @@ const LESSON_LIBRARY = {
       {who:'Mother', ar:'الله يسلمك، انتبه على حالك.', translit:'allah ysallimak, intabih ala halak', en:'May God protect you, take care of yourself.'},
     ],
     quiz:[
-      {qAr:'عشان تقول عن ابوك قدام الناس باحترام؟', qEn:'How do you refer to your father respectfully?', options:['الوالد / Alwaalid','ابوي / Abuwi (at home)','بابا / Baba'], correct:0},
+      {qAr:'كيف تقول عن ابوك قدام الناس باحترام؟', qEn:'How do you refer to your father respectfully?', options:['الوالد / Alwaalid','ابوي / Abuwi (at home)','بابا / Baba'], correct:0},
       {qAr:'وش كلمه امك بالبيت؟', qEn:'What do you call your mother at home?', options:['امي / Ummi','الوالده / Alwaalida','الخاله / Khalati'], correct:0},
     ],
     summary:'You learned the two levels of family words: warm home words (abuwi, ummi) and respectful forms (alwaalid, alwaalida).',
@@ -13370,7 +13370,7 @@ const LESSON_LIBRARY = {
     ],
     quiz:[
       {qAr:'وش معنى خميسيه؟', qEn:'What does khameesiya mean?', options:['تجمعه يوم الخميس / Thursday gathering','مدرسه / School','سفريه / A trip'], correct:0},
-      {qAr:'عشان تقول نتجمع؟', qEn:'How do you say we gather?', options:['نتجمع / Nitjamma','نروح / Nrooh','ننام / Nnam'], correct:0},
+      {qAr:'كيف تقول نتجمع؟', qEn:'How do you say we gather?', options:['نتجمع / Nitjamma','نروح / Nrooh','ننام / Nnam'], correct:0},
     ],
     summary:'You learned the weekly family gathering, its own word khameesiya, and how the invitation works.',
     takeaway:'اللمه والخميسيه هما قلب الحيا العايليهه.',
@@ -13453,7 +13453,7 @@ const LESSON_LIBRARY = {
       {who:'B', ar:'الولد ست سنين، والبنت ثلاث.', translit:'alwalad sitt sineen, walbint thalath', en:'The boy is six, and the girl is three.'},
     ],
     quiz:[
-      {qAr:'عشان تقول عيالي؟', qEn:'How do you say my kids?', options:['عيالي / Ayaali','اطفالي الرسميه / Formal','اول شيدي الفصحى / MSA'], correct:0},
+      {qAr:'كيف تقول عيالي؟', qEn:'How do you say my kids?', options:['عيالي / Ayaali','اطفالي الرسميه / Formal','اول شيدي الفصحى / MSA'], correct:0},
       {qAr:'بنتك وش اسمها بالعاميه؟', qEn:'What do you call your daughter?', options:['بنتي / Binti','ابنتي / Ibnti','الفتاه / Alfata'], correct:0},
     ],
     summary:'You learned the warm possessive words People use for their children.',
@@ -13482,7 +13482,7 @@ const LESSON_LIBRARY = {
     ],
     quiz:[
       {qAr:'وش اول شي ييمكنم للضيف؟', qEn:'What is offered to the guest first?', options:['قهوه او شاي / Coffee or tea','فطيره / A pie','عصير بارد / Cold juice'], correct:0},
-      {qAr:'عشان تقول بنزور؟', qEn:'How do you say we will visit?', options:['بنزور / Bnazoor','زرت / Zurt','نروح / Nrooh'], correct:0},
+      {qAr:'كيف تقول بنزور؟', qEn:'How do you say we will visit?', options:['بنزور / Bnazoor','زرت / Zurt','نروح / Nrooh'], correct:0},
     ],
     summary:'You learned the visit ritual: announce it, arrive, and take the first cup of hospitality.',
     takeaway:'الزياره تبدا بالقهوه، والضيافه واجبه.',
@@ -13511,7 +13511,7 @@ const LESSON_LIBRARY = {
       {who:'Reception', ar:'تمام، الساعه اربعه.', translit:'tamaam, alsaa arbaa', en:'OK, at four.'},
     ],
     quiz:[
-      {qAr:'عشان تحجز موعد؟', qEn:'How do you book an appointment?', options:['ابي احجز موعد / I want to book','وين العياده؟ / Where is the clinic?','بكم؟ / How much?'], correct:0},
+      {qAr:'كيف تحجز موعد؟', qEn:'How do you book an appointment?', options:['ابي احجز موعد / I want to book','وين العياده؟ / Where is the clinic?','بكم؟ / How much?'], correct:0},
       {qAr:'وش تسال لسه الحجز؟', qEn:'What do you ask after booking?', options:['متى الموعد بالضبط / When exactly','وين مطعمهم؟ / Where is their restaurant?','كم عمره؟ / How old is he?'], correct:0},
     ],
     summary:'You learned the appointment booking exchange and the polite time question.',
@@ -13539,8 +13539,8 @@ const LESSON_LIBRARY = {
       {who:'You', ar:'هنا تحت، احس بدوار.', translit:'huna taht, ahiss bidawaar', en:'Here below, I feel dizzy.'},
     ],
     quiz:[
-      {qAr:'عشان تقول عندي صداع؟', qEn:'How do you say I have a headache?', options:['عندي صداع / Indi sadaa','انا صداع / Ana sadaa','صداع عندي؟ / Sadaa indi?'], correct:0},
-      {qAr:'عشان تقول من امس؟', qEn:'How do you say since yesterday?', options:['من امس / Min ams','بكره / Bukra','الحين / Alheen'], correct:0},
+      {qAr:'كيف تقول عندي صداع؟', qEn:'How do you say I have a headache?', options:['عندي صداع / Indi sadaa','انا صداع / Ana sadaa','صداع عندي؟ / Sadaa indi?'], correct:0},
+      {qAr:'كيف تقول من امس؟', qEn:'How do you say since yesterday?', options:['من امس / Min ams','بكره / Bukra','الحين / Alheen'], correct:0},
     ],
     summary:'You learned the symptom pattern and how to tell the doctor what hurts.',
     takeaway:'عندي + العرض، ومن متى. ذا كل اللي يحتاجه الدكتور.',
@@ -13567,7 +13567,7 @@ const LESSON_LIBRARY = {
       {who:'Pharmacist', ar:'ذا منيح، مره كل ست ساعات.', translit:'hadha mnih, marra kul sitt saaat', en:'This one is good, once every six hours.'},
     ],
     quiz:[
-      {qAr:'عشان تطلب مسكن الم؟', qEn:'How do you ask for a painkiller?', options:['ابي مسكن / I want a painkiller','وين الحبوب؟ / Where are the pills?','بكم الروشته؟ / How much is the prescription?'], correct:0},
+      {qAr:'كيف تطلب مسكن الم؟', qEn:'How do you ask for a painkiller?', options:['ابي مسكن / I want a painkiller','وين الحبوب؟ / Where are the pills?','بكم الروشته؟ / How much is the prescription?'], correct:0},
       {qAr:'وش كلمه الروشته بالعاميه؟', qEn:'What is the dialect word for prescription?', options:['روشته / Rushta','وصفه / Wasfa','علاج / Ilaaj'], correct:0},
     ],
     summary:'You learned the pharmacy exchange: name the need, get the medicine, hear the dosage.',
@@ -13596,7 +13596,7 @@ const LESSON_LIBRARY = {
     ],
     quiz:[
       {qAr:'وش اول سوال بالاستقبال؟', qEn:'What is the first reception question?', options:['الاسم لو سمحت / Your name please','بكم؟ / How much?','وين بيتك؟ / Where is your house?'], correct:0},
-      {qAr:'عشان تاكد عندك موعد؟', qEn:'How do you confirm you have an appointment?', options:['عندي موعد / I have an appointment','ما عندي شي / I have nothing','الموعد مشغول / The appointment is busy'], correct:0},
+      {qAr:'كيف تاكد عندك موعد؟', qEn:'How do you confirm you have an appointment?', options:['عندي موعد / I have an appointment','ما عندي شي / I have nothing','الموعد مشغول / The appointment is busy'], correct:0},
     ],
     summary:'You learned the reception check-in flow and the waiting direction.',
     takeaway:'عندي موعد + الاسم = دخول سلس للمستشفى.',
@@ -13651,8 +13651,8 @@ const LESSON_LIBRARY = {
       {who:'Staff', ar:'اتصلوا بالاسعاف، بسرعه.', translit:'itsallo bial-isaf, bisuraa', en:'Call the ambulance, quickly.'},
     ],
     quiz:[
-      {qAr:'عشان تطلب المساعده بالطواري؟', qEn:'How do you ask for help in an emergency?', options:['ساعبدوني / Help me','وين الباب؟ / Where is the door?','بكم؟ / How much?'], correct:0},
-      {qAr:'عشان تقول بسرعه؟', qEn:'How do you say quickly?', options:['بسرعه / Bisuraa','ببط / Slowly','بعدين / Later'], correct:0},
+      {qAr:'كيف تطلب المساعده بالطواري؟', qEn:'How do you ask for help in an emergency?', options:['ساعبدوني / Help me','وين الباب؟ / Where is the door?','بكم؟ / How much?'], correct:0},
+      {qAr:'كيف تقول بسرعه؟', qEn:'How do you say quickly?', options:['بسرعه / Bisuraa','ببط / Slowly','بعدين / Later'], correct:0},
     ],
     summary:'You learned the emergency phrases that matter most: asking for help and urgency.',
     takeaway:'ساعبدوني + بسرعه + وصف المشكله = طواري واضحه.',
@@ -13681,7 +13681,7 @@ const LESSON_LIBRARY = {
       {who:'Agent', ar:'مباشره ولا فيها توقف؟', translit:'mubashara walla feeha tawaqquf?', en:'Direct or with a stop?'},
     ],
     quiz:[
-      {qAr:'عشان تقول تذكره لـ جده؟', qEn:'How do you say a ticket to Jeddah?', options:['تذكره لين جده / Ticket to Jeddah','تذكره من جده / Ticket from Jeddah','جده تذكره / Jeddah ticket'], correct:0},
+      {qAr:'كيف تقول تذكره لـ جده؟', qEn:'How do you say a ticket to Jeddah?', options:['تذكره لين جده / Ticket to Jeddah','تذكره من جده / Ticket from Jeddah','جده تذكره / Jeddah ticket'], correct:0},
       {qAr:'وش تسال عن الرحه؟', qEn:'What do you ask about the flight?', options:['مباشره ولا فيها توقف؟ / Direct or with a stop?','وين الفندق؟ / Where is the hotel?','كم عمرك؟ / How old are you?'], correct:0},
     ],
     summary:'You learned the flight booking exchange: destination with lin, timing, and the direct question.',
@@ -13709,7 +13709,7 @@ const LESSON_LIBRARY = {
       {who:'Staff', ar:'لسه نص ساعه.', translit:'baad nus saa', en:'In half an hour.'},
     ],
     quiz:[
-      {qAr:'عشان تسال عن البوابه؟', qEn:'How do you ask about the gate?', options:['وين البوابه؟ / Where is the gate?','بكم؟ / How much?','وين الحمام؟ / Where is the bathroom?'], correct:0},
+      {qAr:'كيف تسال عن البوابه؟', qEn:'How do you ask about the gate?', options:['وين البوابه؟ / Where is the gate?','بكم؟ / How much?','وين الحمام؟ / Where is the bathroom?'], correct:0},
       {qAr:'وش تقدم عند الصعود؟', qEn:'What do you show at boarding?', options:['الجواز والتذكره / Passport and ticket','الماوس / The mouse','المفتاح / The key'], correct:0},
     ],
     summary:'You learned the airport questions: gate, boarding time, and showing your passport.',
@@ -13737,7 +13737,7 @@ const LESSON_LIBRARY = {
       {who:'Reception', ar:'من سبعه لعشره.', translit:'min sabaa la-ashara', en:'From seven to ten.'},
     ],
     quiz:[
-      {qAr:'عشان تاكد حجزك؟', qEn:'How do you confirm your booking?', options:['عندي حجز باسم / I have a reservation under','وين الغرفه؟ / Where is the room?','بكم الفندق؟ / How much is the hotel?'], correct:0},
+      {qAr:'كيف تاكد حجزك؟', qEn:'How do you confirm your booking?', options:['عندي حجز باسم / I have a reservation under','وين الغرفه؟ / Where is the room?','بكم الفندق؟ / How much is the hotel?'], correct:0},
       {qAr:'وش تسال عن الفطور؟', qEn:'What do you ask about breakfast?', options:['الفطور متى؟ / When is breakfast?','الفطور بكم؟ / How much is breakfast?','الفطور وين؟ / Where is breakfast?'], correct:0},
     ],
     summary:'You learned the hotel check-in and the breakfast time question.',
@@ -13765,7 +13765,7 @@ const LESSON_LIBRARY = {
       {who:'Local', ar:'قريب، خمس دقايق مشي.', translit:'qareeb, khams dagayeek mashi', en:'Near, five minutes walk.'},
     ],
     quiz:[
-      {qAr:'عشان تسال عن مكان؟', qEn:'How do you ask for a place?', options:['وين...؟ / Where is...?','بكم...؟ / How much?','متى...؟ / When?'], correct:0},
+      {qAr:'كيف تسال عن مكان؟', qEn:'How do you ask for a place?', options:['وين...؟ / Where is...?','بكم...؟ / How much?','متى...؟ / When?'], correct:0},
       {qAr:'وش معنى قدام؟', qEn:'What does gudaam mean?', options:['قدام / Straight ahead','ورا / Behind','تحت / Below'], correct:0},
     ],
     summary:'You learned the directions question and the three turn words that answer it.',
@@ -13793,7 +13793,7 @@ const LESSON_LIBRARY = {
       {who:'Local', ar:'اهلا، ماشي بعيد، خذ تاكسي.', translit:'ahla, maashi baeed, khuth taksi', en:'OK, it is a bit far, take a taxi.'},
     ],
     quiz:[
-      {qAr:'عشان تقول انا ضايع؟', qEn:'How do you say I am lost?', options:['انا ضايع / I am lost','انا جوعان / I am hungry','انا تعبان / I am tired'], correct:0},
+      {qAr:'كيف تقول انا ضايع؟', qEn:'How do you say I am lost?', options:['انا ضايع / I am lost','انا جوعان / I am hungry','انا تعبان / I am tired'], correct:0},
       {qAr:'وش تسوي قبل ما تسال؟', qEn:'What do you do before asking?', options:['تجهز العنوان / Prepare the address','تصيح / Shout','تمشي للعكس / Walk the wrong way'], correct:0},
     ],
     summary:'You learned the lost traveler opener and how to get back on track.',
@@ -13821,7 +13821,7 @@ const LESSON_LIBRARY = {
       {who:'Staff', ar:'خلني اشيك لك.', translit:'khallini ashayyak lak', en:'Let me check for you.'},
     ],
     quiz:[
-      {qAr:'عشان تسال عن التاخير؟', qEn:'How do you ask about the delay?', options:['كم المده؟ / How long?','وين الباب؟ / Where is the gate?','بكم؟ / How much?'], correct:0},
+      {qAr:'كيف تسال عن التاخير؟', qEn:'How do you ask about the delay?', options:['كم المده؟ / How long?','وين الباب؟ / Where is the gate?','بكم؟ / How much?'], correct:0},
       {qAr:'وش تقول لو الغوا الرحه؟', qEn:'What do you say if the flight is cancelled?', options:['فيه رحه ثانيه؟ / Is there another flight?','خلاص / Done','ما يهم / It does not matter'], correct:0},
     ],
     summary:'You learned the delay questions and how to push for a rebooking.',
@@ -13879,7 +13879,7 @@ const LESSON_LIBRARY = {
       {who:'Local', ar:'وبعدين نصلي جماعه.', translit:'wa baadein nusalli jamaa', en:'And then we pray together.'},
     ],
     quiz:[
-      {qAr:'عشان تسال عن مكان الوضوو؟', qEn:'How do you ask where ablution is?', options:['وين الوضوو؟ / Where is ablution?','وين الباب؟ / Where is the door?','بكم؟ / How much?'], correct:0},
+      {qAr:'كيف تسال عن مكان الوضوو؟', qEn:'How do you ask where ablution is?', options:['وين الوضوو؟ / Where is ablution?','وين الباب؟ / Where is the door?','بكم؟ / How much?'], correct:0},
       {qAr:'وش كلمه الما بالعاميه؟', qEn:'What is the dialect word for water?', options:['مويه / Moya','ما / Maa (formal)','عصير / Juice'], correct:0},
     ],
     summary:'You learned the practical mosque questions and the natural replies.',
@@ -13907,7 +13907,7 @@ const LESSON_LIBRARY = {
       {who:'Local', ar:'اكيد، في المسجد.', translit:'akeed, fee almasjid', en:'Of course, at the mosque.'},
     ],
     quiz:[
-      {qAr:'عشان تسال عن وقت الصلاه؟', qEn:'How do you ask about prayer time?', options:['متى الصلاه؟ / When is the prayer?','وين الصلاه؟ / Where is the prayer?','بكم الصلاه؟ / How much is the prayer?'], correct:0},
+      {qAr:'كيف تسال عن وقت الصلاه؟', qEn:'How do you ask about prayer time?', options:['متى الصلاه؟ / When is the prayer?','وين الصلاه؟ / Where is the prayer?','بكم الصلاه؟ / How much is the prayer?'], correct:0},
       {qAr:'وش يعلن وقت الصلاه؟', qEn:'What announces the prayer time?', options:['الاذان / The adhan','الجرس / A bell','الصافره / A whistle'], correct:0},
     ],
     summary:'You learned the prayer time question and the mosque rhythm around the adhan.',
@@ -14021,8 +14021,8 @@ const LESSON_LIBRARY = {
       {who:'Caller', ar:'بخصوص الاجتماع بكره.', translit:'bikhsoos alijtimaa bukra', en:'About the meeting tomorrow.'},
     ],
     quiz:[
-      {qAr:'عشان ترد على الجوال؟', qEn:'How do you answer the phone?', options:['الو / Alo','هلا / Hala','صباح الخير / Good morning'], correct:0},
-      {qAr:'عشان تسال مين المتصل؟', qEn:'How do you ask who is calling?', options:['مين معاي؟ / Who is this?','كم عمرك؟ / How old?','وين؟ / Where?'], correct:0},
+      {qAr:'كيف ترد على الجوال؟', qEn:'How do you answer the phone?', options:['الو / Alo','هلا / Hala','صباح الخير / Good morning'], correct:0},
+      {qAr:'كيف تسال مين المتصل؟', qEn:'How do you ask who is calling?', options:['مين معاي؟ / Who is this?','كم عمرك؟ / How old?','وين؟ / Where?'], correct:0},
     ],
     summary:'You learned the phone greeting and the caller question.',
     takeaway:'الو + مين معاي؟ = بدايه اي مكالمه.',
@@ -14049,7 +14049,7 @@ const LESSON_LIBRARY = {
       {who:'You', ar:'مع السلامه.', translit:'maa alsalama', en:'Goodbye.'},
     ],
     quiz:[
-      {qAr:'عشان تقول رقم غلط؟', qEn:'How do you say wrong number?', options:['رقم غلط / Wrong number','رقم صح / Right number','وين؟ / Where?'], correct:0},
+      {qAr:'كيف تقول رقم غلط؟', qEn:'How do you say wrong number?', options:['رقم غلط / Wrong number','رقم صح / Right number','وين؟ / Where?'], correct:0},
       {qAr:'وش رد اللي اتصل بالغلط؟', qEn:'What does the mis dialer reply?', options:['ما عليك / No problem','لاتصل ثاني / Do not call again','شكرا / Thanks'], correct:0},
     ],
     summary:'You learned the polite wrong number exchange.',
@@ -14077,8 +14077,8 @@ const LESSON_LIBRARY = {
       {who:'Other', ar:'تمام، ببلغه.', translit:'tamaam, bballighah', en:'OK, I will tell him.'},
     ],
     quiz:[
-      {qAr:'عشان تقول مو موجود؟', qEn:'How do you say he is not here?', options:['مو موجود / Not here','موجود / Here','وين؟ / Where?'], correct:0},
-      {qAr:'عشان تطلب توصيل رساله؟', qEn:'How do you ask to relay a message?', options:['قل له يتصل علي / Tell him to call me','لا تقول له / Do not tell him','متى؟ / When?'], correct:0},
+      {qAr:'كيف تقول مو موجود؟', qEn:'How do you say he is not here?', options:['مو موجود / Not here','موجود / Here','وين؟ / Where?'], correct:0},
+      {qAr:'كيف تطلب توصيل رساله؟', qEn:'How do you ask to relay a message?', options:['قل له يتصل علي / Tell him to call me','لا تقول له / Do not tell him','متى؟ / When?'], correct:0},
     ],
     summary:'You learned the message relay and the return call promise.',
     takeaway:'مو موجود + قل له يتصل علي = رساله واضحه.',
@@ -14105,7 +14105,7 @@ const LESSON_LIBRARY = {
       {who:'Other', ar:'تمام، انا فاضي العصر.', translit:'tamaam, ana faadi alasr', en:'OK, I am free in the afternoon.'},
     ],
     quiz:[
-      {qAr:'عشان تعد بالاتصال؟', qEn:'How do you promise to call back?', options:['باراجعك / I will call you back','ما اتصل / I will not call','وين؟ / Where?'], correct:0},
+      {qAr:'كيف تعد بالاتصال؟', qEn:'How do you promise to call back?', options:['باراجعك / I will call you back','ما اتصل / I will not call','وين؟ / Where?'], correct:0},
       {qAr:'وش تقول لو ما ردوا عليك؟', qEn:'What do you say when they did not answer?', options:['اسف ما رديت / Sorry I did not answer','ليش ما رديت؟ / Why no answer?','لا تكلمني / Do not talk to me'], correct:0},
     ],
     summary:'You learned the callback promise and the polite apology for a missed call.',
@@ -14133,7 +14133,7 @@ const LESSON_LIBRARY = {
       {who:'Secretary', ar:'ببلغه، وراح يكلمك.', translit:'bballighah, wa raah yakallimak', en:'I will tell him, and he will call you.'},
     ],
     quiz:[
-      {qAr:'عشان تقول مشغول؟', qEn:'How do you say busy?', options:['مشغول / Busy','فاضي / Free','موجود / Here'], correct:0},
+      {qAr:'كيف تقول مشغول؟', qEn:'How do you say busy?', options:['مشغول / Busy','فاضي / Free','موجود / Here'], correct:0},
       {qAr:'وش تقول لو فيه شي مهم؟', qEn:'What do you say if it is important?', options:['فيه شي مهم / Something important','ما فيه شي / Nothing','خلاص / Done'], correct:0},
     ],
     summary:'You learned the busy exchange and how to signal urgency.',
@@ -14161,7 +14161,7 @@ const LESSON_LIBRARY = {
       {who:'Other', ar:'مع السلامه.', translit:'maa alsalama', en:'Goodbye.'},
     ],
     quiz:[
-      {qAr:'عشان تختم المكالمه؟', qEn:'How do you end a call?', options:['مع السلامه / Goodbye','الو / Hello','مين معاي؟ / Who is this?'], correct:0},
+      {qAr:'كيف تختم المكالمه؟', qEn:'How do you end a call?', options:['مع السلامه / Goodbye','الو / Hello','مين معاي؟ / Who is this?'], correct:0},
       {qAr:'وش تقول لسه الشكر؟', qEn:'What do you say after thanks?', options:['نتكلم بعدين / We will talk later','لا تنسى / Do not forget','وين؟ / Where?'], correct:0},
     ],
     summary:'You learned the polite call closing and the promise to talk again.',
