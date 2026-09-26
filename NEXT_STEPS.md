@@ -1,5 +1,37 @@
 # NEXT STEPS - pick up here
 
+## DONE: Full mangled-word recovery + DB migration (2026-09-26 session)
+
+### Root cause found
+Commit `57f466b` ("deep Arabic simplification") ran over-aggressive replacements
+that corrupted 500+ words: ki-sounds became عشان (اكيد→اعشاند, اوكي→اوعشان,
+تركيز→ترعشانز, ويكند→ويعشانند) and ف became ين (الفاتوره→اليناتوره,
+الفطور→الينطور, الفيلم→الينيلم). Originals were recovered exactly from
+`57f466b^` via context-verified diffing — not hand-guessed.
+
+### Fixed (3 commits, all pushed)
+1. `19d5dfb` — 224 first-pass mangled words + dir="ltr" on English quiz
+   questions (was rendering "?Why eliminate..." backwards in RTL)
+2. `e081ca2` — cache busters
+3. `3dc8a88` — 500+ recovered words: 189 translit dictionary entries restored
+   wholesale from pre-corruption source + 316 token fixes incl. LETTER_NAMES,
+   yes-regex (اكيد/اوكي), تخالف in legal terms
+
+### DB migration applied to live DB (verified 0 remaining)
+`202609260001_fix_mangled_arabic_dialect.sql` — academy renamed الاملاء
+والاصوات (تهجي removed), spell-cvc-at lesson title, 2 lesson_items, 9 exercise
+payloads (وشنو→وش, يختر→يخلص).
+
+### Deliberately kept (house style, NOT corruption)
+پ for P in translits, ة→ه, no hamza, عشانك as "how are you" greeting, زين,
+مررره, تخالين (you think), كاونسالينج/مودالينج translits.
+
+### Known minor items (not bugs, deferred)
+- Mobile: stage header subtitle truncates with ellipsis (by design)
+- Word-order tiles right-align when wrapping on narrow screens (cosmetic)
+
+---
+
 ## DONE: Bug fixes + interface improvements + Arabic sweep (2026-09-25 session 2)
 
 ### Bugs found and fixed
