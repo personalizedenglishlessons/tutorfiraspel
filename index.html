@@ -1247,7 +1247,7 @@ section{ padding-top:70px; padding-bottom:70px; }
     <div class="section-head center reveal" dir="rtl">
       <span class="eyebrow">باقات المنصه</span>
       <h2 class="arabic-h">باقتين، ثلاث مدد، وكلها تشمل حصص مباشره</h2>
-      <p class="arabic">مسارين: وواحد لللي يبدا من الصفر، ووواحد لللي يستعد للستب او التوفل او الايلتس. تدفع عبر واتساب ونتفعّل حسابك خلال دقايق.</p>
+      <p class="arabic">مسارين: واحد لللي يبدا من الصفر، و واحد لللي يستعد للستب او التوفل او الايلتس. تدفع عبر واتساب ونتفعّل حسابك خلال دقايق.</p>
     </div>
     <div class="pricing-grid" id="pricingGrid" dir="rtl"></div>
     <p class="pricing-note arabic">
@@ -1312,7 +1312,7 @@ section{ padding-top:70px; padding-bottom:70px; }
       termEn:'Absolute beginner - first letter', termAr:'مبتدي من الصفر - اول حرف',
       descEn:'For absolute beginners starting from scratch.', descAr:'للي ما يعرف حرف — يبدا من الصفر.',
       featEn:['All lessons in one place','Start from the alphabet, step by step','Learn from situations you live daily','Arabic explanation with every lesson'],
-      featAr:['كل دروسك بمكان وواحد','تبدا من الحروف، خطوه خطوه','تتعلم من مواقف تصير لك','كل درس مشروح بالعربي']
+      featAr:['كل دروسك بمكان واحد','تبدا من الحروف، خطوه خطوه','تتعلم من مواقف تصير لك','كل درس مشروح بالعربي']
     };
   }
   function durLabel(m,ar){ return m===1?(ar?'شهر':'1 Month'):(m===2?(ar?'شهران':'2 Months'):(ar?'3 اشهر':'3 Months')); }
@@ -1543,7 +1543,7 @@ function applyIndexLang(lang){
   // section heads - bilingual (preserve structure, just translate)
   var heads=[
     {sel:'#features .section-head h2', ar:'اكاديميه مبنيه على صوتك، مو على منهج جاهز.', en:'An academy built around your voice, not a ready curriculum.'},
-    {sel:'#features .section-head p', ar:'كل جز من المنصه يخدم هدف وواحد: تنتقل من التردد للطلاقه، محادثه صادقه لسه محادثه.', en:'Every part of the platform serves one goal: move you from hesitation to fluency, one honest conversation at a time.'},
+    {sel:'#features .section-head p', ar:'كل جز من المنصه يخدم هدف واحد: تنتقل من التردد للطلاقه، محادثه صادقه لسه محادثه.', en:'Every part of the platform serves one goal: move you from hesitation to fluency, one honest conversation at a time.'},
     {sel:'#curriculum .section-head h2', ar:'منصه مصممه مثل معلم خاص، ومبنيه مثل برنامج احترافي.', en:'A platform designed like a private tutor, built like pro software.'},
     {sel:'#curriculum .section-head p', ar:'كل اداه يحتاجها طالب جاد، مرتبه حول لوحه تحكم خاصه فيك.', en:'Every tool a serious learner needs, organized around your personal dashboard.'},
     {sel:'#stories .section-head h2', ar:'قالو عن تجربتهم', en:'What they say about it'},
@@ -1716,7 +1716,7 @@ function applyIndexLang(lang){
   var pricingHead=document.querySelector('#pricing .section-head h2');
   if(pricingHead) setLang(pricingHead, 'باقتين، ثلاث مدد، وكلها تشمل حصص مباشره.', 'Two tracks, three durations, all include live classes.');
   var pricingP=document.querySelector('#pricing .section-head p');
-  if(pricingP) setLang(pricingP, 'مسارين: وواحد لللي يبدا من الصفر، ووواحد لللي يستعد للستب او التوفل او الايلتس. تدفع عبر واتساب ونتفعّل حسابك خلال دقايق.', 'Two tracks: one for beginners starting from zero, and one for students preparing for STEP, TOEFL, or IELTS. Pay via WhatsApp, activated within minutes.');
+  if(pricingP) setLang(pricingP, 'مسارين: واحد لللي يبدا من الصفر، و واحد لللي يستعد للستب او التوفل او الايلتس. تدفع عبر واتساب ونتفعّل حسابك خلال دقايق.', 'Two tracks: one for beginners starting from zero, and one for students preparing for STEP, TOEFL, or IELTS. Pay via WhatsApp, activated within minutes.');
   var pricingNote=document.querySelector('.pricing-note');
   if(pricingNote) pricingNote.innerHTML = lang==='ar' ? '<b>ما تعرف وش يناسبك؟</b> راسلنا واتساب ونساعدك تختار.' : '<b>Not sure which fits?</b> Message us on WhatsApp and we&rsquo;ll help you choose.';
   // footer + remaining section heads (minimal bilingual to satisfy full-site requirement)
@@ -1732,7 +1732,7 @@ function applyIndexLang(lang){
   var ppEyebrow=document.querySelector('#personalPreview .eyebrow');
   if(ppEyebrow) ppEyebrow.textContent = lang==='ar' ? 'نفس المنصه، خطه غير' : 'Same platform, different plan';
   var ppH2=document.querySelector('#personalPreview h2');
-  if(ppH2) ppH2.textContent = lang==='ar' ? 'كل وواحد يتعلم بطريقه غير' : 'Everyone learns differently';
+  if(ppH2) ppH2.textContent = lang==='ar' ? 'كل واحد يتعلم بطريقه غير' : 'Everyone learns differently';
   var ppP=document.querySelector('#personalPreview .section-head p');
   if(ppP) ppP.textContent = lang==='ar' ? 'PEL ما يعطي الكل نفس الدروس. قل لنا وش تبي الانجليزي لاجله، ونبني لك خطه على مقاس هدفك ومستواك ووقتك' : 'PEL does not give everyone the same lessons. Tell us what you need English for, and we build a plan around your goal, level and time.';
   var ppCards=document.querySelectorAll('#personalPreview .card');
@@ -1809,7 +1809,7 @@ function applyIndexLang(lang){
   if(courseGridEl){
     var sec=courseGridEl.closest('section');
     if(sec){
-      var ch2=sec.querySelector('h2'); if(ch2) ch2.textContent = lang==='ar' ? 'مسارات متعدده، وخطه وواحده مبنيه على مقاسك.' : 'Multiple paths, one plan built for you.';
+      var ch2=sec.querySelector('h2'); if(ch2) ch2.textContent = lang==='ar' ? 'مسارات متعدده، وخطه واحده مبنيه على مقاسك.' : 'Multiple paths, one plan built for you.';
       var cp=sec.querySelector('p.arabic'); if(cp) cp.textContent = lang==='ar' ? 'التفاصيل الكامله تفتح لسه التسجيل. هذي لمحه بسيطه عن الاتجاه العام.' : 'Full details unlock after enrollment. This is a brief overview.';
     }
   }
@@ -2127,7 +2127,7 @@ window.addEventListener('storage', function(e){ if(e.key==='pel_account_prefs') 
 /* FAQ DATA - bilingual. DB copy (site_settings.faqs, editable in Admin >
    Site Settings) is canonical; this built-in list is the offline fallback. */
 const faqs = [
-  {qAr:'لمين ذا البرنامج؟', aAr:'لكل وواحد حاب يتعلم انجليزي — موظف، طالب، او اي شخص يبغى يتكلم بثقه. ما يهم مستواك، نبدا من وين ما انت.', qEn:'Who is this for?', aEn:'Anyone who wants to learn English — employees, students, or anyone who wants to speak with confidence. Your level doesn\'t matter, we start where you are.'},
+  {qAr:'لمين ذا البرنامج؟', aAr:'لكل واحد حاب يتعلم انجليزي — موظف، طالب، او اي شخص يبغى يتكلم بثقه. ما يهم مستواك، نبدا من وين ما انت.', qEn:'Who is this for?', aEn:'Anyone who wants to learn English — employees, students, or anyone who wants to speak with confidence. Your level doesn\'t matter, we start where you are.'},
   {qAr:'لازم اعرف انجليزي قبل؟', aAr:'لا. تختبر مستواك وتنبني خطه على اساسه. لو ما تعرف ولا كلمه، نبدا من الحروف.', qEn:'Do I need to know English first?', aEn:'No. You take a level test and we build your plan from there. If you don\'t know a single word, we start from the alphabet.'},
   {qAr:'المنهج امريكي فعلاً؟', aAr:'اي والله. كل درس وتسجيل ونطق مبني على اللهجه الامريكيه.', qEn:'Is it really American English?', aEn:'Yes. Every lesson, recording, and pronunciation is built on American English.'},
   {qAr:'الشرح بالعربي؟', aAr:'اي والله. كل درس مشروح بالعربي، والكلمات الجديده مكتوب نطقها بجانبها.', qEn:'Is it explained in Arabic?', aEn:'Yes. Every lesson is explained in Arabic, and new words have their pronunciation written next to them.'},
