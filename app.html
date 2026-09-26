@@ -44,7 +44,7 @@
   --stage-bar-border:var(--border);
   --ease:cubic-bezier(.16,.84,.32,1);
   --dur:300ms;
-  --sidebar-w:276px; --sidebar-w-collapsed:80px; --topbar-h:76px; --context-w:320px;
+  --sidebar-w:276px; --topbar-h:76px; --context-w:320px;
   /* Arabic + transliteration type scale. Enlarged for readability while the
      scoped tight-UI overrides below keep dock/sidebar/chips from overflowing. */
   --arabic-min:0.9rem; --arabic-scale:1.15em;
@@ -139,7 +139,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   position:sticky; top:0; height:100vh; height:100dvh; display:flex; flex-direction:column; z-index:200;
   transition:width var(--dur) var(--ease), transform var(--dur) var(--ease);
 }
-.sidebar.collapsed{ width:var(--sidebar-w-collapsed); }
+.sidebar.collapsed{ width:0; overflow:hidden; border-right:none; }
 .sidebar-head{ display:flex; align-items:center; gap:12px; padding:24px 22px; border-bottom:1px solid var(--border); }
 @media(min-width:1920px){ .sidebar-head{ padding:28px 28px; } }
 @media(min-width:2560px){ .sidebar-head{ padding:36px 36px; } .sidebar-logo img{ height:32px; } }
@@ -151,14 +151,14 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 html[data-theme="light"] .pel-logo{ display:none; }
 html[data-theme="light"] .pel-logo-light{ display:inline-block; }
 .sidebar-name{ font-family:'Fraunces',serif; font-size:.95rem; white-space:normal; overflow:visible; line-height:1.35; opacity:1; transition:opacity .2s ease; }
-.sidebar.collapsed .sidebar-name{ opacity:0; width:0; }
+/* sidebar collapsed → fully hidden (width:0, overflow:hidden) */
 .sidebar-collapse-btn{
   margin-left:auto; width:30px; height:30px; border-radius:9px; border:1px solid var(--border); color:var(--text-muted);
   display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:.25s ease;
 }
 .sidebar-collapse-btn:hover{ border-color:var(--gold); color:var(--gold); }
 .sidebar-collapse-btn svg{ transition:transform .35s var(--ease); }
-.sidebar.collapsed .sidebar-collapse-btn svg{ transform:rotate(180deg); }
+
 
 .sidebar-scroll{ flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; overscroll-behavior:contain; padding:14px 12px 20px; }
 @media(min-width:1920px){ .sidebar-scroll{ padding:18px 16px 24px; } }
@@ -179,12 +179,11 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
 .side-link.active .side-icon{ color:var(--gold); }
 .side-link.active::before{ content:""; position:absolute; left:0; top:8px; bottom:8px; width:3px; border-radius:3px; background:var(--gold); }
 .side-badge{ position:absolute; top:7px; right:8px; min-width:19px; height:19px; border-radius:10px; background:var(--gold); color:#17171B; font-size:.62rem; font-weight:800; display:flex; align-items:center; justify-content:center; padding:0 6px; box-shadow:0 2px 8px rgba(0,0,0,.35); }
-.sidebar.collapsed .side-badge{ display:none; }
+
 .side-text-wrap{ display:flex; flex-direction:column; transition:opacity .2s ease; overflow:hidden; }
 .side-text-wrap .ar{ font-family:'Cairo','Tajawal',sans-serif; direction:rtl; text-align:left; line-height:1.3; }
 .side-text-wrap .en{ font-size:.68rem; color:var(--text-muted); line-height:1.3; margin-top:1px; }
-.sidebar.collapsed .side-text-wrap{ opacity:0; width:0; }
-.sidebar.collapsed .side-link{ justify-content:center; }
+
 
 .sidebar-foot{ padding:16px 20px; border-top:1px solid var(--border); }
 @media(min-width:1920px){ .sidebar-foot{ padding:20px 28px; } }
@@ -192,13 +191,13 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
 @media(max-width:640px){ .sidebar-foot{ padding:12px 16px; } }
 .streak-mini{ display:flex; align-items:center; gap:10px; font-size:.78rem; color:var(--text-muted); }
 .streak-mini b{ color:var(--gold); }
-.sidebar.collapsed .streak-mini .txt{ display:none; }
+
 
 .sidebar-overlay{ display:none; }
 @media(max-width:980px){
   .sidebar{ position:fixed; left:0; transform:translateX(-100%); box-shadow:var(--shadow-lift); }
   .sidebar.mobile-open{ transform:translateX(0); }
-  .sidebar.collapsed{ width:var(--sidebar-w); }
+  /* collapsed sidebar stays at width:0 on mobile too */
   .sidebar-overlay{ display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:190; backdrop-filter:blur(2px); -webkit-backdrop-filter:blur(2px); }
   html[data-theme="light"] .sidebar-overlay{ background:rgba(0,0,0,.25); }
   .sidebar-overlay.show{ display:block; }
@@ -244,8 +243,10 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
 @media(min-width:1920px){ .topbar{ padding:0 40px; gap:20px; } }
 @media(min-width:2560px){ .topbar{ padding:0 56px; gap:24px; } }
 @media(max-width:640px){ .topbar{ padding:0 14px; gap:10px; } }
-.mobile-sidebar-btn{ display:none; width:38px; height:38px; border-radius:10px; border:1px solid var(--border); align-items:center; justify-content:center; color:var(--text-secondary); flex-shrink:0; }
-@media(max-width:980px){ .mobile-sidebar-btn{ display:flex; } }
+.mobile-sidebar-btn{ display:flex; width:38px; height:38px; border-radius:10px; border:1px solid var(--border); align-items:center; justify-content:center; color:var(--text-secondary); flex-shrink:0; }
+@media(max-width:980px){ .mobile-sidebar-btn{ width:40px; height:40px; } }
+/* On desktop/tablet, hide hamburger when sidebar is open */
+@media(min-width:981px){ .sidebar:not(.collapsed) ~ .main-col .mobile-sidebar-btn{ display:none; } }
 @media(max-width:640px){ .mobile-sidebar-btn{ width:40px; height:40px; } }
 
 .search-trigger{
@@ -1030,6 +1031,7 @@ body.ui-ar .lib-filter{ direction:rtl; }
    These overrides mirror every directional property so the Arabic UI is a
    true mirror of the English one. English interface is untouched. */
 body.ui-ar .sidebar{ border-right:none; border-left:1px solid var(--border); }
+body.ui-ar .sidebar.collapsed{ border-left:none; }
 body.ui-ar .sidebar-collapse-btn{ margin-left:0; margin-right:auto; }
 body.ui-ar .side-link.active{ background:linear-gradient(270deg, rgba(200,169,106,.14), transparent); }
 body.ui-ar .side-link.active::before{ left:auto; right:0; }
@@ -3134,12 +3136,19 @@ document.addEventListener('click', e => {
 });
 goToView('home');
 
-/* sidebar collapse (desktop) + mobile drawer */
+/* sidebar collapse (desktop: fully hide) + mobile drawer */
 const sidebarEl = document.getElementById('sidebar');
-document.getElementById('collapseBtn').addEventListener('click', () => sidebarEl.classList.toggle('collapsed'));
+document.getElementById('collapseBtn').addEventListener('click', () => {
+  sidebarEl.classList.add('collapsed');
+  sidebarEl.classList.remove('mobile-open');
+  document.getElementById('sidebarOverlay').classList.remove('show');
+});
 document.getElementById('mobileSidebarBtn').addEventListener('click', () => {
-  sidebarEl.classList.add('mobile-open');
-  document.getElementById('sidebarOverlay').classList.add('show');
+  sidebarEl.classList.remove('collapsed');
+  if (window.innerWidth <= 980) {
+    sidebarEl.classList.add('mobile-open');
+    document.getElementById('sidebarOverlay').classList.add('show');
+  }
 });
 // Mobile bottom study dock: quick nav (closes drawer) + More (opens full drawer)
 document.querySelectorAll('.dock-btn[data-view]').forEach(btn => {
