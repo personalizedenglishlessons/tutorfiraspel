@@ -141,6 +141,9 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 }
 .sidebar.collapsed{ width:var(--sidebar-w-collapsed); }
 .sidebar-head{ display:flex; align-items:center; gap:12px; padding:24px 22px; border-bottom:1px solid var(--border); }
+@media(min-width:1920px){ .sidebar-head{ padding:28px 28px; } }
+@media(min-width:2560px){ .sidebar-head{ padding:36px 36px; } .sidebar-logo img{ height:32px; } }
+@media(max-width:640px){ .sidebar-head{ padding:16px 18px; } }
 .sidebar-logo{ display:flex; align-items:center; flex-shrink:0; }
 .sidebar-logo img{ height:24px; width:auto; }
 .pel-logo{ display:inline-block; vertical-align:middle; }
@@ -158,11 +161,17 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
 .sidebar.collapsed .sidebar-collapse-btn svg{ transform:rotate(180deg); }
 
 .sidebar-scroll{ flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; overscroll-behavior:contain; padding:14px 12px 20px; }
+@media(min-width:1920px){ .sidebar-scroll{ padding:18px 16px 24px; } }
+@media(min-width:2560px){ .sidebar-scroll{ padding:24px 20px 30px; } }
+@media(max-width:640px){ .sidebar-scroll{ padding:10px 10px 16px; } }
 .side-link{
   display:flex; align-items:center; gap:13px; padding:11px 12px; border-radius:13px; margin-bottom:2px;
   color:var(--text-secondary); font-size:.85rem; font-weight:500; position:relative; white-space:nowrap; overflow:hidden;
   transition:background .3s ease, color .3s ease;
 }
+@media(min-width:1920px){ .side-link{ font-size:.95rem; padding:13px 16px; gap:16px; } .side-link .side-icon{ width:22px; } }
+@media(min-width:2560px){ .side-link{ font-size:1.05rem; padding:16px 20px; gap:18px; } .side-link .side-icon{ width:24px; } }
+@media(max-width:640px){ .side-link{ padding:13px 14px; font-size:.88rem; } }
 .side-link .side-icon{ display:flex; align-items:center; justify-content:center; width:19px; flex-shrink:0; color:var(--text-muted); transition:color .3s ease; }
 .side-link:hover{ background:var(--card); color:var(--text); }
 .side-link:hover .side-icon{ color:var(--gold); }
@@ -178,6 +187,9 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
 .sidebar.collapsed .side-link{ justify-content:center; }
 
 .sidebar-foot{ padding:16px 20px; border-top:1px solid var(--border); }
+@media(min-width:1920px){ .sidebar-foot{ padding:20px 28px; } }
+@media(min-width:2560px){ .sidebar-foot{ padding:26px 36px; } }
+@media(max-width:640px){ .sidebar-foot{ padding:12px 16px; } }
 .streak-mini{ display:flex; align-items:center; gap:10px; font-size:.78rem; color:var(--text-muted); }
 .streak-mini b{ color:var(--gold); }
 .sidebar.collapsed .streak-mini .txt{ display:none; }
@@ -214,6 +226,8 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
   .dock-btn svg{ width:21px; height:21px; }
   .dock-btn.active{ color:var(--gold); }
   .dock-btn.active svg{ color:var(--gold); }
+  @media(max-width:640px){ .dock-btn{ font-size:.62rem; padding:8px 2px; } .dock-btn svg{ width:23px; height:23px; } }
+  @media(min-width:1920px){ .dock-btn{ font-size:.72rem; padding:8px 2px; } .dock-btn svg{ width:24px; height:24px; } }
   .main-col{ padding-bottom:calc(64px + env(safe-area-inset-bottom)); }
 }
 
@@ -227,14 +241,21 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
   border-bottom:1px solid var(--border);
   display:flex; align-items:center; gap:16px; padding:0 28px;
 }
+@media(min-width:1920px){ .topbar{ padding:0 40px; gap:20px; } }
+@media(min-width:2560px){ .topbar{ padding:0 56px; gap:24px; } }
+@media(max-width:640px){ .topbar{ padding:0 14px; gap:10px; } }
 .mobile-sidebar-btn{ display:none; width:38px; height:38px; border-radius:10px; border:1px solid var(--border); align-items:center; justify-content:center; color:var(--text-secondary); flex-shrink:0; }
 @media(max-width:980px){ .mobile-sidebar-btn{ display:flex; } }
+@media(max-width:640px){ .mobile-sidebar-btn{ width:40px; height:40px; } }
 
 .search-trigger{
   flex:1; max-width:420px; display:flex; align-items:center; gap:10px; padding:10px 16px; border-radius:12px;
   background:var(--card); border:1px solid var(--border); color:var(--text-muted); font-size:.85rem;
   transition:border-color .3s ease; overflow:hidden;
 }
+@media(min-width:1920px){ .search-trigger{ max-width:500px; font-size:.95rem; padding:12px 20px; } }
+@media(min-width:2560px){ .search-trigger{ max-width:600px; font-size:1.05rem; padding:14px 24px; } }
+@media(max-width:640px){ .search-trigger{ padding:8px 12px; font-size:.8rem; } }
 .search-trigger:hover{ border-color:var(--gold); }
 .search-trigger .arabic{ line-height:1.3 !important; }
 .search-trigger > span{ line-height:1.3; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
@@ -246,6 +267,9 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
   display:flex; align-items:center; justify-content:center; position:relative; transition:border-color .3s ease,color .3s ease,transform .3s ease;
   flex-shrink:0;
 }
+@media(min-width:1920px){ .icon-btn{ width:46px; height:46px; } .icon-btn svg{ width:22px; height:22px; } }
+@media(min-width:2560px){ .icon-btn{ width:52px; height:52px; } .icon-btn svg{ width:26px; height:26px; } }
+@media(max-width:640px){ .icon-btn{ width:38px; height:38px; } }
 .icon-btn:hover{ border-color:var(--gold); color:var(--gold); transform:translateY(-1px); }
 .notif-dot{ position:absolute; top:8px; right:9px; width:7px; height:7px; border-radius:50%; background:var(--gold); box-shadow:0 0 0 2px var(--bg); }
 .pill-stat{ display:flex; align-items:center; gap:7px; font-size:.78rem; color:var(--text-secondary); padding:8px 14px; border-radius:999px; border:1px solid var(--border); background:var(--card); }
@@ -253,17 +277,21 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
 .pill-stat svg{ width:15px; height:15px; }
 @media(max-width:1120px){ .pill-stat.hide-mid{ display:none; } }
 @media(max-width:720px){ .search-trigger{ display:none; } }
-/* TV/large screens: taller topbar for better proportions */
-@media(min-width:1400px){ :root{ --topbar-h:84px; } }
-@media(min-width:1920px){ :root{ --topbar-h:92px; } }
+/* TV/large screens: taller topbar, wider sidebar for better proportions */
+@media(min-width:1400px){ :root{ --topbar-h:84px; --sidebar-w:300px; } }
+@media(min-width:1920px){ :root{ --topbar-h:92px; --sidebar-w:320px; } }
+@media(min-width:2560px){ :root{ --topbar-h:100px; --sidebar-w:360px; --context-w:380px; } }
 .topbar{ overflow:visible; }
 
 .user-menu-trigger{ display:flex; align-items:center; gap:10px; padding:5px 12px 5px 5px; border-radius:999px; border:1px solid var(--border); background:var(--card); }
 .user-menu-trigger:hover{ border-color:var(--gold); }
 .avatar-circle{ width:32px; height:32px; border-radius:50%; background:linear-gradient(135deg,var(--gold-soft),var(--bronze)); color:#171412; display:flex; align-items:center; justify-content:center; font-family:'Fraunces',serif; font-weight:600; font-size:.85rem; flex-shrink:0; }
+@media(min-width:1920px){ .avatar-circle{ width:38px; height:38px; font-size:.95rem; } }
+@media(min-width:2560px){ .avatar-circle{ width:44px; height:44px; font-size:1.05rem; } }
 .user-meta{ text-align:left; line-height:1.25; }
 .user-meta b{ display:block; font-size:.8rem; font-weight:600; }
 .user-meta span{ font-size:.68rem; color:var(--text-muted); }
+@media(min-width:1920px){ .user-meta b{ font-size:.9rem; } .user-meta span{ font-size:.76rem; } }
 @media(max-width:720px){ .user-meta{ display:none; } .pill-stat{ display:none; } }
 
 .dropdown{
@@ -285,8 +313,9 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
 
 .content-cols{ display:flex; flex:1; min-width:0; }
 .content{ flex:1; min-width:0; max-width:1100px; padding:32px 36px 80px; }
-@media(min-width:1600px){ .content{ max-width:1200px; margin-inline:auto; } }
-@media(max-width:640px){ .content{ padding:22px 18px 64px; } }
+@media(min-width:1600px){ .content{ max-width:1300px; margin-inline:auto; } }
+@media(min-width:2560px){ .content{ max-width:1500px; padding:48px 48px 100px; } }
+@media(max-width:640px){ .content{ padding:20px 16px 70px; } }
 .view{ display:none; animation:fadeUp .5s var(--ease); }
 .view.active{ display:block; }
 @keyframes fadeUp{ from{ opacity:0; transform:translateY(14px);} to{ opacity:1; transform:translateY(0);} }
@@ -314,6 +343,9 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
 .page-head{ margin-bottom:28px; }
 .page-head h1{ font-size:clamp(1.6rem,2.6vw,2.2rem); margin-top:14px; }
 .page-head p{ margin-top:8px; color:var(--text-muted); font-size:.92rem; max-width:560px; }
+@media(min-width:1920px){ .page-head h1{ font-size:clamp(2rem,3vw,2.8rem); } .page-head p{ font-size:1.05rem; max-width:680px; } .eyebrow{ font-size:.8rem; } }
+@media(min-width:2560px){ .page-head h1{ font-size:clamp(2.4rem,3.5vw,3.2rem); } .page-head p{ font-size:1.15rem; max-width:780px; } .eyebrow{ font-size:.9rem; } }
+@media(max-width:640px){ .page-head{ margin-bottom:20px; } .page-head h1{ font-size:clamp(1.35rem,6vw,1.8rem); } .page-head p{ font-size:.85rem; } }
 
 .grid{ display:grid; gap:20px; }
 .grid-2{ grid-template-columns:repeat(2,1fr); }
@@ -785,21 +817,35 @@ body.ui-ar .vv-collection-card .col-desc{ font-family:'Cairo','Tajawal',sans-ser
 
 /* Responsive: all devices */
 @media(max-width:640px){
-  .vv-cat-grid{ grid-template-columns:1fr 1fr; }
+  .vv-cat-grid{ grid-template-columns:1fr 1fr; gap:10px; }
   .vv-collection-grid{ grid-template-columns:1fr; }
-  .vv-card-face{ padding:24px 20px; }
+  .vv-card-face{ padding:24px 18px; border-radius:20px; }
   .vv-meta-grid{ grid-template-columns:1fr; }
   .vv-study-stats{ display:none; }
   .vv-study-top{ flex-wrap:wrap; gap:10px; }
   .vv-nav{ padding:8px 0 calc(8px + env(safe-area-inset-bottom,0px)); }
+  .vv-cat-card{ padding:16px 14px; }
+  .vv-collection-card{ padding:20px 18px; }
+  .vv-card-scene{ min-height:380px; }
+  .vv-toolbar{ margin-bottom:16px; }
+  .vv-nav-btn{ width:44px; height:44px; }
+  .vv-nav-btn [data-lucide]{ width:20px; height:20px; }
+  .vv-speak-btn{ width:44px; height:44px; }
+  .vv-speak-btn [data-lucide]{ width:20px; height:20px; }
+  .vv-ctrl-btn{ width:36px; height:36px; }
+  .vv-ctrl-btn [data-lucide]{ width:16px; height:16px; }
+  .vv-back-btn{ width:36px; height:36px; }
+  .vv-back-btn [data-lucide]{ width:16px; height:16px; }
 }
-@media(max-width:380px){ .vv-cat-grid{ grid-template-columns:1fr; } }
+@media(max-width:380px){ .vv-cat-grid{ grid-template-columns:1fr; } .vv-card-scene{ min-height:340px; } }
 
 /* Tablet portrait */
 @media(min-width:641px) and (max-width:900px){
   .vv-cat-grid{ grid-template-columns:repeat(2,1fr); }
   .vv-collection-grid{ grid-template-columns:repeat(2,1fr); }
   .vv-card-scene{ min-height:420px; }
+  .vv-cat-card{ padding:18px; }
+  .vv-collection-card{ padding:20px; }
 }
 
 /* Large screens / TV */
@@ -817,13 +863,15 @@ body.ui-ar .vv-collection-card .col-desc{ font-family:'Cairo','Tajawal',sans-ser
   .vv-nav{ max-width:700px; margin:0 auto; }
   .vv-nav-btn{ width:56px; height:56px; }
   .vv-nav-btn [data-lucide]{ width:26px; height:26px; }
+  .vv-cat-card{ padding:26px; }
+  .vv-collection-card{ padding:28px; }
 }
 
 /* TV / extra large */
 @media(min-width:1920px){
   .vv-shell{ max-width:1300px; }
-  .vv-cat-grid{ grid-template-columns:repeat(5,1fr); }
-  .vv-collection-grid{ grid-template-columns:repeat(4,1fr); }
+  .vv-cat-grid{ grid-template-columns:repeat(5,1fr); gap:18px; }
+  .vv-collection-grid{ grid-template-columns:repeat(4,1fr); gap:18px; }
   .vv-card-scene{ min-height:680px; }
   .vv-card-face{ padding:60px; border-radius:32px; }
   .vv-card-word{ font-size:clamp(3.5rem,7vw,5.5rem); }
@@ -834,20 +882,59 @@ body.ui-ar .vv-collection-card .col-desc{ font-family:'Cairo','Tajawal',sans-ser
   .vv-meta-val{ font-size:1.05rem; }
   .vv-tip{ font-size:1rem; padding:20px 24px; }
   .vv-nav-btn{ width:64px; height:64px; }
+  .vv-nav-btn [data-lucide]{ width:30px; height:30px; }
   .vv-speak-btn{ width:56px; height:56px; }
+  .vv-speak-btn [data-lucide]{ width:26px; height:26px; }
   .vv-flip-hint{ font-size:.9rem; }
   .vv-bookmark-btn{ font-size:1rem; padding:14px 28px; }
   .vv-meta-label{ font-size:.8rem; }
+  .vv-cat-card{ padding:32px; }
+  .vv-cat-icon{ width:48px; height:48px; border-radius:16px; }
+  .vv-cat-icon [data-lucide]{ width:24px; height:24px; }
+  .vv-collection-card{ padding:34px; }
+}
+
+/* 4K / ultra-wide TV */
+@media(min-width:2560px){
+  .vv-shell{ max-width:1600px; }
+  .vv-cat-grid{ grid-template-columns:repeat(6,1fr); gap:22px; }
+  .vv-collection-grid{ grid-template-columns:repeat(5,1fr); gap:22px; }
+  .vv-card-scene{ min-height:800px; }
+  .vv-card-face{ padding:72px; border-radius:36px; }
+  .vv-card-word{ font-size:clamp(4rem,8vw,6.5rem); }
+  .vv-card-ar{ font-size:clamp(3rem,6vw,4rem); }
+  .vv-card-translit{ font-size:clamp(1.4rem,3vw,1.9rem); }
+  .vv-example-en{ font-size:clamp(1.4rem,3vw,1.9rem); }
+  .vv-example-ar{ font-size:clamp(1.3rem,2.5vw,1.7rem); }
+  .vv-meta-val{ font-size:1.2rem; }
+  .vv-meta-label{ font-size:.9rem; }
+  .vv-tip{ font-size:1.1rem; padding:24px 28px; }
+  .vv-nav-btn{ width:72px; height:72px; }
+  .vv-nav-btn [data-lucide]{ width:34px; height:34px; }
+  .vv-speak-btn{ width:64px; height:64px; }
+  .vv-speak-btn [data-lucide]{ width:30px; height:30px; }
+  .vv-bookmark-btn{ font-size:1.1rem; padding:16px 32px; }
+  .vv-cat-card{ padding:38px; }
+  .vv-cat-icon{ width:56px; height:56px; }
+  .vv-cat-icon [data-lucide]{ width:28px; height:28px; }
+  .vv-cat-name{ font-size:1.2rem; }
+  .vv-collection-card{ padding:40px; }
+  .vv-collection-card .col-name{ font-size:1.3rem; }
+  .vv-collection-card .col-icon{ width:52px; height:52px; }
+  .vv-collection-card .col-icon [data-lucide]{ width:26px; height:26px; }
 }
 
 /* Landscape phone */
 @media(max-height:500px) and (orientation:landscape){
-  .vv-card-scene{ min-height:280px; }
+  .vv-card-scene{ min-height:260px; }
   .vv-card-face{ padding:16px 24px; }
   .vv-card-word{ font-size:clamp(1.8rem,4vw,2.5rem); }
   .vv-card-ar{ font-size:clamp(1.2rem,2.5vw,1.6rem); }
-  .vv-study-top{ margin-bottom:10px; }
+  .vv-study-top{ margin-bottom:8px; }
   .vv-nav{ padding:4px 0; }
+  .vv-toolbar{ margin-bottom:10px; }
+  .vv-cat-grid{ grid-template-columns:repeat(3,1fr); }
+  .vv-collection-grid{ grid-template-columns:repeat(2,1fr); }
 }
 
 /* Touch targets for mobile */
@@ -856,6 +943,7 @@ body.ui-ar .vv-collection-card .col-desc{ font-family:'Cairo','Tajawal',sans-ser
   .vv-cat-card:hover,.vv-collection-card:hover{ transform:none; }
   .vv-nav-btn,.vv-ctrl-btn,.vv-back-btn{ width:52px; height:52px; }
   .vv-speak-btn{ width:48px; height:48px; }
+  .vv-nav-btn [data-lucide]{ width:24px; height:24px; }
 }
 
 /* pronunciation + grammar topic grid */
@@ -1400,8 +1488,8 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
   .icon-btn{ width:36px; height:36px; }
   .content{ padding:18px 14px 72px; }
   .content-cols{ flex-direction:column; }
-  .page-head{ margin-bottom:20px; }
-  .page-head h1{ font-size:clamp(1.45rem,6vw,1.9rem); }
+  .page-head{ margin-bottom:16px; }
+  .page-head h1{ font-size:clamp(1.3rem,6vw,1.7rem); }
   .card{ padding:18px; border-radius:16px; }
   #heroCard{ padding:18px !important; gap:16px !important; flex-direction:column; align-items:stretch !important; }
   #heroCard > div:last-child{ width:84px !important; height:84px !important; align-self:center; }
@@ -17901,9 +17989,9 @@ function renderVocabulary(){
     'Restaurant English':'انجليزي المطاعم','Hospital English':'انجليزي المستشفى','Business English':'انجليزي الشغل',
     'Airport English':'انجليزي المطار','Shopping English':'انجليزي التسوق','Travel English':'انجليزي السفر',
     'Workplace Communication':'التواصل بالشغل','Job Interview Academy':'مقابلات العمل','Family':'العائله',
-    'Colors':'الالوان','Daily Life':'الحياة اليوميه','General':'عام','Emergency English':'انجليزي الطوارئ',
+    'Colors':'الالوان','Daily Life':'كل يوم','General':'عام','Emergency English':'انجليزي الطوارئ',
     'Driving English':'انجليزي القياده','Hotel English':'انجليزي الفنادق','Greetings':'التحيات','Conversations':'المحادثات',
-    'Hospital English':'المستشفى','Mosque Etiquette':'اداب المسجد','Phone Calls':'المكالمات','Travel English':'السفر',
+    'Mosque Etiquette':'اداب المسجد','Phone Calls':'المكالمات',
     'At Work':'الشغل','Coffee Shop English':'انجليزي الكوفي','American Slang':'امريكي عامي','American Conversations':'محادثات امريكيه',
     'American Accent Lab':'اللهجه الامريكيه','English Mastery':'اتقان الانجليزي','Fluency Journey':'رحله الطلاقه','Idioms Library':'مكتبه التعابير',
     'Listening Lounge':'ركن الاستماع','Movie English':'انجليزي الافلام','Music English':'انجليزي الاغاني','Phrasal Verbs Lab':'مختبر الافعال',
@@ -17911,12 +17999,12 @@ function renderVocabulary(){
     'Vocabulary Vault':'بنك الكلمات','Workplace':'الشغل'
   };
   // Difficulty levels in 
-  const VV_DIFF_AR = {'Beginner':'مبتدا','Intermediate':'وسط','Advanced':'متقدم','All Levels':'كل المستويات'};
+  const VV_DIFF_AR = {'Beginner':'مبتدا','Intermediate':'وسط','Advanced':'متقدم','All Levels':'كلها'};
   el.innerHTML = `
     <div class="page-head">
       <span class="eyebrow"><span class="arabic" style="font-size:.95em;">بنك الكلمات</span>، Vocabulary Vault</span>
-      <h1><span class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">كل كلمه، بثلاث لغات.</span><span dir="ltr">Every word, in three languages.</span></h1>
-      <p><span class="arabic" style="display:block; margin-bottom:4px;">اختار تصنيف وابدا. اقلب البطاقه وتشوف المعنى بالعربي والنطق والكلمات اللي مثلها.</span><span dir="ltr">Pick a category and start studying. Flip a card to see the Arabic () meaning, pronunciation, synonyms and more.</span></p>
+      <h1><span class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">كل كلمه بثلاث لغات</span><span dir="ltr">Every word, in three languages.</span></h1>
+      <p><span class="arabic" style="display:block; margin-bottom:4px;">اختار قسم وابدا. اقلب البطاقه وتشوف المعنى بالعربي والنطق والكلمات اللي مثلها.</span><span dir="ltr">Pick a category and start studying. Flip a card to see the Arabic () meaning, pronunciation, synonyms and more.</span></p>
     </div>
     <div class="vv-shell">
       <div id="vvCategoryPanel">
@@ -18111,7 +18199,93 @@ function renderVocabulary(){
         .replace(/كلمات نفس المعنى/g,'كلمات نفس المعنى')       // keep
         .replace(/عكس الكلمه/g,'عكس الكلمه')                   // keep
         .replace(/من نفس الاصل/g,'من نفس الاصل')               // keep
-        .replace(/كلمات تجي معاها/g,'كلمات تجي معاها');         // keep
+        .replace(/كلمات تجي معاها/g,'كلمات تجي معاها')         // keep
+        .replace(/المعنى/g,'المعنى')                             // keep - common enough
+        .replace(/النطق/g,'النطق')                               // keep
+        .replace(/يكون/g,'يصير')                                 // be → ysir
+        .replace(/منذ/g,'من')                                    // since → min
+        .replace(/أيضا/g,'كمان')                                 // also → kaman
+        .replace(/كذلك/g,'كمان')                                 // also → kaman
+        .replace(/بعض/g,'بعض')                                   // keep - common Saudi
+        .replace(/جميع/g,'كل')                                   // all → kul
+        .replace(/الذين/g,'اللي')                               // those who → illi
+        .replace(/التي/g,'اللي')                                 // which → illi (redundant safety)
+        .replace(/الذي/g,'اللي')                                 // who → illi (redundant safety)
+        .replace(/هذه/g,'هذي')                                   // this → hathi (redundant safety)
+        .replace(/ذلك/g,'ذاك')                                   // that → thak (redundant safety)
+        .replace(/تستطيع/g,'تقدر')                               // you can → tiqdar (redundant safety)
+        .replace(/يمكنك/g,'تقدر')                                // you can → tiqdar (redundant safety)
+        .replace(/يجب/g,'لازم')                                  // must → lazim (redundant safety)
+        .replace(/سوف/g,'بت')                                    // will → bt (redundant safety)
+        .replace(/لديك/g,'عندك')                                 // you have → indik (redundant safety)
+        .replace(/إننا/g,'احنا')                                 // we → ihna (redundant safety)
+        .replace(/كما/g,'بس')                                    // trim formal (redundant safety)
+        .replace(/حيث/g,'لان')                                   // since → la-an (redundant safety)
+        .replace(/من فضلك/g,'لو سمحت')                           // please → law samaht (redundant safety)
+        .replace(/جدا/g,'مره')                                   // very → marra (redundant safety)
+        .replace(/العثور/g,'حصول')                               // found → husul (redundant safety)
+        .replace(/لم يتم/g,'ما')                                 // was not → ma (redundant safety)
+        .replace(/المفردات/g,'الكلمات')                          // vocabulary → words (redundant safety)
+        .replace(/المرادفات/g,'الكلمات اللي مثلها')              // synonyms (redundant safety)
+        .replace(/المتضادات/g,'الكلمات العكس')                  // antonyms
+        .replace(/العائله/g,'الاصل')                             // family → origin
+        .replace(/التلازمات/g,'كلمات تجي معاها')                // collocations (redundant safety)
+        .replace(/الجمله/g,'جمله')                                // sentence
+        .replace(/الشرح/g,'الشرح')                               // keep
+        .replace(/التفسير/g,'الشرح')                             // explanation → sharh
+        .replace(/بالنسبة/g,'عشان')                              // regarding → ashan
+        .replace(/من خلال/g,'عن طريق')                           // through → an tariq
+        .replace(/بواسطة/g,'عن طريق')                            // by → an tariq
+        .replace(/بشكل/g,'بطريقه')                               // in a way → b tareeqa
+        .replace(/بطريقة/g,'بطريقه')                             // in a way → b tareeqa
+        .replace(/عبر/g,'عن طريق')                               // via → an tariq
+        .replace(/ضمن/g,'داخل')                                  // within → dakhil
+        .replace(/أثناء/g,'وقت')                                 // during → waqt
+        .replace(/خلال/g,'مدة')                                  // during → mudda
+        .replace(/بسبب/g,'عشان')                                 // because → ashan
+        .replace(/حول/g,'عن')                                    // about → an
+        .replace(/نحو/g,'لـ')                                    // towards → la
+        .replace(/دون/g,'بدون')                                  // without → bdoon
+        .replace(/بدون/g,'بدون')                                 // keep
+        .replace(/عدا/g,'غير')                                   // except → ghair
+        .replace(/سوى/g,'غير')                                   // except → ghair
+        .replace(/فقط/g,'بس')                                    // only → bas
+        .replace(/جميعا/g,'كلهم')                               // altogether → kulhum
+        .replace(/معا/g,'مع بعض')                               // together → ma baad
+        .replace(/بالإضافة/g,'وكمان')                            // in addition → w kaman
+        .replace(/فضلا/g,'وكمان')                                // in addition → w kaman
+        .replace(/علاوة/g,'وكمان')                               // moreover → w kaman
+        .replace(/أخيرا/g,'اخيرا')                               // finally (fix hamza)
+        .replace(/في الختام/g,'بالاخير')                         // in conclusion → bil akheer
+        .replace(/وخلاصة/g,'بالاخير')                            // in conclusion → bil akheer
+        .replace(/النتيجة/g,'اللي طلع')                          // result → illi tala
+        .replace(/قد/g,'يمكن')                                   // may → yimkin
+        .replace(/كان/g,'كان')                                   // keep - common
+        .replace(/كانت/g,'كانت')                                 // keep - common
+        .replace(/لأن/g,'لان')                                   // because → la-an
+        .replace(/لأنه/g,'لانه')                                 // because → la-anhu
+        .replace(/لكن/g,'بس')                                    // but → bas
+        .replace(/بل/g,'بل')                                     // keep - rare in context
+        .replace(/إذا/g,'لو')                                    // if → law
+        .replace(/عند/g,'عند')                                   // keep - common Saudi
+        .replace(/عليه/g,'عليه')                                 // keep - common
+        .replace(/عليها/g,'عليها')                               // keep - common
+        .replace(/به/g,'به')                                     // keep - common
+        .replace(/بها/g,'بها')                                   // keep - common
+        .replace(/فيه/g,'فيه')                                   // keep - common Saudi
+        .replace(/فيها/g,'فيها')                                 // keep - common Saudi
+        .replace(/منه/g,'منه')                                   // keep - common
+        .replace(/منها/g,'منها')                                 // keep - common
+        .replace(/له/g,'له')                                     // keep - common Saudi
+        .replace(/لها/g,'لها')                                   // keep - common Saudi
+        .replace(/إليه/g,'له')                                  // to him → la
+        .replace(/إليها/g,'لها')                                 // to her → laha
+        .replace(/استخدام/g,'استخدام')                           // keep - common
+        .replace(/استطاع/g,'قدر')                                // could → qadar
+        .replace(/بعض/g,'بعض')                                   // keep
+        .replace(/كثير/g,'كثير')                                 // keep - common Saudi
+        .replace(/أو/g,'او')                                     // or (fix hamza)
+        .replace(/أم/g,'ام')                                     // or (fix hamza);
     }
     wrap.innerHTML = `
       <div class="vv-card-face vv-card-front">
