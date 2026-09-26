@@ -666,6 +666,108 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
 .vocab-ipa{ color:var(--text-muted); font-size:.86rem; margin-top:8px; }
 .vocab-cat{ margin-top:auto; }
 
+/* ---- Vocabulary Vault study mode (vv- scoped) ---- */
+.vv-shell{ max-width:920px; margin:0 auto; }
+.vv-toolbar{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:20px; }
+.vv-search{ flex:1; min-width:200px; display:flex; align-items:center; gap:8px; background:var(--card); border:1px solid var(--border); border-radius:13px; padding:10px 14px; }
+.vv-search input{ background:none; border:none; outline:none; color:var(--text); font-family:inherit; font-size:.85rem; width:100%; }
+.vv-search input::placeholder{ color:var(--text-faint); }
+.vv-cat-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:14px; margin-bottom:32px; }
+.vv-cat-card{ background:linear-gradient(180deg,rgba(255,255,255,.018),transparent 34%),var(--card); border:1px solid var(--border); border-radius:16px; padding:20px; cursor:pointer; display:flex; flex-direction:column; gap:10px; transition:.3s var(--ease); box-shadow:inset 0 1px 0 rgba(255,255,255,.03); }
+.vv-cat-card:hover{ border-color:var(--gold); transform:translateY(-3px); box-shadow:var(--shadow-soft); }
+.vv-cat-icon{ width:40px; height:40px; border-radius:13px; flex-shrink:0; background:linear-gradient(135deg,rgba(216,189,131,.36),rgba(168,131,69,.2) 60%,rgba(200,169,106,.12)); color:var(--gold-soft); display:flex; align-items:center; justify-content:center; }
+.vv-cat-icon [data-lucide]{ width:20px; height:20px; }
+.vv-cat-name{ font-family:'Fraunces',serif; font-size:1rem; font-weight:500; color:var(--text); line-height:1.3; }
+body.ui-ar .vv-cat-name{ font-family:'Cairo','Tajawal',sans-serif; }
+.vv-cat-count{ font-size:.76rem; color:var(--text-muted); }
+.vv-cat-count b{ color:var(--gold); }
+
+.vv-study-panel{ display:none; }
+.vv-study-panel.show{ display:block; }
+.vv-study-top{ display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; }
+.vv-back-btn{ background:var(--card); border:1px solid var(--border); color:var(--text-secondary); width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:border-color .3s var(--ease),color .3s var(--ease); flex-shrink:0; }
+.vv-back-btn:hover{ border-color:var(--gold); color:var(--gold); }
+.vv-back-btn [data-lucide]{ width:18px; height:18px; }
+.vv-study-title{ display:flex; align-items:center; gap:10px; }
+.vv-study-title .cat-label{ color:var(--text-muted); font-size:.82rem; font-weight:500; }
+.vv-study-stats{ display:flex; gap:16px; align-items:center; }
+.vv-stat{ display:flex; flex-direction:column; align-items:center; gap:2px; }
+.vv-stat .num{ font-family:'Fraunces',serif; font-size:1.1rem; font-weight:500; color:var(--gold); }
+body.ui-ar .vv-stat .num{ font-family:'Cairo','Tajawal',sans-serif; }
+.vv-stat .lbl{ font-size:.62rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:.08em; }
+body.ui-ar .vv-stat .lbl{ letter-spacing:0; text-transform:none; font-family:'Cairo','Tajawal',sans-serif; }
+.vv-study-ctrls{ display:flex; gap:8px; }
+.vv-ctrl-btn{ background:var(--card); border:1px solid var(--border); color:var(--text-secondary); width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:border-color .3s var(--ease),color .3s var(--ease); flex-shrink:0; }
+.vv-ctrl-btn:hover{ border-color:var(--gold); color:var(--gold); }
+.vv-ctrl-btn.active{ background:rgba(200,169,106,.12); border-color:var(--gold); color:var(--gold); }
+.vv-ctrl-btn [data-lucide]{ width:18px; height:18px; }
+
+.vv-progress-bar{ height:3px; background:rgba(255,255,255,.05); border-radius:3px; margin-bottom:24px; overflow:hidden; }
+.vv-progress-fill{ height:100%; background:var(--gold); transition:width .6s var(--ease); }
+
+.vv-card-scene{ perspective:1400px; margin-bottom:24px; }
+.vv-card-inner{ position:relative; width:100%; min-height:380px; transition:transform .6s var(--ease); transform-style:preserve-3d; cursor:pointer; }
+.vv-card-inner.flipped{ transform:rotateY(180deg); }
+.vv-card-face{ position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; background:linear-gradient(180deg,rgba(255,255,255,.018),transparent 34%),var(--card); border:1px solid var(--border); border-radius:20px; padding:32px; display:flex; flex-direction:column; box-shadow:inset 0 1px 0 rgba(255,255,255,.03),0 20px 60px -20px rgba(0,0,0,.55); }
+.vv-card-back{ transform:rotateY(180deg); overflow-y:auto; }
+.vv-card-top{ display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; }
+.vv-card-cat{ font-size:.76rem; font-weight:600; color:var(--gold); letter-spacing:.06em; text-transform:uppercase; background:rgba(200,169,106,.08); border:1px solid rgba(200,169,106,.2); padding:6px 14px; border-radius:999px; }
+body.ui-ar .vv-card-cat{ letter-spacing:0; text-transform:none; font-family:'Cairo','Tajawal',sans-serif; }
+.vv-card-diff{ font-size:.72rem; color:var(--text-muted); font-weight:500; }
+.vv-card-diff span{ color:var(--gold); }
+.vv-card-body{ flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; gap:8px; }
+.vv-card-word{ font-family:'Fraunces',Georgia,serif; font-size:clamp(2rem,5vw,3.5rem); font-weight:500; letter-spacing:-.02em; line-height:1.1; color:var(--text); }
+.vv-card-ipa{ font-size:clamp(.9rem,1.8vw,1.2rem); color:var(--gold-soft); font-family:monospace; }
+.vv-card-translit{ font-size:clamp(.9rem,2vw,1.2rem); color:var(--text-secondary); direction:ltr; }
+.vv-card-ar{ font-family:'Cairo','Tajawal',sans-serif; font-size:clamp(1.4rem,3.5vw,2.2rem); direction:rtl; color:var(--text); margin-top:6px; line-height:1.4; }
+.vv-speak-btn{ margin-top:14px; background:var(--card-elevated); border:1px solid var(--border); color:var(--gold); width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:border-color .3s var(--ease),color .3s var(--ease); }
+.vv-speak-btn:hover{ border-color:var(--gold); color:var(--gold); }
+.vv-speak-btn [data-lucide]{ width:20px; height:20px; }
+.vv-speak-btn.speaking{ animation:vv-pulse 1s ease-in-out infinite; }
+@keyframes vv-pulse{ 0%,100%{ box-shadow:0 0 0 0 rgba(200,169,106,.4); } 50%{ box-shadow:0 0 0 12px rgba(200,169,106,0); } }
+
+.vv-card-back-content{ flex:1; display:flex; flex-direction:column; gap:16px; justify-content:center; }
+.vv-example-label{ font-size:.72rem; color:var(--gold); text-transform:uppercase; letter-spacing:.08em; font-weight:600; text-align:center; }
+body.ui-ar .vv-example-label{ letter-spacing:0; text-transform:none; font-family:'Cairo','Tajawal',sans-serif; }
+.vv-example-en{ font-size:clamp(1rem,2vw,1.3rem); font-weight:500; line-height:1.5; text-align:center; direction:ltr; }
+.vv-example-ar{ font-family:'Cairo','Tajawal',sans-serif; font-size:clamp(1rem,2vw,1.2rem); direction:rtl; text-align:center; color:var(--text-secondary); line-height:1.6; }
+.vv-example-tr{ font-size:clamp(.85rem,1.5vw,1rem); color:var(--gold-soft); direction:ltr; text-align:center; }
+.vv-divider{ height:1px; background:var(--border); margin:2px 0; }
+.vv-meta-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.vv-meta-item{ background:var(--card-elevated); border:1px solid var(--border); border-radius:13px; padding:12px 14px; }
+.vv-meta-label{ font-size:.68rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:.06em; font-weight:600; margin-bottom:4px; }
+body.ui-ar .vv-meta-label{ letter-spacing:0; text-transform:none; font-family:'Cairo','Tajawal',sans-serif; }
+.vv-meta-val{ font-size:.82rem; color:var(--text-secondary); line-height:1.5; }
+body.ui-ar .vv-meta-val{ font-family:'Cairo','Tajawal',sans-serif; direction:rtl; }
+.vv-tip{ font-size:.85rem; color:var(--text-muted); text-align:center; line-height:1.6; background:rgba(200,169,106,.05); border:1px solid rgba(200,169,106,.12); border-radius:14px; padding:14px 18px; }
+body.ui-ar .vv-tip{ font-family:'Cairo','Tajawal',sans-serif; direction:rtl; }
+.vv-bookmark-btn{ margin-top:4px; background:none; border:1px solid var(--border); color:var(--text-muted); padding:8px 16px; border-radius:12px; font-size:.8rem; font-weight:600; cursor:pointer; transition:border-color .3s var(--ease),color .3s var(--ease); font-family:inherit; align-self:center; }
+.vv-bookmark-btn:hover{ border-color:var(--gold); color:var(--gold); }
+.vv-bookmark-btn.saved{ color:var(--gold); border-color:var(--gold); }
+
+.vv-nav{ display:flex; align-items:center; justify-content:space-between; padding:8px 0; }
+.vv-nav-btn{ background:var(--card); border:1px solid var(--border); color:var(--text); width:48px; height:48px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:border-color .3s var(--ease),color .3s var(--ease); flex-shrink:0; }
+.vv-nav-btn:hover{ border-color:var(--gold); color:var(--gold); }
+.vv-nav-btn:disabled{ opacity:.3; cursor:not-allowed; }
+.vv-nav-btn [data-lucide]{ width:22px; height:22px; }
+.vv-nav-center{ display:flex; flex-direction:column; align-items:center; gap:6px; }
+.vv-nav-dots{ display:flex; gap:6px; max-width:280px; overflow:hidden; }
+.vv-nav-dot{ width:8px; height:8px; border-radius:50%; background:var(--border); transition:.3s var(--ease); cursor:pointer; flex-shrink:0; }
+.vv-nav-dot.active{ background:var(--gold); width:24px; border-radius:4px; }
+.vv-nav-dot:hover{ background:var(--text-muted); }
+.vv-nav-progress{ font-size:.78rem; color:var(--text-muted); font-weight:500; }
+
+.vv-empty{ text-align:center; padding:48px 20px; }
+.vv-empty .icon{ width:44px; height:44px; color:var(--gold); margin:0 auto 16px; }
+
+@media(max-width:640px){
+  .vv-cat-grid{ grid-template-columns:1fr 1fr; }
+  .vv-card-face{ padding:24px 20px; }
+  .vv-meta-grid{ grid-template-columns:1fr; }
+  .vv-study-stats{ display:none; }
+}
+@media(max-width:380px){ .vv-cat-grid{ grid-template-columns:1fr; } }
+
 /* pronunciation + grammar topic grid */
 .topic-tile{ padding:20px; border-radius:16px; background:var(--card); border:1px solid var(--border); cursor:pointer; transition:.3s var(--ease); }
 .topic-tile:hover{ border-color:var(--gold); transform:translateY(-3px); }
@@ -17690,77 +17792,288 @@ function renderLessonReader(container, academy, lesson){
 function renderVocabulary(){
   const el = document.getElementById('view-vocabulary');
   el.dataset.rendered = '1';
-  const categories = ['All', ...new Set(VOCAB_BANK.map(v => v.category))];
+  const arMode = document.body.classList.contains('ui-ar');
+  const VV_CAT_ICONS = {
+    'Restaurant English':'utensils','Hospital English':'stethoscope','Business English':'briefcase',
+    'Airport English':'plane','Shopping English':'shopping-bag','Travel English':'globe',
+    'Workplace Communication':'building-2','Job Interview Academy':'user-check','Family':'users',
+    'Colors':'palette','Daily Life':'coffee','General':'book-open','Emergency English':'shield-alert',
+    'Driving English':'car','Hotel English':'bed-double','Saudi Greetings':'hand','Saudi Conversations':'message-circle',
+    'Saudi Hospital':'heart-pulse','Saudi Mosque Etiquette':'moon','Saudi Phone Calls':'phone','Saudi Travel':'map-pin',
+    'Saudi At Work':'briefcase','Coffee Shop English':'coffee','American Slang':'message-square','American Conversations':'messages-square',
+    'American Accent Lab':'mic','English Mastery':'graduation-cap','Fluency Journey':'wind','Idioms Library':'lightbulb',
+    'Listening Lounge':'headphones','Movie English':'film','Music English':'music','Phrasal Verbs Lab':'flask-conical',
+    'Reading Corner':'book-open','Speaking Studio':'mic','TV Series English':'tv','Writing Workshop':'pen-tool','Grammar Academy':'check-square',
+    'Vocabulary Vault':'book-open','Workplace':'building-2'
+  };
   el.innerHTML = `
     <div class="page-head">
       <span class="eyebrow"><span class="arabic" style="font-size:.95em;">خزنة المفردات</span>، Vocabulary Vault</span>
       <h1><span class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">كل كلمه، بثلاث لغات.</span><span dir="ltr">Every word, in three languages.</span></h1>
-      <p><span class="arabic" style="display:block; margin-bottom:4px;">اقلب البطاقه لترى المعنى بالعربي السعودي والنطق والمرادفات والاغلاط الشايعة.</span><span dir="ltr">Flip a card to see the Arabic (Saudi) meaning, pronunciation, synonyms and common mistakes.</span></p>
+      <p><span class="arabic" style="display:block; margin-bottom:4px;">اختر تصنيف وابدأ الدراسه. اقلب البطاقه لترى المعنى بالعربي السعودي والنطق والمرادفات.</span><span dir="ltr">Pick a category and start studying. Flip a card to see the Arabic (Saudi) meaning, pronunciation, synonyms and more.</span></p>
     </div>
-    <div class="lib-toolbar">
-      <div class="lib-search"><i data-lucide="search" width="15" height="15" style="color:var(--text-muted);"></i><label for="vocabSearch" class="sr-only">Search vocabulary</label><input type="text" id="vocabSearch" dir="auto" placeholder="ابحث في المفردات... / Search vocabulary..."></div>
-      <div id="vocabFilters" style="display:flex; gap:8px; flex-wrap:wrap;">${categories.map((c,i)=>`<button type="button" class="lib-filter${i===0?' active':''}" data-cat="${c}">${c}</button>`).join('')}</div>
-    </div>
-    <div class="grid grid-3" id="vocabGrid"></div>`;
-  function renderGrid(){
-    const q = (document.getElementById('vocabSearch').value||'').toLowerCase();
-    const cat = el.querySelector('.lib-filter.active').dataset.cat;
-    const filtered = VOCAB_BANK.filter(v => (cat==='All'||v.category===cat) && v.en.toLowerCase().includes(q));
-    const grid = document.getElementById('vocabGrid');
-    grid.innerHTML = filtered.map((v,i) => {
-      const wordKey = 'vocab-' + v.en.toLowerCase().replace(/\s+/g,'-');
-      const bm = isBookmarked('vocab', wordKey);
-      return `
-      <div class="flashcard-scene">
-        <div class="flashcard" data-idx="${i}">
-          <div class="flashcard-face">
-            <span class="chip gold">${escapeHtml(v.category||'')}</span>
-            <h3 class="vocab-word" style="margin-top:16px;" dir="ltr">${escapeHtml(v.en||'')}</h3>
-            <div class="arabic" style="font-size:.82rem; color:var(--text-muted);">${escapeHtml(translitEn(v.en||''))}</div>
-            <div class="arabic" style="margin-top:14px; font-size:1.05rem; color:var(--gold-soft);">${escapeHtml(v.ar||'')}</div>
-            <div class="vocab-cat" style="display:flex; justify-content:space-between; align-items:center;">
-              <span style="font-size:.7rem; color:var(--text-muted);"><span class="arabic">اضغط لقلب البطاقه</span>، Tap card to flip</span>
-              <button type="button" class="icon-btn speak-btn" data-speak="${escapeHtml(v.en||'')}" aria-label="Listen" style="width:34px; height:34px;"><i data-lucide="volume-2" width="14" height="14"></i></button>
-            </div>
+    <div class="vv-shell">
+      <div id="vvCategoryPanel">
+        <div class="vv-toolbar">
+          <div class="vv-search"><i data-lucide="search" width="15" height="15" style="color:var(--text-muted); flex-shrink:0;"></i><input type="text" id="vvSearch" dir="auto" placeholder="${arMode?'ابحث في المفردات...':'Search vocabulary...'}"></div>
+        </div>
+        <div class="vv-cat-grid" id="vvCatGrid"></div>
+      </div>
+      <div id="vvStudyPanel" class="vv-study-panel">
+        <div class="vv-study-top">
+          <div class="vv-study-title">
+            <button type="button" class="vv-back-btn" id="vvBackBtn" aria-label="Back"><i data-lucide="arrow-left"></i></button>
+            <span class="cat-label" id="vvCatLabel"></span>
           </div>
-          <div class="flashcard-face flashcard-back">
-            ${triplet(v.example ? v.example.en||'' : '', v.example ? v.example.ar||'' : '', v.example ? v.example.translit||'' : '')}
-            <p style="font-size:.76rem; color:var(--text-muted); margin-top:10px;"><b style="color:var(--text-secondary);"><span class="arabic">مرادفات</span>، Synonyms:</b> <span dir="ltr">${escapeHtml(v.synonyms||'')}</span></p>
-            <p style="font-size:.76rem; color:var(--text-muted); margin-top:4px;"><b style="color:var(--text-secondary);"><span class="arabic">اضداد</span>، Antonyms:</b> <span dir="ltr">${escapeHtml(v.antonyms||'')}</span></p>
-            <p style="font-size:.76rem; color:var(--text-muted); margin-top:4px;"><b style="color:var(--text-secondary);"><span class="arabic">تلازمات لفظية</span>، Collocations:</b> <span dir="ltr">${escapeHtml(v.collocations||'')}</span></p>
-            <div class="mistake-box" style="margin-top:10px;"><p style="font-size:.74rem; color:var(--text-secondary);" dir="ltr">${escapeHtml(v.tip||'')}</p></div>
-            <button type="button" class="btn-ghost-sm bookmark-word-btn" data-word="${escapeHtml(wordKey||'')}" data-en="${escapeHtml(v.en||'')}" data-ar="${escapeHtml(v.ar||'')}" style="margin-top:10px;">${bm?'★ <span class="arabic">محفوظه</span>، Bookmarked':'☆ <span class="arabic">احفظ الكلمه</span>، Save Word'}</button>
+          <div class="vv-study-stats">
+            <div class="vv-stat"><div class="num" id="vvStatSeen">0</div><div class="lbl">${arMode?'شفت':'Seen'}</div></div>
+            <div class="vv-stat"><div class="num" id="vvStatTotal">0</div><div class="lbl">${arMode?'المجموع':'Total'}</div></div>
+          </div>
+          <div class="vv-study-ctrls">
+            <button type="button" class="vv-ctrl-btn" id="vvShuffleBtn" aria-label="Shuffle"><i data-lucide="shuffle"></i></button>
           </div>
         </div>
+        <div class="vv-progress-bar"><div class="vv-progress-fill" id="vvProgressFill" style="width:0%"></div></div>
+        <div class="vv-card-scene" id="vvCardScene"></div>
+        <div class="vv-nav">
+          <button type="button" class="vv-nav-btn" id="vvPrevBtn" disabled><i data-lucide="chevron-left"></i></button>
+          <div class="vv-nav-center">
+            <div class="vv-nav-dots" id="vvNavDots"></div>
+            <div class="vv-nav-progress" id="vvNavProgress">1 / 0</div>
+          </div>
+          <button type="button" class="vv-nav-btn" id="vvNextBtn"><i data-lucide="chevron-right"></i></button>
+        </div>
+      </div>
+    </div>`;
+  // --- State ---
+  let vvCategory = null, vvDeck = [], vvOrder = [], vvCurrent = 0, vvFlipped = false, vvSeen = new Set();
+  const catPanel = document.getElementById('vvCategoryPanel');
+  const studyPanel = document.getElementById('vvStudyPanel');
+  const catGridEl = document.getElementById('vvCatGrid');
+  const cardScene = document.getElementById('vvCardScene');
+  const navDots = document.getElementById('vvNavDots');
+  const navProgress = document.getElementById('vvNavProgress');
+  const progressFill = document.getElementById('vvProgressFill');
+  const prevBtn = document.getElementById('vvPrevBtn');
+  const nextBtn = document.getElementById('vvNextBtn');
+  const shuffleBtn = document.getElementById('vvShuffleBtn');
+  const backBtn = document.getElementById('vvBackBtn');
+  const catLabel = document.getElementById('vvCatLabel');
+  const statSeen = document.getElementById('vvStatSeen');
+  const statTotal = document.getElementById('vvStatTotal');
+  // --- Category Picker ---
+  function renderCategoryPicker(){
+    const q = (document.getElementById('vvSearch').value||'').toLowerCase();
+    const cats = {};
+    VOCAB_BANK.forEach(v => { if(!cats[v.category]) cats[v.category] = 0; cats[v.category]++; });
+    const entries = Object.entries(cats)
+      .filter(([cat]) => cat.toLowerCase().includes(q))
+      .sort((a,b) => b[1] - a[1]);
+    catGridEl.innerHTML = entries.map(([cat,count]) => {
+      const icon = VV_CAT_ICONS[cat] || 'book-open';
+      const wordLabel = arMode ? 'كلمه' : 'word' + (count>1?'s':'');
+      return `<div class="vv-cat-card" data-cat="${escapeHtml(cat)}">
+        <div class="vv-cat-icon"><i data-lucide="${icon}"></i></div>
+        <div class="vv-cat-name">${escapeHtml(cat)}</div>
+        <div class="vv-cat-count"><b>${count}</b> ${wordLabel}</div>
       </div>`;
-    }).join('') || `<div class="empty-state" style="grid-column:1/-1;"><i class="empty-icon" data-lucide="search-x"></i><h3><span class="arabic" style="display:block; font-size:.8em; font-weight:400; color:var(--text-muted); margin-bottom:4px;">لم يتم العثور على كلمات</span>No words found</h3><p><span class="arabic" style="display:block; margin-bottom:4px;">جرب كلمه بحث اخرى.</span>Try another search term.</p></div>`;
-    grid.querySelectorAll('.flashcard').forEach(card => card.addEventListener('click', (e) => { if(!e.target.closest('button')) card.classList.toggle('flipped'); }));
-    grid.querySelectorAll('.speak-btn').forEach(btn => btn.addEventListener('click', e => { e.stopPropagation(); speak(btn.dataset.speak); }));
-    grid.querySelectorAll('.bookmark-word-btn').forEach(btn => btn.addEventListener('click', e => {
-      e.stopPropagation();
-      toggleBookmark('vocab', btn.dataset.word, btn.dataset.en, btn.dataset.ar);
-      const saved = isBookmarked('vocab', btn.dataset.word);
-      vocabStore = vocabStore.filter(v => v.en !== btn.dataset.en);
-      if(saved) vocabStore.unshift({en: btn.dataset.en, ar: btn.dataset.ar});
-      // Words the student explicitly saved also join the review queue, so
-      // a bookmarked word is scheduled for recall instead of just sitting
-      // in a list.
-      if(saved){
-        const bankWord = VOCAB_BANK.find(v => v.en === btn.dataset.en);
-        enqueueForReview(bankWord || { en: btn.dataset.en, ar: btn.dataset.ar }, 'Vocabulary Vault');
-      }
-      persistStudentState();
-      btn.innerHTML = saved ? '★ <span class="arabic">محفوظه</span>، Bookmarked' : '☆ <span class="arabic">احفظ الكلمه</span>، Save Word';
-      renderCtxLists();
-    }));
+    }).join('') || `<div class="vv-empty"><div class="icon"><i data-lucide="search-x" width="44" height="44"></i></div><h3>${arMode?'لم يتم العثور على كلمات':'No words found'}</h3><p>${arMode?'جرب كلمه بحث اخرى.':'Try another search term.'}</p></div>`;
+    catGridEl.querySelectorAll('.vv-cat-card').forEach(card => {
+      card.addEventListener('click', () => startStudy(card.dataset.cat));
+    });
     if(window.lucide) lucide.createIcons();
   }
-  document.getElementById('vocabSearch').addEventListener('input', renderGrid);
-  document.getElementById('vocabFilters').addEventListener('click', e => {
-    const btn = e.target.closest('.lib-filter'); if(!btn) return;
-    el.querySelectorAll('.lib-filter').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); renderGrid();
+  document.getElementById('vvSearch').addEventListener('input', renderCategoryPicker);
+  // --- Study Mode ---
+  function startStudy(category){
+    vvCategory = category;
+    vvDeck = VOCAB_BANK.filter(v => v.category === category);
+    vvOrder = vvDeck.map((_,i) => i);
+    catLabel.textContent = category;
+    statTotal.textContent = vvDeck.length;
+    vvSeen.clear();
+    renderStudyCard();
+    catPanel.style.display = 'none';
+    studyPanel.classList.add('show');
+    if(window.lucide) lucide.createIcons();
+  }
+  function backToCategories(){
+    studyPanel.classList.remove('show');
+    catPanel.style.display = '';
+  }
+  function renderStudyCard(){
+    cardScene.innerHTML = '';
+    vvOrder.forEach(i => {
+      const c = buildStudyCard(vvDeck[i]);
+      cardScene.appendChild(c);
+    });
+    if(cardScene.children.length) cardScene.children[0].classList.add('active');
+    buildNavDots();
+    vvCurrent = 0; vvFlipped = false; vvSeen.clear();
+    updateStudyProgress();
+    if(window.lucide) lucide.createIcons();
+  }
+  function buildStudyCard(v){
+    const wrap = document.createElement('div');
+    wrap.className = 'vv-card-inner enter-from-right';
+    wrap.style.cssText = 'position:relative;width:100%;min-height:380px;transition:transform .6s var(--ease),opacity .4s var(--ease);transform-style:preserve-3d;cursor:pointer;';
+    const wordKey = 'vocab-' + v.en.toLowerCase().replace(/\s+/g,'-');
+    const bm = isBookmarked('vocab', wordKey);
+    const diff = v.difficulty || '';
+    wrap.innerHTML = `
+      <div class="vv-card-face vv-card-front">
+        <div class="vv-card-top">
+          <span class="vv-card-cat">${escapeHtml(v.category||'')}</span>
+          <span class="vv-card-diff">${arMode?'المستوى':'Level'}: <span>${escapeHtml(diff)}</span></span>
+        </div>
+        <div class="vv-card-body">
+          <div class="vv-card-word">${escapeHtml(v.en||'')}</div>
+          <div class="vv-card-ipa">${escapeHtml(v.ipa||'')}</div>
+          <div class="vv-card-translit">${escapeHtml(v.translit||translitEn(v.en||''))}</div>
+          <div class="vv-card-ar">${escapeHtml(v.ar||'')}</div>
+          <button type="button" class="vv-speak-btn" data-speak="${escapeHtml(v.en||'')}" aria-label="Listen"><i data-lucide="volume-2"></i></button>
+        </div>
+      </div>
+      <div class="vv-card-face vv-card-back">
+        <div class="vv-card-top">
+          <span class="vv-card-cat">${escapeHtml(v.en||'')}</span>
+          <span class="vv-card-diff">${escapeHtml(diff)}</span>
+        </div>
+        <div class="vv-card-back-content">
+          <div class="vv-example-label">${arMode?'مثال':'Example'}</div>
+          <div class="vv-example-en">"${escapeHtml(v.example ? v.example.en||'' : '')}"</div>
+          <div class="vv-example-ar">${escapeHtml(v.example ? v.example.ar||'' : '')}</div>
+          <div class="vv-example-tr">${escapeHtml(v.example ? v.example.translit||'' : '')}</div>
+          <div class="vv-divider"></div>
+          <div class="vv-meta-grid">
+            <div class="vv-meta-item">
+              <div class="vv-meta-label">${arMode?'مرادفات':'Synonyms'}</div>
+              <div class="vv-meta-val">${escapeHtml(v.synonyms_ar||v.synonyms||'')}</div>
+            </div>
+            ${v.antonyms && v.antonyms !== '-' ? `<div class="vv-meta-item">
+              <div class="vv-meta-label">${arMode?'متضادات':'Antonyms'}</div>
+              <div class="vv-meta-val">${escapeHtml(v.antonyms_ar||v.antonyms||'')}</div>
+            </div>` : ''}
+          </div>
+          <div class="vv-meta-grid">
+            <div class="vv-meta-item">
+              <div class="vv-meta-label">${arMode?'عائله الكلمه':'Family'}</div>
+              <div class="vv-meta-val">${escapeHtml(v.family_ar||v.family||'')}</div>
+            </div>
+            <div class="vv-meta-item">
+              <div class="vv-meta-label">${arMode?'تلازمات':'Collocations'}</div>
+              <div class="vv-meta-val">${escapeHtml(v.collocations_ar||v.collocations||'')}</div>
+            </div>
+          </div>
+          <div class="vv-divider"></div>
+          <div class="vv-tip">${escapeHtml(v.tip_ar||v.tip||'')}</div>
+          <button type="button" class="vv-bookmark-btn${bm?' saved':''}" data-word="${escapeHtml(wordKey)}" data-en="${escapeHtml(v.en||'')}" data-ar="${escapeHtml(v.ar||'')}">${bm?'★ '+(arMode?'محفوظه':'Bookmarked'):'☆ '+(arMode?'احفظ الكلمه':'Save Word')}</button>
+        </div>
+      </div>`;
+    return wrap;
+  }
+  function buildNavDots(){
+    navDots.innerHTML = vvOrder.map((_,i) => `<div class="vv-nav-dot${i===0?' active':''}" data-idx="${i}"></div>`).join('');
+    navDots.querySelectorAll('.vv-nav-dot').forEach(d => d.addEventListener('click', () => goToCard(+d.dataset.idx)));
+  }
+  function updateStudyProgress(){
+    const pct = vvOrder.length ? ((vvCurrent+1)/vvOrder.length)*100 : 0;
+    progressFill.style.width = pct + '%';
+    navProgress.textContent = `${vvCurrent+1} / ${vvOrder.length}`;
+    navDots.querySelectorAll('.vv-nav-dot').forEach((d,i) => d.classList.toggle('active', i===vvCurrent));
+    prevBtn.disabled = vvCurrent === 0;
+    nextBtn.disabled = vvCurrent === vvOrder.length - 1;
+    vvSeen.add(vvCurrent);
+    statSeen.textContent = vvSeen.size;
+  }
+  function showStudyCard(idx, dir){
+    const cards = cardScene.children;
+    if(!cards.length || idx<0 || idx>=cards.length) return;
+    vvFlipped = false;
+    const oldCard = cards[vvCurrent];
+    const newCard = cards[idx];
+    if(oldCard && oldCard !== newCard){
+      oldCard.style.transform = dir > 0 ? 'translateX(-120%) rotateY(-15deg)' : 'translateX(120%) rotateY(15deg)';
+      oldCard.style.opacity = '0';
+    }
+    newCard.style.transform = dir > 0 ? 'translateX(120%) rotateY(15deg)' : 'translateX(-120%) rotateY(-15deg)';
+    newCard.style.opacity = '0';
+    requestAnimationFrame(() => {
+      newCard.style.transition = 'transform .6s var(--ease), opacity .4s var(--ease)';
+      newCard.style.transform = 'translateX(0) rotateY(0)';
+      newCard.style.opacity = '1';
+    });
+    vvCurrent = idx;
+    updateStudyProgress();
+  }
+  function flipCard(){
+    vvFlipped = !vvFlipped;
+    const card = cardScene.children[vvCurrent];
+    if(card){
+      card.style.transform = vvFlipped ? 'rotateY(180deg)' : 'rotateY(0)';
+    }
+  }
+  function flipThenAdvance(){
+    if(!vvFlipped){
+      flipCard();
+      setTimeout(() => {
+        if(vvCurrent < vvOrder.length-1) showStudyCard(vvCurrent+1, 1);
+      }, 2200);
+    } else {
+      if(vvCurrent < vvOrder.length-1) showStudyCard(vvCurrent+1, 1);
+    }
+  }
+  function goToCard(idx){
+    if(idx === vvCurrent){ flipCard(); return; }
+    showStudyCard(idx, idx > vvCurrent ? 1 : -1);
+  }
+  function vvShuffle(){
+    vvOrder.sort(() => Math.random() - .5);
+    renderStudyCard();
+  }
+  // --- Bookmark handler ---
+  function handleBookmark(btn){
+    const wordKey = btn.dataset.word;
+    const en = btn.dataset.en;
+    const ar = btn.dataset.ar;
+    toggleBookmark('vocab', wordKey, en, ar);
+    const saved = isBookmarked('vocab', wordKey);
+    vocabStore = vocabStore.filter(v => v.en !== en);
+    if(saved) vocabStore.unshift({en, ar});
+    if(saved){
+      const bankWord = VOCAB_BANK.find(v => v.en === en);
+      enqueueForReview(bankWord || {en, ar}, 'Vocabulary Vault');
+    }
+    persistStudentState();
+    btn.textContent = saved ? '★ '+(arMode?'محفوظه':'Bookmarked') : '☆ '+(arMode?'احفظ الكلمه':'Save Word');
+    btn.classList.toggle('saved', saved);
+    renderCtxLists();
+  }
+  // --- Event listeners ---
+  backBtn.addEventListener('click', backToCategories);
+  prevBtn.addEventListener('click', () => { if(vvCurrent > 0) showStudyCard(vvCurrent-1, -1); });
+  nextBtn.addEventListener('click', flipThenAdvance);
+  shuffleBtn.addEventListener('click', vvShuffle);
+  cardScene.addEventListener('click', (e) => {
+    const speakBtn = e.target.closest('[data-speak]');
+    if(speakBtn){ e.stopPropagation(); speak(speakBtn.dataset.speak); return; }
+    const bmBtn = e.target.closest('.vv-bookmark-btn');
+    if(bmBtn){ e.stopPropagation(); handleBookmark(bmBtn); return; }
+    if(e.target.closest('.vv-card-inner')) flipCard();
   });
-  renderGrid();
+  // Keyboard nav (scoped to vocab view)
+  function vvKeyHandler(e){
+    if(document.getElementById('view-vocabulary').style.display === 'none' || !studyPanel.classList.contains('show')) return;
+    switch(e.key){
+      case 'ArrowRight': case ' ': e.preventDefault(); flipThenAdvance(); break;
+      case 'ArrowLeft': e.preventDefault(); if(vvCurrent>0) showStudyCard(vvCurrent-1,-1); break;
+      case 'ArrowUp': case 'ArrowDown': case 'Enter': e.preventDefault(); flipCard(); break;
+      case 'Escape': e.preventDefault(); backToCategories(); break;
+    }
+  }
+  document.addEventListener('keydown', vvKeyHandler);
+  // --- Init ---
+  renderCategoryPicker();
   // A0 Pronunciation Cards, DB-backed (Supabase). Surfaces the foundational
   // 153-word dictionary with نطق + meaning + example + speak. No AI, rule-based
   // translit fallback. Anon can SELECT words (RLS allows it).
