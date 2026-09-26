@@ -2808,7 +2808,7 @@ async function questionsView(){
       '<th style="text-align:right;padding:8px;">'+esc(lang==='ar'?'المستوى':'Level')+'</th>'+
       '<th style="text-align:right;padding:8px;">'+esc(lang==='ar'?'السوال':'Question')+'</th>'+
       '<th style="text-align:right;padding:8px;">'+esc(lang==='ar'?'الحاله':'Status')+'</th>'+
-      '<th style="text-align:right;padding:8px;">'+esc(lang==='ar'?'اجراات':'Actions')+'</th>'+
+      '<th style="text-align:right;padding:8px;">'+esc(lang==='ar'?'اعمال':'Actions')+'</th>'+
       '</tr></thead><tbody>'+rowsHtml+'</tbody></table></div>';
     wire();
   }
