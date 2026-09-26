@@ -23,7 +23,7 @@
 <script src="lib/cert-qr.js?v=a43f19f9" defer></script>
 <script src="lib/cert-sheet.js?v=ece713aa" defer></script>
 <script src="lib/pel_config.js?v=d66df0a3"></script>
-<script src="lib/pel_lesson_stage.js?v=3e3f6bf4"></script>
+<script src="lib/pel_lesson_stage.js?v=0c020509"></script>
 <script src="lib/pel_dashboard_life.js?v=d42ab032"></script>
 <script src="lib/pel_curriculum_path.js?v=e4c5c297"></script>
 <style>
@@ -12926,7 +12926,7 @@ const LESSON_LIBRARY = {
     conversation:[
       {who:'Barista', ar:'تفضل، وش تبي؟', translit:'tafaddal, wesh tebi?', en:'Welcome, what would you like?'},
       {who:'You', ar:'ابي قهوه بارده وسط.', translit:'abi gahwa barda wasat', en:'I want a medium iced coffee.'},
-      {who:'Barista', ar:'مع حليب ولازمون؟', translit:'maa haleeb walla bidoon?', en:'With milk or without?'},
+      {who:'Barista', ar:'مع حليب ولا بدون؟', translit:'maa haleeb walla bidoon?', en:'With milk or without?'},
       {who:'You', ar:'مع حليب، وبدون سكر.', translit:'maa haleeb, wa bidoon sukkar', en:'With milk, and no sugar.'},
     ],
     quiz:[
@@ -16222,7 +16222,7 @@ window.pelConversationFit = function(userText, botLine){
   else if(/what do you do|what'?s your job|where do you work|what are you|what do you work|وين تشتغل|وش تشتغل|وش تسوي بالشغل|وظيفتك|شغلك/.test(b)) type='occupation';
   else if(/how much|how many|كم /.test(b)) type='quantity';
   else if(/do you|are you|can you|could you|have you|did you|would you|will you|is it|هل |عندك|تقدر|تقدر|ممكن/.test(b)) type='yesno';
-  else if(/where|وين|متى|when|what time|وش الوقت|why|ليش|what|وش|how come|عشان ج/.test(b)) type='info';
+  else if(/where|وين|متى|when|what time|وش الوقت|why|ليش|what|وش|how come|كيف ج/.test(b)) type='info';
 
   const isQuestion = /\?/.test(botLine||'') || type!=='general';
 
