@@ -159,7 +159,7 @@ var I = {
   'mainDifficulty':{en:'Main difficulty', ar:'الاكثر صعوبه'},
   'mainStrength':{en:'Strength', ar:'نقطه القوه'},
   'currentConcern':{en:'Current concern', ar:'القلق الحالي'},
-  'recommendedFocus':{en:'Recommended focus', ar:'الترعشانز الموصى به'},
+  'recommendedFocus':{en:'Recommended focus', ar:'التركيز الموصى به'},
   'whyRoute':{en:'Why PEL built this route', ar:'ليش بنى بيل ذا المسار'},
   'routeDuration':{en:'Estimated route duration', ar:'المده التقديريه للمسار'},
   'remainingStage':{en:'%d lessons left in current stage', ar:'باقي %d درس في المرحله الحاليه'},
@@ -215,7 +215,7 @@ var I = {
   'actor':{en:'Actor', ar:'المنفذ'},
   'target':{en:'Target', ar:'الهدف'},
   'when':{en:'When', ar:'متى'},
-  'check':{en:'Check', ar:'الينحص'},
+  'check':{en:'Check', ar:'الفحص'},
   'healthy':{en:'Healthy', ar:'سليم'},
   'issues':{en:'Issues', ar:'مشاكل'},
   'report':{en:'Report', ar:'التقرير'},
@@ -239,7 +239,7 @@ var I = {
   'lastStudy':{en:'Last study day', ar:'اخر يوم دراسه'},
   'longestStreak':{en:'Longest streak', ar:'اطول استمرار'},
   'permissionDenied':{en:'Permission denied.', ar:'صلاحيه مرفوضه.'},
-  'confirmAction':{en:'Confirm action', ar:'تاعشاند الاجرا'},
+  'confirmAction':{en:'Confirm action', ar:'تاكيد الاجرا'},
   'createGroup':{en:'New group', ar:'مجموعه جديده'},
   'editGroup':{en:'Edit group', ar:'تعديل المجموعه'},
   'newTeacher':{en:'New teacher', ar:'معلم جديد'},
@@ -282,7 +282,7 @@ var I = {
   'changeRole':{en:'Change role', ar:'تغيير الدور'},
   'confirmChange':{en:'Are you sure? This is recorded in the audit log.', ar:'متاكد؟ بنحذف تسجيل ذاك في سجل التدقيق.'},
   'refresh':{en:'Refresh', ar:'تحديث'},
-  'checks':{en:'Checks', ar:'الينحوصات'},
+  'checks':{en:'Checks', ar:'الفحوصات'},
   'type':{en:'Type', ar:'النوع'},
   'createdAt':{en:'Created', ar:'انشي في'},
   'date':{en:'Date', ar:'التاريخ'},
@@ -718,7 +718,7 @@ var NAV = [
     {id:'classes', en:'Live Classes', ar:'الدروس المباشره', icon:'video'},
     {id:'programs', en:'Programs', ar:'البرامج', icon:'credit-card'},
     {id:'plans', en:'Plans', ar:'الباقات', icon:'badge-check', perm:'subscriptions.manage'},
-    {id:'billing', en:'Billing & Index', ar:'الينوتره والبدايه', icon:'wallet', perm:'subscriptions.manage'},
+    {id:'billing', en:'Billing & Index', ar:'الفوتره والبدايه', icon:'wallet', perm:'subscriptions.manage'},
     {id:'liveClasses', en:'Class Requests', ar:'طلبات الحصص', icon:'ticket', perm:'subscriptions.manage'},
     {id:'settings', en:'Site Settings', ar:'اعدادات الموقع', icon:'settings', perm:'settings.manage'},
   ]},
@@ -1251,7 +1251,7 @@ var tabs = [
   if(delBtn){
     delBtn.addEventListener('click', async function(){
       if(!confirm(lang === 'ar' ? 'بنحذف حذف حساب الطالب وكل بياناته نهائيا (تبقى الشهادات بس). متابعه؟' : 'This permanently deletes the student account and ALL their history (certificates are kept). Continue?')){ return; }
-      if(!confirm(lang === 'ar' ? 'تاعشاند اخوير: ذا الاجرا لا تقدر التراجع عنه.' : 'Final confirmation: this cannot be undone.')){ return; }
+      if(!confirm(lang === 'ar' ? 'تاكيد اخوير: ذا الاجرا لا تقدر التراجع عنه.' : 'Final confirmation: this cannot be undone.')){ return; }
       delBtn.disabled = true;
       var r = await rpc('admin_student_delete', { p_user_id: current360Uid });
       if(!r.ok){ delBtn.disabled = false; toast((r.error && r.error.message) || t('permissionDenied'), true); return; }
@@ -1391,7 +1391,7 @@ function renderTabLearning(plan, st, kv, d){
   var concern = [];
   if(health.difficulty) concern.push(health.difficulty.txt);
   if(attention.length >= 2) concern.push(t('missedLiveReason').replace('%d', arNum(attention.length)));
-  if(health.weak.length) concern.push(lang === 'ar' ? 'الترعشانز المطلوب: ' + health.weak[0].nameAr : 'Focus area: ' + health.weak[0].name);
+  if(health.weak.length) concern.push(lang === 'ar' ? 'التركيز المطلوب: ' + health.weak[0].nameAr : 'Focus area: ' + health.weak[0].name);
 
   var whyHtml = '';
   if(window.PEL_ENGINE && plan && plan.profile && plan.route){
@@ -1457,7 +1457,7 @@ function renderTabPersonalization(plan){
   var help = '<div class="notice" style="margin-bottom:14px;"><div style="font-weight:600;">' + esc(lang==='ar'?'من وين تجي هذي المعلومات؟':'Where this data comes from') + '</div>' +
     '<div style="margin-top:6px; font-size:.8rem; color:var(--text-muted); line-height:1.7;">' +
     esc(lang==='ar'
-      ? 'هذي خطه الطالب اللي يبنيها بنفسه: يجاوب على اساله الاهداف والوقت اليومي اول ما يدخل التطبيق او من صفحه البدايه. اذا بنى خطته، تشوف هنا هدفه ووقته ووتيرته. اذا الينضا فاضي، يعني الطالب ما بنى خطته لسه - اساله يدخل التطبيق ويبنيها، وبتقدر بعدها تسند له الباقه المناسبه.'
+      ? 'هذي خطه الطالب اللي يبنيها بنفسه: يجاوب على اساله الاهداف والوقت اليومي اول ما يدخل التطبيق او من صفحه البدايه. اذا بنى خطته، تشوف هنا هدفه ووقته ووتيرته. اذا الفضا فاضي، يعني الطالب ما بنى خطته لسه - اساله يدخل التطبيق ويبنيها، وبتقدر بعدها تسند له الباقه المناسبه.'
       : 'This is the plan the student builds themselves: they answer the goal and daily-time questions on first sign-in or from the home page. Once built, you see their goal, pace and route here. If this is empty, the student has not built their plan yet - have them sign in and build it, then assign the right plan.') +
     '</div></div>';
   if(!plan || !plan.profile){
@@ -2572,7 +2572,7 @@ function programForm(){
    (hero / pricing copy). No payment gateway - CTAs are WhatsApp.
    ============================================================ */
 async function billingView(){
-  $('viewArea').innerHTML = pageHead(lang==='ar'?'الينوتره والبدايه':'Billing & Index',
+  $('viewArea').innerHTML = pageHead(lang==='ar'?'الفوتره والبدايه':'Billing & Index',
     lang==='ar'?'عدل اسعار الباقات ونص الصفحه البدايه - التغييرات توصل لـ /index فوراً':'Edit plan prices and index copy - changes reach /index immediately') + loadingBlock();
   var c = client();
   var [pp, ss] = await Promise.all([
@@ -2610,8 +2610,8 @@ async function billingView(){
     '<div class="card" style="margin-bottom:16px;"><div class="form-grid">' +
     '<div class="field full"><label>'+(lang==='ar'?'عنوان البطل (عربي)':'Hero headline (AR)')+'</label><textarea class="input" rows="2" data-ix="hero_headline_ar">'+esc(val('hero_headline_ar'))+'</textarea></div>' +
     '<div class="field full"><label>'+(lang==='ar'?'عنوان البطل (انجليزي)':'Hero headline (EN)')+'</label><textarea class="input" rows="2" data-ix="hero_headline_en">'+esc(val('hero_headline_en'))+'</textarea></div>' +
-    '<div class="field full"><label>'+(lang==='ar'?'العنوان الينرعي (عربي)':'Hero sub (AR)')+'</label><textarea class="input" rows="2" data-ix="hero_sub_ar">'+esc(val('hero_sub_ar'))+'</textarea></div>' +
-    '<div class="field full"><label>'+(lang==='ar'?'العنوان الينرعي (انجليزي)':'Hero sub (EN)')+'</label><textarea class="input" rows="2" data-ix="hero_sub_en">'+esc(val('hero_sub_en'))+'</textarea></div>' +
+    '<div class="field full"><label>'+(lang==='ar'?'العنوان الفرعي (عربي)':'Hero sub (AR)')+'</label><textarea class="input" rows="2" data-ix="hero_sub_ar">'+esc(val('hero_sub_ar'))+'</textarea></div>' +
+    '<div class="field full"><label>'+(lang==='ar'?'العنوان الفرعي (انجليزي)':'Hero sub (EN)')+'</label><textarea class="input" rows="2" data-ix="hero_sub_en">'+esc(val('hero_sub_en'))+'</textarea></div>' +
     '<div class="field full"><label>'+(lang==='ar'?'ملاحظه الباقات (عربي)':'Pricing note (AR)')+'</label><textarea class="input" rows="2" data-ix="pricing_note_ar">'+esc(val('pricing_note_ar'))+'</textarea></div>' +
     '<div class="field full"><label>'+(lang==='ar'?'ملاحظه الباقات (انجليزي)':'Pricing note (EN)')+'</label><textarea class="input" rows="2" data-ix="pricing_note_en">'+esc(val('pricing_note_en'))+'</textarea></div>' +
     '</div></div>';
@@ -2632,7 +2632,7 @@ async function billingView(){
     '<div class="btn-row" style="margin-bottom:8px;"><button class="btn btn-outline btn-sm" id="faqAdd">'+esc(lang==='ar'?'سوال جديد':'Add question')+'</button></div>';
   indexHtml += faqHtml;
 
-  $('viewArea').innerHTML = pageHead(lang==='ar'?'الينوتره والبدايه':'Billing & Index',
+  $('viewArea').innerHTML = pageHead(lang==='ar'?'الفوتره والبدايه':'Billing & Index',
     lang==='ar'?'عدل اسعار الباقات ونص الصفحه البدايه':'Edit plan prices and index copy') +
     '<div class="btn-row" style="margin-bottom:16px;"><button class="btn btn-gold btn-sm" id="ppSave">'+esc(t('save'))+'</button>' +
     '<span class="why">'+(lang==='ar'?'الدفع عبر واتساب - ما في بوابه دفع':'WhatsApp checkout only - no payment gateway')+'</span></div>' +
@@ -3020,7 +3020,7 @@ var prevWrap = $('ciPreviewWrap');
    18. AUDIT LOG (Phase 35)
    ============================================================ */
 async function roles(){
-  $('viewArea').innerHTML = pageHead(t('roles'), lang === 'ar' ? 'الينريق والادوار' : 'Team and roles') + loadingBlock();
+  $('viewArea').innerHTML = pageHead(t('roles'), lang === 'ar' ? 'الفريق والادوار' : 'Team and roles') + loadingBlock();
   var r = await rpc('admin_team');
   if(!r.ok){ $('viewArea').innerHTML = errBlock(rpcErrMsg(r)); return; }
   var rows = r.data || [];

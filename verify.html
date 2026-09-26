@@ -420,7 +420,7 @@ document.getElementById('numForm').addEventListener('submit', function(e){
     showNumResult(true, 'رقم سليم: تاريخ الاصدار ' + d.slice(0,2) + '/' + d.slice(2,4) + '/' + '20' + d.slice(0,2) + ' ورقم التحقق مطابق.',
       'Valid number: issued ' + '20' + d.slice(0,2) + '-' + d.slice(2,4) + '-' + d.slice(4,6) + ', checksum matches. Authenticity still requires the secret verification code.');
   }else{
-    showNumResult(false, 'رقم مزور او تالين: خانه التحقق غير مطابقه.', 'This number is forged or corrupted: the checksum digit does not match.');
+    showNumResult(false, 'رقم مزور او تالف: خانه التحقق غير مطابقه.', 'This number is forged or corrupted: the checksum digit does not match.');
   }
 });
 document.getElementById('retryBtn').addEventListener('click', () => {

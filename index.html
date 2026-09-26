@@ -29,8 +29,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;500;700&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
-<script src="lib/daily-lesson.js?v=0e630c50" defer></script>
-<script src="lib/pel-personalization.js?v=83c2a27d" defer></script>
+<script src="lib/daily-lesson.js?v=4de3f5bb" defer></script>
+<script src="lib/pel-personalization.js?v=34905d6b" defer></script>
 <script src="lib/onboard.js?v=675e2760" defer></script>
 <script src="lib/pel-assessment.js?v=1cacf139" defer></script>
 <style>
@@ -1221,7 +1221,7 @@ section{ padding-top:70px; padding-bottom:70px; }
         </div>
         <div style="display:flex; gap:12px; align-items:center; padding:14px 16px; border-radius:14px; background:rgba(200,169,106,.06); border:1px solid rgba(200,169,106,.15);">
           <span style="min-width:48px; height:48px; border-radius:14px; background:linear-gradient(135deg,var(--gold),var(--gold-soft)); color:#171412; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:1rem; box-shadow:0 4px 16px -4px rgba(200,169,106,.4);">A2</span>
-          <div><div style="font-weight:700; font-size:1rem;">انجليزي الشغل</div><div style="font-size:.78rem; color:var(--text-muted); margin-top:2px;">ترعشانزك: محادثه واستماع</div></div>
+          <div><div style="font-weight:700; font-size:1rem;">انجليزي الشغل</div><div style="font-size:.78rem; color:var(--text-muted); margin-top:2px;">تركيزك: محادثه واستماع</div></div>
         </div>
         <div class="pp-route">
           <div style="padding-left:10px;"><div class="route-label">اليوم</div><div style="font-size:.9rem; margin-top:3px;">تبدا محادثه في الشغل</div></div>
@@ -1370,7 +1370,7 @@ section{ padding-top:70px; padding-bottom:70px; }
         html += '</ul>';
         var waText = ar ? ('السلام عليكم، ابي اشترك بباقه '+dl+' من خطه '+(tier==='exam_prep'?'التجهيز للاختبارات':'ابد من الصفر')+' بـ '+r.price+' ريال. وش طريقه الدفع؟') : ('Hello, I want the '+dl+' plan ('+tier+') at '+r.price+' SAR. How do I pay?');
         html += '<a href="'+waLink(waText)+'" target="_blank" rel="noopener" class="'+(r.featured?'btn-gold':'btn-outline')+' magnetic" data-magnetic>'+(ar?'سجل عن طريق واتساب':'Enroll via WhatsApp')+'</a>';
-        html += '<div style="margin-top:10px;font-size:.72rem;color:var(--text-muted);text-align:center;">'+(ar?'التنشيط خلال دقايق لسه التاعشاند اليدوي':'Activation within minutes after manual confirmation')+'</div>';
+        html += '<div style="margin-top:10px;font-size:.72rem;color:var(--text-muted);text-align:center;">'+(ar?'التنشيط خلال دقايق لسه التاكيد اليدوي':'Activation within minutes after manual confirmation')+'</div>';
         html += '</div>';
       }
       html += '</div>'; // subgrid
@@ -1596,7 +1596,7 @@ function applyIndexLang(lang){
   var ppH2=document.querySelector('#personalPreview h2');
   if(ppH2) ppH2.textContent = lang==='ar' ? 'اختبار دقيقتين يحدد مستواك وهدفك' : 'Tell us what you need, we build the path';
   var ppCols=document.querySelectorAll('#personalPreview .reveal > div');
-  var ppAr={say:'انت تقول', items:['ابي انجليزي للشغل','المحادثه صعبه علي','ايمكنر ادرس 20 دقيقه يوميا'], build:'PEL يبني', path:'انجليزي الشغل', focus:'ترعشانزك: محادثه واستماع', todayL:'اليوم', todayV:'تبدا محادثه في الشغل', nextL:'بعدها', nextV:'تسال زميلك عن مساعده', laterL:'بعدين', laterV:'اجتماعات، عملا، مقابلات'};
+  var ppAr={say:'انت تقول', items:['ابي انجليزي للشغل','المحادثه صعبه علي','ايمكنر ادرس 20 دقيقه يوميا'], build:'PEL يبني', path:'انجليزي الشغل', focus:'تركيزك: محادثه واستماع', todayL:'اليوم', todayV:'تبدا محادثه في الشغل', nextL:'بعدها', nextV:'تسال زميلك عن مساعده', laterL:'بعدين', laterV:'اجتماعات، عملا، مقابلات'};
   var ppEn={say:'You tell PEL', items:['I need English for work','Speaking is hard for me','I can study 20 minutes a day'], build:'PEL builds', path:'Workplace English', focus:'Focus: speaking + listening', todayL:'Today', todayV:'Start a conversation at work', nextL:'Next', nextV:'Ask a coworker for help', laterL:'Later', laterV:'Meetings, customers, interviews'};
   var ppData = lang==='ar'?ppAr:ppEn;
   if(ppCols.length>=2){
@@ -1627,7 +1627,7 @@ function applyIndexLang(lang){
   var ppPathName=document.querySelector('#personalPreview .pp-build div[style*="font-weight:700"][style*="1rem"]');
   if(ppPathName) ppPathName.textContent = lang==='ar' ? 'انجليزي الشغل' : 'Workplace English';
   var ppPathFocus=document.querySelector('#personalPreview .pp-build div[style*="font-size:.78rem"]');
-  if(ppPathFocus) ppPathFocus.textContent = lang==='ar' ? 'ترعشانزك: محادثه واستماع' : 'Focus: speaking + listening';
+  if(ppPathFocus) ppPathFocus.textContent = lang==='ar' ? 'تركيزك: محادثه واستماع' : 'Focus: speaking + listening';
   var ppRoutes=document.querySelectorAll('#personalPreview .pp-route');
   var ppRouteAr=[{l:'اليوم',v:'تبدا محادثه في الشغل'},{l:'بعدها',v:'تسال زميلك عن مساعده'},{l:'بعدين',v:'اجتماعات، عملا، مقابلات'}];
   var ppRouteEn=[{l:'Today',v:'Start a conversation at work'},{l:'Next',v:'Ask a coworker for help'},{l:'Later',v:'Meetings, customers, interviews'}];
@@ -1736,7 +1736,7 @@ function applyIndexLang(lang){
   var ppP=document.querySelector('#personalPreview .section-head p');
   if(ppP) ppP.textContent = lang==='ar' ? 'PEL ما يعطي الكل نفس الدروس. قل لنا وش تبي الانجليزي لاجله، ونبني لك خطه على مقاس هدفك ومستواك ووقتك' : 'PEL does not give everyone the same lessons. Tell us what you need English for, and we build a plan around your goal, level and time.';
   var ppCards=document.querySelectorAll('#personalPreview .card');
-  var ppAr=[{k:'شغل',t:'انجليزي الشغل',d:'ترعشانزك: محادثه<br>وقتك: 20 دقيقه يوميا<br>مواقف: اجتماع، ايميل، مكالمه'},{k:'سفر',t:'انجليزي السفر',d:'ترعشانزك: استماع<br>وقتك: 15 دقيقه يوميا<br>مواقف: مطار، فندق، مطعم'},{k:'سوالف يوميه',t:'انجليزي يومي',d:'ترعشانزك: محادثه<br>وقتك: 15 دقيقه يوميا<br>مواقف: سوالف، طلبات، مساعده'}];
+  var ppAr=[{k:'شغل',t:'انجليزي الشغل',d:'تركيزك: محادثه<br>وقتك: 20 دقيقه يوميا<br>مواقف: اجتماع، ايميل، مكالمه'},{k:'سفر',t:'انجليزي السفر',d:'تركيزك: استماع<br>وقتك: 15 دقيقه يوميا<br>مواقف: مطار، فندق، مطعم'},{k:'سوالف يوميه',t:'انجليزي يومي',d:'تركيزك: محادثه<br>وقتك: 15 دقيقه يوميا<br>مواقف: سوالف، طلبات، مساعده'}];
   var ppEn=[{k:'Work',t:'Work English',d:'Focus: speaking<br>Time: 20 min a day<br>Situations: meeting, email, call'},{k:'Travel',t:'Travel English',d:'Focus: listening<br>Time: 15 min a day<br>Situations: airport, hotel, restaurant'},{k:'Everyday',t:'Everyday English',d:'Focus: conversation<br>Time: 15 min a day<br>Situations: small talk, requests, help'}];
   ppCards.forEach(function(card,i){
     var data = lang==='ar'?ppAr[i]:ppEn[i];
@@ -1831,7 +1831,7 @@ function applyIndexLang(lang){
     {name:'علي القحطاني',role:'طالب جامعاي الدمام',quote:'كنت اذا جاني برزنتيشن بالانجليزي اقعد احفظ الكلام كله قبل اعرضه الحين صرت اتكلم من راسي اكثر وما عاد اخاف اذا نسيت جمله'},
     {name:'لينا حسن',role:'صيدلانيه دبي',quote:'شغلي كله بالانجليزي بس كنت احيانا اتردد اذا احتجت اشرح شي بالتفصيل لمريض الفرق لسه الدروس ان لامي صار اسلس وثقتي اكبر'},
     {name:'يوسف عبدالسلام',role:'مطور برامج القاهره',quote:'القراوه عندي كانت كويسه لكن الكلام لا اول ما يدخل ميتنج ابقى ساكت دلوقتي بقيت اشارك عادي حتى لو غلطت بكمل ومبقتش اخاف من الموضوع'},
-    {name:'دانه العمري',role:'طالبه ثانوي جده',quote:'كنت احب الانجليزي بس اذا طلبت مني الابله اتكلم قدام الينصل اتوتر مره الحين صرت اجاوب ببدون ما افكر كثير واحس نفسي ارتحت صراحه مررره ما قصر'},
+    {name:'دانه العمري',role:'طالبه ثانوي جده',quote:'كنت احب الانجليزي بس اذا طلبت مني الابله اتكلم قدام الفصل اتوتر مره الحين صرت اجاوب ببدون ما افكر كثير واحس نفسي ارتحت صراحه مررره ما قصر'},
     {name:'خالد الهاجري',role:'مدير مبيعات الكويت',quote:'اسافر كثير بحكم الشغل ودايم احتاج اتكلم مع عملا من برا قبل كنت افكر بكل جمله قبل اقولها الحين الامور تمشي بشكل طبيعي وايد'}
   ];
   var testiEn=[
@@ -2087,7 +2087,7 @@ window.addEventListener('storage', function(e){ if(e.key==='pel_account_prefs') 
   var phrases = [
     { tag:'في الشغل', en:'Could you send me the details?', ar:'تقدر ترسل لي التفاصيل؟', phon:'كود يو سند مي ذا ديتيلز' },
     { tag:'في المطار', en:'How long does it take?', ar:'كم ياخذ وقت؟', phon:'هاو لونغ داز ات تيك' },
-    { tag:'في المطعم', en:'Can I get the receipt?', ar:'ممكن اليناتوره؟', phon:'كان اي جيت ذا ريسيت' },
+    { tag:'في المطعم', en:'Can I get the receipt?', ar:'ممكن الفاتوره؟', phon:'كان اي جيت ذا ريسيت' },
     { tag:'تعارف', en:'Nice to meet you', ar:'فرصه مبسوطه', phon:'نايس تو ميت يو' },
     { tag:'في الدوام', en:'I will get back to you', ar:'برد عليك', phon:'اي ويل جيت باك تو يو' }
   ];
@@ -2131,8 +2131,8 @@ const faqs = [
   {qAr:'لازم اعرف انجليزي قبل؟', aAr:'لا. تختبر مستواك وتنبني خطه على اساسه. لو ما تعرف ولا كلمه، نبدا من الحروف.', qEn:'Do I need to know English first?', aEn:'No. You take a level test and we build your plan from there. If you don\'t know a single word, we start from the alphabet.'},
   {qAr:'المنهج امريكي فعلاً؟', aAr:'اي والله. كل درس وتسجيل ونطق مبني على اللهجه الامريكيه.', qEn:'Is it really American English?', aEn:'Yes. Every lesson, recording, and pronunciation is built on American English.'},
   {qAr:'الشرح بالعربي؟', aAr:'اي والله. كل درس مشروح بالعربي، والكلمات الجديده مكتوب نطقها بجانبها.', qEn:'Is it explained in Arabic?', aEn:'Yes. Every lesson is explained in Arabic, and new words have their pronunciation written next to them.'},
-  {qAr:'ايمكنر ادرس من الجوال؟', aAr:'اعشاند. المنصه تشتغل على الجوال والتابلت. تكمّل من وين ما وقفت.', qEn:'Can I study on my phone?', aEn:'Yes. The platform works on phones and tablets. You pick up where you left off.'},
-  {qAr:'كم مده الاشتراك؟', aAr:'شهر، شهرين، او 3 اشهر. انت تختار. خلال هالينتره كل الدروس متاحه لك.', qEn:'How long is the subscription?', aEn:'One month, two months, or three months. You choose. All lessons are available to you during that time.'},
+  {qAr:'ايمكنر ادرس من الجوال؟', aAr:'اكيد. المنصه تشتغل على الجوال والتابلت. تكمّل من وين ما وقفت.', qEn:'Can I study on my phone?', aEn:'Yes. The platform works on phones and tablets. You pick up where you left off.'},
+  {qAr:'كم مده الاشتراك؟', aAr:'شهر، شهرين، او 3 اشهر. انت تختار. خلال هالفتره كل الدروس متاحه لك.', qEn:'How long is the subscription?', aEn:'One month, two months, or three months. You choose. All lessons are available to you during that time.'},
   {qAr:'تقدرون تترجمون لي؟', aAr:'اي والله. تترجم اي كلمه او جمله وانت تتعلم. واذا كتبت شي، نصحح لك ونقولك وين الغلط.', qEn:'Can you translate for me?', aEn:'Yes. You can translate any word or sentence while you learn. And if you write something, we correct it and show you where the mistakes are.'},
   {qAr:'اشوف تقدمي؟', aAr:'اي والله. لوحتك تشوف وين وصلت في المحادثه والاستماع والمفردات، اسبوع باسبوع.', qEn:'Can I see my progress?', aEn:'Yes. Your dashboard shows where you are in speaking, listening, and vocabulary, week by week.'},
   {qAr:'كم سعر الاشتراك؟', aAr:'مسارين: ابد من الصفر يبدا من 800 ريال بالشهر، والتجهيز للاختبارات يبدا من 1000 ريال. كل الباقات فيها حصص مباشره. تدفع عبر واتساب ونتفعّل حسابك خلال دقايق. شوف الباقات بالتفصيل فوق.', qEn:'How much?', aEn:'Two tracks: Start From Zero starts at 800 SAR/month, Exam Prep starts at 1000 SAR/month. All plans include live classes. Pay via WhatsApp, activated in minutes. See the plans above for details.'},
