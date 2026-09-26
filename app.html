@@ -705,8 +705,9 @@ body.ui-ar .vv-stat .lbl{ letter-spacing:0; text-transform:none; font-family:'Ca
 .vv-progress-bar{ height:3px; background:rgba(255,255,255,.05); border-radius:3px; margin-bottom:24px; overflow:hidden; }
 .vv-progress-fill{ height:100%; background:var(--gold); transition:width .6s var(--ease); }
 
-.vv-card-scene{ perspective:1400px; margin-bottom:24px; }
-.vv-card-inner{ position:relative; width:100%; min-height:380px; transition:transform .6s var(--ease); transform-style:preserve-3d; cursor:pointer; }
+.vv-card-scene{ perspective:1400px; margin-bottom:24px; position:relative; min-height:480px; }
+.vv-card-inner{ position:absolute; inset:0; opacity:0; pointer-events:none; transition:transform .6s var(--ease),opacity .4s var(--ease); transform-style:preserve-3d; cursor:pointer; }
+.vv-card-inner.active{ opacity:1; pointer-events:auto; }
 .vv-card-inner.flipped{ transform:rotateY(180deg); }
 .vv-card-face{ position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; background:linear-gradient(180deg,rgba(255,255,255,.018),transparent 34%),var(--card); border:1px solid var(--border); border-radius:20px; padding:32px; display:flex; flex-direction:column; box-shadow:inset 0 1px 0 rgba(255,255,255,.03),0 20px 60px -20px rgba(0,0,0,.55); }
 .vv-card-back{ transform:rotateY(180deg); overflow-y:auto; }
@@ -17915,8 +17916,7 @@ function renderVocabulary(){
   }
   function buildStudyCard(v){
     const wrap = document.createElement('div');
-    wrap.className = 'vv-card-inner enter-from-right';
-    wrap.style.cssText = 'position:relative;width:100%;min-height:380px;transition:transform .6s var(--ease),opacity .4s var(--ease);transform-style:preserve-3d;cursor:pointer;';
+    wrap.className = 'vv-card-inner';
     const wordKey = 'vocab-' + v.en.toLowerCase().replace(/\s+/g,'-');
     const bm = isBookmarked('vocab', wordKey);
     const diff = v.difficulty || '';
@@ -17993,16 +17993,10 @@ function renderVocabulary(){
     const oldCard = cards[vvCurrent];
     const newCard = cards[idx];
     if(oldCard && oldCard !== newCard){
-      oldCard.style.transform = dir > 0 ? 'translateX(-120%) rotateY(-15deg)' : 'translateX(120%) rotateY(15deg)';
-      oldCard.style.opacity = '0';
+      oldCard.classList.remove('active','flipped');
     }
-    newCard.style.transform = dir > 0 ? 'translateX(120%) rotateY(15deg)' : 'translateX(-120%) rotateY(-15deg)';
-    newCard.style.opacity = '0';
-    requestAnimationFrame(() => {
-      newCard.style.transition = 'transform .6s var(--ease), opacity .4s var(--ease)';
-      newCard.style.transform = 'translateX(0) rotateY(0)';
-      newCard.style.opacity = '1';
-    });
+    newCard.classList.add('active');
+    newCard.classList.remove('flipped');
     vvCurrent = idx;
     updateStudyProgress();
   }
@@ -18010,7 +18004,7 @@ function renderVocabulary(){
     vvFlipped = !vvFlipped;
     const card = cardScene.children[vvCurrent];
     if(card){
-      card.style.transform = vvFlipped ? 'rotateY(180deg)' : 'rotateY(0)';
+      card.classList.toggle('flipped', vvFlipped);
     }
   }
   function flipThenAdvance(){
@@ -18074,94 +18068,6 @@ function renderVocabulary(){
   document.addEventListener('keydown', vvKeyHandler);
   // --- Init ---
   renderCategoryPicker();
-  // A0 Pronunciation Cards, DB-backed (Supabase). Surfaces the foundational
-  // 153-word dictionary with نطق + meaning + example + speak. No AI, rule-based
-  // translit fallback. Anon can SELECT words (RLS allows it).
-  (async () => {
-    try {
-      const sb = window.pelSupabaseClient ? window.pelSupabaseClient() : null;
-      if (!sb) return;
-      const { data, error } = await sb.from('words')
-        .select('en,ar,translit,example_en,example_ar,example_tr')
-        .eq('active', true).eq('level', 'A0').order('en');
-      if (error || !data || !data.length) return;
-      const wrap = document.createElement('div');
-      wrap.style.cssText = 'margin-top:30px;';
-      wrap.innerHTML =
-        '<div class="page-head" style="margin-bottom:14px;">' +
-        '<span class="eyebrow"><span class="arabic" style="font-size:.95em;">بطاقات النطق</span>، A0 Pronunciation Cards</span>' +
-        '<h2><span class="arabic" style="display:block;font-size:.62em;font-weight:400;color:var(--text-secondary);margin-bottom:4px;">اساسيات لكل مبتدي، بالنطق والمعنى والمثال.</span>Foundational words, with pronunciation.</h2>' +
-        '</div><div class="grid grid-3" id="a0VocabGrid"></div>';
-      el.appendChild(wrap);
-      const grid = wrap.querySelector('#a0VocabGrid');
-      grid.innerHTML = data.map(v => {
-        let ar = v.ar;
-        if (typeof ar === 'string') { try { ar = JSON.parse(ar); } catch (e) { ar = [ar]; } }
-        ar = Array.isArray(ar) ? (ar[0] || '') : (ar || '');
-        const tr = v.translit || translitEn(v.en || '');
-        const exEn = v.example_en || '';
-        const exAr = v.example_ar || '';
-        const exTr = v.example_tr || (exEn ? translitEn(exEn) : '');
-        return '<div class="dbx-card" style="background:var(--card-elevated);border:1px solid var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;">' +
-          '<h3 class="vocab-word" style="margin:0 0 6px;" dir="ltr">' + escapeHtml(v.en) + '</h3>' +
-          '<div class="arabic" style="font-size:.82rem;color:var(--text-muted);margin-top:2px;">' + escapeHtml(tr) + '</div>' +
-          '<div class="arabic" style="font-size:1.05rem;color:var(--gold-soft);">' + escapeHtml(ar) + '</div>' +
-          (exEn ? '<div style="margin-top:12px;font-size:.84rem;" dir="ltr">' + escapeHtml(exEn) + '</div>' +
-            '<div class="arabic" style="font-size:.76rem;color:var(--gold-soft);margin-top:2px;">' + escapeHtml(exTr) + '</div>' +
-            '<div class="arabic" style="font-size:.78rem;color:var(--text-muted);margin-top:3px;">' + escapeHtml(exAr) + '</div>' : '') +
-          '<div style="margin-top:auto;padding-top:10px;display:flex;justify-content:space-between;align-items:center;">' +
-          '<span style="font-size:.7rem;color:var(--text-muted);"><span class="arabic">اسمع الكلمه</span></span>' +
-          '<button type="button" class="icon-btn speak-btn" data-speak="' + escapeHtml(v.en) + '" style="width:34px;height:34px;"><i data-lucide="volume-2" width="14" height="14"></i></button>' +
-          '</div></div>';
-      }).join('');
-      grid.querySelectorAll('.speak-btn').forEach(b => b.addEventListener('click', e => { e.stopPropagation(); speak(b.dataset.speak); }));
-      if (window.lucide) lucide.createIcons();
-    } catch (e) { /* fail silently */ }
-  })();
-  // Abha Expressions (عبارات ابها), niche phrasebook for the Arab community in
-  // Abha dialect. DB-backed (words where role='expression'). English phrase +
-  // نطق + Abha-dialect Arabic + context. No AI, rule-based translit fallback.
-  (async () => {
-    try {
-      const sb = window.pelSupabaseClient ? window.pelSupabaseClient() : null;
-      if (!sb) return;
-      const { data, error } = await sb.from('words')
-        .select('en,ar,translit,example_en,example_ar,example_tr')
-        .eq('active', true).eq('role', 'expression').order('en');
-      if (error || !data || !data.length) return;
-      const wrap = document.createElement('div');
-      wrap.style.cssText = 'margin-top:30px;';
-      wrap.innerHTML =
-        '<div class="page-head" style="margin-bottom:14px;">' +
-        '<span class="eyebrow"><span class="arabic" style="font-size:.95em;">عبارات ابها</span>، Abha Expressions</span>' +
-        '<h2><span class="arabic" style="display:block;font-size:.62em;font-weight:400;color:var(--text-secondary);margin-bottom:4px;">عبارات انجليزيه يوميه، بشرح بلهجه ابها.</span>Everyday English, explained in Abha dialect.</h2>' +
-        '</div><div class="grid grid-3" id="abhaExprGrid"></div>';
-      el.appendChild(wrap);
-      const grid = wrap.querySelector('#abhaExprGrid');
-      grid.innerHTML = data.map(v => {
-        let ar = v.ar;
-        if (typeof ar === 'string') { try { ar = JSON.parse(ar); } catch (e) { ar = [ar]; } }
-        ar = Array.isArray(ar) ? (ar[0] || '') : (ar || '');
-        const tr = v.translit || translitEn(v.en || '');
-        const cEn = v.example_en || '';
-        const cAr = v.example_ar || '';
-        const cTr = v.example_tr || (cEn ? translitEn(cEn) : '');
-        return '<div class="dbx-card" style="background:var(--card-elevated);border:1px solid var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;">' +
-          '<span class="chip gold" style="align-self:flex-start;" dir="ltr">Expression</span>' +
-          '<h3 class="vocab-word" style="margin:8px 0 6px;" dir="ltr">' + escapeHtml(v.en) + '</h3>' +
-          '<div class="arabic" style="font-size:.82rem;color:var(--text-muted);">' + escapeHtml(tr) + '</div>' +
-          '<div class="arabic" style="font-size:1.02rem;color:var(--gold-soft);margin-top:10px;">' + escapeHtml(ar) + '</div>' +
-          (cEn ? '<div style="margin-top:12px;font-size:.76rem;margin-top:3px;" dir="ltr">' + escapeHtml(cEn) + '</div>' +
-            '<div class="arabic" style="font-size:.74rem;color:var(--gold-soft);margin-top:2px;">' + escapeHtml(cTr) + '</div>' +
-            '<div style="font-size:.78rem;color:var(--text-muted);margin-top:3px;"><span class="arabic">الاستخدام</span>: ' + escapeHtml(cAr) + '</div>' : '') +
-          '<div style="margin-top:auto;padding-top:10px;display:flex;justify-content:flex-end;">' +
-          '<button type="button" class="icon-btn speak-btn" data-speak="' + escapeHtml(v.en) + '" style="width:34px;height:34px;"><i data-lucide="volume-2" width="14" height="14"></i></button>' +
-          '</div></div>';
-      }).join('');
-      grid.querySelectorAll('.speak-btn').forEach(b => b.addEventListener('click', e => { e.stopPropagation(); speak(b.dataset.speak); }));
-      if (window.lucide) lucide.createIcons();
-    } catch (e) { /* fail silently */ }
-  })();
 }
 viewRenderers.vocabulary = renderVocabulary;
 
