@@ -35,6 +35,16 @@ payloads (وشنو→وش, يختر→يخلص).
 - DB migration 202609260002 applied + verified (7 rows: ex 763/706/1561, items 853/1504/2681)
 - Commits: 7ce0b04, fb5fc9f
 
+### Addendum (2026-09-26 session 3): deep corruption sweep + activity QA
+- Found + fixed 3 more corruption families from 57f466b:
+  كيف→عشان (68 quiz qAr + 4 lib labels + FAQ), اقدر→ايمكنر (27 sites),
+  cake=كيك (Piece of cake entry + quiz), كلاب→اللاب, plus Science: علاج/علم/اوليا/العلوي/نقد
+- DB migration 202609260003 applied (5 وايد rows) — full-DB rescan clean
+- LTR fix: mistake-coach English sentences + practice questions (period flip)
+- Activity QA as student: mistake coach → quick check → teach → build → order
+  sequence verified working, 0 console exceptions
+- Commits: bc41c20, 08a31dd, 3ce2b7b, ea75e9e
+
 ### Known minor items (not bugs, deferred)
 - Mobile: stage header subtitle truncates with ellipsis (by design)
 - Word-order tiles right-align when wrapping on narrow screens (cosmetic)
