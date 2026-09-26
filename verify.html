@@ -162,26 +162,26 @@ body.ui-en .t-ar{ display:none !important; }
   <div class="site-logo"><img class="pel-logo" src="brand/pel-wordmark.svg" alt="PEL"><img class="pel-logo-light" src="brand/pel-wordmark-dark.svg" alt="PEL"></div>
   <div class="site-name">
     <b>Personalized English Lessons</b>
-    <div class="arabic t-ar" style="font-size:.8rem; color:var(--text-muted);">دروس انجليزي مخصصة، الاكاديمية</div>
+    <div class="arabic t-ar" style="font-size:.8rem; color:var(--text-muted);">دروس انجليزي مخصصه، الاكاديميه</div>
   </div>
 </header>
 <button type="button" class="lang-pill" id="verifyLangBtn" aria-label="Switch interface language">EN</button>
 
 <main class="wrap">
   <div class="card">
-    <div class="eyebrow"><span class="t-ar">التحقق من الشهادة</span><span class="t-en">Certificate Verification</span></div>
+    <div class="eyebrow"><span class="t-ar">التحقق من الشهاده</span><span class="t-en">Certificate Verification</span></div>
 
     <!-- verified -->
     <div class="state" id="st-ok">
-      <div class="verified-badge"><span class="t-ar">موثقة</span><span class="t-en">Verified</span></div>
+      <div class="verified-badge"><span class="t-ar">موثقه</span><span class="t-en">Verified</span></div>
       <div id="okVerifyCard" class="verify-card" style="margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:12px 24px;text-align:start;"></div>
       <div id="okIdCheck" style="margin-top:14px; display:none; font-size:.76rem; line-height:1.7;"></div>
       <div class="genuine">
-        <span class="t-ar" style="display:block;">هذه الشهادة اصلية وموثقة من الاكاديمية.</span>
+        <span class="t-ar" style="display:block;">هذه الشهاده اصلية وموثقه من الاكاديميه.</span>
         <span class="t-en" style="display:block;">This certificate is genuine and issued by Personalized English Lessons.</span>
       </div>
       <button type="button" class="btn-ghost" id="okToggleCert" aria-expanded="false" style="margin-top:18px;">
-        <span class="t-ar">عرض الشهادة كاملة</span><span class="t-en">View full certificate</span>
+        <span class="t-ar">عرض الشهاده كامله</span><span class="t-en">View full certificate</span>
       </button>
       <div id="okCertWrap" class="cert-preview" style="display:none;margin-top:14px;"></div>
     </div>
@@ -191,8 +191,8 @@ body.ui-en .t-ar{ display:none !important; }
       <div class="seal bad">
         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>
       </div>
-      <h1><span class="t-ar">تعذر التحقق من هذه الشهادة</span><span class="t-en">Unable to verify this certificate</span></h1>
-      <p class="sub"><span class="t-ar" style="display:block;">ما لقينا سجل لهذا الرمز. تاكد من الرمز وحاول مرة ثانية.</span><span class="t-en" style="display:block;">We could not find a record for this code. Double-check it and try again.</span></p>
+      <h1><span class="t-ar">تعذر التحقق من هذه الشهاده</span><span class="t-en">Unable to verify this certificate</span></h1>
+      <p class="sub"><span class="t-ar" style="display:block;">ما لقينا سجل لهذا الرمز. تاكد من الرمز وحاول مره ثانية.</span><span class="t-en" style="display:block;">We could not find a record for this code. Double-check it and try again.</span></p>
       <form class="lookup-form" id="badForm">
         <input id="badCode" placeholder="PEL-XXXX-XXXX" autocomplete="off" spellcheck="false" aria-label="Verification code">
         <button class="btn-gold" type="submit"><span class="t-ar">تحقق</span><span class="t-en">Verify</span></button>
@@ -205,25 +205,25 @@ body.ui-en .t-ar{ display:none !important; }
       <div class="seal bad">
         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.7 3.86a2 2 0 00-3.4 0z"/></svg>
       </div>
-      <h1><span class="t-ar">خدمة التحقق غير متاحة حاليا</span><span class="t-en">Verification service unavailable</span></h1>
-      <p class="sub"><span class="t-ar" style="display:block;">تعذر الاتصال بخدمة التحقق. جرب مرة ثانية بعد قليل.</span><span class="t-en" style="display:block;">We could not reach the verification service. Please try again shortly.</span></p>
-      <button type="button" class="btn-ghost" id="retryBtn" style="margin-top:18px;"><span class="t-ar">جرب مرة ثانية</span><span class="t-en">Try again</span></button>
+      <h1><span class="t-ar">خدمة التحقق غير متاحه حاليا</span><span class="t-en">Verification service unavailable</span></h1>
+      <p class="sub"><span class="t-ar" style="display:block;">تعذر الاتصال بخدمة التحقق. جرب مره ثانية بعد قليل.</span><span class="t-en" style="display:block;">We could not reach the verification service. Please try again shortly.</span></p>
+      <button type="button" class="btn-ghost" id="retryBtn" style="margin-top:18px;"><span class="t-ar">جرب مره ثانية</span><span class="t-en">Try again</span></button>
     </div>
 
     <!-- lookup prompt (no code yet) -->
     <div class="state" id="st-form">
-      <h1 style="margin-top:6px;"><span class="t-ar" style="display:block; font-size:.55em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">تحقق من صحة شهادة</span><span class="t-en">Verify a certificate</span></h1>
-      <p class="sub"><span class="t-ar" style="display:block;">ادخل رمز التحقق الموجود على الشهادة.</span><span class="t-en" style="display:block;">Enter the verification code printed on the certificate.</span></p>
+      <h1 style="margin-top:6px;"><span class="t-ar" style="display:block; font-size:.55em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">تحقق من صحه شهاده</span><span class="t-en">Verify a certificate</span></h1>
+      <p class="sub"><span class="t-ar" style="display:block;">ادخل رمز التحقق الموجود على الشهاده.</span><span class="t-en" style="display:block;">Enter the verification code printed on the certificate.</span></p>
       <form class="lookup-form" id="mainForm">
         <input id="mainCode" placeholder="PEL-XXXX-XXXX" autocomplete="off" spellcheck="false" aria-label="Verification code">
         <button class="btn-gold" type="submit"><span class="t-ar">تحقق</span><span class="t-en">Verify</span></button>
       </form>
       <div style="margin-top:26px; padding-top:20px; border-top:1px solid var(--border);">
-        <p class="sub" style="font-size:.78rem;"><span class="t-ar" style="display:block;">كل شهادة صادرة من التطبيق لها رمز تحقق فريد لا يمكن تخمينه.</span><span class="t-en" style="display:block;">Every certificate issued by the app carries a unique, unguessable verification code.</span></p>
+        <p class="sub" style="font-size:.78rem;"><span class="t-ar" style="display:block;">كل شهاده صادرة من التطبيق لها رمز تحقق فريد لا يمكن تخمينه.</span><span class="t-en" style="display:block;">Every certificate issued by the app carries a unique, unguessable verification code.</span></p>
       </div>
       <div style="margin-top:22px; padding-top:20px; border-top:1px solid var(--border);">
-        <p style="font-size:.78rem; font-weight:700; color:var(--text-secondary);"><span class="t-ar">فحص رقم الشهادة</span><span class="t-en">Validate a certificate number</span></p>
-        <p class="sub" style="font-size:.76rem; margin-top:6px;"><span class="t-ar" style="display:block;">كل رقم شهادة فيه تاريخ الاصدار ورقم تحقق (checksum). الرقم المزور ينكشف هنا فورا، بدون قاعدة البيانات.</span><span class="t-en" style="display:block;">Every certificate number embeds its issue date and a checksum digit. A forged number is caught here instantly, with no database lookup.</span></p>
+        <p style="font-size:.78rem; font-weight:700; color:var(--text-secondary);"><span class="t-ar">فحص رقم الشهاده</span><span class="t-en">Validate a certificate number</span></p>
+        <p class="sub" style="font-size:.76rem; margin-top:6px;"><span class="t-ar" style="display:block;">كل رقم شهاده فيه تاريخ الاصدار ورقم تحقق (checksum). الرقم المزور ينكشف هنا فورا، بدون قاعده البيانات.</span><span class="t-en" style="display:block;">Every certificate number embeds its issue date and a checksum digit. A forged number is caught here instantly, with no database lookup.</span></p>
         <form class="lookup-form" id="numForm">
           <input id="numCode" placeholder="PEL-260813-531-9" autocomplete="off" spellcheck="false" aria-label="Certificate number">
           <button class="btn-gold" type="submit"><span class="t-ar">فحص</span><span class="t-en">Check</span></button>
@@ -241,7 +241,7 @@ body.ui-en .t-ar{ display:none !important; }
 </main>
 
 <footer class="site-foot">
-  <span class="t-ar" style="display:block;">التحقق يتم مباشرة من سجل الشهادات الرسمي، ولا يمكن تزوير الشهادات.</span>
+  <span class="t-ar" style="display:block;">التحقق يتم مباشره من سجل الشهادات الرسمي، ولا يمكن تزوير الشهادات.</span>
   <span class="t-en" style="display:block;">Verification runs against the official certificate registry. Certificates cannot be forged.</span>
 </footer>
 
@@ -262,7 +262,7 @@ function applyVerifyLang(lang){
   document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
   document.body.classList.toggle('ui-ar', lang === 'ar');
   document.body.classList.toggle('ui-en', lang === 'en');
-  document.title = lang === 'ar' ? 'التحقق من الشهادة | PEL' : 'Certificate Verification | PEL';
+  document.title = lang === 'ar' ? 'التحقق من الشهاده | PEL' : 'Certificate Verification | PEL';
   const pill = document.getElementById('verifyLangBtn');
   if(pill) pill.textContent = lang === 'ar' ? 'EN' : 'ع';
   const prefs = readAcctPrefs();
@@ -349,11 +349,11 @@ async function lookup(code){
     if(validCertNumber(row.cert_id)){
       idCheck.style.display = 'block';
       idCheck.style.color = 'var(--success)';
-      idCheck.innerHTML = '✓ <span class="t-ar">رقم الشهادة سليم (التاريخ ورقم التحقق مطابقان)</span><span class="t-en">Certificate ID checksum valid</span>';
+      idCheck.innerHTML = '✓ <span class="t-ar">رقم الشهاده سليم (التاريخ ورقم التحقق مطابقان)</span><span class="t-en">Certificate ID checksum valid</span>';
     }else{
       idCheck.style.display = 'block';
       idCheck.style.color = 'var(--warning)';
-      idCheck.innerHTML = '! <span class="t-ar">رقم الشهادة لا يطابق الصيغة الرسمية</span><span class="t-en">Certificate ID checksum does not match</span>';
+      idCheck.innerHTML = '! <span class="t-ar">رقم الشهاده لا يطابق الصيغه الرسميه</span><span class="t-en">Certificate ID checksum does not match</span>';
     }
     showState('st-ok');
   }catch(e){ showState('st-err'); }
@@ -412,7 +412,7 @@ document.getElementById('numForm').addEventListener('submit', function(e){
   const raw = document.getElementById('numCode').value.trim();
   const m = String(raw).toUpperCase().match(/^PEL-(\d{6})-(\d{3})-(\d)$/);
   if(!m){
-    showNumResult(false, 'الصيغة غير صحيحة.', 'Wrong format. Expected PEL-YYMMDD-SSS-C, e.g. PEL-260813-531-9.');
+    showNumResult(false, 'الصيغه غير صحيحة.', 'Wrong format. Expected PEL-YYMMDD-SSS-C, e.g. PEL-260813-531-9.');
     return;
   }
   if(validCertNumber(raw)){

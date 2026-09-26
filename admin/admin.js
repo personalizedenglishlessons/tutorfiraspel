@@ -34,7 +34,7 @@ var current360Uid = null;
    2. I18N - single-language admin screens (ar RTL / en LTR)
    ============================================================ */
 var I = {
-  'overview':{en:'Overview', ar:'نظرة عامة'},
+  'overview':{en:'Overview', ar:'نظره عامه'},
   'people':{en:'People', ar:'الاشخاص'},
   'learning':{en:'Learning', ar:'التعلم'},
   'operations':{en:'Operations', ar:'العمليات'},
@@ -44,20 +44,20 @@ var I = {
   'groups':{en:'Groups', ar:'المجموعات'},
   'courses':{en:'Courses', ar:'المسارات'},
   'interventions':{en:'Interventions', ar:'التدخلات'},
-  'classes':{en:'Live Classes', ar:'الدروس المباشرة'},
+  'classes':{en:'Live Classes', ar:'الدروس المباشره'},
   'programs':{en:'Programs', ar:'البرامج'},
   'certificates':{en:'Certificates', ar:'الشهادات'},
   'audit':{en:'Audit Log', ar:'سجل التدقيق'},
   'roles':{en:'Access & Roles', ar:'الادوار والصلاحيات'},
-  'health':{en:'System Health', ar:'صحة النظام'},
+  'health':{en:'System Health', ar:'صحه النظام'},
   'reports':{en:'Reports', ar:'التقارير'},
   'searchPlaceholder':{en:'Search name, email, phone, ID…', ar:'ابحث بالاسم او الايميل او الجوال…'},
-  'status':{en:'Status', ar:'الحالة'},
+  'status':{en:'Status', ar:'الحاله'},
   'level':{en:'Level', ar:'المستوى'},
   'program':{en:'Program', ar:'البرنامج'},
   'teacher':{en:'Teacher', ar:'المعلم'},
-  'group':{en:'Group', ar:'المجموعة'},
-  'certStatus':{en:'Certificate', ar:'الشهادة'},
+  'group':{en:'Group', ar:'المجموعه'},
+  'certStatus':{en:'Certificate', ar:'الشهاده'},
   'all':{en:'All', ar:'الكل'},
   'sort':{en:'Sort', ar:'الترتيب'},
   'name':{en:'Name', ar:'الاسم'},
@@ -76,7 +76,7 @@ var I = {
   'scheduled':{en:'Scheduled', ar:'مجدول'}, 'completed':{en:'Completed', ar:'مكتمل'}, 'cancelled':{en:'Cancelled', ar:'ملغي'}, 'rescheduled':{en:'Rescheduled', ar:'اعيدت جدولته'},
   'needsAttention':{en:'Needs attention', ar:'يحتاج انتباه'},
   'inactiveReason':{en:'No activity for %d days', ar:'لا نشاط منذ %d يوم'},
-  'missedLiveReason':{en:'%d missed live sessions (30d)', ar:'%d دروس مباشرة مفقودة (٣٠ يوم)'},
+  'missedLiveReason':{en:'%d missed live sessions (30d)', ar:'%d دروس مباشره مفقودة (٣٠ يوم)'},
   'expiringReason':{en:'Program ends in %d days', ar:'ينتهي البرنامج خلال %d يوم'},
   'whatShouldIDo':{en:'What should I do?', ar:'ماذا افعل الان؟'},
   'studentsTotal':{en:'Total students', ar:'اجمالي الطلاب'},
@@ -88,11 +88,11 @@ var I = {
   'certsIssued':{en:'Certificates', ar:'الشهادات'},
   'teachersCount':{en:'Teachers', ar:'المعلمين'},
   'groupsCount':{en:'Active groups', ar:'المجموعات النشطة'},
-  'upcomingClasses':{en:'Upcoming classes', ar:'الدروس القادمة'},
+  'upcomingClasses':{en:'Upcoming classes', ar:'الدروس القادمه'},
   'expiringPrograms':{en:'Programs expiring (14d)', ar:'برامج تنتهي (١٤ يوم)'},
   'recentCompletions':{en:'Recent completions', ar:'اخر الانجازات'},
   'recentCerts':{en:'Recent certificates', ar:'اخر الشهادات'},
-  'courseDistribution':{en:'Current course distribution', ar:'توزيع المسارات الحالية'},
+  'courseDistribution':{en:'Current course distribution', ar:'توزيع المسارات الحاليه'},
   'recentAudit':{en:'Recent admin actions', ar:'اخر اجراوات الادارة'},
   'noData':{en:'No data yet', ar:'لا توجد بيانات بعد'},
   'back':{en:'Back', ar:'رجوع'},
@@ -107,7 +107,7 @@ var I = {
   'close':{en:'Close', ar:'اغلاق'},
   'create':{en:'Create', ar:'انشا'},
   'edit':{en:'Edit', ar:'تعديل'},
-  'errorGeneric':{en:'Something went wrong. Try again.', ar:'حدث خطا. حاول مرة اخرى.'},
+  'errorGeneric':{en:'Something went wrong. Try again.', ar:'حدث خطا. حاول مره اخرى.'},
   'noPermission':{en:'You do not have permission for this action.', ar:'ليس لديك صلاحية لهذا الاجرا.'},
   'verifyCode':{en:'Verify code', ar:'تحقق من الرمز'},
   'code':{en:'Code', ar:'الرمز'},
@@ -115,7 +115,7 @@ var I = {
   'revokeReason':{en:'Reason for revocation', ar:'سبب الالغا'},
   'revoke':{en:'Revoke', ar:'الغا'},
   'reissue':{en:'Reissue', ar:'اعادة اصدار'},
-  'issueCert':{en:'Issue certificate', ar:'اصدار شهادة'},
+  'issueCert':{en:'Issue certificate', ar:'اصدار شهاده'},
   'manualRecipient':{en:'Manual recipient (no account)', ar:'مستلم يدوي (بدون حساب)'},
   'existingStudent':{en:'Existing student', ar:'طالب مسجل'},
   'completionDate':{en:'Completion date', ar:'تاريخ الاكمال'},
@@ -124,50 +124,50 @@ var I = {
   'levelField':{en:'Level (A1-C1)', ar:'المستوى (A1-C1)'},
   'programName':{en:'Program name', ar:'اسم البرنامج'},
   'issue':{en:'Issue', ar:'اصدار'},
-  'certIssued':{en:'Certificate issued', ar:'تم اصدار الشهادة'},
+  'certIssued':{en:'Certificate issued', ar:'تم اصدار الشهاده'},
   'certPreview':{en:'Preview', ar:'معاينة'},
-  'certRevoked':{en:'Certificate revoked', ar:'تم الغا الشهادة'},
-  'certReissued':{en:'Certificate reissued', ar:'تمت اعادة اصدار الشهادة'},
-  'verifyResult':{en:'Verification result', ar:'نتيجة التحقق'},
+  'certRevoked':{en:'Certificate revoked', ar:'تم الغا الشهاده'},
+  'certReissued':{en:'Certificate reissued', ar:'تمت اعادة اصدار الشهاده'},
+  'verifyResult':{en:'Verification result', ar:'نتيجه التحقق'},
   'valid':{en:'Valid', ar:'صالحة'}, 'invalid':{en:'Invalid / revoked', ar:'غير صالحة / ملغاة'},
-  'print':{en:'Print', ar:'طباعة'},
-  'blocked':{en:'Popup blocked. Allow popups for this site to print.', ar:'تم حظر النافذة المنبثقة. اسمح بالنوافذ المنبثقة لهذا الموقع للطباعة.'},
+  'print':{en:'Print', ar:'طباعه'},
+  'blocked':{en:'Popup blocked. Allow popups for this site to print.', ar:'تم حظر النافذة المنبثقه. اسمح بالنوافذ المنبثقه لهذا الموقع للطباعه.'},
   'student360':{en:'Student 360', ar:'ملف الطالب'},
   'profile':{en:'Profile', ar:'الملف'},
-  'learningHealth':{en:'Learning health', ar:'صحة التعلم'},
+  'learningHealth':{en:'Learning health', ar:'صحه التعلم'},
   'skills':{en:'Skills', ar:'المهارات'},
   'personalization':{en:'Personalization', ar:'التخصيص'},
   'recommendations':{en:'Recommendations', ar:'التوصيات'},
   'timeline':{en:'Timeline', ar:'الخط الزمني'},
   'notes':{en:'Notes', ar:'ملاحظات'},
-  'activity':{en:'Live & activity', ar:'النشاط والدروس المباشرة'},
+  'activity':{en:'Live & activity', ar:'النشاط والدروس المباشره'},
   'interventionList':{en:'Interventions', ar:'التدخلات'},
-  'addNote':{en:'Add note', ar:'اضافة ملاحظة'},
-  'noteBody':{en:'Note…', ar:'الملاحظة…'},
+  'addNote':{en:'Add note', ar:'اضافة ملاحظه'},
+  'noteBody':{en:'Note…', ar:'الملاحظه…'},
   'assignIntervention':{en:'Assign intervention', ar:'اسناد تدخل'},
   'overrideRec':{en:'Override recommendation', ar:'تجاوز التوصية'},
   'overrideReason':{en:'Reason for override', ar:'سبب التجاوز'},
   'replacement':{en:'Replacement activity / lesson', ar:'البديل / الدرس البديل'},
   'whyPEL':{en:'Why PEL recommends this', ar:'لماذا يوصي بيل بهذا'},
-  'todayRec':{en:'Current recommendation', ar:'التوصية الحالية'},
-  'takeSnapshot':{en:'Save monthly snapshot', ar:'حفظ لقطة شهرية'},
+  'todayRec':{en:'Current recommendation', ar:'التوصية الحاليه'},
+  'takeSnapshot':{en:'Save monthly snapshot', ar:'حفظ لقطة شهره'},
   'snapshotSaved':{en:'Snapshot saved', ar:'تم حفظ اللقطة'},
-  'preview':{en:'View student experience', ar:'معاينة تجربة الطالب'},
+  'preview':{en:'View student experience', ar:'معاينة تجربه الطالب'},
   'previewNote':{en:'Read-only preview - nothing on the student account changes.', ar:'معاينة للقراوة فقط - لا يحدث اي تغيير على حساب الطالب.'},
-  'weakAreas':{en:'Weak areas', ar:'المواضع الضعيفة'},
-  'strongAreas':{en:'Strong areas', ar:'المواضع القوية'},
-  'mainDifficulty':{en:'Main difficulty', ar:'الاكثر صعوبة'},
-  'mainStrength':{en:'Strength', ar:'نقطة القوة'},
+  'weakAreas':{en:'Weak areas', ar:'المواضع الضعيفه'},
+  'strongAreas':{en:'Strong areas', ar:'المواضع القويه'},
+  'mainDifficulty':{en:'Main difficulty', ar:'الاكثر صعوبه'},
+  'mainStrength':{en:'Strength', ar:'نقطه القوه'},
   'currentConcern':{en:'Current concern', ar:'القلق الحالي'},
   'recommendedFocus':{en:'Recommended focus', ar:'التركيز الموصى به'},
   'whyRoute':{en:'Why PEL built this route', ar:'لماذا بنى بيل هذا المسار'},
   'routeDuration':{en:'Estimated route duration', ar:'المدة التقديرية للمسار'},
-  'remainingStage':{en:'%d lessons left in current stage', ar:'باقي %d درس في المرحلة الحالية'},
+  'remainingStage':{en:'%d lessons left in current stage', ar:'باقي %d درس في المرحله الحاليه'},
   'goal':{en:'Learning goal', ar:'هدف التعلم'},
-  'dailyMin':{en:'Daily minutes', ar:'الدقايق اليومية'},
+  'dailyMin':{en:'Daily minutes', ar:'الدقايق اليوميه'},
   'weeklyFreq':{en:'Days per week', ar:'ايام في الاسبوع'},
-  'outcome':{en:'Desired outcome', ar:'النتيجة المرغوبة'},
-  'contexts':{en:'Real-life contexts', ar:'المواقف الحقيقية'},
+  'outcome':{en:'Desired outcome', ar:'النتيجه المرغوبه'},
+  'contexts':{en:'Real-life contexts', ar:'المواقف الحقيقيه'},
   'weaknesses':{en:'Self-reported weaknesses', ar:'نقاط الضعف المذكورة'},
   'enrolled':{en:'Enrolled', ar:'التسجيل'},
   'phone':{en:'Phone', ar:'الجوال'},
@@ -181,20 +181,20 @@ var I = {
   'attendanceRate':{en:'Attendance rate', ar:'نسبة الحضور'},
   'sessionDate':{en:'Date', ar:'التاريخ'}, 'time':{en:'Time', ar:'الوقت'},
   'topic':{en:'Topic', ar:'الموضوع'},
-  'groupName':{en:'Group', ar:'المجموعة'},
-  'capacity':{en:'Capacity', ar:'السعة'},
+  'groupName':{en:'Group', ar:'المجموعه'},
+  'capacity':{en:'Capacity', ar:'السعه'},
   'roster':{en:'Roster', ar:'القايمة'},
   'waitlist':{en:'Waitlist', ar:'قايمة الانتظار'},
   'availableSeats':{en:'%d seats left', ar:'باقي %d مقاعد'},
-  'groupFull':{en:'Group is full', ar:'المجموعة ممتلية'},
-  'moveFromWaitlist':{en:'Move into group', ar:'نقل للمجموعة'},
+  'groupFull':{en:'Group is full', ar:'المجموعه ممتلية'},
+  'moveFromWaitlist':{en:'Move into group', ar:'نقل للمجموعه'},
   'addStudent':{en:'Add student', ar:'اضافة طالب'},
   'createStudent':{en:'Create student', ar:'انشا طالب'},
-  'createStudentDesc':{en:'Create an account the student can sign in with. Set their name, email, and a password (min 8 chars).', ar:'انشي حساب يقدر الطالب يدخل فيه. حدد اسمه، ايميله، وكلمة مرور (٨ احرف على الاقل).'},
+  'createStudentDesc':{en:'Create an account the student can sign in with. Set their name, email, and a password (min 8 chars).', ar:'انشي حساب يقدر الطالب يدخل فيه. حدد اسمه، ايميله، وكلمه مرور (٨ احرف على الاقل).'},
   'studentEmail':{en:'Email', ar:'البريد الالكتروني'},
-  'studentPassword':{en:'Password', ar:'كلمة المرور'},
+  'studentPassword':{en:'Password', ar:'كلمه المرور'},
   'pwMinLen':{en:'At least 8 characters', ar:'٨ احرف على الاقل'},
-  'studentCreated':{en:'Student created. Share the email and password with them.', ar:'تم انشا الطالب. شارك الايميل وكلمة المرور معه.'},
+  'studentCreated':{en:'Student created. Share the email and password with them.', ar:'تم انشا الطالب. شارك الايميل وكلمه المرور معه.'},
   'removeStudent':{en:'Remove', ar:'ازالة'},
   'assignTeacher':{en:'Assign teacher', ar:'اسناد معلم'},
   'schedule':{en:'Schedule', ar:'الجدول'},
@@ -202,14 +202,14 @@ var I = {
   'newProgram':{en:'New program', ar:'برنامج جديد'},
   'newSubscription':{en:'New subscription', ar:'اشتراك جديد'},
   'durationMonths':{en:'Duration (months)', ar:'المدة (شهور)'},
-  'includedSessions':{en:'Included live sessions', ar:'الدروس المباشرة المشمولة'},
+  'includedSessions':{en:'Included live sessions', ar:'الدروس المباشره المشمولة'},
   'startDate':{en:'Start date', ar:'تاريخ البداية'},
-  'endDate':{en:'End date', ar:'تاريخ النهاية'},
+  'endDate':{en:'End date', ar:'تاريخ النهايه'},
   'subStatus':{en:'Subscription', ar:'الاشتراك'},
   'subscriptions':{en:'Subscriptions', ar:'الاشتراكات'},
   'newClass':{en:'New live class', ar:'درس مباشر جديد'},
   'markAttendance':{en:'Mark attendance', ar:'تسجيل الحضور'},
-  'markClass':{en:'Mark class status', ar:'تحديث حالة الدرس'},
+  'markClass':{en:'Mark class status', ar:'تحديث حاله الدرس'},
   'student':{en:'Student', ar:'الطالب'},
   'action':{en:'Action', ar:'الاجرا'},
   'actor':{en:'Actor', ar:'المنفذ'},
@@ -226,11 +226,11 @@ var I = {
   'lessonsDone':{en:'%d lessons done', ar:'%d درس منجز'},
   'ofRoute':{en:'of route', ar:'من المسار'},
   'nextLesson':{en:'Next lesson', ar:'الدرس القادم'},
-  'stage':{en:'Stage', ar:'المرحلة'},
+  'stage':{en:'Stage', ar:'المرحله'},
   'totalLessons':{en:'Total lessons', ar:'اجمالي الدروس'},
-  'completedCount':{en:'Completed lessons', ar:'الدروس المنجزة'},
+  'completedCount':{en:'Completed lessons', ar:'الدروس المنجزه'},
   'recVsProd':{en:'Recognition vs Production', ar:'الاسترجاع مقابل الانتاج'},
-  'recVsProdHint':{en:'First-try production is the mastery signal - how often the student can USE the language, not just recognize it.', ar:'الانتاج من اول محاولة هو موشر الاتقان - قدرة الطالب على استخدام اللغة، وليس التعرف عليها فقط.'},
+  'recVsProdHint':{en:'First-try production is the mastery signal - how often the student can USE the language, not just recognize it.', ar:'الانتاج من اول محاولة هو موشر الاتقان - قدره الطالب على استخدام اللغه، وليس التعرف عليها فقط.'},
   'recognition':{en:'Recognition', ar:'الاسترجاع'},
   'production':{en:'Production (eventual)', ar:'الانتاج (بعد المحاولات)'},
   'productionFirst':{en:'Production (first try)', ar:'الانتاج (اول محاولة)'},
@@ -240,37 +240,37 @@ var I = {
   'longestStreak':{en:'Longest streak', ar:'اطول استمرار'},
   'permissionDenied':{en:'Permission denied.', ar:'صلاحية مرفوضة.'},
   'confirmAction':{en:'Confirm action', ar:'تاكيد الاجرا'},
-  'createGroup':{en:'New group', ar:'مجموعة جديدة'},
-  'editGroup':{en:'Edit group', ar:'تعديل المجموعة'},
+  'createGroup':{en:'New group', ar:'مجموعه جديده'},
+  'editGroup':{en:'Edit group', ar:'تعديل المجموعه'},
   'newTeacher':{en:'New teacher', ar:'معلم جديد'},
   'youAreViewing':{en:'You are viewing', ar:'انت تشاهد'},
   'studentOf':{en:'Student', ar:'طالب'},
   'teacherOf':{en:'Teacher', ar:'معلم'},
   'adminOf':{en:'Administrator', ar:'ادمين'},
   'superAdminOf':{en:'Super admin', ar:'مشرف عام'},
-  'langLabel':{en:'Interface', ar:'الواجهة'},
+  'langLabel':{en:'Interface', ar:'الواجهه'},
   'required':{en:'Required', ar:'مطلوب'},
   'noCertificates':{en:'No certificates yet', ar:'لا توجد شهادات بعد'},
   'noInterventions':{en:'No interventions yet', ar:'لا توجد تدخلات بعد'},
   'noNotes':{en:'No notes yet', ar:'لا توجد ملاحظات بعد'},
   'noSubscriptions':{en:'No program subscription yet', ar:'لا يوجد اشتراك برنامج بعد'},
-  'noAttendance':{en:'No live class records yet', ar:'لا توجد سجلات دروس مباشرة بعد'},
+  'noAttendance':{en:'No live class records yet', ar:'لا توجد سجلات دروس مباشره بعد'},
   'noTimeline':{en:'No activity recorded yet', ar:'لا يوجد نشاط مسجل بعد'},
-  'noRecommendations':{en:'No stored recommendations yet', ar:'لا توجد توصيات محفوظة بعد'},
+  'noRecommendations':{en:'No stored recommendations yet', ar:'لا توجد توصيات محفوظه بعد'},
   'attentionLabel':{en:'Only attention', ar:'الانتباه فقط'},
   'apply':{en:'Apply', ar:'تطبيق'},
   'reset':{en:'Reset', ar:'مسح'},
   'loadMore':{en:'Load more', ar:'المزيد'},
   'prev':{en:'Prev', ar:'السابق'},
   'next':{en:'Next', ar:'التالي'},
-  'pageOf':{en:'Page %p of %t', ar:'صفحة %p من %t'},
-  'totalRow':{en:'%n results', ar:'%n نتيجة'},
+  'pageOf':{en:'Page %p of %t', ar:'صفحه %p من %t'},
+  'totalRow':{en:'%n results', ar:'%n نتيجه'},
   'assign':{en:'Assign', ar:'اسناد'},
   'acceptRec':{en:'Accept & assign', ar:'قبول واسناد'},
   'dismissRec':{en:'Dismiss', ar:'تجاهل'},
   'replacementLesson':{en:'Replacement lesson', ar:'الدرس البديل'},
-  'strengthWord':{en:'Strength', ar:'قوة'},
-  'weekday_0':{en:'Sun',ar:'الاحد'},'weekday_1':{en:'Mon',ar:'الاثنين'},'weekday_2':{en:'Tue',ar:'الثلاثا'},'weekday_3':{en:'Wed',ar:'الاربعا'},'weekday_4':{en:'Thu',ar:'الخميس'},'weekday_5':{en:'Fri',ar:'الجمعة'},'weekday_6':{en:'Sat',ar:'السبت'},
+  'strengthWord':{en:'Strength', ar:'قوه'},
+  'weekday_0':{en:'Sun',ar:'الاحد'},'weekday_1':{en:'Mon',ar:'الاثنين'},'weekday_2':{en:'Tue',ar:'الثلاثا'},'weekday_3':{en:'Wed',ar:'الاربعا'},'weekday_4':{en:'Thu',ar:'الخميس'},'weekday_5':{en:'Fri',ar:'الجمعه'},'weekday_6':{en:'Sat',ar:'السبت'},
   'course':{en:'Course', ar:'المسار'},
   'memberCount':{en:'Members', ar:'الاعضا'},
   'members':{en:'Members', ar:'الاعضا'},
@@ -297,10 +297,10 @@ var I = {
   'report_certificates':{en:'Certificates', ar:'الشهادات'},
   'report_attendance':{en:'Attendance', ar:'الحضور'},
   'report_programs':{en:'Program subscriptions', ar:'اشتراكات البرامج'},
-  'report_classes':{en:'Live classes', ar:'الدروس المباشرة'},
+  'report_classes':{en:'Live classes', ar:'الدروس المباشره'},
   'report_atrisk':{en:'At-risk students', ar:'الطلاب المعرضون للخطر'},
   'atRisk':{en:'At risk', ar:'معرض للخطر'},
-  'openGroup':{en:'Open group', ar:'فتح المجموعة'},
+  'openGroup':{en:'Open group', ar:'فتح المجموعه'},
   'studentCol':{en:'Student', ar:'الطالب'},
   'activePrograms':{en:'Active programs', ar:'البرامج النشطة'},
   'totalSubscriptions':{en:'Subscriptions', ar:'الاشتراكات'},
@@ -316,14 +316,14 @@ var I = {
   'lesson':{en:'Lesson', ar:'درس'},
   'noCourses':{en:'No course data available.', ar:'لا توجد بيانات مسارات.'},
   'lessonsManagerSub':{en:'Add, edit, reorder and hide lessons - changes reach every student instantly.', ar:'اضف وعدل ورتب واخفي الدروس - التغييرات توصل لكل طالب فوراً.'},
-  'newAcademy':{en:'New academy', ar:'اكاديمية جديدة'},
+  'newAcademy':{en:'New academy', ar:'اكاديميه جديده'},
   'newLesson':{en:'New lesson', ar:'درس جديد'},
-  'editAcademy':{en:'Edit academy', ar:'تعديل الاكاديمية'},
+  'editAcademy':{en:'Edit academy', ar:'تعديل الاكاديميه'},
   'editLesson':{en:'Edit lesson', ar:'تعديل الدرس'},
   'titleEn':{en:'Title (English)', ar:'العنوان (انجليزي)'},
   'titleAr':{en:'Title (Arabic)', ar:'العنوان (عربي)'},
   'minutesLabel':{en:'Minutes', ar:'الدقايق'},
-  'difficulty':{en:'Difficulty', ar:'الصعوبة'},
+  'difficulty':{en:'Difficulty', ar:'الصعوبه'},
   'iconLabel':{en:'Icon', ar:'الايقونة'},
   'colorFrom':{en:'Gradient from', ar:'التدرج من'},
   'colorTo':{en:'Gradient to', ar:'التدرج الى'},
@@ -333,8 +333,8 @@ var I = {
   'unlink':{en:'Remove', ar:'ازالة'},
   'moveUp':{en:'Move up', ar:'لاعلى'},
   'moveDown':{en:'Move down', ar:'لاسفل'},
-  'academy':{en:'Academy', ar:'الاكاديمية'},
-  'confirmUnlink':{en:'Remove this lesson from this academy? Students lose access to it there.', ar:'ازالة هذا الدرس من الاكاديمية؟ الطلاب يفقدون الوصول له هنا.'},
+  'academy':{en:'Academy', ar:'الاكاديميه'},
+  'confirmUnlink':{en:'Remove this lesson from this academy? Students lose access to it there.', ar:'ازالة هذا الدرس من الاكاديميه؟ الطلاب يفقدون الوصول له هنا.'},
   'lessonSaved':{en:'Lesson saved.', ar:'تم حفظ الدرس.'},
   'curriculumUpdated':{en:'Curriculum updated.', ar:'تم تحديث المنهج.'},
   'select':{en:'Select', ar:'اختيار'},
@@ -347,26 +347,26 @@ var I = {
   'plan':{en:'Plan & Access', ar:'الباقة والوصول'},
   'activePlans':{en:'Active plans', ar:'باقات نشطة'},
   'expiringSoon':{en:'Expiring soon (7d)', ar:'تنتهي قريباً (٧ ايام)'},
-  'expiredPlans':{en:'Expired plans', ar:'باقات منتهية'},
+  'expiredPlans':{en:'Expired plans', ar:'باقات منتهيه'},
   'scheduledPlans':{en:'Scheduled plans', ar:'باقات مجدولة'},
-  'suspendedPlans':{en:'Suspended plans', ar:'باقات موقوفة'},
-  'expired':{en:'Expired', ar:'منتهية'},
+  'suspendedPlans':{en:'Suspended plans', ar:'باقات موقوفه'},
+  'expired':{en:'Expired', ar:'منتهيه'},
   'daysLeft':{en:'%d days left', ar:'متبقي %d يوم'},
   'noPlan':{en:'No plan', ar:'بدون باقة'},
   'assignPlan':{en:'Assign plan', ar:'اسناد باقة'},
-  'newPlan':{en:'New plan', ar:'باقة جديدة'},
+  'newPlan':{en:'New plan', ar:'باقة جديده'},
   'planCatalog':{en:'Plan catalog', ar:'كتالوج الباقات'},
   'perPlan':{en:'per plan', ar:'لكل باقة'},
   'savePlan':{en:'Save plan', ar:'حفظ الباقة'},
   'planHistory':{en:'Plan history', ar:'سجل الباقات'},
-  'liveClasses':{en:'Live classes', ar:'الدروس المباشرة'},
-  'upcoming':{en:'Upcoming', ar:'القادمة'},
+  'liveClasses':{en:'Live classes', ar:'الدروس المباشره'},
+  'upcoming':{en:'Upcoming', ar:'القادمه'},
   'recent':{en:'Recent', ar:'الاخيرة'},
   'durationDays':{en:'Duration (days)', ar:'المدة (ايام)'},
   'price':{en:'Price', ar:'السعر'},
   'currency':{en:'Currency', ar:'العملة'},
-  'weeklyLive':{en:'Weekly live sessions', ar:'حصص مباشرة اسبوعياً'},
-  'platformAccess':{en:'Platform access', ar:'وصول المنصة'},
+  'weeklyLive':{en:'Weekly live sessions', ar:'حصص مباشره اسبوعياً'},
+  'platformAccess':{en:'Platform access', ar:'وصول المنصه'},
   'extend':{en:'Extend', ar:'تمديد'},
   'extendDays':{en:'Extend +%d days', ar:'تمديد +%d يوم'},
   'suspend':{en:'Suspend', ar:'ايقاف'},
@@ -375,7 +375,7 @@ var I = {
   'announcementDelivery':{en:'Delivery', ar:'الوصول'},
   'newAnnouncement':{en:'New announcement', ar:'اعلان جديد'},
   'title':{en:'Title', ar:'العنوان'},
-  'message':{en:'Message', ar:'الرسالة'},
+  'message':{en:'Message', ar:'الرساله'},
   'audience':{en:'Audience', ar:'الجمهور'},
   'everyone':{en:'All students', ar:'كل الطلاب'},
   'specificStudents':{en:'Specific students', ar:'طلاب محددون'},
@@ -401,19 +401,19 @@ var I = {
   'assigned':{en:'Assigned', ar:'اسندت'},
   'extended':{en:'Extended', ar:'مددت'},
   'scheduledLbl':{en:'Scheduled', ar:'مجدولة'},
-  'planNote':{en:'Access expires automatically on the end date (server-enforced). Renewing never resets progress.', ar:'ينتهي الوصول تلقايياً بتاريخ النهاية (تطبيق من الخادم). التجديد لا يمسّ تقدمك.'},
+  'planNote':{en:'Access expires automatically on the end date (server-enforced). Renewing never resets progress.', ar:'ينتهي الوصول تلقايياً بتاريخ النهايه (تطبيق من الخادم). التجديد لا يمسّ تقدمك.'},
   'notificationSent':{en:'Announcement sent.', ar:'تم ارسال الاعلان.'},
   'planSaved':{en:'Plan saved.', ar:'تم حفظ الباقة.'},
   'planAssigned':{en:'Plan assigned.', ar:'تم اسناد الباقة.'},
   'planExtended':{en:'Plan extended.', ar:'تم تمديد الباقة.'},
-  'planStatusChanged':{en:'Plan status updated.', ar:'تم تحديث حالة الباقة.'},
+  'planStatusChanged':{en:'Plan status updated.', ar:'تم تحديث حاله الباقة.'},
   'entLabel':{en:'Entitlement', ar:'الباقة'},
   'entAny':{en:'All entitlements', ar:'كل الحالات'},
   'entExpiring7':{en:'Expiring ≤7 days', ar:'ينتهي خلال ٧ ايام'},
   'entExpiring30':{en:'Expiring ≤30 days', ar:'ينتهي خلال ٣٠ يوم'},
-  'entExpired':{en:'Expired', ar:'منتهية'},
+  'entExpired':{en:'Expired', ar:'منتهيه'},
   'entNoPlan':{en:'No plan', ar:'بدون باقة'},
-  'entSuspended':{en:'Suspended', ar:'موقوفة'},
+  'entSuspended':{en:'Suspended', ar:'موقوفه'},
   'seeAll':{en:'See all', ar:'عرض الكل'},
 };
 function t(k){
@@ -696,14 +696,14 @@ function applyLang(announce){
   document.body.classList.toggle('ui-en', lang === 'en');
   $('langBtn').textContent = lang === 'ar' ? 'EN' : 'ع';
   try{ localStorage.setItem('pel_admin_prefs', JSON.stringify({ lang: lang })); var acct=null; try{ acct=JSON.parse(localStorage.getItem('pel_account_prefs')||'null'); }catch(e){} if(!acct) acct={lang:'en',direction:'en'}; acct.lang=lang; localStorage.setItem('pel_account_prefs', JSON.stringify(acct)); }catch(e){}
-  if(announce) toast(lang === 'ar' ? 'الواجهة بالعربية' : 'Interface switched to English');
+  if(announce) toast(lang === 'ar' ? 'الواجهه بالعربيه' : 'Interface switched to English');
 }
 
 /* ============================================================
    5. NAVIGATION
    ============================================================ */
 var NAV = [
-  { label:'overview', items:[ {id:'overview', en:'Overview', ar:'نظرة عامة', icon:'layout-dashboard'} ] },
+  { label:'overview', items:[ {id:'overview', en:'Overview', ar:'نظره عامه', icon:'layout-dashboard'} ] },
   { label:'people', items:[
     {id:'students', en:'Students', ar:'الطلاب', icon:'users'},
     {id:'teachers', en:'Teachers', ar:'المعلمين', icon:'user-check'},
@@ -715,7 +715,7 @@ var NAV = [
     {id:'interventions', en:'Interventions', ar:'التدخلات', icon:'activity'},
   ]},
 { label:'operations', items:[
-    {id:'classes', en:'Live Classes', ar:'الدروس المباشرة', icon:'video'},
+    {id:'classes', en:'Live Classes', ar:'الدروس المباشره', icon:'video'},
     {id:'programs', en:'Programs', ar:'البرامج', icon:'credit-card'},
     {id:'plans', en:'Plans', ar:'الباقات', icon:'badge-check', perm:'subscriptions.manage'},
     {id:'billing', en:'Billing & Index', ar:'الفوترة والبداية', icon:'wallet', perm:'subscriptions.manage'},
@@ -726,7 +726,7 @@ var NAV = [
     {id:'certificates', en:'Certificates', ar:'الشهادات', icon:'graduation-cap'},
     {id:'announcements', en:'Announcements', ar:'الاعلانات', icon:'megaphone', perm:'announcements.manage'},
     {id:'roles', en:'Access & Roles', ar:'الادوار والصلاحيات', icon:'shield', perm:'roles.manage'},
-    {id:'health', en:'System Health', ar:'صحة النظام', icon:'heart-pulse', perm:'health.read'},
+    {id:'health', en:'System Health', ar:'صحه النظام', icon:'heart-pulse', perm:'health.read'},
   ]},
   { label:'reports', items:[ {id:'reports', en:'Reports', ar:'التقارير', icon:'file-bar-chart'} ] },
 ];
@@ -787,8 +787,8 @@ $('viewArea').innerHTML = pageHead(t('overview'), lang === 'ar' ? 'وش يصير
   if((tt.expiring || 0) > 0) actions.push({ warn:true, icon:'hourglass', txt: (lang === 'ar' ? (tt.expiring + ' برنامج ينتهي خلال ١٤ يوم - جدد او كلم الطالب') : (tt.expiring + ' program(s) end within 14 days - renew or reach out') ) });
   if(actions.length === 0){
     if((d.attention || []).length > 0) actions.push({ txt: lang === 'ar' ? (d.attention.length + ' طالب يحتاج انتباه') : (d.attention.length + ' students need attention') });
-    if((d.upcoming_classes || []).length > 0) actions.push({ txt: lang === 'ar' ? (d.upcoming_classes.length + ' دروس مباشرة قادمة - سجل الحضور بعدها') : (d.upcoming_classes.length + ' upcoming live classes') });
-    if((tt.certificates_30 || 0) > 0) actions.push({ txt: lang === 'ar' ? (tt.certificates_30 + ' شهادة صدرت هذا الشهر') : (tt.certificates_30 + ' certificates issued this month') });
+    if((d.upcoming_classes || []).length > 0) actions.push({ txt: lang === 'ar' ? (d.upcoming_classes.length + ' دروس مباشره قادمه - سجل الحضور بعدها') : (d.upcoming_classes.length + ' upcoming live classes') });
+    if((tt.certificates_30 || 0) > 0) actions.push({ txt: lang === 'ar' ? (tt.certificates_30 + ' شهاده صدرت هذا الشهر') : (tt.certificates_30 + ' certificates issued this month') });
     if((tt.stalled || 0) > 0) actions.push({ txt: lang === 'ar' ? (tt.stalled + ' طالب متوقف - افتح ملفاتهم وشوف السبب') : (tt.stalled + ' stalled students - open their profiles') });
   }
   var actionHtml = actions.length ? actions.map(function(a){
@@ -851,7 +851,7 @@ $('viewArea').innerHTML = pageHead(t('overview'), lang === 'ar' ? 'وش يصير
     return '<div class="bar-row"><div class="bar-label">' + esc(academyName(c.academy, lang)) + '</div><div class="bar-track"><div class="bar-fill" style="width:' + w + '%"></div></div><div class="bar-val">' + fmtN(c.count) + '</div></div>';
   }).join('') || '<div class="sub">' + esc(t('noData')) + '</div>';
 
-  $('viewArea').innerHTML = pageHead(t('overview'), lang === 'ar' ? 'نظرة عامة على المنصة.' : 'Platform overview.') +
+  $('viewArea').innerHTML = pageHead(t('overview'), lang === 'ar' ? 'نظره عامه على المنصه.' : 'Platform overview.') +
     '<div class="kpi-grid">' + kpiHtml + '</div>' +
     '<div class="grid grid-2"><div>' +
     '<div class="section-title">' + esc(t('whatShouldIDo')) + '</div><div class="card"><div class="reason-list">' + actionHtml + '</div></div>' +
@@ -1094,7 +1094,7 @@ function render360(){
   if(presence.session_duration_seconds != null){
     var mins = Math.floor(presence.session_duration_seconds / 60);
     var secs = presence.session_duration_seconds % 60;
-    presInfo += '<span>· ' + esc(lang==='ar'?'مدة الجلسة':'Session') + ': ' + esc(mins + 'm ' + secs + 's') + '</span>';
+    presInfo += '<span>· ' + esc(lang==='ar'?'مدة الجلسه':'Session') + ': ' + esc(mins + 'm ' + secs + 's') + '</span>';
   }
 
   var header =
@@ -1168,11 +1168,11 @@ var tabs = [
         (hasPerm('subscriptions.manage') ?
         '<div class="reason-list" style="margin-bottom:10px;">' +
           '<div class="reason-item" style="flex-wrap:wrap;gap:8px;align-items:center;">' +
-            '<div style="font-weight:700;min-width:110px;">'+esc(lang==='ar'?'الخطة والمستوى':'Plan & level')+'</div>' +
+            '<div style="font-weight:700;min-width:110px;">'+esc(lang==='ar'?'الخطه والمستوى':'Plan & level')+'</div>' +
             chip(esc(b.tier==='exam_prep'?(lang==='ar'?'التجهيز للاختبارات':'Exam Prep'):(lang==='ar'?'ابد من الصفر':'Start From Zero')), 'gold') +
             chip(esc(lvlName(b.assessed_cefr_level||'A1')), '') +
             '<button class="btn btn-gold btn-sm" id="s360AssignPlan">'+esc(t('assignPlan'))+'</button>' +
-            '<span style="font-size:.76rem;color:var(--text-muted);">'+esc(lang==='ar'?'يحدد البرنامج + المدة + نوع الخطة + المستوى اللي تاخذ منه الدروس':'Sets program + duration + plan type + level that drives their lessons')+'</span>' +
+            '<span style="font-size:.76rem;color:var(--text-muted);">'+esc(lang==='ar'?'يحدد البرنامج + المدة + نوع الخطه + المستوى اللي تاخذ منه الدروس':'Sets program + duration + plan type + level that drives their lessons')+'</span>' +
           '</div></div>' : '') +
         '<div class="reason-list" id="credLedger">' +
           (ledger.length ? ledger.map(function(l){
@@ -1457,7 +1457,7 @@ function renderTabPersonalization(plan){
   var help = '<div class="notice" style="margin-bottom:14px;"><div style="font-weight:600;">' + esc(lang==='ar'?'من وين تجي هذي المعلومات؟':'Where this data comes from') + '</div>' +
     '<div style="margin-top:6px; font-size:.8rem; color:var(--text-muted); line-height:1.7;">' +
     esc(lang==='ar'
-      ? 'هذي خطة الطالب اللي يبنيها بنفسه: يجاوب على اسالة الاهداف والوقت اليومي اول ما يدخل التطبيق او من صفحة البداية. اذا بنى خطته، تشوف هنا هدفه ووقته ووتيرته. اذا الفضا فاضي، يعني الطالب ما بنى خطته بعد - اساله يدخل التطبيق ويبنيها، وبتقدر بعدها تسند له الباقة المناسبة.'
+      ? 'هذي خطه الطالب اللي يبنيها بنفسه: يجاوب على اسالة الاهداف والوقت اليومي اول ما يدخل التطبيق او من صفحه البداية. اذا بنى خطته، تشوف هنا هدفه ووقته ووتيرته. اذا الفضا فاضي، يعني الطالب ما بنى خطته بعد - اساله يدخل التطبيق ويبنيها، وبتقدر بعدها تسند له الباقة المناسبه.'
       : 'This is the plan the student builds themselves: they answer the goal and daily-time questions on first sign-in or from the home page. Once built, you see their goal, pace and route here. If this is empty, the student has not built their plan yet - have them sign in and build it, then assign the right plan.') +
     '</div></div>';
   if(!plan || !plan.profile){
@@ -1635,7 +1635,7 @@ function renderTabTimeline(p, st, kv, d){
   var plan = p.plan;
   if(plan && plan.onboardingCompleted){
     var planDate = plan.updatedAt || plan.onboardingCompletedAt || p.created_at;
-    events.push({ date: planDate, icon:'map', txt: lang === 'ar' ? 'بنا خطة التعلم الشخصية' : 'Personalized plan built', sub: plan.profile && (lang === 'ar' ? plan.profile.goalsAr : plan.profile.goalsEn) });
+    events.push({ date: planDate, icon:'map', txt: lang === 'ar' ? 'بنا خطه التعلم الشخصية' : 'Personalized plan built', sub: plan.profile && (lang === 'ar' ? plan.profile.goalsAr : plan.profile.goalsEn) });
   }
   var compDates = kv['pel_completion_dates'] || {};
   Object.keys(compDates).forEach(function(k){
@@ -1643,7 +1643,7 @@ function renderTabTimeline(p, st, kv, d){
     events.push({ date: compDates[k] + 'T00:00:00', icon:'check-circle-2', txt: lang === 'ar' ? 'درس مكتمل' : 'Lesson completed', sub: lessonName(parts[1]) + '، ' + academyName(parts[0], lang) });
   });
   (d.certificates || []).forEach(function(c){
-    events.push({ date: c.created_at, icon:'graduation-cap', txt: lang === 'ar' ? 'اصدار شهادة' : 'Certificate issued', sub: c.academy_en + '، ' + c.cert_id, cls: c.status === 'revoked' ? 'red' : '' });
+    events.push({ date: c.created_at, icon:'graduation-cap', txt: lang === 'ar' ? 'اصدار شهاده' : 'Certificate issued', sub: c.academy_en + '، ' + c.cert_id, cls: c.status === 'revoked' ? 'red' : '' });
   });
   (d.interventions || []).forEach(function(i){
     events.push({ date: i.created_at, icon:'activity', txt: lang === 'ar' ? 'تدخل' : 'Intervention', sub: lang === 'ar' ? i.title_ar : i.title_en, cls:'warn' });
@@ -2369,7 +2369,7 @@ async function interventions(){
    15. LIVE CLASSES + ATTENDANCE (Phases 30-31)
    ============================================================ */
 async function classes(){
-  $('viewArea').innerHTML = pageHead(t('classes'), lang === 'ar' ? 'الدروس المباشرة والحضور' : 'Live classes and attendance') + loadingBlock();
+  $('viewArea').innerHTML = pageHead(t('classes'), lang === 'ar' ? 'الدروس المباشره والحضور' : 'Live classes and attendance') + loadingBlock();
   var [r, g] = await Promise.all([
     rpc('admin_classes'),
     pelTableSelect('groups', 'id,name,status', { eq: { status: 'active' } })
@@ -2397,7 +2397,7 @@ async function classes(){
   }).join('') || emptyBlock(t('noData'));
 
   var newBtn = hasPerm('classes.manage') ? '<div class="btn-row" style="margin-bottom:16px;"><button class="btn btn-gold btn-sm" id="newClassBtn">' + esc(t('newClass')) + '</button></div>' : '';
-  $('viewArea').innerHTML = pageHead(t('classes'), lang === 'ar' ? 'جدول الدروس المباشرة' : 'Live class schedule') +
+  $('viewArea').innerHTML = pageHead(t('classes'), lang === 'ar' ? 'جدول الدروس المباشره' : 'Live class schedule') +
     newBtn + '<div class="grid grid-3">' + html + '</div>';
   loadIcons();
   var nb = $('newClassBtn');
@@ -2573,7 +2573,7 @@ function programForm(){
    ============================================================ */
 async function billingView(){
   $('viewArea').innerHTML = pageHead(lang==='ar'?'الفوترة والبداية':'Billing & Index',
-    lang==='ar'?'عدل اسعار الباقات ونص الصفحة البداية - التغييرات توصل لـ /index فوراً':'Edit plan prices and index copy - changes reach /index immediately') + loadingBlock();
+    lang==='ar'?'عدل اسعار الباقات ونص الصفحه البداية - التغييرات توصل لـ /index فوراً':'Edit plan prices and index copy - changes reach /index immediately') + loadingBlock();
   var c = client();
   var [pp, ss] = await Promise.all([
     pelTableSelect('plan_pricing', '*', { order: 'tier,duration_months' }),
@@ -2597,8 +2597,8 @@ async function billingView(){
         '<div style="font-weight:700;min-width:90px;">'+esc(mo+' '+(lang==='ar'?'اشهر':'months'))+'</div>' +
         '<label style="display:flex;align-items:center;gap:6px;font-size:.78rem;">'+esc(t('price'))+' <input class="input" type="number" style="width:90px" data-pp="price" data-tier="'+tier.k+'" data-mo="'+mo+'" value="'+(r.price||0)+'"></label>' +
         '<label style="display:flex;align-items:center;gap:6px;font-size:.78rem;">'+(lang==='ar'?'حصص اسبوعياً':'Weekly classes')+' <input class="input" type="number" style="width:70px" data-pp="weekly_live_classes" data-tier="'+tier.k+'" data-mo="'+mo+'" value="'+(r.weekly_live_classes||0)+'"></label>' +
-        '<label style="display:flex;align-items:center;gap:6px;font-size:.78rem;"><input type="checkbox" data-pp="featured" data-tier="'+tier.k+'" data-mo="'+mo+'" '+(r.featured?'checked':'')+'> '+(lang==='ar'?'مميزة':'Featured')+'</label>' +
-        '<label style="display:flex;align-items:center;gap:6px;font-size:.78rem;"><input type="checkbox" data-pp="active" data-tier="'+tier.k+'" data-mo="'+mo+'" '+(r.active!==false?'checked':'')+'> '+(lang==='ar'?'متاحة':'Active')+'</label>' +
+        '<label style="display:flex;align-items:center;gap:6px;font-size:.78rem;"><input type="checkbox" data-pp="featured" data-tier="'+tier.k+'" data-mo="'+mo+'" '+(r.featured?'checked':'')+'> '+(lang==='ar'?'مميزه':'Featured')+'</label>' +
+        '<label style="display:flex;align-items:center;gap:6px;font-size:.78rem;"><input type="checkbox" data-pp="active" data-tier="'+tier.k+'" data-mo="'+mo+'" '+(r.active!==false?'checked':'')+'> '+(lang==='ar'?'متاحه':'Active')+'</label>' +
         '</div>';
     });
     matrixHtml += '</div></div>';
@@ -2606,14 +2606,14 @@ async function billingView(){
 
   // ---- index content ----
   function val(k){ var v = kv[k]; return (v && typeof v === 'string') ? v : (v && v.ar ? v.ar : ''); }
-  var indexHtml = '<div class="section-title">'+(lang==='ar'?'نص الصفحة البداية':'Index copy')+'</div>' +
+  var indexHtml = '<div class="section-title">'+(lang==='ar'?'نص الصفحه البداية':'Index copy')+'</div>' +
     '<div class="card" style="margin-bottom:16px;"><div class="form-grid">' +
     '<div class="field full"><label>'+(lang==='ar'?'عنوان البطل (عربي)':'Hero headline (AR)')+'</label><textarea class="input" rows="2" data-ix="hero_headline_ar">'+esc(val('hero_headline_ar'))+'</textarea></div>' +
     '<div class="field full"><label>'+(lang==='ar'?'عنوان البطل (انجليزي)':'Hero headline (EN)')+'</label><textarea class="input" rows="2" data-ix="hero_headline_en">'+esc(val('hero_headline_en'))+'</textarea></div>' +
     '<div class="field full"><label>'+(lang==='ar'?'العنوان الفرعي (عربي)':'Hero sub (AR)')+'</label><textarea class="input" rows="2" data-ix="hero_sub_ar">'+esc(val('hero_sub_ar'))+'</textarea></div>' +
     '<div class="field full"><label>'+(lang==='ar'?'العنوان الفرعي (انجليزي)':'Hero sub (EN)')+'</label><textarea class="input" rows="2" data-ix="hero_sub_en">'+esc(val('hero_sub_en'))+'</textarea></div>' +
-    '<div class="field full"><label>'+(lang==='ar'?'ملاحظة الباقات (عربي)':'Pricing note (AR)')+'</label><textarea class="input" rows="2" data-ix="pricing_note_ar">'+esc(val('pricing_note_ar'))+'</textarea></div>' +
-    '<div class="field full"><label>'+(lang==='ar'?'ملاحظة الباقات (انجليزي)':'Pricing note (EN)')+'</label><textarea class="input" rows="2" data-ix="pricing_note_en">'+esc(val('pricing_note_en'))+'</textarea></div>' +
+    '<div class="field full"><label>'+(lang==='ar'?'ملاحظه الباقات (عربي)':'Pricing note (AR)')+'</label><textarea class="input" rows="2" data-ix="pricing_note_ar">'+esc(val('pricing_note_ar'))+'</textarea></div>' +
+    '<div class="field full"><label>'+(lang==='ar'?'ملاحظه الباقات (انجليزي)':'Pricing note (EN)')+'</label><textarea class="input" rows="2" data-ix="pricing_note_en">'+esc(val('pricing_note_en'))+'</textarea></div>' +
     '</div></div>';
 
   // ---- FAQ editor (site_settings.faqs = JSON array of {qEn,qAr,aEn,aAr}) ----
@@ -2633,9 +2633,9 @@ async function billingView(){
   indexHtml += faqHtml;
 
   $('viewArea').innerHTML = pageHead(lang==='ar'?'الفوترة والبداية':'Billing & Index',
-    lang==='ar'?'عدل اسعار الباقات ونص الصفحة البداية':'Edit plan prices and index copy') +
+    lang==='ar'?'عدل اسعار الباقات ونص الصفحه البداية':'Edit plan prices and index copy') +
     '<div class="btn-row" style="margin-bottom:16px;"><button class="btn btn-gold btn-sm" id="ppSave">'+esc(t('save'))+'</button>' +
-    '<span class="why">'+(lang==='ar'?'الدفع عبر واتساب - ما في بوابة دفع':'WhatsApp checkout only - no payment gateway')+'</span></div>' +
+    '<span class="why">'+(lang==='ar'?'الدفع عبر واتساب - ما في بوابه دفع':'WhatsApp checkout only - no payment gateway')+'</span></div>' +
     matrixHtml + indexHtml;
 
   // FAQ add/remove wiring
@@ -2721,7 +2721,7 @@ async function questionsView(){
         '<td style="padding:8px;vertical-align:top;">'+(q.active!==false?'<span class="chip emerald" style="font-size:.7rem">'+esc(lang==='ar'?'متاح':'Active')+'</span>':'<span class="chip muted" style="font-size:.7rem">'+esc(lang==='ar'?'متوقف':'Off')+'</span>')+'</td>'+
         '<td style="padding:8px;vertical-align:top;white-space:nowrap;">'+
           '<button class="btn btn-ghost btn-sm" data-aq-edit="'+esc(q.id)+'">'+esc(t('edit'))+'</button> '+
-          '<button class="btn btn-outline btn-sm" data-aq-toggle="'+esc(q.id)+'">'+esc(lang==='ar'?'حالة':'Toggle')+'</button> '+
+          '<button class="btn btn-outline btn-sm" data-aq-toggle="'+esc(q.id)+'">'+esc(lang==='ar'?'حاله':'Toggle')+'</button> '+
           '<button class="btn btn-danger btn-sm" data-aq-del="'+esc(q.id)+'">'+esc(lang==='ar'?'حذف':'Delete')+'</button>'+
         '</td></tr>';
     }).join('');
@@ -2730,7 +2730,7 @@ async function questionsView(){
       '<th style="text-align:right;padding:8px;">'+esc(lang==='ar'?'الكود':'Code')+'</th>'+
       '<th style="text-align:right;padding:8px;">'+esc(lang==='ar'?'المستوى':'Level')+'</th>'+
       '<th style="text-align:right;padding:8px;">'+esc(lang==='ar'?'السوال':'Question')+'</th>'+
-      '<th style="text-align:right;padding:8px;">'+esc(lang==='ar'?'الحالة':'Status')+'</th>'+
+      '<th style="text-align:right;padding:8px;">'+esc(lang==='ar'?'الحاله':'Status')+'</th>'+
       '<th style="text-align:right;padding:8px;">'+esc(lang==='ar'?'اجراات':'Actions')+'</th>'+
       '</tr></thead><tbody>'+rowsHtml+'</tbody></table></div>';
     wire();
@@ -2770,7 +2770,7 @@ async function questionsView(){
       '<div class="field"><label>'+esc(lang==='ar'?'الكود':'Code')+'</label><input class="input" id="qf_code" value="'+esc(q?q.code:'')+'" placeholder="q16"></div>'+
       '<div class="field"><label>'+esc(lang==='ar'?'المسار':'Tier')+'</label><select class="input" id="qf_tier"><option value="beginner"'+(q&&q.tier==='beginner'?' selected':'')+'>Beginner</option><option value="exam_prep"'+(q&&q.tier==='exam_prep'?' selected':'')+'>Exam Prep</option></select></div>'+
       '<div class="field"><label>'+esc(lang==='ar'?'المستوى':'Level')+'</label><select class="input" id="qf_level">'+['A0','A1','A2','B1','B2','C1'].map(function(l){return '<option value="'+l+'"'+(q&&q.level===l?' selected':'')+'>'+esc(lvlName(l))+'</option>';}).join('')+'</select></div>'+
-      '<div class="field"><label>'+esc(lang==='ar'?'الصعوبة':'Difficulty')+'</label><select class="input" id="qf_diff">'+[1,2,3,4,5].map(function(d){return '<option value="'+d+'"'+(q&&q.difficulty_rating===d?' selected':'')+'>'+d+'</option>';}).join('')+'</select></div>'+
+      '<div class="field"><label>'+esc(lang==='ar'?'الصعوبه':'Difficulty')+'</label><select class="input" id="qf_diff">'+[1,2,3,4,5].map(function(d){return '<option value="'+d+'"'+(q&&q.difficulty_rating===d?' selected':'')+'>'+d+'</option>';}).join('')+'</select></div>'+
       '<div class="field"><label>'+esc(lang==='ar'?'النوع':'Skill')+'</label><select class="input" id="qf_skill">'+['grammar','vocab','reading','listening'].map(function(s){return '<option value="'+s+'"'+(q&&q.skill_type===s?' selected':'')+'>'+s+'</option>';}).join('')+'</select></div>'+
       '<div class="field"><label><input type="checkbox" id="qf_active" '+(q?(q.active!==false?'checked':''):'checked')+'> '+esc(lang==='ar'?'متاح':'Active')+'</label></div>'+
       '<div class="field full"><label>'+esc(lang==='ar'?'السوال (عربي)':'Question (AR)')+'</label><textarea class="input" rows="2" id="qf_qar">'+esc(q?(q.question_ar||''):'')+'</textarea></div>'+
@@ -3056,7 +3056,7 @@ async function roles(){
    20. SYSTEM HEALTH (Phase 37)
    ============================================================ */
 async function health(){
-  $('viewArea').innerHTML = pageHead(t('health'), lang === 'ar' ? 'فحوصات صحة النظام' : 'System health checks') + loadingBlock();
+  $('viewArea').innerHTML = pageHead(t('health'), lang === 'ar' ? 'فحوصات صحه النظام' : 'System health checks') + loadingBlock();
   var r = await rpc('system_health');
   if(!r.ok){ $('viewArea').innerHTML = errBlock(rpcErrMsg(r)); return; }
   var checks = (r.data && r.data.checks) || [];
@@ -3067,7 +3067,7 @@ async function health(){
       '<span class="why">' + esc(c.code) + '</span></div>' +
       chip(ok ? t('healthy') : t('issues') + ': ' + fmtN(c.count), ok ? 'green' : 'red') + '</div>';
   }).join('') || emptyBlock(t('noData'));
-  $('viewArea').innerHTML = pageHead(t('health'), lang === 'ar' ? 'صحة النظام' : 'System health') +
+  $('viewArea').innerHTML = pageHead(t('health'), lang === 'ar' ? 'صحه النظام' : 'System health') +
     '<div class="btn-row" style="margin-bottom:16px;"><button class="btn btn-outline btn-sm" id="healthRefresh">' + esc(t('refresh')) + '</button></div>' +
     '<div class="card"><div class="reason-list">' + html + '</div></div>';
   loadIcons();
@@ -3219,7 +3219,7 @@ async function openAssignPlanModal(uid, onDone, curTier, curLevel){
         catalog.map(function(x){ return '<option value="' + x.id + '" data-days="' + (x.duration_days || (x.duration_months||0)*30) + '">' + esc(x.name_en + (x.price?(' - '+x.price+' '+(x.currency||'SAR')):'')) + '</option>'; }).join('') + '</select></div>' +
       '<div class="field"><label>' + esc(t('startDate')) + '</label><input class="input" type="date" id="apStart" value="' + new Date().toISOString().slice(0,10) + '"></div>' +
       '<div class="field"><label>' + esc(t('endDate')) + ' <span style="opacity:.6">(optional)</span></label><input class="input" type="date" id="apEnd"></div>' +
-      '<div class="field"><label>' + esc(lang==='ar'?'نوع الخطة':'Plan type') + '</label><select class="input" id="apTier">' +
+      '<div class="field"><label>' + esc(lang==='ar'?'نوع الخطه':'Plan type') + '</label><select class="input" id="apTier">' +
         '<option value="start_from_zero"' + (curTier==='exam_prep'?'':' selected') + '>' + esc(lang==='ar'?'ابد من الصفر':'Start From Zero') + '</option>' +
         '<option value="exam_prep"' + (curTier==='exam_prep'?' selected':'') + '>' + esc(lang==='ar'?'التجهيز للاختبارات':'Exam Prep') + '</option>' +
       '</select></div>' +
@@ -3228,7 +3228,7 @@ async function openAssignPlanModal(uid, onDone, curTier, curLevel){
       '<div class="field full"><label>' + esc(t('reason')) + '</label><input class="input" id="apReason"></div>' +
     '</div>' +
     '<div class="btn-row"><button class="btn btn-gold btn-sm" id="apSave">' + esc(t('save')) + '</button><button class="btn btn-ghost btn-sm" data-close>' + esc(t('cancel')) + '</button></div>' +
-    '<div class="sub" style="margin-top:8px;color:var(--text-muted);">' + esc(lang==='ar'?'يحدد البرنامج + المدة + نوع الخطة + المستوى اللي تاخذ منه الدروس':'Sets program + duration + plan type + level that drives their lessons') + '</div>');
+    '<div class="sub" style="margin-top:8px;color:var(--text-muted);">' + esc(lang==='ar'?'يحدد البرنامج + المدة + نوع الخطه + المستوى اللي تاخذ منه الدروس':'Sets program + duration + plan type + level that drives their lessons') + '</div>');
   ms.querySelector('[data-close]').addEventListener('click', function(){ closeModal(ms); });
   $('apSave').addEventListener('click', async function(){
     var btn = $('apSave'); btn.disabled = true; var orig = btn.textContent; btn.textContent = '...';
@@ -3307,7 +3307,7 @@ function savePlanForm(catalog){
    23. ANNOUNCEMENTS VIEW (upgrade)
    ============================================================ */
 async function announcementsView(){
-  $('viewArea').innerHTML = pageHead(t('announcements'), lang === 'ar' ? 'ارسل اعلانات لكل الطلاب او لمجموعة مختارة، وتابع الوصول.' : 'Send announcements to everyone or a selection, and track delivery.') + loadingBlock();
+  $('viewArea').innerHTML = pageHead(t('announcements'), lang === 'ar' ? 'ارسل اعلانات لكل الطلاب او لمجموعه مختارة، وتابع الوصول.' : 'Send announcements to everyone or a selection, and track delivery.') + loadingBlock();
   var r = await rpc('admin_announcements');
   if(!r.ok){ $('viewArea').innerHTML = errBlock(r.error && r.error.message); return; }
   var rows = r.data || [];
@@ -3331,7 +3331,7 @@ async function announcementsView(){
       '</div>';
   }).join('') || emptyBlock(t('noAnnouncements'));
 
-  $('viewArea').innerHTML = pageHead(t('announcements'), lang === 'ar' ? 'اعلانات المنصة وتتبع الوصول.' : 'Platform announcements and delivery tracking.') +
+  $('viewArea').innerHTML = pageHead(t('announcements'), lang === 'ar' ? 'اعلانات المنصه وتتبع الوصول.' : 'Platform announcements and delivery tracking.') +
     '<div class="btn-row" style="margin-bottom:16px;"><button class="btn btn-gold btn-sm" id="annNewBtn">' + esc(t('newAnnouncement')) + '</button></div>' +
     '<div>' + html + '</div>';
   loadIcons();
@@ -3497,13 +3497,13 @@ async function settingsView(){
       '</div>' +
       '<div class="s360-meta" style="margin-top:18px;"><span class="chip bronze">' + esc(lang === 'ar' ? 'خيارات' : 'Flags') + '</span></div>' +
       '<div class="form-grid" style="margin-top:12px;">' +
-        chk('stMaint', 'وضع الصيانة (تنبيه في تسجيل الدخول والتطبيق)', 'Maintenance mode (notice on login & app)', maint) +
+        chk('stMaint', 'وضع الصيانه (تنبيه في تسجيل الدخول والتطبيق)', 'Maintenance mode (notice on login & app)', maint) +
         chk('stP6', 'باقة 6 اشهر متوفرة', '6-Month plan available', p6) +
         '<div class="field"><label>' + esc(lang === 'ar' ? 'واتساب التواصل' : 'WhatsApp contact') + '</label><input class="input" id="stWa" value="' + esc(wa) + '" placeholder="9665XXXXXXXX" dir="ltr"></div>' +
       '</div>' +
     '</div>' +
     '<div class="card" style="max-width:760px; margin-top:16px;">' +
-      '<div class="s360-meta" style="margin-top:0;"><span class="chip gold">' + esc(lang === 'ar' ? 'الاساله الشايعة - الصفحة البداية' : 'Homepage FAQs') + '</span></div>' +
+      '<div class="s360-meta" style="margin-top:0;"><span class="chip gold">' + esc(lang === 'ar' ? 'الاساله الشايعة - الصفحه البداية' : 'Homepage FAQs') + '</span></div>' +
       '<p style="margin:10px 0 0; font-size:.76rem; color:var(--text-muted); line-height:1.7;">' +
         esc(lang === 'ar'
           ? 'كل سطر = سوال|جواب. لازم نفس عدد الاسطر بالعربي والانجليزي وبنفس الترتيب.'
@@ -3671,17 +3671,17 @@ var mm = $('mobileMenuBtn');
    ============================================================ */
 var LC_SVC = {
   group_online_40:{en:'Group online (40m)', ar:'جماعية اونلاين (40د)'},
-  private_online_40:{en:'Private online (40m)', ar:'خاصة اونلاين (40د)'},
+  private_online_40:{en:'Private online (40m)', ar:'خاصه اونلاين (40د)'},
   in_person_40:{en:'In-person (40m)', ar:'حضورية (40د)'}
 };
-var LC_ST = {pending:{en:'Pending',ar:'قيد الانتظار'},approved:{en:'Approved',ar:'مقبولة'},declined:{en:'Declined',ar:'مرفوضة'},cancelled:{en:'Cancelled',ar:'ملغية'}};
+var LC_ST = {pending:{en:'Pending',ar:'قيد الانتظار'},approved:{en:'Approved',ar:'مقبولة'},declined:{en:'Declined',ar:'مرفوضة'},cancelled:{en:'Cancelled',ar:'ملغيه'}};
 function lcSvcLabel(code){ var m=LC_SVC[code]||{}; return lang==='ar'?(m.ar||code):(m.en||code); }
 function lcStLabel(st){ var m=LC_ST[st]||{en:st,ar:st}; return lang==='ar'?m.ar:m.en; }
 
 var lcState = { filter:'pending', cities:[], reqs:[] };
 
 async function liveClassesView(){
-  $('viewArea').innerHTML = pageHead(t('liveClasses')||'Class Requests', lang==='ar'?'طلبات الحصص المباشرة والرصيد':'Live class credit requests and cities') + loadingBlock();
+  $('viewArea').innerHTML = pageHead(t('liveClasses')||'Class Requests', lang==='ar'?'طلبات الحصص المباشره والرصيد':'Live class credit requests and cities') + loadingBlock();
   await lcLoad();
 }
 
@@ -3711,7 +3711,7 @@ function lcRender(){
           '<div style="font-weight:700;">'+esc(lcSvcLabel(r.service_code))+' <span class="chip muted">'+esc(r.credit_cost+' '+(A?'رصيد':'credits'))+'</span></div>'+
           '<div style="font-size:.82rem;color:var(--text-secondary);margin-top:3px;">'+esc(r.student_email||r.student_id)+'</div>'+
           '<div style="font-size:.8rem;color:var(--text-muted);margin-top:4px;line-height:1.6;">'+
-            (r.city_raw?(esc((A?'المدينة: ':'City: ')+r.city_raw)+' - '):'')+
+            (r.city_raw?(esc((A?'المدينه: ':'City: ')+r.city_raw)+' - '):'')+
             (r.preferred_times?esc((A?'الوقت المناسب: ':'Preferred: ')+r.preferred_times):'')+
             (r.student_notes?('<br>'+(A?'ملاحظات: ':'Notes: ')+esc(r.student_notes)):'')+
           '</div>'+
@@ -3721,7 +3721,7 @@ function lcRender(){
       '</div>'+
       (pend ?
         '<div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;align-items:center;">'+
-          '<input class="input" data-lc-note="'+esc(r.id)+'" style="flex:1;min-width:160px;" placeholder="'+esc(A?'ملاحظة القرار (اختياري)':'Decision note (optional)')+'">'+
+          '<input class="input" data-lc-note="'+esc(r.id)+'" style="flex:1;min-width:160px;" placeholder="'+esc(A?'ملاحظه القرار (اختياري)':'Decision note (optional)')+'">'+
           '<button class="btn btn-gold btn-sm" data-lc-decide="'+esc(r.id)+'|1">'+esc(A?'قبول':'Approve')+'</button>'+
           '<button class="btn btn-outline btn-sm" data-lc-decide="'+esc(r.id)+'|0">'+esc(A?'رفض':'Decline')+'</button>'+
         '</div>' : '')+
@@ -3735,20 +3735,20 @@ function lcRender(){
     '</div>';
   }).join('') : emptyBlock(A?'لا توجد مدن بعد':'No cities yet');
 
-  host.innerHTML = pageHead(A?'طلبات الحصص':'Class Requests', A?'رصيد الحصص وطلبات الحصص المباشرة':'Live class credit requests and cities') +
+  host.innerHTML = pageHead(A?'طلبات الحصص':'Class Requests', A?'رصيد الحصص وطلبات الحصص المباشره':'Live class credit requests and cities') +
     '<div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;">'+filtBtn('pending')+filtBtn('all')+'</div>'+
     '<div class="section-title">'+esc(A?'الطلبات':'Requests')+'</div>'+
     rows +
     '<div class="section-title" style="margin-top:26px;">'+esc(A?'مدن الحصص الحضورية':'In-person cities')+'</div>'+
     '<div class="card" style="padding:6px 16px;margin-bottom:14px;">'+cityRows+'</div>'+
     '<div class="card" style="padding:16px;">'+
-      '<div style="font-weight:700;margin-bottom:8px;">'+esc(A?'اضف مدينة':'Add a city')+'</div>'+
+      '<div style="font-weight:700;margin-bottom:8px;">'+esc(A?'اضف مدينه':'Add a city')+'</div>'+
       '<div style="display:flex;gap:8px;flex-wrap:wrap;">'+
-        '<input class="input" id="lcCityName" style="flex:1;min-width:160px;" placeholder="'+esc(A?'اكتب اسم المدينة':'Type city name')+'">'+
+        '<input class="input" id="lcCityName" style="flex:1;min-width:160px;" placeholder="'+esc(A?'اكتب اسم المدينه':'Type city name')+'">'+
         '<label class="chip-input" style="display:flex;align-items:center;gap:6px;"><input type="checkbox" id="lcCityAvail" checked> '+esc(A?'متوفرة للحضور':'Available')+'</label>'+
         '<button class="btn btn-gold btn-sm" id="lcCityAdd">'+esc(A?'اضافة':'Add city')+'</button>'+
       '</div>'+
-      '<div style="font-size:.78rem;color:var(--text-muted);margin-top:8px;">'+esc(A?'اكتب اسم المدينة يدويا، مثل: النماص، ابها، جدة. الحصص الحضورية متوفرة حاليا في النماص فقط.':'Type the city name freely, e.g. Al Namas, Abha, Jeddah. In-person classes are currently available in Al Namas only.')+'</div>'+
+      '<div style="font-size:.78rem;color:var(--text-muted);margin-top:8px;">'+esc(A?'اكتب اسم المدينه يدويا، مثل: النماص، ابها، جدة. الحصص الحضورية متوفرة حاليا في النماص فقط.':'Type the city name freely, e.g. Al Namas, Abha, Jeddah. In-person classes are currently available in Al Namas only.')+'</div>'+
     '</div>';
   lcWire();
 }
@@ -3774,20 +3774,20 @@ function lcWire(){
     var on = b.getAttribute('data-on') === '1';
     var city = (lcState.cities.find(function(c){ return c.id === id; })||{}).city_name || '';
     var r = await rpc('admin_manage_live_class_city', { p_city_name:city, p_available:!on });
-    if(!r.ok){ toast(lang==='ar'?'ما قدرنا نحدث المدينة':'Could not update city', true); return; }
+    if(!r.ok){ toast(lang==='ar'?'ما قدرنا نحدث المدينه':'Could not update city', true); return; }
     await audit('liveclass.city.toggle', 'live_class_city', id, { city:city, available:!on });
     await lcLoad();
   }); });
   var addBtn = $('lcCityAdd');
   if(addBtn) addBtn.addEventListener('click', async function(){
     var name = $('lcCityName').value.trim();
-    if(!name){ toast(lang==='ar'?'اكتب اسم المدينة':'Type a city name', true); return; }
+    if(!name){ toast(lang==='ar'?'اكتب اسم المدينه':'Type a city name', true); return; }
     var avail = $('lcCityAvail').checked;
     var r = await rpc('admin_manage_live_class_city', { p_city_name:name, p_available:avail });
-    if(!r.ok){ toast(lang==='ar'?'ما قدرنا نضيف المدينة':'Could not add city', true); return; }
+    if(!r.ok){ toast(lang==='ar'?'ما قدرنا نضيف المدينه':'Could not add city', true); return; }
     await audit('liveclass.city.add', 'live_class_city', null, { city:name, available:avail });
     $('lcCityName').value = '';
-    toast(lang==='ar'?'تمت اضافة المدينة':'City added');
+    toast(lang==='ar'?'تمت اضافة المدينه':'City added');
     await lcLoad();
   });
 }
