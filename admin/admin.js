@@ -567,9 +567,13 @@ function lvlOptions(cur){
 /* academy + lesson display names via PEL_ENGINE */
 function academyName(id, lng){
   var m = (window.PEL_ENGINE && PEL_ENGINE.ACADEMY_META && PEL_ENGINE.ACADEMY_META[id]) || {};
+  var db = (window.PEL_ENGINE && PEL_ENGINE.dbAcademy) ? PEL_ENGINE.dbAcademy(id) : null;
+  if(db) return (lng === 'ar' ? db.name_ar : db.name_en) || m.ar || m.en || id;
   return (lng === 'ar' ? m.ar : m.en) || id;
 }
 function lessonName(id){
+  var db = (window.PEL_ENGINE && PEL_ENGINE.dbLesson) ? PEL_ENGINE.dbLesson(id) : null;
+  if(db) return (lang === 'ar' ? db.a : db.t) || id;
   var m = (window.PEL_ENGINE && PEL_ENGINE.lessonMeta) ? PEL_ENGINE.lessonMeta(id) : null;
   return m ? (lang === 'ar' ? m.a : m.t) : id;
 }
@@ -596,13 +600,22 @@ function skillScoresAll(completed){
                  Vocabulary:{done:0,total:0}, Pronunciation:{done:0,total:0}, Writing:{done:0,total:0} };
   var done = {};
   (completed || []).forEach(function(k){ done[k] = 1; });
-  var meta = (window.PEL_ENGINE && PEL_ENGINE.ACADEMY_META) || {};
-  Object.keys(meta).forEach(function(aid){
-    var c = counts[SKILL_OF_ACADEMY[aid] || 'Vocabulary'];
+  /* Prefer the full DB catalog (54 academies incl. the granular stage
+     academies — a1-present-simple, step-exam-prep... — where the student's
+     completed lessons actually live). The static ACADEMY_META mirror (30
+     academies) misses them entirely. */
+  var acList = (window.PEL_ENGINE && PEL_ENGINE.curriculumAcademies && PEL_ENGINE.curriculumAcademies().length)
+    ? PEL_ENGINE.curriculumAcademies()
+    : Object.keys((window.PEL_ENGINE && PEL_ENGINE.ACADEMY_META) || {}).map(function(aid){ return { id: aid }; });
+  acList.forEach(function(ac){
+    if(!ac || !ac.id) return;
+    var c = counts[SKILL_OF_ACADEMY[ac.id] || 'Vocabulary'];
     if(!c) return;
-    var ids = (PEL_ENGINE.academyLessons) ? (PEL_ENGINE.academyLessons(aid) || []) : [];
+    var ids = (ac.lessons && ac.lessons.length)
+      ? ac.lessons.map(function(l){ return l.id; })
+      : ((PEL_ENGINE.academyLessons) ? (PEL_ENGINE.academyLessons(ac.id) || []) : []);
     c.total += ids.length;
-    ids.forEach(function(lid){ if(done[aid + '::' + lid]) c.done++; });
+    ids.forEach(function(lid){ if(done[ac.id + '::' + lid]) c.done++; });
   });
   return counts;
 }
@@ -1296,7 +1309,7 @@ var tabs = [
       var host = document.querySelector('#viewArea .s360-header .s360-meta');
       if(host && host.isConnected){
         host.insertAdjacentHTML('beforeend',
-          '<span>· <b>' + esc(academyName(p.current_stage, lang) !== p.current_stage ? academyName(p.current_stage, lang) : (p.current_stage || '-')) + '</b></span>' +
+          '<span>· <b>' + esc(academyName(p.current_stage, lang)) + '</b></span>' +
           '<span>· ' + esc(p.current_level || '') + '</span>' +
           (p.current_lesson ? '<span>· ' + esc(lessonName(p.current_lesson)) + '</span>' : '') +
           '<span>· ' + ((p.completed_lessons || []).length) + ' ' + esc(t('lessonsDoneShort')) + '</span>');
