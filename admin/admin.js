@@ -224,6 +224,7 @@ var I = {
   'generateSnapshot':{en:'Snapshot history', ar:'سجل اللقطات'},
   'est':{en:'Est. %d min', ar:'تقريب %d دقيقه'},
   'estDaily':{en:'Est. daily pace', ar:'التقدير اليومي'},
+  'lessonsDoneShort':{en:'lessons done', ar:'درس منجز'},
   'lessonsDone':{en:'%d lessons done', ar:'%d درس منجز'},
   'ofRoute':{en:'of route', ar:'من المسار'},
   'nextLesson':{en:'Next lesson', ar:'الدرس الجا'},
@@ -233,10 +234,10 @@ var I = {
   'recVsProd':{en:'Recognition vs Production', ar:'الاسترجاع مقابل الانتاج'},
   'recVsProdHint':{en:'First-try production is the mastery signal - how often the student can USE the language, not just recognize it.', ar:'الانتاج من اول محاوله هو موشر الاتقان - يقدر الطالب يستخدم اللغه، وليس التعرف عليها بس.'},
   'recognition':{en:'Recognition', ar:'الاسترجاع'},
-  'production':{en:'Production (eventual)', ar:'الانتاج (لسه المحاول شيت)'},
+  'production':{en:'Production (eventual)', ar:'الانتاج (مع المحاولات)'},
   'productionFirst':{en:'Production (first try)', ar:'الانتاج (اول محاوله)'},
   'recentLessons':{en:'Recent lessons', ar:'احداث الدروس'},
-  'noStatsYet':{en:'No exercise stats recorded yet. They appear after the first lesson completion.', ar:'ما فيه احصاييات لسه. تظهر لسه امثلل اول درس.'},
+  'noStatsYet':{en:'No exercise stats recorded yet. They appear after the first lesson completion.', ar:'ما فيه احصاييات لسه. تظهر بعد اول درس تكمله.'},
   'lastStudy':{en:'Last study day', ar:'اخر يوم دراسه'},
   'longestStreak':{en:'Longest streak', ar:'اطول استمرار'},
   'permissionDenied':{en:'Permission denied.', ar:'صلاحيه مرفوضه.'},
@@ -1176,6 +1177,20 @@ var tabs = [
     '<div class="card" id="s360Billing" style="margin-bottom:18px;">' + loadingBlock() + '</div>' +
     tabHtml + '<div id="s360Body"></div>';
   renderTab(s360Tab);
+  /* Load the full DB curriculum once so skill bars and academy progress use
+     the real catalog (472 lessons) instead of the static 6-lesson-per-academy
+     offline mirror. Re-render the active tab when it arrives. */
+  if(window.PEL_ENGINE && PEL_ENGINE.setCurriculumOverride && !PEL_ENGINE.hasCurriculumOverride()){
+    (async function(){
+      try{
+        var r = await rpc('student_curriculum');
+        if(r.ok && r.data && r.data.academies){
+          PEL_ENGINE.setCurriculumOverride(r.data);
+          if(current360Uid) renderTab(s360Tab);
+        }
+      }catch(e){}
+    })();
+  }
   wireStudentLinks();
 
   /* Billing & live-class credit ledger (manual WhatsApp payments). */
@@ -1281,10 +1296,10 @@ var tabs = [
       var host = document.querySelector('#viewArea .s360-header .s360-meta');
       if(host && host.isConnected){
         host.insertAdjacentHTML('beforeend',
-          '<span>· <b>' + esc(p.current_stage || '-') + '</b></span>' +
+          '<span>· <b>' + esc(academyName(p.current_stage, lang) !== p.current_stage ? academyName(p.current_stage, lang) : (p.current_stage || '-')) + '</b></span>' +
           '<span>· ' + esc(p.current_level || '') + '</span>' +
-          (p.current_lesson ? '<span>· ' + esc(p.current_lesson) + '</span>' : '') +
-          '<span>· ' + ((p.completed_lessons || []).length) + ' ' + esc(t('completedLbl') || 'done') + '</span>');
+          (p.current_lesson ? '<span>· ' + esc(lessonName(p.current_lesson)) + '</span>' : '') +
+          '<span>· ' + ((p.completed_lessons || []).length) + ' ' + esc(t('lessonsDoneShort')) + '</span>');
       }
     }catch(e){}
   })();
