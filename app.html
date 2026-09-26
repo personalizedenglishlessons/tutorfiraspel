@@ -1604,7 +1604,7 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
                 <label style="display:block; font-size:.78rem; font-weight:600; color:var(--text-secondary); margin-bottom:8px;"><span class="arabic">وش تتعلم؟</span>، What are you learning?</label>
                 <select id="learnDirectionSelect" style="width:100%; padding:10px 12px; border-radius:10px; background:var(--card-elevated); border:1px solid var(--border); color:var(--text);">
                   <option value="en" data-en="I'm learning English" data-ar="اتعلم الانجليزيه">I'm learning English</option>
-                  <option value="ar" data-en="I'm learning Saudi Arabian Arabic" data-ar="اتعلم اللهجه السعوديه">I'm learning Saudi Arabian Arabic</option>
+                  <option value="ar" data-en="I'm learning Arabic" data-ar="اتعلم اللهجه العربيه">I'm learning Arabic</option>
                 </select>
                 <p style="margin-top:8px; font-size:.76rem; color:var(--text-muted);"><span class="arabic" style="display:block;">هذا يحدد الدروس والتوصيات والصفحه البداية.</span>This drives the lessons, recommendations and home screen.</p>
               </div>
@@ -8818,7 +8818,7 @@ function detectIntent(text){
   if(/(\?|^(how|what|where|when|why|who|which|do|does|is|are|وش|وين|متى|ليش|كيف|هل|بكم|كم))/.test(t)) return 'question';
   return 'statement';
 }
-// Persona-aware, intent-aware replies in natural Saudi-friendly Arabic.
+// Persona-aware, intent-aware replies in natural -friendly Arabic.
 // Each entry gives a short natural reply the persona would actually say.
 const SMART_REPLIES = {
   refusal:  { en:'No problem at all, we can work something out. What would you like to do?', ar:'ولا يهمك، نقدر نعدّل الوضع. وش تحب نسوي؟', translit:'نو بروبلم ات اول، وي كان وورك سمثنق اوت. وات وود يو لايك تو دو؟' },
@@ -9901,7 +9901,7 @@ document.getElementById('interfaceLangSelect').addEventListener('change', functi
 });
 const topbarLangBtn = document.getElementById('topbarLangBtn');
 if(topbarLangBtn) topbarLangBtn.addEventListener('click', () => applyInterfaceLang(accountPrefs.lang === 'ar' ? 'en' : 'ar', {announce:true}));
-/* Learn direction: what is this student actually learning? ar = Saudi Arabian Arabic
+/* Learn direction: what is this student actually learning? ar = Arabic
    (interface explains Arabic to an English speaker), en = English (default). */
 const learnDirectionSelect = document.getElementById('learnDirectionSelect');
 if(learnDirectionSelect){
@@ -9910,7 +9910,7 @@ if(learnDirectionSelect){
     accountPrefs.direction = this.value;
     lsSet('pel_account_prefs', accountPrefs);
     renderHomeForDirection();
-    toast(this.value === 'ar' ? '<span class="arabic">صار التعلم موجه للهجه السعوديه</span>، Learning direction set to Saudi Arabian Arabic'
+    toast(this.value === 'ar' ? '<span class="arabic">صار التعلم موجه للهجه العربيه</span>، Learning direction set to Arabic'
       : '<span class="arabic">صار التعلم موجه للانجليزي</span>، Learning direction set to English');
   });
 }
@@ -9930,7 +9930,7 @@ if(learnDirectionSelect){
 const AR_CHAR_RE = /[\u0600-\u06FF]/;
 const CONTENT_MARK_RE = /(triplet|chat-bubble|chat-scroll|situation-|flashcard|mistake-box|quiz-option|vocab-word|vocab-ipa|fb-issue|qt-result|pel-stage|pel-path)/;
 function isContentNode(el){
-  // The lesson body of a Saudi Arabian Arabic lesson is authored
+  // The lesson body of a Arabic lesson is authored
   // Arabic-first: the Arabic is the target, English the support.
   const wsBody = el.closest ? el.closest('#wsCenter') : null;
   if(wsBody && wsState && wsState.lessonId){
@@ -10128,17 +10128,17 @@ const ACADEMIES = [
   {id:'music-english', en:'Music English', ar:'تعلم من الاغاني', translit:'ميوزك انجلش', cat:'Culture', icon:'music', from:'#A88345', to:'#3F8C72', difficulty:'Intermediate', duration:'4h', lessons:16},
   {id:'english-mastery', en:'English Mastery', ar:'اتقان الانجليزي', translit:'انجلش ماستري', cat:'Mastery', icon:'crown', from:'#C8A96A', to:'#D8BD83', difficulty:'Advanced', duration:'12h', lessons:52},
   {id:'fluency-journey', en:'Fluency Journey', ar:'رحه الطلاقة', translit:'فلوينسي جورني', cat:'Mastery', icon:'compass', from:'#D8BD83', to:'#A88345', difficulty:'All Levels', duration:'20h', lessons:64},
-  /* ------- Learn Saudi Arabian Arabic track (direction: ar) ------- */
-  {id:'saudi-greetings', en:'Saudi Greetings', ar:'تحيات سعوديه', translit:'سعودي قريتينقز', dir:'ar', cat:'Saudi Arabian Arabic', icon:'hand', from:'#3F8C72', to:'#276b53', difficulty:'Beginner', duration:'3h', lessons:12},
-  {id:'saudi-daily-life', en:'Saudi Daily Life', ar:'الحيا اليوميه بالسعودي', translit:'سعودي ديلي لايف', dir:'ar', cat:'Saudi Arabian Arabic', icon:'sun', from:'#C8A96A', to:'#3F8C72', difficulty:'Beginner', duration:'4h', lessons:14},
-  {id:'saudi-coffee-shop', en:'Saudi Coffee Shop', ar:'الكوفي بالسعودي', translit:'سعودي كوفي شوب', dir:'ar', cat:'Saudi Arabian Arabic', icon:'coffee', from:'#A88345', to:'#D8BD83', difficulty:'Beginner', duration:'2h', lessons:10},
-  {id:'saudi-conversations', en:'Saudi Conversations', ar:'محادثات سعوديه', translit:'سعودي كونفرسيشنز', dir:'ar', cat:'Saudi Arabian Arabic', icon:'message-circle', from:'#D8BD83', to:'#C8A96A', difficulty:'Intermediate', duration:'5h', lessons:16},
-  {id:'saudi-at-work', en:'Saudi Arabian Arabic at Work', ar:'السعودي بالدوام', translit:'سعودي ات وورك', dir:'ar', cat:'Saudi Arabian Arabic', icon:'briefcase', from:'#262833', to:'#A88345', difficulty:'Intermediate', duration:'4h', lessons:12},
-  {id:'saudi-family', en:'Saudi Family Life', ar:'الحيا العايلية بالسعودي', translit:'سعودي فاميلي لايف', dir:'ar', cat:'Saudi Arabian Arabic', icon:'users', from:'#3F8C72', to:'#C8A96A', difficulty:'Beginner', duration:'4h', lessons:14},
-  {id:'saudi-hospital', en:'Saudi Arabian Arabic at the Hospital', ar:'السعودي بالمستشفى', translit:'سعودي هوسبيتل', dir:'ar', cat:'Saudi Arabian Arabic', icon:'cross', from:'#D25C5C', to:'#262833', difficulty:'Intermediate', duration:'4h', lessons:12},
-  {id:'saudi-travel', en:'Saudi Arabian Arabic for Travel', ar:'السعودي للسفر', translit:'سعودي ترافل', dir:'ar', cat:'Saudi Arabian Arabic', icon:'plane', from:'#A88345', to:'#3F8C72', difficulty:'Beginner', duration:'4h', lessons:14},
-  {id:'saudi-mosque-etiquette', en:'Mosque Etiquette in Saudi', ar:'اداب المسجد', translit:'سعودي مسجد اتيكيت', dir:'ar', cat:'Saudi Arabian Arabic', icon:'moon-star', from:'#276b53', to:'#17171B', difficulty:'Intermediate', duration:'3h', lessons:10},
-  {id:'saudi-phone-calls', en:'Saudi Phone Calls', ar:'المكالمات بالسعودي', translit:'سعودي فون كولز', dir:'ar', cat:'Saudi Arabian Arabic', icon:'phone', from:'#262833', to:'#D8BD83', difficulty:'Intermediate', duration:'3h', lessons:10},
+  /* ------- Learn Arabic track (direction: ar) ------- */
+  {id:'saudi-greetings', en:'Greetings', ar:'التحيات', translit:'قريتينقز', dir:'ar', cat:'Arabic', icon:'hand', from:'#3F8C72', to:'#276b53', difficulty:'Beginner', duration:'3h', lessons:12},
+  {id:'saudi-daily-life', en:'Daily Life', ar:'الحيا اليوميه', translit:'ديلي لايف', dir:'ar', cat:'Arabic', icon:'sun', from:'#C8A96A', to:'#3F8C72', difficulty:'Beginner', duration:'4h', lessons:14},
+  {id:'saudi-coffee-shop', en:'Coffee Shop', ar:'الكوفي', translit:'كوفي شوب', dir:'ar', cat:'Arabic', icon:'coffee', from:'#A88345', to:'#D8BD83', difficulty:'Beginner', duration:'2h', lessons:10},
+  {id:'saudi-conversations', en:'Conversations', ar:'المحادثات', translit:'كونفرسيشنز', dir:'ar', cat:'Arabic', icon:'message-circle', from:'#D8BD83', to:'#C8A96A', difficulty:'Intermediate', duration:'5h', lessons:16},
+  {id:'saudi-at-work', en:'Arabic at Work', ar:'العربي بالدوام', translit:'ات وورك', dir:'ar', cat:'Arabic', icon:'briefcase', from:'#262833', to:'#A88345', difficulty:'Intermediate', duration:'4h', lessons:12},
+  {id:'saudi-family', en:'Family Life', ar:'الحيا العايليه', translit:'فاميلي لايف', dir:'ar', cat:'Arabic', icon:'users', from:'#3F8C72', to:'#C8A96A', difficulty:'Beginner', duration:'4h', lessons:14},
+  {id:'saudi-hospital', en:'Arabic at the Hospital', ar:'العربي بالمستشفى', translit:'هوسبيتل', dir:'ar', cat:'Arabic', icon:'cross', from:'#D25C5C', to:'#262833', difficulty:'Intermediate', duration:'4h', lessons:12},
+  {id:'saudi-travel', en:'Arabic for Travel', ar:'العربي للسفر', translit:'ترافل', dir:'ar', cat:'Arabic', icon:'plane', from:'#A88345', to:'#3F8C72', difficulty:'Beginner', duration:'4h', lessons:14},
+  {id:'saudi-mosque-etiquette', en:'Mosque Etiquette', ar:'اداب المسجد', translit:'مسجد اتيكيت', dir:'ar', cat:'Arabic', icon:'moon-star', from:'#276b53', to:'#17171B', difficulty:'Intermediate', duration:'3h', lessons:10},
+  {id:'saudi-phone-calls', en:'Phone Calls', ar:'المكالمات', translit:'فون كولز', dir:'ar', cat:'Arabic', icon:'phone', from:'#262833', to:'#D8BD83', difficulty:'Intermediate', duration:'3h', lessons:10},
 ];
 function featuredLesson(){
   // Lesson of the Day: prefer a real lesson from the student's CURRENT guided
@@ -10175,7 +10175,7 @@ function featuredLesson(){
   return {academy: academy.id, lesson: lesson.id, en: lesson.en, ar: lesson.ar};
 }
 function directionAcademies(){
-  // The academy list for the learner's direction: Saudi Arabian Arabic academies
+  // The academy list for the learner's direction: Arabic academies
   // when direction is 'ar', English academies otherwise. Never empty.
   const dir = learningDirection();
   const pool = ACADEMIES.filter(a => (a.dir || 'en') === dir);
@@ -10316,41 +10316,41 @@ const VOCAB_BANK = [
 {en:'Converse', ipa:'/kənˈvɜːrs/', ar:'يتكلم، يتبادل الكلام', translit:'كونفِرس', example:{en:'Let\'s converse in English.', ar:'لنتكلم بالانجليزيه.', translit:'ليتس كونفِرس ان انجلش.'}, synonyms:'talk, chat', antonyms:'stay silent', family:'converse, conversation', collocations:'converse with, converse in', category:'Fluency Journey', difficulty:'Advanced', tip:'To converse is to talk with someone.', synonyms_ar:'يتكلم', antonyms_ar:'يسكت', family_ar:'يتكلم، محادثه', collocations_ar:'تحدث مع، تحدث بـ', tip_ar:'converse تعني يتكلم مع احد', mistake:'Saying "converse with to" instead of "converse with."'},
 {en:'Proficiency', ipa:'/prəˈfɪʃənsi/', ar:'اتقان، كفايه', translit:'بروفينسي', example:{en:'Test your English proficiency.', ar:'اختبر اتقانك للانجليزيه.', translit:'تيست يور انجلش بروفينسي.'}, synonyms:'skill, competence', antonyms:'incompetence', family:'proficient, proficiency', collocations:'language proficiency, high proficiency', category:'Fluency Journey', difficulty:'Advanced', tip:'Proficiency is your skill level.', synonyms_ar:'اتقان، كفايه', antonyms_ar:'ضعف', family_ar:'متمكن، اتقان', collocations_ar:'كفايه لغويه، كفايه عاليه', tip_ar:'الكفايه هي مستوى مهارتك', mistake:'Confusing proficiency with perfection.'},
 {en:'Tongue-tied', ipa:'/ˈtʌŋ taɪd/', ar:'عاجز عن الكلام (خجلًا)', translit:'تَنق تايد', example:{en:'I got tongue-tied in the interview.', ar:'صِرت عاجزًا عن الكلام في المقابله.', translit:'اي قوت تَنق تايد ان ذا انترفيو.'}, synonyms:'speechless, flustered', antonyms:'fluent, articulate', family:'tongue, tie', collocations:'feel tongue-tied, get tongue-tied', category:'Fluency Journey', difficulty:'Advanced', tip:'It means you cannot speak from nerves.', synonyms_ar:'عاجز عن الكلام', antonyms_ar:'بليغ', family_ar:'لسان، ربط', collocations_ar:'يحس عاجز عن الكلام، يصير عاجز', tip_ar:'يعني ما تقدر تتكلم من التوتر', mistake:'Staying silent instead of pushing through.'},
-{en:'Hello', ipa:'/həˈloʊ/', ar:'مرحبًا', translit:'هَلو', example:{en:'Hello, how are you?', ar:'مرحبًا، كيف حالك؟', translit:'هَلو، هاو ار يو؟'}, synonyms:'hi, greetings', antonyms:'goodbye', family:'hello', collocations:'say hello, hello there', category:'Saudi Greetings', difficulty:'Beginner', tip:'"Hello" works any time of day.', synonyms_ar:'مرحبا', antonyms_ar:'وداعا', family_ar:'مرحبا', collocations_ar:'قل مرحبا، مرحبا هناك', tip_ar:'hello تصلح اي وقت باليوم', mistake:'Forgetting to greet before a request.'},
-{en:'Goodbye', ipa:'/ˌɡʊdˈbaɪ/', ar:'مع السلامة، وداعًا', translit:'قودباي', example:{en:'Goodbye, see you tomorrow.', ar:'مع السلامة، اراك غدًا.', translit:'قودباي، سي يو تومورو.'}, synonyms:'bye, farewell', antonyms:'hello, hi', family:'goodbye', collocations:'say goodbye, wave goodbye', category:'Saudi Greetings', difficulty:'Beginner', tip:'"Goodbye" ends a meeting politely.', synonyms_ar:'مع السلامه', antonyms_ar:'مرحبا', family_ar:'وداع', collocations_ar:'قل وداعا، لوّح وداعا', tip_ar:'goodbye تنهي اللقاء باحترام', mistake:'Leaving without saying goodbye.'},
-{en:'Welcome', ipa:'/ˈwɛlkəm/', ar:'اهلًا وسهلًا', translit:'وِلكَم', example:{en:'Welcome to our home.', ar:'اهلًا وسهلًا في بيتنا.', translit:'وِلكَم تو اور هوم.'}, synonyms:'greetings, come in', antonyms:'goodbye', family:'welcome, welcomed', collocations:'welcome to, you are welcome', category:'Saudi Greetings', difficulty:'Beginner', tip:'"Welcome" greets someone who arrives.', synonyms_ar:'اهلا وسهلا', antonyms_ar:'وداعا', family_ar:'اهلا وسهلا، مرحبا', collocations_ar:'اهلا في، اهلا وسهلا بكم', tip_ar:'welcome ترحب بلي يجي', mistake:'Saying "welcome" instead of "you are welcome" for thanks.'},
-{en:'Good morning', ipa:'/ɡʊd ˈmɔːrnɪŋ/', ar:'صباح الخير', translit:'قود مورنينق', example:{en:'Good morning, everyone.', ar:'صباح الخير جميعًا.', translit:'قود مورنينق، افريوان.'}, synonyms:'morning greeting', antonyms:'good night', family:'morning', collocations:'say good morning, good morning to you', category:'Saudi Greetings', difficulty:'Beginner', tip:'Use it before noon.', synonyms_ar:'صباح الخير', antonyms_ar:'تصبح على خير', family_ar:'صباح', collocations_ar:'قل صباح الخير، صباح الخير لك', tip_ar:'استخدمها قبل الظهر', mistake:'Saying "good morning" in the evening.'},
-{en:'Thank you', ipa:'/θæŋk juː/', ar:'شكرًا لك', translit:'ثانك يو', example:{en:'Thank you for your help.', ar:'شكرًا لك على مساعدتك.', translit:'ثانك يو فور يور هيلب.'}, synonyms:'thanks, much obliged', antonyms:'', family:'thank, thanks', collocations:'say thank you, thank you so much', category:'Saudi Greetings', difficulty:'Beginner', tip:'"Thank you" shows gratitude.', synonyms_ar:'شكرا لك', antonyms_ar:'', family_ar:'شكرا، شكر', collocations_ar:'قل شكرا، شكرا جزيلا', tip_ar:'شكرا تظهر الامتنان', mistake:'Forgetting to thank someone who helped.'},
-{en:'Invitation', ipa:'/ˌɪnvɪˈteɪʃən/', ar:'دعوة', translit:'انفيتيهيشِن', example:{en:'Thank you for the invitation.', ar:'شكرًا على الدعوة.', translit:'ثانك يو فور ذا انفيتيهيشِن.'}, synonyms:'invite, summons', antonyms:'rejection', family:'invite, invited', collocations:'accept an invitation, send an invitation', category:'Saudi Conversations', difficulty:'Intermediate', tip:'An invitation asks someone to come.', synonyms_ar:'دعوه', antonyms_ar:'رفض', family_ar:'يدعو، مدعو', collocations_ar:'اقبل دعوه، ابعت دعوه', tip_ar:'الدعوه تطلب من احد يجي', mistake:'Forgetting to RSVP to an invitation.'},
-{en:'Host', ipa:'/hoʊst/', ar:'مضيف', translit:'هوست', example:{en:'Our host welcomed everyone.', ar:'مضيفنا رحّب بالجميع.', translit:'اور هوست وِلكَمد افريوان.'}, synonyms:'host, entertainer', antonyms:'guest', family:'host, hosted', collocations:'play host, host a gathering', category:'Saudi Conversations', difficulty:'Intermediate', tip:'The host receives the guests.', synonyms_ar:'مضيف', antonyms_ar:'ضيف', family_ar:'مضيف، استضاف', collocations_ar:'استضاف، استضاف تجمع', tip_ar:'المضيف يستقبل الضيوف', mistake:'Confusing host (person) with host (a lot).'},
-{en:'Guest', ipa:'/ɡɛst/', ar:'ضيف', translit:'گست', example:{en:'We have guests tonight.', ar:'عندنا ضيوف الليله.', translit:'وي هاف گستس تونايت.'}, synonyms:'visitor', antonyms:'host', family:'guest, guests', collocations:'welcome a guest, house guest', category:'Saudi Conversations', difficulty:'Intermediate', tip:'A guest is someone you invited.', synonyms_ar:'ضيف', antonyms_ar:'مضيف', family_ar:'ضيف، ضيوف', collocations_ar:'رحب بضيف، ضيف بالبيت', tip_ar:'الضيف هو احد مدعو', mistake:'Confusing "guest" with "quest."'},
-{en:'Gathering', ipa:'/ˈɡæðərɪŋ/', ar:'تجمع، مجلس', translit:'گاذرينق', example:{en:'The family gathering was lovely.', ar:'كان تجمع العايلة لطيفًا.', translit:'ذا فاميلي گاذرينق واز لافلي.'}, synonyms:'meetup, assembly', antonyms:'dispersal', family:'gather, gathering', collocations:'family gathering, social gathering', category:'Saudi Conversations', difficulty:'Intermediate', tip:'A gathering is people meeting together.', synonyms_ar:'تجمع، مجلس', antonyms_ar:'تفرق', family_ar:'يجتمع، تجمع', collocations_ar:'تجمع عايلي، تجمع اجتماعي', tip_ar:'التجمع هو ناس يجتمعون مع بعض', mistake:'Calling every gathering a "party."'},
-{en:'Hospitality', ipa:'/ˌhɒspɪˈtæləti/', ar:'كرم الضيافة', translit:'هوسبيتاليتي', example:{en:'Saudi hospitality is famous.', ar:'كرم الضيافة السعودي معروف.', translit:'ساودي هوسبيتاليتي از فيمس.'}, synonyms:'welcome, generosity', antonyms:'coldness', family:'hospitable, hospitality', collocations:'show hospitality, generous hospitality', category:'Saudi Conversations', difficulty:'Intermediate', tip:'Hospitality is warm welcoming of guests.', synonyms_ar:'كرم الضيافه', antonyms_ar:'برود', family_ar:'ضيافي، ضيافه', collocations_ar:'اظهر ضيافه، ضيافه كريمه', tip_ar:'الضيافه هي استقبال الضيوف بحراره', mistake:'Confusing it with "hospital."'},
-{en:'Meeting', ipa:'/ˈmiːtɪŋ/', ar:'اجتماع', translit:'ميتينق', example:{en:'The meeting starts at ten.', ar:'الاجتماع يبدا العاشرة.', translit:'ذا ميتينق ستارتس ات تين.'}, synonyms:'gathering, discussion', antonyms:'breakup', family:'meet, meeting', collocations:'schedule a meeting, team meeting', category:'Saudi At Work', difficulty:'Intermediate', tip:'A meeting is a planned work talk.', synonyms_ar:'اجتماع', antonyms_ar:'تفرق', family_ar:'يلتقي، اجتماع', collocations_ar:'جدول اجتماع، اجتماع فريق', tip_ar:'الاجتماع حديث عمل مخطط له', mistake:'Confusing "meeting" (event) with "meet" (verb).'},
-{en:'Deadline', ipa:'/ˈdɛdlaɪn/', ar:'موعد نهايي', translit:'ديدلاين', example:{en:'The deadline is Friday.', ar:'الموعد النهايي يوم الجمعه.', translit:'ذا ديدلاين از فرايداي.'}, synonyms:'due date, cutoff', antonyms:'extension', family:'deadline, deadlines', collocations:'meet a deadline, miss a deadline', category:'Saudi At Work', difficulty:'Intermediate', tip:'A deadline is the last time to finish.', synonyms_ar:'موعد نهايي', antonyms_ar:'تمديد', family_ar:'موعد نهايي، مواعيد نهاييه', collocations_ar:'حققت الموعد، فاتك الموعد', tip_ar:'الموعد النهايي هو اخر وقت للتسليم', mistake:'Missing the deadline without warning.'},
-{en:'Colleague', ipa:'/ˈkɒliːɡ/', ar:'زميل عمل', translit:'كوليگ', example:{en:'My colleague helped me.', ar:'ساعدني زميلي في العمل.', translit:'ماي كوليگ هيلب مي.'}, synonyms:'coworker, associate', antonyms:'rival', family:'colleague, colleagues', collocations:'a close colleague, work colleague', category:'Saudi At Work', difficulty:'Intermediate', tip:'A colleague is someone you work with.', synonyms_ar:'زميل عمل', antonyms_ar:'منافس', family_ar:'زميل، زملاء', collocations_ar:'زميل مقرب، زميل عمل', tip_ar:'الزميل هو احد تشتغل معه', mistake:'Pronouncing it "col-league" as two words.'},
-{en:'Shift', ipa:'/ʃɪft/', ar:'وردية عمل', translit:'شِفت', example:{en:'I work the night shift.', ar:'اعمل في وردية الليل.', translit:'اي وورك ذا نايت شِفت.'}, synonyms:'work period, turn', antonyms:'day off', family:'shift, shifts', collocations:'night shift, day shift', category:'Saudi At Work', difficulty:'Intermediate', tip:'A shift is one work period.', synonyms_ar:'ورديه عمل', antonyms_ar:'اجازه', family_ar:'ورديه، ورديات', collocations_ar:'ورديه ليل، ورديه نهار', tip_ar:'الورديه هي فتره عمل واحده', mistake:'Confusing shift (work) with shift (move).'},
-{en:'Approve', ipa:'/əˈpruːv/', ar:'يوافق، يعتمد', translit:'ابروف', example:{en:'The manager approved my request.', ar:'وافق المدير على طلبي.', translit:'ذا ماناجر ابروفد ماي ريكويست.'}, synonyms:'accept, authorize', antonyms:'reject, deny', family:'approve, approval', collocations:'approve a request, approve of', category:'Saudi At Work', difficulty:'Intermediate', tip:'"Approve a request" = accept it officially.', synonyms_ar:'يوافق', antonyms_ar:'يرفض', family_ar:'يوافق، موافقه', collocations_ar:'وافق على طلب، وافق على', tip_ar:'وافق على طلب يعني قبله رسميا', mistake:'Saying "approve on" instead of "approve."'},
-{en:'Appointment', ipa:'/əˈpɔɪntmənt/', ar:'موعد (طبي)', translit:'اپوينتمِنت', example:{en:'I have a doctor\'s appointment.', ar:'عندي موعد مع الطبيب.', translit:'اي هاف ا دوكتورز اپوينتمِنت.'}, synonyms:'booking, slot', antonyms:'cancellation', family:'appoint, appointment', collocations:'make an appointment, cancel an appointment', category:'Saudi Hospital', difficulty:'Intermediate', tip:'Book an appointment before you go.', synonyms_ar:'موعد طبي', antonyms_ar:'الغاء', family_ar:'يعين، موعد', collocations_ar:'احجز موعد، الغي موعد', tip_ar:'احجز موعد قبل ما تروح', mistake:'Saying "I have appointment" instead of "an appointment."'},
-{en:'Symptom', ipa:'/ˈsɪmptəm/', ar:'عَرَض مرضي', translit:'سيمبتوم', example:{en:'A fever is a symptom.', ar:'الحمى عَرَض مرضي.', translit:'ا فيفر از ا سيمبتوم.'}, synonyms:'sign, indication', antonyms:'', family:'symptom, symptomatic', collocations:'mild symptom, common symptom', category:'Saudi Hospital', difficulty:'Intermediate', tip:'A symptom is a sign of illness.', synonyms_ar:'عَرَض مرضي', antonyms_ar:'', family_ar:'عَرَض، عرضي', collocations_ar:'عَرَض خفيف، عَرَض شايع', tip_ar:'العَرَض اشاره على المرض', mistake:'Confusing symptom with the illness itself.'},
-{en:'Recovery', ipa:'/rɪˈkʌvəri/', ar:'تعافي، شفا', translit:'ريكوفري', example:{en:'Her recovery was quick.', ar:'تعافيها كان سريعًا.', translit:'هر ريكوفري واز كويك.'}, synonyms:'healing, improvement', antonyms:'relapse', family:'recover, recovery', collocations:'full recovery, speed up recovery', category:'Saudi Hospital', difficulty:'Intermediate', tip:'Recovery is getting better after illness.', synonyms_ar:'تعافي', antonyms_ar:'انتكاسه', family_ar:'يتعافى، تعافي', collocations_ar:'تعافي كامل، تسريع التعافي', tip_ar:'التعافي هو التحسن بعد المرض', mistake:'Confusing recovery with discovery.'},
-{en:'Insurance', ipa:'/ɪnˈʃʊərəns/', ar:'تامين (صحي)', translit:'انشورينس', example:{en:'Do you have health insurance?', ar:'هل عندك تامين صحي؟', translit:'دو يو هاف هيلث انشورينس؟'}, synonyms:'cover, coverage', antonyms:'', family:'insure, insurance', collocations:'health insurance, insurance card', category:'Saudi Hospital', difficulty:'Intermediate', tip:'Insurance helps pay for treatment.', synonyms_ar:'تامين صحي', antonyms_ar:'', family_ar:'يومن، تامين', collocations_ar:'تامين صحي، بطاقه التامين', tip_ar:'التامين يساعد يدفع تكاليف العلاج', mistake:'Forgetting the insurance card at home.'},
-{en:'Checkup', ipa:'/ˈtʃɛkʌp/', ar:'فحص طبي دوري', translit:'تشيك اب', example:{en:'Get a yearly checkup.', ar:'اجرِ فحصًا سنويًا.', translit:'گيت ا ييرلي تشيك اب.'}, synonyms:'examination, screening', antonyms:'', family:'check, checkup', collocations:'routine checkup, medical checkup', category:'Saudi Hospital', difficulty:'Intermediate', tip:'A checkup catches problems early.', synonyms_ar:'فحص طبي دوري', antonyms_ar:'', family_ar:'يفحص، فحص', collocations_ar:'فحص دوري، فحص طبي', tip_ar:'الفحص يكشف المشاكل بدري', mistake:'Skipping checkups when you feel fine.'},
-{en:'Ticket', ipa:'/ˈtɪkɪt/', ar:'تذكرة', translit:'تيكيت', example:{en:'Show your ticket at the gate.', ar:'اعرض تذكرتك عند البوابه.', translit:'شو يور تيكيت ات ذا گيت.'}, synonyms:'pass, boarding card', antonyms:'', family:'ticket, tickets', collocations:'book a ticket, plane ticket', category:'Saudi Travel', difficulty:'Beginner', tip:'Keep your ticket ready at the gate.', synonyms_ar:'تذكره', antonyms_ar:'', family_ar:'تذكره، تذاكر', collocations_ar:'احجز تذكره، تذكره طياره', tip_ar:'خلي تذكرتك جاهزه عند البوابه', mistake:'Losing the ticket before boarding.'},
-{en:'Passport', ipa:'/ˈpæspɔːrt/', ar:'جواز سفر', translit:'باسبورت', example:{en:'Your passport, please.', ar:'جواز سفرك لو سمحت.', translit:'يور باسبورت، بليز.'}, synonyms:'ID, travel document', antonyms:'', family:'passport, passports', collocations:'show your passport, renew a passport', category:'Saudi Travel', difficulty:'Beginner', tip:'Check your passport\'s expiry date.', synonyms_ar:'جواز سفر', antonyms_ar:'', family_ar:'جواز، جوازات', collocations_ar:'اعرض جوازك، جدد جواز', tip_ar:'تاكد من تاريخ انتهاء الجواز', mistake:'Traveling with an expired passport.'},
-{en:'Luggage', ipa:'/ˈlʌɡɪdʒ/', ar:'امتعة، حقايب', translit:'لَگيج', example:{en:'Where is the luggage?', ar:'اين الامتعة؟', translit:'وير از ذا لَگيج؟'}, synonyms:'bags, baggage', antonyms:'', family:'luggage', collocations:'pack luggage, luggage allowance', category:'Saudi Travel', difficulty:'Beginner', tip:'Luggage is uncountable; don\'t say "luggages."', synonyms_ar:'امتعه، حقايب', antonyms_ar:'', family_ar:'امتعه', collocations_ar:'حزم الامتعه، وزن الامتعه المسموح', tip_ar:'luggage ما تعد؛ لا تقل luggages', mistake:'Saying "luggages" with an -s.'},
-{en:'Boarding', ipa:'/ˈbɔːrdɪŋ/', ar:'صعود (الطايرة)', translit:'بوردينق', example:{en:'Boarding starts now.', ar:'الصعود يبدا الان.', translit:'بوردينق ستارتس ناو.'}, synonyms:'embarking, getting on', antonyms:'disembarking', family:'board, boarding', collocations:'boarding pass, boarding gate', category:'Saudi Travel', difficulty:'Beginner', tip:'Boarding is getting on the plane.', synonyms_ar:'صعود الطايره', antonyms_ar:'نزول', family_ar:'يصعد، صعود', collocations_ar:'تذكره الصعود، بوابه الصعود', tip_ar:'الصعود يعني تركب الطايره', mistake:'Confusing boarding with landing.'},
-{en:'Departure', ipa:'/dɪˈpɑːrtʃər/', ar:'مغادرة، اقلاع', translit:'ديبارتشَر', example:{en:'Departure is at six.', ar:'المغادرة الساعه السادسة.', translit:'ديبارتشَر از ات سيكس.'}, synonyms:'leaving, takeoff', antonyms:'arrival', family:'depart, departure', collocations:'departure time, departure gate', category:'Saudi Travel', difficulty:'Beginner', tip:'Departure is when you leave.', synonyms_ar:'مغادره، اقلاع', antonyms_ar:'وصول', family_ar:'يغادر، مغادره', collocations_ar:'وقت المغادره، بوابه المغادره', tip_ar:'المغادره هي لما تروح', mistake:'Confusing departure with arrival.'},
-{en:'Etiquette', ipa:'/ˈɛtɪkɛt/', ar:'اداب، اتيكيت', translit:'اتيكيت', example:{en:'Learn mosque etiquette.', ar:'تعلّم اداب المسجد.', translit:'ليرن موسك اتيكيت.'}, synonyms:'manners, customs', antonyms:'rudeness', family:'etiquette', collocations:'proper etiquette, dress etiquette', category:'Saudi Mosque Etiquette', difficulty:'Intermediate', tip:'Etiquette is polite behavior in a place.', synonyms_ar:'اداب، اتيكيت', antonyms_ar:'قله ادب', family_ar:'اتيكيت', collocations_ar:'اتيكيت صحيح، اتيكيت لبس', tip_ar:'الاتيكيت هو تصرف مهذب في مكان', mistake:'Pronouncing it "etti-ket."'},
-{en:'Prayer', ipa:'/prɛr/', ar:'صلاه، دعا', translit:'برير', example:{en:'Prayer time is near.', ar:'وقت الصلاه اقترب.', translit:'برير تايم از نير.'}, synonyms:'worship, supplication', antonyms:'', family:'pray, prayer', collocations:'prayer time, prayer hall', category:'Saudi Mosque Etiquette', difficulty:'Intermediate', tip:'Keep quiet during prayer time.', synonyms_ar:'صلاه، دعا', antonyms_ar:'', family_ar:'يصلي، صلاه', collocations_ar:'وقت الصلاه، قاعه صلاه', tip_ar:'خلي هادي وقت الصلاه', mistake:'Talking loudly during prayer.'},
-{en:'Respect', ipa:'/rɪˈspɛkt/', ar:'احترام', translit:'ريسبيكت', example:{en:'Show respect to others.', ar:'اعرض الاحترام للاخرين.', translit:'شو ريسبيكت تو اذرز.'}, synonyms:'regard, honor', antonyms:'disrespect', family:'respect, respectful', collocations:'show respect, treat with respect', category:'Saudi Mosque Etiquette', difficulty:'Intermediate', tip:'Respect means treating others well.', synonyms_ar:'احترام', antonyms_ar:'قله احترام', family_ar:'احترام، محترم', collocations_ar:'اظهر احترام، عامل باحترام', tip_ar:'الاحترام يعني تعامل الناس حلو', mistake:'Confusing "respect" (noun) with "respectful."'},
-{en:'Modest', ipa:'/ˈmɒdɪst/', ar:'محتشم، متواضع', translit:'موديست', example:{en:'Wear modest clothes.', ar:'ارتدِ ملابس محتشمة.', translit:'وير موديست كلوذز.'}, synonyms:'decent, humble', antonyms:'showy, immodest', family:'modest, modesty', collocations:'modest dress, modest behavior', category:'Saudi Mosque Etiquette', difficulty:'Intermediate', tip:'Modest dress is simple and covering.', synonyms_ar:'محتشم، متواضع', antonyms_ar:'متباهي', family_ar:'محتشم، حياء', collocations_ar:'لبس محتشم، تصرف متواضع', tip_ar:'اللبس المحتشم بسيط ويستر', mistake:'Confusing "modest" (clothing) with "shy."'},
-{en:'Quiet', ipa:'/ˈkwaɪət/', ar:'هادي، صامت', translit:'كوايت', example:{en:'Please be quiet.', ar:'لو سمحت اهدا.', translit:'بليز بي كوايت.'}, synonyms:'silent, calm', antonyms:'loud, noisy', family:'quiet, quietly', collocations:'keep quiet, quiet place', category:'Saudi Mosque Etiquette', difficulty:'Intermediate', tip:'"Quiet" is two syllables: qui-et.', synonyms_ar:'هادي، صامت', antonyms_ar:'صاخب', family_ar:'هادي، بهدوء', collocations_ar:'خليك هادي، مكان هادي', tip_ar:'quiet مقطعين: qui-et', mistake:'Spelling it "quite," which means "fairly."'},
-{en:'Caller', ipa:'/ˈkɔːlər/', ar:'المتصل', translit:'كولر', example:{en:'The caller hung up.', ar:'اغلق المتصل الخط.', translit:'ذا كولر هانق اب.'}, synonyms:'caller, phoner', antonyms:'receiver', family:'call, caller', collocations:'unknown caller, frequent caller', category:'Saudi Phone Calls', difficulty:'Intermediate', tip:'The caller is the one who phones.', synonyms_ar:'المتصل', antonyms_ar:'المستقبل', family_ar:'يتصل، متصل', collocations_ar:'متصل مجهول، متصل دايم', tip_ar:'المتصل هو اللي يرفع السماعه', mistake:'Confusing caller with receiver.'},
-{en:'Hold', ipa:'/hoʊld/', ar:'انتظار (على الخط)', translit:'هولد', example:{en:'Please hold for a moment.', ar:'ابقَ على الخط لحظه لو سمحت.', translit:'بليز هولد فور ا موومِنت.'}, synonyms:'wait, pause', antonyms:'hang up', family:'hold, holding', collocations:'on hold, put on hold', category:'Saudi Phone Calls', difficulty:'Intermediate', tip:'"Hold" means wait on the phone.', synonyms_ar:'انتظار على الخط', antonyms_ar:'يغلق الخط', family_ar:'يمسك، انتظار', collocations_ar:'على الانتظار، حط على الانتظار', tip_ar:'hold يعني انتظر على التلفون', mistake:'Hanging up instead of holding.'},
-{en:'Voicemail', ipa:'/ˈvɔɪsmeɪl/', ar:'بريد صوتي', translit:'فويسميل', example:{en:'Leave a voicemail.', ar:'اترك رساله صوتية.', translit:'ليف ا فويسميل.'}, synonyms:'voice message, answering machine', antonyms:'', family:'voice, mail', collocations:'leave a voicemail, check voicemail', category:'Saudi Phone Calls', difficulty:'Intermediate', tip:'Voicemail records your message.', synonyms_ar:'بريد صوتي', antonyms_ar:'', family_ar:'صوت، بريد', collocations_ar:'اترك رساله صوتيه، شيك على البريد الصوتي', tip_ar:'البريد الصوتي يسجل رسالتك', mistake:'Forgetting to leave your name in voicemail.'},
-{en:'Dial', ipa:'/ˈdaɪəl/', ar:'يطلب (رقمًا)', translit:'دايال', example:{en:'Dial the number.', ar:'اطلب الرقم.', translit:'دايال ذا نامبر.'}, synonyms:'call, ring', antonyms:'hang up', family:'dial, dialed', collocations:'dial a number, dial in', category:'Saudi Phone Calls', difficulty:'Intermediate', tip:'To dial is to enter a number.', synonyms_ar:'يطلب رقما', antonyms_ar:'يغلق الخط', family_ar:'يطلب، طلب', collocations_ar:'اطلب رقم، اتصل', tip_ar:'dial تعني تدخل رقم', mistake:'Saying "dial to" instead of "dial."'},
-{en:'Receptionist', ipa:'/rɪˈsɛpʃənɪst/', ar:'موظف الاستقبال', translit:'ريسبشنست', example:{en:'Ask the receptionist.', ar:'اسال موظف الاستقبال.', translit:'اسك ذا ريسبشنست.'}, synonyms:'front desk clerk', antonyms:'', family:'reception, receptionist', collocations:'the receptionist, call the receptionist', category:'Saudi Phone Calls', difficulty:'Intermediate', tip:'The receptionist greets and directs callers.', synonyms_ar:'موظف الاستقبال', antonyms_ar:'', family_ar:'استقبال، موظف استقبال', collocations_ar:'موظف الاستقبال، اتصل بموظف الاستقبال', tip_ar:'موظف الاستقبال يرحب ويوجّه المتصلين', mistake:'Pronouncing it "reception-ist" too fast.'},
+{en:'Hello', ipa:'/həˈloʊ/', ar:'مرحبًا', translit:'هَلو', example:{en:'Hello, how are you?', ar:'مرحبًا، كيف حالك؟', translit:'هَلو، هاو ار يو؟'}, synonyms:'hi, greetings', antonyms:'goodbye', family:'hello', collocations:'say hello, hello there', category:'Greetings', difficulty:'Beginner', tip:'"Hello" works any time of day.', synonyms_ar:'مرحبا', antonyms_ar:'وداعا', family_ar:'مرحبا', collocations_ar:'قل مرحبا، مرحبا هناك', tip_ar:'hello تصلح اي وقت باليوم', mistake:'Forgetting to greet before a request.'},
+{en:'Goodbye', ipa:'/ˌɡʊdˈbaɪ/', ar:'مع السلامة، وداعًا', translit:'قودباي', example:{en:'Goodbye, see you tomorrow.', ar:'مع السلامة، اراك غدًا.', translit:'قودباي، سي يو تومورو.'}, synonyms:'bye, farewell', antonyms:'hello, hi', family:'goodbye', collocations:'say goodbye, wave goodbye', category:'Greetings', difficulty:'Beginner', tip:'"Goodbye" ends a meeting politely.', synonyms_ar:'مع السلامه', antonyms_ar:'مرحبا', family_ar:'وداع', collocations_ar:'قل وداعا، لوّح وداعا', tip_ar:'goodbye تنهي اللقاء باحترام', mistake:'Leaving without saying goodbye.'},
+{en:'Welcome', ipa:'/ˈwɛlkəm/', ar:'اهلًا وسهلًا', translit:'وِلكَم', example:{en:'Welcome to our home.', ar:'اهلًا وسهلًا في بيتنا.', translit:'وِلكَم تو اور هوم.'}, synonyms:'greetings, come in', antonyms:'goodbye', family:'welcome, welcomed', collocations:'welcome to, you are welcome', category:'Greetings', difficulty:'Beginner', tip:'"Welcome" greets someone who arrives.', synonyms_ar:'اهلا وسهلا', antonyms_ar:'وداعا', family_ar:'اهلا وسهلا، مرحبا', collocations_ar:'اهلا في، اهلا وسهلا بكم', tip_ar:'welcome ترحب بلي يجي', mistake:'Saying "welcome" instead of "you are welcome" for thanks.'},
+{en:'Good morning', ipa:'/ɡʊd ˈmɔːrnɪŋ/', ar:'صباح الخير', translit:'قود مورنينق', example:{en:'Good morning, everyone.', ar:'صباح الخير جميعًا.', translit:'قود مورنينق، افريوان.'}, synonyms:'morning greeting', antonyms:'good night', family:'morning', collocations:'say good morning, good morning to you', category:'Greetings', difficulty:'Beginner', tip:'Use it before noon.', synonyms_ar:'صباح الخير', antonyms_ar:'تصبح على خير', family_ar:'صباح', collocations_ar:'قل صباح الخير، صباح الخير لك', tip_ar:'استخدمها قبل الظهر', mistake:'Saying "good morning" in the evening.'},
+{en:'Thank you', ipa:'/θæŋk juː/', ar:'شكرًا لك', translit:'ثانك يو', example:{en:'Thank you for your help.', ar:'شكرًا لك على مساعدتك.', translit:'ثانك يو فور يور هيلب.'}, synonyms:'thanks, much obliged', antonyms:'', family:'thank, thanks', collocations:'say thank you, thank you so much', category:'Greetings', difficulty:'Beginner', tip:'"Thank you" shows gratitude.', synonyms_ar:'شكرا لك', antonyms_ar:'', family_ar:'شكرا، شكر', collocations_ar:'قل شكرا، شكرا جزيلا', tip_ar:'شكرا تظهر الامتنان', mistake:'Forgetting to thank someone who helped.'},
+{en:'Invitation', ipa:'/ˌɪnvɪˈteɪʃən/', ar:'دعوة', translit:'انفيتيهيشِن', example:{en:'Thank you for the invitation.', ar:'شكرًا على الدعوة.', translit:'ثانك يو فور ذا انفيتيهيشِن.'}, synonyms:'invite, summons', antonyms:'rejection', family:'invite, invited', collocations:'accept an invitation, send an invitation', category:'Conversations', difficulty:'Intermediate', tip:'An invitation asks someone to come.', synonyms_ar:'دعوه', antonyms_ar:'رفض', family_ar:'يدعو، مدعو', collocations_ar:'اقبل دعوه، ابعت دعوه', tip_ar:'الدعوه تطلب من احد يجي', mistake:'Forgetting to RSVP to an invitation.'},
+{en:'Host', ipa:'/hoʊst/', ar:'مضيف', translit:'هوست', example:{en:'Our host welcomed everyone.', ar:'مضيفنا رحّب بالجميع.', translit:'اور هوست وِلكَمد افريوان.'}, synonyms:'host, entertainer', antonyms:'guest', family:'host, hosted', collocations:'play host, host a gathering', category:'Conversations', difficulty:'Intermediate', tip:'The host receives the guests.', synonyms_ar:'مضيف', antonyms_ar:'ضيف', family_ar:'مضيف، استضاف', collocations_ar:'استضاف، استضاف تجمع', tip_ar:'المضيف يستقبل الضيوف', mistake:'Confusing host (person) with host (a lot).'},
+{en:'Guest', ipa:'/ɡɛst/', ar:'ضيف', translit:'گست', example:{en:'We have guests tonight.', ar:'عندنا ضيوف الليله.', translit:'وي هاف گستس تونايت.'}, synonyms:'visitor', antonyms:'host', family:'guest, guests', collocations:'welcome a guest, house guest', category:'Conversations', difficulty:'Intermediate', tip:'A guest is someone you invited.', synonyms_ar:'ضيف', antonyms_ar:'مضيف', family_ar:'ضيف، ضيوف', collocations_ar:'رحب بضيف، ضيف بالبيت', tip_ar:'الضيف هو احد مدعو', mistake:'Confusing "guest" with "quest."'},
+{en:'Gathering', ipa:'/ˈɡæðərɪŋ/', ar:'تجمع، مجلس', translit:'گاذرينق', example:{en:'The family gathering was lovely.', ar:'كان تجمع العايلة لطيفًا.', translit:'ذا فاميلي گاذرينق واز لافلي.'}, synonyms:'meetup, assembly', antonyms:'dispersal', family:'gather, gathering', collocations:'family gathering, social gathering', category:'Conversations', difficulty:'Intermediate', tip:'A gathering is people meeting together.', synonyms_ar:'تجمع، مجلس', antonyms_ar:'تفرق', family_ar:'يجتمع، تجمع', collocations_ar:'تجمع عايلي، تجمع اجتماعي', tip_ar:'التجمع هو ناس يجتمعون مع بعض', mistake:'Calling every gathering a "party."'},
+{en:'Hospitality', ipa:'/ˌhɒspɪˈtæləti/', ar:'كرم الضيافة', translit:'هوسبيتاليتي', example:{en:'Arab hospitality is famous.', ar:'كرم الضيافه العربي معروف.', translit:'ساودي هوسبيتاليتي از فيمس.'}, synonyms:'welcome, generosity', antonyms:'coldness', family:'hospitable, hospitality', collocations:'show hospitality, generous hospitality', category:'Conversations', difficulty:'Intermediate', tip:'Hospitality is warm welcoming of guests.', synonyms_ar:'كرم الضيافه', antonyms_ar:'برود', family_ar:'ضيافي، ضيافه', collocations_ar:'اظهر ضيافه، ضيافه كريمه', tip_ar:'الضيافه هي استقبال الضيوف بحراره', mistake:'Confusing it with "hospital."'},
+{en:'Meeting', ipa:'/ˈmiːtɪŋ/', ar:'اجتماع', translit:'ميتينق', example:{en:'The meeting starts at ten.', ar:'الاجتماع يبدا العاشرة.', translit:'ذا ميتينق ستارتس ات تين.'}, synonyms:'gathering, discussion', antonyms:'breakup', family:'meet, meeting', collocations:'schedule a meeting, team meeting', category:'At Work', difficulty:'Intermediate', tip:'A meeting is a planned work talk.', synonyms_ar:'اجتماع', antonyms_ar:'تفرق', family_ar:'يلتقي، اجتماع', collocations_ar:'جدول اجتماع، اجتماع فريق', tip_ar:'الاجتماع حديث عمل مخطط له', mistake:'Confusing "meeting" (event) with "meet" (verb).'},
+{en:'Deadline', ipa:'/ˈdɛdlaɪn/', ar:'موعد نهايي', translit:'ديدلاين', example:{en:'The deadline is Friday.', ar:'الموعد النهايي يوم الجمعه.', translit:'ذا ديدلاين از فرايداي.'}, synonyms:'due date, cutoff', antonyms:'extension', family:'deadline, deadlines', collocations:'meet a deadline, miss a deadline', category:'At Work', difficulty:'Intermediate', tip:'A deadline is the last time to finish.', synonyms_ar:'موعد نهايي', antonyms_ar:'تمديد', family_ar:'موعد نهايي، مواعيد نهاييه', collocations_ar:'حققت الموعد، فاتك الموعد', tip_ar:'الموعد النهايي هو اخر وقت للتسليم', mistake:'Missing the deadline without warning.'},
+{en:'Colleague', ipa:'/ˈkɒliːɡ/', ar:'زميل عمل', translit:'كوليگ', example:{en:'My colleague helped me.', ar:'ساعدني زميلي في العمل.', translit:'ماي كوليگ هيلب مي.'}, synonyms:'coworker, associate', antonyms:'rival', family:'colleague, colleagues', collocations:'a close colleague, work colleague', category:'At Work', difficulty:'Intermediate', tip:'A colleague is someone you work with.', synonyms_ar:'زميل عمل', antonyms_ar:'منافس', family_ar:'زميل، زملاء', collocations_ar:'زميل مقرب، زميل عمل', tip_ar:'الزميل هو احد تشتغل معه', mistake:'Pronouncing it "col-league" as two words.'},
+{en:'Shift', ipa:'/ʃɪft/', ar:'وردية عمل', translit:'شِفت', example:{en:'I work the night shift.', ar:'اعمل في وردية الليل.', translit:'اي وورك ذا نايت شِفت.'}, synonyms:'work period, turn', antonyms:'day off', family:'shift, shifts', collocations:'night shift, day shift', category:'At Work', difficulty:'Intermediate', tip:'A shift is one work period.', synonyms_ar:'ورديه عمل', antonyms_ar:'اجازه', family_ar:'ورديه، ورديات', collocations_ar:'ورديه ليل، ورديه نهار', tip_ar:'الورديه هي فتره عمل واحده', mistake:'Confusing shift (work) with shift (move).'},
+{en:'Approve', ipa:'/əˈpruːv/', ar:'يوافق، يعتمد', translit:'ابروف', example:{en:'The manager approved my request.', ar:'وافق المدير على طلبي.', translit:'ذا ماناجر ابروفد ماي ريكويست.'}, synonyms:'accept, authorize', antonyms:'reject, deny', family:'approve, approval', collocations:'approve a request, approve of', category:'At Work', difficulty:'Intermediate', tip:'"Approve a request" = accept it officially.', synonyms_ar:'يوافق', antonyms_ar:'يرفض', family_ar:'يوافق، موافقه', collocations_ar:'وافق على طلب، وافق على', tip_ar:'وافق على طلب يعني قبله رسميا', mistake:'Saying "approve on" instead of "approve."'},
+{en:'Appointment', ipa:'/əˈpɔɪntmənt/', ar:'موعد (طبي)', translit:'اپوينتمِنت', example:{en:'I have a doctor\'s appointment.', ar:'عندي موعد مع الطبيب.', translit:'اي هاف ا دوكتورز اپوينتمِنت.'}, synonyms:'booking, slot', antonyms:'cancellation', family:'appoint, appointment', collocations:'make an appointment, cancel an appointment', category:'Hospital English', difficulty:'Intermediate', tip:'Book an appointment before you go.', synonyms_ar:'موعد طبي', antonyms_ar:'الغاء', family_ar:'يعين، موعد', collocations_ar:'احجز موعد، الغي موعد', tip_ar:'احجز موعد قبل ما تروح', mistake:'Saying "I have appointment" instead of "an appointment."'},
+{en:'Symptom', ipa:'/ˈsɪmptəm/', ar:'عَرَض مرضي', translit:'سيمبتوم', example:{en:'A fever is a symptom.', ar:'الحمى عَرَض مرضي.', translit:'ا فيفر از ا سيمبتوم.'}, synonyms:'sign, indication', antonyms:'', family:'symptom, symptomatic', collocations:'mild symptom, common symptom', category:'Hospital English', difficulty:'Intermediate', tip:'A symptom is a sign of illness.', synonyms_ar:'عَرَض مرضي', antonyms_ar:'', family_ar:'عَرَض، عرضي', collocations_ar:'عَرَض خفيف، عَرَض شايع', tip_ar:'العَرَض اشاره على المرض', mistake:'Confusing symptom with the illness itself.'},
+{en:'Recovery', ipa:'/rɪˈkʌvəri/', ar:'تعافي، شفا', translit:'ريكوفري', example:{en:'Her recovery was quick.', ar:'تعافيها كان سريعًا.', translit:'هر ريكوفري واز كويك.'}, synonyms:'healing, improvement', antonyms:'relapse', family:'recover, recovery', collocations:'full recovery, speed up recovery', category:'Hospital English', difficulty:'Intermediate', tip:'Recovery is getting better after illness.', synonyms_ar:'تعافي', antonyms_ar:'انتكاسه', family_ar:'يتعافى، تعافي', collocations_ar:'تعافي كامل، تسريع التعافي', tip_ar:'التعافي هو التحسن بعد المرض', mistake:'Confusing recovery with discovery.'},
+{en:'Insurance', ipa:'/ɪnˈʃʊərəns/', ar:'تامين (صحي)', translit:'انشورينس', example:{en:'Do you have health insurance?', ar:'هل عندك تامين صحي؟', translit:'دو يو هاف هيلث انشورينس؟'}, synonyms:'cover, coverage', antonyms:'', family:'insure, insurance', collocations:'health insurance, insurance card', category:'Hospital English', difficulty:'Intermediate', tip:'Insurance helps pay for treatment.', synonyms_ar:'تامين صحي', antonyms_ar:'', family_ar:'يومن، تامين', collocations_ar:'تامين صحي، بطاقه التامين', tip_ar:'التامين يساعد يدفع تكاليف العلاج', mistake:'Forgetting the insurance card at home.'},
+{en:'Checkup', ipa:'/ˈtʃɛkʌp/', ar:'فحص طبي دوري', translit:'تشيك اب', example:{en:'Get a yearly checkup.', ar:'اجرِ فحصًا سنويًا.', translit:'گيت ا ييرلي تشيك اب.'}, synonyms:'examination, screening', antonyms:'', family:'check, checkup', collocations:'routine checkup, medical checkup', category:'Hospital English', difficulty:'Intermediate', tip:'A checkup catches problems early.', synonyms_ar:'فحص طبي دوري', antonyms_ar:'', family_ar:'يفحص، فحص', collocations_ar:'فحص دوري، فحص طبي', tip_ar:'الفحص يكشف المشاكل بدري', mistake:'Skipping checkups when you feel fine.'},
+{en:'Ticket', ipa:'/ˈtɪkɪt/', ar:'تذكرة', translit:'تيكيت', example:{en:'Show your ticket at the gate.', ar:'اعرض تذكرتك عند البوابه.', translit:'شو يور تيكيت ات ذا گيت.'}, synonyms:'pass, boarding card', antonyms:'', family:'ticket, tickets', collocations:'book a ticket, plane ticket', category:'Travel English', difficulty:'Beginner', tip:'Keep your ticket ready at the gate.', synonyms_ar:'تذكره', antonyms_ar:'', family_ar:'تذكره، تذاكر', collocations_ar:'احجز تذكره، تذكره طياره', tip_ar:'خلي تذكرتك جاهزه عند البوابه', mistake:'Losing the ticket before boarding.'},
+{en:'Passport', ipa:'/ˈpæspɔːrt/', ar:'جواز سفر', translit:'باسبورت', example:{en:'Your passport, please.', ar:'جواز سفرك لو سمحت.', translit:'يور باسبورت، بليز.'}, synonyms:'ID, travel document', antonyms:'', family:'passport, passports', collocations:'show your passport, renew a passport', category:'Travel English', difficulty:'Beginner', tip:'Check your passport\'s expiry date.', synonyms_ar:'جواز سفر', antonyms_ar:'', family_ar:'جواز، جوازات', collocations_ar:'اعرض جوازك، جدد جواز', tip_ar:'تاكد من تاريخ انتهاء الجواز', mistake:'Traveling with an expired passport.'},
+{en:'Luggage', ipa:'/ˈlʌɡɪdʒ/', ar:'امتعة، حقايب', translit:'لَگيج', example:{en:'Where is the luggage?', ar:'اين الامتعة؟', translit:'وير از ذا لَگيج؟'}, synonyms:'bags, baggage', antonyms:'', family:'luggage', collocations:'pack luggage, luggage allowance', category:'Travel English', difficulty:'Beginner', tip:'Luggage is uncountable; don\'t say "luggages."', synonyms_ar:'امتعه، حقايب', antonyms_ar:'', family_ar:'امتعه', collocations_ar:'حزم الامتعه، وزن الامتعه المسموح', tip_ar:'luggage ما تعد؛ لا تقل luggages', mistake:'Saying "luggages" with an -s.'},
+{en:'Boarding', ipa:'/ˈbɔːrdɪŋ/', ar:'صعود (الطايرة)', translit:'بوردينق', example:{en:'Boarding starts now.', ar:'الصعود يبدا الان.', translit:'بوردينق ستارتس ناو.'}, synonyms:'embarking, getting on', antonyms:'disembarking', family:'board, boarding', collocations:'boarding pass, boarding gate', category:'Travel English', difficulty:'Beginner', tip:'Boarding is getting on the plane.', synonyms_ar:'صعود الطايره', antonyms_ar:'نزول', family_ar:'يصعد، صعود', collocations_ar:'تذكره الصعود، بوابه الصعود', tip_ar:'الصعود يعني تركب الطايره', mistake:'Confusing boarding with landing.'},
+{en:'Departure', ipa:'/dɪˈpɑːrtʃər/', ar:'مغادرة، اقلاع', translit:'ديبارتشَر', example:{en:'Departure is at six.', ar:'المغادرة الساعه السادسة.', translit:'ديبارتشَر از ات سيكس.'}, synonyms:'leaving, takeoff', antonyms:'arrival', family:'depart, departure', collocations:'departure time, departure gate', category:'Travel English', difficulty:'Beginner', tip:'Departure is when you leave.', synonyms_ar:'مغادره، اقلاع', antonyms_ar:'وصول', family_ar:'يغادر، مغادره', collocations_ar:'وقت المغادره، بوابه المغادره', tip_ar:'المغادره هي لما تروح', mistake:'Confusing departure with arrival.'},
+{en:'Etiquette', ipa:'/ˈɛtɪkɛt/', ar:'اداب، اتيكيت', translit:'اتيكيت', example:{en:'Learn mosque etiquette.', ar:'تعلّم اداب المسجد.', translit:'ليرن موسك اتيكيت.'}, synonyms:'manners, customs', antonyms:'rudeness', family:'etiquette', collocations:'proper etiquette, dress etiquette', category:'Mosque Etiquette', difficulty:'Intermediate', tip:'Etiquette is polite behavior in a place.', synonyms_ar:'اداب، اتيكيت', antonyms_ar:'قله ادب', family_ar:'اتيكيت', collocations_ar:'اتيكيت صحيح، اتيكيت لبس', tip_ar:'الاتيكيت هو تصرف مهذب في مكان', mistake:'Pronouncing it "etti-ket."'},
+{en:'Prayer', ipa:'/prɛr/', ar:'صلاه، دعا', translit:'برير', example:{en:'Prayer time is near.', ar:'وقت الصلاه اقترب.', translit:'برير تايم از نير.'}, synonyms:'worship, supplication', antonyms:'', family:'pray, prayer', collocations:'prayer time, prayer hall', category:'Mosque Etiquette', difficulty:'Intermediate', tip:'Keep quiet during prayer time.', synonyms_ar:'صلاه، دعا', antonyms_ar:'', family_ar:'يصلي، صلاه', collocations_ar:'وقت الصلاه، قاعه صلاه', tip_ar:'خلي هادي وقت الصلاه', mistake:'Talking loudly during prayer.'},
+{en:'Respect', ipa:'/rɪˈspɛkt/', ar:'احترام', translit:'ريسبيكت', example:{en:'Show respect to others.', ar:'اعرض الاحترام للاخرين.', translit:'شو ريسبيكت تو اذرز.'}, synonyms:'regard, honor', antonyms:'disrespect', family:'respect, respectful', collocations:'show respect, treat with respect', category:'Mosque Etiquette', difficulty:'Intermediate', tip:'Respect means treating others well.', synonyms_ar:'احترام', antonyms_ar:'قله احترام', family_ar:'احترام، محترم', collocations_ar:'اظهر احترام، عامل باحترام', tip_ar:'الاحترام يعني تعامل الناس حلو', mistake:'Confusing "respect" (noun) with "respectful."'},
+{en:'Modest', ipa:'/ˈmɒdɪst/', ar:'محتشم، متواضع', translit:'موديست', example:{en:'Wear modest clothes.', ar:'ارتدِ ملابس محتشمة.', translit:'وير موديست كلوذز.'}, synonyms:'decent, humble', antonyms:'showy, immodest', family:'modest, modesty', collocations:'modest dress, modest behavior', category:'Mosque Etiquette', difficulty:'Intermediate', tip:'Modest dress is simple and covering.', synonyms_ar:'محتشم، متواضع', antonyms_ar:'متباهي', family_ar:'محتشم، حياء', collocations_ar:'لبس محتشم، تصرف متواضع', tip_ar:'اللبس المحتشم بسيط ويستر', mistake:'Confusing "modest" (clothing) with "shy."'},
+{en:'Quiet', ipa:'/ˈkwaɪət/', ar:'هادي، صامت', translit:'كوايت', example:{en:'Please be quiet.', ar:'لو سمحت اهدا.', translit:'بليز بي كوايت.'}, synonyms:'silent, calm', antonyms:'loud, noisy', family:'quiet, quietly', collocations:'keep quiet, quiet place', category:'Mosque Etiquette', difficulty:'Intermediate', tip:'"Quiet" is two syllables: qui-et.', synonyms_ar:'هادي، صامت', antonyms_ar:'صاخب', family_ar:'هادي، بهدوء', collocations_ar:'خليك هادي، مكان هادي', tip_ar:'quiet مقطعين: qui-et', mistake:'Spelling it "quite," which means "fairly."'},
+{en:'Caller', ipa:'/ˈkɔːlər/', ar:'المتصل', translit:'كولر', example:{en:'The caller hung up.', ar:'اغلق المتصل الخط.', translit:'ذا كولر هانق اب.'}, synonyms:'caller, phoner', antonyms:'receiver', family:'call, caller', collocations:'unknown caller, frequent caller', category:'Phone Calls', difficulty:'Intermediate', tip:'The caller is the one who phones.', synonyms_ar:'المتصل', antonyms_ar:'المستقبل', family_ar:'يتصل، متصل', collocations_ar:'متصل مجهول، متصل دايم', tip_ar:'المتصل هو اللي يرفع السماعه', mistake:'Confusing caller with receiver.'},
+{en:'Hold', ipa:'/hoʊld/', ar:'انتظار (على الخط)', translit:'هولد', example:{en:'Please hold for a moment.', ar:'ابقَ على الخط لحظه لو سمحت.', translit:'بليز هولد فور ا موومِنت.'}, synonyms:'wait, pause', antonyms:'hang up', family:'hold, holding', collocations:'on hold, put on hold', category:'Phone Calls', difficulty:'Intermediate', tip:'"Hold" means wait on the phone.', synonyms_ar:'انتظار على الخط', antonyms_ar:'يغلق الخط', family_ar:'يمسك، انتظار', collocations_ar:'على الانتظار، حط على الانتظار', tip_ar:'hold يعني انتظر على التلفون', mistake:'Hanging up instead of holding.'},
+{en:'Voicemail', ipa:'/ˈvɔɪsmeɪl/', ar:'بريد صوتي', translit:'فويسميل', example:{en:'Leave a voicemail.', ar:'اترك رساله صوتية.', translit:'ليف ا فويسميل.'}, synonyms:'voice message, answering machine', antonyms:'', family:'voice, mail', collocations:'leave a voicemail, check voicemail', category:'Phone Calls', difficulty:'Intermediate', tip:'Voicemail records your message.', synonyms_ar:'بريد صوتي', antonyms_ar:'', family_ar:'صوت، بريد', collocations_ar:'اترك رساله صوتيه، شيك على البريد الصوتي', tip_ar:'البريد الصوتي يسجل رسالتك', mistake:'Forgetting to leave your name in voicemail.'},
+{en:'Dial', ipa:'/ˈdaɪəl/', ar:'يطلب (رقمًا)', translit:'دايال', example:{en:'Dial the number.', ar:'اطلب الرقم.', translit:'دايال ذا نامبر.'}, synonyms:'call, ring', antonyms:'hang up', family:'dial, dialed', collocations:'dial a number, dial in', category:'Phone Calls', difficulty:'Intermediate', tip:'To dial is to enter a number.', synonyms_ar:'يطلب رقما', antonyms_ar:'يغلق الخط', family_ar:'يطلب، طلب', collocations_ar:'اطلب رقم، اتصل', tip_ar:'dial تعني تدخل رقم', mistake:'Saying "dial to" instead of "dial."'},
+{en:'Receptionist', ipa:'/rɪˈsɛpʃənɪst/', ar:'موظف الاستقبال', translit:'ريسبشنست', example:{en:'Ask the receptionist.', ar:'اسال موظف الاستقبال.', translit:'اسك ذا ريسبشنست.'}, synonyms:'front desk clerk', antonyms:'', family:'reception, receptionist', collocations:'the receptionist, call the receptionist', category:'Phone Calls', difficulty:'Intermediate', tip:'The receptionist greets and directs callers.', synonyms_ar:'موظف الاستقبال', antonyms_ar:'', family_ar:'استقبال، موظف استقبال', collocations_ar:'موظف الاستقبال، اتصل بموظف الاستقبال', tip_ar:'موظف الاستقبال يرحب ويوجّه المتصلين', mistake:'Pronouncing it "reception-ist" too fast.'},
 {en:'Scene', ipa:'/siːn/', ar:'مشهد', translit:'سين', example:{en:'That scene made me cry.', ar:'ذاك المشهد ابكاني.', translit:'ذات سين ميد مي كراي.'}, synonyms:'shot, sequence', antonyms:'', family:'scene, scenes', collocations:'film a scene, cut a scene', category:'Movie English', difficulty:'Advanced', tip:'A scene is one part of a movie.', synonyms_ar:'مشهد', antonyms_ar:'', family_ar:'مشهد، مشاهد', collocations_ar:'صوّر مشهد، قطع مشهد', tip_ar:'المشهد جزء واحد من الفيلم', mistake:'Spelling it "seen," which is the verb.'},
 {en:'Sequel', ipa:'/ˈsiːkwəl/', ar:'جز ثاني، تتمة', translit:'سيكويل', example:{en:'The sequel is better than the first.', ar:'الجز الثاني افضل من الاول.', translit:'ذا سيكويل از بيتر ذان ذا فيرست.'}, synonyms:'follow-up, part two', antonyms:'prequel', family:'sequel, sequels', collocations:'a sequel to, make a sequel', category:'Movie English', difficulty:'Advanced', tip:'A sequel comes after the first film.', synonyms_ar:'جز ثاني، تتمه', antonyms_ar:'باديه', family_ar:'تتمه، تتمات', collocations_ar:'تتمه لـ، سوي تتمه', tip_ar:'التتمه تجي بعد الفيلم الاول', mistake:'Confusing sequel with prequel.'},
 {en:'Plot', ipa:'/plɒt/', ar:'حبكة، قصه', translit:'بلوت', example:{en:'The plot was confusing.', ar:'كانت الحبكة محيرة.', translit:'ذا بلوت واز كونفيوزينق.'}, synonyms:'storyline, story', antonyms:'', family:'plot, plots', collocations:'plot twist, develop the plot', category:'Movie English', difficulty:'Advanced', tip:'The plot is the story of the movie.', synonyms_ar:'حبكه، قصه', antonyms_ar:'', family_ar:'حبكه، حبكات', collocations_ar:'لفه بالقصه، طوّر الحبكه', tip_ar:'الحبكه هي قصه الفيلم', mistake:'Confusing plot (story) with plot (land).'},
@@ -10359,9 +10359,9 @@ const VOCAB_BANK = [
 
 /* ---- grammar academy topics ---- */
 /* ============================================================
-   SAUDI MISTAKE COACH — interactive error patterns for Saudi learners
+   MISTAKE COACH — interactive error patterns for Arabic speakers
    Categorized by error type, each pattern has wrong/correct examples,
-   Saudi dialect explanation, quick rule, and practice questions.
+   the dialect explanation, quick rule, and practice questions.
    Research-backed: Al-Hattami 2010, Ahmad 2011, Al-Seghayer 2014.
    Exposed on window so the lesson engine can match patterns to lesson content.
    ============================================================ */
@@ -10790,7 +10790,7 @@ window.SAUDI_MISTAKE_COACH = [
 
 const GRAMMAR_TOPICS = [
   {id:'present-perfect', title:'Present Perfect vs Past Simple', rule:'Use present perfect for actions connecting the past to now. Use past simple for finished actions with a specific past time.', saudi:'لو الفعل له تاثير الحين او مو معروف وقته بالضبط، استخدم present perfect. لو تتكلم عن وقت محدد خلص، استخدم past simple.', wrong:'I have visited Riyadh last year.', right:'I visited Riyadh last year.', mistakes:['Using "have" with a specific past time word like "yesterday" or "last year."','Saying "I have went" instead of "I have gone."']},
-  {id:'articles', title:'Articles: A, An, The', rule:'Use "a" before consonant sounds, "an" before vowel sounds, and "the" for something specific both speakers know.', saudi:'العربي مالها ادوات نكرة زي a/an، فهذا يصعب على الطلاب السعوديين، لازم تتذكرها بكل جمله.', wrong:'She is a engineer.', right:'She is an engineer.', mistakes:['Saying "a" before a vowel sound: "a apple" instead of "an apple."','Dropping the article completely: "I am engineer."']},
+  {id:'articles', title:'Articles: A, An, The', rule:'Use "a" before consonant sounds, "an" before vowel sounds, and "the" for something specific both speakers know.', saudi:'العربي مالها ادوات نكرة زي a/an، فهذا يصعب على الطلاب العربيين، لازم تتذكرها بكل جمله.', wrong:'She is a engineer.', right:'She is an engineer.', mistakes:['Saying "a" before a vowel sound: "a apple" instead of "an apple."','Dropping the article completely: "I am engineer."']},
   {id:'subject-verb', title:'Subject-Verb Agreement', rule:'Singular subjects take singular verbs, plural subjects take plural verbs.', saudi:'لازم الفعل يتوافق مع الشخص، لو الشخص مفرد الفعل يضاف له s في المضارع.', wrong:'She go to work every day.', right:'She goes to work every day.', mistakes:['Forgetting the "s" with he/she/it in present simple.','Using "is" with plural subjects: "the students is here."']},
   {id:'prepositions-time', title:'Prepositions of Time: In, On, At', rule:'Use "in" for months and years, "on" for days and dates, "at" for exact times.', saudi:'in للشهور والسنين، on للايام والتواريخ، at للوقت بالضبط زي الساعه.', wrong:'I will call you in Monday at 3pm... on 3pm.', right:'I will call you on Monday at 3pm.', mistakes:['Saying "in Monday" instead of "on Monday."', "Saying \"on 5 o'clock\" instead of \"at 5 o'clock.\""]},
   {id:'comparatives', title:'Comparatives and Superlatives', rule:'Add "-er" for short adjectives and "more" for longer ones. Use "-est" or "most" for superlatives.', saudi:'للصفات القصيره نزيد er، وللصفات الطويله نستخدم more قبلها.', wrong:'This hotel is more good than that one.', right:'This hotel is better than that one.', mistakes:['Saying "more good" instead of "better."','Doubling comparison: "more better" or "most best."']},
@@ -12415,20 +12415,20 @@ const LESSON_LIBRARY = {
 
 /* ============================================================
    LEARN SAUDI ARABIC track (direction: ar)
-   Natural everyday Saudi dialect, taught to English speakers.
+   Natural everyday the dialect, taught to English speakers.
    Transliteration is learner-friendly: no hamza marks, no
    apostrophe notation, just plain readable spelling.
    ============================================================ */
   'sa-hello-hala': {
-    title:'Hala: The Saudi Hello', ar:'هلا والله', translit:'hala wallah', dir:'ar',
+    title:'Hala: The  Hello', ar:'هلا والله', translit:'hala wallah', dir:'ar',
     duration:'6 min', difficulty:'Beginner',
     vocab:[
-      {en:'Hello / welcome', ar:'هلا', translit:'hala', tip:'The everyday Saudi hello. Say it with a smile, it carries the warmth.'},
+      {en:'Hello / welcome', ar:'هلا', translit:'hala', tip:'The everyday hello. Say it with a smile, it carries the warmth.'},
       {en:'Welcome, more warmly', ar:'هلا والله', translit:'hala wallah', tip:'Adds "wallah" to make it warmer, very common between friends.'},
       {en:'How are you? (to a man)', ar:'كيفك؟', translit:'keefak', tip:'Add "yaa" to sound friendlier: keefak yaa?'},
       {en:'How are you? (to a woman)', ar:'كيفك؟', translit:'keefik', tip:'Same word, the ending changes: keefak for him, keefik for her.'},
     ],
-    grammar:{title:'Hala and its replies', rule:'"Hala" is a greeting, not a question. Reply with the same word or add a blessing. Gender changes the ending of "keefak" (him) vs "keefik" (her).', saudi:'هلا ردها هلا، او تزيد عليها. كلمه كيفك تتغير حسب اللي قدامك: للرجل keefak وللمراة keefik.', wrong:'Say nothing back when someone says hala.', right:'Reply: "Hala wallah, keefak?" (Hi, how are you?)', mistakes:['Not replying at all, in Saudi culture a greeting always gets a greeting back.','Using "keefak" for a woman, the natural form is "keefik."']},
+    grammar:{title:'Hala and its replies', rule:'"Hala" is a greeting, not a question. Reply with the same word or add a blessing. Gender changes the ending of "keefak" (him) vs "keefik" (her).', saudi:'هلا ردها هلا، او تزيد عليها. كلمه كيفك تتغير حسب اللي قدامك: للرجل keefak وللمراة keefik.', wrong:'Say nothing back when someone says hala.', right:'Reply: "Hala wallah, keefak?" (Hi, how are you?)', mistakes:['Not replying at all, in  culture a greeting always gets a greeting back.','Using "keefak" for a woman, the natural form is "keefik."']},
     conversation:[
       {who:'A', ar:'هلا والله، كيفك؟', translit:'hala wallah, keefak?', en:'Hey there, how are you?'},
       {who:'B', ar:'هلا بك، تمام الحمدلله، وانت؟', translit:'hala bik, tamaam alhamdulillah, wenta?', en:'Welcome, I am good, praise God, and you?'},
@@ -12439,8 +12439,8 @@ const LESSON_LIBRARY = {
       {qAr:'وش تقول للرد على هلا؟', qEn:'What do you reply to "Hala"?', options:['هلا بك / Hala bik','وش تبي / What do you want','لا شكرا / No thanks'], correct:0},
       {qAr:'كيف تسال امراة عن حالها؟', qEn:'How do you ask a woman how she is?', options:['كيفك؟ keefik','كيفك؟ keefak','وينك؟ weenik'], correct:0},
     ],
-    summary:'You learned the real Saudi greeting and its natural reply, including how the same question changes for a man and a woman.',
-    takeaway:'اول كلمه تقولها باي موقف بالسعوديه: هلا. ردها هلا.',
+    summary:'You learned the real greeting and its natural reply, including how the same question changes for a man and a woman.',
+    takeaway:'اول كلمه تقولها باي موقف بالعربيه: هلا. ردها هلا.',
     situation:{
       hear:[{ar:'هلا والله، كيفك؟', translit:'hala wallah, keefak?', en:'Hey, how are you?'},{ar:'هلا بك، نورتنا.', translit:'hala bik, nawwartna', en:'Welcome, you brightened our place.'}],
       say:[{ar:'هلا، تمام الحمدلله.', translit:'hala, tamaam alhamdulillah', en:'Hi, I am good, thank God.'}],
@@ -12456,7 +12456,7 @@ const LESSON_LIBRARY = {
       {en:'And you?', ar:'وانت؟', translit:'wenta?', tip:'Always bounce the question back, it is expected.'},
       {en:'Fine / well', ar:'بخير', translit:'bikhair', tip:'Short and polite, good for formal settings.'},
     ],
-    grammar:{title:'The exchange pattern', rule:'In Saudi conversation, "how are you" is a ritual: you ask, they answer with a blessing, and you answer back. Always return the question.', saudi:'السوال عن الحال طقس: تسال، يجاوبون، وتسال انت بعد. ما يصير تسال وما ترد السوال.', wrong:'Answer "tamaam" and walk away without asking back.', right:'"Tamaam, wenta?" (I am good, and you?)', mistakes:['Answering only yes/no and stopping the exchange.','Answering with a long story, keep it short unless they ask more.']},
+    grammar:{title:'The exchange pattern', rule:'In conversation, "how are you" is a ritual: you ask, they answer with a blessing, and you answer back. Always return the question.', saudi:'السوال عن الحال طقس: تسال، يجاوبون، وتسال انت بعد. ما يصير تسال وما ترد السوال.', wrong:'Answer "tamaam" and walk away without asking back.', right:'"Tamaam, wenta?" (I am good, and you?)', mistakes:['Answering only yes/no and stopping the exchange.','Answering with a long story, keep it short unless they ask more.']},
     conversation:[
       {who:'A', ar:'كيف حالك اليوم؟', translit:'keef halak alyoum?', en:'How are you today?'},
       {who:'B', ar:'الحمدلله بخير، وانت كيفك؟', translit:'alhamdulillah bikhair, wenta keefak?', en:'Fine, praise God, and how are you?'},
@@ -12467,7 +12467,7 @@ const LESSON_LIBRARY = {
       {qAr:'وش تسوي بعد ما ترد على السوال؟', qEn:'After answering, what do you do?', options:['تسال السوال نفسه / Ask the same question back','تمشي / Walk away','تسكت / Stay silent'], correct:0},
     ],
     summary:'You practiced the polite how-are-you ritual and learned that returning the question is part of the greeting, not optional.',
-    takeaway:'احفظ: تمام + الحمدلله + وانت؟ = ردة فعل سعوديه طبيعية.',
+    takeaway:'احفظ: تمام + الحمدلله + وانت؟ = ردة فعل طبيعيه.',
     situation:{
       hear:[{ar:'كيفك؟', translit:'keefak?', en:'How are you?'},{ar:'كيف الدنيا معك؟', translit:'keef aldenya maak?', en:'How is life with you?'}],
       say:[{ar:'تمام الحمدلله.', translit:'tamaam alhamdulillah', en:'I am good, praise God.'}],
@@ -12483,7 +12483,7 @@ const LESSON_LIBRARY = {
       {en:'God willing', ar:'ان شا الله', translit:'inshallah', tip:'Attached to future plans, carries no religious weight in everyday use.'},
       {en:'Take care / God protect you', ar:'في امان الله', translit:'fi aman allah', tip:'A warm farewell, used between people who care about each other.'},
     ],
-    grammar:{title:'Inshallah with plans', rule:'Saudis attach "inshallah" to any future statement. It softens the promise and is expected, not optional, in everyday talk.', saudi:'اي كلام عن المستقبل يزيد عليه ان شا الله. مو شرط تكون متدين، عادة لغوية.', wrong:'Say "I will come tomorrow" with no inshallah.', right:'"Nshoofak bukra, inshallah." (See you tomorrow, God willing.)', mistakes:['Skipping inshallah for future plans, it sounds abrupt.','Saying it for something already done, it is only for the future.']},
+    grammar:{title:'Inshallah with plans', rule:'People attach "inshallah" to any future statement. It softens the promise and is expected, not optional, in everyday talk.', saudi:'اي كلام عن المستقبل يزيد عليه ان شا الله. مو شرط تكون متدين، عادة لغوية.', wrong:'Say "I will come tomorrow" with no inshallah.', right:'"Nshoofak bukra, inshallah." (See you tomorrow, God willing.)', mistakes:['Skipping inshallah for future plans, it sounds abrupt.','Saying it for something already done, it is only for the future.']},
     conversation:[
       {who:'A', ar:'الحين ماشي، مع السلامة.', translit:'alheen maashi, maa alsalama', en:'I am leaving now, goodbye.'},
       {who:'B', ar:'في امان الله، نشوفك بكرة ان شا الله.', translit:'fi aman allah, nshoofak bukra inshallah', en:'Take care, see you tomorrow God willing.'},
@@ -12493,7 +12493,7 @@ const LESSON_LIBRARY = {
       {qAr:'وش تقول وانت ماشي؟', qEn:'What do you say when leaving?', options:['مع السلامة / Goodbye','هلا / Hello','كيفك؟ / How are you?'], correct:0},
       {qAr:'ليش تضيف "ان شا الله" للخطط الجاية؟', qEn:'Why add "Inshallah" to future plans?', options:['عادات لغوية طبيعية / It is the natural way','عشان كلامك رسمي / To sound formal','عشان تعقد الامور / To complicate things'], correct:0},
     ],
-    summary:'You learned the standard Saudi farewell, the warm variant, and why inshallah belongs to every future plan.',
+    summary:'You learned the standard farewell, the warm variant, and why inshallah belongs to every future plan.',
     takeaway:'مع السلامة للمشي، في امان الله للمقربين، وان شا الله لاي خطه جاية.',
     situation:{
       hear:[{ar:'الحين ماشي.', translit:'alheen maashi', en:'I am leaving now.'},{ar:'بالسلامة.', translit:'balsalama', en:'Safe travels.'}],
@@ -12506,11 +12506,11 @@ const LESSON_LIBRARY = {
     duration:'6 min', difficulty:'Beginner',
     vocab:[
       {en:'Thank you', ar:'شكرا', translit:'shukran', tip:'The safe, universal thank you.'},
-      {en:'May God give you health', ar:'يعطيك العافية', translit:'yatik alafya', tip:'The everyday Saudi way to thank someone for effort or help.'},
+      {en:'May God give you health', ar:'يعطيك العافية', translit:'yatik alafya', tip:'The everyday way to thank someone for effort or help.'},
       {en:'Thank you (male)', ar:'مشكور', translit:'mashkoor', tip:'Short and friendly, used between men and for men.'},
       {en:'You are welcome', ar:'العفو', translit:'alafoo', tip:'The standard reply to thanks.'},
     ],
-    grammar:{title:'Thanking for effort', rule:'"Yatik alafya" is used when someone did work or helped you. It literally wishes them health and is the most natural thanks in Saudi daily life.', saudi:'يعطيك العافية تقال لمن تعب معك او ساعدك. اقوى واطبع من شكرا العادية.', wrong:'Say only "shukran" to a waiter who served you all evening.', right:'"Yatik alafya, mashkoor." (Thank you for your effort.)', mistakes:['Forgetting to thank service workers with yatik alafya.','Using formal MSA phrases like "ashkuruki jazeelan" in daily talk, it sounds like a news broadcast.']},
+    grammar:{title:'Thanking for effort', rule:'"Yatik alafya" is used when someone did work or helped you. It literally wishes them health and is the most natural thanks in  daily life.', saudi:'يعطيك العافية تقال لمن تعب معك او ساعدك. اقوى واطبع من شكرا العادية.', wrong:'Say only "shukran" to a waiter who served you all evening.', right:'"Yatik alafya, mashkoor." (Thank you for your effort.)', mistakes:['Forgetting to thank service workers with yatik alafya.','Using formal MSA phrases like "ashkuruki jazeelan" in daily talk, it sounds like a news broadcast.']},
     conversation:[
       {who:'A', ar:'سويت لي معروف كبير.', translit:'sawwayt li maaroof kabeer', en:'You did me a big favor.'},
       {who:'B', ar:'العفو، هذا واجب.', translit:'alafoo, hadha wajib', en:'You are welcome, it is my duty.'},
@@ -12520,7 +12520,7 @@ const LESSON_LIBRARY = {
       {qAr:'وش اطبع طريقه تشكر فيها اللي ساعدك؟', qEn:'What is the most natural way to thank someone who helped you?', options:['يعطيك العافية / Yatik alafya','اشكرك جزيل الشكر / Formal MSA thanks','حسنًا، شكرًا / Well, thanks'], correct:0},
       {qAr:'وش رد العفو؟', qEn:'What does "Alafoo" mean?', options:['You are welcome','Sorry','Goodbye'], correct:0},
     ],
-    summary:'You learned how Saudis really thank each other: yatik alafya for effort, alafoo for the reply, and when each fits.',
+    summary:'You learned how Arabic speakers really thank each other: yatik alafya for effort, alafoo for the reply, and when each fits.',
     takeaway:'يعطيك العافية هي الشكر الحقيقي بالشارع والمطعم والدوام.',
     situation:{
       hear:[{ar:'يعطيك العافية.', translit:'yatik alafya', en:'Thank you (for your effort).'},{ar:'العفو.', translit:'alafoo', en:'You are welcome.'}],
@@ -12548,7 +12548,7 @@ const LESSON_LIBRARY = {
       {qAr:'كيف تسال عن اسم الرجل؟', qEn:'How do you ask a man his name?', options:['وش اسمك؟ wesh ismak','وش اسمك؟ wesh ismik','اسمي؟ ismi?'], correct:0},
       {qAr:'وش تقول بعد ما تسمع الاسم؟', qEn:'What do you say after hearing the name?', options:['تشرفنا / Nice to meet you','وين؟ / Where?','طيب / OK'], correct:0},
     ],
-    summary:'You practiced the short, natural Saudi introduction: name, question, and tsharrafna.',
+    summary:'You practiced the short, natural introduction: name, question, and tsharrafna.',
     takeaway:'اسمي + وش اسمك + تشرفنا = تعريف كامل باللهجه.',
     situation:{
       hear:[{ar:'وش اسمك؟', translit:'wesh ismak?', en:'What is your name?'},{ar:'من وين انت؟', translit:'min wen enta?', en:'Where are you from?'}],
@@ -12565,7 +12565,7 @@ const LESSON_LIBRARY = {
       {en:'What do you do?', ar:'وش تشتغل؟', translit:'wesh tashtaghel?', tip:'Literally "what do you work?", the natural small talk opener.'},
       {en:'Welcome', ar:'اهلا وسهلا', translit:'ahlan wa sahlan', tip:'The classic welcome, still very much alive.'},
     ],
-    grammar:{title:'First-meeting flow', rule:'The Saudi first-meeting order: name, where are you from, what do you do. Questions come fast and are friendly, not nosey.', saudi:'اول ما تتعرف: الاسم، ثم من وين، ثم وش تشتغل. اساله سريعه وودية.', wrong:'Answer only with your name and stay quiet.', right:'"Ismi Omar, ana min Jeddah, ashtaghel muhandis." (I am Omar, from Jeddah, I work as an engineer.)', mistakes:['Treating the rapid questions as rude, they are how Saudis get to know you.','Answering "where are you from" with just the country, the city is expected.']},
+    grammar:{title:'First-meeting flow', rule:'The first-meeting order: name, where are you from, what do you do. Questions come fast and are friendly, not nosey.', saudi:'اول ما تتعرف: الاسم، ثم من وين، ثم وش تشتغل. اساله سريعه وودية.', wrong:'Answer only with your name and stay quiet.', right:'"Ismi Omar, ana min Jeddah, ashtaghel muhandis." (I am Omar, from Jeddah, I work as an engineer.)', mistakes:['Treating the rapid questions as rude, they are how Arabic speakers get to know you.','Answering "where are you from" with just the country, the city is expected.']},
     conversation:[
       {who:'A', ar:'نورتنا، وش اسمك؟', translit:'nawwartna, wesh ismak?', en:'Welcome, what is your name?'},
       {who:'B', ar:'اسمي احمد.', translit:'ismi ahmed', en:'My name is Ahmed.'},
@@ -12576,7 +12576,7 @@ const LESSON_LIBRARY = {
       {qAr:'وش السوال الثاني الطبيعي بعد الاسم؟', qEn:'What is the natural second question after the name?', options:['من وين انت؟ / Where are you from?','كم عمرك؟ / How old are you?','كم راتبك؟ / What is your salary?'], correct:0},
       {qAr:'وش تقول للضيف الجديد؟', qEn:'What do you say to a newcomer?', options:['نورتنا / You honored us','مع السلامة / Goodbye','لا تشكرني / Do not thank me'], correct:0},
     ],
-    summary:'You learned the real Saudi getting-to-know-you flow and why the fast questions are friendly, not rude.',
+    summary:'You learned the real getting-to-know-you flow and why the fast questions are friendly, not rude.',
     takeaway:'الاسم، من وين، وش تشتغل. هذا ترتيب التعارف عندنا.',
     situation:{
       hear:[{ar:'نورتنا، من وين انت؟', translit:'nawwartna, min wen enta?', en:'Welcome, where are you from?'},{ar:'وش تشتغل؟', translit:'wesh tashtaghel?', en:'What do you do?'}],
@@ -12604,7 +12604,7 @@ const LESSON_LIBRARY = {
       {qAr:'كيف تطلب من السواق ياخذك للمطار؟', qEn:'How do you ask the driver to take you to the airport?', options:['ودني المطار / Take me to the airport','المطار وين؟ / Where is the airport?','انا طيار / I am a pilot'], correct:0},
       {qAr:'وش تسال قبل ما تطلع؟', qEn:'What do you ask before starting?', options:['بكم؟ / How much?','وين السوق؟ / Where is the market?','كم الساعه؟ / What time is it?'], correct:0},
     ],
-    summary:'You learned the short taxi phrases Saudis use daily: destination, stop here, and the price question.',
+    summary:'You learned the short taxi phrases People use daily: destination, stop here, and the price question.',
     takeaway:'ودني + المكان، وبكم قبل ما يتحرك.',
     situation:{
       hear:[{ar:'وين تبي؟', translit:'wen tebi?', en:'Where do you want to go?'},{ar:'بكم؟', translit:'bikam?', en:'How much?'}],
@@ -12644,12 +12644,12 @@ const LESSON_LIBRARY = {
     title:'Talking About Family', ar:'سوالف العايلة', translit:'sawalif aleela', dir:'ar',
     duration:'8 min', difficulty:'Beginner',
     vocab:[
-      {en:'My family', ar:'اهلي', translit:'ahli', tip:'In Saudi talk, "ahl" covers the whole family.'},
+      {en:'My family', ar:'اهلي', translit:'ahli', tip:'In Arabic, "ahl" covers the whole family.'},
       {en:'I have a brother', ar:'عندي اخ', translit:'indi akh', tip:'Then add the number: indi akh wahed.'},
       {en:'I have a sister', ar:'عندي اخت', translit:'indi ukht', tip:'Same pattern for a sister.'},
       {en:'Married', ar:'متزوج', translit:'mitzawwij', tip:'For a man. A woman says mitzawwija.'},
     ],
-    grammar:{title:'Possession with indi', rule:'Saudis say "indi" (I have) for family and possessions, far more natural than the MSA "ladayya".', saudi:'عندي = عندي اخ، عندي سياره. ما حد يقول لدي بالشارع.', wrong:'Use formal MSA "ladayya akhun" for I have a brother.', right:'"Indi akh wahed wa ukhtayn." (I have one brother and two sisters.)', mistakes:['Using MSA possession words in daily talk.','Forgetting gender: mitzawwij for him, mitzawwija for her.']},
+    grammar:{title:'Possession with indi', rule:'Arabic speakers say "indi" (I have) for family and possessions, far more natural than the MSA "ladayya".', saudi:'عندي = عندي اخ، عندي سياره. ما حد يقول لدي بالشارع.', wrong:'Use formal MSA "ladayya akhun" for I have a brother.', right:'"Indi akh wahed wa ukhtayn." (I have one brother and two sisters.)', mistakes:['Using MSA possession words in daily talk.','Forgetting gender: mitzawwij for him, mitzawwija for her.']},
     conversation:[
       {who:'A', ar:'عندك اخوان؟', translit:'indak ikhwan?', en:'Do you have brothers?'},
       {who:'B', ar:'ايه، عندي اخوين وثلاث اخوات.', translit:'ay, indi akhween wa thalath akhawat', en:'Yes, I have two brothers and three sisters.'},
@@ -12673,7 +12673,7 @@ const LESSON_LIBRARY = {
     duration:'7 min', difficulty:'Beginner',
     vocab:[
       {en:'What are you doing today?', ar:'وش تسوي اليوم؟', translit:'wesh taswi alyoum?', en:'The standard plans question.'},
-      {en:'Let us go out', ar:'نطلع', translit:'nitla', tip:'The universal "let us go out" in Saudi talk.'},
+      {en:'Let us go out', ar:'نطلع', translit:'nitla', tip:'The universal "let us go out" in Arabic.'},
       {en:'Where to?', ar:'وين؟', translit:'wen?', tip:'Short and natural, no verb needed.'},
       {en:'Agreed / deal', ar:'ماشي / تم', translit:'maashi / tam', tip:'Mashi is casual, tam is confirmed.'},
     ],
@@ -12688,7 +12688,7 @@ const LESSON_LIBRARY = {
       {qAr:'كيف تقترح الخروج؟', qEn:'How do you suggest going out?', options:['نطلع؟ / Shall we go out?','انا خارج / I am out','وين انت؟ / Where are you?'], correct:0},
       {qAr:'وش تقول لما توافق على الخطه؟', qEn:'What do you say when agreeing?', options:['ماشي / OK deal','لا / No','وين؟ / Where?'], correct:0},
     ],
-    summary:'You learned how Saudis make casual plans: nitla + place, and the two ways to confirm.',
+    summary:'You learned how People make casual plans: nitla + place, and the two ways to confirm.',
     takeaway:'نطلع؟ + ماشي = خطه تنجز باللهجه.',
     situation:{
       hear:[{ar:'وش تسوي اليوم؟', translit:'wesh taswi alyoum?', en:'What are you doing today?'},{ar:'نطلع؟', translit:'nitla?', en:'Shall we go out?'}],
@@ -12705,7 +12705,7 @@ const LESSON_LIBRARY = {
       {en:'The bill please', ar:'الحساب لو سمحت', translit:'alhisab law samaht', tip:'Standard end-of-meal request.'},
       {en:'Delicious', ar:'لذيذ', translit:'ladheedh', tip:'Say it to the staff, they appreciate it.'},
     ],
-    grammar:{title:'Ordering with abi', rule:'Saudis order with "abi" (I want) + the item. No need for polite request forms, it is completely normal and friendly.', saudi:'تطلب: ابي + الطلب. ما يحتاج صيغ رسميه.', wrong:'Use a heavy formal phrase to ask for the menu.', right:'"Abi atlub kabsa, law samaht." (I want to order kabsa, please.)', mistakes:['Saying "awaddo an atalab" (formal), nobody talks like that in a restaurant.','Not asking "wesh indakum" when you want suggestions.']},
+    grammar:{title:'Ordering with abi', rule:'People order with "abi" (I want) + the item. No need for polite request forms, it is completely normal and friendly.', saudi:'تطلب: ابي + الطلب. ما يحتاج صيغ رسميه.', wrong:'Use a heavy formal phrase to ask for the menu.', right:'"Abi atlub kabsa, law samaht." (I want to order kabsa, please.)', mistakes:['Saying "awaddo an atalab" (formal), nobody talks like that in a restaurant.','Not asking "wesh indakum" when you want suggestions.']},
     conversation:[
       {who:'Waiter', ar:'تفضل، وش تبي تطلب؟', translit:'tafaddal, wesh tebi tatlab?', en:'Welcome, what would you like to order?'},
       {who:'You', ar:'ابي كبسة دجاج.', translit:'abi kabsa dajaj', en:'I want chicken kabsa.'},
@@ -12733,7 +12733,7 @@ const LESSON_LIBRARY = {
       {en:'Slowly please', ar:'ببط لو سمحت', translit:'bibut law samaht', tip:'Ask for a slower pace.'},
       {en:'What does it mean?', ar:'وش معناها؟', translit:'wesh maanaha?', tip:'Ask the meaning of a word.'},
     ],
-    grammar:{title:'Asking for help naturally', rule:'There is no shame in saying "ma fahemt". Saudis say it constantly and people happily repeat or explain.', saudi:'ما فهمت تقال بكل طبيعية، والناس تعيد لك بدون مشكله.', wrong:'Nod and pretend you understood.', right:'"Mumkin taeed, bibut law samaht?" (Can you repeat, slowly please?)', mistakes:['Pretending to understand and then getting lost later.','Using heavy formal Arabic to ask a simple thing.']},
+    grammar:{title:'Asking for help naturally', rule:'There is no shame in saying "ma fahemt". Arabic speakers say it constantly and people happily repeat or explain.', saudi:'ما فهمت تقال بكل طبيعية، والناس تعيد لك بدون مشكله.', wrong:'Nod and pretend you understood.', right:'"Mumkin taeed, bibut law samaht?" (Can you repeat, slowly please?)', mistakes:['Pretending to understand and then getting lost later.','Using heavy formal Arabic to ask a simple thing.']},
     conversation:[
       {who:'A', ar:'المعرض يبدا الساعه خمسة.', translit:'almaraid yabda alsaa khamsa', en:'The exhibition starts at five.'},
       {who:'B', ar:'ما فهمت، ممكن تعيد ببطو؟', translit:'ma fahemt, mumkin taeed bibut?', en:'I did not understand, can you repeat slowly?'},
@@ -12753,15 +12753,15 @@ const LESSON_LIBRARY = {
     },
   },
   'sa-coffee-order': {
-    title:'Ordering Coffee the Saudi Way', ar:'طلب قهوه سعودي', translit:'talab gahwa saoudi', dir:'ar',
+    title:'Ordering Coffee the  Way', ar:'طلب قهوه', translit:'talab gahwa saoudi', dir:'ar',
     duration:'7 min', difficulty:'Beginner',
     vocab:[
-      {en:'Saudi coffee', ar:'قهوه', translit:'gahwa', tip:'In Saudi, gahwa usually means the traditional lightly roasted coffee with dates.'},
-      {en:'With cardamom', ar:'بالهيل', translit:'bilhail', tip:'The classic Saudi coffee flavor.'},
+      {en:'Arabic coffee', ar:'قهوه', translit:'gahwa', tip:'In , gahwa usually means the traditional lightly roasted coffee with dates.'},
+      {en:'With cardamom', ar:'بالهيل', translit:'bilhail', tip:'The classic Arabic coffee flavor.'},
       {en:'Dates', ar:'تمر', translit:'tamr', tip:'Served with gahwa, the traditional pairing.'},
       {en:'More, please', ar:'زياده لو سمحت', translit:'ziyada law samaht', tip:'The host will pour more gahwa until you tilt the cup.'},
     ],
-    grammar:{title:'The gahwa ritual', rule:'With Saudi coffee, you tilt your cup side to side when you have had enough. Until then, more is poured. Learn the gesture, it is the real communication.', saudi:'القهوه السعوديه: تاخذ، وتحرك الفنجال لما تكفي، والا يزيدون لك.', wrong:'Say "no" loudly when offered more gahwa.', right:'Tilt the cup gently, or say "ziyada" (more) if you want another round.', mistakes:['Placing the cup down to signal stop, the tilt is the signal.','Refusing the first cup, it is the most basic hospitality.']},
+    grammar:{title:'The gahwa ritual', rule:'With Arabic coffee, you tilt your cup side to side when you have had enough. Until then, more is poured. Learn the gesture, it is the real communication.', saudi:'القهوه العربيه: تاخذ، وتحرك الفنجال لما تكفي، والا يزيدون لك.', wrong:'Say "no" loudly when offered more gahwa.', right:'Tilt the cup gently, or say "ziyada" (more) if you want another round.', mistakes:['Placing the cup down to signal stop, the tilt is the signal.','Refusing the first cup, it is the most basic hospitality.']},
     conversation:[
       {who:'Host', ar:'تفضل، قهوه.', translit:'tafaddal, gahwa', en:'Here you go, coffee.'},
       {who:'You', ar:'يعطيك العافية.', translit:'yatik alafya', en:'Thank you.'},
@@ -12770,9 +12770,9 @@ const LESSON_LIBRARY = {
     ],
     quiz:[
       {qAr:'وش تسوي لما تبي توقف القهوه؟', qEn:'What signals you have had enough gahwa?', options:['تحرك الفنجال يمين ويسار / Tilt the cup side to side','تصرخ / Shout','تقوم / Stand up'], correct:0},
-      {qAr:'وش يقدم مع القهوه السعوديه؟', qEn:'What is served with Saudi coffee?', options:['تمر / Dates','كيك / Cake','بطاطس / Chips'], correct:0},
+      {qAr:'وش يقدم مع القهوه العربيه؟', qEn:'What is served with Arabic coffee?', options:['تمر / Dates','كيك / Cake','بطاطس / Chips'], correct:0},
     ],
-    summary:'You learned the coffee ritual: the words and the cup gesture that Saudis use every day.',
+    summary:'You learned the coffee ritual: the words and the cup gesture that People use every day.',
     takeaway:'حرك الفنجال = وقفت، وزياده لو سمحت = عطني ثانية.',
     situation:{
       hear:[{ar:'تفضل القهوه.', translit:'tafaddal algahwa', en:'Here is the coffee.'},{ar:'زياده؟', translit:'ziyada?', en:'More?'}],
@@ -12817,7 +12817,7 @@ const LESSON_LIBRARY = {
       {en:'It is crowded today', ar:'الزحمة اليوم', translit:'alzahma alyoum', tip:'The universal coffee shop comment.'},
       {en:'Enjoy!', ar:'بالعافية', translit:'bialafya', tip:'Said when someone eats or drinks, like bon appetit.'},
     ],
-    grammar:{title:'The coffee queue small talk', rule:'Standing in line at a Saudi coffee shop is social. Comment on the crowd, ask for recommendations, and keep it light.', saudi:'وقت الزحمة بالكوفي تسولف: الزحمة، تنصحني؟، بالعافية.', wrong:'Stand in silence and avoid every glance.', right:'"Alzahma alyoum! Wesh tansahni?" (It is crowded today! What do you recommend?)', mistakes:['Treating a stranger as rude for chatting, it is normal here.','Forgetting bialafya when someone gets their drink.']},
+    grammar:{title:'The coffee queue small talk', rule:'Standing in line at a Arabic coffee shop is social. Comment on the crowd, ask for recommendations, and keep it light.', saudi:'وقت الزحمة بالكوفي تسولف: الزحمة، تنصحني؟، بالعافية.', wrong:'Stand in silence and avoid every glance.', right:'"Alzahma alyoum! Wesh tansahni?" (It is crowded today! What do you recommend?)', mistakes:['Treating a stranger as rude for chatting, it is normal here.','Forgetting bialafya when someone gets their drink.']},
     conversation:[
       {who:'A', ar:'الزحمة اليوم والله.', translit:'alzahma alyoum wallah', en:'It is really crowded today.'},
       {who:'B', ar:'ايه، بعد العصر دايم كذا.', translit:'ay, baad alasr dayim katha', en:'Yeah, after Asr it is always like this.'},
@@ -12828,7 +12828,7 @@ const LESSON_LIBRARY = {
       {qAr:'وش تقول للي ياخذ مشروبه؟', qEn:'What do you say to someone getting their drink?', options:['بالعافية / Enjoy','وين؟ / Where?','لا / No'], correct:0},
       {qAr:'كيف تسال عن اقتراح؟', qEn:'How do you ask for a recommendation?', options:['وش تنصحني؟ / What do you recommend?','بكم؟ / How much?','وين؟ / Where?'], correct:0},
     ],
-    summary:'You learned the light social talk that turns a coffee run into a real Saudi interaction.',
+    summary:'You learned the light social talk that turns a coffee run into a real interaction.',
     takeaway:'الزحمة + وش تنصحني + بالعافية = سوالف كوفي كامله.',
     situation:{
       hear:[{ar:'تجي هنا دايم؟', translit:'teji huna dayim?', en:'Do you come here often?'},{ar:'جرب ذا، مره حلو.', translit:'jarb dha, marra hilo', en:'Try this one, it is really good.'}],
@@ -12896,12 +12896,12 @@ const LESSON_LIBRARY = {
     title:'Inviting a Friend', ar:'دعوة صديق', translit:'dawa sadeeq', dir:'ar',
     duration:'7 min', difficulty:'Intermediate',
     vocab:[
-      {en:'Come to my house', ar:'تعال عندنا', translit:'taal indana', tip:'The warm Saudi invitation.'},
+      {en:'Come to my house', ar:'تعال عندنا', translit:'taal indana', tip:'The warm invitation.'},
       {en:'There is dinner', ar:'فيه عشا', translit:'fee asha', tip:'Announce the food, the best reason.'},
       {en:'Do you want to come?', ar:'تبي تجي؟', translit:'tebi tji?', tip:'Direct and friendly.'},
       {en:'I will come God willing', ar:'بجي ان شا الله', translit:'bji inshallah', tip:'The standard accepting reply.'},
     ],
-    grammar:{title:'The invitation pattern', rule:'Saudi invitations are direct: come to our place, there is food. The reply is bji inshallah, with time and place settled after.', saudi:'تدعو: تعال عندنا، فيه عشا. والرد: بجي ان شا الله.', wrong:'Invite with a written formal letter.', right:'"Taal indana, fee asha." (Come to our place, there is dinner.)', mistakes:['Hesitating to accept, bji inshallah is all you need.','Asking what is for dinner before accepting, just come.']},
+    grammar:{title:'The invitation pattern', rule:'invitations are direct: come to our place, there is food. The reply is bji inshallah, with time and place settled after.', saudi:'تدعو: تعال عندنا، فيه عشا. والرد: بجي ان شا الله.', wrong:'Invite with a written formal letter.', right:'"Taal indana, fee asha." (Come to our place, there is dinner.)', mistakes:['Hesitating to accept, bji inshallah is all you need.','Asking what is for dinner before accepting, just come.']},
     conversation:[
       {who:'A', ar:'تبي تجي عندنا اليوم؟', translit:'tebi tji indana alyoum?', en:'Do you want to come over today?'},
       {who:'B', ar:'فيه شيو؟', translit:'fee shay?', en:'Is there something?'},
@@ -12912,7 +12912,7 @@ const LESSON_LIBRARY = {
       {qAr:'كيف تدعو صديقك لعشاو؟', qEn:'How do you invite a friend to dinner?', options:['تعال عندنا فيه عشا / Come over, there is dinner','وين اكلت؟ / Where did you eat?','انا مشغول / I am busy'], correct:0},
       {qAr:'وش الرد الطبيعي على الدعوة؟', qEn:'What is the natural reply to an invitation?', options:['بجي ان شا الله / I will come God willing','مستحيل / Impossible','لا اسالك / Do not ask me'], correct:0},
     ],
-    summary:'You learned the direct, warm Saudi invitation and the easy way to accept.',
+    summary:'You learned the direct, warm invitation and the easy way to accept.',
     takeaway:'تعال عندنا + فيه عشا + بجي ان شا الله = دعوة كامله.',
     situation:{
       hear:[{ar:'تبي تتعشى معنا؟', translit:'tebi ttaasha maana?', en:'Do you want to have dinner with us?'},{ar:'تعال بكرة.', translit:'taal bukra', en:'Come tomorrow.'}],
@@ -12925,11 +12925,11 @@ const LESSON_LIBRARY = {
     duration:'7 min', difficulty:'Intermediate',
     vocab:[
       {en:'In my opinion', ar:'بصراحه', translit:'bisaraaha', tip:'The natural way to open your opinion.'},
-      {en:'I think', ar:'اشوف / اظن', translit:'ashoof / athun', tip:'Ashoof is very Saudi for I think.'},
+      {en:'I think', ar:'اشوف / اظن', translit:'ashoof / athun', tip:'Ashoof is very  for I think.'},
       {en:'Do you agree?', ar:'انت معي؟', translit:'enta maayi?', tip:'Check agreement directly.'},
       {en:'I agree', ar:'انا معك', translit:'ana maak', tip:'The direct agreement.'},
     ],
-    grammar:{title:'Opinions with ashoof', rule:'Saudis say "ashoof" (I see) to mean I think. It is shorter and more natural than the formal "fi raayi".', saudi:'اشوف = اظن. ما حد يقول برايي بالعامية.', wrong:'Say "fi raayi alshakhsi" (in my personal opinion), too heavy.', right:'"Bisaraaha, ashoof hadha alkhiyar ahsan." (Honestly, I think this option is better.)', mistakes:['Over-hedging an opinion, Saudis state it directly.','Forgetting to ask enta maayi after stating yours.']},
+    grammar:{title:'Opinions with ashoof', rule:'Arabic speakers say "ashoof" (I see) to mean I think. It is shorter and more natural than the formal "fi raayi".', saudi:'اشوف = اظن. ما حد يقول برايي بالعامية.', wrong:'Say "fi raayi alshakhsi" (in my personal opinion), too heavy.', right:'"Bisaraaha, ashoof hadha alkhiyar ahsan." (Honestly, I think this option is better.)', mistakes:['Over-hedging an opinion, Arabic speakers state it directly.','Forgetting to ask enta maayi after stating yours.']},
     conversation:[
       {who:'A', ar:'وش رايك بالمكان؟', translit:'wesh raayak bialmakan?', en:'What do you think of the place?'},
       {who:'B', ar:'بصراحه، مره حلو.', translit:'bisaraaha, marra hilo', en:'Honestly, really nice.'},
@@ -12940,7 +12940,7 @@ const LESSON_LIBRARY = {
       {qAr:'كيف تبدا رايك باللهجه؟', qEn:'How do you open your opinion naturally?', options:['بصراحه / Honestly','بحسب رايي المتواضع / In my humble opinion','وفقا للمصادر / According to sources'], correct:0},
       {qAr:'كيف تقول "انا معك"؟', qEn:'How do you say "I agree"?', options:['انا معك / Ana maak','انا ضدك / Against you','لا اعرف / I do not know'], correct:0},
     ],
-    summary:'You learned the direct Saudi opinion pattern and the follow-up agreement check.',
+    summary:'You learned the direct opinion pattern and the follow-up agreement check.',
     takeaway:'بصراحه اشوف + انت معي؟ = راي كامل.',
     situation:{
       hear:[{ar:'وش رايك؟', translit:'wesh raayak?', en:'What is your opinion?'},{ar:'انت معي ولا ضد؟', translit:'enta maayi walla dhidd?', en:'Are you with me or against?'}],
@@ -12949,7 +12949,7 @@ const LESSON_LIBRARY = {
     },
   },
   'sa-apologizing': {
-    title:'Apologizing the Saudi Way', ar:'الاعتذار', translit:'aleitidhar', dir:'ar',
+    title:'Apologizing the  Way', ar:'الاعتذار', translit:'aleitidhar', dir:'ar',
     duration:'6 min', difficulty:'Intermediate',
     vocab:[
       {en:'I am sorry', ar:'اسف', translit:'aasif', tip:'For a man. A woman says aasifa.'},
@@ -12957,7 +12957,7 @@ const LESSON_LIBRARY = {
       {en:'My fault', ar:'الغلطة مني', translit:'alghalta minni', tip:'Take responsibility directly.'},
       {en:'It is fine / no problem', ar:'ما عليك', translit:'ma aleik', tip:'The standard reply that forgives.'},
     ],
-    grammar:{title:'The apology exchange', rule:'Saudis apologize fast and directly: aasif or samaahni, explain briefly, and the reply is ma aleik. No long speeches.', saudi:'الاعتذار سريع: اسف + سبب قصير، والرد: ما عليك.', wrong:'Over-explain the apology for five minutes.', right:'"Aasif, alghalta minni. Ma aleik?" (Sorry, my fault. Are we fine?)', mistakes:['Saying the formal "ataassaf jiddan" everywhere, too stiff.','Not accepting the apology reply ma aleik and moving on.']},
+    grammar:{title:'The apology exchange', rule:'People apologize fast and directly: aasif or samaahni, explain briefly, and the reply is ma aleik. No long speeches.', saudi:'الاعتذار سريع: اسف + سبب قصير، والرد: ما عليك.', wrong:'Over-explain the apology for five minutes.', right:'"Aasif, alghalta minni. Ma aleik?" (Sorry, my fault. Are we fine?)', mistakes:['Saying the formal "ataassaf jiddan" everywhere, too stiff.','Not accepting the apology reply ma aleik and moving on.']},
     conversation:[
       {who:'A', ar:'اسف على التاخير.', translit:'aasif ala altaakheer', en:'Sorry for the delay.'},
       {who:'B', ar:'ما عليك، الوضع تمام.', translit:'ma aleik, alwadh taman', en:'It is fine, everything is OK.'},
@@ -12968,7 +12968,7 @@ const LESSON_LIBRARY = {
       {qAr:'وش الرد الطبيعي على الاعتذار؟', qEn:'What is the natural reply to an apology?', options:['ما عليك / It is fine','وين؟ / Where?','شكرا / Thanks'], correct:0},
       {qAr:'كيف تتحمل المسوولية؟', qEn:'How do you take responsibility?', options:['الغلطة مني / My fault','مو انا / Not me','الظروف / Circumstances'], correct:0},
     ],
-    summary:'You learned the fast Saudi apology: aasif, the reason, and the forgiving reply.',
+    summary:'You learned the fast apology: aasif, the reason, and the forgiving reply.',
     takeaway:'اسف + سبب قصير، والرد دايم: ما عليك.',
     situation:{
       hear:[{ar:'اسف والله.', translit:'aasif wallah', en:'I am really sorry.'},{ar:'ما عليك.', translit:'ma aleik', en:'It is fine.'}],
@@ -12985,7 +12985,7 @@ const LESSON_LIBRARY = {
       {en:'Another time', ar:'مره ثانية', translit:'marra thanya', tip:'Softens the refusal.'},
       {en:'God willing later', ar:'ان شا الله مره جاية', translit:'inshallah marra jayya', tip:'The gentlest way to defer.'},
     ],
-    grammar:{title:'The soft refusal', rule:'Saudis rarely say a hard no. Use indi irtibaat (I have commitments) plus inshallah marra jayya (maybe next time).', saudi:'الرفق بالرفض: عندي ارتباط + ان شا الله مره جاية.', wrong:'Say a blunt no with no softening.', right:'"Ma agdar alyoum, indi irtibaat. Marra thanya inshallah." (I cannot today, I have commitments. Another time God willing.)', mistakes:['Saying "la" alone, it sounds harsh.','Over-promising to appear nice, a soft no is respected.']},
+    grammar:{title:'The soft refusal', rule:'Arabic speakers rarely say a hard no. Use indi irtibaat (I have commitments) plus inshallah marra jayya (maybe next time).', saudi:'الرفق بالرفض: عندي ارتباط + ان شا الله مره جاية.', wrong:'Say a blunt no with no softening.', right:'"Ma agdar alyoum, indi irtibaat. Marra thanya inshallah." (I cannot today, I have commitments. Another time God willing.)', mistakes:['Saying "la" alone, it sounds harsh.','Over-promising to appear nice, a soft no is respected.']},
     conversation:[
       {who:'A', ar:'تعال معنا اليوم.', translit:'taal maana alyoum', en:'Come with us today.'},
       {who:'B', ar:'ما اقدر، عندي ارتباط.', translit:'ma agdar, indi irtibaat', en:'I cannot, I have commitments.'},
@@ -12996,7 +12996,7 @@ const LESSON_LIBRARY = {
       {qAr:'كيف ترفض بدون ما تجرح؟', qEn:'How do you refuse without hurting?', options:['عندي ارتباط / I have commitments','لا وخلاص / No and done','مستحيل / Impossible'], correct:0},
       {qAr:'وش يخفف الرفض؟', qEn:'What softens a refusal?', options:['ان شا الله مره جاية / Maybe next time','ما راح اطلع ابدا / Never going out','لا تسالني / Do not ask'], correct:0},
     ],
-    summary:'You learned the Saudi soft refusal: honest, polite, and never blunt.',
+    summary:'You learned the soft refusal: honest, polite, and never blunt.',
     takeaway:'ما اقدر + عندي ارتباط + مره ثانية = رفض مودب.',
     situation:{
       hear:[{ar:'تعال معنا.', translit:'taal maana', en:'Come with us.'},{ar:'وش رايك؟', translit:'wesh raayak?', en:'What do you think?'}],
@@ -13013,7 +13013,7 @@ const LESSON_LIBRARY = {
       {en:'I came back', ar:'رجعت', translit:'rjaat', tip:'Rjaat is I came back.'},
       {en:'I finished', ar:'خلصت', translit:'khalast', tip:'Khalast is I finished, used constantly.'},
     ],
-    grammar:{title:'The day in three verbs', rule:'A Saudi day is told with saheet, ruht, khalast. These three cover waking, going, and finishing, no complex tenses needed.', saudi:'يومك يحكى بثلاث: صحيت، رحت، خلصت.', wrong:'Conjugate a full MSA past tense narrative.', right:'"Saheet, ruht alshughl, khalast alsaa khamsa." (I woke up, went to work, finished at five.)', mistakes:['Using formal past tense endings in everyday storytelling.','Telling the whole day in one breath, let them ask.']},
+    grammar:{title:'The day in three verbs', rule:'A the day is told with saheet, ruht, khalast. These three cover waking, going, and finishing, no complex tenses needed.', saudi:'يومك يحكى بثلاث: صحيت، رحت، خلصت.', wrong:'Conjugate a full MSA past tense narrative.', right:'"Saheet, ruht alshughl, khalast alsaa khamsa." (I woke up, went to work, finished at five.)', mistakes:['Using formal past tense endings in everyday storytelling.','Telling the whole day in one breath, let them ask.']},
     conversation:[
       {who:'A', ar:'وش سويت اليوم؟', translit:'wesh sawwayt alyoum?', en:'What did you do today?'},
       {who:'B', ar:'صحيت بدري، ورحت الدوام.', translit:'saheet badri, wa ruht aldawam', en:'I woke up early and went to work.'},
@@ -13024,7 +13024,7 @@ const LESSON_LIBRARY = {
       {qAr:'كيف تقول "استيقظت" بالعامية؟', qEn:'How do you say "I woke up" in dialect?', options:['صحيت / Saheet','استيقظت / Formal','قمت ولا شي / Nothing'], correct:0},
       {qAr:'وش الفعل اللي يغطي "رحت"؟', qEn:'Which verb covers "I went"?', options:['رحت / Ruht','اروح بكرة / Future','ذاهب / Going'], correct:0},
     ],
-    summary:'You learned the three verbs that tell any Saudi day and how to keep the story natural.',
+    summary:'You learned the three verbs that tell any the day and how to keep the story natural.',
     takeaway:'صحيت + رحت + خلصت = يوم كامل بثلاث كلمات.',
     situation:{
       hear:[{ar:'وش سويت اليوم؟', translit:'wesh sawwayt alyoum?', en:'What did you do today?'},{ar:'وين رحت؟', translit:'wen ruht?', en:'Where did you go?'}],
@@ -13041,7 +13041,7 @@ const LESSON_LIBRARY = {
       {en:'Welcome back', ar:'حياك الله', translit:'hayak allah', tip:'Said when someone returns or arrives.'},
       {en:'Good evening', ar:'مسا الخير', translit:'masaa alkhair', tip:'The evening greeting.'},
     ],
-    grammar:{title:'The reply pattern', rule:'Every Saudi greeting has its fixed reply: sabah alkhair gets sabah annoor, masaa alkhair gets masaa annoor.', saudi:'صباح الخير ردها صباح النور، ومسا الخير ردها مسا النور.', wrong:'Reply to sabah alkhair with just "hi".', right:'"Sabah annoor." or "Hayak allah."', mistakes:['Mixing up the reply, the pattern is fixed and expected.','Skipping the greeting for emails, always open with it.']},
+    grammar:{title:'The reply pattern', rule:'Every greeting has its fixed reply: sabah alkhair gets sabah annoor, masaa alkhair gets masaa annoor.', saudi:'صباح الخير ردها صباح النور، ومسا الخير ردها مسا النور.', wrong:'Reply to sabah alkhair with just "hi".', right:'"Sabah annoor." or "Hayak allah."', mistakes:['Mixing up the reply, the pattern is fixed and expected.','Skipping the greeting for emails, always open with it.']},
     conversation:[
       {who:'A', ar:'صباح الخير.', translit:'sabah alkhair', en:'Good morning.'},
       {who:'B', ar:'صباح النور، حياك الله.', translit:'sabah annoor, hayak allah', en:'Good morning, welcome.'},
@@ -13069,7 +13069,7 @@ const LESSON_LIBRARY = {
       {en:'I agree with you', ar:'انا معك', translit:'ana maak', tip:'Simple agreement in meetings.'},
       {en:'Let me explain', ar:'خلني اوضح', translit:'khallini owadhah', tip:'Take the floor politely.'},
     ],
-    grammar:{title:'Meeting phrases', rule:'Saudi meetings use the same short dialect phrases as daily talk: nibda, wesh raayak, ana maak. No need to switch to formal Arabic.', saudi:'الاجتماعات بالعامية: نبدا، وش رايك، انا معك.', wrong:'Switch to heavy formal Arabic in every meeting.', right:'"Nibda. Wesh raayak ya Khalid?" (Let us start. What is your view, Khalid?)', mistakes:['Sitting silent, raayak questions expect a real answer.','Using formal Arabic that sounds like a TV broadcast.']},
+    grammar:{title:'Meeting phrases', rule:'meetings use the same short dialect phrases as daily talk: nibda, wesh raayak, ana maak. No need to switch to formal Arabic.', saudi:'الاجتماعات بالعامية: نبدا، وش رايك، انا معك.', wrong:'Switch to heavy formal Arabic in every meeting.', right:'"Nibda. Wesh raayak ya Khalid?" (Let us start. What is your view, Khalid?)', mistakes:['Sitting silent, raayak questions expect a real answer.','Using formal Arabic that sounds like a TV broadcast.']},
     conversation:[
       {who:'Manager', ar:'يلا نبدا، وش على الاجندة؟', translit:'yalla nibda, wesh ala alajenda?', en:'Let us start, what is on the agenda?'},
       {who:'A', ar:'عندنا عرض التسعير.', translit:'indana ard altaaseer', en:'We have the pricing proposal.'},
@@ -13080,7 +13080,7 @@ const LESSON_LIBRARY = {
       {qAr:'كيف تفتح الاجتماع؟', qEn:'How do you open the meeting?', options:['يلا نبدا / Let us start','وين الغداو؟ / Where is lunch?','انا متعب / I am tired'], correct:0},
       {qAr:'كيف تاخذ راي زميلك؟', qEn:'How do you ask a colleague for their view?', options:['وش رايك؟ / What is your view?','سو لي قهوه / Make me coffee','اسكت / Be quiet'], correct:0},
     ],
-    summary:'You learned the meeting phrases that keep you participating in any Saudi office.',
+    summary:'You learned the meeting phrases that keep you participating in any office.',
     takeaway:'نبدا، وش رايك، انا معك = حضور كامل بالاجتماع.',
     situation:{
       hear:[{ar:'نبدا الاجتماع.', translit:'nibda alijtimaa', en:'Let us start the meeting.'},{ar:'عندك اضافة؟', translit:'indak idafa?', en:'Do you have anything to add?'}],
@@ -13125,7 +13125,7 @@ const LESSON_LIBRARY = {
       {en:'Is it urgent?', ar:'مستعجل؟', translit:'mustaajil?', tip:'Check the priority.'},
       {en:'I need more time', ar:'ابي وقت اكثر', translit:'abi waqt akthar', tip:'The honest extension ask.'},
     ],
-    grammar:{title:'The deadline ask', rule:'Deadline talk in Saudi offices is direct: mata akher mawid, mustaajil, and the commitment bakhallisah.', saudi:'اساله المواعيد: متى اخر موعد؟ مستعجل؟ باخلصه.', wrong:'Avoid asking and miss the deadline silently.', right:'"Mata akher mawid? Mustaajil aw mumkin baad?‏" (When is the deadline? Urgent or can it wait?)', mistakes:['Saying yes to everything then missing it, better to ask for time.','Using formal "almawid alnihai" everywhere, akher mawid is natural.']},
+    grammar:{title:'The deadline ask', rule:'Deadline talk in offices is direct: mata akher mawid, mustaajil, and the commitment bakhallisah.', saudi:'اساله المواعيد: متى اخر موعد؟ مستعجل؟ باخلصه.', wrong:'Avoid asking and miss the deadline silently.', right:'"Mata akher mawid? Mustaajil aw mumkin baad?‏" (When is the deadline? Urgent or can it wait?)', mistakes:['Saying yes to everything then missing it, better to ask for time.','Using formal "almawid alnihai" everywhere, akher mawid is natural.']},
     conversation:[
       {who:'Manager', ar:'التقرير متى يخلص؟', translit:'altaqreer mata ykhalas?', en:'When will the report be done?'},
       {who:'You', ar:'باخلصه بكرة ان شا الله.', translit:'bakhallisah bukra inshallah', en:'I will finish it tomorrow God willing.'},
@@ -13153,7 +13153,7 @@ const LESSON_LIBRARY = {
       {en:'In my opinion', ar:'من وجهة نظري', translit:'min wijhat nathari', tip:'Softens any criticism.'},
       {en:'Try again', ar:'جرب مره ثانية', translit:'jarb marra thanya', tip:'Encourage a redo.'},
     ],
-    grammar:{title:'Giving feedback kindly', rule:'Saudi feedback starts with praise, then the improvement, then encouragement. Never open with criticism.', saudi:'الملاحظه تبدا بمدح، ثم التحسين، ثم تشجيع.', wrong:'Open the feedback with the problem.', right:'"Shughl mumtaz, bas yahtaaj tahseen huna." (Great work, but it needs improvement here.)', mistakes:['Criticizing publicly, feedback is given privately.','Opening with a negative, praise comes first.']},
+    grammar:{title:'Giving feedback kindly', rule:'feedback starts with praise, then the improvement, then encouragement. Never open with criticism.', saudi:'الملاحظه تبدا بمدح، ثم التحسين، ثم تشجيع.', wrong:'Open the feedback with the problem.', right:'"Shughl mumtaz, bas yahtaaj tahseen huna." (Great work, but it needs improvement here.)', mistakes:['Criticizing publicly, feedback is given privately.','Opening with a negative, praise comes first.']},
     conversation:[
       {who:'A', ar:'شغلك ممتاز والله.', translit:'shughlak mumtaz wallah', en:'Your work is really excellent.'},
       {who:'B', ar:'تسلم، الله يوفقك.', translit:'taslam, allah ywaffaqak', en:'Thanks, may God grant you success.'},
@@ -13164,7 +13164,7 @@ const LESSON_LIBRARY = {
       {qAr:'كيف تبدا الملاحظه؟', qEn:'How do you open feedback?', options:['بمدح الشغل / With praise','بالمشكله / With the problem','بالصمت / With silence'], correct:0},
       {qAr:'كيف تقول يحتاج تحسين؟', qEn:'How do you say it needs improvement?', options:['يحتاج تحسين / Needs improvement','هذا فاشل / This failed','ما ينفع ابدا / Never works'], correct:0},
     ],
-    summary:'You learned the praise-first feedback pattern that keeps Saudi colleagues engaged.',
+    summary:'You learned the praise-first feedback pattern that keeps colleagues engaged.',
     takeaway:'مدح + تحسين + تشجيع = ملاحظه مهنيه.',
     situation:{
       hear:[{ar:'شغلك تمام.', translit:'shughlak tamaam', en:'Your work is fine.'},{ar:'بس فيه ملاحظه.', translit:'bas fee mulahatha', en:'But there is a note.'}],
@@ -13181,7 +13181,7 @@ const LESSON_LIBRARY = {
       {en:'One moment', ar:'لحظه', translit:'lahtha', tip:'Ask to wait.'},
       {en:'I will call back', ar:'باراجعك', translit:'barajeek', tip:'Promise a return call.'},
     ],
-    grammar:{title:'The phone flow', rule:'Work calls open with assalamu alaikum, then meen maayi (who is this), then the matter. Keep it short.', saudi:'المكالمه: سلام عليكم، مين معي، ثم الموضوع.', wrong:'Skip the greeting and state the matter.', right:'"Assalamu alaikum, meen maayi?" then the reason.', mistakes:['Forgetting the greeting, it is mandatory on Saudi calls.','Talking for minutes before saying who you are.']},
+    grammar:{title:'The phone flow', rule:'Work calls open with assalamu alaikum, then meen maayi (who is this), then the matter. Keep it short.', saudi:'المكالمه: سلام عليكم، مين معي، ثم الموضوع.', wrong:'Skip the greeting and state the matter.', right:'"Assalamu alaikum, meen maayi?" then the reason.', mistakes:['Forgetting the greeting, it is mandatory on  calls.','Talking for minutes before saying who you are.']},
     conversation:[
       {who:'You', ar:'السلام عليكم، مين معي؟', translit:'assalamu alaikum, meen maayi?', en:'Hello, who is this?'},
       {who:'Other', ar:'وعليكم السلام، انا محمد من الموارد.', translit:'wa alaikum assalam, ana mohammad min almawarid', en:'Peace be upon you too, this is Mohammad from HR.'},
@@ -13201,7 +13201,7 @@ const LESSON_LIBRARY = {
     },
   },
 
-/* ------- Saudi Family Life (saudi-family) ------- */
+/* ------- Family Life (saudi-family) ------- */
   'sa-family-parents': {
     title:'Talking to Parents Respectfully', ar:'الكلام مع الوالدين', translit:'alkalam maa alwalidayn', dir:'ar',
     duration:'7 min', difficulty:'Beginner',
@@ -13211,7 +13211,7 @@ const LESSON_LIBRARY = {
       {en:'Father (respectful)', ar:'الوالد', translit:'alwaalid', tip:'Use this when speaking about your father to others with respect.'},
       {en:'Mother (respectful)', ar:'الوالدة', translit:'alwaalida', tip:'The respectful form when telling others about your mother.'},
     ],
-    grammar:{title:'Respect forms for parents', rule:'In Saudi talk, parents get special words. At home you say abuwi and ummi, but when you speak about them to someone else, alwaalid and alwaalida carry more respect.', saudi:'بالبيت تقول ابوي وامي، وبالناس قدامك تقول الوالد والوالدة احتراما.', wrong:'Use the same word for your father in every situation.', right:'"Alwaalid hassa hali." (My father is fine now.)', mistakes:['Calling your father by his first name, never done.','Using abuwi when speaking formally about him to a stranger.']},
+    grammar:{title:'Respect forms for parents', rule:'In Arabic, parents get special words. At home you say abuwi and ummi, but when you speak about them to someone else, alwaalid and alwaalida carry more respect.', saudi:'بالبيت تقول ابوي وامي، وبالناس قدامك تقول الوالد والوالدة احتراما.', wrong:'Use the same word for your father in every situation.', right:'"Alwaalid hassa hali." (My father is fine now.)', mistakes:['Calling your father by his first name, never done.','Using abuwi when speaking formally about him to a stranger.']},
     conversation:[
       {who:'You', ar:'ابوي، ممكن توديني المدرسه؟', translit:'abuwi, mumkin tawaddini almadrasa?', en:'Dad, can you take me to school?'},
       {who:'Father', ar:'تمام يا قلبي، يلا نروح.', translit:'tamaam ya galbi, yalla nrooh', en:'OK my heart, let us go.'},
@@ -13234,12 +13234,12 @@ const LESSON_LIBRARY = {
     title:'The Family Gathering', ar:'اللمة العايلية', translit:'al-lamma aleeliya', dir:'ar',
     duration:'7 min', difficulty:'Beginner',
     vocab:[
-      {en:'Family gathering', ar:'لمة', translit:'lamma', tip:'The weekly get together, the heart of Saudi family life.'},
+      {en:'Family gathering', ar:'لمة', translit:'lamma', tip:'The weekly get together, the heart of family life.'},
       {en:'Relatives', ar:'الاقارب', translit:'alaqaareb', tip:'The wider family beyond parents and siblings.'},
       {en:'We gather', ar:'نتجمع', translit:'nitjamma', tip:'Used for the weekly gathering.'},
       {en:'Thursday evening', ar:'خميسية', translit:'khameesiya', tip:'Thursday night gatherings are so common they have their own word.'},
     ],
-    grammar:{title:'The weekly lamma', rule:'Many Saudi families gather every Thursday night, the khameesiya. The verb is nitjamma (we gather) and the invitation is simple.', saudi:'الخميسية تجمع عايلي كل خميس، تقال: نتجمع عند امي.', wrong:'Treat family gatherings as occasional and formal.', right:'"Nitjamma khameesiya inda abuwi." (We gather Thursday nights at my fathers.)', mistakes:['Saying no to a family lamma without a real excuse, it matters.','Arriving hours late, the meal has a set time.']},
+    grammar:{title:'The weekly lamma', rule:'Many families gather every Thursday night, the khameesiya. The verb is nitjamma (we gather) and the invitation is simple.', saudi:'الخميسية تجمع عايلي كل خميس، تقال: نتجمع عند امي.', wrong:'Treat family gatherings as occasional and formal.', right:'"Nitjamma khameesiya inda abuwi." (We gather Thursday nights at my fathers.)', mistakes:['Saying no to a family lamma without a real excuse, it matters.','Arriving hours late, the meal has a set time.']},
     conversation:[
       {who:'A', ar:'وين الخميسية هذا الاسبوع؟', translit:'wen alkhameesiya hadha alusboo?', en:'Where is the gathering this week?'},
       {who:'B', ar:'عند الوالدة، وكل الاقارب جايين.', translit:'ind alwaalida, wa kul alaqaareb jayyeen', en:'At my mothers, and all the relatives are coming.'},
@@ -13251,7 +13251,7 @@ const LESSON_LIBRARY = {
       {qAr:'كيف تقول نتجمع؟', qEn:'How do you say we gather?', options:['نتجمع / Nitjamma','نروح / Nrooh','ننام / Nnam'], correct:0},
     ],
     summary:'You learned the weekly family gathering, its own word khameesiya, and how the invitation works.',
-    takeaway:'اللمة والخميسية هما قلب الحيا العايلية بالسعوديه.',
+    takeaway:'اللمة والخميسية هما قلب الحيا العايليهه.',
     situation:{
       hear:[{ar:'اللمة وين هذا الاسبوع؟', translit:'allamma wen hadha alusboo?', en:'Where is the gathering this week?'},{ar:'كلهم جايين.', translit:'kulhum jayyeen', en:'Everyone is coming.'}],
       say:[{ar:'بجي مع العايلة ان شا الله.', translit:'bji maa aleela inshallah', en:'I will come with the family, God willing.'}],
@@ -13276,9 +13276,9 @@ const LESSON_LIBRARY = {
     ],
     quiz:[
       {qAr:'وش تقول لما ينادونك للاكل؟', qEn:'What do you say when called to eat?', options:['جايتنا / Coming','ما ابي / I do not want','وين؟ / Where?'], correct:0},
-      {qAr:'متى الغدا المعتاد بالبيوت السعوديه؟', qEn:'When is the usual Saudi family lunch?', options:['بعد صلاه الظهر / After Dhuhr','الفجر / Dawn','نص الليل / Midnight'], correct:0},
+      {qAr:'متى الغدا المعتاد بالبيوت؟', qEn:'When is the usual family lunch?', options:['بعد صلاه الظهر / After Dhuhr','الفجر / Dawn','نص الليل / Midnight'], correct:0},
     ],
-    summary:'You learned the family meal call and the timing that shapes the Saudi day.',
+    summary:'You learned the family meal call and the timing that shapes the the day.',
     takeaway:'يلا الغدا، والكبسة على اصولها، كلمتان تدخلك في اي بيت.',
     situation:{
       hear:[{ar:'الغدا جاهز.', translit:'alghada jahez', en:'Lunch is ready.'},{ar:'تعال كل قبل ما يبرد.', translit:'taal kul gabl ma ybard', en:'Come eat before it gets cold.'}],
@@ -13334,7 +13334,7 @@ const LESSON_LIBRARY = {
       {qAr:'كيف تقول عيالي؟', qEn:'How do you say my kids?', options:['عيالي / Ayaali','اطفالي الرسميه / Formal','اولادي الفصحى / MSA'], correct:0},
       {qAr:'بنتك وش اسمها بالعامية؟', qEn:'What do you call your daughter?', options:['بنتي / Binti','ابنتي / Ibnti','الفتاة / Alfata'], correct:0},
     ],
-    summary:'You learned the warm possessive words Saudis use for their children.',
+    summary:'You learned the warm possessive words People use for their children.',
     takeaway:'ولدي وبنتي وعيالي، ثلاث كلمات تفتح قلوب الابا.',
     situation:{
       hear:[{ar:'عندك عيال؟', translit:'indak ayaal?', en:'Do you have kids?'},{ar:'ولدي بمدرسه.', translit:'waladi bimadrasa', en:'My son is at school.'}],
@@ -13351,7 +13351,7 @@ const LESSON_LIBRARY = {
       {en:'Hospitality', ar:'ضيافة', translit:'dayafa', tip:'Offering food and drink to guests.'},
       {en:'Welcome guest', ar:'ضيف', translit:'dayf', tip:'The guest is treated with great respect.'},
     ],
-    grammar:{title:'The visit pattern', rule:'Saudi visits come with hospitality: tea or coffee first, then the conversation. You announce a visit with bnazoor + the relative.', saudi:'الزياره عندنا تبدا بالقهوه، ثم السوالف. تقول: بنزور عمي.', wrong:'Show up unannounced for a visit, call first.', right:'"Bnazoor khalaal, akeed." (We will visit the aunt, of course.)', mistakes:['Refusing the first cup of coffee, part of the hospitality ritual.','Staying too long, short visits are appreciated.']},
+    grammar:{title:'The visit pattern', rule:'visits come with hospitality: tea or coffee first, then the conversation. You announce a visit with bnazoor + the relative.', saudi:'الزياره عندنا تبدا بالقهوه، ثم السوالف. تقول: بنزور عمي.', wrong:'Show up unannounced for a visit, call first.', right:'"Bnazoor khalaal, akeed." (We will visit the aunt, of course.)', mistakes:['Refusing the first cup of coffee, part of the hospitality ritual.','Staying too long, short visits are appreciated.']},
     conversation:[
       {who:'You', ar:'بنزور خالي اليوم.', translit:'bnazoor khaali alyoum', en:'We will visit my uncle today.'},
       {who:'Relative', ar:'اهلا وسهلا، تفضل القهوه.', translit:'ahlan wa sahlan, tafaddal algahwa', en:'Welcome, have some coffee.'},
@@ -13371,14 +13371,14 @@ const LESSON_LIBRARY = {
     },
   },
 
-/* ------- Saudi Arabian Arabic at the Hospital (saudi-hospital) ------- */
+/* ------- Arabic at the Hospital (saudi-hospital) ------- */
   'sa-hospital-appointment': {
     title:'Booking a Doctor Appointment', ar:'حجز موعد طبيب', translit:'hajz mawid tabeeb', dir:'ar',
     duration:'8 min', difficulty:'Intermediate',
     vocab:[
       {en:'Appointment', ar:'موعد', translit:'mawid', tip:'The universal word for appointment.'},
       {en:'I want to book', ar:'ابي احجز', translit:'abi ahjiz', tip:'The booking opener.'},
-      {en:'The doctor', ar:'الدكتور', translit:'aldoktoor', tip:'Used for both men and women doctors in Saudi talk.'},
+      {en:'The doctor', ar:'الدكتور', translit:'aldoktoor', tip:'Used for both men and women doctors in Arabic.'},
       {en:'The clinic', ar:'العياده', translit:'aleeyada', tip:'Where you see the doctor.'},
     ],
     grammar:{title:'Booking with abi ahjiz', rule:'Bookings open with abi ahjiz mawid (I want to book an appointment) + the doctor or clinic.', saudi:'تحجز: ابي احجز موعد عند الدكتور فلان.', wrong:'Wait in line without an appointment at a clinic that needs one.', right:'"Abi ahjiz mawid inda aldoktoor." (I want to book with the doctor.)', mistakes:['Saying mawid when you mean a booking for a test, use it broadly, it covers both.','Forgetting to ask about the waiting time.']},
@@ -13541,7 +13541,7 @@ const LESSON_LIBRARY = {
     },
   },
 
-/* ------- Saudi Arabian Arabic for Travel (saudi-travel) ------- */
+/* ------- Arabic for Travel (saudi-travel) ------- */
   'sa-travel-booking': {
     title:'Booking a Flight', ar:'حجز رحه طيران', translit:'hajz rihla tayaraan', dir:'ar',
     duration:'8 min', difficulty:'Beginner',
@@ -13551,7 +13551,7 @@ const LESSON_LIBRARY = {
       {en:'A direct flight', ar:'رحه مباشره', translit:'rihla mubashara', tip:'No stops in between.'},
       {en:'The price', ar:'السعر', translit:'alsir', tip:'Ask it directly.'},
     ],
-    grammar:{title:'Booking with lin', rule:'In Saudi travel talk, the destination comes with lin (to): tathkara lin + the city.', saudi:'تحجز: تذكرة لين + المدينه.', wrong:'Use the formal ila for the destination.', right:'"Abi tathkara lin Dubai." (I want a ticket to Dubai.)', mistakes:['Forgetting to ask about a direct flight, mubashara matters.','Not confirming the price before booking.']},
+    grammar:{title:'Booking with lin', rule:'In travel talk, the destination comes with lin (to): tathkara lin + the city.', saudi:'تحجز: تذكرة لين + المدينه.', wrong:'Use the formal ila for the destination.', right:'"Abi tathkara lin Dubai." (I want a ticket to Dubai.)', mistakes:['Forgetting to ask about a direct flight, mubashara matters.','Not confirming the price before booking.']},
     conversation:[
       {who:'You', ar:'ابي تذكرة لين جدة.', translit:'abi tathkara lin jeddah', en:'I want a ticket to Jeddah.'},
       {who:'Agent', ar:'متى تبي تطير؟', translit:'mata tebi tatheer?', en:'When do you want to fly?'},
@@ -13711,7 +13711,7 @@ const LESSON_LIBRARY = {
     },
   },
 
-/* ------- Mosque Etiquette in Saudi (saudi-mosque-etiquette) ------- */
+/* ------- Mosque Etiquette (saudi-mosque-etiquette) ------- */
   'sa-mosque-greeting': {
     title:'The Mosque Greeting', ar:'تحية المسجد', translit:'tahiyat almasjid', dir:'ar',
     duration:'7 min', difficulty:'Intermediate',
@@ -13881,7 +13881,7 @@ const LESSON_LIBRARY = {
     },
   },
 
-/* ------- Saudi Phone Calls (saudi-phone-calls) ------- */
+/* ------- Phone Calls (saudi-phone-calls) ------- */
   'sa-phone-answer': {
     title:'Answering the Phone', ar:'الرد على الاتصال', translit:'alradd ala al-ittisaal', dir:'ar',
     duration:'7 min', difficulty:'Intermediate',
@@ -14446,7 +14446,7 @@ function renderDbPractice(container, exercises){
           const pf = (typeof pronFeedback === 'function') ? pronFeedback(heard, tgt) : null;
           const tip = (pf && pf.tipAr) ? ' <span class="arabic" style="color:var(--gold);">'+pf.tipAr+'</span>' : '';
           // Encouragement messages based on score — reduces speaking anxiety
-          // Research: 100% of Saudi EFL learners report speaking anxiety
+          // Research: 100% of  EFL learners report speaking anxiety
           // Ref: https://www.e-iji.net/dosyalar/iji_2026_3_19.pdf
           let enc = '';
           if(score < 40) enc = ' <span class="arabic" style="color:var(--text-muted);">الغلط عادي، هذا كيف نتعلم. حاول مره ثانية.</span>';
@@ -15268,7 +15268,7 @@ async function grammarServerAlive(epOverride){
   if(epOverride === undefined){ _grammarAlive = ok; _grammarAliveAt = Date.now(); }
   return ok;
 }
-/* Arabic labels for LanguageTool rule categories, natural Saudi phrasing. */
+/* Arabic labels for LanguageTool rule categories, natural  phrasing. */
 const LT_CATEGORY_AR = {
   'AGREEMENT': { ar:'توافق الفعل مع الشخص', en:'Subject-verb agreement', learn:'الفعل يتغير مع الشخص: he goes, they go.' },
   'TYPOS': { ar:'غلط املايي', en:'Spelling', learn:'كلمه مكتوبه غلط، شوف التصحيح المقترح.' },
@@ -16135,7 +16135,7 @@ window.pelConversationFit = function(userText, botLine){
    ============================================================ */
 
 // Rule-based corrections: the mistakes Arabic speakers actually make, each
-// with a natural Saudi-Arabic explanation, an English one, and a short
+// with a natural -Arabic explanation, an English one, and a short
 // "learn this" point so the student takes a lesson away, not just a fix.
 // Free, offline, unlimited. Nothing here calls an API.
 const CORRECT_RULES = [
@@ -16832,9 +16832,9 @@ function repairSentences(text, nlpImpl, issues){
   return fixed;
 }
 
-// Saudi-ify: Google Translate returns formal MSA. This layer rewrites the
-// most common formal words and phrases into the natural Saudi equivalents a
-// real Saudi student speaks, so the review's Arabic always sounds like
+// -ify: Google Translate returns formal MSA. This layer rewrites the
+// most common formal words and phrases into the natural  equivalents a
+// real  student speaks, so the review's Arabic always sounds like
 // everyday conversation, never a textbook.
 const SAUDI_SWAPS = [
   // longest patterns first, so "تريد ان تفعل" never gets split by "تريد" alone
@@ -16874,7 +16874,7 @@ const SAUDI_SWAPS = [
   ['القاعدة', 'القاعده'], ['الاجابة', 'الاجابه'], ['النتيجة', 'النتيجه'],
   ['القراءة', 'القرايه'], ['التمرينة', 'التمرينه'], ['المساعدة', 'المساعده'],
   ['الاكاديمية', 'الاكاديميه'], ['المباشرة', 'المباشره'], ['الواجهة', 'الواجهه'],
-  ['العربية', 'العربيه'], ['الانجليزية', 'الانجليزيه'], ['السعودية', 'السعوديه'],
+  ['العربية', 'العربيه'], ['الانجليزية', 'الانجليزيه'], ['العربية', 'العربيه'],
   ['الشهادة', 'الشهاده'], ['المنصة', 'المنصه'], ['اللغة', 'اللغه'], ['الصفحة', 'الصفحه'],
   ['المشكلة', 'المشكله'], ['المكالمة', 'المكالمه'], ['المقابلة', 'المقابله'], ['المفضلة', 'المفضله'],
   ['المرة', 'المره'], ['المرحلة', 'المرحله'], ['الدورة', 'الدوره'], ['الزيارة', 'الزياره'],
@@ -17186,7 +17186,7 @@ function renderLibrary(){
         <a href="${location.pathname.replace(/[^/]*$/,'')+'index.html'}#pricing" class="btn-gold magnetic" data-magnetic style="flex-shrink:0;">${ar?'اشترك الحين':'Subscribe now'}</a>
       </div>`
     : '';
-  // Direction-aware library: Saudi Arabian Arabic academies lead for Saudi learners,
+  // Direction-aware library: Arabic academies lead for Arabic speakers,
   // English academies lead otherwise. Nothing is hidden, just ordered.
   const dirPool = directionAcademies();
   const otherPool = ACADEMIES.filter(a => !dirPool.includes(a));
@@ -17710,7 +17710,7 @@ function renderLessonReader(container, academy, lesson){
         const s = sectionNoteText(n.en||'', n.ar||'');
         return {en:n.en, ar:n.ar, tr:n.tr, sections:s};
       });
-      let html = '<div class="lesson-section"><h3><span class="arabic">لاحظ</span>، Notice</h3><p class="lesson-section-sub"><span class="arabic" style="display:block;">انماط وقواعد مختصرة، بالعامية والانجليزي.</span><span dir="ltr">Compact patterns and rules, in Saudi Arabic and English.</span></p>';
+      let html = '<div class="lesson-section"><h3><span class="arabic">لاحظ</span>، Notice</h3><p class="lesson-section-sub"><span class="arabic" style="display:block;">انماط وقواعد مختصرة، بالعامية والانجليزي.</span><span dir="ltr">Compact patterns and rules, in  Arabic and English.</span></p>';
       sections.forEach(ns => {
         if(ns.sections.rule.length){
           html += '<div class="concept-section-label" dir="ltr">Rule</div>';
@@ -17740,7 +17740,7 @@ function renderLessonReader(container, academy, lesson){
         html += '<div class="concept-section-label" dir="ltr">Rule</div>';
         html += renderStepsHtml(lesson.grammar.rule, 'concept-step-en', terms);
       }
-      // Meaning (Saudi Arabic explanation)
+      // Meaning ( Arabic explanation)
       if(lesson.grammar.saudi){
         html += '<div class="concept-section-label">Meaning</div>';
         html += renderStepsHtml(lesson.grammar.saudi, 'concept-step-ar arabic', terms);
@@ -17888,35 +17888,35 @@ function renderVocabulary(){
     'Airport English':'plane','Shopping English':'shopping-bag','Travel English':'globe',
     'Workplace Communication':'building-2','Job Interview Academy':'user-check','Family':'users',
     'Colors':'palette','Daily Life':'coffee','General':'book-open','Emergency English':'shield-alert',
-    'Driving English':'car','Hotel English':'bed-double','Saudi Greetings':'hand','Saudi Conversations':'message-circle',
-    'Saudi Hospital':'heart-pulse','Saudi Mosque Etiquette':'moon','Saudi Phone Calls':'phone','Saudi Travel':'map-pin',
-    'Saudi At Work':'briefcase','Coffee Shop English':'coffee','American Slang':'message-square','American Conversations':'messages-square',
+    'Driving English':'car','Hotel English':'bed-double','Greetings':'hand','Conversations':'message-circle',
+    'Hospital English':'heart-pulse','Mosque Etiquette':'moon','Phone Calls':'phone','Travel English':'map-pin',
+    'At Work':'briefcase','Coffee Shop English':'coffee','American Slang':'message-square','American Conversations':'messages-square',
     'American Accent Lab':'mic','English Mastery':'graduation-cap','Fluency Journey':'wind','Idioms Library':'lightbulb',
     'Listening Lounge':'headphones','Movie English':'film','Music English':'music','Phrasal Verbs Lab':'flask-conical',
     'Reading Corner':'book-open','Speaking Studio':'mic','TV Series English':'tv','Writing Workshop':'pen-tool','Grammar Academy':'check-square',
     'Vocabulary Vault':'book-open','Workplace':'building-2'
   };
-  // Saudi Arabic category names
+  //  Arabic category names
   const VV_CAT_AR = {
     'Restaurant English':'انجليزي المطاعم','Hospital English':'انجليزي المستشفى','Business English':'انجليزي الشغل',
     'Airport English':'انجليزي المطار','Shopping English':'انجليزي التسوق','Travel English':'انجليزي السفر',
     'Workplace Communication':'التواصل بالشغل','Job Interview Academy':'مقابلات العمل','Family':'العائله',
     'Colors':'الالوان','Daily Life':'الحياة اليوميه','General':'عام','Emergency English':'انجليزي الطوارئ',
-    'Driving English':'انجليزي القياده','Hotel English':'انجليزي الفنادق','Saudi Greetings':'تحيات سعوديه','Saudi Conversations':'محادثات سعوديه',
-    'Saudi Hospital':'مستشفى سعودي','Saudi Mosque Etiquette':'اداب المسجد','Saudi Phone Calls':'مكالمات سعوديه','Saudi Travel':'سفر سعودي',
-    'Saudi At Work':'سعودي بالشغل','Coffee Shop English':'انجليزي الكوفي','American Slang':'امريكي عامي','American Conversations':'محادثات امريكيه',
+    'Driving English':'انجليزي القياده','Hotel English':'انجليزي الفنادق','Greetings':'التحيات','Conversations':'المحادثات',
+    'Hospital English':'المستشفى','Mosque Etiquette':'اداب المسجد','Phone Calls':'المكالمات','Travel English':'السفر',
+    'At Work':'الشغل','Coffee Shop English':'انجليزي الكوفي','American Slang':'امريكي عامي','American Conversations':'محادثات امريكيه',
     'American Accent Lab':'اللهجه الامريكيه','English Mastery':'اتقان الانجليزي','Fluency Journey':'رحله الطلاقه','Idioms Library':'مكتبه التعابير',
     'Listening Lounge':'ركن الاستماع','Movie English':'انجليزي الافلام','Music English':'انجليزي الاغاني','Phrasal Verbs Lab':'مختبر الافعال',
     'Reading Corner':'ركن القراءه','Speaking Studio':'استوديو المحادثه','TV Series English':'انجليزي المسلسلات','Writing Workshop':'ورشه الكتابه','Grammar Academy':'اكاديميه القواعد',
     'Vocabulary Vault':'بنك الكلمات','Workplace':'الشغل'
   };
-  // Difficulty levels in Saudi
+  // Difficulty levels in 
   const VV_DIFF_AR = {'Beginner':'مبتدا','Intermediate':'وسط','Advanced':'متقدم','All Levels':'كل المستويات'};
   el.innerHTML = `
     <div class="page-head">
       <span class="eyebrow"><span class="arabic" style="font-size:.95em;">بنك الكلمات</span>، Vocabulary Vault</span>
       <h1><span class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">كل كلمه، بثلاث لغات.</span><span dir="ltr">Every word, in three languages.</span></h1>
-      <p><span class="arabic" style="display:block; margin-bottom:4px;">اختار تصنيف وابدا. اقلب البطاقه وتشوف المعنى بالسعودي والنطق والكلمات اللي مثلها.</span><span dir="ltr">Pick a category and start studying. Flip a card to see the Arabic (Saudi) meaning, pronunciation, synonyms and more.</span></p>
+      <p><span class="arabic" style="display:block; margin-bottom:4px;">اختار تصنيف وابدا. اقلب البطاقه وتشوف المعنى بالعربي والنطق والكلمات اللي مثلها.</span><span dir="ltr">Pick a category and start studying. Flip a card to see the Arabic () meaning, pronunciation, synonyms and more.</span></p>
     </div>
     <div class="vv-shell">
       <div id="vvCategoryPanel">
@@ -18066,7 +18066,7 @@ function renderVocabulary(){
     const wordKey = 'vocab-' + v.en.toLowerCase().replace(/\s+/g,'-');
     const bm = isBookmarked('vocab', wordKey);
     const diff = v.difficulty || '';
-    // Saudi Arabic cleaner — normalizes hamzas, removes diacritics, simplifies formal terms
+    //  Arabic cleaner — normalizes hamzas, removes diacritics, simplifies formal terms
     function vvSaudiClean(s){
       if(!s) return '';
       return String(s)
@@ -18075,7 +18075,7 @@ function renderVocabulary(){
         .replace(/ؤ/g,'و')                                      // waw hamza → waw
         .replace(/ئ/g,'ي')                                      // yaa hamza → yaa
         .replace(/—|–/g,'،')                                    // em/en dash → comma
-        .replace(/جدا/g,'مره')                                  // very → marra (Saudi)
+        .replace(/جدا/g,'مره')                                  // very → marra ()
         .replace(/من فضلك/g,'لو سمحت')                          // please → law samaht
         .replace(/لديك/g,'عندك')                                // you have → indik
         .replace(/هذه/g,'هذي')                                  // this (f) → hathi
@@ -18089,7 +18089,7 @@ function renderVocabulary(){
         .replace(/سوف/g,'بت')                                   // will → bt
         .replace(/كما/g,'بس')                                   // trim overly formal
         .replace(/حيث/g,'لان')                                  // since → la-an
-        .replace(/بنفس/g,'بنفس')                               // keep as-is if already Saudi
+        .replace(/بنفس/g,'بنفس')                               // keep as-is if already 
         .replace(/المفردات/g,'الكلمات')                          // vocabulary → words
         .replace(/العثور/g,'حصول')                              // found → got
         .replace(/لم يتم/g,'ما')                                // was not → ma
@@ -18306,7 +18306,7 @@ function renderGrammar(){
     <div class="grid grid-2" id="grammarGrid"></div>
     <div style="margin-top:36px;">
       <div class="page-head" style="margin-bottom:20px;">
-        <span class="eyebrow"><span class="arabic" style="font-size:.95em;">مدرب الاغلاط السعودي</span>، Saudi Mistake Coach</span>
+        <span class="eyebrow"><span class="arabic" style="font-size:.95em;">مدرب الاغلاط</span>،  Mistake Coach</span>
         <h2 style="font-size:1.3rem; margin-top:8px;"><span class="arabic" style="display:block; font-size:.7em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">الاغلاط اللي يقع فيها المتكلم بالعربيه، مع السبب والتمرين.</span><span dir="ltr">The mistakes Arabic speakers make, with the reason and practice.</span></h2>
       </div>
       <div class="grid grid-2" id="coachGrid"></div>
@@ -18332,7 +18332,7 @@ function renderGrammar(){
       {qEn:'Which sentence is correct?', qAr:'اي جمله صح؟', options:[g.wrong, g.right], correct:1}
     ], 'gq-'+g.id);
   });
-  // Saudi Mistake Coach: show each category with its patterns and practice questions
+  //  Mistake Coach: show each category with its patterns and practice questions
   const coach = (window.SAUDI_MISTAKE_COACH || []);
   const coachGrid = document.getElementById('coachGrid');
   if(coach.length){
@@ -19081,7 +19081,7 @@ function renderWriting(){
     const tr = await freeTranslate(text);
     const meaningEl = document.getElementById('fbArMeaning');
     // The free translator returns formal MSA, so the review rewrites common
-    // words into natural Saudi conversational Arabic before showing them.
+    // words into natural conversational Arabic before showing them.
     if(meaningEl) meaningEl.innerHTML = tr.ok ? escapeHtml(tr.target === 'ar' ? saudiifyAr(tr.text) : tr.text) : `<span class="arabic">تعذر الترجمة الان، جرب مره ثانية.</span>`;
     const taBtn = document.getElementById('tryAgainBtn');
     if(taBtn) taBtn.addEventListener('click', () => {
@@ -19141,7 +19141,7 @@ function reviewDueCount(){
   return reviewQueue().filter(r => r.due <= now).length;
 }
 // Pronunciation shown on review cards: the one engine for English words
-// (Arabic-script), the stored Latin-script translit for Saudi words.
+// (Arabic-script), the stored Latin-script translit for  words.
 function reviewTranslit(item){
   if(item && item.translit && /[\u0600-\u06FF]/.test(item.translit)){
     return translitEn(item.en || '');
@@ -19493,10 +19493,10 @@ document.addEventListener('pel-progress-updated', () => { try{ renderControlCent
 
 function renderHomeForDirection(){
   // Home copy that depends on what the student is learning, not just the
-  // interface language: Saudi Arabian Arabic direction gets its own framing.
+  // interface language: Arabic direction gets its own framing.
   const ar = learningDirection() === 'ar';
-  const dirLabelEn = ar ? 'Saudi Arabian Arabic' : 'English';
-  const dirLabelAr = ar ? 'اللهجه السعوديه' : 'الانجليزي';
+  const dirLabelEn = ar ? 'Arabic' : 'English';
+  const dirLabelAr = ar ? 'اللهجه العربيه' : 'الانجليزي';
   const els = {
     homeSubtitle: document.getElementById('homeSubtitle'),
     heroResumeTitle: document.getElementById('heroResumeTitle'),
@@ -19779,14 +19779,14 @@ function renderContinueLearning(){
     if(resumeText) resumeText.innerHTML = (hasPlan() && firstObj)
       ? `<span class="arabic">${escapeHtml(firstObj.ar || '')}</span> · ${escapeHtml(firstObj.title || '')}`
       : (dirAr
-          ? `<span class="arabic" style="display:block">لنبدا رحلتك في تعلم اللهجه السعوديه. اكمل درسك الاول لفتح لوحتك الشخصية.</span><span class="pel-en-copy" style="display:block">Let's begin your Saudi Arabian Arabic journey. Complete your first lesson to unlock your personalized dashboard.</span>`
+          ? `<span class="arabic" style="display:block">لنبدا رحلتك في تعلم اللهجه العربيه. اكمل درسك الاول لفتح لوحتك الشخصية.</span><span class="pel-en-copy" style="display:block">Let's begin your Arabic journey. Complete your first lesson to unlock your personalized dashboard.</span>`
           : `<span class="arabic" style="display:block">لنبدا رحلتك في تعلم الانجليزي. اكمل درسك الاول لفتح لوحتك الشخصية.</span><span class="pel-en-copy" style="display:block">Let's begin your English journey. Complete your first lesson to unlock your personalized dashboard.</span>`);
     setHomeSubtitle((hasPlan() && firstObj)
       ? `اول خطوه: ${escapeHtml(firstObj.ar||'')}.`
-      : (dirAr ? 'اول خطوه: اكمل درسك الاول باللهجه السعوديه، ولوحتك تنفتح.' : 'اول خطوه: اكمل درسك الاول، ولوحتك تنفتح.'),
+      : (dirAr ? 'اول خطوه: اكمل درسك الاول باللهجه العربيه، ولوحتك تنفتح.' : 'اول خطوه: اكمل درسك الاول، ولوحتك تنفتح.'),
       (hasPlan() && firstObj)
         ? `First step: ${escapeHtml(firstObj.title||'')}.`
-        : (dirAr ? 'First step: complete your first Saudi Arabian Arabic lesson and your dashboard opens up.'
+        : (dirAr ? 'First step: complete your first Arabic lesson and your dashboard opens up.'
             : 'First step: complete your first lesson and your dashboard opens up.'));
     if(resumeBtn) resumeBtn.innerHTML = `<span class="arabic">ابدا درسك الاول</span>، Start Your First Lesson`;
     const estChip = document.getElementById('heroEstChip');
@@ -21210,7 +21210,7 @@ function renderDashboardIntel(){
       activityTouch: function(evt, opts){ try{ PEL_ACTIVITY.touch(evt, opts); }catch(e){} },
       accountPrefs: function(){ return accountPrefs; },
       openLesson: openLesson,
-      // Saudi Mistake Coach data — common Saudi learner mistakes woven into
+      //  Mistake Coach data — common  learner mistakes woven into
       // the lesson flow. Patterns are matched to lesson content automatically.
       saudiMistakeCoach: function(){ return window.SAUDI_MISTAKE_COACH || []; },
       // Guided tool rules: which tools are unlocked at the student's CEFR level
@@ -21608,7 +21608,7 @@ if(window.lucide) lucide.createIcons();
      Builds on profiles.live_class_credits + the live_class_requests tables.
      Reuses the shared anon key + localStorage session, so it sees the same
      logged-in student as the main app. No mutation of the main IIFE.
-     Arabic = Saudi Southern/Abha dialect: no hamzas, no em-dashes.
+     Arabic =  Southern/Abha dialect: no hamzas, no em-dashes.
      ============================================================ -->
 <script>
 (function(){
