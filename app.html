@@ -231,14 +231,14 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
 @media(max-width:980px){ .mobile-sidebar-btn{ display:flex; } }
 
 .search-trigger{
-  flex:1; max-width:380px; display:flex; align-items:center; gap:10px; padding:10px 16px; border-radius:12px;
+  flex:1; max-width:420px; display:flex; align-items:center; gap:10px; padding:10px 16px; border-radius:12px;
   background:var(--card); border:1px solid var(--border); color:var(--text-muted); font-size:.85rem;
-  transition:border-color .3s ease;
+  transition:border-color .3s ease; overflow:hidden;
 }
 .search-trigger:hover{ border-color:var(--gold); }
 .search-trigger .arabic{ line-height:1.3 !important; }
-.search-trigger > span{ line-height:1.3; }
-.kbd{ margin-left:auto; font-size:.66rem; padding:2px 7px; border-radius:6px; border:1px solid var(--border); color:var(--text-muted); flex-shrink:0; }
+.search-trigger > span{ line-height:1.3; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.search-trigger .kbd{ margin-left:auto; font-size:.66rem; padding:2px 7px; border-radius:6px; border:1px solid var(--border); color:var(--text-muted); flex-shrink:0; }
 .topbar-spacer{ flex:1; }
 .topbar-actions{ display:flex; align-items:center; gap:10px; }
 .icon-btn{
@@ -1480,7 +1480,7 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
 
       <button type="button" class="search-trigger" id="searchTrigger">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-        <span><span class="arabic">ابحث في الدروس والمفردات والقواعد...</span><span style="display:block; font-size:.72em; color:var(--text-muted); margin-top:1px;">Search lessons, vocabulary, grammar...</span></span>
+        <span><span class="arabic">ابحث...</span>Search...</span>
         <span class="kbd">Ctrl K</span>
       </button>
 
@@ -17896,6 +17896,22 @@ function renderVocabulary(){
     'Reading Corner':'book-open','Speaking Studio':'mic','TV Series English':'tv','Writing Workshop':'pen-tool','Grammar Academy':'check-square',
     'Vocabulary Vault':'book-open','Workplace':'building-2'
   };
+  // Saudi Arabic category names
+  const VV_CAT_AR = {
+    'Restaurant English':'انجليزي المطاعم','Hospital English':'انجليزي المستشفى','Business English':'انجليزي الشغل',
+    'Airport English':'انجليزي المطار','Shopping English':'انجليزي التسوق','Travel English':'انجليزي السفر',
+    'Workplace Communication':'التواصل بالشغل','Job Interview Academy':'مقابلات العمل','Family':'العائله',
+    'Colors':'الالوان','Daily Life':'الحياة اليوميه','General':'عام','Emergency English':'انجليزي الطوارئ',
+    'Driving English':'انجليزي القياده','Hotel English':'انجليزي الفنادق','Saudi Greetings':'تحيات سعوديه','Saudi Conversations':'محادثات سعوديه',
+    'Saudi Hospital':'مستشفى سعودي','Saudi Mosque Etiquette':'اداب المسجد','Saudi Phone Calls':'مكالمات سعوديه','Saudi Travel':'سفر سعودي',
+    'Saudi At Work':'سعودي بالشغل','Coffee Shop English':'انجليزي الكوفي','American Slang':'امريكي عامي','American Conversations':'محادثات امريكيه',
+    'American Accent Lab':'اللهجه الامريكيه','English Mastery':'اتقان الانجليزي','Fluency Journey':'رحله الطلاقه','Idioms Library':'مكتبه التعابير',
+    'Listening Lounge':'ركن الاستماع','Movie English':'انجليزي الافلام','Music English':'انجليزي الاغاني','Phrasal Verbs Lab':'مختبر الافعال',
+    'Reading Corner':'ركن القراءه','Speaking Studio':'استوديو المحادثه','TV Series English':'انجليزي المسلسلات','Writing Workshop':'ورشه الكتابه','Grammar Academy':'اكاديميه القواعد',
+    'Vocabulary Vault':'بنك الكلمات','Workplace':'الشغل'
+  };
+  // Difficulty levels in Saudi
+  const VV_DIFF_AR = {'Beginner':'مبتدا','Intermediate':'وسط','Advanced':'متقدم','All Levels':'كل المستويات'};
   el.innerHTML = `
     <div class="page-head">
       <span class="eyebrow"><span class="arabic" style="font-size:.95em;">بنك الكلمات</span>، Vocabulary Vault</span>
@@ -17980,7 +17996,7 @@ function renderVocabulary(){
   function startStudyCollection(colId){
     const col = VV_COLLECTIONS.find(c => c.id === colId);
     if(!col) return;
-    vvCategory = arMode ? col.ar : col.en;
+    vvCategory = arMode ? (VV_CAT_AR[col.ar] || col.ar) : col.en;
     vvDeck = VOCAB_BANK.filter(col.filter);
     vvOrder = vvDeck.map((_,i) => i);
     catLabel.textContent = vvCategory;
@@ -18001,10 +18017,11 @@ function renderVocabulary(){
       .sort((a,b) => b[1] - a[1]);
     catGridEl.innerHTML = entries.map(([cat,count]) => {
       const icon = VV_CAT_ICONS[cat] || 'book-open';
+      const catName = arMode ? (VV_CAT_AR[cat] || cat) : cat;
       const wordLabel = arMode ? 'كلمه' : 'word' + (count>1?'s':'');
       return `<div class="vv-cat-card" data-cat="${escapeHtml(cat)}">
         <div class="vv-cat-icon"><i data-lucide="${icon}"></i></div>
-        <div class="vv-cat-name">${escapeHtml(cat)}</div>
+        <div class="vv-cat-name">${escapeHtml(catName)}</div>
         <div class="vv-cat-count"><b>${count}</b> ${wordLabel}</div>
       </div>`;
     }).join('') || `<div class="vv-empty"><div class="icon"><i data-lucide="search-x" width="44" height="44"></i></div><h3>${arMode?'ما حصلت كلمات':'No words found'}</h3><p>${arMode?'جرب كلمه ثانيه.':'Try another search term.'}</p></div>`;
@@ -18099,8 +18116,8 @@ function renderVocabulary(){
     wrap.innerHTML = `
       <div class="vv-card-face vv-card-front">
         <div class="vv-card-top">
-          <span class="vv-card-cat">${escapeHtml(v.category||'')}</span>
-          <span class="vv-card-diff">${arMode?'المستوى':'Level'}: <span>${escapeHtml(diff)}</span></span>
+          <span class="vv-card-cat">${escapeHtml(arMode ? (VV_CAT_AR[v.category||''] || v.category||'') : v.category||'')}</span>
+          <span class="vv-card-diff">${arMode?'المستوى':'Level'}: <span>${escapeHtml(arMode ? (VV_DIFF_AR[diff] || diff) : diff)}</span></span>
         </div>
         <div class="vv-card-body">
           <div class="vv-card-word">${escapeHtml(v.en||'')}</div>
