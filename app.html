@@ -486,7 +486,7 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
 .qt-popup-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
 .qt-popup-head .icon-btn{ width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:var(--card-elevated); border:1px solid var(--border); color:var(--text-muted); cursor:pointer; font-size:.8rem; }
 @media(max-width:640px){
-  .qt-fab{ right:26px; bottom:90px; }
+  .qt-fab{ right:26px; bottom:140px; }
   .qt-popup{ left:12px; right:12px; bottom:12px; width:auto; max-height:80vh; }
   .dash-stats-bar{ gap:14px !important; padding:12px 14px !important; overflow-x:auto; flex-wrap:nowrap !important; -webkit-overflow-scrolling:touch; }
   .dash-stats-bar > div{ flex-shrink:0; }
@@ -3026,7 +3026,7 @@ const navGroups = [
      view is kept as an internal route but not advertised. */
   { label:{en:'Progress', ar:'تقدمك'}, items:[
     {id:'vocabulary', en:'Vocabulary Vault', ar:'خزنه الكلمات', icon:'book-open'},
-    {id:'review', en:'Smart Review', ar:'مراجعه ذعشانه', icon:'rotate-ccw'},
+    {id:'review', en:'Smart Review', ar:'مراجعه ذكيه', icon:'rotate-ccw'},
     {id:'bookmarks', en:'Bookmarks', ar:'المفضله', icon:'bookmark'},
     {id:'achievements', en:'Achievements', ar:'الانجازات', icon:'award'},
     {id:'calendar', en:'Study Calendar', ar:'تقويم الدراسه', icon:'calendar-days'},
@@ -3269,7 +3269,7 @@ function renderReviewStrip(){
    ============================================================ */
 const paletteData = [
   {group:'Navigate', icon:'home', label:'Learning Home | البدايه', view:'home'},
-  {group:'Navigate', icon:'rotate-ccw', label:'Smart Review | مراجعه ذعشانه', view:'review'},
+  {group:'Navigate', icon:'rotate-ccw', label:'Smart Review | مراجعه ذكيه', view:'review'},
   {group:'Navigate', icon:'bookmark', label:'Bookmarks | المفضله', view:'bookmarks'},
   {group:'Navigate', icon:'award', label:'Achievements | الانجازات', view:'achievements'},
   {group:'Navigate', icon:'graduation-cap', label:'Certificates | الشهادات', view:'certificates'},
@@ -17931,7 +17931,7 @@ function renderLessonReader(container, academy, lesson){
     </div>` : done && !nextItem ? `
     <div class="lesson-section" style="background:rgba(200,169,106,.07); border:1px solid rgba(200,169,106,.28); border-radius:16px; padding:20px; margin-top:22px;">
       <h3 style="font-size:1.02rem;"><span class="arabic">اكملت ذا المسار</span>، <span dir="ltr">Academy Complete</span></h3>
-      <p style="margin-top:8px; font-size:.86rem; color:var(--text-secondary);"><span class="arabic">ما شا الله، خلصت اخر درس في ${escapeHtml(academy.ar||'')}. راجع الكلمات في المراجعه الذعشانه، او ابدا اكاديميه ثانيه.</span><span dir="ltr">You finished the last lesson of ${escapeHtml(academy.en||'')}. Review your words in Smart Review, or start another academy.</span></p>
+      <p style="margin-top:8px; font-size:.86rem; color:var(--text-secondary);"><span class="arabic">ما شا الله، خلصت اخر درس في ${escapeHtml(academy.ar||'')}. راجع الكلمات في المراجعه الذكيه، او ابدا اكاديميه ثانيه.</span><span dir="ltr">You finished the last lesson of ${escapeHtml(academy.en||'')}. Review your words in Smart Review, or start another academy.</span></p>
       <button type="button" class="btn-outline" id="lessonNextBtn" style="margin-top:14px;"><span class="arabic">شوف الاكاديميات</span>، <span dir="ltr">Browse Academies</span></button>
     </div>` : ''}
   `;
@@ -18731,7 +18731,7 @@ function renderPronDrill(card, drill){
           </div>
           <div style="margin-top:14px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
             <button type="button" class="btn-gold" id="drill-restart"><span class="arabic">اعد التدريب</span></button>
-            ${nxt?`<button type="button" class="btn-ghost" id="drill-next"><span class="arabic">الجا: </span>${nxt.title}</button>`:''}
+            ${nxt?`<button type="button" class="btn-ghost" id="drill-next"><span class="arabic">الجاي: </span>${nxt.title}</button>`:''}
           </div>
         </div>`;
       if(window.lucide) lucide.createIcons();
@@ -19395,9 +19395,9 @@ function renderReview(){
 
   el.innerHTML = `
     <div class="page-head">
-      <span class="eyebrow"><span class="arabic" style="font-size:.95em;">المراجعه الذعشانه</span>، Smart Review</span>
+      <span class="eyebrow"><span class="arabic" style="font-size:.95em;">المراجعه الذكيه</span>، Smart Review</span>
       <h1><span class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">الكلمات ترجع قبل ما تنساها.</span>Words come back right before you forget them.</h1>
-      <p><span class="arabic" style="display:block; margin-bottom:4px;">كل كلمه قابلتها بدروسك ترجع لك هنا بفواصل ذعشانه: لسه يوم، بعدين ثلاثه ايام، بعدين اسبوعين. جاوب صح والكلمه تلسه، جاوب غلط وترجع اسرع.</span>Every word you met in your lessons comes back here on a growing schedule. Answer correctly and it moves further out; miss it and it returns sooner.</p>
+      <p><span class="arabic" style="display:block; margin-bottom:4px;">كل كلمه قابلتها بدروسك ترجع لك هنا بفواصل ذكيه: لسه يوم، بعدين ثلاثه ايام، بعدين اسبوعين. جاوب صح والكلمه تلسه، جاوب غلط وترجع اسرع.</span>Every word you met in your lessons comes back here on a growing schedule. Answer correctly and it moves further out; miss it and it returns sooner.</p>
     </div>
     <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:26px;">
       <span class="chip gold"><span class="arabic">${due.length} جاهزه اليوم</span>، ${due.length} due today</span>
@@ -19626,7 +19626,7 @@ async function renderControlCenter(){
       </p>
       <button type="button" class="btn-gold magnetic" id="ccStartBtn" style="margin-top:14px;"><span class="arabic">ابدا الدرس</span>، Start lesson</button>`
       : `<p style="margin-top:16px; color:var(--text-secondary);"><span class="arabic">اكملت هذي المرحله.</span>، You have finished this stage.</p>`}
-      ${nxt ? `<p style="margin-top:14px; font-size:.8rem; color:var(--text-muted); display:flex; align-items:center; gap:6px;"><i data-lucide="lock" width="13" height="13"></i> <span><span class="arabic">الجا: ${escapeHtml(nxt.title_ar||nxt.title_en)}</span>، Next: ${escapeHtml(nxt.title_en||nxt.title_ar)}</span></p>` : ''}
+      ${nxt ? `<p style="margin-top:14px; font-size:.8rem; color:var(--text-muted); display:flex; align-items:center; gap:6px;"><i data-lucide="lock" width="13" height="13"></i> <span><span class="arabic">الجاي: ${escapeHtml(nxt.title_ar||nxt.title_en)}</span>، Next: ${escapeHtml(nxt.title_en||nxt.title_ar)}</span></p>` : ''}
       </div>
       <div style="flex:0 0 auto; position:relative; width:128px; height:128px;">
         <svg width="128" height="128" viewBox="0 0 128 128" style="display:block; transform:rotate(-90deg);">
