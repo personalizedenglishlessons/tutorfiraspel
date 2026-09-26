@@ -1192,18 +1192,21 @@ var tabs = [
   renderTab(s360Tab);
   /* Load the full DB curriculum once so skill bars and academy progress use
      the real catalog (472 lessons) instead of the static 6-lesson-per-academy
-     offline mirror. Re-render the active tab when it arrives. */
-  if(window.PEL_ENGINE && PEL_ENGINE.setCurriculumOverride && !PEL_ENGINE.hasCurriculumOverride()){
-    (async function(){
-      try{
-        var r = await rpc('student_curriculum');
-        if(r.ok && r.data && r.data.academies){
-          PEL_ENGINE.setCurriculumOverride(r.data);
-          if(current360Uid) renderTab(s360Tab);
-        }
-      }catch(e){}
-    })();
-  }
+     offline mirror. Exposed as a promise so the progression line below can
+     await it before resolving display names (else it races and prints raw
+     academy/lesson ids). Re-renders the active tab when it arrives. */
+  var s360CurriculumReady = (function(){
+    if(window.PEL_ENGINE && PEL_ENGINE.hasCurriculumOverride && PEL_ENGINE.hasCurriculumOverride()) return Promise.resolve(true);
+    if(!window.PEL_ENGINE || !PEL_ENGINE.setCurriculumOverride) return Promise.resolve(false);
+    return rpc('student_curriculum').then(function(r){
+      if(r.ok && r.data && r.data.academies){
+        PEL_ENGINE.setCurriculumOverride(r.data);
+        if(current360Uid) renderTab(s360Tab);
+        return true;
+      }
+      return false;
+    }).catch(function(){ return false; });
+  })();
   wireStudentLinks();
 
   /* Billing & live-class credit ledger (manual WhatsApp payments). */
@@ -1305,6 +1308,9 @@ var tabs = [
     try{
       var pr = await rpc('admin_student_progression', { p_user_id: current360Uid });
       if(!pr.ok || !pr.data || !pr.data.ok || !pr.data.prog) return;
+      /* Wait for the DB curriculum so academy/lesson display names resolve
+         instead of racing it and printing raw ids. */
+      try{ await s360CurriculumReady; }catch(e){}
       var p = pr.data.prog;
       var host = document.querySelector('#viewArea .s360-header .s360-meta');
       if(host && host.isConnected){
