@@ -761,13 +761,75 @@ body.ui-ar .vv-tip{ font-family:'Cairo','Tajawal',sans-serif; direction:rtl; }
 .vv-empty{ text-align:center; padding:48px 20px; }
 .vv-empty .icon{ width:44px; height:44px; color:var(--gold); margin:0 auto 16px; }
 
+/* Curated collection cards */
+.vv-collection-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:14px; margin-bottom:32px; }
+.vv-collection-card{ background:linear-gradient(135deg,rgba(200,169,106,.1),rgba(200,169,106,.02)); border:1px solid rgba(200,169,106,.2); border-radius:18px; padding:24px; cursor:pointer; display:flex; flex-direction:column; gap:10px; transition:.3s var(--ease); position:relative; overflow:hidden; }
+.vv-collection-card:hover{ border-color:var(--gold); transform:translateY(-3px); box-shadow:var(--shadow-soft); }
+.vv-collection-card .col-icon{ width:44px; height:44px; border-radius:14px; background:linear-gradient(135deg,rgba(216,189,131,.36),rgba(168,131,69,.2) 60%,rgba(200,169,106,.12)); color:var(--gold-soft); display:flex; align-items:center; justify-content:center; }
+.vv-collection-card .col-icon [data-lucide]{ width:22px; height:22px; }
+.vv-collection-card .col-name{ font-family:'Fraunces',serif; font-size:1.1rem; font-weight:500; color:var(--text); line-height:1.3; }
+body.ui-ar .vv-collection-card .col-name{ font-family:'Cairo','Tajawal',sans-serif; }
+.vv-collection-card .col-desc{ font-size:.8rem; color:var(--text-muted); line-height:1.5; }
+body.ui-ar .vv-collection-card .col-desc{ font-family:'Cairo','Tajawal',sans-serif; }
+.vv-collection-card .col-count{ font-size:.76rem; color:var(--text-muted); }
+.vv-collection-card .col-count b{ color:var(--gold); }
+
+/* Responsive: all devices */
 @media(max-width:640px){
   .vv-cat-grid{ grid-template-columns:1fr 1fr; }
+  .vv-collection-grid{ grid-template-columns:1fr; }
   .vv-card-face{ padding:24px 20px; }
   .vv-meta-grid{ grid-template-columns:1fr; }
   .vv-study-stats{ display:none; }
+  .vv-study-top{ flex-wrap:wrap; gap:10px; }
+  .vv-nav{ padding:8px 0 calc(8px + env(safe-area-inset-bottom,0px)); }
 }
 @media(max-width:380px){ .vv-cat-grid{ grid-template-columns:1fr; } }
+
+/* Tablet portrait */
+@media(min-width:641px) and (max-width:900px){
+  .vv-cat-grid{ grid-template-columns:repeat(2,1fr); }
+  .vv-collection-grid{ grid-template-columns:repeat(2,1fr); }
+  .vv-card-scene{ min-height:420px; }
+}
+
+/* Large screens / TV */
+@media(min-width:1400px){
+  .vv-shell{ max-width:1100px; }
+  .vv-cat-grid{ grid-template-columns:repeat(4,1fr); }
+  .vv-collection-grid{ grid-template-columns:repeat(3,1fr); }
+  .vv-card-scene{ min-height:560px; }
+  .vv-card-face{ padding:48px; }
+  .vv-card-word{ font-size:clamp(3rem,6vw,4.5rem); }
+  .vv-card-ar{ font-size:clamp(2rem,4vw,3rem); }
+  .vv-study-top{ padding:0 0 8px; }
+  .vv-nav{ max-width:700px; margin:0 auto; }
+}
+
+/* TV / extra large */
+@media(min-width:1920px){
+  .vv-shell{ max-width:1300px; }
+  .vv-cat-grid{ grid-template-columns:repeat(5,1fr); }
+  .vv-card-scene{ min-height:640px; }
+}
+
+/* Landscape phone */
+@media(max-height:500px) and (orientation:landscape){
+  .vv-card-scene{ min-height:280px; }
+  .vv-card-face{ padding:16px 24px; }
+  .vv-card-word{ font-size:clamp(1.8rem,4vw,2.5rem); }
+  .vv-card-ar{ font-size:clamp(1.2rem,2.5vw,1.6rem); }
+  .vv-study-top{ margin-bottom:10px; }
+  .vv-nav{ padding:4px 0; }
+}
+
+/* Touch targets for mobile */
+@media(hover:none){
+  .vv-card-inner{ cursor:default; }
+  .vv-cat-card:hover,.vv-collection-card:hover{ transform:none; }
+  .vv-nav-btn,.vv-ctrl-btn,.vv-back-btn{ width:52px; height:52px; }
+  .vv-speak-btn{ width:48px; height:48px; }
+}
 
 /* pronunciation + grammar topic grid */
 .topic-tile{ padding:20px; border-radius:16px; background:var(--card); border:1px solid var(--border); cursor:pointer; transition:.3s var(--ease); }
@@ -17818,6 +17880,7 @@ function renderVocabulary(){
         <div class="vv-toolbar">
           <div class="vv-search"><i data-lucide="search" width="15" height="15" style="color:var(--text-muted); flex-shrink:0;"></i><input type="text" id="vvSearch" dir="auto" placeholder="${arMode?'ابحث في المفردات...':'Search vocabulary...'}"></div>
         </div>
+        <div class="vv-collection-grid" id="vvCollectionGrid"></div>
         <div class="vv-cat-grid" id="vvCatGrid"></div>
       </div>
       <div id="vvStudyPanel" class="vv-study-panel">
@@ -17862,6 +17925,45 @@ function renderVocabulary(){
   const catLabel = document.getElementById('vvCatLabel');
   const statSeen = document.getElementById('vvStatSeen');
   const statTotal = document.getElementById('vvStatTotal');
+  // --- Curated Collections ---
+  const VV_COLLECTIONS = [
+    {id:'everyday', icon:'sun', en:'Everyday Words', ar:'كلمات يوميه', desc_en:'Common words for daily life', desc_ar:'كلمات شائعه للحياة اليوميه', filter: v => v.difficulty==='Beginner'},
+    {id:'beginners', icon:'graduation-cap', en:'Essential for Beginners', ar:'اساسيات للمبتدئين', desc_en:'Start here — the most useful words', desc_ar:'ابدا من هنا — انفع الكلمات', filter: v => v.difficulty==='Beginner' || v.difficulty==='Intermediate'},
+    {id:'advanced', icon:'zap', en:'Advanced Vocabulary', ar:'مفردات متقدمه', desc_en:'Challenge yourself with harder words', desc_ar:'تحدى نفسك بكلمات اصعب', filter: v => v.difficulty==='Advanced'},
+    {id:'all', icon:'library', en:'All Words', ar:'كل الكلمات', desc_en:'Browse the full vocabulary bank', desc_ar:'تصفح كل المفردات', filter: () => true},
+  ];
+  const collectionGrid = document.getElementById('vvCollectionGrid');
+  function renderCollections(){
+    collectionGrid.innerHTML = VV_COLLECTIONS.map(col => {
+      const count = VOCAB_BANK.filter(col.filter).length;
+      const name = arMode ? col.ar : col.en;
+      const desc = arMode ? col.desc_ar : col.desc_en;
+      const wordLabel = arMode ? 'كلمه' : 'word' + (count>1?'s':'');
+      return `<div class="vv-collection-card" data-col="${col.id}">
+        <div class="col-icon"><i data-lucide="${col.icon}"></i></div>
+        <div class="col-name">${escapeHtml(name)}</div>
+        <div class="col-desc">${escapeHtml(desc)}</div>
+        <div class="col-count"><b>${count}</b> ${wordLabel}</div>
+      </div>`;
+    }).join('');
+    collectionGrid.querySelectorAll('.vv-collection-card').forEach(card => {
+      card.addEventListener('click', () => startStudyCollection(card.dataset.col));
+    });
+  }
+  function startStudyCollection(colId){
+    const col = VV_COLLECTIONS.find(c => c.id === colId);
+    if(!col) return;
+    vvCategory = arMode ? col.ar : col.en;
+    vvDeck = VOCAB_BANK.filter(col.filter);
+    vvOrder = vvDeck.map((_,i) => i);
+    catLabel.textContent = vvCategory;
+    statTotal.textContent = vvDeck.length;
+    vvSeen.clear();
+    renderStudyCard();
+    catPanel.style.display = 'none';
+    studyPanel.classList.add('show');
+    if(window.lucide) lucide.createIcons();
+  }
   // --- Category Picker ---
   function renderCategoryPicker(){
     const q = (document.getElementById('vvSearch').value||'').toLowerCase();
@@ -18066,7 +18168,25 @@ function renderVocabulary(){
     }
   }
   document.addEventListener('keydown', vvKeyHandler);
+  // --- Touch / Swipe support ---
+  let vvTouchStartX = 0, vvTouchStartY = 0;
+  cardScene.addEventListener('touchstart', (e) => {
+    vvTouchStartX = e.touches[0].clientX;
+    vvTouchStartY = e.touches[0].clientY;
+  }, {passive:true});
+  cardScene.addEventListener('touchend', (e) => {
+    if(!studyPanel.classList.contains('show')) return;
+    const dx = e.changedTouches[0].clientX - vvTouchStartX;
+    const dy = e.changedTouches[0].clientY - vvTouchStartY;
+    if(Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)){
+      if(dx > 0){ if(vvCurrent > 0) showStudyCard(vvCurrent-1, -1); }
+      else { flipThenAdvance(); }
+    } else if(Math.abs(dy) > 50 && Math.abs(dy) > Math.abs(dx)){
+      flipCard();
+    }
+  }, {passive:true});
   // --- Init ---
+  renderCollections();
   renderCategoryPicker();
 }
 viewRenderers.vocabulary = renderVocabulary;
