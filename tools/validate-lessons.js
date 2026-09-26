@@ -81,7 +81,7 @@ ids.forEach(id => {
   if(Array.isArray(l.quiz)){
     if(l.quiz.length < 2) fail(id, 'quiz has <2 items ('+l.quiz.length+')');
     l.quiz.forEach((q, idx) => {
-      if(!q || !q.q) fail(id, 'quiz['+idx+'] missing q');
+      if(!q || !q.qAr || !q.qEn) fail(id, 'quiz['+idx+'] missing qAr/qEn');
       const opts = q.options;
       if(!Array.isArray(opts) || opts.length < 2) fail(id, 'quiz['+idx+'] options <2');
       else {

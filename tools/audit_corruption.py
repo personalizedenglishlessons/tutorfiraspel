@@ -72,6 +72,10 @@ DB_SQL = (
     "union all\n"
     "select 'lessons', id, '', title_en, title_ar from lessons\n"
     " where title_ar ~ 'ببدون|حينجليز|الاغيردات|الوفكار|الواحداث|يبانن|لازمون|فعلايبك|يداخل|ثمانانيه|فومثلن|بكذا هذا|ساال|وراا|دااما|الرايسية';\n"
+    "union all\n"
+    "select 'lesson_exercises', id, type, lesson_id, payload->>'ar' from lesson_exercises\n"
+    " where payload::text ~ 'ببدون|حينجليز|الوفكار|الواحداث|يبانن|لازمون|فعلايبك|يداخل|ثمانانيه|فومثلن|بكذا هذا|ساال|وراا|دااما|قراان|شااع|الرايسية'\n"
+    "    or hint_ar ~ 'ساال|وراا|دااما|قراان|شااع|الرايسية|ببدون|ثمانانيه';\n"
 )
 
 

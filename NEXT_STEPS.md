@@ -85,6 +85,17 @@ seconds; exit 1 on any hit. `--sql` prints the DB sweep query. Run it before
 every push. DB re-verified clean (all lesson_items hits were ممكن/يمكن
 substrings and legit كيفك greetings).
 
+### DB corruption: hamza->plain-alef family (2026-09-27, f323ba7+)
+The lesson DATABASE carried its own corruption the source never had: some
+script replaced every hamza with a plain alef, creating doubled-ا garbles.
+~120 lesson_items rows + 39 lesson_exercises rows + the words 'wrong' row
+fixed (ساال->سوال, شااع->شايع, دااما->دايما, قاامة->قايمه, قراان->قران,
+الرايسية->الرئيسيه, عشاا->عشا, وراا->ورا, +50 more). All content tables
+verified 0 hits. tools/audit_corruption.py --sql now sweeps items+lessons+
+exercises. Also: validate-lessons.js was stale (checked q.q instead of
+qAr/qEn -> 266 false positives); fixed, all 133 lessons pass. Admin 360
+recommendations title now resolves from the DB catalog (was generic 'درس').
+
 ### Deliberately NOT changed (house style / later legit simplifications)
 عشانك؟ greeting, بعدين/بعدها/الجاه/ومثلن/صح/اغلط dialect forms,
 پ for P in translits, الانجليزي (old pre-corruption commit itself had
