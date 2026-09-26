@@ -13392,7 +13392,7 @@ const LESSON_LIBRARY = {
     grammar:{title:'Calling to the table', rule:'Families call each other with taal kul (come eat) or yalla ghada (lets go, lunch). The meal is announced, not scheduled.', saudi:'ينادي اهل البيت: يلا البكره، تعال كل. ما فيه مواعيد رسميه.', wrong:'Wait for a formal announcement before eating.', right:'"Yalla, alghada jahez." (Come on, lunch is ready.)', mistakes:['Sitting at the table before being called in some homes.','Starting to eat before the eldest starts, a sign of respect.']},
     conversation:[
       {who:'Mother', ar:'يلا يا اول شيد، البكره جاهز.', translit:'yalla ya awlad, alghada jahez', en:'Come on kids, lunch is ready.'},
-      {who:'You', ar:'جايتنا، شو سويتي اليوم؟', translit:'jayyatna, shu sawwayti alyoum?', en:'Coming, what did you cook today?'},
+      {who:'You', ar:'جيتي لنا، وش سويتي اليوم؟', translit:'jayyit lana, wesh sawaiti alyoum?', en:'Coming, what did you cook today?'},
       {who:'Mother', ar:'كبسه على اصولها.', translit:'kabsa ala osulha', en:'Kabsa done properly.'},
       {who:'You', ar:'يعطيك العافيه يا امي.', translit:'yatik alafya ya ummi', en:'Thank you, mom.'},
     ],
@@ -17665,7 +17665,7 @@ function renderWorkspace(){
   const list = academyLessonList(academy);
   const lesson = getLesson(academy.id, wsState.lessonId);
   if(!lesson){
-    if(el) el.innerHTML = '<div class="empty-state" style="padding:60px 20px;text-align:center;"><i class="empty-icon" data-lucide="book-open"></i><h3><span class="arabic" style="display:block;margin-bottom:4px;">الدرس غير متاح</span>Lesson not available</h3><p><span class="arabic" style="display:block;margin-bottom:4px;">ذا الدرس لسا ما انضاف لل مكتبه</span>This lesson has no content yet. It will appear here once it is published.</p></div>';
+    if(el) el.innerHTML = '<div class="empty-state" style="padding:60px 20px;text-align:center;"><i class="empty-icon" data-lucide="book-open"></i><h3><span class="arabic" style="display:block;margin-bottom:4px;">الدرس غير متاح</span>Lesson not available</h3><p><span class="arabic" style="display:block;margin-bottom:4px;">ذا الدرس لسه ما انضاف للمكتبه</span>This lesson has no content yet. It will appear here once it is published.</p></div>';
     if(window.lucide) lucide.createIcons();
     return;
   }
@@ -21979,7 +21979,7 @@ if(window.lucide) lucide.createIcons();
       return '<div class="pel-req-row">'+
         '<div class="pel-req-main"><b>'+esc(nm)+'</b> - '+r.credit_cost+' '+(A?'رصيد':'credits')+(r.city_raw?(' - '+esc(r.city_raw)):'')+'<div class="pel-req-meta">'+esc(fmtDate(r.created_at))+(r.preferred_times?(' - '+esc(r.preferred_times)):'')+'</div>'+(r.decision_note?'<div class="pel-req-note">'+esc(r.decision_note)+'</div>':'')+'</div>'+
         st+'</div>';
-    }).join('') : '<div class="pel-empty">'+esc(A?'لسا ما طلبيت حصه. اختر نوع الحصه فوق واطلب.' : 'No live class requests yet. Pick a class type above and request one.')+'</div>';
+    }).join('') : '<div class="pel-empty">'+esc(A?'لسه ما طلبت حصه. اختر نوع الحصه فوق واطلب.' : 'No live class requests yet. Pick a class type above and request one.')+'</div>';
 
     v.innerHTML = '<div class="pel-lc-view">'+
       welcome+
@@ -22038,7 +22038,7 @@ if(window.lucide) lucide.createIcons();
     const v=document.getElementById('view-liveClasses'); if(!v) return;
     const sel=v.querySelector('#pelSvc'); const city=v.querySelector('#pelCity'); const times=v.querySelector('#pelTimes'); const notes=v.querySelector('#pelNotes'); const btn=v.querySelector('#pelSubmit');
     if(!sel) return;
-    const cl=c(); if(!cl){ toast({en:'Not ready yet',ar:'لسا جاهز'}); return; }
+    const cl=c(); if(!cl){ toast({en:'Not ready yet',ar:'لسه مو جاهز'}); return; }
     const A=ar();
     // Validate required fields before submitting
     if(!times.value.trim()){ toast({en:'Enter your preferred times first.', ar:'اكتب اوقات مناسبه لك الاول.'}, 'error'); times.focus(); return; }
