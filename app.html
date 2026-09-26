@@ -10288,9 +10288,20 @@ function featuredLesson(){
 function directionAcademies(){
   // The academy list for the learner's direction: Arabic academies
   // when direction is 'ar', English academies otherwise. Never empty.
+  // STEP-plan students only see academies on their STEP route.
   const dir = learningDirection();
-  const pool = ACADEMIES.filter(a => (a.dir || 'en') === dir);
-  return pool.length ? pool : ACADEMIES;
+  let pool = ACADEMIES.filter(a => (a.dir || 'en') === dir);
+  if(!pool.length) pool = ACADEMIES.slice();
+  // STEP isolation: a STEP student only sees their route academies
+  if(typeof isStepStudent === 'function' && isStepStudent()){
+    const st = window.PEL_EFFECTIVE_STATE;
+    if(st && Array.isArray(st.route_stages) && st.route_stages.length){
+      const routeIds = st.route_stages.map(s => s.id).filter(Boolean);
+      const filtered = pool.filter(a => routeIds.indexOf(a.id) !== -1);
+      if(filtered.length) return filtered;
+    }
+  }
+  return pool;
 }
 
 /* ---- vocabulary bank (full trilingual flashcard fields) ---- */
@@ -14327,6 +14338,18 @@ function nextLesson(){
     for(const l of list){
       if(l.locked) break;
       if(!completedLessons.has(lessonKey(a.id, l.id))) return {academy: a.id, lesson: l.id};
+    }
+  }
+  // STEP isolation on the final fallback: never send a STEP student to a
+  // non-STEP academy. Prefer the first route stage academy.
+  if(typeof isStepStudent === 'function' && isStepStudent()){
+    const st = window.PEL_EFFECTIVE_STATE;
+    if(st && Array.isArray(st.route_stages) && st.route_stages.length){
+      const stepAcademy = ACADEMIES.find(a => a.id === st.route_stages[0].id);
+      if(stepAcademy){
+        const sl = academyLessonList(stepAcademy)[0];
+        if(sl) return {academy: stepAcademy.id, lesson: sl.id};
+      }
     }
   }
   const a0 = ACADEMIES[0];
