@@ -16,16 +16,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;500;700&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
 <script src="vendor/lucide.min.js" integrity="sha384-e4/0BB/wmBhpxvLLrbTidvaESiwxgHfoSGUoRd2s9Ho7YmgxiMftfoo51J/Ojyph" crossorigin="anonymous" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.50.0/dist/umd/supabase.js" integrity="sha384-K0oxqktRvaThvYgGL4G+OK2Ih6VS6Uyu7j3+7WJgp/uWM0Yv6Xi4YEiw0BB+mPfi" crossorigin="anonymous" defer></script>
-<script src="lib/daily-lesson.js?v=928133c7" defer></script>
-<script src="lib/pel-personalization.js?v=8b3a91d5" defer></script>
-<script src="lib/pel-plans.js?v=bc153457" defer></script>
-<script src="lib/pel-settings.js?v=f0132cbb" defer></script>
-<script src="lib/cert-qr.js?v=d202324c" defer></script>
-<script src="lib/cert-sheet.js?v=36e2abcd" defer></script>
-<script src="lib/pel_config.js?v=deec3e10"></script>
-<script src="lib/pel_lesson_stage.js?v=c7e2404f"></script>
-<script src="lib/pel_dashboard_life.js?v=769f4110"></script>
-<script src="lib/pel_curriculum_path.js?v=4fdca572"></script>
+<script src="lib/daily-lesson.js?v=e944dc59" defer></script>
+<script src="lib/pel-personalization.js?v=e3af6b4d" defer></script>
+<script src="lib/pel-plans.js?v=31e23e3b" defer></script>
+<script src="lib/pel-settings.js?v=30360798" defer></script>
+<script src="lib/cert-qr.js?v=a43f19f9" defer></script>
+<script src="lib/cert-sheet.js?v=ece713aa" defer></script>
+<script src="lib/pel_config.js?v=d66df0a3"></script>
+<script src="lib/pel_lesson_stage.js?v=3e3f6bf4"></script>
+<script src="lib/pel_dashboard_life.js?v=d42ab032"></script>
+<script src="lib/pel_curriculum_path.js?v=e4c5c297"></script>
 <style>
 /* ============================================================
    DESIGN SYSTEM TOKENS, shared with index.html / login.html
@@ -3226,7 +3226,7 @@ function buildDailyItems(){
   const persona = SPEAKING_PERSONAS[dayIdx % SPEAKING_PERSONAS.length];
   const ac = ACADEMIES.find(a => a.id === feat.academy);
   return [
-    {icon:'sparkles', title:'<span class="arabic">درس اليوم</span>، Lesson of the Day', body: escapeHtml(lesson.title||''), sub: `<span class="arabic">${ac ? escapeHtml(ac.ar||ac.en||'') : ''}، ${String(lesson.duration||'').replace(/\bmin\b/i,'دقيقه')}</span>، ${ac ? escapeHtml(ac.en||'') : ''}، ${escapeHtml(lesson.duration||'')}`, view:'lessonOfDay'},
+    {icon:'sparkles', title:'<span class="arabic">' + (feat.review ? 'درس اليوم · مراجعه' : 'درس اليوم') + '</span>، Lesson of the Day' + (feat.review ? ' · Review' : ''), body: escapeHtml(lesson.title||''), sub: `<span class="arabic">${ac ? escapeHtml(ac.ar||ac.en||'') : ''}، ${String(lesson.duration||'').replace(/\bmin\b/i,'دقيقه')}</span>، ${ac ? escapeHtml(ac.en||'') : ''}، ${escapeHtml(lesson.duration||'')}`, view:'lessonOfDay'},
     {icon:'book-open', title:'<span class="arabic">كلمه اليوم</span>، Word of the Day', body: escapeHtml(word.en||''), sub: `${escapeHtml(translitEn(word.en||''))}، ${escapeHtml(word.ar||'')}`, view:'vocabulary'},
     {icon:'quote', title:'<span class="arabic">كلمه اليوم</span>، Phrase of the Day', body: escapeHtml(phrase.example ? phrase.example.en||'' : phrase.en||''), sub: escapeHtml(phrase.example ? phrase.example.ar||'' : phrase.ar||''), view:'vocabulary'},
     {icon:'flag', title:'<span class="arabic">تلازم اليوم</span>، Collocation of the Day', body: escapeHtml(word.collocations || word.en||''), sub: escapeHtml(word.ar||''), view:'vocabulary'},
@@ -10260,16 +10260,22 @@ function featuredLesson(){
   try{
     const st = window.PEL_EFFECTIVE_STATE;
     if(st && st.stage && st.lessons && st.lessons.length){
-      // Rotate the daily card through the student's available lessons so it
-      // feels fresh each day; the sequential path stays on "كمل تعلمك" /
-      // nextLesson(). Falls back to the first available lesson.
-      const avail = st.lessons.filter(x => x.state === 'available');
+      // Rotate the daily card so it feels fresh each day. The stage gates
+      // lessons strictly sequentially (rn <= done + 1), so 'available' alone
+      // is always exactly ONE lesson and a rotation among only-available
+      // lessons can never rotate. Pool = everything the student can actually
+      // open in their CURRENT stage: the next available lesson plus their
+      // completed ones (daily review picks). Locked lessons are excluded —
+      // featuring a lesson the student cannot open would be a dead card.
+      // The sequential path stays on "كمل تعلمك" / nextLesson().
+      const pool = st.lessons.filter(x => x.state === 'available' || x.state === 'completed');
       const _di = parseInt(new Intl.DateTimeFormat('en-CA', {timeZone:'Asia/Riyadh'}).format(new Date()).replace(/-/g,'')) % 100000;
-      const L = (avail.length > 1 ? avail[_di % avail.length] : (avail[0] || st.lessons[0]));
+      const L = (pool.length > 1 ? pool[_di % pool.length] : (pool[0] || st.lessons.find(x => x.state === 'available') || st.lessons[0]));
       if(L && L.id){
         return { academy: st.stage.id, lesson: L.id,
                  en: L.title_en || L.en || L.title || '',
-                 ar: L.title_ar || L.ar || '' };
+                 ar: L.title_ar || L.ar || '',
+                 review: L.state === 'completed' };
       }
     }
   }catch(e){ /* fall through to rotating bank */ }
