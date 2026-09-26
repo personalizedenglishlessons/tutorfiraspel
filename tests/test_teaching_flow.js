@@ -44,7 +44,7 @@ function makeLesson(opts){
   opts = opts || {};
   const vocab = opts.vocab || [
     { en:'tired', ar:'متعوب', translit:'تايرد', example:{en:'I am tired today.', ar:'انا متعب اليوم.'}, sentences:[] },
-    { en:'happy', ar:'سعيد', translit:'هابي', example:{en:'She is happy.', ar:'هي سعيدة.'}, sentences:[] },
+    { en:'happy', ar:'سعيد', translit:'هابي', example:{en:'She is happy.', ar:'هي سعيده.'}, sentences:[] },
     { en:'ready', ar:'جاهز', translit:'ريدي', example:{en:'Are you ready?', ar:'هل انت جاهز؟'}, sentences:[] },
     { en:'busy', ar:'مشغول', translit:'بيزي', example:{en:'He is busy now.', ar:'هو مشغول الحين.'}, sentences:[] },
   ];
@@ -107,7 +107,7 @@ check('pron cat returns null (no trap)', phRandom === null);
 
 // 1. concept_examples appears before first practice activity
 var lesson1 = makeLesson({
-  notes: [{en:'Test rule', ar:'قاعدة'}],
+  notes: [{en:'Test rule', ar:'قاعده'}],
   exampleSentences: [{en:'This is a test sentence.', ar:'هذا اختبار.'}],
   conversation: [{en:'I am fine.', ar:'انا بخير.'}, {en:'I am ready.', ar:'انا جاهز.'}, {en:'I am tired.', ar:'انا متعب.'}],
 });
@@ -147,9 +147,9 @@ check('fake dialogue: no complete_dialogue', !hasCompDlg);
 // 5. Vocab-only lesson (no sentences at all): no fill_blank, arrange_words, speaking, guided_production
 var vocabOnly = makeLesson({
   vocab: [
-    { en:'cat', ar:'قطة', translit:'كات', example:{}, sentences:[] },
+    { en:'cat', ar:'قطه', translit:'كات', example:{}, sentences:[] },
     { en:'dog', ar:'كلب', translit:'دوغ', example:{}, sentences:[] },
-    { en:'fish', ar:'سمكة', translit:'فيش', example:{}, sentences:[] },
+    { en:'fish', ar:'سمكه', translit:'فيش', example:{}, sentences:[] },
     { en:'bird', ar:'طاير', translit:'بيرد', example:{}, sentences:[] },
   ],
   conversation: [], exampleSentences: [], notes: [],

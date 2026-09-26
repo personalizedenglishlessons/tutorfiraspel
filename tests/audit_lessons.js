@@ -43,24 +43,24 @@ const buildSequence = api.buildSequence;
 // Access PEL_BEGINNER through the module's internal scope
 // Since it's not directly exposed, let's build lessons from known topics
 const topics = [
-  { id:'iam', title:'I am: your first English sentence', ar:'انا: اول جملة انجليزي' },
-  { id:'pronouns', title:'My, your, his, her', ar:'ضمائر الملكية' },
+  { id:'iam', title:'I am: your first English sentence', ar:'انا: اول جمله انجليزي' },
+  { id:'pronouns', title:'My, your, his, her', ar:'ضماير الملكيه' },
   { id:'aan', title:'A, An and The', ar:'ال التعريف و ا' },
   { id:'numbers', title:'Numbers 1-10', ar:'الارقام ١-١٠' },
   { id:'colors', title:'Colors', ar:'الالوان' },
-  { id:'family', title:'Family members', ar:'العائلة' },
+  { id:'family', title:'Family members', ar:'العايله' },
   { id:'days', title:'Days of the week', ar:'ايام الاسبوع' },
   { id:'greetings', title:'Greetings', ar:'التحيات' },
   { id:'food', title:'Food and drink', ar:'الاكل و الشرب' },
-  { id:'body', title:'Body parts', ar:'اجزاء الجسم' },
+  { id:'body', title:'Body parts', ar:'اجزا الجسم' },
   { id:'clothes', title:'Clothes', ar:'الملابس' },
   { id:'weather', title:'Weather', ar:'الطقس' },
   { id:'house', title:'House and home', ar:'البيت' },
-  { id:'jobs', title:'Jobs', ar:'الوظائف' },
-  { id:'directions', title:'Asking directions', ar:'السؤال عن الاتجاهات' },
-  { id:'time', title:'Telling time', ar:'الساعة و الوقت' },
+  { id:'jobs', title:'Jobs', ar:'الوظايف' },
+  { id:'directions', title:'Asking directions', ar:'السوال عن الاتجاهات' },
+  { id:'time', title:'Telling time', ar:'الساعه و الوقت' },
   { id:'shopping', title:'Shopping', ar:'التسوق' },
-  { id:'health', title:'Health and doctor', ar:'الصحة و الطبيب' },
+  { id:'health', title:'Health and doctor', ar:'الصحه و الطبيب' },
 ];
 
 // Build a realistic lesson for each topic
@@ -76,7 +76,7 @@ function makeLessonForTopic(topic) {
       { en:'please', ar:'من فضلك', translit:'بليز', example:{en:'Please help me.', ar:'من فضلك ساعدني.'}, sentences:[] },
       { en:'sorry', ar:'آسف', translit:'سوري', example:{en:'I am sorry.', ar:'انا آسف.'}, sentences:[] },
     ],
-    dbNotes: [{ en:'Basic greeting words', ar:'كلمات التحية الأساسية' }],
+    dbNotes: [{ en:'Basic greeting words', ar:'كلمات التحيه الاساسيه' }],
     conversation: [
       { en:'Hello!', ar:'هلو!' },
       { en:'How are you?', ar:'كيف حالك؟' },
