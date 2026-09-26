@@ -720,7 +720,7 @@ body.ui-ar .vv-card-cat{ letter-spacing:0; text-transform:none; font-family:'Cai
 .vv-card-diff span{ color:var(--gold); }
 .vv-card-body{ flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; gap:8px; }
 .vv-card-word{ font-family:'Fraunces',Georgia,serif; font-size:clamp(2rem,5vw,3.5rem); font-weight:500; letter-spacing:-.02em; line-height:1.1; color:var(--text); }
-.vv-card-ipa{ font-size:clamp(.9rem,1.8vw,1.2rem); color:var(--gold-soft); font-family:monospace; }
+.vv-card-ipa{ display:none; } /* Hidden: IPA glyphs show as tofu on TV/tablet browsers; translit provides pronunciation */
 .vv-card-translit{ font-size:clamp(.9rem,2vw,1.2rem); color:var(--text-secondary); direction:ltr; }
 .vv-card-ar{ font-family:'Cairo','Tajawal',sans-serif; font-size:clamp(1.4rem,3.5vw,2.2rem); direction:rtl; color:var(--text); margin-top:8px; line-height:1.4; }
 .vv-speak-btn{ margin-top:16px; background:var(--card-elevated); border:1px solid var(--border); color:var(--gold); width:48px; height:48px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:border-color .3s var(--ease),color .3s var(--ease); }
@@ -17873,25 +17873,6 @@ function renderVocabulary(){
   const el = document.getElementById('view-vocabulary');
   el.dataset.rendered = '1';
   const arMode = document.body.classList.contains('ui-ar');
-  // Detect IPA font support — TV browsers often lack IPA glyphs (tofu boxes)
-  var _ipaOK = null;
-  function ipaSupported(){
-    if(_ipaOK !== null) return _ipaOK;
-    try{
-      var ctx = document.createElement('canvas').getContext('2d');
-      ctx.font = '20px sans-serif';
-      // Private Use Area char — definitely missing from all fonts
-      var missingW = ctx.measureText('\uE000').width;
-      // Common IPA chars that show as tofu on TV browsers
-      var ipaChars = 'ɪɡʃəʊːˈˌɑɛɔ';
-      var tofu = 0;
-      for(var i=0;i<ipaChars.length;i++){
-        if(ctx.measureText(ipaChars[i]).width === missingW) tofu++;
-      }
-      _ipaOK = tofu < 2; // If 2+ IPA chars are tofu, font doesn't support IPA
-    }catch(e){ _ipaOK = true; }
-    return _ipaOK;
-  }
   const VV_CAT_ICONS = {
     'Restaurant English':'utensils','Hospital English':'stethoscope','Business English':'briefcase',
     'Airport English':'plane','Shopping English':'shopping-bag','Travel English':'globe',
@@ -18058,6 +18039,31 @@ function renderVocabulary(){
     const wordKey = 'vocab-' + v.en.toLowerCase().replace(/\s+/g,'-');
     const bm = isBookmarked('vocab', wordKey);
     const diff = v.difficulty || '';
+    // Saudi Arabic cleaner — normalizes hamzas, removes diacritics, simplifies formal terms
+    function vvSaudiClean(s){
+      if(!s) return '';
+      return String(s)
+        .replace(/[\u064B-\u065F\u0670\u0640]/g,'')        // remove diacritics + tatweel
+        .replace(/أ|إ|آ/g,'ا')                                  // hamza on alef → alef
+        .replace(/ؤ/g,'و')                                      // waw hamza → waw
+        .replace(/ئ/g,'ي')                                      // yaa hamza → yaa
+        .replace(/—|–/g,'،')                                    // em/en dash → comma
+        .replace(/جدا/g,'مره')                                  // very → marra (Saudi)
+        .replace(/من فضلك/g,'لو سمحت')                          // please → law samaht
+        .replace(/لديك/g,'عندك')                                // you have → indik
+        .replace(/هذه/g,'هذي')                                  // this (f) → hathi
+        .replace(/ذلك/g,'ذاك')                                  // that → thak
+        .replace(/تستطيع/g,'تقدر')                              // you can → tiqdar
+        .replace(/التي/g,'اللي')                                // which → illi
+        .replace(/الذي/g,'اللي')                                // who → illi
+        .replace(/إننا/g,'احنا')                                // we → ihna
+        .replace(/يمكنك/g,'تقدر')                               // you can → tiqdar
+        .replace(/يجب/g,'لازم')                                 // must → lazim
+        .replace(/سوف/g,'بت')                                   // will → bt
+        .replace(/كما/g,'بس')                                   // trim overly formal
+        .replace(/حيث/g,'لان')                                  // since → la-an
+        .replace(/بنفس/g,'بنفس');                               // keep as-is if already Saudi
+    }
     wrap.innerHTML = `
       <div class="vv-card-face vv-card-front">
         <div class="vv-card-top">
@@ -18066,7 +18072,6 @@ function renderVocabulary(){
         </div>
         <div class="vv-card-body">
           <div class="vv-card-word">${escapeHtml(v.en||'')}</div>
-          ${ipaSupported() ? `<div class="vv-card-ipa">${escapeHtml(v.ipa||'')}</div>` : ''}
           <div class="vv-card-translit">${escapeHtml(v.translit||translitEn(v.en||''))}</div>
           <div class="vv-card-ar">${escapeHtml(v.ar||'')}</div>
           <button type="button" class="vv-speak-btn" data-speak="${escapeHtml(v.en||'')}" aria-label="Listen"><i data-lucide="volume-2"></i></button>
@@ -18078,33 +18083,33 @@ function renderVocabulary(){
           <span class="vv-card-diff">${escapeHtml(diff)}</span>
         </div>
         <div class="vv-card-back-content">
-          <div class="vv-example-label">${arMode?'مثال':'Example'}</div>
+          <div class="vv-example-label">مثال</div>
           <div class="vv-example-en">"${escapeHtml(v.example ? v.example.en||'' : '')}"</div>
-          <div class="vv-example-ar">${escapeHtml(v.example ? v.example.ar||'' : '')}</div>
+          <div class="vv-example-ar">${escapeHtml(vvSaudiClean(v.example ? v.example.ar||'' : ''))}</div>
           <div class="vv-example-tr">${escapeHtml(v.example ? v.example.translit||'' : '')}</div>
           <div class="vv-divider"></div>
           <div class="vv-meta-grid">
             <div class="vv-meta-item">
-              <div class="vv-meta-label">${arMode?'مرادفات':'Synonyms'}</div>
-              <div class="vv-meta-val">${escapeHtml(v.synonyms_ar||v.synonyms||'')}</div>
+              <div class="vv-meta-label">مرادفات</div>
+              <div class="vv-meta-val">${escapeHtml(vvSaudiClean(v.synonyms_ar||v.synonyms||''))}</div>
             </div>
             ${v.antonyms && v.antonyms !== '-' ? `<div class="vv-meta-item">
-              <div class="vv-meta-label">${arMode?'متضادات':'Antonyms'}</div>
-              <div class="vv-meta-val">${escapeHtml(v.antonyms_ar||v.antonyms||'')}</div>
+              <div class="vv-meta-label">متضادات</div>
+              <div class="vv-meta-val">${escapeHtml(vvSaudiClean(v.antonyms_ar||v.antonyms||''))}</div>
             </div>` : ''}
           </div>
           <div class="vv-meta-grid">
             <div class="vv-meta-item">
-              <div class="vv-meta-label">${arMode?'عائله الكلمه':'Family'}</div>
-              <div class="vv-meta-val">${escapeHtml(v.family_ar||v.family||'')}</div>
+              <div class="vv-meta-label">عائله الكلمه</div>
+              <div class="vv-meta-val">${escapeHtml(vvSaudiClean(v.family_ar||v.family||''))}</div>
             </div>
             <div class="vv-meta-item">
-              <div class="vv-meta-label">${arMode?'تلازمات':'Collocations'}</div>
-              <div class="vv-meta-val">${escapeHtml(v.collocations_ar||v.collocations||'')}</div>
+              <div class="vv-meta-label">تلازمات</div>
+              <div class="vv-meta-val">${escapeHtml(vvSaudiClean(v.collocations_ar||v.collocations||''))}</div>
             </div>
           </div>
           <div class="vv-divider"></div>
-          <div class="vv-tip">${escapeHtml(v.tip_ar||v.tip||'')}</div>
+          <div class="vv-tip">${escapeHtml(vvSaudiClean(v.tip_ar||v.tip||''))}</div>
           <button type="button" class="vv-bookmark-btn${bm?' saved':''}" data-word="${escapeHtml(wordKey)}" data-en="${escapeHtml(v.en||'')}" data-ar="${escapeHtml(v.ar||'')}">${bm?'★ '+(arMode?'محفوظه':'Bookmarked'):'☆ '+(arMode?'احفظ الكلمه':'Save Word')}</button>
         </div>
       </div>`;
