@@ -1,5 +1,55 @@
 # NEXT STEPS - pick up here
 
+## DONE: Vocabulary Vault + pronunciation (translit) sweep (2026-09-28, third session)
+
+User: "look in vocab vault as well... DO NOT STOP UNTIL THERE'S NO
+MISTRANSLATION AND MISPRONUNCIATION IN MY APP". Reviewed all 170 vault
+entries field-by-field (en/ipa/ar/translit/example trio/synonyms_ar/
+antonyms_ar/collocations_ar/tip_ar), the 5,263-entry PHON_DICT
+(back-transliteration consistency flagger + hand review), tv-vocab copy,
+pel_lesson_stage item translits, mistake coach, min-pairs. DB:
+lesson_items/lesson_exercises/academies/words swept for the same
+families. Tests 65/65, audit CLEAN.
+
+### Mispronunciations fixed (students were being taught wrong sounds)
+- line family: دد لوين/ديدلوين/هيدلوين/ذا لوين/يرلوين → لاين (deadline,
+  headline, "the line is bad", airline) — app + PHON_DICT + stage + DB
+- allergy: الرجي(ز) → اليرجي(ز) (vault, 3 L() calls, tv-vocab, DB exercises)
+- punctual: بنكتشول → پنكتشول (vault, tv-vocab, DB lesson_items ×6, exercises ×2)
+- carried كابي→كاريد, married ميبي→ميريد, soft بتت→سوفت, luggage لازينج→لاگيج,
+  icon ايصير→ايكون, connection كانيكشان→كونيكشن, collocation كولاكيشان→كولوكيشن,
+  corrections كيريكشانز→كوريكشنز, pragmatics برابستيكس→براغماتيكس,
+  proficiency بروفينسي→بروفيشَنسي, mexico ميكساكو→مكسيكو, echo يكو→ايكو,
+  casual كاجاوال→كاجوال, cycle سايكال→سايكل, phrase فريز→فرايز,
+  education يجاكيشان→اديوكيشن, execution يكساكيوشان→اكسيكيوشن,
+  images اماجز→ايماجز, physicians فازيشانز→فيزيشنز, although ولذو→اولذو,
+  authors وثيرز→اوثرز, blind بلويند→بلايند, carolina كيرالوينا→كارولاينا,
+  away اوي→اواي, damages داماجاز→داميجز, educational يجاكيشانال→ايديوكيشنل,
+  motorcycle موتيرسايكال→موتورسايكل, accent اكسينت→اكسنت, hundred هاندرِد
+- vault translit fixes: pronunciation برنانسييهيشن→پرنانسييهيشِن, hospital
+  هاسپیطل (Persian ی) → هاسبيتل (app/tv-vocab/stage), stress-example سيصير
+  ("second"!) → سيكند, famous فيمس→فايمس, help هلب→هيلب, symptoms سمبتمز→سيمبتومز
+- phrasal: الفريزل فيربز → الفرايزل فيربز (app/daily-lesson/pel-personalization/
+  DB academies), fluency فلوينسي→فلونسي, vocabulary vault فوكابيولري فولت→ڤوكابيولري ڤولت
+- Persian/Urdu codepoint normalization (render-identical, bad encoding):
+  234 Persian yeh + 14 keheh in pel_lesson_stage.js, 19 rows lesson_items,
+  14 rows lesson_exercises
+
+### Mistranslations fixed in vault metadata
+- Hospitality example: "Arab hospitality is famous" said ساودي (Saudi) → عرب
+- Fire extinguisher example المرهر (garbage) → الحايط (wall)
+- Replay/Scene/Sequel: الجزا/جز → الجزء; check-out tip: زر → جر
+- My son chip showed وعندي ("and I have") → ولدي
+- tip_ar fixes: مع ولا السفر (stray ولا), للاسيله → للاسئله (intonation),
+  انتها الجواز → انتهاء, "the h is silent: wite" → wyte (EN typo too),
+  لسه for after again (التتمه تجي لسه الفيلم الاول, التعافي...لسه المرض),
+  collocations: موسم اخوير → موسم الاخير (finale), ضو → ضوء اخضر,
+  شوط اسبريسو → شوت, اهلل لحن → دندن, امسح قايمه → افحص (scan),
+  كون قطعه كيك → تكون, لافره السرعه → لافرفه, حققت الموعد → تلحق بالموعد
+- vvSaudiClean-style rule .replace(/اخويرا/g) mapped to itself — now → اخيرا
+
+# NEXT STEPS - pick up here
+
 ## DONE: FULL-CODEBASE mistranslation sweep — every source file (2026-09-28, later session)
 
 User asked to LOOK EVERYWHERE across the entire codebase. Extracted 6,962 unique
