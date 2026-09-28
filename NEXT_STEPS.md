@@ -1,5 +1,33 @@
 # NEXT STEPS - pick up here
 
+## DONE: Deep DB exercise-payload sweep (2026-09-28, fifth session)
+
+Ran the word-alignment flagger over every lesson_exercises payload
+(1,428 rows, 2,968 en/tr pairs) and the lessons/words tables. Fixed 150
+exercise payloads live (JSON-aware walk: only translit fields, never
+Arabic fields) plus 4 PHON_DICT entries in app.html.
+
+### Big catches
+- "Build:" translit was بلد / بلد ات / بيرلت ("country"!) in ~110
+  exercises -> بيلد (PHON_DICT standard)
+- luggage لاجيدج -> لاگيدج; although ولذو (+ ex#1136 ولذو ات رينيد ->
+  اولذو ايت ريند, and its why_ar said الثو -> اولذو)
+- always الويز / اولويك -> اولويز (x4); usually يوشوي -> يوجوالي
+- office وفيس -> اوفيس; PHON_DICT entries upgraded: office وفيس->اوفيس,
+  yesterday ييستردي->يسترداي, conclusion كانكلوجان->كنكلوژن,
+  usually يوجاوالي->يوجوالي (standards now match words table)
+- pick/picked/picks بك/بكت/بكس -> پيك/پيكت/پيكس; improve ام بروف -> امپروڤ
+  (also in accept array); want وانتي -> وانت (x2); which ويش/وتش -> ويتش
+- passage پاساق -> باساج (x4); exam اقزام -> اكزام; ex#2322 asks اكسك ->
+  اسكس; this ذس -> ذيس (x8); makes ميكس is CORRECT (PHON_DICT) - kept
+- ex#2365 hint 'ف اللي تربط' -> 'الكلمه اللي تربط'
+- examples in lesson_items (separate pass): usually يوشوي, always الويز,
+  although الثو/ولثو, explains اسبليينز -> اكسبلينز, pick up بك اب ->
+  پيك اب, office اوفس -> اوفيس, inversion adds اديز -> ادز, and
+  "He study" was translit اي (I) -> هي (he)
+
+# NEXT STEPS - pick up here
+
 ## DONE: Verification round 4 — L() translits + DB translit columns (2026-09-28, fourth session)
 
 After the vault sweep, ran the back-transliteration flagger over the sets
