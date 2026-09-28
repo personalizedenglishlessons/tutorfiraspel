@@ -1,5 +1,33 @@
 # NEXT STEPS - pick up here
 
+## DONE: Round 6 — full re-flag of source + phrase items (2026-09-28, sixth session)
+
+Ran word+sentence flaggers over every source file and the 1,503
+phrase-kind lesson_items. Hand-reviewed all flags; most were the
+intentional romanized-Arabic dialect course (correct by design).
+
+### Fixed (source, pushed)
+- find family: فويند -> فايند in 16 spots incl 5 PHON_DICT entries
+  (find/finder/finding/findings/finds) + defined ديفويند -> ديفايند
+- refund ريفَند -> ريفاند; item was garbage ابنحذف -> ايتام (2 spots)
+- "five Bucks" was translit فايڤ دولارز (dollars!) -> فايڤ باکس
+- colleagues كوليجز -> كولييجز; once وانست -> وانس;
+  practice پراكسيس ("praxis") -> پراكتس (Persian vs Arabic ك caused
+  the first fix attempt to miss — re-check with both codepoints)
+### Fixed (DB)
+- lesson_items: پراكسيس، وانست، فويند، ابنحذف families
+- this=ذس standardized to ذيس across lesson_items (50 rows),
+  lesson_exercises (22), lib/pel_lesson_stage.js (28) — app standard
+  is ذيس (46 uses in app.html, 0 ذس)
+
+Flagger review status: source sentence-level review COMPLETE (999
+flags, all false positives are: silent-letter words, alignment
+artifacts, romanized-Arabic dialect chips). DB phrase items reviewed.
+Remaining flags in earlier PHON_DICT word list are known-good
+(hand-reviewed twice).
+
+# NEXT STEPS - pick up here
+
 ## DONE: Deep DB exercise-payload sweep (2026-09-28, fifth session)
 
 Ran the word-alignment flagger over every lesson_exercises payload
