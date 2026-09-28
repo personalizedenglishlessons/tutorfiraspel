@@ -1,5 +1,31 @@
 # NEXT STEPS - pick up here
 
+## DONE: Migration tracker reconciliation + check tool (2026-09-28 session)
+
+### Problem
+The last 3 sessions (26th, 27th, 28th) applied migrations directly via the
+Supabase Management API but never recorded them in
+`supabase_migrations.schema_migrations` — its last entry was 202609250002.
+A later `supabase db push` would have tried to re-apply the 5 migrations
+(202609260001, 202609260002, 202609260003, 202609270001, 202609280001).
+
+### Fixed
+1. Verified each of the 5 migrations IS live in the DB before touching
+   anything (شنو/تهجي counts = 0; item 853 = ابي الدجاج; item 2681 = تحياتي;
+   ex 772 answer = احب التمر مره; admin_student_progression checks
+   students.read; ex 613 wrong_tr = أم فاين.; zero اام rows anywhere).
+2. Inserted the 5 tracker rows (version + name + full file SQL as the
+   statements element) — tracker now matches reality (38/38).
+
+### New tool: `tools/check_migrations.py`
+Run before ending any session that touches the DB:
+```bash
+SUPABASE_ACCESS_TOKEN=sbp_... python3 tools/check_migrations.py   # check only
+MODE=record SUPABASE_ACCESS_TOKEN=sbp_... python3 tools/check_migrations.py  # record missing
+```
+Read-only by default; MODE=record inserts tracker rows for repo files missing
+from the tracker (only after verifying the SQL is already live).
+
 ## DONE: رحه→رحله fix + hero card lesson discrepancy (2026-09-28 session)
 
 ### رحه → رحله corruption (commit 318563f)
