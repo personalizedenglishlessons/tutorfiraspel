@@ -22027,7 +22027,7 @@ if(window.lucide) lucide.createIcons();
 
     const cards=services.map(s=>{
       return '<div class="pel-svc-card'+(s.requires_in_person_city?' inperson':'')+'">'+
-        '<div class="pel-svc-cost">'+s.credit_cost+'<span>'+(A?'رصيد':'credits')+'</span></div>'+
+        '<div class="pel-svc-cost">'+s.credit_cost+' <span>'+(A?'رصيد':'credits')+'</span></div>'+
         '<div class="pel-svc-name">'+esc(A?(s.label_ar||s.label_en):(s.label_en||s.label_ar))+'</div>'+
         '<div class="pel-svc-dur">'+s.duration_minutes+' '+(A?'دقيقه':'min')+(s.requires_in_person_city?(' - '+(A?'حضوري':'in-person')):'')+'</div>'+
         '<div class="pel-svc-desc">'+esc(A?(s.desc_ar||s.desc_en):(s.desc_en||s.desc_ar))+'</div>'+
