@@ -1,5 +1,48 @@
 # NEXT STEPS - pick up here
 
+## DONE: FULL mistranslation sweep — EN↔AR pairs, source + live DB (2026-09-28 session)
+
+Method: extracted ALL 2,182 unique en→ar pairs from lesson_items (2,559 rows),
+all 183 words-table rows, plus app.html/index/admin/lib source strings, and
+reviewed every pair by hand. ~90 mistranslations found and fixed.
+Migration 202609281001 applied to live DB + recorded in tracker (39/39).
+
+### Critical mistranslations fixed (highlights)
+- "nice to meet you" rendered as سعدت بلقياك / فرصة سعيدة / فرصه مبسوطه across
+  15+ rows (items + exercise options + words) → تشرفنا everywhere (matches
+  the a805098 standard)
+- "Tell me about it" → لا تزعلني ("don't anger me") → والله العظم
+- grandparents → اخوالي (maternal uncles!) → جدي وجدتي (3 rows + exercise)
+- "3.75 riyals" → ثلاثة وسبعين وسبعين هلله (nonsense) → ثلاثة ريال وخمسين وسبعين هلله
+- "Say hello... goodbye" → قول هلم... وقود باي (وقود = FUEL) → قل هلا... وقل باي
+- never/ever → ابدأ ("I begin!") → ابدا (3 rows + words)
+- English is spoken here → الانجليزي يتكلم هنا (active, wrong) → يتكلمون الانجليزي هنا
+- I was tired, so I slept → فعنيت بدري (عنيت = suffered) → فنمت بدري
+
+### Word-level fixes
+- عملا→عملاء (customers), استبدأل→استبدال (8 spots incl. source),
+  مسكن الم→مسكن الالم (truncated), عرفني عن نفسك→بنفسك (source ×6),
+  عياي→عيال (kids), جتز→جاوز (pass), بيرج→بيمطر (rain), بار اود→بارد (cold),
+  بطيا→بطيء (slow ×2), حذا/حذاي→حذاء/حذائي, جددة→جده (Jeddah ×4),
+  تشغل→تشتغل (works), ناميه/نامي→نايمه/نايم, جوالاتي→جوالي,
+  يوجعني→يوجعه (pronoun), ارسأل→ارسال, صغار علي→صغير علي,
+  تتغدى الصبح→تفطر الصبح (breakfast), من وين→من امتى (Since when),
+  دق→دغري (straight), انزل→اقوم (get up), وقود باي→قول باي
+
+### Also fixed
+- Truncated rows: "Correct: I'm ready" → 'الصحيح:' (missing example appended);
+  Just a trim, please → Persian-yeh تخفیف + missing لو سمحت
+- Translit: هز→هاز (has), سعدت بلقياك→تشرفنا in exercise options ×6
+- Source files: app.html (17), tv-vocab-test (1), pel-personalization.js (2)
+  — استبدأل, عرفني عن نفسك, مسكن الم, للاشياو, دوّمت→داومت, حذا→حذاء,
+  لا تزعلني→والله العظم, ولا يهمك ابدأ→ابدا
+- Double-check pass after global replace caught العملاءء (double hamza) — fixed
+
+### Verified
+- All 2,182 unique pairs re-scanned post-fix: 0 remaining hits
+- words table clean, assessment_questions clean, exercises payloads clean
+- 65/65 tests pass, audit_corruption.py CLEAN (28 patterns)
+
 ## DONE: Bug + mistranslation hunt — 3 new corruption families (2026-09-28 session)
 
 Method: signature-anchored line diff of the full 57f466b diff (595 word-level
