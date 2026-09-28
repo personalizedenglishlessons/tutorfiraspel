@@ -44,8 +44,8 @@ DATA = [
    'syn':'smoothness, flow','ant':'hesitation, stumbling','fam':'fluent, fluently','coll':'speak with fluency, build fluency','tip':'Fluency is about flow, not perfect grammar.','mistake':'Stopping at every small mistake kills fluency.'}),
 
 ('speaking-studio','Speaking Studio',I1,
-  {'en':'Pronunciation','ipa':'/prəˌnʌnsiˈeɪʃən/','ar':'النطق، طريقة لفظ الكلمات','translit':'برنانسييهيشِن',
-   'ex_en':'His pronunciation is very clear.','ex_ar':'نطقه واضح جدًا.','ex_tr':'هيز برنانسييهيشِن إز فيري كلير.',
+  {'en':'Pronunciation','ipa':'/prəˌnʌnsiˈeɪʃən/','ar':'النطق، طريقة لفظ الكلمات','translit':'پرنانسييهيشِن',
+   'ex_en':'His pronunciation is very clear.','ex_ar':'نطقه واضح جدًا.','ex_tr':'هيز پرنانسييهيشِن إز فيري كلير.',
    'syn':'articulation, diction','ant':'mispronunciation','fam':'pronounce, pronounced','coll':'clear pronunciation, improve pronunciation','tip':'The word itself has no "o" after the "n."','mistake':'Spelling it "pronounciation."'}),
 
 ('speaking-studio','Speaking Studio',I1,
@@ -357,8 +357,8 @@ DATA = [
    'ex_en':'Let\'s converse in English.','ex_ar':'لنتحدث بالإنجليزية.','ex_tr':'ليتس كونفِرس إن إنجلش.',
    'syn':'talk, chat','ant':'stay silent','fam':'converse, conversation','coll':'converse with, converse in','tip':'To converse is to talk with someone.','mistake':'Saying "converse with to" instead of "converse with."'}),
 ('fluency-journey','Fluency Journey',ADV,
-  {'en':'Proficiency','ipa':'/prəˈfɪʃənsi/','ar':'إتقان، كفاءة','translit':'بروفينسي',
-   'ex_en':'Test your English proficiency.','ex_ar':'اختبر إتقانك للإنجليزية.','ex_tr':'تيست يور إنجلش بروفينسي.',
+  {'en':'Proficiency','ipa':'/prəˈfɪʃənsi/','ar':'إتقان، كفاءة','translit':'بروفيشَنسي',
+   'ex_en':'Test your English proficiency.','ex_ar':'اختبر إتقانك للإنجليزية.','ex_tr':'تيست يور إنجلش بروفيشَنسي.',
    'syn':'skill, competence','ant':'incompetence','fam':'proficient, proficiency','coll':'language proficiency, high proficiency','tip':'Proficiency is your skill level.','mistake':'Confusing proficiency with perfection.'}),
 ('fluency-journey','Fluency Journey',ADV,
   {'en':'Tongue-tied','ipa':'/ˈtʌŋ taɪd/','ar':'عاجز عن الكلام (خجلًا)','translit':'تَنق تايد',
@@ -402,7 +402,7 @@ DATA = [
    'syn':'meetup, assembly','ant':'dispersal','fam':'gather, gathering','coll':'family gathering, social gathering','tip':'A gathering is people meeting together.','mistake':'Calling every gathering a "party."'}),
 ('saudi-conversations','Saudi Conversations',I1,
   {'en':'Hospitality','ipa':'/ˌhɒspɪˈtæləti/','ar':'كرم الضيافة','translit':'هوسبيتاليتي',
-   'ex_en':'Saudi hospitality is famous.','ex_ar':'كرم الضيافة السعودي معروف.','ex_tr':'ساودي هوسبيتاليتي إز فيمس.',
+   'ex_en':'Saudi hospitality is famous.','ex_ar':'كرم الضيافة السعودي معروف.','ex_tr':'ساودي هوسبيتاليتي إز فايمس.',
    'syn':'welcome, generosity','ant':'coldness','fam':'hospitable, hospitality','coll':'show hospitality, generous hospitality','tip':'Hospitality is warm welcoming of guests.','mistake':'Confusing it with "hospital."'}),
 # ===================== BATCH 4 =====================
 ('saudi-at-work','Saudi At Work',I1,

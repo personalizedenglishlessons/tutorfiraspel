@@ -5600,7 +5600,7 @@ const PHON_DICT = {
 'headaches':'هيديكس',
 'headed':'هيداد',
 'header':'هيدر',
-'headlines':'هيدلوينز',
+'headlines':'هيدلاينز',
 'heads':'هيدز',
 'heal':'هيل',
 'healing':'هيلينج',
@@ -7203,7 +7203,7 @@ const PHON_DICT = {
 'queries':'كويريز',
 'query':'كويري',
 'quest':'كويست',
-'question':'كوستشن',
+'question':'كويستشن',
 'questions':'كويستشانز',
 'queue':'كيو',
 'quick':'كويك',
@@ -8921,7 +8921,7 @@ const SMART_REPLIES = {
   agreement:{ en:'Perfect, that works for me. Anything else I can help with?', ar:'ممتاز، ذا يضبط معاي. فيه شي ثاني اقدر اساعدك فيه؟', translit:'بيرفكت، ذات ووركس فور مي. انيثينق الس اي كان هيلب وذ؟' },
   greeting: { en:'Hello, nice to see you! How can I help you today?', ar:'اهلين، تشرفنا بشوفك! كيف اقدر اساعدك اليوم؟', translit:'هالو، نايس تو سي يو! هاو كان اي هيلب يو تودي؟' },
   thanks:   { en:"You're most welcome. Is there anything else you need?", ar:'العفو، ولا يهمك. فيه شي ثاني تبغاه؟', translit:'يور موست ويلكم. از ذير انيثينق الس يو نيد؟' },
-  question: { en:'Good question, let me help you with that. What exactly would you like to know?', ar:'سؤال ممتاز، خلني اساعدك فيه. وش بالضبط تبغى تعرف؟', translit:'قود كوستشن، ليت مي هيلب يو وذ ذات. وات اكزاكلي وود يو لايك تو نو؟' },
+  question: { en:'Good question, let me help you with that. What exactly would you like to know?', ar:'سؤال ممتاز، خلني اساعدك فيه. وش بالضبط تبغى تعرف؟', translit:'قود كويستشن، ليت مي هيلب يو وذ ذات. وات اكزاكلي وود يو لايك تو نو؟' },
   request:  { en:'Of course, I will take care of that right away. Anything else?', ar:'اكيد، باعتني في ذا الحين. فيه شي ثاني؟', translit:'اوف كورس، اي ويل تيك كير اوف ذات رايت اوي. انيثينق الس؟' },
   statement:{ en:'I understand. Thanks for letting me know, is there anything else?', ar:'فهمت عليك. شكرا انك عرّفتني، فيه شي ثاني؟', translit:'اي اندرستاند. ثانكس فور ليتينق مي نو، از ذير انيثينق الس؟' },
 };
@@ -9075,7 +9075,7 @@ const RP_SCRIPTS = {
         yes: { next: 3, reply: L('Good to know, I will avoid those.', 'تمام عرفت، رح اتجنبها.', 'قود تو نو، اي ويل اڤويد ذوز.') },
         no: { next: 3, reply: L('Good.', 'ممتاز.', 'قود.') },
         info: { next: 3, reply: L('I will make a note of that.', 'رح اسجل ذا.', 'اي ويل ميك ا نوت اوف ذات.') } },
-      { key:'plan', expect:'any', ask: L('I will prescribe something for you. Take it twice a day. Any questions?', 'بوصف لك دوا. خذه مرتين باليوم. عندك اسأله؟', 'اي ويل پريسكرايب سمثنق فور يو. تيك ات توايس ا داي. اني كوستشنز؟'),
+      { key:'plan', expect:'any', ask: L('I will prescribe something for you. Take it twice a day. Any questions?', 'بوصف لك دوا. خذه مرتين باليوم. عندك اسأله؟', 'اي ويل پريسكرايب سمثنق فور يو. تيك ات توايس ا داي. اني كويستشنز؟'),
         any: { next: 'wrap', reply: L('Take care and rest well. Come back if it does not get better.', 'خل بالك وارتاح زين. ارجع اذا ما تحسنت.', 'تيك كير اند ريست ويل. کام باك اف ات داز نوت قيت بيتر.') } },
       { key:'wrap', wrap: L('Get well soon.', 'الف سلامه.', 'قيت ويل سون.') }
     ],
@@ -9125,11 +9125,11 @@ const RP_SCRIPTS = {
   'teacher': {
     role: 'Teacher', studentRole: 'student',
     steps: [
-      { key:'questions', expect:'yesno', ask: L("Do you have any questions about today's lesson?", 'عندك اسأله على درس اليوم؟', 'دو يو هاف اني كوستشنز اباوت تودييز لسن؟'),
-        yes: { next: 1, reply: L('Go ahead, what is your question?', 'تفضل، وش سؤالك؟', 'قو اهيد، وات از يور كوستشن؟') },
+      { key:'questions', expect:'yesno', ask: L("Do you have any questions about today's lesson?", 'عندك اسأله على درس اليوم؟', 'دو يو هاف اني كويستشنز اباوت تودييز لسن؟'),
+        yes: { next: 1, reply: L('Go ahead, what is your question?', 'تفضل، وش سؤالك؟', 'قو اهيد، وات از يور كويستشن؟') },
         no: { next: 2, reply: L('Great. Let us review the key words. Repeat after me.', 'ممتاز. خلنا نراجع الكلمات المهمه. كرر وراي.', 'قريت. ليت اس ريفيو ذا كي ووردز. ريپيت افتير مي.') } },
-      { key:'question', expect:'open', ask: L('What is your question?', 'وش سؤالك؟', 'وات از يور كوستشن؟'),
-        any: { next: 2, reply: L('That is a great question. Let me explain it clearly.', 'سؤال ممتاز. خلني اشرحه زين.', 'ذات از ا قريت كوستشن. ليت مي اكسپلين ات كليرلي.') } },
+      { key:'question', expect:'open', ask: L('What is your question?', 'وش سؤالك؟', 'وات از يور كويستشن؟'),
+        any: { next: 2, reply: L('That is a great question. Let me explain it clearly.', 'سؤال ممتاز. خلني اشرحه زين.', 'ذات از ا قريت كويستشن. ليت مي اكسپلين ات كليرلي.') } },
       { key:'practice', expect:'yesno', ask: L('Do you want to practice the dialogue now?', 'تبي نتمرن على الحوار الحين؟', 'دو يو وانت تو پرکتیس ذا دايالوق ناو؟'),
         yes: { next: 3 },
         no: { next: 'wrap', reply: L('No problem, we can practice next time.', 'ولا يهمك، نتمرن المره الجايه.', 'نو بروبلم، وي كان پرکتیس نيكست تايم.') },
@@ -9285,13 +9285,13 @@ const RP_SCRIPTS = {
     role: 'Tour Guide', studentRole: 'tourist',
     steps: [
       { key:'start', expect:'open', ask: L('Welcome everyone. We start the tour in ten minutes.', 'حياكم كلهم. نبدأ الجوله لسه عشر دقايق.', 'ويلكم اڤري ون. وي ستارت ذا تور ان تن مينتس.'),
-        any: { next: 1, reply: L('Our first stop is the old town. Any questions before we start?', 'اول محطه لنا البلده المقيمه. عندكم اسأله قبل ما نبدأ؟', 'اور فيرست ستد از ذي اولد تاون. اني كوستشنز بيفور وي ستارت؟') } },
-      { key:'questions', expect:'yesno', ask: L('Any questions before we start?', 'عندكم اسأله قبل ما نبدأ؟', 'اني كوستشنز بيفور وي ستارت؟'),
+        any: { next: 1, reply: L('Our first stop is the old town. Any questions before we start?', 'اول محطه لنا البلده المقيمه. عندكم اسأله قبل ما نبدأ؟', 'اور فيرست ستد از ذي اولد تاون. اني كويستشنز بيفور وي ستارت؟') } },
+      { key:'questions', expect:'yesno', ask: L('Any questions before we start?', 'عندكم اسأله قبل ما نبدأ؟', 'اني كويستشنز بيفور وي ستارت؟'),
         yes: { next: 2, reply: L('Go ahead, what would you like to know?', 'تفضلوا، وش تحبون تعرفون؟', 'قو اهيد، وات وود يو لايك تو نو؟') },
         no: { next: 'wrap', reply: L('Alright, follow me then.', 'طيب، اتبعوني.', 'اولرايت، فولو مي ذين.') },
         info: { next: 2, reply: L('Sure, what would you like to ask?', 'اكيد، وش تحب تسأل؟', 'شور، وات وود يو لايك تو اسك؟') } },
       { key:'question', expect:'open', ask: L('What would you like to know?', 'وش تحب تعرف؟', 'وات وود يو لايك تو نو؟'),
-        any: { next: 'wrap', reply: L('Good question, I will explain on the way.', 'سؤال ممتاز، بشرح لكم بالطريق.', 'قود كوستشن، اي ويل اكسپلين اون ذا وي.') } },
+        any: { next: 'wrap', reply: L('Good question, I will explain on the way.', 'سؤال ممتاز، بشرح لكم بالطريق.', 'قود كويستشن، اي ويل اكسپلين اون ذا وي.') } },
       { key:'wrap', wrap: L('Enjoy the tour!', 'استمتعوا بالجوله!', 'انجوي ذا تور!') }
     ],
     faq: [
@@ -9368,7 +9368,7 @@ const RP_ALT = {
   'teacher': {
     'questions.yes': L('Please, what is on your mind?', 'تفضل، وش ببالك؟', 'بليز، وات از اون يور مويند؟'),
     'questions.no': L('Perfect. Then let us practice the dialogue. Ready?', 'ممتاز. نتمرن على الحوار. جاهز؟', 'بيرفكت. ذين ليت اس پرکتیس ذا دايالوق. ريدي؟'),
-    'question.any': L('Great question, I am happy to explain.', 'سؤال ممتاز، يسعدني اشرح.', 'قريت كوستشن، اي ام هپي تو اكسپلين.'),
+    'question.any': L('Great question, I am happy to explain.', 'سؤال ممتاز، يسعدني اشرح.', 'قريت كويستشن، اي ام هپي تو اكسپلين.'),
     'practice.no': L('No problem, we will do it next time.', 'ولا يهمك، نسويها المره الجايه.', 'نو بروبلم، وي ويل دو ات نيكست تايم.'),
     'next.any': L('Well done. See you at the next lesson!', 'ما شا الله. نشوفك بالدرس الجاي!', 'ويل دون. سي يو ات ذا نيكست لسن!')
   },
@@ -9427,7 +9427,7 @@ const RP_ALT = {
     'why.any': L('You were speeding a little. A warning this time, drive safely.', 'كنت مسرع شوي. تحذير هالمره، قود بحذر.', 'يو ور سپيدنق ا ليتل. ا وورنينق ذيس تايم، درايڤ سيفلي.')
   },
   'tour-guide': {
-    'start.any': L('Perfect. Our first stop is the old town. Questions before we go?', 'ممتاز. اول محطه البلده المقيمه. اسأله قبل ما ننطلق؟', 'بيرفكت. اور فيرست ستد از ذي اولد تاون. كوستشنز بيفور وي قو؟'),
+    'start.any': L('Perfect. Our first stop is the old town. Questions before we go?', 'ممتاز. اول محطه البلده المقيمه. اسأله قبل ما ننطلق؟', 'بيرفكت. اور فيرست ستد از ذي اولد تاون. كويستشنز بيفور وي قو؟'),
     'questions.yes': L('Go on, what do you want to know?', 'تفضل، وش تبي تعرف؟', 'قو اون، وات دو يو وانت تو نو؟'),
     'questions.no': L('Perfect, follow me then.', 'ممتاز، اتبعوني.', 'بيرفكت، فولو مي ذين.'),
     'questions.info': L('Sure, what would you like to ask?', 'اكيد، وش تحب تسأل؟', 'شور، وات وود يو لايك تو اسك؟'),
@@ -11017,7 +11017,7 @@ const SPEAKING_PERSONAS = [
   {id:'doctor', title:'Doctor', icon:'stethoscope', opener:{en:'What symptoms have you been having?', ar:'وش الاعراض اللي عندك؟', translit:'وات سيمبتومز هاف يو بين هافينج؟'}},
   {id:'cashier', title:'Cashier', icon:'shopping-bag', opener:{en:'Did you find everything you needed?', ar:'لقيت كل اللي تبيه؟', translit:'ديد يو فايند اڤري ثينج يو نيدد؟'}},
   {id:'manager', title:'Manager', icon:'briefcase', opener:{en:"Let's go over your progress this month.", ar:'خلنا نراجع تقدمك ذا الشهر.', translit:'ليتس قو اوڤر يور بروقرس ذيس مانث.'}},
-  {id:'teacher', title:'Teacher', icon:'graduation-cap', opener:{en:"Do you have any questions about today's lesson?", ar:'عندك اسأله على درس اليوم؟', translit:'دو يو هاف اني كوستشنز اباوت تودييز لسن؟'}},
+  {id:'teacher', title:'Teacher', icon:'graduation-cap', opener:{en:"Do you have any questions about today's lesson?", ar:'عندك اسأله على درس اليوم؟', translit:'دو يو هاف اني كويستشنز اباوت تودييز لسن؟'}},
   {id:'friend', title:'Friend', icon:'smile', opener:{en:'Hey, long time no see, how have you been?', ar:'هلا والله، من زمان، اخبارك؟', translit:'هاي، لونق تايم نو سي، هاو هاف يو بين؟'}},
   {id:'customer', title:'Customer', icon:'user', opener:{en:'Excuse me, can you help me find something?', ar:'لو سمحت، تقدر تساعدني الاقي شي؟', translit:'اكسكوز مي، كان يو هيلب مي فايند سمثنق؟'}},
   {id:'receptionist-clinic', title:'Clinic Receptionist', icon:'clipboard', opener:{en:'Do you have an appointment today?', ar:'عندك موعد اليوم؟', translit:'دو يو هاف ان ابوينتمنت تودي؟'}},
@@ -11314,7 +11314,7 @@ const LESSON_LIBRARY = {
     takeaway:'احفظ رقمك واسمك الكامل بترتيب انجليزي، وجرب تنطقهم قدام احد اليوم.',
   },
   'basic-questions': {
-    title:'Basic Questions With What, Where, When', ar:'الاسأله الاساسيه: وش، وين، متى', translit:'بيسك كوستشنز وذ وات، وير، وين',
+    title:'Basic Questions With What, Where, When', ar:'الاسأله الاساسيه: وش، وين، متى', translit:'بيسك كويستشنز وذ وات، وير، وين',
     duration:'8 min', difficulty:'Beginner',
     vocab:[VOCAB_BANK[13], VOCAB_BANK[2]],
     grammar:{title:'WH- Question Order', rule:'A WH- question starts with the question word, then the auxiliary, then the subject: Where are you? What do you do?', saudi:'ترتيب السؤال: كلمه السؤال، بعدين كلمه مساعده، بعدين الشخص. مو مثل العربي اللي يبدأ بالشخص.', wrong:'You are from where?', right:'Where are you from?', mistakes:['Putting the question word at the end in English, it stays at the start.','Forgetting the auxiliary: "Where you live?" instead of "Where do you live?"']},
@@ -11484,7 +11484,7 @@ const LESSON_LIBRARY = {
     conversation:[
       {who:'A', en:'So you want the meeting moved to Sunday?', ar:'يعني تبغى الاجتماع يتنقل للاحد؟', translit:'سو يو وانت ذا ميتنق موڤد تو ساندي؟'},
       {who:'B', en:'Oh, I think we misunderstood. I said Saturday, not Sunday.', ar:'اي، اتوقع حصل سو فهم. انا قلت السبت مو الاحد.', translit:'او، اي ثينك وي ميساندرستود. اي سيد ساتردي، نات ساندي.'},
-      {who:'A', en:'My bad, Saturday then. Let me rephrase my question.', ar:'غلطتي، السبت اذن. خلني اعيد صياغه سؤالي.', translit:'ماي باد، ساتردي ذن. ليت مي ريفريز ماي كوستشن.'},
+      {who:'A', en:'My bad, Saturday then. Let me rephrase my question.', ar:'غلطتي، السبت اذن. خلني اعيد صياغه سؤالي.', translit:'ماي باد، ساتردي ذن. ليت مي ريفريز ماي كويستشن.'},
       {who:'B', en:'No worries, it happens.', ar:'ولا يهمك، تصير.', translit:'نو ووريز، ات هابنز.'},
     ],
     quiz:[
@@ -12367,7 +12367,7 @@ const LESSON_LIBRARY = {
     vocab:[VOCAB_BANK[4], VOCAB_BANK[38]],
     grammar:{title:'Could You Please', rule:'Politeness in writing comes from modals: Could you please...? Would it be possible to...?', saudi:'التادب بالكتابه من الافعال المساعده: ممكن لو سمحت؟', wrong:'Send the file.', right:'Could you please send the file?', mistakes:['Writing demands in short imperatives.','Forgetting the subject line.']},
     conversation:[
-      {who:'A', en:'Subject: Quick question about the report', ar:'الموضوع: سؤال سريع عن التقرير', translit:'سابجكت: كويك كوستشن اباوت ذا ريبورت'},
+      {who:'A', en:'Subject: Quick question about the report', ar:'الموضوع: سؤال سريع عن التقرير', translit:'سابجكت: كويك كويستشن اباوت ذا ريبورت'},
       {who:'B', en:'Dear Omar, could you please send the updated report?', ar:'عزيزي عمر، ممكن ترسل التقرير المحدث؟', translit:'دير عمر، كود يو بليز سند ذا اپديتد ريبورت؟'},
       {who:'A', en:'Would it be possible to get it by noon?', ar:'ممكن يصير جاهز قبل الظهر؟', translit:'وود ات بي پوسيبل تو قيت ات باي نون؟'},
       {who:'B', en:'Thanks in advance, Sara.', ar:'شكرا مقدمًا، ساره.', translit:'ثانكس ان ادفانس، سارا.'},

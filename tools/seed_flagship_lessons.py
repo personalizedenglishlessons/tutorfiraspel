@@ -56,7 +56,7 @@ LESSONS = [
    ("phrase","See you later","أراك لاحقًا","سي يو ليتر","See you later, bye!","أراك لاحقًا، مع السلامة!","سي يو ليتر، باي!"),
    ("phrase","How are you?","كيف حالك؟","هاو آر يو","How are you? I'm fine, thanks.","كيف حالك؟ أنا بخير، شكرًا.","هاو آر يو؟ ايم فاين، ثانكس."),
  ], exs=[
-   ("choose", {"question":{"en":"Which is a greeting?","ar":"أيُّها تحية؟","tr":"ويش از ا گرتنق؟"},
+   ("choose", {"question":{"en":"Which is a greeting?","ar":"أيُّها تحية؟","tr":"ويتش از ا گرتنق؟"},
      "options":[{"t":"Hello","ok":True,"tr":"هالو"},{"t":"Goodbye","ok":False,"tr":"قودباي"},{"t":"Yesterday","ok":False,"tr":"يستردي"}]}),
    ("order", {"prompt":{"en":"Build: where are you from?","ar":"رتّب: من أين أنت؟","tr":"بيلد: وير آر يو فروم؟"},
      "tokens":["Where","are","you","from","?"],"answer":"Where are you from?"}),
