@@ -1,5 +1,27 @@
 # NEXT STEPS - pick up here
 
+## DONE: رحه→رحله fix + hero card lesson discrepancy (2026-09-28 session)
+
+### رحه → رحله corruption (commit 318563f)
+- 24 instances of رحه (missing ل) fixed across app.html + lib/daily-lesson.js
+- Root: same 57f466b corruption family — the letter ل was dropped from رحله (trip/journey)
+- DB verified clean (academies table uses formal رحلة, not corrupted)
+- Remaining رحه instances are correct: verbs يشرحه/بشرحه/نشرحها (explain it)
+
+### Hero card showed wrong lesson (commit 5a71ea6)
+- **Problem**: renderControlCenter() always picked the first 'available' lesson
+  from the server, ignoring the student's saved pel_stage_pos. If the student
+  was mid-lesson on a different lesson (or the server marked it 'locked'
+  because completed_lessons was reset), the hero card showed the wrong lesson
+  with 'Start lesson' instead of the lesson they were working on.
+- **Fix**: Check pel_stage_pos for the current stage; if the saved lesson is in
+  the stage (available OR locked), show it on the hero card with 'Continue lesson'.
+  Lesson path list also shows the saved lesson even if server marks it locked,
+  with a 'Resume' label.
+- **Verified live**: button changed from 'ابدا الدرس' to 'كمل الدرس' for
+  student with saved position at activity 12/25.
+- Cache buster bumped for pel_lesson_stage.js (201a49b6)
+
 ## DONE: Admin student-360 fixes + new corruption families sweep (2026-09-27 session)
 
 ### Admin student 360 (commit a98f426 + this commit)
