@@ -58,7 +58,7 @@ LESSONS = [
  ], exs=[
    ("choose", {"question":{"en":"Which is a greeting?","ar":"أيُّها تحية؟","tr":"ويش از ا گرتنق؟"},
      "options":[{"t":"Hello","ok":True,"tr":"هالو"},{"t":"Goodbye","ok":False,"tr":"قودباي"},{"t":"Yesterday","ok":False,"tr":"يستردي"}]}),
-   ("order", {"prompt":{"en":"Build: where are you from?","ar":"رتّب: من أين أنت؟","tr":"بيرلت: وير آر يو فروم؟"},
+   ("order", {"prompt":{"en":"Build: where are you from?","ar":"رتّب: من أين أنت؟","tr":"بيلد: وير آر يو فروم؟"},
      "tokens":["Where","are","you","from","?"],"answer":"Where are you from?"}),
    ("translate", {"source":"Nice to meet you.","source_tr":"نايس تو ميت يو.","dir":"en2ar","answer":"سعيد بلقائك","accept":["سعيد بلقائك","تشرفنا"]}),
    ("correct", {"wrong":"What your name?","wrong_tr":"وات يور نيم؟","right":"What is your name?","right_tr":"وات از يور نيم؟"}),
@@ -75,7 +75,7 @@ LESSONS = [
  ], exs=[
    ("choose", {"question":{"en":"Which means 'مثلّج'?","ar":"أيُّها تعني «مثلّج»؟","tr":"ويش مينز مثلج؟"},
      "options":[{"t":"Iced","ok":True,"tr":"ايسد"},{"t":"Hot","ok":False,"tr":"هوت"},{"t":"Sweet","ok":False,"tr":"سويت"}]}),
-   ("order", {"prompt":{"en":"Build: can I have a latte?","ar":"رتّب: هل يمكنني لاتيه؟","tr":"بيرلت: كان اي هاف ا لاتيه؟"},
+   ("order", {"prompt":{"en":"Build: can I have a latte?","ar":"رتّب: هل يمكنني لاتيه؟","tr":"بيلد: كان اي هاف ا لاتيه؟"},
      "tokens":["Can","I","have","a","latte","?"],"answer":"Can I have a latte?"}),
    ("translate", {"source":"Coffee to go, please.","source_tr":"كوفي تو قو، بليز.","dir":"en2ar","answer":"قهوة للسفري، من فضلك.","accept":["قهوة للسفري من فضلك","قهوة للسفري، من فضلك"]}),
    ("correct", {"wrong":"I want latte.","wrong_tr":"اي وانت لاتيه.","right":"I'd like a latte.","right_tr":"ايد لايك ا لاتيه."}),
@@ -92,7 +92,7 @@ LESSONS = [
  ], exs=[
    ("choose", {"question":{"en":"Which means 'غرفة مزدوجة'?","ar":"أيُّها تعني «غرفة مزدوجة»؟","tr":"ويش مينز غرفة مزدوجة؟"},
      "options":[{"t":"Double room","ok":True,"tr":"دابل روم"},{"t":"Single room","ok":False,"tr":"سينقل روم"},{"t":"Key card","ok":False,"tr":"كي كارد"}]}),
-   ("order", {"prompt":{"en":"Build: I'd like to book a room","ar":"رتّب: أود حجز غرفة","tr":"بيرلت: اود حجز غرفة"},
+   ("order", {"prompt":{"en":"Build: I'd like to book a room","ar":"رتّب: أود حجز غرفة","tr":"بيلد: اود حجز غرفة"},
      "tokens":["I'd","like","to","book","a","room"],"answer":"I'd like to book a room"}),
    ("translate", {"source":"How much per night?","source_tr":"هاو متش بير نايت؟","dir":"en2ar","answer":"كم لليلة؟","accept":["كم لليلة","كم سعر الليلة"]}),
    ("correct", {"wrong":"I want book room.","wrong_tr":"اي وانت بوك روم.","right":"I'd like to book a room.","right_tr":"ايد لايك تو بوك ا روم."}),
@@ -109,7 +109,7 @@ LESSONS = [
  ], exs=[
    ("choose", {"question":{"en":"Which means 'جواز السفر'?","ar":"أيُّها تعني «جواز السفر»؟","tr":"ويش مينز جواز السفر؟"},
      "options":[{"t":"Passport","ok":True,"tr":"باسبورت"},{"t":"Boarding pass","ok":False,"tr":"بوردنق باس"},{"t":"Luggage","ok":False,"tr":"لاگيج"}]}),
-   ("order", {"prompt":{"en":"Build: where is the gate?","ar":"رتّب: أين البوابة؟","tr":"بيرلت: وير از ذا قيت؟"},
+   ("order", {"prompt":{"en":"Build: where is the gate?","ar":"رتّب: أين البوابة؟","tr":"بيلد: وير از ذا قيت؟"},
      "tokens":["Where","is","the","gate","?"],"answer":"Where is the gate?"}),
    ("translate", {"source":"My flight is at 6 p.m.","source_tr":"ماي فلايت از ات سيكس پي إم.","dir":"en2ar","answer":"رحلتي الساعة السادسة عصرًا.","accept":["رحلتي الساعة السادسة","رحلتي الساعة 6 مساءً"]}),
    ("correct", {"wrong":"Where gate?","wrong_tr":"وير قيت؟","right":"Where is the gate?","right_tr":"وير از ذا قيت؟"}),
@@ -126,7 +126,7 @@ LESSONS = [
  ], exs=[
    ("choose", {"question":{"en":"Which means 'من زمان ما شفتك'?","ar":"أيُّها تعني «من زمان ما شفتك»؟","tr":"ويش مينز من زمان ما شفتك؟"},
      "options":[{"t":"Long time no see","ok":True,"tr":"لونق تايم نو سي"},{"t":"See you later","ok":False,"tr":"سي يو ليتر"},{"t":"Nice to meet you","ok":False,"tr":"نايس تو ميت يو"}]}),
-   ("order", {"prompt":{"en":"Build: what have you been up to?","ar":"رتّب: وش صار معك؟","tr":"بيرلت: وات هاف يو بين اپ تو؟"},
+   ("order", {"prompt":{"en":"Build: what have you been up to?","ar":"رتّب: وش صار معك؟","tr":"بيلد: وات هاف يو بين اپ تو؟"},
      "tokens":["What","have","you","been","up","to","?"],"answer":"What have you been up to?"}),
    ("translate", {"source":"That sounds great!","source_tr":"ذات ساوندز قرايت!","dir":"en2ar","answer":"يبدو رائعًا!","accept":["يبدو رائعا","يبدو رائعًا!","رائع"]}),
    ("correct", {"wrong":"How it going?","wrong_tr":"هاو ات قوينق؟","right":"How's it going?","right_tr":"هاوز ات قوينق؟"}),
