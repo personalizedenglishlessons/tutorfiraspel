@@ -107,7 +107,7 @@ html[data-theme="light"] ::selection{ background:rgba(0,113,227,.2); color:var(-
 @media(prefers-reduced-motion:reduce){ *{ animation-duration:.001ms !important; transition-duration:.001ms !important; } }
 /* Touch devices: neutralize transform-based hover effects that get stuck after tap (iPad/tablet glitch fix) */
 @media(hover:none){
-  .card.hoverable:hover,.btn-gold:hover,.fab-qt:hover,.academy-card:hover,
+  .card.hoverable:hover,.btn-gold:hover,.academy-card:hover,
   .topic-tile:hover,.icon-btn:hover,.mini:hover,.related-lesson:hover{
     transform:none !important; box-shadow:none !important;
   }
@@ -470,28 +470,7 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
 /* ============================================================
    PART 3, QUICK TRANSLATE FLOATING BUTTON + POPUP
    ============================================================ */
-.fab-qt{
-  position:fixed; bottom:26px; right:26px; z-index:1200; width:58px; height:58px; border-radius:50%;
-  background:linear-gradient(135deg,var(--gold-soft),var(--bronze)); color:#171412; display:flex; align-items:center; justify-content:center;
-  box-shadow:0 14px 40px -10px rgba(200,169,106,.55); transition:transform .3s var(--ease), box-shadow .3s var(--ease);
-}
-.fab-qt:hover{ transform:translateY(-3px) scale(1.04); box-shadow:0 20px 50px -10px rgba(200,169,106,.7); }
-.qt-fab{ right:96px; bottom:72px; }
-.qt-popup{
-  position:fixed; z-index:1300; bottom:140px; right:26px; width:min(340px,92vw);
-  background:var(--card); border:1px solid var(--border); border-radius:18px; box-shadow:var(--shadow-lift);
-  padding:16px; display:none; max-height:70vh; overflow:auto;
-}
-.qt-popup.open{ display:block; }
-.qt-popup-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
-.qt-popup-head .icon-btn{ width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:var(--card-elevated); border:1px solid var(--border); color:var(--text-muted); cursor:pointer; font-size:.8rem; }
-@media(max-width:640px){
-  .qt-fab{ right:26px; bottom:140px; }
-  .qt-popup{ left:12px; right:12px; bottom:12px; width:auto; max-height:80vh; }
-  .dash-stats-bar{ gap:14px !important; padding:12px 14px !important; overflow-x:auto; flex-wrap:nowrap !important; -webkit-overflow-scrolling:touch; }
-  .dash-stats-bar > div{ flex-shrink:0; }
-  .dash-stats-bar .arabic{ font-size:.72rem; }
-}
+/* (Quick Translate FAB removed — now lives in Settings) */
 
 /* ============================================================
    PART 3, ACHIEVEMENTS
@@ -526,8 +505,9 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
   body[data-printing] #authGate,
   body[data-printing] #toastStack,
   body[data-printing] #sidebarOverlay,
-  body[data-printing] #qtPopup,
-  body[data-printing] #qtFab,
+  body[data-printing] #qtInput,
+  body[data-printing] #qtBtn,
+  body[data-printing] #qtResult,
   body[data-printing] #paletteOverlay{ display:none !important; }
   body[data-printing] #certPrintRoot{ display:block !important; }
 }
@@ -589,7 +569,7 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
 .mini-remove-btn{ background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:1rem; line-height:1; padding:2px 6px; border-radius:6px; flex-shrink:0; }
 .mini-remove-btn:hover{ color:var(--danger); background:rgba(210,92,92,.12); }
 
-/* quick translate */
+/* quick translate result styling */
 .qt-box textarea{ width:100%; background:var(--card-elevated); border:1px solid var(--border); border-radius:12px; padding:10px 12px; color:var(--text); font-size:.82rem; resize:none; min-height:56px; }
 .qt-result{ margin-top:8px; font-size:.82rem; color:var(--gold); unicode-bidi:plaintext; text-align:start; font-family:'Cairo','Tajawal',sans-serif; min-height:18px; }
 
@@ -1059,7 +1039,7 @@ body.ui-ar .user-menu-wrap .dropdown{ left:auto; right:0; }
 body.ui-ar .notif-wrap .dropdown{ left:auto; right:0; }
 body.ui-ar #toastStack{ right:auto; left:26px; }
 body.ui-ar .modal-close{ right:auto; left:22px; }
-body.ui-ar .qt-fab{ right:auto; left:26px; }
+/* (Quick Translate FAB removed — now in Settings) */
 body.ui-ar .qt-popup{ right:auto; left:26px; }
 body.ui-ar .cert-seal{ right:auto; left:22px; }
 body.ui-ar .academy-fav{ left:auto; right:12px; }
@@ -1074,7 +1054,7 @@ body.ui-ar .fb-why{ border-left:none; border-right:2px solid rgba(0,113,227,.3);
   body.ui-ar .sidebar.mobile-open{ transform:translateX(0); }
   body.ui-ar .context-panel{ right:auto; left:0; transform:translateX(-100%); }
   body.ui-ar .context-panel.open{ transform:translateX(0); }
-  body.ui-ar .qt-fab{ right:auto; left:26px; }
+  /* (Quick Translate FAB removed — now in Settings) */
   body.ui-ar .qt-popup{ left:12px; right:12px; }
 }
 /* Light-mode RTL: mirror the active-link gradient and hero glow direction */
@@ -1390,8 +1370,7 @@ html[data-theme="light"] .btn-outline:hover{ border-color:rgba(0,113,227,.4); ba
 html[data-theme="light"] .btn-ghost:hover{ color:var(--gold); border-color:rgba(0,113,227,.3); }
 html[data-theme="light"] .chip.gold{ background:linear-gradient(180deg, rgba(0,113,227,.1), rgba(0,113,227,.05)); }
 html[data-theme="light"] .toast.gold{ border-color:rgba(0,113,227,.4); }
-html[data-theme="light"] .fab-qt{ color:#FFFFFF; box-shadow:0 4px 14px -6px rgba(0,113,227,.4); }
-html[data-theme="light"] .fab-qt:hover{ box-shadow:0 8px 24px -8px rgba(0,113,227,.45); }
+/* (Quick Translate FAB removed — now in Settings) */
 html[data-theme="light"] .badge-icon-wrap{ background:radial-gradient(circle, rgba(0,113,227,.15), rgba(0,113,227,.04)); border-color:rgba(0,113,227,.25); }
 html[data-theme="light"] .cert-top{ background:linear-gradient(135deg, rgba(0,113,227,.08), transparent 70%); }
 html[data-theme="light"] .heatmap-cell[data-lvl="1"]{ background:rgba(0,113,227,.2); }
@@ -1524,7 +1503,9 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
   .palette-results{ max-height:calc(76vh - 70px); }
   #accessGate{ padding:16px; }
   #accessGate .gate-card{ padding:0 4px; }
-  .fab-qt{ bottom:72px; right:18px; width:52px; height:52px; }
+  .dash-stats-bar{ gap:14px !important; padding:12px 14px !important; overflow-x:auto; flex-wrap:nowrap !important; -webkit-overflow-scrolling:touch; }
+  .dash-stats-bar > div{ flex-shrink:0; }
+  .dash-stats-bar .arabic{ font-size:.72rem; }
   .qt-popup{ bottom:140px; right:12px; left:12px; width:auto; }
 }
 
@@ -1737,6 +1718,25 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
               <div class="setting-row"><div class="sr-label"><b>Reduce motion</b><span class="arabic">تقليل الحركه</span></div><label class="switch"><input type="checkbox" id="reduceMotionToggle"><span class="switch-track"></span></label></div>
             </div>
             <div class="card">
+              <h3 style="font-size:1.05rem;">Zoom <span class="arabic" style="font-size:.85em; font-weight:400;">· التكبير</span></h3>
+              <p style="margin-top:8px; font-size:.84rem; color:var(--text-muted);"><span class="arabic" style="display:block;">تكبير او تصغير حجم الصفحه. مفيد لشاشات التلفاز او الكمبيوترات اللي ما تدعم التكبير.</span>Zoom in or out. Useful for TV browsers or devices that don't support browser zoom.</p>
+              <div style="display:flex; align-items:center; gap:12px; margin-top:16px;">
+                <button type="button" class="btn-outline" id="zoomOutBtn" style="min-width:44px; height:44px; font-size:1.2rem;">−</button>
+                <span id="zoomLevelLabel" style="font-size:1rem; font-weight:600; min-width:56px; text-align:center;">100%</span>
+                <button type="button" class="btn-outline" id="zoomInBtn" style="min-width:44px; height:44px; font-size:1.2rem;">+</button>
+                <button type="button" class="btn-ghost-sm" id="zoomResetBtn" style="margin-left:8px;"><span class="arabic">تصفير</span>، Reset</button>
+              </div>
+            </div>
+            <div class="card">
+              <h3 style="font-size:1.05rem;">Quick Translate <span class="arabic" style="font-size:.85em; font-weight:400;">· ترجمه سريعه</span></h3>
+              <p style="margin-top:8px; font-size:.84rem; color:var(--text-muted);"><span class="arabic" style="display:block;">ترجم كلمه او جمله بين العربي والانجليزي فورا.</span>Translate a word or sentence between Arabic and English instantly.</p>
+              <div style="margin-top:14px;">
+                <textarea id="qtInput" dir="auto" placeholder="اكتب كلمه او جمله بالعربي او الانجليزي... / Type a word or sentence in Arabic or English..." style="width:100%; min-height:72px; padding:10px 12px; border-radius:10px; background:var(--card-elevated); border:1px solid var(--border); color:var(--text); resize:vertical;"></textarea>
+                <button type="button" class="btn-ghost-sm" id="qtBtn" style="margin-top:8px;"><span class="arabic">ترجم</span>، Translate</button>
+                <div class="qt-result" id="qtResult" style="margin-top:10px;"></div>
+              </div>
+            </div>
+            <div class="card">
               <h3 style="font-size:1.05rem;">Grammar Engine <span class="arabic" style="font-size:.85em; font-weight:400;">· محرك القواعد</span></h3>
               <p style="margin-top:8px; font-size:.84rem; color:var(--text-muted); line-height:1.7;">
                 <span class="arabic" style="display:block; margin-bottom:4px;">محرك قواعد حقيقي مجاني بلا حدود. اذا عندك خادم LanguageTool خاص فيك، حط رابطه هنا. خليه فاضي عشان يستخدم المحرك المدمج.</span>
@@ -1782,7 +1782,7 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
         </div>
 
         <div class="context-block" style="display:none;">
-          <!-- Quick Translate moved to its own floating popup (qtFab/qtPopup) below, so it works on mobile regardless of this panel's open state -->
+          <!-- Quick Translate now lives in Settings view -->
         </div>
 
         <div class="context-block">
@@ -1821,21 +1821,6 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
 </div>
 
 <!-- ================= QUICK TRANSLATE (floating, mobile-friendly) ================= -->
-<button type="button" class="fab-qt qt-fab" id="qtFab" aria-label="Open Quick Translate">
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h7M7 3v2c0 4.5-2 8-5 10M4 13c1.8 1.5 4 2 5.5 1.8M13 21l4-9 4 9M14.5 18h5"/></svg>
-</button>
-<div class="qt-popup" id="qtPopup">
-  <div class="qt-popup-head">
-    <h4 style="margin:0;"><span class="arabic">ترجمه سريعه</span>، Quick Translate</h4>
-    <button type="button" class="icon-btn" id="qtCloseBtn" aria-label="Close">✕</button>
-  </div>
-  <div class="qt-box">
-    <textarea id="qtInput" dir="auto" placeholder="اكتب كلمه او جمله بالعربي او الانجليزي... / Type a word or sentence in Arabic or English..."></textarea>
-    <button type="button" class="btn-ghost-sm" id="qtBtn" style="margin-top:8px;"><span class="arabic">ترجم</span>، Translate</button>
-    <div class="qt-result" id="qtResult"></div>
-  </div>
-</div>
-
 <!-- ================= COMMAND PALETTE ================= -->
 <div class="palette-overlay" id="paletteOverlay">
   <div class="palette-box">
@@ -9772,12 +9757,26 @@ function lightCorrection(text){
   return null;
 }
 
-document.getElementById('qtFab').addEventListener('click', () => {
-  document.getElementById('qtPopup').classList.toggle('open');
-});
-document.getElementById('qtCloseBtn').addEventListener('click', () => {
-  document.getElementById('qtPopup').classList.remove('open');
-});
+/* ---- Zoom control (for TV browsers that don't support browser zoom) ---- */
+(function(){
+  const ZOOM_KEY = 'pel_app_zoom';
+  const ZOOM_MIN = 0.70, ZOOM_MAX = 1.60, ZOOM_STEP = 0.10;
+  function getZoom(){ try{ return parseFloat(localStorage.getItem(ZOOM_KEY)) || 1; }catch(e){ return 1; } }
+  function applyZoom(z){
+    z = Math.max(ZOOM_MIN, Math.min(ZOOM_MAX, z));
+    try{ localStorage.setItem(ZOOM_KEY, String(z)); }catch(e){}
+    document.documentElement.style.zoom = z;
+    const label = document.getElementById('zoomLevelLabel');
+    if(label) label.textContent = Math.round(z * 100) + '%';
+  }
+  applyZoom(getZoom());
+  function bind(id, fn){ const el = document.getElementById(id); if(el) el.addEventListener('click', fn); }
+  bind('zoomInBtn', () => applyZoom(getZoom() + ZOOM_STEP));
+  bind('zoomOutBtn', () => applyZoom(getZoom() - ZOOM_STEP));
+  bind('zoomResetBtn', () => applyZoom(1));
+})();
+
+/* ---- Quick Translate (now in Settings, not a floating FAB) ---- */
 document.getElementById('qtBtn').addEventListener('click', async () => {
   const raw = document.getElementById('qtInput').value.trim();
   const resultEl = document.getElementById('qtResult');
