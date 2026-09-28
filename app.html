@@ -9272,8 +9272,8 @@ const RP_SCRIPTS = {
     role: 'Police Officer', studentRole: 'driver',
     steps: [
       { key:'id', expect:'open', ask: L('Good evening, can I see your ID, please?', 'مساء الخير، ممكن اشوف الهويه لو سمحت؟', 'قود ايڤنينج، كان اي سي يور اي دي، بليز؟'),
-        any: { next: 1, reply: L('Thank you. Do you know why I stopped you?', 'شكرا. تدري ليش وقفتك؟', 'ثانك يو. دو يو نو واي اي ستد يو؟') } },
-      { key:'why', expect:'open', ask: L('Do you know why I stopped you?', 'تدري ليش وقفتك؟', 'دو يو نو واي اي ستد يو؟'),
+        any: { next: 1, reply: L('Thank you. Do you know why I stopped you?', 'شكرا. تدري ليش وقفتك؟', 'ثانك يو. دو يو نو واي اي ستوبد يو؟') } },
+      { key:'why', expect:'open', ask: L('Do you know why I stopped you?', 'تدري ليش وقفتك؟', 'دو يو نو واي اي ستوبد يو؟'),
         any: { next: 'wrap', reply: L('You were going a bit over the speed limit. I will give you a warning this time.', 'كنت مسرع شويه فوق السرعه المحدده. بكتفي بتحذير هالمره.', 'يو ور قوينق ا بت اوڤر ذا سپيد لمت. اي ويل قيڤ يو ا وورنينق ذيس تايم.') } },
       { key:'wrap', wrap: L('Drive safely.', 'قود بحذر.', 'درايڤ سيفلي.') }
     ],
