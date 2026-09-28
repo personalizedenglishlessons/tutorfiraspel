@@ -9051,8 +9051,8 @@ const RP_SCRIPTS = {
       { key:'docs', expect:'open', ask: L('Passport and boarding pass, please.', 'الجواز وبطاقه الصعود لو سمحت.', 'باسبورت اند بوردنج پاس، بليز.'),
         any: { next: 1, reply: L('Thank you. What is your final destination?', 'شكرا. وين وجهتك النهاييه؟', 'ثانك يو. وات از يور فوينل ديستنيشن؟') } },
       { key:'destination', expect:'open', ask: L('What is your final destination?', 'وين وجهتك النهاييه؟', 'وات از يور فوينل ديستنيشن؟'),
-        any: { next: 'wrap', reply: L('Enjoy your flight. Gate 12 is boarding now.', 'رحه مبسوطه. بوابه 12 يصعدون الحين.', 'انجوي يور فلايت. قيت تويلف از بوردينق ناو.') } },
-      { key:'wrap', wrap: L('Have a safe trip.', 'رحه امنه.', 'هاف ا سيف تريپ.') }
+        any: { next: 'wrap', reply: L('Enjoy your flight. Gate 12 is boarding now.', 'رحله مبسوطه. بوابه 12 يصعدون الحين.', 'انجوي يور فلايت. قيت تويلف از بوردينق ناو.') } },
+      { key:'wrap', wrap: L('Have a safe trip.', 'رحله امنه.', 'هاف ا سيف تريپ.') }
     ],
     faq: [
       { match: /(which gate|gate number|بوابه)/, reply: L('Your gate is printed on your boarding pass.', 'البوابه مكتوبه على بطاقه الصعود.', 'يور قيت از پرينتد اون يور بوردينق پاس.') },
@@ -9073,7 +9073,7 @@ const RP_SCRIPTS = {
       { key:'wrap', wrap: L('Here we are. Have a great day.', 'وصلنا. يومك مبسوط.', 'هير وي ار. هاف ا قريت داي.') }
     ],
     faq: [
-      { match: /(how much|fare|بكم|الاجره)/, reply: L('The fare is about 40 riyals for this trip.', 'الاجره تقريب ٤٠ ريال لهذي الرحه.', 'ذا فير از اباوت فورتي ريالز فور ذيس تريپ.') },
+      { match: /(how much|fare|بكم|الاجره)/, reply: L('The fare is about 40 riyals for this trip.', 'الاجره تقريب ٤٠ ريال لهذي الرحله.', 'ذا فير از اباوت فورتي ريالز فور ذيس تريپ.') },
       { match: /(credit card|كارت|بطاقه)/, reply: L('Yes, we accept cards.', 'ايه، نقبل الكروت.', 'يس، وي اكسپت كاردز.') },
       { match: /(airport|مطار)/, reply: L('To the airport it takes about thirty minutes.', 'لـ المطار تقريب ثلاثين دقيقه.', 'تو ذا ايرپورت ات تيكس اباوت ثرتي مينتس.') }
     ]
@@ -9236,11 +9236,11 @@ const RP_SCRIPTS = {
   'flight-attendant': {
     role: 'Flight Attendant', studentRole: 'passenger',
     steps: [
-      { key:'drink', expect:'open', ask: L('Welcome aboard. Would you like something to drink?', 'اهلا بكم على متن الرحه. تبي شي تشربه؟', 'ويلكم ابورد. وود يو لايك سمثنق تو درينك؟'),
+      { key:'drink', expect:'open', ask: L('Welcome aboard. Would you like something to drink?', 'اهلا بكم على متن الرحله. تبي شي تشربه؟', 'ويلكم ابورد. وود يو لايك سمثنق تو درينك؟'),
         any: { next: 1, reply: L('Coming right up. Would you like anything to eat?', 'الحين اجيبه. تبي شي تاكله؟', 'کمنق رايت اپ. وود يو لايك انيثينق تو ات؟') } },
       { key:'food', expect:'open', ask: L('Would you like anything to eat?', 'تبي شي تاكله؟', 'وود يو لايك انيثينق تو ات؟'),
-        any: { next: 'wrap', reply: L('Here you go. Enjoy your flight.', 'تفضل. رحه مبسوطه.', 'هير يو قو. انجوي يور فلايت.') } },
-      { key:'wrap', wrap: L('Let me know if you need anything during the flight.', 'خبرني اذا احتجت شي اثنا الرحه.', 'ليت مي نو اف يو نيد انيثينق ديورينق ذا فلايت.') }
+        any: { next: 'wrap', reply: L('Here you go. Enjoy your flight.', 'تفضل. رحله مبسوطه.', 'هير يو قو. انجوي يور فلايت.') } },
+      { key:'wrap', wrap: L('Let me know if you need anything during the flight.', 'خبرني اذا احتجت شي اثنا الرحله.', 'ليت مي نو اف يو نيد انيثينق ديورينق ذا فلايت.') }
     ],
     faq: [
       { match: /(water|ما)/, reply: L('Of course, I will bring you some water.', 'اكيد، بجيب لك ما.', 'اوف كورس، اي ويل برينق يو سم ووتر.') },
@@ -9350,7 +9350,7 @@ const RP_ALT = {
   },
   'airport-officer': {
     'docs.any': L('All set. What is your final destination?', 'تمام. وين وجهتك النهاييه؟', 'اول سيت. وات از يور فوينل ديستنيشن؟'),
-    'destination.any': L('Perfect, have a pleasant flight. Gate 12 is boarding.', 'ممتاز، رحه ممتعه. بوابه 12 يصعدون الحين.', 'بيرفكت، هاف ا پليزنت فلايت. قيت تويلف از بوردينق.')
+    'destination.any': L('Perfect, have a pleasant flight. Gate 12 is boarding.', 'ممتاز، رحله ممتعه. بوابه 12 يصعدون الحين.', 'بيرفكت، هاف ا پليزنت فلايت. قيت تويلف از بوردينق.')
   },
   'taxi-driver': {
     'destination.any': L('Right, that is about twenty minutes. Bags in the trunk?', 'تم، تقريب عشرين دقيقه. الشنط بالصندوق؟', 'رايت، ذات از اباوت توانتي مينتس. باجز ان ذا ترنك؟'),
@@ -9421,7 +9421,7 @@ const RP_ALT = {
   },
   'flight-attendant': {
     'drink.any': L('Coming up. Would you like something to eat as well?', 'الحين اجيبه. تبي شي تاكله لسه؟', 'کمنق اپ. وود يو لايك سمثنق تو ات از ويل؟'),
-    'food.any': L('There you go. Have a pleasant flight.', 'تفضل. رحه ممتعه.', 'ذير يو قو. هاف ا پليزنت فلايت.')
+    'food.any': L('There you go. Have a pleasant flight.', 'تفضل. رحله ممتعه.', 'ذير يو قو. هاف ا پليزنت فلايت.')
   },
   'coworker': {
     'lunch.yes': L('Nice one. Any place in mind?', 'حلو. عندك مكان ببالك؟', 'نايس ون. اني پليس ان مويند؟'),
@@ -10238,7 +10238,7 @@ const ACADEMIES = [
   {id:'tv-series-english', en:'TV Series English', ar:'تعلم من المسلسلات', translit:'تي في سيريز انجلش', cat:'Culture', icon:'tv', from:'#17171B', to:'#343744', difficulty:'Advanced', duration:'6h', lessons:18},
   {id:'music-english', en:'Music English', ar:'تعلم من الاغاني', translit:'ميوزك انجلش', cat:'Culture', icon:'music', from:'#A88345', to:'#3F8C72', difficulty:'Intermediate', duration:'4h', lessons:16},
   {id:'english-mastery', en:'English Mastery', ar:'اتقان الانجليزي', translit:'انجلش ماستري', cat:'Mastery', icon:'crown', from:'#C8A96A', to:'#D8BD83', difficulty:'Advanced', duration:'12h', lessons:52},
-  {id:'fluency-journey', en:'Fluency Journey', ar:'رحه الطلاقه', translit:'فلوينسي جورني', cat:'Mastery', icon:'compass', from:'#D8BD83', to:'#A88345', difficulty:'All Levels', duration:'20h', lessons:64},
+  {id:'fluency-journey', en:'Fluency Journey', ar:'رحله الطلاقه', translit:'فلوينسي جورني', cat:'Mastery', icon:'compass', from:'#D8BD83', to:'#A88345', difficulty:'All Levels', duration:'20h', lessons:64},
   /* ------- Learn Arabic track (direction: ar) ------- */
   {id:'saudi-greetings', en:'Greetings', ar:'التحيات', translit:'قريتينقز', dir:'ar', cat:'Arabic', icon:'hand', from:'#3F8C72', to:'#276b53', difficulty:'Beginner', duration:'3h', lessons:12},
   {id:'saudi-daily-life', en:'Daily Life', ar:'الحيا اليوميه', translit:'ديلي لايف', dir:'ar', cat:'Arabic', icon:'sun', from:'#C8A96A', to:'#3F8C72', difficulty:'Beginner', duration:'4h', lessons:14},
@@ -10322,7 +10322,7 @@ const VOCAB_BANK = [
   {en:'Appointment', ipa:'/əˈpɔɪntmənt/', ar:'موعد', translit:'ابوينتمنت', example:{en:'I need to make a doctor appointment.', ar:'لازم احجز موعد عند الدكتور.', translit:'اي نيد تو ميك ا دكتور ابوينتمنت.'}, synonyms:'Meeting, booking', antonyms:'-', family:'appoint, appointed', collocations:'make an appointment, cancel an appointment', category:'Hospital English', difficulty:'Intermediate', tip:'In Arabic we usually just say "موعد" for both a meeting and a doctor visit.', synonyms_ar:'موعد طبي', antonyms_ar:'الغا', family_ar:'يعين، موعد', collocations_ar:'احجز موعد، الغي موعد', tip_ar:'احجز موعد قبل ما تروح', mistake:'Saying "I have appointment" without "an."'},
   {en:'Negotiate', ipa:'/nɪˈɡoʊʃieɪt/', ar:'يتفاوض', translit:'نيقوشييت', example:{en:'We negotiated a better price.', ar:'تفاوضنا على سعر افضل.', translit:'وي نيقوشييتد ا بيتر برايس.'}, synonyms:'Bargain, discuss', antonyms:'Concede', family:'negotiation, negotiator', collocations:'negotiate a deal, negotiate a price', category:'Business English', difficulty:'Advanced', tip:'Common in salary and price conversations.', synonyms_ar:'فاوض، ناقش', antonyms_ar:'تنازل', family_ar:'تفاوض، مفاوض', collocations_ar:'فاوض على صفقه، فاوض على سعر', tip_ar:'كلمه شايعه في محادثات الراتب والاسعار', mistake:'Confusing "negotiate" with "argue," negotiating is calm and respectful.'},
   {en:'Deadline', ipa:'/ˈdɛdlaɪn/', ar:'موعد نهايي', translit:'دد لوين', example:{en:'The deadline is next Thursday.', ar:'الموعد النهايي يوم الخميس الجاي.', translit:'ذا دد لوين از نكست ثيرزداي.'}, synonyms:'Due date', antonyms:'-', family:'-', collocations:'meet a deadline, miss a deadline', category:'Workplace Communication', difficulty:'Intermediate', tip:'Very common word in office English.', synonyms_ar:'موعد نهايي', antonyms_ar:'تمديد', family_ar:'موعد نهايي، مواعيد نهاييه', collocations_ar:'حققت الموعد، فاتك الموعد', tip_ar:'الموعد النهايي هو اخر وقت للتسليم', mistake:'Saying "the last date" instead of "the deadline."'},
-  {en:'Itinerary', ipa:'/aɪˈtɪnəˌrɛri/', ar:'خط سير الرحه', translit:'ايتنراري', example:{en:'Can you send me the itinerary?', ar:'ممكن ترسل لي خط سير الرحه؟', translit:'كان يو سند مي ذا ايتنراري؟'}, synonyms:'Travel plan, schedule', antonyms:'-', family:'-', collocations:'travel itinerary, daily itinerary', category:'Travel English', difficulty:'Advanced', tip:'A slightly formal word, common with travel agents and hotels.', synonyms_ar:'خط سير، جدول', antonyms_ar:'-', family_ar:'-', collocations_ar:'خط سير رحه، خط سير يومي', tip_ar:'كلمه شوي راقيه، شايعه مع ولا السفر والفنادق', mistake:'Mispronouncing as "eye-tin-uh-ree," it is "eye-TIN-uh-rer-ee."'},
+  {en:'Itinerary', ipa:'/aɪˈtɪnəˌrɛri/', ar:'خط سير الرحله', translit:'ايتنراري', example:{en:'Can you send me the itinerary?', ar:'ممكن ترسل لي خط سير الرحله؟', translit:'كان يو سند مي ذا ايتنراري؟'}, synonyms:'Travel plan, schedule', antonyms:'-', family:'-', collocations:'travel itinerary, daily itinerary', category:'Travel English', difficulty:'Advanced', tip:'A slightly formal word, common with travel agents and hotels.', synonyms_ar:'خط سير، جدول', antonyms_ar:'-', family_ar:'-', collocations_ar:'خط سير رحله، خط سير يومي', tip_ar:'كلمه شوي راقيه، شايعه مع ولا السفر والفنادق', mistake:'Mispronouncing as "eye-tin-uh-ree," it is "eye-TIN-uh-rer-ee."'},
   {en:'Refund', ipa:'/ˈriːfʌnd/', ar:'استرجاع المبلغ', translit:'ريفَند', example:{en:'I would like a refund for this item.', ar:'ابي استرجاع المبلغ لذلك الغرض.', translit:'اي وود لايك ا ريفَند فور ذيس ابنحذف.'}, synonyms:'Reimbursement', antonyms:'Charge', family:'refunded, refunding', collocations:'request a refund, full refund', category:'Shopping English', difficulty:'Intermediate', tip:'Noun stress is on the first syllable, verb stress moves to the second: "please REfund me" vs "a REfund."', synonyms_ar:'استرجاع المبلغ', antonyms_ar:'رسوم', family_ar:'مسترجع، يسترجع', collocations_ar:'اطلب استرجاع، استرجاع كامل', tip_ar:'الاسم تشديد على اول جز، الفعل تشديد على ثاني جز', mistake:'Asking "give me back money" instead of "I would like a refund."'},
   {en:'Layover', ipa:'/ˈleɪˌoʊvər/', ar:'توقف بين رحلتين', translit:'لاي اوڤر', example:{en:'We have a two hour layover in Dubai.', ar:'عندنا توقف ساعتين في دبي.', translit:'وي هاف ا تو اور لاي اوڤر ان دبي.'}, synonyms:'Stopover', antonyms:'Direct flight', family:'-', collocations:'short layover, long layover', category:'Airport English', difficulty:'Intermediate', tip:'Very common word at check-in counters.', synonyms_ar:'توقف بين رحلتين', antonyms_ar:'رحله مباشره', family_ar:'-', collocations_ar:'توقف قصير، توقف طويل', tip_ar:'كلمه شايعه عند كاونتر تسجيل الدخول', mistake:'Using "stop" alone instead of "layover" or "stopover."'},
   {en:'Complimentary', ipa:'/ˌkɑːmplɪˈmɛntəri/', ar:'مجاني، مقدم كهديه', translit:'كامبلمنتري', example:{en:'Breakfast is complimentary at this hotel.', ar:'الفطور مجاني في ذا الفندق.', translit:'بريكفاست از كامبلمنتري ات ذيس هوتيل.'}, synonyms:'Free, gratis', antonyms:'Paid', family:'compliment, complimented', collocations:'complimentary breakfast, complimentary wifi', category:'Hotel English', difficulty:'Advanced', tip:'Do not confuse with "complementary" (matching), spelled with an e.', synonyms_ar:'مجاني، هديه', antonyms_ar:'مدفوع', family_ar:'مجامله', collocations_ar:'فطور مجاني، واي فاي مجاني', tip_ar:'لا تخلط بينها وبين complementary اللي معناها متكامل', mistake:'Saying "free" is fine casually, but hotels prefer "complimentary."'},
@@ -11027,7 +11027,7 @@ const SPEAKING_PERSONAS = [
   {id:'receptionist-clinic', title:'Clinic Receptionist', icon:'clipboard', opener:{en:'Do you have an appointment today?', ar:'عندك موعد اليوم؟', translit:'دو يو هاف ان ابوينتمنت تودي؟'}},
   {id:'neighbour', title:'Neighbour', icon:'home', opener:{en:'Good morning, moving in today?', ar:'صباح الخير، بتنتقلون اليوم؟', translit:'قود مورننج، مووينج ان تودي؟'}},
   {id:'bank-teller', title:'Bank Teller', icon:'landmark', opener:{en:'Good morning, how can I help you today?', ar:'صباح الخير، كيف اقدر اساعدك اليوم؟', translit:'قود مورننج، هاو كان اي هيلب يو تودي؟'}},
-  {id:'flight-attendant', title:'Flight Attendant', icon:'plane', opener:{en:'Welcome aboard. Would you like something to drink?', ar:'اهلاً بكم على متن الرحه. تبي شي تشربه؟', translit:'ويلكم ابورد. وود يو لايك سمثنق تو درينك؟'}},
+  {id:'flight-attendant', title:'Flight Attendant', icon:'plane', opener:{en:'Welcome aboard. Would you like something to drink?', ar:'اهلاً بكم على متن الرحله. تبي شي تشربه؟', translit:'ويلكم ابورد. وود يو لايك سمثنق تو درينك؟'}},
   {id:'coworker', title:'Coworker', icon:'users', opener:{en:'Hey, do you want to grab lunch together?', ar:'هلا، تبغى نتعشى مع بعض؟', translit:'هاي، دو يو وانت تو قراب لانش توقذر؟'}},
   {id:'job-interviewer', title:'Job Interviewer', icon:'user-check', opener:{en:'Thanks for coming in. Tell me about yourself.', ar:'شكرا لحضورك. عرفني عن نفسك.', translit:'ثانكس فور كمنق ان. تيل مي اباوت يورسلف.'}},
   {id:'police-officer', title:'Police Officer', icon:'shield', opener:{en:'Good evening, can I see your ID, please?', ar:'مسا الخير، ممكن اشوف الهويه لو سمحت؟', translit:'قود ايڤنينج، كان اي سي يور اي دي، بليز؟'}},
@@ -11037,7 +11037,7 @@ const SPEAKING_PERSONAS = [
 /* ---- listening lounge tracks ---- */
 const LISTENING_TRACKS = [
   {id:'airport-announcement', title:'Airport Announcement', lines:[
-    {en:'Flight 204 to Jeddah is now boarding at gate twelve.', ar:'رحه 204 لجده الحين تصعيد عند بوابه اثنا عشر.', translit:'فلايت تو او فور تو جده از ناو بوردنج ات قيت تويلف.'},
+    {en:'Flight 204 to Jeddah is now boarding at gate twelve.', ar:'رحله 204 لجده الحين تصعيد عند بوابه اثنا عشر.', translit:'فلايت تو او فور تو جده از ناو بوردنج ات قيت تويلف.'},
     {en:'Please have your boarding pass and ID ready.', ar:'خلوا بطاقه الصعود والهويه جاهزه.', translit:'بليز هاف يور بوردنج پاس اند اي دي رِدي.'},
   ]},
   {id:'coffee-order', title:'At The Coffee Counter', lines:[
@@ -11188,7 +11188,7 @@ const FLAGSHIP_LESSONS = {
     title:'Going To The Airport', ar:'الذهاب للمطار', translit:'جوينج تو ذا ايربورت',
     difficulty:'Beginner', duration:'8 min',
     vocab:[VOCAB_BANK[7], VOCAB_BANK[5]],
-    grammar:{title:'Prepositions of Time: In, On, At', rule:'Use "at" for exact times like flight times.', saudi:'استخدم at مع الوقت المحدد زي وقت الرحه.', wrong:'The flight is on 6pm.', right:'The flight is at 6pm.', mistakes:['Saying "on" instead of "at" with clock times.']},
+    grammar:{title:'Prepositions of Time: In, On, At', rule:'Use "at" for exact times like flight times.', saudi:'استخدم at مع الوقت المحدد زي وقت الرحله.', wrong:'The flight is on 6pm.', right:'The flight is at 6pm.', mistakes:['Saying "on" instead of "at" with clock times.']},
     conversation:[
       {who:'Officer', en:'Passport and boarding pass, please.', ar:'الجواز وبطاقه الصعود لو سمحت.', translit:'باسبورت اند بوردنج پاس، بليز.'},
       {who:'You', en:'Here you go. Which gate is my flight?', ar:'اتفضل. اي بوابه رحلتي؟', translit:'هير يو قو. وِتش قيت از ماي فلايت؟'},
@@ -11511,7 +11511,7 @@ const LESSON_LIBRARY = {
     ],
     quiz:[
       {qAr:'اي جمله صح عن امس؟', qEn:'Which is correct about yesterday?', options:['Yesterday we visited the museum.','Yesterday we have visited the museum.','Yesterday we visit the museum.'], correct:0},
-      {qAr:'كيف تسال عن رحه احد؟', qEn:'How do you ask about someone\'s trip?', options:['How was your trip?','How is your trip?','How will be your trip?'], correct:0},
+      {qAr:'كيف تسال عن رحله احد؟', qEn:'How do you ask about someone\'s trip?', options:['How was your trip?','How is your trip?','How will be your trip?'], correct:0},
     ],
     summary:'You practiced telling short stories in past simple and asking about past trips.',
     takeaway:'احك لواحد عن يومك امس بثلاث جمل ماضيه.',
@@ -11592,16 +11592,16 @@ const LESSON_LIBRARY = {
     title:'Delays and Cancellations', ar:'التاخير والالغا', translit:'ديليز اند كانسليشنز',
     duration:'9 min', difficulty:'Intermediate',
     vocab:[VOCAB_BANK[6], VOCAB_BANK[7]],
-    grammar:{title:'Asking About Problems', rule:'Ask clearly: Is the flight delayed? How long is the delay? What are my options?', saudi:'لما تتاخر رحلتك، اسال بوضوح: هل الرحه متاخره؟ كم التاخير؟ وش خياراتي؟', wrong:'Flight late, what do?', right:'Is the flight delayed? How long is the delay?', mistakes:['Asking with no auxiliary: "flight delayed?"','Not asking about compensation or alternatives.']},
+    grammar:{title:'Asking About Problems', rule:'Ask clearly: Is the flight delayed? How long is the delay? What are my options?', saudi:'لما تتاخر رحلتك، اسال بوضوح: هل الرحله متاخره؟ كم التاخير؟ وش خياراتي؟', wrong:'Flight late, what do?', right:'Is the flight delayed? How long is the delay?', mistakes:['Asking with no auxiliary: "flight delayed?"','Not asking about compensation or alternatives.']},
     conversation:[
-      {who:'You', en:'Excuse me, is the flight to Riyadh delayed?', ar:'لو سمحت، رحه الرياض متاخره؟', translit:'اكسكوز مي، از ذا فلايت تو رياض ديليدد؟'},
+      {who:'You', en:'Excuse me, is the flight to Riyadh delayed?', ar:'لو سمحت، رحله الرياض متاخره؟', translit:'اكسكوز مي، از ذا فلايت تو رياض ديليدد؟'},
       {who:'Agent', en:'Yes, about two hours due to the weather.', ar:'ايه، تقريبًا ساعتين عشان الجو.', translit:'يس، اباوت تو اورز دو تو ذا ويذر.'},
-      {who:'You', en:'I have a connection in Jeddah. Will I make it?', ar:'عندي رحه ربط بجده. بلحق عليها؟', translit:'اي هاف ا كونكشن ان جده. ويل اي ميك ات؟'},
-      {who:'Agent', en:'Let me rebook you on a later connection, no extra charge.', ar:'خلني اعيد حجزك على رحه ربط بعدين، بدون رسوم.', translit:'ليت مي ريبوك يو اون ا ليتر كونكشن، نو اكسترا تشارج.'},
+      {who:'You', en:'I have a connection in Jeddah. Will I make it?', ar:'عندي رحله ربط بجده. بلحق عليها؟', translit:'اي هاف ا كونكشن ان جده. ويل اي ميك ات؟'},
+      {who:'Agent', en:'Let me rebook you on a later connection, no extra charge.', ar:'خلني اعيد حجزك على رحله ربط بعدين، بدون رسوم.', translit:'ليت مي ريبوك يو اون ا ليتر كونكشن، نو اكسترا تشارج.'},
     ],
     quiz:[
       {qAr:'كيف تسال عن التاخير؟', qEn:'How do you ask about a delay?', options:['Is the flight delayed?','Flight delay how much?','Why flight late, tell?'], correct:0},
-      {qAr:'"Connection" بالمطار تعني:', qEn:'"Connection" at the airport means:', options:['رحه ربط','بوابه','مطار'], correct:0},
+      {qAr:'"Connection" بالمطار تعني:', qEn:'"Connection" at the airport means:', options:['رحله ربط','بوابه','مطار'], correct:0},
     ],
     summary:'You practiced handling delays, asking about connections, and getting rebooked.',
     takeaway:'احفظ: How long is the delay? و Will I make my connection?',
@@ -12190,7 +12190,7 @@ const LESSON_LIBRARY = {
     vocab:[VOCAB_BANK[5], VOCAB_BANK[16]],
     grammar:{title:'Choice of Future Form', rule:'Going to = decided plan. Will = decision now, promise, or prediction.', saudi:'going to للخطه الجاهزه، will للقرار اللحظي او الوعد.', wrong:'I will going to visit him.', right:'I am going to visit him, or I will call him now.', mistakes:['Mixing both: "will going to."','Using "will" for a plan made long ago.']},
     conversation:[
-      {who:'A', en:'Have you decided about the trip?', ar:'قررت بشان الرحه؟', translit:'هاف يو دسايدد اباوت ذا تريب؟'},
+      {who:'A', en:'Have you decided about the trip?', ar:'قررت بشان الرحله؟', translit:'هاف يو دسايدد اباوت ذا تريب؟'},
       {who:'B', en:'Yes, I am going to visit my family in Abha next week.', ar:'ايه، بروح ازور اهلي بابها الاسبوع الجاي.', translit:'يس، ايم قوينق تو ڤيزت ماي فاميلي ان ابها نكست ويك.'},
       {who:'A', en:'Nice. I will join you if I finish early.', ar:'حلو. باجي معاك لو خلصت بدري.', translit:'نايس. اي ويل جوين يو اف اي فينيش ايرلي.'},
       {who:'B', en:'Deal, I will text you the details tonight.', ar:'تم، بارسل لك التفاصيل الليله.', translit:'ديل، اي ويل تكست يو ذا ديتيلز تونايت.'},
@@ -12297,16 +12297,16 @@ const LESSON_LIBRARY = {
     title:'Listening To Announcements', ar:'تستمع للاعلانات', translit:'ليسننق تو اناونسمينتس',
     duration:'9 min', difficulty:'Intermediate',
     vocab:[VOCAB_BANK[12], VOCAB_BANK[13]],
-    grammar:{title:'Numbers and Gates', rule:'Announcements are heavy with numbers: gate 12, flight 204, ten minutes delay.', saudi:'الاعلانات مليانه ارقام: بوابه ١٢، رحه ٢٠٤، تاخوير عشر دقايق.', wrong:'Missing the gate number because you tuned out.', right:'Listening for the key details: flight number, gate, time, change.', mistakes:['Trying to hear every word instead of the key facts.','Confusing similar numbers: 14 vs 40.']},
+    grammar:{title:'Numbers and Gates', rule:'Announcements are heavy with numbers: gate 12, flight 204, ten minutes delay.', saudi:'الاعلانات مليانه ارقام: بوابه ١٢، رحله ٢٠٤، تاخوير عشر دقايق.', wrong:'Missing the gate number because you tuned out.', right:'Listening for the key details: flight number, gate, time, change.', mistakes:['Trying to hear every word instead of the key facts.','Confusing similar numbers: 14 vs 40.']},
     conversation:[
-      {who:'Speaker', en:'Attention passengers, flight 204 to Jeddah is now boarding at gate 12.', ar:'انتباه للمسافرين، رحه 204 لجده بدا صعودها بوابه 12.', translit:'اتنشن پاسنجرز، فلايت تو او فور تو جده از ناو بوردنق ات قيت تويلف.'},
+      {who:'Speaker', en:'Attention passengers, flight 204 to Jeddah is now boarding at gate 12.', ar:'انتباه للمسافرين، رحله 204 لجده بدا صعودها بوابه 12.', translit:'اتنشن پاسنجرز، فلايت تو او فور تو جده از ناو بوردنق ات قيت تويلف.'},
       {who:'You', en:'Was that gate 12 or gate 20?', ar:'هذي بوابه 12 وللا 20؟', translit:'واز ذات قيت تويلف اور قيت توانتي؟'},
       {who:'A', en:'Gate 12, and they said boarding now.', ar:'بوابه 12، وقالوا الصعود الحين.', translit:'قيت تويلف، اند ذي سيد بوردنق ناو.'},
       {who:'You', en:'Thanks, I almost missed it.', ar:'شكرا، كدت افوتها.', translit:'ثانكس، اي اولموست مست ات.'},
     ],
     quiz:[
       {qAr:'بالاعلانات وش تسمع بعنايه؟', qEn:'In announcements, listen for:', options:['Flight number, gate, and time','The pilot\'s name','The airline\'s history'], correct:0},
-      {qAr:'"Boarding now" معناها:', qEn:'"Boarding now" means:', options:['الصعود بدا الحين','تاخر الرحه','تم الالغا'], correct:0},
+      {qAr:'"Boarding now" معناها:', qEn:'"Boarding now" means:', options:['الصعود بدا الحين','تاخر الرحله','تم الالغا'], correct:0},
     ],
     summary:'You practiced catching key details in announcements and confirming what you heard.',
     takeaway:'لما تسمع اعلان، كرر عليه: Gate 12? تاكيدك يمنع الغلط.',
@@ -13676,12 +13676,12 @@ const LESSON_LIBRARY = {
 
 /* ------- Arabic for Travel (saudi-travel) ------- */
   'sa-travel-booking': {
-    title:'Booking a Flight', ar:'حجز رحه طيران', translit:'hajz rihla tayaraan', dir:'ar',
+    title:'Booking a Flight', ar:'حجز رحله طيران', translit:'hajz rihla tayaraan', dir:'ar',
     duration:'8 min', difficulty:'Beginner',
     vocab:[
       {en:'A flight ticket', ar:'تذكره طيران', translit:'tathkara tayaraan', tip:'The ticket.'},
       {en:'To where?', ar:'لين؟', translit:'leen?', tip:'The natural way to ask the destination.'},
-      {en:'A direct flight', ar:'رحه مباشره', translit:'rihla mubashara', tip:'No stops in between.'},
+      {en:'A direct flight', ar:'رحله مباشره', translit:'rihla mubashara', tip:'No stops in between.'},
       {en:'The price', ar:'السعر', translit:'alsir', tip:'Ask it directly.'},
     ],
     grammar:{title:'Booking with lin', rule:'In travel talk, the destination comes with lin (to): tathkara lin + the city.', saudi:'تحجز: تذكره لين + المدينه.', wrong:'Use the formal ila for the destination.', right:'"Abi tathkara lin Dubai." (I want a ticket to Dubai.)', mistakes:['Forgetting to ask about a direct flight, mubashara matters.','Not confirming the price before booking.']},
@@ -13693,13 +13693,13 @@ const LESSON_LIBRARY = {
     ],
     quiz:[
       {qAr:'كيف تقول تذكره لـ جده؟', qEn:'How do you say a ticket to Jeddah?', options:['تذكره لين جده / Ticket to Jeddah','تذكره من جده / Ticket from Jeddah','جده تذكره / Jeddah ticket'], correct:0},
-      {qAr:'وش تسال عن الرحه؟', qEn:'What do you ask about the flight?', options:['مباشره ولا فيها توقف؟ / Direct or with a stop?','وين الفندق؟ / Where is the hotel?','كم عمرك؟ / How old are you?'], correct:0},
+      {qAr:'وش تسال عن الرحله؟', qEn:'What do you ask about the flight?', options:['مباشره ولا فيها توقف؟ / Direct or with a stop?','وين الفندق؟ / Where is the hotel?','كم عمرك؟ / How old are you?'], correct:0},
     ],
     summary:'You learned the flight booking exchange: destination with lin, timing, and the direct question.',
     takeaway:'تذكره لين + متى + مباشره = حجز طيران كامل.',
     situation:{
       hear:[{ar:'متى تبي تطير؟', translit:'mata tebi tatheer?', en:'When do you want to fly?'},{ar:'بكم تبي درجه؟', translit:'bikam tebi daraja?', en:'Which class do you want?'}],
-      say:[{ar:'ابي رحه مباشره لو سمحت.', translit:'abi rihla mubashara law samaht', en:'I want a direct flight please.'}],
+      say:[{ar:'ابي رحله مباشره لو سمحت.', translit:'abi rihla mubashara law samaht', en:'I want a direct flight please.'}],
       recover:[{ar:'اقصد امس، بكره.', translit:'agsid ams, bukra', en:'I mean not yesterday, tomorrow.'}],
     },
   },
@@ -13822,24 +13822,24 @@ const LESSON_LIBRARY = {
       {en:'Delayed', ar:'متاخره', translit:'mitaakhira', tip:'The flight is delayed.'},
       {en:'Cancelled', ar:'ملغاه', translit:'mulgha', tip:'The flight is cancelled.'},
       {en:'How long?', ar:'كم المده؟', translit:'kam almudda?', en:'How long?'},
-      {en:'Another flight', ar:'رحه ثانيه', translit:'rihla thanya', tip:'Ask for a rebooking.'},
+      {en:'Another flight', ar:'رحله ثانيه', translit:'rihla thanya', tip:'Ask for a rebooking.'},
     ],
-    grammar:{title:'Asking about delays', rule:'Ask is the flight mitaakhira or mulgha, then kam almudda (how long) and request rihla thanya (another flight).', saudi:'تسال: الرحه متاخره؟ كم المده؟', wrong:'Stay quiet and miss updates.', right:'"Alrihla mitaakhira, kam almudda?" (The flight is delayed, how long?)', mistakes:['Using the formal taakhir (delay) instead of mitaakhira for the status.','Forgetting to ask for a rebooking when it is mulgha.']},
+    grammar:{title:'Asking about delays', rule:'Ask is the flight mitaakhira or mulgha, then kam almudda (how long) and request rihla thanya (another flight).', saudi:'تسال: الرحله متاخره؟ كم المده؟', wrong:'Stay quiet and miss updates.', right:'"Alrihla mitaakhira, kam almudda?" (The flight is delayed, how long?)', mistakes:['Using the formal taakhir (delay) instead of mitaakhira for the status.','Forgetting to ask for a rebooking when it is mulgha.']},
     conversation:[
       {who:'You', ar:'رحلتي متاخره كم؟', translit:'rihlati mitaakhira kam?', en:'My flight is delayed how long?'},
       {who:'Staff', ar:'ساعتين تقريب.', translit:'saaatayn taqreeban', en:'About two hours.'},
-      {who:'You', ar:'فيه رحه ثانيه ابكر؟', translit:'feeh rihla thanya abkar?', en:'Is there an earlier flight?'},
+      {who:'You', ar:'فيه رحله ثانيه ابكر؟', translit:'feeh rihla thanya abkar?', en:'Is there an earlier flight?'},
       {who:'Staff', ar:'خلني اشيك لك.', translit:'khallini ashayyak lak', en:'Let me check for you.'},
     ],
     quiz:[
       {qAr:'كيف تسال عن التاخير؟', qEn:'How do you ask about the delay?', options:['كم المده؟ / How long?','وين الباب؟ / Where is the gate?','بكم؟ / How much?'], correct:0},
-      {qAr:'وش تقول لو الغوا الرحه؟', qEn:'What do you say if the flight is cancelled?', options:['فيه رحه ثانيه؟ / Is there another flight?','خلاص / Done','ما يهم / It does not matter'], correct:0},
+      {qAr:'وش تقول لو الغوا الرحله؟', qEn:'What do you say if the flight is cancelled?', options:['فيه رحله ثانيه؟ / Is there another flight?','خلاص / Done','ما يهم / It does not matter'], correct:0},
     ],
     summary:'You learned the delay questions and how to push for a rebooking.',
-    takeaway:'متاخره كم؟ وفيه رحه ثانيه؟ = تتحكم في وضعك.',
+    takeaway:'متاخره كم؟ وفيه رحله ثانيه؟ = تتحكم في وضعك.',
     situation:{
-      hear:[{ar:'الرحه متاخره.', translit:'alrihla mitaakhira', en:'The flight is delayed.'},{ar:'ملغاه.', translit:'mulgha', en:'Cancelled.'}],
-      say:[{ar:'ممكن رحه ثانيه بنفس السعر؟', translit:'mumkin rihla thanya binafs alsir?', en:'Can I get another flight at the same price?'}],
+      hear:[{ar:'الرحله متاخره.', translit:'alrihla mitaakhira', en:'The flight is delayed.'},{ar:'ملغاه.', translit:'mulgha', en:'Cancelled.'}],
+      say:[{ar:'ممكن رحله ثانيه بنفس السعر؟', translit:'mumkin rihla thanya binafs alsir?', en:'Can I get another flight at the same price?'}],
       recover:[{ar:'اقصد ابكر مو احداث.', translit:'agsid abkar mo ahdath', en:'I mean earlier, not later.'}],
     },
   },
@@ -17023,7 +17023,7 @@ const SAUDI_SWAPS = [
   ['الشهادة', 'الشهاده'], ['المنصة', 'المنصه'], ['اللغة', 'اللغه'], ['الصفحة', 'الصفحه'],
   ['المشكلة', 'المشكله'], ['المكالمة', 'المكالمه'], ['المقابلة', 'المقابله'], ['المفضلة', 'المفضله'],
   ['المرة', 'المره'], ['المرحلة', 'المرحله'], ['الدورة', 'الدوره'], ['الزيارة', 'الزياره'],
-  ['الرحلة', 'الرحه'], ['الطريقة', 'الطريقه'], ['السيارة', 'السياره'], ['الساعة', 'الساعه'],
+  ['الرحلة', 'الرحله'], ['الطريقة', 'الطريقه'], ['السيارة', 'السياره'], ['الساعة', 'الساعه'],
   ['الغرفة', 'الغرفه'], ['الرسالة', 'الرساله'], ['الجلسة', 'الجلسه'], ['الحصة', 'الحصه'],
   ['الخطة', 'الخطه'], ['الخطوة', 'الخطوه'], ['القصة', 'القصه'], ['النقطة', 'النقطه'],
   ['النهاية', 'النهايه'], ['النسخة', 'النسخه'], ['المكتبة', 'المكتبه'], ['الاستاذة', 'الاستاذه'],
