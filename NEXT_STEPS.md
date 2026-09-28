@@ -1,5 +1,32 @@
 # NEXT STEPS - pick up here
 
+## DONE: Verification round 4 — L() translits + DB translit columns (2026-09-28, fourth session)
+
+After the vault sweep, ran the back-transliteration flagger over the sets
+not yet covered: every L('en','ar','translit') call in all source files,
+plus the DB words.translit (183 rows) and lesson_items.translit
+(1,056 word rows). Hand-reviewed all 55 flags; most were correct phonics
+(silent letters: know→نو, walk→وك, would→ود; is/was/the/theys fine).
+
+### Real errors fixed (DB lesson_items, live)
+- cape كيب (= "keep"!) → كايب
+- flight فايت (= "fight"!) → فلايت
+- although الثو / ولثو → اولذو (words table too)
+- "at 7" ات سيون → ات سيڤن
+- pick up بيك اب / بك اب → پيك اب
+
+### Real errors fixed (source, pushed)
+- roleplay "Do you know why I stopped you?" translit ستد → ستوبد (app.html ×2)
+- PHON_DICT deadlines ديدلوينز → ديدلاينز
+- جزء hamza family stragglers: الجز الثاني/هالجز/الجز الاول → جزء (app.html)
+
+Live verification on GitHub Pages with student account (testmail1):
+deployed app.html byte-checked for all fix families (zero old strings),
+vault UI opened — Deadline card renders دد لاين + fixed collocations
+(تلحق بالموعد النهايي), Hospital English deck renders ابوينتمنت correctly.
+
+# NEXT STEPS - pick up here
+
 ## DONE: Vocabulary Vault + pronunciation (translit) sweep (2026-09-28, third session)
 
 User: "look in vocab vault as well... DO NOT STOP UNTIL THERE'S NO
