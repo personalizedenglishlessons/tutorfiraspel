@@ -1,5 +1,58 @@
 # NEXT STEPS - pick up here
 
+## DONE: Round 8 — full re-scan of everything (2026-09-28, eighth session)
+
+User asked to SCAN EVERYTHING. Full sweep of repo + DB, fresh dumps.
+
+### Source fixes (pushed fdf7f05, 630b047)
+- headlines هيدلوينز -> هيدلاينز (PHON_DICT)
+- question كوستشن -> كويستشن (PHON_DICT + 16 sentence uses; was
+  teaching "koschen", and PHON_DICT contradicted itself with
+  كويستشانز for the plural)
+- admin.js 'تاكيد اخوير' -> 'تاكيد اخير'
+- seed_flagship generator 'ويش از' -> 'ويتش از' synced
+- tools/batch_vocab_data.py synced to fixed vocab translits
+- PERSIAN CODEPOINTS normalized repo-wide (ک U+06A9 -> ك, ی U+06CC
+  -> ي): 26 spots in app.html roleplay translits (پرکتیس/کمنق/کچ/
+  سکستي/کيلوميترز/اميرجنسی/پریفر...) + docs. These render fine but
+  silently break any search/replace that uses Arabic codepoints.
+
+### DB fixes (live, verified zero residual)
+- Round-5 families that had NOT stuck/were missed: ييستردي -> يسترداي,
+  يوشوي -> يوجوالي, الويز/اولويك -> اولويز, ام بروف -> ام پروڤ,
+  كاجاوال -> كاجوال
+- allergy الرجي -> اليرجي (2 lesson_items rows)
+- جزء hamza: 'بالجز الثاني' -> 'بالجزء', 'هالجز' -> 'هالجزء'
+- كوستشن -> كويستشن (3 lesson_items + 6 exercises)
+- luggage rows 'لقج'/'لاقيج' -> 'لاگيج' (PHON_DICT standard);
+  exercises لاگیدج -> لاگيج normalized
+- opinion 'ابينيون' -> 'اپينيان' (PHON_DICT)
+- 'اكتف فرس باسيف' -> 'اكتف ڤرس باسيف' (vs was rendered فرس!)
+- 'اي اقر' -> 'اي اقري' (PHON_DICT agree=اقري)
+- above 'اباوف' -> 'اباڤ', Pick up 'بك اب' -> 'پيك اب' (2 exercise
+  rows + option), missing ___ blank restored in ex#2274 tr
+- Farsi codepoints normalized in 4 lesson_items rows
+
+### Verified clean (no action)
+- Empty translits (99): all Takeaway/grammar-explanation items, by design
+- Vault VOCAB_BANK: 168 entries, no same-category duplicates,
+  colleague كوليگ/كولييج cross-category inconsistency known-good
+- پال endings (sample سامپال, simple سيمپال, example اقزامپال):
+  systematic PHON_DICT house style, not corruption — DO NOT "fix"
+- ex→اقز convention (exact اقزاكت, exam اقزام): PHON_DICT systematic,
+  Saudi ق=g reading makes it accurate — both اقزام/اكزام readable
+- makes=ميكس exercise hits correct; فروم ذا correct; false-positive
+  guards documented in round 5 still apply
+
+### Deploy verified
+Live app.html: zero Farsi codepoints, question/headlines fixes live.
+
+CAUTION: when writing Arabic replacement strings by hand, double-check
+ي vs ی — round 8 introduced then caught a Farsi-yeh typo in پيك اب
+while fixing بك اب.
+
+# NEXT STEPS - pick up here
+
 ## DONE: Round 7 — vault drift/dedupe/search + a0hw EN quality (2026-09-28, seventh session)
 
 ### Vault bugs fixed (pushed dc52a04, 5ccaf20, 6679cb0)
