@@ -8982,7 +8982,7 @@ const RP_SCRIPTS = {
       { match: /(how much|cost|price|fee|بكم|كم التكلفه)/, reply: L('A consultation costs 150 SAR.', 'الكشفيه ١٥٠ ريال.', 'ا كونسلتيشن كوستس 150 سار.') },
       { match: /(insurance|تامين|تامين)/, reply: L('We accept most insurance plans. Please bring your insurance card.', 'نقبل اغلب التامينات. اجلب بطاقه التامين لو سمحت.', 'وي اكسپت موست انسيورنس بلانز. بليز برينق يور انسيورنس كارد.') },
       { match: /(parking|مواقف)/, reply: L('There is free parking behind the building.', 'فيه مواقف مجانيه ورا المبنى.', 'ذير از فري پاركينج بيهيند ذا بلدنق.') },
-      { match: /(emergency|طواري)/, reply: L('For an emergency, please call 997.', 'للطواري اتصل على 997.', 'فور ان اميرجنسی، بليز كول 997.') }
+      { match: /(emergency|طواري)/, reply: L('For an emergency, please call 997.', 'للطواري اتصل على 997.', 'فور ان اميرجنسي، بليز كول 997.') }
     ]
   },
   'waiter': {
@@ -9076,12 +9076,12 @@ const RP_SCRIPTS = {
         no: { next: 3, reply: L('Good.', 'ممتاز.', 'قود.') },
         info: { next: 3, reply: L('I will make a note of that.', 'رح اسجل ذا.', 'اي ويل ميك ا نوت اوف ذات.') } },
       { key:'plan', expect:'any', ask: L('I will prescribe something for you. Take it twice a day. Any questions?', 'بوصف لك دوا. خذه مرتين باليوم. عندك اسأله؟', 'اي ويل پريسكرايب سمثنق فور يو. تيك ات توايس ا داي. اني كويستشنز؟'),
-        any: { next: 'wrap', reply: L('Take care and rest well. Come back if it does not get better.', 'خل بالك وارتاح زين. ارجع اذا ما تحسنت.', 'تيك كير اند ريست ويل. کام باك اف ات داز نوت قيت بيتر.') } },
+        any: { next: 'wrap', reply: L('Take care and rest well. Come back if it does not get better.', 'خل بالك وارتاح زين. ارجع اذا ما تحسنت.', 'تيك كير اند ريست ويل. كام باك اف ات داز نوت قيت بيتر.') } },
       { key:'wrap', wrap: L('Get well soon.', 'الف سلامه.', 'قيت ويل سون.') }
     ],
     faq: [
       { match: /(how much|cost|بكم)/, reply: L('The consultation is covered by your insurance.', 'الكشفيه مغطاه بالتامين.', 'ذا كونسلتيشن از كڤرد باي يور انسيورنس.') },
-      { match: /(medicine|دوا)/, reply: L('Take the medicine after meals.', 'خذ الدوا لسه الاكل.', 'تيك ذا ميديکيشن افتير ميلز.') }
+      { match: /(medicine|دوا)/, reply: L('Take the medicine after meals.', 'خذ الدوا لسه الاكل.', 'تيك ذا ميديكيشن افتير ميلز.') }
     ]
   },
   'cashier': {
@@ -9130,12 +9130,12 @@ const RP_SCRIPTS = {
         no: { next: 2, reply: L('Great. Let us review the key words. Repeat after me.', 'ممتاز. خلنا نراجع الكلمات المهمه. كرر وراي.', 'قريت. ليت اس ريفيو ذا كي ووردز. ريپيت افتير مي.') } },
       { key:'question', expect:'open', ask: L('What is your question?', 'وش سؤالك؟', 'وات از يور كويستشن؟'),
         any: { next: 2, reply: L('That is a great question. Let me explain it clearly.', 'سؤال ممتاز. خلني اشرحه زين.', 'ذات از ا قريت كويستشن. ليت مي اكسپلين ات كليرلي.') } },
-      { key:'practice', expect:'yesno', ask: L('Do you want to practice the dialogue now?', 'تبي نتمرن على الحوار الحين؟', 'دو يو وانت تو پرکتیس ذا دايالوق ناو؟'),
+      { key:'practice', expect:'yesno', ask: L('Do you want to practice the dialogue now?', 'تبي نتمرن على الحوار الحين؟', 'دو يو وانت تو پركتيس ذا دايالوق ناو؟'),
         yes: { next: 3 },
-        no: { next: 'wrap', reply: L('No problem, we can practice next time.', 'ولا يهمك، نتمرن المره الجايه.', 'نو بروبلم، وي كان پرکتیس نيكست تايم.') },
+        no: { next: 'wrap', reply: L('No problem, we can practice next time.', 'ولا يهمك، نتمرن المره الجايه.', 'نو بروبلم، وي كان پركتيس نيكست تايم.') },
         info: { next: 3, reply: L('Okay, let us start.', 'طيب، نبدأ.', 'اوكي، ليت اس ستارت.') } },
       { key:'next', expect:'any', ask: L('Let us do it together. Ready?', 'نسويها سوا. جاهز؟', 'ليت اس دو ات توقذر. ريدي؟'),
-        any: { next: 'wrap', reply: L('Excellent practice. See you next lesson!', 'تمرين ممتاز. نشوفك بالدرس الجاي!', 'اكسيلنت پرکتیس. سي يو نيكست لسن!') } },
+        any: { next: 'wrap', reply: L('Excellent practice. See you next lesson!', 'تمرين ممتاز. نشوفك بالدرس الجاي!', 'اكسيلنت پركتيس. سي يو نيكست لسن!') } },
       { key:'wrap', wrap: L('Great job today.', 'ما شا الله عليك اليوم.', 'قريت جوب تودي.') }
     ],
     faq: [
@@ -9159,7 +9159,7 @@ const RP_SCRIPTS = {
       { key:'wrap', wrap: L('Take care, talk soon.', 'خل بالك، نتكلم قريب.', 'تيك كير، توك سون.') }
     ],
     faq: [
-      { match: /(movie|فيلم)/, reply: L('There is a new action movie showing this week.', 'فيه فيلم اكشن جديد هالاسبوع.', 'ذير از ا نيو اکشن موڤي شوينق ذيس ويك.') }
+      { match: /(movie|فيلم)/, reply: L('There is a new action movie showing this week.', 'فيه فيلم اكشن جديد هالاسبوع.', 'ذير از ا نيو اكشن موڤي شوينق ذيس ويك.') }
     ]
   },
   'customer': {
@@ -9176,7 +9176,7 @@ const RP_SCRIPTS = {
       { key:'more', expect:'any', ask: L('Anything else you need?', 'تبي شي ثاني؟', 'انيثينق الس يو نيد؟'),
         no: { next: 'wrap', reply: L('Alright, I will take you to the checkout.', 'طيب، اوديك للدفع.', 'اولرايت، اي ويل تيك يو تو ذا تشيك اوت.') },
         any: { next: 3, reply: L('Sure, what else can I help you find?', 'اكيد، وش ثاني ادور لك؟', 'شور، وات الس كان اي هيلپ يو فايند؟') } },
-      { key:'wrap', wrap: L('Thank you, come again.', 'شكرا، تفضل مره ثانيه.', 'ثانك يو، کام اگين.') }
+      { key:'wrap', wrap: L('Thank you, come again.', 'شكرا، تفضل مره ثانيه.', 'ثانك يو، كام اگين.') }
     ],
     faq: [
       { match: /(price|بكم)/, reply: L('That item is 45 riyals.', 'ذا القطعه ٤٥ ريال.', 'ذات ايتام از فورتي فايڤ ريالز.') }
@@ -9215,14 +9215,14 @@ const RP_SCRIPTS = {
     ],
     faq: [
       { match: /(open|ساعات)/, reply: L('We are open from 9 AM to 4 PM.', 'دوامنا من ٩ الصباح لـ ٤ العصر.', 'وي ار اوپن فروم 9 اي ام تو 4 پي ام.') },
-      { match: /(open an account|حساب)/, reply: L('You can open an account with your ID and 100 riyals.', 'تقدر تفتح حساب بهويتك و١٠٠ ريال.', 'يو كان اوپن ان اكاونت وذ يور اي دي اند ون هاندرید ريالز.') }
+      { match: /(open an account|حساب)/, reply: L('You can open an account with your ID and 100 riyals.', 'تقدر تفتح حساب بهويتك و١٠٠ ريال.', 'يو كان اوپن ان اكاونت وذ يور اي دي اند ون هاندريد ريالز.') }
     ]
   },
   'flight-attendant': {
     role: 'Flight Attendant', studentRole: 'passenger',
     steps: [
       { key:'drink', expect:'open', ask: L('Welcome aboard. Would you like something to drink?', 'اهلا بكم على متن الرحله. تبي شي تشربه؟', 'ويلكم ابورد. وود يو لايك سمثنق تو درينك؟'),
-        any: { next: 1, reply: L('Coming right up. Would you like anything to eat?', 'الحين اجيبه. تبي شي تاكله؟', 'کمنق رايت اپ. وود يو لايك انيثينق تو ات؟') } },
+        any: { next: 1, reply: L('Coming right up. Would you like anything to eat?', 'الحين اجيبه. تبي شي تاكله؟', 'كمنق رايت اپ. وود يو لايك انيثينق تو ات؟') } },
       { key:'food', expect:'open', ask: L('Would you like anything to eat?', 'تبي شي تاكله؟', 'وود يو لايك انيثينق تو ات؟'),
         any: { next: 'wrap', reply: L('Here you go. Enjoy your flight.', 'تفضل. رحله مبسوطه.', 'هير يو قو. انجوي يور فلايت.') } },
       { key:'wrap', wrap: L('Let me know if you need anything during the flight.', 'خبرني اذا احتجت شي اثنا الرحله.', 'ليت مي نو اف يو نيد انيثينق ديورينق ذا فلايت.') }
@@ -9255,13 +9255,13 @@ const RP_SCRIPTS = {
   'job-interviewer': {
     role: 'Job Interviewer', studentRole: 'candidate',
     steps: [
-      { key:'about', expect:'open', ask: L('Thanks for coming in. Tell me about yourself.', 'شكرا لحضورك. عرفني بنفسك.', 'ثانكس فور کمنق ان. تيل مي اباوت يورسلف.'),
+      { key:'about', expect:'open', ask: L('Thanks for coming in. Tell me about yourself.', 'شكرا لحضورك. عرفني بنفسك.', 'ثانكس فور كمنق ان. تيل مي اباوت يورسلف.'),
         any: { next: 1, reply: L('Interesting. Why do you want this job?', 'ممتاز. ليش تبغى ذا الشغل؟', 'انترستينق. واي دو يو وانت ذيس جاب؟') } },
       { key:'why', expect:'open', ask: L('Why do you want this job?', 'ليش تبغى ذا الشغل؟', 'واي دو يو وانت ذيس جاب؟'),
         any: { next: 2, reply: L('Good answer. Where do you see yourself in five years?', 'جواب ممتاز. وين تشوف نفسك لسه خمس سنين؟', 'قود انسر. وير دو يو سي يورسلف ان فايڤ ييرز؟') } },
       { key:'future', expect:'open', ask: L('Where do you see yourself in five years?', 'وين تشوف نفسك لسه خمس سنين؟', 'وير دو يو سي يورسلف ان فايڤ ييرز؟'),
         any: { next: 'wrap', reply: L('Thank you for your time. We will be in touch soon.', 'شكرا على وقتك. بنواصل معاك قريب.', 'ثانك يو فور يور تايم. وي ويل بي ان تچ سون.') } },
-      { key:'wrap', wrap: L('Good luck with your application.', 'بالتوفيق بطلبك.', 'قود لک وذ يور اپليکيشن.') }
+      { key:'wrap', wrap: L('Good luck with your application.', 'بالتوفيق بطلبك.', 'قود لك وذ يور اپليكيشن.') }
     ],
     faq: [
       { match: /(salary|راتب)/, reply: L('The salary range is 5,000 to 7,000 per month.', 'الراتب بين ٥٠٠٠ و٧٠٠٠ شهريا.', 'ذا سالري رينج از فايڤ تو سفن ثاوزند پير مانث.') },
@@ -9278,7 +9278,7 @@ const RP_SCRIPTS = {
       { key:'wrap', wrap: L('Drive safely.', 'قود بحذر.', 'درايڤ سيفلي.') }
     ],
     faq: [
-      { match: /(speed limit|سرعه)/, reply: L('The speed limit here is 60 kilometers per hour.', 'السرعه المحدده هنا ٦٠ كيلو بالساعه.', 'ذا سپيد لمت هير از سکستي كيلوميترز پير اور.') }
+      { match: /(speed limit|سرعه)/, reply: L('The speed limit here is 60 kilometers per hour.', 'السرعه المحدده هنا ٦٠ كيلو بالساعه.', 'ذا سپيد لمت هير از سكستي كيلوميترز پير اور.') }
     ]
   },
   'tour-guide': {
@@ -9349,7 +9349,7 @@ const RP_ALT = {
     'allergy.yes': L('Good to know, I will avoid those medicines.', 'عرفت، رح اتجنب هذي الادويه.', 'قود تو نو، اي ويل اڤويد ذوز ميديسنز.'),
     'allergy.no': L('Perfect.', 'ممتاز.', 'بيرفكت.'),
     'allergy.info': L('I will write that down.', 'رح اسجل ذا.', 'اي ويل رايت ذات داون.'),
-    'plan.any': L('Rest well and take the medicine as directed. Come back if it continues.', 'ارتاح زين وخذ الدوا زي ما قلت. ارجع اذا استمر الوضع.', 'ريست ويل اند تيك ذا ميدسن از دايركتد. کام باك اف ات كونتينيوز.')
+    'plan.any': L('Rest well and take the medicine as directed. Come back if it continues.', 'ارتاح زين وخذ الدوا زي ما قلت. ارجع اذا استمر الوضع.', 'ريست ويل اند تيك ذا ميدسن از دايركتد. كام باك اف ات كونتينيوز.')
   },
   'cashier': {
     'found.no': L('Oh, sorry. What are you after?', 'اوه، اسف. وش تدور؟', 'او، سوري. وات ار يو افتير؟'),
@@ -9367,7 +9367,7 @@ const RP_ALT = {
   },
   'teacher': {
     'questions.yes': L('Please, what is on your mind?', 'تفضل، وش ببالك؟', 'بليز، وات از اون يور مويند؟'),
-    'questions.no': L('Perfect. Then let us practice the dialogue. Ready?', 'ممتاز. نتمرن على الحوار. جاهز؟', 'بيرفكت. ذين ليت اس پرکتیس ذا دايالوق. ريدي؟'),
+    'questions.no': L('Perfect. Then let us practice the dialogue. Ready?', 'ممتاز. نتمرن على الحوار. جاهز؟', 'بيرفكت. ذين ليت اس پركتيس ذا دايالوق. ريدي؟'),
     'question.any': L('Great question, I am happy to explain.', 'سؤال ممتاز، يسعدني اشرح.', 'قريت كويستشن، اي ام هپي تو اكسپلين.'),
     'practice.no': L('No problem, we will do it next time.', 'ولا يهمك، نسويها المره الجايه.', 'نو بروبلم، وي ويل دو ات نيكست تايم.'),
     'next.any': L('Well done. See you at the next lesson!', 'ما شا الله. نشوفك بالدرس الجاي!', 'ويل دون. سي يو ات ذا نيكست لسن!')
@@ -9382,7 +9382,7 @@ const RP_ALT = {
   },
   'customer': {
     'find.any': L('Happy to help. What can I find for you?', 'بخدمك. وش ادور لك؟', 'هپي تو هيلپ. وات كان اي فايند فور يو؟'),
-    'item.any': L('Come with me, is this the one?', 'تعال معاي، ذا هو؟', 'کم وذ مي، از ذيس ذا ون؟'),
+    'item.any': L('Come with me, is this the one?', 'تعال معاي، ذا هو؟', 'كم وذ مي، از ذيس ذا ون؟'),
     'want.yes': L('Lovely. Anything else you need?', 'حلو. تبي شي ثاني؟', 'لوڤلي. انيثينق الس يو نيد؟'),
     'want.no': L('No problem, I will bring other options.', 'ولا يهمك، بجيب لك خيارات ثانيه.', 'نو بروبلم، اي ويل برينق انذر اپشنز.'),
     'want.info': L('I will look for something closer to that.', 'بدور لك على شي اقرب من ذا.', 'اي ويل لوك فور سمثنق كلوزر تو ذات.'),
@@ -9405,7 +9405,7 @@ const RP_ALT = {
     'process.any': L('Of course, what else can I do?', 'اكيد، وش ثاني اسوي لك؟', 'اوف كورس، وات الس كان اي دو؟')
   },
   'flight-attendant': {
-    'drink.any': L('Coming up. Would you like something to eat as well?', 'الحين اجيبه. تبي شي تاكله لسه؟', 'کمنق اپ. وود يو لايك سمثنق تو ات از ويل؟'),
+    'drink.any': L('Coming up. Would you like something to eat as well?', 'الحين اجيبه. تبي شي تاكله لسه؟', 'كمنق اپ. وود يو لايك سمثنق تو ات از ويل؟'),
     'food.any': L('There you go. Have a pleasant flight.', 'تفضل. رحله ممتعه.', 'ذير يو قو. هاف ا پليزنت فلايت.')
   },
   'coworker': {
@@ -9420,7 +9420,7 @@ const RP_ALT = {
   'job-interviewer': {
     'about.any': L('Good to know. Why would you like this role?', 'حلو. ليش تبغى ذا الدور؟', 'قود تو نو. واي وود يو لايك ذيس رول؟'),
     'why.any': L('Clear answer. Where do you hope to be in five years?', 'جواب واضح. وين تتمنى تكون لسه خمس سنين؟', 'كلير انسر. وير دو يو هوپ تو بي ان فايڤ ييرز؟'),
-    'future.any': L('Thank you for your time today. We will contact you soon.', 'شكرا على وقتك اليوم. بنواصل معاك قريب.', 'ثانك يو فور يور تايم تودي. وي ويل کونتکت يو سون.')
+    'future.any': L('Thank you for your time today. We will contact you soon.', 'شكرا على وقتك اليوم. بنواصل معاك قريب.', 'ثانك يو فور يور تايم تودي. وي ويل كونتكت يو سون.')
   },
   'police-officer': {
     'id.any': L('Thank you. Do you know why I pulled you over?', 'شكرا. تدري ليش وقفتك؟', 'ثانك يو. دو يو نو واي اي پولد يو اوڤر؟'),
@@ -9627,7 +9627,7 @@ function converseWith(persona, state, text){
       state.i = step.any.next === 'wrap' ? wrapIdx : step.any.next;
       return replyOut(script, state, leadAr, callReplyVariant(script, step, 'any', step.any.reply, slots, raw, state) || repFor(script, state.i, slots, raw));
     }
-    return replyOut(script, state, leadAr, warnReply(step, leadAr, L('Sorry, I did not catch your name. Could you tell me again?', 'اسف ما سمعت اسمك زين. ممكن تعيده؟', 'سوري، اي ديد نوت کچ يور نيم. كود يو تيل مي اگين؟')));
+    return replyOut(script, state, leadAr, warnReply(step, leadAr, L('Sorry, I did not catch your name. Could you tell me again?', 'اسف ما سمعت اسمك زين. ممكن تعيده؟', 'سوري، اي ديد نوت كچ يور نيم. كود يو تيل مي اگين؟')));
   }
   if(step.expect === 'time'){
     const tm = rpTime(raw);
@@ -14205,7 +14205,7 @@ const LESSON_LIBRARY = {
     conversation:[
       {who:'A', en:'I like your car, what color is it?', ar:'عجبتني سيارتك، وش لونها؟', translit:'اي لايك يور كار، وات كالر از ات؟'},
       {who:'B', en:'It is white, my brother has a red one.', ar:'ابيض، اخوي عنده وحده حمرا.', translit:'ات از وايت، ماي براذر هاز ا ريد ون.'},
-      {who:'A', en:'I prefer blue cars.', ar:'انا افضل السيارات الزرقا.', translit:'اي پریفر بلو كارز.'},
+      {who:'A', en:'I prefer blue cars.', ar:'انا افضل السيارات الزرقا.', translit:'اي پريفر بلو كارز.'},
       {who:'B', en:'Green and blue both look nice.', ar:'الاخضر والازرق كلاهم حلوين.', translit:'قرين اند بلو بوث لوك نايس.'},
     ],
     quiz:[

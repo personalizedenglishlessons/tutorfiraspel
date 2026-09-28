@@ -51,7 +51,7 @@ intentional romanized-Arabic dialect course (correct by design).
 - find family: فويند -> فايند in 16 spots incl 5 PHON_DICT entries
   (find/finder/finding/findings/finds) + defined ديفويند -> ديفايند
 - refund ريفَند -> ريفاند; item was garbage ابنحذف -> ايتام (2 spots)
-- "five Bucks" was translit فايڤ دولارز (dollars!) -> فايڤ باکس
+- "five Bucks" was translit فايڤ دولارز (dollars!) -> فايڤ باكس
 - colleagues كوليجز -> كولييجز; once وانست -> وانس;
   practice پراكسيس ("praxis") -> پراكتس (Persian vs Arabic ك caused
   the first fix attempt to miss — re-check with both codepoints)
@@ -151,7 +151,7 @@ families. Tests 65/65, audit CLEAN.
   away اوي→اواي, damages داماجاز→داميجز, educational يجاكيشانال→ايديوكيشنل,
   motorcycle موتيرسايكال→موتورسايكل, accent اكسينت→اكسنت, hundred هاندرِد
 - vault translit fixes: pronunciation برنانسييهيشن→پرنانسييهيشِن, hospital
-  هاسپیطل (Persian ی) → هاسبيتل (app/tv-vocab/stage), stress-example سيصير
+  هاسپيطل (Persian ي) → هاسبيتل (app/tv-vocab/stage), stress-example سيصير
   ("second"!) → سيكند, famous فيمس→فايمس, help هلب→هيلب, symptoms سمبتمز→سيمبتومز
 - phrasal: الفريزل فيربز → الفرايزل فيربز (app/daily-lesson/pel-personalization/
   DB academies), fluency فلوينسي→فلونسي, vocabulary vault فوكابيولري فولت→ڤوكابيولري ڤولت
@@ -202,7 +202,7 @@ all tests pass (65/65), audit tool CLEAN.
 - Wake Up → يصحى، يسوي ("does!") → يصحى، يقوم من النوم; Prefix/Sequel جز→جزء;
   Prayer دعا→دعاء; Bad → سي→سيء; Water → ما ("not") → ماي (3 beginner spots);
   checked-luggage → امتع محقونه ("injected") → امتعه مسجله
-- تخفیف (Persian yeh) in pel_lesson_stage barber dialogue → تخفيف لو سمحت;
+- تخفيف (Persian yeh) in pel_lesson_stage barber dialogue → تخفيف لو سمحت;
   Since when → من وين → من متى; help translit هلب → هيلب (3 options)
 - onboard: المده تتكلم ("duration talks") → تتغير; العب الاسبوعي ("play") → العبء
 - assessment: الوقت خلص ("is up" for almost-up) → على وش يخلص
@@ -246,7 +246,7 @@ Migration 202609281001 applied to live DB + recorded in tracker (39/39).
 
 ### Also fixed
 - Truncated rows: "Correct: I'm ready" → 'الصحيح:' (missing example appended);
-  Just a trim, please → Persian-yeh تخفیف + missing لو سمحت
+  Just a trim, please → Persian-yeh تخفيف + missing لو سمحت
 - Translit: هز→هاز (has), سعدت بلقياك→تشرفنا in exercise options ×6
 - Source files: app.html (17), tv-vocab-test (1), pel-personalization.js (2)
   — استبدأل, عرفني عن نفسك, مسكن الم, للاشياو, دوّمت→داومت, حذا→حذاء,
@@ -382,7 +382,7 @@ Recovered originals from 57f466b^ by signature-anchored line diffing
   يمكنيم→قديم, بيمكنمك→بقدمك, لويمكن→لوقد, يمكنّيش→قدّيش, + more
 - **ك dropped**: لام→كلام, لاسيك→كلاسيك, لاسروم→كلاسروم, لاودي→كلاودي,
   كتشن→كيتشن, كلو→كيلو, ويكند→ويكيند, كالوفورنيا→كالافورنيا,
-  انسايلاپيديا→انسايكلاپيديا, کولد→كولد (Persian kaf)
+  انسايلاپيديا→انسايكلاپيديا, كولد→كولد (Persian kaf)
 - **كيف→عشان leftovers**: 39 line-verified restores (كيف الدوام/النوم/تنطق...)
   عشانك greeting kept (house style). عشبسستري→كيماستري, عشبسكال→كيماكال
 - **ا→وا before احد/احداث**: واحداث→احداث, الواحداث→الاحداث ( weekdays
