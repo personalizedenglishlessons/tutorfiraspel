@@ -28,7 +28,7 @@ EXPR=[
 ("I am broke.","انا مفلس.","You have no money.","عندك ما معك فلوس."),
 ("No worries.","ما يهمك، عادي.","It is not a problem.","ما فيها مشكلة."),
 ("Take your time.","على راحتك.","Do not rush.","ما فيه استعجال."),
-("Sounds good.","يمدي، كويس.","You agree.","انت موافق."),
+("Sounds good.","كويس.","You agree.","انت موافق."),
 ("Hang on a second.","ثانية، انتظر.","Wait a moment.","استظر لحظة."),
 ("I will get back to you.","برد عليك بعدين.","I will reply later.","بارد بعدين."),
 ("It is up to you.","القرار بيدك.","Your choice.","الاختيار على راحتك."),

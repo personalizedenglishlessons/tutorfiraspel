@@ -95,7 +95,7 @@ LESSONS += [L("b2-pack2-01","Nuanced Opinions","الاراء المرموقة","
     I("phrase","obtain","يحصل","اوبتين",
       "Please obtain a receipt.","ابغى تحصل على وصل.","بليز اوبتين ا ريست.",
       "Formal for 'get'.","رسمي لـ 'خذ'."),
-    I("phrase","kids","عياي","كيدز",
+    I("phrase","kids","عيال","كيدز",
       "The kids are playing.","العيايل يلعبون.","ذا كيدز ار بلاينق.",
       "Informal for 'children'.","عامي لـ 'اطفال'."),
     I("sentence","I would like to inquire about","حاب اسال عن","اي وود لايك تو انكواير اباوت",

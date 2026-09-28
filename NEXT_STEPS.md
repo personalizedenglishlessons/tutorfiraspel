@@ -1,5 +1,46 @@
 # NEXT STEPS - pick up here
 
+## DONE: FULL-CODEBASE mistranslation sweep — every source file (2026-09-28, later session)
+
+User asked to LOOK EVERYWHERE across the entire codebase. Extracted 6,962 unique
+EN↔AR pairs from all 22 source files (app.html 3,633; pel_lesson_stage.js 1,927;
+admin/admin.js 820; pel-personalization 266; assessment/onboard/tv-vocab/index/etc),
+hand-reviewed them (including all 170 vocabulary-vault entries, all admin i18n
+labels, pronunciation-question options), plus re-grepped every error family fixed
+in the DB earlier against the whole repo. 138 replacements across 13 files,
+all tests pass (65/65), audit tool CLEAN.
+
+### New corruption families found + fixed
+- البسه for "accent" (American Accent Lab / achievement badge) → اللكنه (3 spots)
+- after → لسه ("still") family: لسه الصلاه (After the Prayer lesson title, 7 spots,
+  translit 'baad alsala' proved intent), متابعه لسه المقابله (Interview Follow-up),
+  نقص الاطراف لسه؟ (too), التنشيط...لسه التاكيد, منهك لسه الشغل
+- سؤالف misspelling of سوالف (chats) → سوالف (24 spots incl. index.html, daily-lesson.js)
+- تاخوير (not a word) → تاخير الرحلات (5 spots); اثنا القياده → اثناء
+- الحيا truncated حياة (انجليزي الحيا اليوميه etc.) → الحياه (5 spots)
+- اخوير family (corruption of اخير): بالاخوير (3) incl. two vvSaudiClean-style
+  .replace() rules mapping to the typo, اخويرك, admin الاخويره → الاخير/تفضل
+- admin i18n rot: معوينه→معاينه (preview, 3), تاريخ الامثلل→تاريخ الاكتمال,
+  Currency→الشغله→العمله, الفوتره والبدايه (Billing & Index)→الاسعار وصفحة البدايه,
+  بنحذف تسجيل ذاك ("we will delete!") → بنسجل ذا الاجرا, الشغليات→التشغيل,
+  مقرو→مقروء, تنتهي قريبً→قريبًا, عنديه/عنديك→عندك, احداث الدروس→الدروس الاخيره
+- Break a leg → حظًا مبسوطًا / حظ مبسوط → بالتوفيق (whole vocab entry)
+- Wake Up → يصحى، يسوي ("does!") → يصحى، يقوم من النوم; Prefix/Sequel جز→جزء;
+  Prayer دعا→دعاء; Bad → سي→سيء; Water → ما ("not") → ماي (3 beginner spots);
+  checked-luggage → امتع محقونه ("injected") → امتعه مسجله
+- تخفیف (Persian yeh) in pel_lesson_stage barber dialogue → تخفيف لو سمحت;
+  Since when → من وين → من متى; help translit هلب → هيلب (3 options)
+- onboard: المده تتكلم ("duration talks") → تتغير; العب الاسبوعي ("play") → العبء
+- assessment: الوقت خلص ("is up" for almost-up) → على وش يخلص
+- ابدأ used for "at all" (5 more grammar-text spots) → ابدا; ابدأ رايك → اعطي رايك
+- index.html: تستخدمها بالحيا → بحياتك
+- tools/ generators (they seeded the DB, kept in sync): قول هلم/وقود باي → قل هلا/قل باي,
+  راح تشغل → تشتغل, روح دق / "straight"=دق → على طول, انزل الساعة ستة → اصحى الساعه ست,
+  عياي → عيال, يمدي، كويس → كويس
+
+Cache busters bumped for pel-personalization.js, pel-assessment.js, onboard.js,
+pel_lesson_stage.js, daily-lesson.js in app/index/admin html.
+
 ## DONE: FULL mistranslation sweep — EN↔AR pairs, source + live DB (2026-09-28 session)
 
 Method: extracted ALL 2,182 unique en→ar pairs from lesson_items (2,559 rows),
