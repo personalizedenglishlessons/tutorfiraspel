@@ -3394,7 +3394,7 @@ const phraseBank = {
   'where is the nearest hospital': {ar:'وين اقرب مستشفى؟'},
   'how much is this': {ar:'بكم ذا؟'},
   'thank you very much': {ar:'شكرا جزيلًا'},
-  'nice to meet you': {ar:'فرصه مبسوطه'},
+  'nice to meet you': {ar:'تشرفنا'},
 };
 
 /* ============================================================
@@ -4321,8 +4321,8 @@ const PHON_DICT = {
 'clothes':'كلوذز',
 'clothing':'كلوذينج',
 'cloudy':'كلاودي',
-'club':'لاب',
-'clubs':'لابز',
+'club':'كلاب',
+'clubs':'كلابز',
 'cluster':'كلاستر',
 'cnet':'سينيت',
 'co':'كيو',
@@ -5035,10 +5035,10 @@ const PHON_DICT = {
 'entries':'ينتريز',
 'entry':'ينتري',
 'environment':'انڤايرنمنت',
-'environmental':'انڤايرانمينتال',
-'environments':'انڤايربسنتس',
+'environmental':'انڤايرنمنتال',
+'environments':'انڤايرنمنتس',
 'epa':'يپيي',
-'episode':'يپاسود',
+'episode':'يپيسود',
 'epson':'يپسان',
 'equal':'يكوال',
 'equipment':'اكويپمانت',
@@ -8919,7 +8919,7 @@ function detectIntent(text){
 const SMART_REPLIES = {
   refusal:  { en:'No problem at all, we can work something out. What would you like to do?', ar:'ولا يهمك، اقدر نعدّل الوضع. وش تحب نسوي؟', translit:'نو بروبلم ات اول، وي كان وورك سمثنق اوت. وات وود يو لايك تو دو؟' },
   agreement:{ en:'Perfect, that works for me. Anything else I can help with?', ar:'ممتاز، ذا يضبط معاي. فيه شي ثاني اقدر اساعدك فيه؟', translit:'بيرفكت، ذات ووركس فور مي. انيثينق الس اي كان هيلب وذ؟' },
-  greeting: { en:'Hello, nice to see you! How can I help you today?', ar:'اهلين، فرصه مبسوطه اشوفك! كيف اقدر اساعدك اليوم؟', translit:'هالو، نايس تو سي يو! هاو كان اي هيلب يو تودي؟' },
+  greeting: { en:'Hello, nice to see you! How can I help you today?', ar:'اهلين، تشرفنا بشوفك! كيف اقدر اساعدك اليوم؟', translit:'هالو، نايس تو سي يو! هاو كان اي هيلب يو تودي؟' },
   thanks:   { en:"You're most welcome. Is there anything else you need?", ar:'العفو، ولا يهمك. فيه شي ثاني تبغاه؟', translit:'يور موست ويلكم. از ذير انيثينق الس يو نيد؟' },
   question: { en:'Good question, let me help you with that. What exactly would you like to know?', ar:'سؤال ممتاز، خلني اساعدك فيه. وش بالضبط تبغى تعرف؟', translit:'قود كوستشن، ليت مي هيلب يو وذ ذات. وات اكزاكلي وود يو لايك تو نو؟' },
   request:  { en:'Of course, I will take care of that right away. Anything else?', ar:'اكيد، باعتني في ذا الحين. فيه شي ثاني؟', translit:'اوف كورس، اي ويل تيك كير اوف ذات رايت اوي. انيثينق الس؟' },
@@ -9194,7 +9194,7 @@ const RP_SCRIPTS = {
         no: { next: 'wrap', reply: L('No problem. Ring my doorbell if you need anything.', 'ولا يهمك. دق جرسي اذا احتجت شي.', 'نو بروبلم. رينق ماي دوربل اف يو نيد انيثينق.') },
         info: { next: 'wrap', reply: L('Okay. Ring my doorbell if you need anything.', 'طيب. دق جرسي اذا احتجت شي.', 'اوكي. رينق ماي دوربل اف يو نيد انيثينق.') } },
       { key:'about', expect:'open', ask: L('Where are you from?', 'من وين انت؟', 'وير ار يو فروم؟'),
-        any: { next: 'wrap', reply: L('Nice to meet you. Let me know if you need anything.', 'فرصه مبسوطه. خبرني اذا احتجت شي.', 'نايس تو ميت يو. ليت مي نو اف يو نيد انيثينق.') } },
+        any: { next: 'wrap', reply: L('Nice to meet you. Let me know if you need anything.', 'تشرفنا. خبرني اذا احتجت شي.', 'نايس تو ميت يو. ليت مي نو اف يو نيد انيثينق.') } },
       { key:'wrap', wrap: L('Welcome to the neighbourhood.', 'اهلا بك بالحي.', 'ويلكم تو ذا نيبورهود.') }
     ],
     faq: [
@@ -9396,7 +9396,7 @@ const RP_ALT = {
     'boxes.yes': L('Anytime. Just give me a shout.', 'انا جاهز. بس ناديني.', 'اني تايم. جاست قيڤ مي ا شاوت.'),
     'boxes.no': L('All good. Knock on my door if you need anything.', 'طيب. دق جرسي اذا احتجت شي.', 'اول قود. نوك اون ماي دور اف يو نيد انيثينق.'),
     'boxes.info': L('Alright, my door is always open.', 'طيب، بابي مفتوح دايما.', 'اولرايت، ماي دور از اولويز اوپن.'),
-    'about.any': L('Nice to meet you. Call me if you need anything.', 'فرصه مبسوطه. ناديني اذا احتجت شي.', 'نايس تو ميت يو. كول مي اف يو نيد انيثينق.')
+    'about.any': L('Nice to meet you. Call me if you need anything.', 'تشرفنا. ناديني اذا احتجت شي.', 'نايس تو ميت يو. كول مي اف يو نيد انيثينق.')
   },
   'bank-teller': {
     'need.any': L('Of course, may I see your ID first?', 'اكيد، ممكن اشوف هويتك اول؟', 'اوف كورس، ماي اي سي يور اي دي فيرست؟'),
@@ -10522,7 +10522,7 @@ window.SAUDI_MISTAKE_COACH = [
         titleEn: 'Overusing the with plurals',
         wrong: 'The dogs are loyal animals.',
         correct: 'Dogs are loyal animals.',
-        whyAr: 'بالعربي نقول الكلاب وفيه وفا. بس بالانجليزي اذا تتكلم عن شي عام (مو كلاب محدده)، ما تستخدم the.',
+        whyAr: 'بالعربي نقول الكلاب وفيه ال. بس بالانجليزي اذا تتكلم عن شي عام (مو كلاب محدده)، ما تستخدم the.',
         ruleAr: 'الجمع العام (مو محدد) = بدون the. الكلاب المحدده = the dogs.',
         practice: [
           {q:'___ cats are independent.', options:['The','—','A','An'], correct:1},
@@ -11139,7 +11139,7 @@ const FLAGSHIP_LESSONS = {
     grammar:{title:'Question Formation', rule:'Most questions need an auxiliary verb before the subject.', saudi:'الاسأله الانجليزيه تحتاج كلمه مساعده قبل الشخص.', wrong:'You from Riyadh?', right:'Are you from Riyadh?', mistakes:['Dropping "are/do" at the start of a question.']},
     conversation:[
       {who:'A', en:"Hi, I don't think we've met. I'm Sarah.", ar:'هلا، ما اتذكر اننا اتعرفنا. انا ساره.', translit:'هاي، اي دونت ثينك ويڤ مِت. ايم ساره.'},
-      {who:'B', en:"Nice to meet you, Sarah. I'm Faisal.", ar:'فرصه مبسوطه يا ساره. انا فيصل.', translit:'نايس تو ميت يو، ساره. ايم فيصل.'},
+      {who:'B', en:"Nice to meet you, Sarah. I'm Faisal.", ar:'تشرفنا يا ساره. انا فيصل.', translit:'نايس تو ميت يو، ساره. ايم فيصل.'},
       {who:'A', en:'Where are you from, Faisal?', ar:'انت من وين يا فيصل؟', translit:'وير ار يو فروم، فيصل؟'},
       {who:'B', en:"I'm from Riyadh. What about you?", ar:'انا من الرياض. وانتِ؟', translit:'ايم فروم رياض. وات اباوت يو؟'},
     ],
@@ -11269,7 +11269,7 @@ const LESSON_LIBRARY = {
     grammar:{title:'Present Simple for Facts', rule:'Use present simple to state facts about yourself: I am, I work, I study, I live.', saudi:'لما تعرف عن نفسك، تستخدم الحاضر البسيط: انا عندي، انا اشتغل، انا اسكن.', wrong:'I am working in a bank since 2020.', right:'I work in a bank. I have worked there since 2020.', mistakes:['Using present continuous for a long-term job: "I am working in a bank" when you mean your career.','Forgetting "a" or "an" before job titles: "I am engineer."']},
     conversation:[
       {who:'A', en:"Hi, I'm Sarah. I don't think we've met.", ar:'هلا، انا ساره. ما اتوقع نعرف بعض.', translit:'هاي، ايم سارا. اي دونت ثينك ويڤ ميت.'},
-      {who:'B', en:"Nice to meet you. I'm Ahmed, I work in IT.", ar:'فرصه مبسوطه. انا احمد، اشتغل في تقنيه المعلومات.', translit:'نايس تو ميت يو. ايم احمد، اي وورك ان اي تي.'},
+      {who:'B', en:"Nice to meet you. I'm Ahmed, I work in IT.", ar:'تشرفنا. انا احمد، اشتغل في تقنيه المعلومات.', translit:'نايس تو ميت يو. ايم احمد، اي وورك ان اي تي.'},
       {who:'A', en:'Nice, how long have you been there?', ar:'حلو، من متى وانت هناك؟', translit:'نايس، هاو لونق هاف يو بين ذير؟'},
       {who:'B', en:'About three years. What about you?', ar:'تقريبًا ثلاث سنوات. وانت؟', translit:'اباوت ثري ييرز. وات اباوت يو؟'},
     ],
@@ -12045,7 +12045,7 @@ const LESSON_LIBRARY = {
     vocab:[VOCAB_BANK[10], VOCAB_BANK[34]],
     grammar:{title:'Present Simple for New Facts', rule:'Ask about routines with present simple: What time do we start? Where is the break room?', saudi:'بالاول يوم اسأل عن الروتين: متى نبدأ؟ وين غرفه الاستراحه؟', wrong:'When start work?', right:'What time do we start?', mistakes:['Asking without auxiliary verbs.','Not introducing yourself to colleagues on day one.']},
     conversation:[
-      {who:'A', en:'Hi, I am new here. I am Omar, nice to meet you.', ar:'هلا، انا جديد هنا. انا عمر، فرصه مبسوطه.', translit:'هاي، ايم نو هير. ايم عمر، نايس تو ميت يو.'},
+      {who:'A', en:'Hi, I am new here. I am Omar, nice to meet you.', ar:'هلا، انا جديد هنا. انا عمر، تشرفنا.', translit:'هاي، ايم نو هير. ايم عمر، نايس تو ميت يو.'},
       {who:'B', en:'Welcome aboard! What time do we start?', ar:'حياك! متى نبدأ الدوام؟', translit:'ويلكم ابورد! وات تايم دو وي ستارت؟'},
       {who:'A', en:'At nine, and lunch is at one. Need anything?', ar:'التسعه، والبكره الواحده. تبي شي؟', translit:'ات نوين، اند لانش از ات وان. نيد اني ثينق؟'},
       {who:'B', en:'Just the Wi-Fi password, please.', ar:'بس باسورد الواي فاي لو سمحت.', translit:'جاست ذا واي فاي پاسوورد، بليز.'},
@@ -12335,7 +12335,7 @@ const LESSON_LIBRARY = {
     grammar:{title:'Skimming For The Ask', rule:'Most emails follow: context, then the ask. Find the ask first: "Could you...?", "Please send...", "By Friday."', saudi:'معظم الايميلات: سياق، بعدين الطلب. دور على الطلب اول.', wrong:'Reading every email word by word and drowning in inbox.', right:'Scanning for the request and the deadline first.', mistakes:['Missing deadlines because you read but did not find the date.','Replying without answering the actual ask.']},
     conversation:[
       {who:'A', en:'Subject: Feedback on your draft', ar:'الموضوع: ملاحظات على مسودتك', translit:'سابجكت: فيدباك اون يور درافت'},
-      {who:'B', en:'Thanks for the draft. Please add the budget numbers by Friday.', ar:'شكرا على المسوده. ياليت ومثلن ارقام الميزانيه قبل الجمعه.', translit:'ثانكس فور ذا درافت. بليز اد ذا بدجت نمبرز باي فرايدي.'},
+      {who:'B', en:'Thanks for the draft. Please add the budget numbers by Friday.', ar:'شكرا على المسوده. ياليت اضافه ارقام الميزانيه قبل الجمعه.', translit:'ثانكس فور ذا درافت. بليز اد ذا بدجت نمبرز باي فرايدي.'},
       {who:'A', en:'Also, could you confirm the meeting time?', ar:'وبرضه ممكن تاكد وقت الاجتماع؟', translit:'اولسو، كود يو كونفيرم ذا ميتنق تايم؟'},
       {who:'B', en:'Thanks, Khalid.', ar:'شكرا، خالد.', translit:'ثانكس، خالد.'},
     ],
@@ -13215,7 +13215,7 @@ const LESSON_LIBRARY = {
     summary:'You learned the meeting phrases that keep you participating in any office.',
     takeaway:'نبدأ، وش رايك، انا معاك = حضور كامل بالاجتماع.',
     situation:{
-      hear:[{ar:'نبدأ الاجتماع.', translit:'nibda alijtimaa', en:'Let us start the meeting.'},{ar:'عندك ومثلن؟', translit:'indak idafa?', en:'Do you have anything to add?'}],
+      hear:[{ar:'نبدأ الاجتماع.', translit:'nibda alijtimaa', en:'Let us start the meeting.'},{ar:'عندك اضافه؟', translit:'indak idafa?', en:'Do you have anything to add?'}],
       say:[{ar:'عندي نقطه بسيطه لو تسمح.', translit:'indi nuqta baseeta law tasmah', en:'I have a small point if you allow.'}],
       recover:[{ar:'اقصد البند الثاني.', translit:'agsid albund althani', en:'I mean the second item.'}],
     },
@@ -16450,14 +16450,14 @@ const CORRECT_RULES = [
   { re:/\bcan able to\b/gi, fix:'can', category:'modals',
     ar:'"can" تكفي، ما نحتاج "able to" بعدها: "I can come".',
     en:'"Can" already means able to: say "I can come", not "I can able to come".',
-    why_ar:'can نفسها تعني يقدر، فمثلن able to تكرار.',
+    why_ar:'can نفسها تعني يقدر، فاضافه able to تكرار.',
     why_en:'"Can" already expresses ability.',
     learn:{ ar:'I can help you.', en:'can + base verb.' } },
   // ---- comparatives ----
   { re:/\bmore better\b/gi, fix:'better', category:'comparatives',
     ar:'لا نضع more قبل better، الكلمه تكفي.',
     en:'Never say "more better". Just say "better".',
-    why_ar:'better هي المقارنه بحد ذاتها، فمثلن more تكرار.',
+    why_ar:'better هي المقارنه بحد ذاتها، فاضافه more تكرار.',
     why_en:'"Better" is already the comparative form.',
     learn:{ ar:'This is better.', en:'better, not more better.' } },
   { re:/\bmore good\b/gi, fix:'better', category:'comparatives',
@@ -16530,19 +16530,19 @@ const CORRECT_RULES = [
   { re:/\brepeat again\b/gi, fix:'repeat', category:'word-choice',
     ar:'"repeat" وحدها تكفي، ما نحتاج again بعدها.',
     en:'"Repeat" already means say again: just say "repeat".',
-    why_ar:'repeat نفسها معناها كرر، فمثلن again تكرار.',
+    why_ar:'repeat نفسها معناها كرر، فاضافه again تكرار.',
     why_en:'"Repeat" already includes the idea of again.',
     learn:{ ar:'Can you repeat that?', en:'repeat, not repeat again.' } },
   { re:/\breturn back\b/gi, fix:'return', category:'word-choice',
     ar:'"return" وحدها تكفي، ما نحتاج back بعدها.',
     en:'"Return" already means go back: just say "return".',
-    why_ar:'return معناها يرجع، فمثلن back تكرار.',
+    why_ar:'return معناها يرجع، فاضافه back تكرار.',
     why_en:'"Return" already means go back.',
     learn:{ ar:'I will return tomorrow.', en:'return, not return back.' } },
   { re:/\benter inside\b/gi, fix:'enter', category:'word-choice',
     ar:'"enter" وحدها تكفي، ما نحتاج inside بعدها.',
     en:'"Enter" already means go inside: just say "enter".',
-    why_ar:'enter معناها يدخل، فمثلن inside تكرار.',
+    why_ar:'enter معناها يدخل، فاضافه inside تكرار.',
     why_en:'"Enter" already means go inside.',
     learn:{ ar:'Please enter the room.', en:'enter, not enter inside.' } },
   { re:/\bexplained me (the|this|that|my|how|why|what)\b/gi, fix:'explained $1 to me', category:'word-choice',
@@ -18310,9 +18310,9 @@ function renderVocabulary(){
         .replace(/بس/g,'بس')                                    // only → bas
         .replace(/كلهم/g,'كلهم')                               // altogether → kulhum
         .replace(/معا/g,'مع بعض')                               // together → ma baad
-        .replace(/ومثلن/g,'وبسن')                            // in addition → w kaman
-        .replace(/فضلا/g,'وبسن')                                // in addition → w kaman
-        .replace(/ومثلن/g,'وبسن')                               // moreover → w kaman
+        .replace(/وكمان/g,'وكمان')                            // in addition → w kaman (already casual, keep)
+        .replace(/فضلا/g,'وكمان')                               // in addition → w kaman
+        .replace(/علاوه/g,'وكمان')                             // moreover → w kaman
         .replace(/اخويرا/g,'اخويرا')                               // finally (fix hamza)
         .replace(/بالاخوير/g,'بالاخوير')                         // in conclusion → bil akheer
         .replace(/وخلاصه/g,'بالاخوير')                            // in conclusion → bil akheer

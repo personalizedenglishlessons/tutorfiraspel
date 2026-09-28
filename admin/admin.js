@@ -188,7 +188,7 @@ var I = {
   'availableSeats':{en:'%d seats left', ar:'باقي %d مقاعد'},
   'groupFull':{en:'Group is full', ar:'المجموعه ممتليه'},
   'moveFromWaitlist':{en:'Move into group', ar:'نقل للمجموعه'},
-  'addStudent':{en:'Add student', ar:'ومثلن طالب'},
+  'addStudent':{en:'Add student', ar:'اضافه طالب'},
   'createStudent':{en:'Create student', ar:'أنشأ طالب'},
   'createStudentDesc':{en:'Create an account the student can sign in with. Set their name, email, and a password (min 8 chars).', ar:'أنشأ حساب يقدر الطالب يدخل فيه. حدد اسمه، ايميله، وكلمه مرور (٨ احرف على الاقل).'},
   'studentEmail':{en:'Email', ar:'البريد الالكتروني'},
@@ -1234,7 +1234,7 @@ var tabs = [
             '<div style="font-weight:700;min-width:110px;">'+esc(lang==='ar'?'تعديل الرصيد':'Adjust credits')+'</div>' +
             '<input class="input" type="number" id="credDelta" style="width:90px;" placeholder="+1 / -1">' +
             '<input class="input" id="credReason" style="flex:1;min-width:140px;" placeholder="'+esc(lang==='ar'?'السبب (دفع واتساب)':'Reason (WhatsApp payment)')+'">' +
-            '<button class="btn btn-gold btn-sm" data-cred-add="1">'+esc(lang==='ar'?'+ ومثلن':'+ Add')+'</button>' +
+            '<button class="btn btn-gold btn-sm" data-cred-add="1">'+esc(lang==='ar'?'+ اضافه':'+ Add')+'</button>' +
             '<button class="btn btn-outline btn-sm" data-cred-add="-1">'+esc(lang==='ar'?'- خصم':'- Deduct')+'</button>' +
           '</div></div>' : '') +
         (hasPerm('subscriptions.manage') ?
@@ -3823,7 +3823,7 @@ function lcRender(){
       '<div style="display:flex;gap:8px;flex-wrap:wrap;">'+
         '<input class="input" id="lcCityName" style="flex:1;min-width:160px;" placeholder="'+esc(A?'اكتب اسم المدينه':'Type city name')+'">'+
         '<label class="chip-input" style="display:flex;align-items:center;gap:6px;"><input type="checkbox" id="lcCityAvail" checked> '+esc(A?'متوفره للحضور':'Available')+'</label>'+
-        '<button class="btn btn-gold btn-sm" id="lcCityAdd">'+esc(A?'ومثلن':'Add city')+'</button>'+
+        '<button class="btn btn-gold btn-sm" id="lcCityAdd">'+esc(A?'اضافه':'Add city')+'</button>'+
       '</div>'+
       '<div style="font-size:.78rem;color:var(--text-muted);margin-top:8px;">'+esc(A?'اكتب اسم المدينه يدويا، مثل: النماص، ابها، جده. الحصص الحضوريه متوفره حاليا في النماص بس.':'Type the city name freely, e.g. Al Namas, Abha, Jeddah. In-person classes are currently available in Al Namas only.')+'</div>'+
     '</div>';
@@ -3864,7 +3864,7 @@ function lcWire(){
     if(!r.ok){ toast(lang==='ar'?'ما قدرنا نضيف المدينه':'Could not add city', true); return; }
     await audit('liveclass.city.add', 'live_class_city', null, { city:name, available:avail });
     $('lcCityName').value = '';
-    toast(lang==='ar'?'تمت ومثلن المدينه':'City added');
+    toast(lang==='ar'?'تمت اضافه المدينه':'City added');
     await lcLoad();
   });
 }

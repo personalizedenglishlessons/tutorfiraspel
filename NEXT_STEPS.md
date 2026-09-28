@@ -1,5 +1,51 @@
 # NEXT STEPS - pick up here
 
+## DONE: Bug + mistranslation hunt — 3 new corruption families (2026-09-28 session)
+
+Method: signature-anchored line diff of the full 57f466b diff (595 word-level
+substitutions extracted), then every output word checked against the current
+source and the live DB. DB scanned with audit_corruption.py --sql patterns +
+the new families across lesson_items, lessons, lesson_exercises, words,
+academies, assessment_questions → **DB is CLEAN; all corruption was source-only**.
+
+### Family 1: اضافه → ومثلن (from 57f466b itself)
+- admin.js: 'Add student' ar:'ومثلن طالب' → اضافه طالب; '+ ومثلن' → '+ اضافه';
+  'Add city' + 'تمت ومثلن المدينه' → اضافه (4 spots)
+- app.html: 'ياليت ومثلن ارقام الميزانيه' → اضافه; 'عندك ومثلن؟' (translit
+  says 'indak idafa?') → عندك اضافه؟; 5× 'فمثلن … تكرار' why_ar strings → فاضافه
+- tv-vocab-test.html: synonyms_ar 'مرافق، ومثلن' → 'مرافق، اضافه'
+- legal.html: 'ومثلن للحصص المباشره' → وكمان (old wording)
+- Root: 57f466b replaced اضافه with ومثلن — a mistranslation (adds vs example),
+  missed by the earlier 500-word recovery.
+
+### Family 2: "nice to meet you" → فرصه مبسوطه (predates 57f466b, from 4fb7459)
+- 9 spots: app.html ×7 (phrasebook key, hotel/bank/restaurant roleplays,
+  dialogues), index.html phrase chip, lib/pel-assessment.js pronunciation
+  question. All فرصه مبسوطه → تشرفنا (matching the a805098 DB fix for
+  فرحت بلقياك→تشرفنا); 'فرصه مبسوطه اشوفك' → 'تشرفنا بشوفك'.
+- Root: literal MSA فرصة سعيدة, swept to مبسوطه — wrong register, wrong meaning.
+
+### Family 3: truncations + translit garbles
+- index.html: 'وتصح كتابتك' → وتصحيح; 'تشوف تصحك فورا' → تشوف تصحيحك فورا
+- app.html translit dict: environments انڤايربسنتس → انڤايرنمنتس;
+  environmental انڤايرانمينتال → انڤايرنمنتال; episode يپاسود → يپيسود;
+  club لاب/لابز → كلاب/كلابز (restored — لاب collided with lab)
+- app.html the-with-generic whyAr: 'وفيه وفا' (nonsense) → 'وفيه ال'
+
+### Runtime chain fix (app.html vvSaudiClean area)
+- `.replace(/ومثلن/g,'وبسن')` ×2 + `.replace(/فضلا/g,'وبسن')` — the value وبسن
+  was garbage (should be وكمان per comments). Now: وكمان→keep, فضلا→وكمان,
+  علاوه→وكمان. No more وبسن can enter rendered text.
+
+### audit_corruption.py extended (24 → 28 patterns + DB SQL)
+New patterns: ومثلن/فمثلن, فرصه مبسوطه/فرصه سعيده, انڤايربسنتس/انڤايرانمينتال/
+يپاسود, وتصح/تصحك. Run `python3 tools/audit_corruption.py` before every push.
+
+### Verified
+- node --check admin.js + pel-assessment.js: OK
+- 65/65 tests pass, audit tool CLEAN (28 patterns, 0 hits)
+- Cache buster bumped for lib/pel-assessment.js (640b3d84)
+
 ## DONE: Migration tracker reconciliation + check tool (2026-09-28 session)
 
 ### Problem
