@@ -1676,7 +1676,7 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
             </div>
             <div class="card">
               <h3 style="font-size:1.05rem;"><span class="arabic" style="font-size:.85em; font-weight:400;">· اللغه</span>Language</h3>
-              <p style="margin-top:8px; font-size:.84rem; color:var(--text-muted);"><span class="arabic" style="display:block;">شييين مختلفين: لغه الواجهه، واللغه اللي تتعلمها.</span>Two different things: the interface language, and the language you are learning.</p>
+              <p style="margin-top:8px; font-size:.84rem; color:var(--text-muted);"><span class="arabic" style="display:block;">شيئين مختلفين: لغه الواجهه، واللغه اللي تتعلمها.</span>Two different things: the interface language, and the language you are learning.</p>
               <div style="margin-top:16px;">
                 <label style="display:block; font-size:.78rem; font-weight:600; color:var(--text-secondary); margin-bottom:8px;"><span class="arabic">لغه الواجهه</span>، Interface language</label>
                 <select id="interfaceLangSelect" style="width:100%; padding:10px 12px; border-radius:10px; background:var(--card-elevated); border:1px solid var(--border); color:var(--text);">
@@ -1691,11 +1691,11 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
                   <option value="en" data-en="I'm learning English" data-ar="اتعلم الانجليزيه">I'm learning English</option>
                   <option value="ar" data-en="I'm learning Arabic" data-ar="اتعلم اللهجه العربيه">I'm learning Arabic</option>
                 </select>
-                <p style="margin-top:8px; font-size:.76rem; color:var(--text-muted);"><span class="arabic" style="display:block;">ذا يحدد الدروس والتوصيات والصفحه البدايه.</span>This drives the lessons, recommendations and home screen.</p>
+                <p style="margin-top:8px; font-size:.76rem; color:var(--text-muted);"><span class="arabic" style="display:block;">ذا يحدد الدروس والتوصيات وصفحه البدايه.</span>This drives the lessons, recommendations and home screen.</p>
               </div>
             </div>
             <div class="card">
-              <h3 style="font-size:1.05rem;">Voice Settings <span class="arabic" style="font-size:.85em; font-weight:400;">· اغيردات الصوت</span></h3>
+              <h3 style="font-size:1.05rem;">Voice Settings <span class="arabic" style="font-size:.85em; font-weight:400;">· اعدادات الصوت</span></h3>
               <p style="margin-top:8px; font-size:.84rem; color:var(--text-muted);"><span class="arabic" style="display:block;">تتحكم بتشغيل الصوت داخل الدروس.</span>Controls native audio playback across lessons.</p>
               <div style="margin-top:18px;">
                 <label style="font-size:.78rem; color:var(--text-muted);"><span class="arabic">سرعه الكلام</span>، Speech speed</label>
@@ -9225,7 +9225,7 @@ const RP_SCRIPTS = {
         any: { next: 1, reply: L('Coming right up. Would you like anything to eat?', 'الحين اجيبه. تبي شي تاكله؟', 'كمنق رايت اپ. وود يو لايك انيثينق تو ات؟') } },
       { key:'food', expect:'open', ask: L('Would you like anything to eat?', 'تبي شي تاكله؟', 'وود يو لايك انيثينق تو ات؟'),
         any: { next: 'wrap', reply: L('Here you go. Enjoy your flight.', 'تفضل. رحله مبسوطه.', 'هير يو قو. انجوي يور فلايت.') } },
-      { key:'wrap', wrap: L('Let me know if you need anything during the flight.', 'خبرني اذا احتجت شي اثنا الرحله.', 'ليت مي نو اف يو نيد انيثينق ديورينق ذا فلايت.') }
+      { key:'wrap', wrap: L('Let me know if you need anything during the flight.', 'خبرني اذا احتجت شي اثناء الرحله.', 'ليت مي نو اف يو نيد انيثينق ديورينق ذا فلايت.') }
     ],
     faq: [
       { match: /(water|ما)/, reply: L('Of course, I will bring you some water.', 'اكيد، بجيب لك ما.', 'اوف كورس، اي ويل برينق يو سم ووتر.') },
@@ -14990,8 +14990,8 @@ function cleanupRecognition(){
 }
 function micErrorMessage(code){
   const m = {
-    'not-allowed': 'الوصول للمايك ممنوع، فعّل صلاحيه المايكروفون لذلك الموقع من اغيردات المتصفح.',
-    'permission-denied': 'الوصول للمايك ممنوع، فعّل صلاحيه المايكروفون لذلك الموقع من اغيردات المتصفح.',
+    'not-allowed': 'الوصول للمايك ممنوع، فعّل صلاحيه المايكروفون لذلك الموقع من اعدادات المتصفح.',
+    'permission-denied': 'الوصول للمايك ممنوع، فعّل صلاحيه المايكروفون لذلك الموقع من اعدادات المتصفح.',
     'audio-capture': 'ما قدرنا نلقى مايكروفون، تاكد انه موصول وشغّال.',
     'network': 'فيه مشكله بالشبكه مع محرك الصوت. اضغط "نطقتها" للتقدم، او جرب مره ثانيه.',
     'no-speech': 'ما سمعنا اي صوت، جرب تتكلم اقرب للمايك.',
@@ -19353,7 +19353,7 @@ function renderBookmarks(){
       <h1><span class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">كل ما حفظته، في مكان واحد.</span>Everything you saved, in one place.</h1>
       <p><span class="arabic" style="display:block; margin-bottom:4px;">الدروس والكلمات والمفضله، قابله للبحث ومنظمه.</span>Lessons, vocabulary, and favourites, searchable and organised.</p>
     </div>
-    <div class="lib-search" style="margin-bottom:20px; max-width:420px;"><i data-lucide="search" width="15" height="15" style="color:var(--text-muted);"></i><label for="bmSearch" class="sr-only">Search bookmarks</label><input type="text" id="bmSearch" dir="auto" placeholder="ابحث في المفضله... / Search your bookmarks..."></div>
+    <div class="lib-search" style="margin-bottom:20px; max-width:420px;"><i data-lucide="search" width="15" height="15" style="color:var(--text-muted);"></i><label for="bmSearch" class="sr-only">ابحث في المفضله، Search bookmarks</label><input type="text" id="bmSearch" dir="auto" placeholder="ابحث في المفضله... / Search your bookmarks..."></div>
     <div class="card" id="bmList"></div>`;
   function renderList(){
     const q = (document.getElementById('bmSearch').value||'').toLowerCase();
@@ -19365,7 +19365,7 @@ function renderBookmarks(){
         <div class="bookmark-type-icon"><i data-lucide="${typeIcon[b.type]||'bookmark'}" width="16" height="16"></i></div>
         <div style="flex:1;"><b style="font-size:.9rem;">${escapeHtml(b.label)}</b><div style="font-size:.74rem; color:var(--text-muted);">${escapeHtml(b.sub||'')}</div></div>
         <span class="chip">${b.type === 'vocab' ? '<span class="arabic">كلمه</span>، Word' : b.type === 'favlesson' ? '<span class="arabic">مفضّل</span>، Favourite' : '<span class="arabic">درس</span>، Lesson'}</span>
-      </div>`).join('') : `<div class="empty-state"><i class="empty-icon" data-lucide="bookmark"></i><h3><span class="arabic" style="display:block; font-size:.8em; font-weight:400; color:var(--text-muted); margin-bottom:4px;">ما فيه مفضله لسه</span>No bookmarks yet</h3><p><span class="arabic" style="display:block; margin-bottom:4px;">احفظ الدروس والكلمات اثنا دراستك، وستظهر هنا.</span>Save lessons and words as you study, and they will show up here.</p></div>`;
+      </div>`).join('') : `<div class="empty-state"><i class="empty-icon" data-lucide="bookmark"></i><h3><span class="arabic" style="display:block; font-size:.8em; font-weight:400; color:var(--text-muted); margin-bottom:4px;">ما فيه مفضله لسه</span>No bookmarks yet</h3><p><span class="arabic" style="display:block; margin-bottom:4px;">احفظ الدروس والكلمات اثناء دراستك، وستظهر هنا.</span>Save lessons and words as you study, and they will show up here.</p></div>`;
     if(window.lucide) lucide.createIcons();
   }
   const bmSearch = document.getElementById('bmSearch');
@@ -20231,7 +20231,7 @@ function renderProfile(){
       <button type="button" class="btn-outline" id="editGoalBtn"><span class="arabic">تعديل هدف التعلم</span>، Edit learning goal</button>
     </div>
 
-    <div class="eyebrow" style="margin-bottom:14px;"><span class="arabic">الاحصاييات</span>، Statistics</div>
+    <div class="eyebrow" style="margin-bottom:14px;"><span class="arabic">الاحصائيات</span>، Statistics</div>
     <div class="grid" style="grid-template-columns:repeat(auto-fit, minmax(140px, 1fr)); margin-bottom:30px;" id="profileStatsGrid"></div>
 
     <div class="card card-elevated" style="display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin-bottom:30px;">
@@ -20963,7 +20963,7 @@ function renderPlanSettings(){
   const E = pelEngine();
   const plan = getPlan();
   if(!E || !plan || !plan.onboardingCompleted){
-    wrap.innerHTML = `<p style="font-size:.82rem; color:var(--text-muted); line-height:1.7;"><span class="arabic" style="display:block;">ما عندك خطه لسه. ابنها من الصفحه البدايه عشان نفتح لك مسارك.</span>No plan yet - build one from the home page first.</p>`;
+    wrap.innerHTML = `<p style="font-size:.82rem; color:var(--text-muted); line-height:1.7;"><span class="arabic" style="display:block;">ما عندك خطه لسه. ابنها من صفحه البدايه عشان نفتح لك مسارك.</span>No plan yet - build one from the home page first.</p>`;
     return;
   }
   const p = plan.profile, r = plan.route;
@@ -21030,7 +21030,7 @@ function renderPlanView(){
       <div class="page-head">
         <span class="eyebrow"><span class="arabic" style="font-size:.95em;">خطتي</span>، My Plan</span>
         <h1><span class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">ما عندك خطه لسه.</span>No personalized plan yet.</h1>
-        <p><span class="arabic" style="display:block; margin-bottom:4px;">اختبر مستواك على الصفحه البدايه ونحدد لك الخطه المناسبه لمستواك وهدفك.</span>Take the level test on the homepage and we match you to the plan that fits your level and goal.</p>
+        <p><span class="arabic" style="display:block; margin-bottom:4px;">اختبر مستواك على صفحه البدايه ونحدد لك الخطه المناسبه لمستواك وهدفك.</span>Take the level test on the homepage and we match you to the plan that fits your level and goal.</p>
         <div style="margin-top:22px;"><a class="btn-gold" href="index.html#pricing"><span class="arabic">ابدأ الاختبار</span>، Take the test</a></div>
       </div>`;
     return;
