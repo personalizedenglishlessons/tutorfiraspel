@@ -1,5 +1,46 @@
 # NEXT STEPS - pick up here
 
+## DONE: Round 7 — vault drift/dedupe/search + a0hw EN quality (2026-09-28, seventh session)
+
+### Vault bugs fixed (pushed dc52a04, 5ccaf20, 6679cb0)
+- DUPLICATE CARDS: Appointment, Symptom, Insurance each appeared TWICE in
+  the same category (VOCAB_BANK had two blocks; UI showed 171 cards for
+  165 unique words). Removed the 3 older duplicates — now 168 total,
+  Hospital English 10->7. Cross-category dups (Deadline, Colleague,
+  Beat) kept — those are intentional.
+- At Work Deadline translit ديدلاين -> دد لاين
+- Interviewer card contradicted itself: antonyms_ar was identical to
+  synonyms_ar (المقابل), and tip_ar said the OPPOSITE of the ar field.
+  Now: ar='اللي يجري المقابله (المقابل)', antonyms_ar='المتقدم
+  للمقابله', synonyms_ar='مسؤول التوظيف', tip consistent.
+- tv-vocab-test.html drift: still had الرجي + سمبتم (fixed in app
+  earlier but not the copy) -> اليرجي + سيمبتوم
+- SEARCH BUG (biggest find): vault search only filtered CATEGORY
+  NAMES but the empty state said "ما حصلت كلمات / no words found" —
+  searching "allergy" showed nothing even though the word exists.
+  Fixed: search now matches en/ar/translit, shows matching words as
+  clickable chips that open a study deck ('نتائج البحث'), plus the
+  containing categories. Verified live: EN + AR queries, chip->deck
+  flow, clear-search restores categories.
+
+### Vault UI verified working (live, testmail1 account)
+Save/bookmark toggle + panel update + unsave, card flip, deck counts,
+dedupe. Test account left clean (no saved words).
+
+### DB exercise EN quality fixes (a0hw set)
+- ex#2322 EN said "asks about" while AR said "طلبت منك تقفل" -> EN now
+  "asked you to close the known door"
+- ex#2354 "More speed than fast" -> "The comparative of fast is"
+- ex#2256 hint "They starts the sentence." -> "The sentence starts
+  with They."
+- ex#2362 "The condition start:" -> "Complete the condition:"
+- ex#2233 options "I big"/"i small" -> "I"/"i" (tr labels unchanged)
+
+Audit trail: words.ar is a JSONB column (use ::text for LIKE).
+IPA fields reviewed — all well-formed.
+
+# NEXT STEPS - pick up here
+
 ## DONE: Round 6 — full re-flag of source + phrase items (2026-09-28, sixth session)
 
 Ran word+sentence flaggers over every source file and the 1,503
