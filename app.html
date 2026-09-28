@@ -23,7 +23,7 @@
 <script src="lib/cert-qr.js?v=a43f19f9" defer></script>
 <script src="lib/cert-sheet.js?v=ece713aa" defer></script>
 <script src="lib/pel_config.js?v=d66df0a3"></script>
-<script src="lib/pel_lesson_stage.js?v=a5bb1af6"></script>
+<script src="lib/pel_lesson_stage.js?v=201a49b6"></script>
 <script src="lib/pel_dashboard_life.js?v=950ac8f3"></script>
 <script src="lib/pel_curriculum_path.js?v=e4c5c297"></script>
 <style>
@@ -19646,8 +19646,37 @@ async function renderControlCenter(){
     }
   }catch(e){}
   const ar = accountPrefs.lang === 'ar';
-  const L = (st.lessons || []).find(x => x.state === 'available') || null;
-  const nxt = (st.lessons || []).find(x => x.state === 'locked');
+  // Check if the student has a saved mid-lesson position (pel_stage_pos).
+  // If the saved lesson is available in the current stage, prefer it over
+  // the first available lesson so the hero card always shows the lesson the
+  // student was actually working on — not a different one.
+  let savedPos = null;
+  try {
+    const raw = localStorage.getItem('pel_stage_pos');
+    if (raw && raw !== '[object Object]' && raw !== 'null') {
+      const pos = typeof raw === 'string' ? JSON.parse(raw) : raw;
+      if (pos && pos.a === st.stage.id && typeof pos.i === 'number') savedPos = pos;
+    }
+  } catch(e) {}
+  const lessons = st.lessons || [];
+  // First available lesson from server state
+  const firstAvail = lessons.find(x => x.state === 'available') || null;
+  // If the student has a saved position (pel_stage_pos) for a lesson in this
+  // stage, show THAT lesson — not the server's first-available. The student
+  // was actively working on it; even if the server marks it "locked" (e.g.
+  // completed_lessons was reset), they should resume where they left off.
+  let L = firstAvail;
+  let isResume = false;
+  if (savedPos && savedPos.l) {
+    const savedLesson = lessons.find(x => x.id === savedPos.l);
+    if (savedLesson && (savedLesson.state === 'available' || savedLesson.state === 'locked')) {
+      L = savedLesson;
+      isResume = savedPos.i > 0;
+    } else if (firstAvail && firstAvail.id === savedPos.l && savedPos.i > 0) {
+      isResume = true;
+    }
+  }
+  const nxt = lessons.find(x => x.state === 'locked');
   const total = st.stage_progress ? st.stage_progress.total : 0;
   const done = st.stage_progress ? st.stage_progress.done : 0;
   const pct = total ? Math.round(done / total * 100) : 0;
@@ -19666,9 +19695,9 @@ async function renderControlCenter(){
       ${L ? `
       <h3 style="margin-top:18px; font-size:1.15rem;" id="ccTodayTitle"><span class="arabic">${L.title_ar || L.title_en}</span>، ${L.title_en || L.title_ar}</h3>
       <p style="color:var(--text-muted); font-size:.82rem; margin-top:4px;">
-        <span class="arabic">درس اليوم · ${L.minutes || 5} دقيقه${ck ? ` · <b style="color:var(--gold);">اختبار المرحله</b>` : ''}</span>، Today's lesson · ${L.minutes || 5} min${ck ? ` · <b style="color:var(--gold);">Stage checkpoint</b>` : ''}
+        <span class="arabic">${isResume ? 'كمل من وين وقفت' : 'درس اليوم'} · ${L.minutes || 5} دقيقه${ck ? ` · <b style="color:var(--gold);">اختبار المرحله</b>` : ''}</span>، ${isResume ? 'Continue where you left off' : 'Today\'s lesson'} · ${L.minutes || 5} min${ck ? ` · <b style="color:var(--gold);">Stage checkpoint</b>` : ''}
       </p>
-      <button type="button" class="btn-gold magnetic" id="ccStartBtn" style="margin-top:14px;"><span class="arabic">ابدا الدرس</span>، Start lesson</button>`
+      <button type="button" class="btn-gold magnetic" id="ccStartBtn" style="margin-top:14px;"><span class="arabic">${isResume ? 'كمل الدرس' : 'ابدا الدرس'}</span>، ${isResume ? 'Continue lesson' : 'Start lesson'}</button>`
       : `<p style="margin-top:16px; color:var(--text-secondary);"><span class="arabic">اكملت هذي المرحله.</span>، You have finished this stage.</p>`}
       ${nxt ? `<p style="margin-top:14px; font-size:.8rem; color:var(--text-muted); display:flex; align-items:center; gap:6px;"><i data-lucide="lock" width="13" height="13"></i> <span><span class="arabic">الجاي: ${escapeHtml(nxt.title_ar||nxt.title_en)}</span>، Next: ${escapeHtml(nxt.title_en||nxt.title_ar)}</span></p>` : ''}
       </div>
@@ -19770,19 +19799,24 @@ function renderActivePath(){
     : s === 'available'
     ? '<span style="width:26px;height:26px;border-radius:50%;border:2px solid var(--gold);color:var(--gold);display:inline-flex;align-items:center;justify-content:center;font-size:.75rem;flex-shrink:0;box-shadow:0 0 0 4px rgba(200,169,106,.12);">●</span>'
     : '<i data-lucide="lock" width="14" height="14" style="color:var(--text-muted);flex-shrink:0;"></i>';
-  const rows = (st.lessons || []).filter(L => L.state !== 'locked').map(L => {
+  // Also show the saved-lesson if the server marks it "locked" but the student
+  // has a saved position for it (pel_stage_pos). Without this the path list
+  // hides the lesson the hero card says to continue.
+  const _savedPathLesson = (function(){ try{ const r=localStorage.getItem('pel_stage_pos'); if(!r)return null; const p=typeof r==='string'?JSON.parse(r):r; if(p&&p.a===st.stage.id&&p.l)return p.l; }catch(e){} return null; })();
+  const rows = (st.lessons || []).filter(L => L.state !== 'locked' || L.id === _savedPathLesson).map(L => {
     const title = ar ? (L.title_ar || L.title_en) : (L.title_en || L.title_ar);
     const isCk = L.kind === 'checkpoint';
     const dim = L.state === 'completed' ? 'opacity:.55;' : '';
-    const hot = L.state === 'available' ? 'background:rgba(200,169,106,.08); border-radius:12px; padding:10px 12px; margin:2px -12px;' : '';
-    const click = L.state === 'available' ? ` data-open-lesson="${L.id}" style="cursor:pointer;"` : '';
+    const hot = (L.state === 'available' || L.id === _savedPathLesson) ? 'background:rgba(200,169,106,.08); border-radius:12px; padding:10px 12px; margin:2px -12px;' : '';
+    const click = (L.state === 'available' || L.id === _savedPathLesson) ? ` data-open-lesson="${L.id}" style="cursor:pointer;"` : '';
+    const label = L.state==='completed'?(uiAr?'مكتمل':'<span dir="ltr">Done</span>'):L.id===_savedPathLesson?(uiAr?'كمل':'<span dir="ltr">Resume</span>'):L.state==='available'?(uiAr?'ابدا':'<span dir="ltr">Start</span>'):(uiAr?'مقفل':'<span dir="ltr">Locked</span>');
     return `<div${click} class="pel-path-row" data-ls="${L.state}" style="display:flex; align-items:center; gap:12px; padding:8px 12px; ${dim}${hot}">
-      ${iconFor(L.state)}
+      ${iconFor(L.id===_savedPathLesson?'available':L.state)}
       <div style="flex:1; min-width:0;">
-        <div style="font-weight:${L.state==='available'?'600':'400'}; font-size:.9rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(title)}</div>
+        <div style="font-weight:${L.state==='available'||L.id===_savedPathLesson?'600':'400'}; font-size:.9rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(title)}</div>
         <div style="font-size:.72rem; color:var(--text-muted);">${isCk ? (uiAr?'اختبار المرحله':'<span dir="ltr">Stage checkpoint</span>') : (uiAr ? `${L.minutes||5} دقيقه` : `<span dir="ltr">${L.minutes||5} min</span>`)}</div>
       </div>
-      <span style="font-size:.7rem; color:var(--text-muted); flex-shrink:0;">${L.state==='completed'?(uiAr?'مكتمل':'<span dir="ltr">Done</span>'):L.state==='available'?(uiAr?'ابدا':'<span dir="ltr">Start</span>'):(uiAr?'مقفل':'<span dir="ltr">Locked</span>')}</span>
+      <span style="font-size:.7rem; color:var(--text-muted); flex-shrink:0;">${label}</span>
     </div>`;
   }).join('');
   const laterHtml = '';
