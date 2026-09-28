@@ -18151,13 +18151,22 @@ function renderVocabulary(){
   }
   // --- Category Picker ---
   function renderCategoryPicker(){
-    const q = (document.getElementById('vvSearch').value||'').toLowerCase();
+    const q = (document.getElementById('vvSearch').value||'').toLowerCase().trim();
     const cats = {};
     VOCAB_BANK.forEach(v => { if(!cats[v.category]) cats[v.category] = 0; cats[v.category]++; });
+    // word matches: search en, ar meaning, translit and category name
+    const matchedWords = q ? VOCAB_BANK.filter(v =>
+      (v.en||'').toLowerCase().includes(q) ||
+      (v.ar||'').includes(q) ||
+      (v.translit||'').includes(q) ||
+      (v.category||'').toLowerCase().includes(q)) : [];
+    const wordCats = new Set(matchedWords.map(v => v.category));
     const entries = Object.entries(cats)
-      .filter(([cat]) => cat.toLowerCase().includes(q))
+      .filter(([cat]) => cat.toLowerCase().includes(q) || wordCats.has(cat))
       .sort((a,b) => b[1] - a[1]);
-    catGridEl.innerHTML = entries.map(([cat,count]) => {
+    // word result chips (only when searching)
+    const wordChips = (q && matchedWords.length) ? `<div class="vv-word-results" style="margin:0 0 16px;"><div style="font-size:.78rem;color:var(--text-muted);margin:0 0 8px;">${arMode? matchedWords.length+' كلمه مطابقه — اضغط للدراسه' : matchedWords.length+' matching word'+(matchedWords.length>1?'s':'')+' — tap to study'}</div><div style="display:flex;flex-wrap:wrap;gap:8px;">${matchedWords.slice(0,24).map(v => `<button type="button" class="vv-word-chip" data-en="${escapeHtml(v.en)}" style="padding:7px 14px;border-radius:999px;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer;font-size:.85rem;"><b>${escapeHtml(v.en)}</b> — <span class="arabic">${escapeHtml(v.ar)}</span></button>`).join('')}</div></div>` : '';
+    catGridEl.innerHTML = wordChips + entries.map(([cat,count]) => {
       const icon = VV_CAT_ICONS[cat] || 'book-open';
       const catName = arMode ? (VV_CAT_AR[cat] || cat) : cat;
       const wordLabel = arMode ? 'كلمه' : 'word' + (count>1?'s':'');
@@ -18170,15 +18179,27 @@ function renderVocabulary(){
     catGridEl.querySelectorAll('.vv-cat-card').forEach(card => {
       card.addEventListener('click', () => startStudy(card.dataset.cat));
     });
+    catGridEl.querySelectorAll('.vv-word-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const en = chip.dataset.en;
+        const word = VOCAB_BANK.find(v => v.en === en);
+        if(word) startStudy(null, [word]);
+      });
+    });
     if(window.lucide) lucide.createIcons();
   }
   document.getElementById('vvSearch').addEventListener('input', renderCategoryPicker);
   // --- Study Mode ---
-  function startStudy(category){
-    vvCategory = category;
-    vvDeck = VOCAB_BANK.filter(v => v.category === category);
+  function startStudy(category, customWords){
+    if(customWords){
+      vvCategory = arMode ? 'نتائج البحث' : 'Search results';
+      vvDeck = customWords;
+    } else {
+      vvCategory = category;
+      vvDeck = VOCAB_BANK.filter(v => v.category === category);
+    }
     vvOrder = vvDeck.map((_,i) => i);
-    catLabel.textContent = category;
+    catLabel.textContent = vvCategory;
     statTotal.textContent = vvDeck.length;
     vvSeen.clear();
     renderStudyCard();
