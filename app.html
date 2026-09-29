@@ -1947,7 +1947,7 @@ function applyStudentStateRow(row){
   const topXp = document.getElementById('topXp');
   if(topXp) topXp.textContent = studentStats.xp.toLocaleString();
   const streakTxt = document.getElementById('sidebarStreakTxt');
-  if(streakTxt) streakTxt.innerHTML = `<span class="arabic">سلسله ${studentStats.streak} يوم</span>، ${studentStats.streak} day streak`;
+  if(streakTxt) streakTxt.innerHTML = `<span class="arabic">سلسله ${studentStats.streak || 0} يوم</span>، ${studentStats.streak || 0} day streak`;
 }
 function clearStudentState(){
   // Wipes every in-memory trace of the previous session's student data.
@@ -14868,7 +14868,7 @@ function awardXp(amount){
   const topXp = document.getElementById('topXp');
   if(topXp) topXp.textContent = studentStats.xp.toLocaleString();
   const streakTxt = document.getElementById('sidebarStreakTxt');
-  if(streakTxt) streakTxt.innerHTML = `<span class="arabic">سلسله ${studentStats.streak} يوم</span>، ${studentStats.streak} day streak`;
+  if(streakTxt) streakTxt.innerHTML = `<span class="arabic">سلسله ${studentStats.streak || 0} يوم</span>، ${studentStats.streak || 0} day streak`;
   // Refresh the dashboard's weekly card + hero rings so "You studied X days
   // this week" and the streak flame update the instant a lesson is finished -
   // not only on the next dashboard visit.
@@ -17686,7 +17686,7 @@ function renderWorkspace(){
       <div class="workspace-center" id="wsCenter"></div>
       <aside class="workspace-context">
         <h4><span class="arabic">التقدم المصغر</span>، Mini Progress</h4>
-        <div class="ring-wrap small" style="margin-bottom:20px;"><svg viewBox="0 0 64 64"><circle class="track" cx="32" cy="32" r="26"></circle><circle class="prog" cx="32" cy="32" r="26" stroke-dasharray="163" style="stroke-dashoffset:${163 - (163*academy.progress/100)};"></circle></svg><div class="ring-center"><b>${academy.progress}%</b></div></div>
+        <div class="ring-wrap small" style="margin-bottom:20px;"><svg viewBox="0 0 64 64"><circle class="track" cx="32" cy="32" r="26"></circle><circle class="prog" cx="32" cy="32" r="26" stroke-dasharray="163" style="stroke-dashoffset:${163 - (163*academy.progress/100)};"></circle></svg><div class="ring-center"><b>${academy.progress || 0}%</b></div></div>
         <h4><span class="arabic">مفردات ذا الدرس</span>، Vocabulary in this Lesson</h4>
         <div id="wsVocabMini" style="margin-bottom:22px;"></div>
         <h4><span class="arabic">ملاحظات</span>، Notes</h4>
@@ -17775,7 +17775,7 @@ function renderLessonReader(container, academy, lesson){
     <div class="lesson-cover" style="background:linear-gradient(135deg, ${academy.from}, ${academy.to});">
       <i class="lesson-cover-icon" data-lucide="${academy.icon}" width="54" height="54" style="color:#fff;"></i>
       <div>
-        <span class="chip gold">${lesson.difficulty} · ${lesson.duration}</span>
+        <span class="chip gold">${lesson.difficulty || 'Intermediate'} · ${lesson.duration || '5 min'}</span>
       </div>
     </div>
     <span class="eyebrow"><span class="arabic">${escapeHtml(academy.ar||'')}</span> · ${escapeHtml(academy.en||'')}</span>
@@ -18786,7 +18786,7 @@ function renderPronDrill(card, drill){
           <div style="font-size:2rem;font-weight:700;color:var(--gold);">${final}% · ${pronGrade(final)}</div>
           <div class="arabic" style="margin-top:4px;">نتيجه ذا التدريب</div>
           <div style="margin-top:6px;font-size:.82rem;color:var(--text-muted);">${breakdown}</div>
-          ${saved.best>final?`<div class="arabic" style="margin-top:4px;font-size:.78rem;color:var(--text-muted);">افضل نتيجه سابقه: ${saved.best}% (${saved.attempts} محاول شيت)</div>`:''}
+          ${saved.best>final?`<div class="arabic" style="margin-top:4px;font-size:.78rem;color:var(--text-muted);">افضل نتيجه سابقه: ${saved.best}% (${saved.attempts || 0} محاول شيت)</div>`:''}
           <div style="margin-top:10px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;align-items:center;">
             <span class="chip" style="background:rgba(200,169,106,.14);color:var(--gold);border:1px solid rgba(200,169,106,.3);font-size:.74rem;"><span class="arabic">المجموع التراكمي</span> Cumulative: ${cum!=null?cum+'%':'-'}</span>
             ${drill.writingPrompt?`<button type="button" class="btn-ghost" id="drill-wprompt"><i data-lucide="pen-line" width="15" height="15"></i> <span class="arabic">تمرين كتابه</span></button>`:''}
@@ -20091,8 +20091,8 @@ function renderContinueLearning(){
       if(body) body.innerHTML = `
         <span class="chip emerald">${escapeHtml(inProgress.en||'')}</span>
         <div style="display:flex; align-items:center; gap:12px; margin-top:12px;">
-          <div class="progress-track" style="flex:1; max-width:280px;"><span class="progress-fill" style="width:${inProgress.progress}%;"></span></div>
-          <span style="font-size:.76rem; color:var(--text-muted);">${inProgress.progress}%</span>
+          <div class="progress-track" style="flex:1; max-width:280px;"><span class="progress-fill" style="width:${inProgress.progress || 0}%;"></span></div>
+          <span style="font-size:.76rem; color:var(--text-muted);">${inProgress.progress || 0}%</span>
         </div>
         <button type="button" class="btn-outline" data-goto-view="resume" style="margin-top:12px;"><span class="arabic">كمل</span>، Resume</button>`;
     }else if(planNext && !inProgress){
@@ -20102,7 +20102,7 @@ function renderContinueLearning(){
       const doneN = Math.max(0, total - (un.remainingLessons || total));
       const pct = Math.round(doneN / total * 100);
       const estChip = document.getElementById('heroEstChip');
-      if(estChip && planNext.minutes) estChip.innerHTML = `<span class="arabic">تقريب ${planNext.minutes} <span class="arabic">دقيقه</span></span>، Est. ${planNext.minutes} min`;
+      if(estChip && planNext.minutes) estChip.innerHTML = `<span class="arabic">تقريب ${planNext.minutes || 5} <span class="arabic">دقيقه</span></span>، Est. ${planNext.minutes || 5} min`;
       if(resumeText) resumeText.innerHTML = `<span class="arabic">${escapeHtml(planNext.titleAr)}</span> · ${escapeHtml(planNext.titleEn)}`;
       setHomeSubtitle(`كمل: ${escapeHtml(planNext.titleAr||'')}.`, `Continue: ${escapeHtml(planNext.titleEn||'')}.`);
       if(heroCard) heroCard.style.display = '';
@@ -20159,11 +20159,11 @@ function renderNotifications(){
     items.push({ar: 'وقت الدراسه اليوم', en:'You have not studied yet today, a few minutes keeps your streak alive.'});
   }
   if(prefs.streak && studentStats.streak > 0 && studentStats.lastStudyDate === yesterday){
-    items.push({ar: 'خطر فقدان السلسله', en:`Your ${studentStats.streak}-day streak ends today if you don't study.`});
+    items.push({ar: 'خطر فقدان السلسله', en:`Your ${studentStats.streak || 0}-day streak ends today if you don't study.`});
   }
   const milestones = [7, 14, 30, 60, 100];
   if(milestones.includes(studentStats.streak)){
-    items.push({ar: 'مبروك، وصلت لانجاز جديد', en:`New streak milestone, you have studied ${studentStats.streak} days in a row.`});
+    items.push({ar: 'مبروك، وصلت لانجاز جديد', en:`New streak milestone, you have studied ${studentStats.streak || 0} days in a row.`});
   }
   const remaining = Math.max(0, (studentPrefs.weeklyGoalLessons||0) - (studentStats.streak > 0 ? 1 : 0));
   if(studentPrefs.weeklyGoalLessons && remaining > 0 && remaining <= 1){
@@ -20769,8 +20769,8 @@ function renderCalendar(){
       </div>
     </div>
     <div class="grid" style="grid-template-columns:repeat(4,1fr);">
-      <div class="stat-pill"><b>${studentStats.streak}</b><span class="arabic" style="display:block;">السلسله الحاليه</span><span>Current streak</span></div>
-      <div class="stat-pill"><b>${studentStats.longestStreak}</b><span class="arabic" style="display:block;">اطول سلسله</span><span>Longest streak</span></div>
+      <div class="stat-pill"><b>${studentStats.streak || 0}</b><span class="arabic" style="display:block;">السلسله الحاليه</span><span>Current streak</span></div>
+      <div class="stat-pill"><b>${studentStats.longestStreak || 0}</b><span class="arabic" style="display:block;">اطول سلسله</span><span>Longest streak</span></div>
       <div class="stat-pill"><b>${Math.min(studentStats.streak,studentPrefs.weeklyGoalLessons||0)} / ${studentPrefs.weeklyGoalLessons||0}</b><span class="arabic" style="display:block;">الهدف الاسبوعي</span><span>Weekly goal</span></div>
       <div class="stat-pill"><b>${Math.min(completedLessons.size,studentPrefs.monthlyGoalLessons||0)} / ${studentPrefs.monthlyGoalLessons||0}</b><span class="arabic" style="display:block;">الهدف الشهري</span><span>Monthly goal</span></div>
     </div>`;
@@ -20979,7 +20979,7 @@ function renderPlanSettings(){
   function preview(){
     const est = E.estimateDuration(p, r, { dailyMinutes: state.daily, weeklyFrequency: state.freqDays });
     const pv = document.getElementById('planEstPreview');
-    if(pv) pv.textContent = `~${est.weeks} weeks · ${est.days} study days · ${est.weeklyMinutes} min/week`;
+    if(pv) pv.textContent = `~${est.weeks || 0} weeks · ${est.days || 0} study days · ${est.weeklyMinutes || 0} min/week`;
   }
   wrap.innerHTML = `
     <div style="margin-top:4px;">
@@ -21048,9 +21048,9 @@ function renderPlanView(){
 
   const chips = [
     `<span class="chip gold">${escapeHtml(startLvl.en)} → ${escapeHtml(goalLvl.en)}</span>`,
-    `<span class="chip">${e.dailyMinutes} <span class="arabic">دقيقه/يوم</span>، ${e.weeklyFrequency}/7</span>`,
-    `<span class="chip">${doneN}/${e.totalLessons} <span class="arabic">دروس</span>، lessons</span>`,
-    `<span class="chip">${un.remainingLessons} <span class="arabic">متبقي</span>، left</span>`,
+    `<span class="chip">${e.dailyMinutes || 0} <span class="arabic">دقيقه/يوم</span>، ${e.weeklyFrequency}/7</span>`,
+    `<span class="chip">${doneN}/${e.totalLessons || 0} <span class="arabic">دروس</span>، lessons</span>`,
+    `<span class="chip">${un.remainingLessons || 0} <span class="arabic">متبقي</span>، left</span>`,
   ].join(' ');
 
   let stagesHtml = '';
@@ -21118,11 +21118,11 @@ function renderPlanView(){
       <div class="card">
         <span class="eyebrow" style="margin:0 0 8px;"><span class="arabic">التقدير الزمني</span>، Time estimate</span>
         <div style="display:flex; flex-direction:column; gap:10px; margin-top:10px;">
-          <div style="display:flex; justify-content:space-between; font-size:.85rem;"><span><span class="arabic">طول المسار</span>، Route length</span><b style="color:var(--gold-soft);">~${e.weeks} <span class="arabic">اسابيع</span>، weeks</b></div>
-          <div style="display:flex; justify-content:space-between; font-size:.85rem;"><span><span class="arabic">ايام دراسه</span>، Study days</span><b style="color:var(--gold-soft);">${e.days}</b></div>
-          <div style="display:flex; justify-content:space-between; font-size:.85rem;"><span><span class="arabic">العب الاسبوعي</span>، Weekly</span><b style="color:var(--gold-soft);">${e.weeklyMinutes} min</b></div>
-          <div style="display:flex; justify-content:space-between; font-size:.85rem;"><span><span class="arabic">عدد الدروس</span>، Lessons</span><b style="color:var(--gold-soft);">${e.totalLessons}</b></div>
-          <p style="font-size:.74rem; color:var(--text-muted); margin-top:4px;"><span class="arabic">${e.dailyMinutes} دقيقه باليوم، ${e.weeklyFrequency} ايام بالاسبوع.</span>${e.dailyMinutes} min/day, ${e.weeklyFrequency} days/week.</p>
+          <div style="display:flex; justify-content:space-between; font-size:.85rem;"><span><span class="arabic">طول المسار</span>، Route length</span><b style="color:var(--gold-soft);">~${e.weeks || 0} <span class="arabic">اسابيع</span>، weeks</b></div>
+          <div style="display:flex; justify-content:space-between; font-size:.85rem;"><span><span class="arabic">ايام دراسه</span>، Study days</span><b style="color:var(--gold-soft);">${e.days || 0}</b></div>
+          <div style="display:flex; justify-content:space-between; font-size:.85rem;"><span><span class="arabic">العب الاسبوعي</span>، Weekly</span><b style="color:var(--gold-soft);">${e.weeklyMinutes || 0} min</b></div>
+          <div style="display:flex; justify-content:space-between; font-size:.85rem;"><span><span class="arabic">عدد الدروس</span>، Lessons</span><b style="color:var(--gold-soft);">${e.totalLessons || 0}</b></div>
+          <p style="font-size:.74rem; color:var(--text-muted); margin-top:4px;"><span class="arabic">${e.dailyMinutes || 0} دقيقه باليوم، ${e.weeklyFrequency} ايام بالاسبوع.</span>${e.dailyMinutes || 0} min/day, ${e.weeklyFrequency} days/week.</p>
         </div>
       </div>
       <div style="display:flex; flex-direction:column; gap:18px;">
@@ -21166,10 +21166,10 @@ function dashRecommendation(){
   if(pn){
     const un = planUnlock();
     const progressAr = un && un.remainingLessons > 1
-      ? `باقي ${un.remainingLessons} دروس بمرحلتك الحاليه.`
+      ? `باقي ${un.remainingLessons || 0} دروس بمرحلتك الحاليه.`
       : (un && un.remainingLessons === 1 ? 'باقي درس واحد وتفتح المرحله الجايه.' : '');
     const progressEn = un && un.remainingLessons > 1
-      ? `${un.remainingLessons} lessons left in your current stage.`
+      ? `${un.remainingLessons || 0} lessons left in your current stage.`
       : (un && un.remainingLessons === 1 ? 'One lesson left in this stage, then you unlock the next one.' : '');
     return { view:'resume', ctaAr: 'كمل مسارك', ctaEn:'Continue your route',
       titleAr: pn.titleAr || '', titleEn: pn.titleEn || '',
@@ -21213,8 +21213,8 @@ function dashRecommendation(){
         ? `ما تدربت على ${escapeHtml(weak.ar||'')} ذا الاسبوع.`
         : `${escapeHtml(weak.ar||'')} اضعف مهاره عندك الحين (${weak.score||0}%).`,
       whyEn: weak.week === 0
-        ? `You have not practiced ${weak.key} this week.`
-        : `${weak.key} is your weakest skill right now (${weak.score}%).` };
+        ? `You have not practiced ${weak.key || ''} this week.`
+        : `${weak.key || ''} is your weakest skill right now (${weak.score || 0}%).` };
   }
   const inProgress = directionAcademies().find(a => a.progress > 0 && a.progress < 100);
   if(inProgress){
@@ -21352,9 +21352,9 @@ function renderFocusCard(){
     html += `<div style="display:flex; gap:18px; flex-wrap:wrap; margin-top:14px;">
       <div style="flex:1; min-width:170px;">
         <span style="font-size:.7rem; color:var(--emerald); letter-spacing:.06em; text-transform:uppercase;"><span class="arabic" style="font-size:.95em; text-transform:none;">اقوى مهاره عندك</span>، Strongest skill</span>
-        <p style="margin-top:6px; font-size:1rem; font-family:'Fraunces',serif;"><span dir="ltr">${escapeHtml(strongest.key)} · ${strongest.score}%</span></p>
+        <p style="margin-top:6px; font-size:1rem; font-family:'Fraunces',serif;"><span dir="ltr">${escapeHtml(strongest.key)} · ${strongest.score || 0}%</span></p>
         <p style="font-size:.76rem; color:var(--text-muted); margin-top:2px;">${strongest.week > 0
-          ? `<span class="arabic">تدربت عليها ${strongest.week} ${strongest.week === 1 ? 'مره' : 'مرات'} ذا الاسبوع</span>، <span dir="ltr">${strongest.week} session${strongest.week === 1 ? '' : 's'} this week</span>`
+          ? `<span class="arabic">تدربت عليها ${strongest.week || 0} ${strongest.week === 1 ? 'مره' : 'مرات'} ذا الاسبوع</span>، <span dir="ltr">${strongest.week || 0} session${strongest.week === 1 ? '' : 's'} this week</span>`
           : `<span class="arabic">راجع كلماتها عشان تثبت</span>، <span dir="ltr">Keep its words in review</span>`}</p>
       </div>
       <div style="flex:1; min-width:170px;">
@@ -21392,7 +21392,7 @@ function renderQuickWin(){
   const qw = dashQuickWin(rec);
   card.style.display = '';
   const title = document.getElementById('quickWinTitle');
-  if(title) title.innerHTML = `<span class="arabic">${escapeHtml(qw.titleAr)}</span> · <span dir="ltr">${escapeHtml(qw.titleEn)} <span style="color:var(--gold-soft); font-weight:400;">(${qw.minutes})</span></span>`;
+  if(title) title.innerHTML = `<span class="arabic">${escapeHtml(qw.titleAr)}</span> · <span dir="ltr">${escapeHtml(qw.titleEn)} <span style="color:var(--gold-soft); font-weight:400;">(${qw.minutes || '2 min'})</span></span>`;
   const why = document.getElementById('quickWinWhy');
   if(why) why.innerHTML = `<span class="arabic">${escapeHtml(qw.whyAr)}</span> · <span dir="ltr">${escapeHtml(qw.whyEn)}</span>`;
   const btn = document.getElementById('quickWinBtn');
