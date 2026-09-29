@@ -1107,7 +1107,7 @@ section{ padding-top:70px; padding-bottom:70px; }
       <a href="#personalPreview">خطتك</a>
       <a href="#pricing">الباقات</a>
       <a href="#liveTeaching">تعلم وممارسه</a>
-      <a href="#faq">الاسيله</a>
+      <a href="#faq">الاسئله</a>
     </nav>
     <div class="header-actions">
       <button type="button" class="lang-pill" id="indexLangBtn" aria-label="Switch language">EN</button>
@@ -1133,7 +1133,7 @@ section{ padding-top:70px; padding-bottom:70px; }
   <a href="#personalPreview" class="mobile-nav-link">خطتك</a>
   <a href="#pricing" class="mobile-nav-link">الباقات</a>
   <a href="#liveTeaching" class="mobile-nav-link">تعلم وممارسه</a>
-  <a href="#faq" class="mobile-nav-link">الاسيله</a>
+  <a href="#faq" class="mobile-nav-link">الاسئله</a>
   <div class="mobile-menu-actions">
     <button type="button" class="btn-gold" data-open-path style="width:100%; border:none; border-radius:999px; padding:13px 22px; font-family:inherit; font-weight:700;">ابني مسار تعلمي</button>
     <a href="login.html" class="btn-outline">دخول الطلاب</a>
@@ -1398,8 +1398,8 @@ section{ padding-top:70px; padding-bottom:70px; }
 <section id="faq">
   <div class="container">
     <div class="section-head center reveal" dir="rtl">
-      <span class="eyebrow">الاسيله الشايعه</span>
-      <h2 class="arabic-h">اسيله قبل التسجيل</h2>
+      <span class="eyebrow">الاسئله الشايعه</span>
+      <h2 class="arabic-h">اسئله قبل التسجيل</h2>
     </div>
     <div class="faq-list" id="faqList" dir="rtl"></div>
   </div>
@@ -1532,12 +1532,12 @@ function applyIndexLang(lang){
     {sel:'.primary-nav a[href="#personalPreview"]', ar: 'خطتك', en:'Your plan'},
     {sel:'.primary-nav a[href="#pricing"]', ar: 'الباقات', en:'Pricing'},
     {sel:'.primary-nav a[href="#liveTeaching"]', ar: 'تعلم وممارسه', en:'Learn & practice'},
-    {sel:'.primary-nav a[href="#faq"]', ar: 'الاسيله', en:'FAQ'},
+    {sel:'.primary-nav a[href="#faq"]', ar: 'الاسئله', en:'FAQ'},
     {sel:'.mobile-menu a[href="#home"]', ar: 'البدايه', en:'Home'},
     {sel:'.mobile-menu a[href="#personalPreview"]', ar: 'خطتك', en:'Your plan'},
     {sel:'.mobile-menu a[href="#pricing"]', ar: 'الباقات', en:'Pricing'},
     {sel:'.mobile-menu a[href="#liveTeaching"]', ar: 'تعلم وممارسه', en:'Learn & practice'},
-    {sel:'.mobile-menu a[href="#faq"]', ar: 'الاسيله', en:'FAQ'}
+    {sel:'.mobile-menu a[href="#faq"]', ar: 'الاسئله', en:'FAQ'}
   ];
   navMap.forEach(function(m){ var el=document.querySelector(m.sel); if(el) el.textContent=m[lang]; });
   // section heads - bilingual (preserve structure, just translate)
@@ -1723,7 +1723,7 @@ function applyIndexLang(lang){
   var footerBrandP=document.querySelector('.footer-brand p.arabic');
   if(footerBrandP) footerBrandP.textContent = lang==='ar' ? 'منصه تعليم انجليزي بالعربي. دروس من مواقف حقيقيه، نطق مسموع، وحصص مباشره مع الاستاذ فراس.' : 'An English learning platform in Arabic. Real-world lessons, audio pronunciation, and live classes with Tutor Firas.';
   var faqH2=document.querySelector('#faq .section-head h2');
-  if(faqH2) faqH2.textContent = lang==='ar' ? 'اسيله قبل التسجيل' : 'Questions before you enroll';
+  if(faqH2) faqH2.textContent = lang==='ar' ? 'اسئله قبل التسجيل' : 'Questions before you enroll';
   var finalH2=document.querySelector('.final-cta h2');
   if(finalH2) finalH2.textContent = lang==='ar' ? 'ابدا درسك الاول الحين' : 'Start your first lesson today';
   var finalP=document.querySelector('.final-cta p.arabic');
@@ -1908,7 +1908,7 @@ function applyIndexLang(lang){
   if(liveRightSub) liveRightSub.textContent = lang==='ar' ? 'الثلاثا 8م، اونلوين، 45 دقيقه، 6 طلاب' : 'Tuesday 8pm, online, 45 minutes, 6 students';
   var loopSteps=document.querySelectorAll('#learningLoop .card');
   var loopAr=[
-    {t:'قيّم',d:'اسيله خفيفه عن مستواك'},
+    {t:'قيّم',d:'اسئله خفيفه عن مستواك'},
     {t:'خصص',d:'خطه على مقاس هدفك'},
     {t:'اتعلم',d:'دروس من مواقف حقيقيه'},
     {t:'مارس',d:'محادثه وكتابه يوميا'},
@@ -1931,7 +1931,7 @@ function applyIndexLang(lang){
   });
   // faq + final cta heads
   var faqEyebrow=document.querySelector('#faq .eyebrow');
-  if(faqEyebrow) faqEyebrow.textContent = lang==='ar' ? 'الاسيله الشايعه' : 'Common questions';
+  if(faqEyebrow) faqEyebrow.textContent = lang==='ar' ? 'الاسئله الشايعه' : 'Common questions';
   var finalEyebrow=document.querySelector('.final-cta .eyebrow');
   if(finalEyebrow) finalEyebrow.textContent = lang==='ar' ? 'ابدا اليوم' : 'Start today';
   var finalBtn=document.querySelector('#finalPathCta span');
