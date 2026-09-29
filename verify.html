@@ -317,7 +317,7 @@ async function lookup(code){
     // scanner sees a clear "genuine" card instead of a full certificate
     // reproduction. The full certificate is rendered below, collapsed.
     const eV = function(s){ return String(s==null?'':s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); };
-    const fmtIssue = function(d){ if(!d) return ''; try{ var x=new Date(d); if(isNaN(x)) return String(d); return x.toLocaleDateString('en-US',{day:'numeric',month:'long',year:'numeric'}); }catch(e){ return String(d); } };
+    const fmtIssue = function(d){ if(!d) return ''; try{ var x=new Date(d); if(isNaN(x)) return String(d); return x.toLocaleDateString('en-US',{day:'numeric',month:'long',year: 'numeric'}); }catch(e){ return String(d); } };
     const fact = function(label, val){ return val ? '<div><div style="font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-soft);">'+label+'</div><div style="font-size:1rem;font-weight:600;margin-top:3px;">'+eV(val)+'</div></div>' : ''; };
     const vCard = document.getElementById('okVerifyCard');
     if(vCard){

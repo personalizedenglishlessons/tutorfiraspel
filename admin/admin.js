@@ -34,389 +34,389 @@ var current360Uid = null;
    2. I18N - single-language admin screens (ar RTL / en LTR)
    ============================================================ */
 var I = {
-  'overview':{en:'Overview', ar:'نظره عامه'},
-  'people':{en:'People', ar:'الاشخاص'},
-  'learning':{en:'Learning', ar:'التعلم'},
-  'operations':{en:'Operations', ar:'التشغيل'},
-  'trust':{en:'Trust', ar:'الموثوقيه'},
-  'students':{en:'Students', ar:'الطلاب'},
-  'teachers':{en:'Teachers', ar:'الاستاذين'},
-  'groups':{en:'Groups', ar:'المجموعات'},
-  'courses':{en:'Courses', ar:'المسارات'},
-  'interventions':{en:'Interventions', ar:'التدخلات'},
-  'classes':{en:'Live Classes', ar:'الدروس المباشره'},
-  'programs':{en:'Programs', ar:'البرامج'},
-  'certificates':{en:'Certificates', ar:'الشهادات'},
-  'audit':{en:'Audit Log', ar:'سجل التدقيق'},
-  'roles':{en:'Access & Roles', ar:'الادوار والصلاحيات'},
-  'health':{en:'System Health', ar:'صحه النظام'},
-  'reports':{en:'Reports', ar:'التقارير'},
-  'searchPlaceholder':{en:'Search name, email, phone, ID…', ar:'ابحث بالاسم او الايميل او الجوال…'},
-  'status':{en:'Status', ar:'الحاله'},
-  'level':{en:'Level', ar:'المستوى'},
-  'program':{en:'Program', ar:'البرنامج'},
-  'teacher':{en:'Teacher', ar:'الاستاذ'},
-  'group':{en:'Group', ar:'المجموعه'},
-  'certStatus':{en:'Certificate', ar:'الشهاده'},
-  'all':{en:'All', ar:'الكل'},
-  'sort':{en:'Sort', ar:'الترتيب'},
-  'name':{en:'Name', ar:'الاسم'},
-  'email':{en:'Email', ar:'البريد'},
-  'xp':{en:'XP', ar:'نقاط'},
-  'streak':{en:'Streak', ar:'الاستمرار'},
-  'progress':{en:'Progress', ar:'التقدم'},
-  'lastActive':{en:'Last active', ar:'اخر نشاط'},
-  'certs':{en:'Certs', ar:'شهادات'},
-  'attention':{en:'Attention', ar:'يحتاج انتباه'},
-  'openStudent':{en:'Open student', ar:'فتح الطالب'},
-  'noResults':{en:'No students match these filters.', ar:'لا فيه طلاب مطابقين.'},
-  'new':{en:'New', ar:'جديد'}, 'active':{en:'Active', ar:'نشط'}, 'stalled':{en:'Stalled', ar:'متوقف'}, 'inactive':{en:'Inactive', ar:'غير نشط'}, 'suspended':{en:'Suspended', ar:'موقوف'},
-  'issued':{en:'Issued', ar:'مصدره'}, 'revoked':{en:'Revoked', ar:'ملغاه'}, 'reissued':{en:'Reissued', ar:'اعيد اصدارها'}, 'draft':{en:'Draft', ar:'مسوده'},
-  'present':{en:'Present', ar:'حاضر'}, 'absent':{en:'Absent', ar:'غايب'}, 'late':{en:'Late', ar:'متاخر'}, 'excused':{en:'Excused', ar:'بعذر'},
-  'scheduled':{en:'Scheduled', ar:'محدد'}, 'completed':{en:'Completed', ar:'مكتمل'}, 'cancelled':{en:'Cancelled', ar:'ملغي'}, 'rescheduled':{en:'Rescheduled', ar:'اعيدت جدولته'},
-  'needsAttention':{en:'Needs attention', ar:'يحتاج انتباه'},
-  'inactiveReason':{en:'No activity for %d days', ar:'ما فيه نشاط من %d يوم'},
-  'missedLiveReason':{en:'%d missed live sessions (30d)', ar:'%d دروس مباشره مفقوده (٣٠ يوم)'},
-  'expiringReason':{en:'Program ends in %d days', ar:'ينتهي البرنامج خلال %d يوم'},
-  'whatShouldIDo':{en:'What should I do?', ar:'وش افعل الحين؟'},
-  'studentsTotal':{en:'Total students', ar:'اجمالي الطلاب'},
-  'activeStudents':{en:'Active (7d)', ar:'نشط (٧ ايام)'},
-  'onlineNow':{en:'Online now', ar:'متصل الحين'},
-  'newStudents':{en:'New (30d)', ar:'جدد (٣٠ يوم)'},
-  'stalledStudents':{en:'Stalled', ar:'متوقفون'},
-  'avgProgress':{en:'Avg lessons', ar:'متوسط الدروس'},
-  'certsIssued':{en:'Certificates', ar:'الشهادات'},
-  'teachersCount':{en:'Teachers', ar:'الاستاذين'},
-  'groupsCount':{en:'Active groups', ar:'المجموعات النشطه'},
-  'upcomingClasses':{en:'Upcoming classes', ar:'الدروس الجايه'},
-  'expiringPrograms':{en:'Programs expiring (14d)', ar:'برامج تنتهي (١٤ يوم)'},
-  'recentCompletions':{en:'Recent completions', ar:'اخر الانجازات'},
-  'recentCerts':{en:'Recent certificates', ar:'اخر الشهادات'},
-  'courseDistribution':{en:'Current course distribution', ar:'توزيع المسارات الحاليه'},
-  'recentAudit':{en:'Recent admin actions', ar:'اخر اجراوات الاداره'},
-  'noData':{en:'No data yet', ar:'ما فيه بيانات لسه'},
-  'back':{en:'Back', ar:'رجوع'},
-  'signOut':{en:'Sign out', ar:'تسجيل الخروج'},
-  'forbiddenTitle':{en:'Access denied', ar:'الوصول مرفوض'},
-  'forbiddenText':{en:'Your account does not have admin or teacher access.', ar:'حسابك ما عندك صلاحيه الاداره او التدريس.'},
-  'today':{en:'today', ar:'اليوم'}, 'yesterday':{en:'yesterday', ar:'امس'}, 'daysAgo':{en:'%d days ago', ar:'قبل %d يوم'},
-  'loading':{en:'Loading…', ar:'جارٍ التحميل…'},
-  'saved':{en:'Saved', ar:'تم الحفظ'},
-  'save':{en:'Save', ar:'حفظ'},
-  'cancel':{en:'Cancel', ar:'الغا'},
-  'close':{en:'Close', ar:'اغلاق'},
-  'create':{en:'Create', ar:'أنشأ'},
-  'edit':{en:'Edit', ar:'تعديل'},
-  'errorGeneric':{en:'Something went wrong. Try again.', ar:'حدث غلط. حاول مره ثانيه.'},
-  'noPermission':{en:'You do not have permission for this action.', ar:'ما عندك صلاحيه لذلك الاجرا.'},
-  'verifyCode':{en:'Verify code', ar:'تاكد من الرمز'},
-  'code':{en:'Code', ar:'الرمز'},
-  'issuedAt':{en:'Issued', ar:'طلعت في'},
-  'revokeReason':{en:'Reason for revocation', ar:'سبب الغاء'},
-  'revoke':{en:'Revoke', ar:'الغا'},
-  'reissue':{en:'Reissue', ar:'اعاده اصدار'},
-  'issueCert':{en:'Issue certificate', ar:'اصدار شهاده'},
-  'manualRecipient':{en:'Manual recipient (no account)', ar:'مستلم يدوي (بدون حساب)'},
-  'existingStudent':{en:'Existing student', ar:'طالب مسجل'},
-  'completionDate':{en:'Completion date', ar:'تاريخ الاكتمال'},
-  'issueDate':{en:'Issue date', ar:'تاريخ الاصدار'},
-  'studentName':{en:'Full name', ar:'الاسم الكامل'},
-  'levelField':{en:'Level (A1-C1)', ar:'المستوى (A1-C1)'},
-  'programName':{en:'Program name', ar:'اسم البرنامج'},
-  'issue':{en:'Issue', ar:'اصدار'},
-  'certIssued':{en:'Certificate issued', ar:'تم اصدار الشهاده'},
-  'certPreview':{en:'Preview', ar:'معاينه'},
-  'certRevoked':{en:'Certificate revoked', ar:'تم الغا الشهاده'},
-  'certReissued':{en:'Certificate reissued', ar:'تمت اعاده اصدار الشهاده'},
-  'verifyResult':{en:'Verification result', ar:'نتيجه التحقق'},
-  'valid':{en:'Valid', ar:'صالحه'}, 'invalid':{en:'Invalid / revoked', ar:'غير صالحه / ملغاه'},
-  'print':{en:'Print', ar:'طباعه'},
-  'blocked':{en:'Popup blocked. Allow popups for this site to print.', ar:'انحظر النافذه المنبثقه. اسمح بالنوافذ المنبثقه لذلك الموقع للطباعه.'},
-  'student360':{en:'Student 360', ar:'ملف الطالب'},
-  'profile':{en:'Profile', ar:'الملف'},
-  'learningHealth':{en:'Learning health', ar:'صحه التعلم'},
-  'skills':{en:'Skills', ar:'المهارات'},
-  'personalization':{en:'Personalization', ar:'التخصيص'},
-  'recommendations':{en:'Recommendations', ar:'التوصيات'},
-  'timeline':{en:'Timeline', ar:'الخط الزمني'},
-  'notes':{en:'Notes', ar:'ملاحظات'},
-  'activity':{en:'Live & activity', ar:'النشاط والدروس المباشره'},
-  'interventionList':{en:'Interventions', ar:'التدخلات'},
-  'addNote':{en:'Add note', ar:'اضف ملاحظه'},
-  'noteBody':{en:'Note…', ar:'الملاحظه…'},
-  'assignIntervention':{en:'Assign intervention', ar:'اسناد تدخل'},
-  'overrideRec':{en:'Override recommendation', ar:'تجاوز التوصيه'},
-  'overrideReason':{en:'Reason for override', ar:'سبب التجاوز'},
-  'replacement':{en:'Replacement activity / lesson', ar:'البديل / الدرس البديل'},
-  'whyPEL':{en:'Why PEL recommends this', ar:'ليش يوصي بيل بذا'},
-  'todayRec':{en:'Current recommendation', ar:'التوصيه الحاليه'},
-  'takeSnapshot':{en:'Save monthly snapshot', ar:'حفظ لقطه شهره'},
-  'snapshotSaved':{en:'Snapshot saved', ar:'حفظنا اللقطه'},
-  'preview':{en:'View student experience', ar:'معاينه تجربه الطالب'},
-  'previewNote':{en:'Read-only preview - nothing on the student account changes.', ar:'معاينه للقراءه بس - ما يصير اي تغيير على حساب الطالب.'},
-  'weakAreas':{en:'Weak areas', ar:'المواضع الضعيفه'},
-  'strongAreas':{en:'Strong areas', ar:'المواضع القويه'},
-  'mainDifficulty':{en:'Main difficulty', ar:'الاكثر صعوبه'},
-  'mainStrength':{en:'Strength', ar:'نقطه القوه'},
-  'currentConcern':{en:'Current concern', ar:'القلق الحالي'},
-  'recommendedFocus':{en:'Recommended focus', ar:'التركيز الموصى به'},
-  'whyRoute':{en:'Why PEL built this route', ar:'ليش بنى بيل ذا المسار'},
-  'routeDuration':{en:'Estimated route duration', ar:'المده التقديريه للمسار'},
-  'remainingStage':{en:'%d lessons left in current stage', ar:'باقي %d درس في المرحله الحاليه'},
-  'goal':{en:'Learning goal', ar:'هدف التعلم'},
-  'dailyMin':{en:'Daily minutes', ar:'الدقايق اليوميه'},
-  'weeklyFreq':{en:'Days per week', ar:'ايام في الاسبوع'},
-  'outcome':{en:'Desired outcome', ar:'النتيجه المرغوبه'},
-  'contexts':{en:'Real-life contexts', ar:'المواقف الحقيقيه'},
-  'weaknesses':{en:'Self-reported weaknesses', ar:'نقاط الضعف المذكوره'},
-  'enrolled':{en:'Enrolled', ar:'التسجيل'},
-  'phone':{en:'Phone', ar:'الجوال'},
-  'whatsapp':{en:'WhatsApp', ar:'واتساب'},
-  'enrollmentDate':{en:'Enrollment date', ar:'تاريخ التسجيل'},
-  'intake':{en:'Intake', ar:'الدفعه'},
-  'role':{en:'Role', ar:'الدور'},
-  'programRemaining':{en:'Program time remaining', ar:'المده المتبقيه'},
-  'expiring':{en:'Expiring', ar:'ينتهي قريب'},
-  'attendance':{en:'Attendance', ar:'الحضور'},
-  'attendanceRate':{en:'Attendance rate', ar:'نسبه الحضور'},
-  'sessionDate':{en:'Date', ar:'التاريخ'}, 'time':{en:'Time', ar:'الوقت'},
-  'topic':{en:'Topic', ar:'الموضوع'},
-  'groupName':{en:'Group', ar:'المجموعه'},
-  'capacity':{en:'Capacity', ar:'السعه'},
-  'roster':{en:'Roster', ar:'القايمه'},
-  'waitlist':{en:'Waitlist', ar:'قايمه الانتظار'},
-  'availableSeats':{en:'%d seats left', ar:'باقي %d مقاعد'},
-  'groupFull':{en:'Group is full', ar:'المجموعه ممتليه'},
-  'moveFromWaitlist':{en:'Move into group', ar:'نقل للمجموعه'},
-  'addStudent':{en:'Add student', ar:'اضافه طالب'},
-  'createStudent':{en:'Create student', ar:'أنشأ طالب'},
-  'createStudentDesc':{en:'Create an account the student can sign in with. Set their name, email, and a password (min 8 chars).', ar:'أنشأ حساب يقدر الطالب يدخل فيه. حدد اسمه، ايميله، وكلمه مرور (٨ احرف على الاقل).'},
-  'studentEmail':{en:'Email', ar:'البريد الالكتروني'},
-  'studentPassword':{en:'Password', ar:'كلمه المرور'},
-  'pwMinLen':{en:'At least 8 characters', ar:'٨ احرف على الاقل'},
-  'studentCreated':{en:'Student created. Share the email and password with them.', ar:'أنشأ الطالب. شارك الايميل وكلمه المرور معه.'},
-  'removeStudent':{en:'Remove', ar:'ازاله'},
-  'assignTeacher':{en:'Assign teacher', ar:'اسناد معلم'},
-  'schedule':{en:'Schedule', ar:'الجدول'},
-  'programCatalog':{en:'Programs & subscriptions', ar:'البرامج والاشتراكات'},
-  'newProgram':{en:'New program', ar:'برنامج جديد'},
-  'newSubscription':{en:'New subscription', ar:'اشتراك جديد'},
-  'durationMonths':{en:'Duration (months)', ar:'المده (شهور)'},
-  'includedSessions':{en:'Included live sessions', ar:'الدروس المباشره المشموله'},
-  'startDate':{en:'Start date', ar:'تاريخ البدايه'},
-  'endDate':{en:'End date', ar:'تاريخ النهايه'},
-  'subStatus':{en:'Subscription', ar:'الاشتراك'},
-  'subscriptions':{en:'Subscriptions', ar:'الاشتراكات'},
-  'newClass':{en:'New live class', ar:'درس مباشر جديد'},
-  'markAttendance':{en:'Mark attendance', ar:'تسجيل الحضور'},
-  'markClass':{en:'Mark class status', ar:'تحديث حاله الدرس'},
-  'student':{en:'Student', ar:'الطالب'},
-  'action':{en:'Action', ar:'الاجرا'},
-  'actor':{en:'Actor', ar:'المنفذ'},
-  'target':{en:'Target', ar:'الهدف'},
-  'when':{en:'When', ar:'متى'},
-  'check':{en:'Check', ar:'الفحص'},
-  'healthy':{en:'Healthy', ar:'سليم'},
-  'issues':{en:'Issues', ar:'مشاكل'},
-  'report':{en:'Report', ar:'التقرير'},
-  'exportCSV':{en:'Export CSV', ar:'تصدير CSV'},
-  'selectedReport':{en:'Choose a report', ar:'اختر تقرير'},
-  'generateSnapshot':{en:'Snapshot history', ar:'سجل اللقطات'},
-  'est':{en:'Est. %d min', ar:'تقريب %d دقيقه'},
-  'estDaily':{en:'Est. daily pace', ar:'التقدير اليومي'},
-  'lessonsDoneShort':{en:'lessons done', ar:'درس منجز'},
-  'lessonsDone':{en:'%d lessons done', ar:'%d درس منجز'},
-  'ofRoute':{en:'of route', ar:'من المسار'},
-  'nextLesson':{en:'Next lesson', ar:'الدرس الجاي'},
-  'stage':{en:'Stage', ar:'المرحله'},
-  'totalLessons':{en:'Total lessons', ar:'اجمالي الدروس'},
-  'completedCount':{en:'Completed lessons', ar:'الدروس المنجزه'},
-  'recVsProd':{en:'Recognition vs Production', ar:'الاسترجاع مقابل الانتاج'},
-  'recVsProdHint':{en:'First-try production is the mastery signal - how often the student can USE the language, not just recognize it.', ar:'الانتاج من اول محاوله هو موشر الاتقان - يقدر الطالب يستخدم اللغه، وليس التعرف عليها بس.'},
-  'recognition':{en:'Recognition', ar:'الاسترجاع'},
-  'production':{en:'Production (eventual)', ar:'الانتاج (مع المحاولات)'},
-  'productionFirst':{en:'Production (first try)', ar:'الانتاج (اول محاوله)'},
-  'recentLessons':{en:'Recent lessons', ar:'الدروس الاخيره'},
-  'noStatsYet':{en:'No exercise stats recorded yet. They appear after the first lesson completion.', ar:'ما فيه احصاييات لسه. تظهر بعد اول درس تكمله.'},
-  'lastStudy':{en:'Last study day', ar:'اخر يوم دراسه'},
-  'longestStreak':{en:'Longest streak', ar:'اطول استمرار'},
-  'permissionDenied':{en:'Permission denied.', ar:'صلاحيه مرفوضه.'},
-  'confirmAction':{en:'Confirm action', ar:'تاكيد الاجرا'},
-  'createGroup':{en:'New group', ar:'مجموعه جديده'},
-  'editGroup':{en:'Edit group', ar:'تعديل المجموعه'},
-  'newTeacher':{en:'New teacher', ar:'معلم جديد'},
-  'youAreViewing':{en:'You are viewing', ar:'انت تشاهد'},
-  'studentOf':{en:'Student', ar:'طالب'},
-  'teacherOf':{en:'Teacher', ar:'معلم'},
-  'adminOf':{en:'Administrator', ar:'ادمين'},
-  'superAdminOf':{en:'Super admin', ar:'مشرف عام'},
-  'langLabel':{en:'Interface', ar:'الواجهه'},
-  'required':{en:'Required', ar:'مطلوب'},
-  'noCertificates':{en:'No certificates yet', ar:'ما فيه شهادات لسه'},
-  'noInterventions':{en:'No interventions yet', ar:'ما فيه تدخلات لسه'},
-  'noNotes':{en:'No notes yet', ar:'ما فيه ملاحظات لسه'},
-  'noSubscriptions':{en:'No program subscription yet', ar:'لا فيه اشتراك برنامج لسه'},
-  'noAttendance':{en:'No live class records yet', ar:'ما فيه سجلات دروس مباشره لسه'},
-  'noTimeline':{en:'No activity recorded yet', ar:'لا فيه نشاط مسجل لسه'},
-  'noRecommendations':{en:'No stored recommendations yet', ar:'ما فيه توصيات محفوظه لسه'},
-  'attentionLabel':{en:'Only attention', ar:'الانتباه بس'},
-  'apply':{en:'Apply', ar:'تطبيق'},
-  'reset':{en:'Reset', ar:'مسح'},
-  'loadMore':{en:'Load more', ar:'المزيد'},
-  'prev':{en:'Prev', ar:'اللي فات'},
-  'next':{en:'Next', ar:'الجاي'},
-  'pageOf':{en:'Page %p of %t', ar:'صفحه %p من %t'},
-  'totalRow':{en:'%n results', ar:'%n نتيجه'},
-  'assign':{en:'Assign', ar:'اسناد'},
-  'acceptRec':{en:'Accept & assign', ar:'قبول واسناد'},
-  'dismissRec':{en:'Dismiss', ar:'تجاهل'},
-  'replacementLesson':{en:'Replacement lesson', ar:'الدرس البديل'},
-  'strengthWord':{en:'Strength', ar:'قوه'},
-  'weekday_0':{en:'Sun',ar:'الاحد'},'weekday_1':{en:'Mon',ar:'الاثنين'},'weekday_2':{en:'Tue',ar:'الثلاثا'},'weekday_3':{en:'Wed',ar:'الاربعا'},'weekday_4':{en:'Thu',ar:'الخميس'},'weekday_5':{en:'Fri',ar:'الجمعه'},'weekday_6':{en:'Sat',ar:'السبت'},
-  'course':{en:'Course', ar:'المسار'},
-  'memberCount':{en:'Members', ar:'الاعضا'},
-  'members':{en:'Members', ar:'الاعضا'},
-  'paused':{en:'Paused', ar:'متوقف موقتا'},
-  'archived':{en:'Archived', ar:'مورشف'},
-  'startTime':{en:'Start', ar:'البدايه'},
-  'duration':{en:'Duration', ar:'المده'},
-  'sessionsRemaining':{en:'Remaining', ar:'المتبقيه'},
-  'changeRole':{en:'Change role', ar:'تغيير الدور'},
-  'confirmChange':{en:'Are you sure? This is recorded in the audit log.', ar:'متاكد؟ بنسجل ذا الاجرا بسجل التدقيق.'},
-  'refresh':{en:'Refresh', ar:'تحديث'},
-  'checks':{en:'Checks', ar:'الفحوصات'},
-  'type':{en:'Type', ar:'النوع'},
-  'createdAt':{en:'Created', ar:'انشي في'},
-  'date':{en:'Date', ar:'التاريخ'},
-  'openStatus':{en:'Open', ar:'مفتوح'},
-  'inProgress':{en:'In progress', ar:'جاري التنفيذ'},
-  'pendingReview':{en:'Pending review', ar:'بانتظار المراجعه'},
-  'roleStudent':{en:'Student', ar:'طالب'},
-  'roleTeacher':{en:'Teacher', ar:'معلم'},
-  'roleAdmin':{en:'Administrator', ar:'ادمين'},
-  'roleSuperAdmin':{en:'Super admin', ar:'مشرف عام'},
-  'report_students':{en:'Students roster', ar:'قايمه الطلاب'},
-  'report_certificates':{en:'Certificates', ar:'الشهادات'},
-  'report_attendance':{en:'Attendance', ar:'الحضور'},
-  'report_programs':{en:'Program subscriptions', ar:'اشتراكات البرامج'},
-  'report_classes':{en:'Live classes', ar:'الدروس المباشره'},
-  'report_atrisk':{en:'At-risk students', ar:'الطلاب المعرضون للخطر'},
-  'atRisk':{en:'At risk', ar:'معرض للخطر'},
-  'openGroup':{en:'Open group', ar:'فتح المجموعه'},
-  'studentCol':{en:'Student', ar:'الطالب'},
-  'activePrograms':{en:'Active programs', ar:'البرامج النشطه'},
-  'totalSubscriptions':{en:'Subscriptions', ar:'الاشتراكات'},
-  'weeks':{en:'%d w', ar:'%d اسابيع'},
-  'lessonCount':{en:'%d lessons', ar:'%d درس'},
-  'minutes':{en:'%d min', ar:'%d دقيقه'},
-  'levels':{en:'Level %s', ar:'المستوى %s'},
-  'diffBeginner':{en:'Beginner', ar:'مبتدي'},
-  'diffIntermediate':{en:'Intermediate', ar:'متوسط'},
-  'diffAdvanced':{en:'Advanced', ar:'متقدم'},
-  'diffAll':{en:'All levels', ar:'كل المستويات'},
-'academyCount':{en:'%d academies', ar:'%d اكاديميات'},
-  'lesson':{en:'Lesson', ar:'درس'},
-  'noCourses':{en:'No course data available.', ar:'ما فيه بيانات مسارات.'},
-  'lessonsManagerSub':{en:'Add, edit, reorder and hide lessons - changes reach every student instantly.', ar:'اضف وعدل ورتب واخفي الدروس - التغييرات توصل لكل طالب فوراً.'},
-  'newAcademy':{en:'New academy', ar:'اكاديميه جديده'},
-  'newLesson':{en:'New lesson', ar:'درس جديد'},
-  'editAcademy':{en:'Edit academy', ar:'تعديل الاكاديميه'},
-  'editLesson':{en:'Edit lesson', ar:'تعديل الدرس'},
-  'titleEn':{en:'Title (English)', ar:'العنوان (انجليزي)'},
-  'titleAr':{en:'Title (Arabic)', ar:'العنوان (عربي)'},
-  'minutesLabel':{en:'Minutes', ar:'الدقايق'},
-  'difficulty':{en:'Difficulty', ar:'الصعوبه'},
-  'iconLabel':{en:'Icon', ar:'الايقونه'},
-  'colorFrom':{en:'Gradient from', ar:'التدرج من'},
-  'colorTo':{en:'Gradient to', ar:'التدرج لـ'},
-  'hidden':{en:'Hidden', ar:'مخفي'},
-  'show':{en:'Show', ar:'اظهار'},
-  'hide':{en:'Hide', ar:'اخفا'},
-  'unlink':{en:'Remove', ar:'ازاله'},
-  'moveUp':{en:'Move up', ar:'لاعلى'},
-  'moveDown':{en:'Move down', ar:'لاسفل'},
-  'academy':{en:'Academy', ar:'الاكاديميه'},
-  'confirmUnlink':{en:'Remove this lesson from this academy? Students lose access to it there.', ar:'ازاله ذا الدرس من الاكاديميه؟ الطلاب يفقدون الوصول له هنا.'},
-  'lessonSaved':{en:'Lesson saved.', ar:'حفظنا الدرس.'},
-  'curriculumUpdated':{en:'Curriculum updated.', ar:'حدثنا المنهج.'},
-  'select':{en:'Select', ar:'اختيار'},
-  'open':{en:'Open', ar:'مفتوح'},
-  'in_progress':{en:'In progress', ar:'جاري التنفيذ'},
-  'resolved':{en:'Resolved', ar:'محلول'},
-'m':{en:'',ar:''},
-  'plans':{en:'Plans', ar:'الباقات'},
-  'announcements':{en:'Announcements', ar:'الاعلانات'},
-  'plan':{en:'Plan & Access', ar:'الباقه والوصول'},
-  'activePlans':{en:'Active plans', ar:'باقات نشطه'},
-  'expiringSoon':{en:'Expiring soon (7d)', ar:'تنتهي قريبًا (٧ ايام)'},
-  'expiredPlans':{en:'Expired plans', ar:'باقات منتهيه'},
-  'scheduledPlans':{en:'Scheduled plans', ar:'باقات محدده'},
-  'suspendedPlans':{en:'Suspended plans', ar:'باقات موقوفه'},
-  'expired':{en:'Expired', ar:'منتهيه'},
-  'daysLeft':{en:'%d days left', ar:'متبقي %d يوم'},
-  'noPlan':{en:'No plan', ar:'بدون باقه'},
-  'assignPlan':{en:'Assign plan', ar:'اسناد باقه'},
-  'newPlan':{en:'New plan', ar:'باقه جديده'},
-  'planCatalog':{en:'Plan catalog', ar:'كتالوج الباقات'},
-  'perPlan':{en:'per plan', ar:'لكل باقه'},
-  'savePlan':{en:'Save plan', ar:'حفظ الباقه'},
-  'planHistory':{en:'Plan history', ar:'سجل الباقات'},
-  'liveClasses':{en:'Live classes', ar:'الدروس المباشره'},
-  'upcoming':{en:'Upcoming', ar:'الجايه'},
-  'recent':{en:'Recent', ar:'الاخيره'},
-  'durationDays':{en:'Duration (days)', ar:'المده (ايام)'},
-  'price':{en:'Price', ar:'السعر'},
-  'currency':{en:'Currency', ar:'العمله'},
-  'weeklyLive':{en:'Weekly live sessions', ar:'حصص مباشره اسبوعياً'},
-  'platformAccess':{en:'Platform access', ar:'وصول المنصه'},
-  'extend':{en:'Extend', ar:'تمديد'},
-  'extendDays':{en:'Extend +%d days', ar:'تمديد +%d يوم'},
-  'suspend':{en:'Suspend', ar:'ايقاف'},
-  'reactivate':{en:'Reactivate', ar:'اعاده تفعيل'},
-  'reason':{en:'Reason', ar:'السبب'},
-  'announcementDelivery':{en:'Delivery', ar:'الوصول'},
-  'newAnnouncement':{en:'New announcement', ar:'اعلان جديد'},
-  'title':{en:'Title', ar:'العنوان'},
-  'message':{en:'Message', ar:'الرساله'},
-  'audience':{en:'Audience', ar:'الجمهور'},
-  'everyone':{en:'All students', ar:'كل الطلاب'},
-  'specificStudents':{en:'Specific students', ar:'طلاب محددون'},
-  'selectStudents':{en:'Select students', ar:'اختر الطلاب'},
-  'priority':{en:'Priority', ar:'الاولويه'},
-  'important':{en:'Important', ar:'مهم'},
-  'normal':{en:'Normal', ar:'عادي'},
-  'send':{en:'Send', ar:'ارسال'},
-  'deliveryStats':{en:'Delivery stats', ar:'احصاييات الوصول'},
-  'deliveredTo':{en:'Delivered to %d students', ar:'وصل لـ %d طالب'},
-  'readCount':{en:'Read', ar:'مقروء'},
-  'unreadCount':{en:'Unread', ar:'غير مقروء'},
-  'noAnnouncements':{en:'No announcements yet.', ar:'ما فيه اعلانات لسه.'},
-  'link':{en:'Link', ar:'رابط'},
-  'scheduleFor':{en:'Schedule for (optional)', ar:'جدوله (اختياري)'},
-  'expiresAt':{en:'Expires at (optional)', ar:'انتهاء الصلاحيه (اختياري)'},
-  'choosePlan':{en:'Choose plan', ar:'اختر الباقه'},
-  'sessionsUsed':{en:'Sessions used', ar:'الحصص المستخدمه'},
-  'sessionsIncluded':{en:'included', ar:'مشموله'},
-  'searchStudents':{en:'Search students…', ar:'ابحث عن طلاب…'},
-  'planChanges':{en:'Plan changes', ar:'تغييرات الباقه'},
-  'reactivated':{en:'Reactivated', ar:'اعيد تفعيلها'},
-  'assigned':{en:'Assigned', ar:'اسندت'},
-  'extended':{en:'Extended', ar:'مددت'},
-  'scheduledLbl':{en:'Scheduled', ar:'محدده'},
-  'planNote':{en:'Access expires automatically on the end date (server-enforced). Renewing never resets progress.', ar:'ينتهي الوصول تلقائياً بتاريخ النهايه (تطبيق من الخادم). التجديد لا يمسّ تقدمك.'},
-  'notificationSent':{en:'Announcement sent.', ar:'ارسلنا الاعلان.'},
-  'planSaved':{en:'Plan saved.', ar:'حفظنا الباقه.'},
-  'planAssigned':{en:'Plan assigned.', ar:'تم اسناد الباقه.'},
-  'planExtended':{en:'Plan extended.', ar:'تم تمديد الباقه.'},
-  'planStatusChanged':{en:'Plan status updated.', ar:'حدثنا حاله الباقه.'},
-  'entLabel':{en:'Entitlement', ar:'الباقه'},
-  'entAny':{en:'All entitlements', ar:'كل الحالات'},
-  'entExpiring7':{en:'Expiring ≤7 days', ar:'ينتهي خلال ٧ ايام'},
-  'entExpiring30':{en:'Expiring ≤30 days', ar:'ينتهي خلال ٣٠ يوم'},
-  'entExpired':{en:'Expired', ar:'منتهيه'},
-  'entNoPlan':{en:'No plan', ar:'بدون باقه'},
-  'entSuspended':{en:'Suspended', ar:'موقوفه'},
-  'seeAll':{en:'See all', ar:'عرض الكل'},
+  'overview':{en:'Overview', ar: 'نظره عامه'},
+  'people':{en:'People', ar: 'الاشخاص'},
+  'learning':{en:'Learning', ar: 'التعلم'},
+  'operations':{en:'Operations', ar: 'التشغيل'},
+  'trust':{en:'Trust', ar: 'الموثوقيه'},
+  'students':{en:'Students', ar: 'الطلاب'},
+  'teachers':{en:'Teachers', ar: 'الاستاذين'},
+  'groups':{en:'Groups', ar: 'المجموعات'},
+  'courses':{en:'Courses', ar: 'المسارات'},
+  'interventions':{en:'Interventions', ar: 'التدخلات'},
+  'classes':{en:'Live Classes', ar: 'الدروس المباشره'},
+  'programs':{en:'Programs', ar: 'البرامج'},
+  'certificates':{en:'Certificates', ar: 'الشهادات'},
+  'audit':{en:'Audit Log', ar: 'سجل التدقيق'},
+  'roles':{en:'Access & Roles', ar: 'الادوار والصلاحيات'},
+  'health':{en:'System Health', ar: 'صحه النظام'},
+  'reports':{en:'Reports', ar: 'التقارير'},
+  'searchPlaceholder':{en:'Search name, email, phone, ID…', ar: 'ابحث بالاسم او الايميل او الجوال…'},
+  'status':{en:'Status', ar: 'الحاله'},
+  'level':{en:'Level', ar: 'المستوى'},
+  'program':{en:'Program', ar: 'البرنامج'},
+  'teacher':{en:'Teacher', ar: 'الاستاذ'},
+  'group':{en:'Group', ar: 'المجموعه'},
+  'certStatus':{en:'Certificate', ar: 'الشهاده'},
+  'all':{en:'All', ar: 'الكل'},
+  'sort':{en:'Sort', ar: 'الترتيب'},
+  'name':{en:'Name', ar: 'الاسم'},
+  'email':{en:'Email', ar: 'البريد'},
+  'xp':{en:'XP', ar: 'نقاط'},
+  'streak':{en:'Streak', ar: 'الاستمرار'},
+  'progress':{en:'Progress', ar: 'التقدم'},
+  'lastActive':{en:'Last active', ar: 'اخر نشاط'},
+  'certs':{en:'Certs', ar: 'شهادات'},
+  'attention':{en:'Attention', ar: 'يحتاج انتباه'},
+  'openStudent':{en:'Open student', ar: 'فتح الطالب'},
+  'noResults':{en:'No students match these filters.', ar: 'لا فيه طلاب مطابقين.'},
+  'new':{en:'New', ar: 'جديد'}, 'active':{en:'Active', ar: 'نشط'}, 'stalled':{en:'Stalled', ar: 'متوقف'}, 'inactive':{en:'Inactive', ar: 'غير نشط'}, 'suspended':{en:'Suspended', ar: 'موقوف'},
+  'issued':{en:'Issued', ar: 'مصدره'}, 'revoked':{en:'Revoked', ar: 'ملغاه'}, 'reissued':{en:'Reissued', ar: 'اعيد اصدارها'}, 'draft':{en:'Draft', ar: 'مسوده'},
+  'present':{en:'Present', ar: 'حاضر'}, 'absent':{en:'Absent', ar: 'غايب'}, 'late':{en:'Late', ar: 'متاخر'}, 'excused':{en:'Excused', ar: 'بعذر'},
+  'scheduled':{en:'Scheduled', ar: 'محدد'}, 'completed':{en:'Completed', ar: 'مكتمل'}, 'cancelled':{en:'Cancelled', ar: 'ملغي'}, 'rescheduled':{en:'Rescheduled', ar: 'اعيدت جدولته'},
+  'needsAttention':{en:'Needs attention', ar: 'يحتاج انتباه'},
+  'inactiveReason':{en:'No activity for %d days', ar: 'ما فيه نشاط من %d يوم'},
+  'missedLiveReason':{en:'%d missed live sessions (30d)', ar: '%d دروس مباشره مفقوده (٣٠ يوم)'},
+  'expiringReason':{en:'Program ends in %d days', ar: 'ينتهي البرنامج خلال %d يوم'},
+  'whatShouldIDo':{en:'What should I do?', ar: 'وش افعل الحين؟'},
+  'studentsTotal':{en:'Total students', ar: 'اجمالي الطلاب'},
+  'activeStudents':{en:'Active (7d)', ar: 'نشط (٧ ايام)'},
+  'onlineNow':{en:'Online now', ar: 'متصل الحين'},
+  'newStudents':{en:'New (30d)', ar: 'جدد (٣٠ يوم)'},
+  'stalledStudents':{en:'Stalled', ar: 'متوقفون'},
+  'avgProgress':{en:'Avg lessons', ar: 'متوسط الدروس'},
+  'certsIssued':{en:'Certificates', ar: 'الشهادات'},
+  'teachersCount':{en:'Teachers', ar: 'الاستاذين'},
+  'groupsCount':{en:'Active groups', ar: 'المجموعات النشطه'},
+  'upcomingClasses':{en:'Upcoming classes', ar: 'الدروس الجايه'},
+  'expiringPrograms':{en:'Programs expiring (14d)', ar: 'برامج تنتهي (١٤ يوم)'},
+  'recentCompletions':{en:'Recent completions', ar: 'اخر الانجازات'},
+  'recentCerts':{en:'Recent certificates', ar: 'اخر الشهادات'},
+  'courseDistribution':{en:'Current course distribution', ar: 'توزيع المسارات الحاليه'},
+  'recentAudit':{en:'Recent admin actions', ar: 'اخر اجراوات الاداره'},
+  'noData':{en:'No data yet', ar: 'ما فيه بيانات لسه'},
+  'back':{en:'Back', ar: 'رجوع'},
+  'signOut':{en:'Sign out', ar: 'تسجيل الخروج'},
+  'forbiddenTitle':{en:'Access denied', ar: 'الوصول مرفوض'},
+  'forbiddenText':{en:'Your account does not have admin or teacher access.', ar: 'حسابك ما عندك صلاحيه الاداره او التدريس.'},
+  'today':{en:'today', ar: 'اليوم'}, 'yesterday':{en:'yesterday', ar: 'امس'}, 'daysAgo':{en:'%d days ago', ar: 'قبل %d يوم'},
+  'loading':{en:'Loading…', ar: 'جارٍ التحميل…'},
+  'saved':{en:'Saved', ar: 'تم الحفظ'},
+  'save':{en:'Save', ar: 'حفظ'},
+  'cancel':{en:'Cancel', ar: 'الغا'},
+  'close':{en:'Close', ar: 'اغلاق'},
+  'create':{en:'Create', ar: 'انشا'},
+  'edit':{en:'Edit', ar: 'تعديل'},
+  'errorGeneric':{en:'Something went wrong. Try again.', ar: 'حدث غلط. حاول مره ثانيه.'},
+  'noPermission':{en:'You do not have permission for this action.', ar: 'ما عندك صلاحيه لذلك الاجرا.'},
+  'verifyCode':{en:'Verify code', ar: 'تاكد من الرمز'},
+  'code':{en:'Code', ar: 'الرمز'},
+  'issuedAt':{en:'Issued', ar: 'طلعت في'},
+  'revokeReason':{en:'Reason for revocation', ar: 'سبب الغا'},
+  'revoke':{en:'Revoke', ar: 'الغا'},
+  'reissue':{en:'Reissue', ar: 'اعاده اصدار'},
+  'issueCert':{en:'Issue certificate', ar: 'اصدار شهاده'},
+  'manualRecipient':{en:'Manual recipient (no account)', ar: 'مستلم يدوي (بدون حساب)'},
+  'existingStudent':{en:'Existing student', ar: 'طالب مسجل'},
+  'completionDate':{en:'Completion date', ar: 'تاريخ الاكتمال'},
+  'issueDate':{en:'Issue date', ar: 'تاريخ الاصدار'},
+  'studentName':{en:'Full name', ar: 'الاسم الكامل'},
+  'levelField':{en:'Level (A1-C1)', ar: 'المستوى (A1-C1)'},
+  'programName':{en:'Program name', ar: 'اسم البرنامج'},
+  'issue':{en:'Issue', ar: 'اصدار'},
+  'certIssued':{en:'Certificate issued', ar: 'تم اصدار الشهاده'},
+  'certPreview':{en:'Preview', ar: 'معاينه'},
+  'certRevoked':{en:'Certificate revoked', ar: 'تم الغا الشهاده'},
+  'certReissued':{en:'Certificate reissued', ar: 'تمت اعاده اصدار الشهاده'},
+  'verifyResult':{en:'Verification result', ar: 'نتيجه التحقق'},
+  'valid':{en:'Valid', ar: 'صالحه'}, 'invalid':{en:'Invalid / revoked', ar: 'غير صالحه / ملغاه'},
+  'print':{en:'Print', ar: 'طباعه'},
+  'blocked':{en:'Popup blocked. Allow popups for this site to print.', ar: 'انحظر النافذه المنبثقه. اسمح بالنوافذ المنبثقه لذلك الموقع للطباعه.'},
+  'student360':{en:'Student 360', ar: 'ملف الطالب'},
+  'profile':{en:'Profile', ar: 'الملف'},
+  'learningHealth':{en:'Learning health', ar: 'صحه التعلم'},
+  'skills':{en:'Skills', ar: 'المهارات'},
+  'personalization':{en:'Personalization', ar: 'التخصيص'},
+  'recommendations':{en:'Recommendations', ar: 'التوصيات'},
+  'timeline':{en:'Timeline', ar: 'الخط الزمني'},
+  'notes':{en:'Notes', ar: 'ملاحظات'},
+  'activity':{en:'Live & activity', ar: 'النشاط والدروس المباشره'},
+  'interventionList':{en:'Interventions', ar: 'التدخلات'},
+  'addNote':{en:'Add note', ar: 'اضف ملاحظه'},
+  'noteBody':{en:'Note…', ar: 'الملاحظه…'},
+  'assignIntervention':{en:'Assign intervention', ar: 'اسناد تدخل'},
+  'overrideRec':{en:'Override recommendation', ar: 'تجاوز التوصيه'},
+  'overrideReason':{en:'Reason for override', ar: 'سبب التجاوز'},
+  'replacement':{en:'Replacement activity / lesson', ar: 'البديل / الدرس البديل'},
+  'whyPEL':{en:'Why PEL recommends this', ar: 'ليش يوصي بيل بذا'},
+  'todayRec':{en:'Current recommendation', ar: 'التوصيه الحاليه'},
+  'takeSnapshot':{en:'Save monthly snapshot', ar: 'حفظ لقطه شهره'},
+  'snapshotSaved':{en:'Snapshot saved', ar: 'حفظنا اللقطه'},
+  'preview':{en:'View student experience', ar: 'معاينه تجربه الطالب'},
+  'previewNote':{en:'Read-only preview - nothing on the student account changes.', ar: 'معاينه للقراه بس - ما يصير اي تغيير على حساب الطالب.'},
+  'weakAreas':{en:'Weak areas', ar: 'المواضع الضعيفه'},
+  'strongAreas':{en:'Strong areas', ar: 'المواضع القويه'},
+  'mainDifficulty':{en:'Main difficulty', ar: 'الاكثر صعوبه'},
+  'mainStrength':{en:'Strength', ar: 'نقطه القوه'},
+  'currentConcern':{en:'Current concern', ar: 'القلق الحالي'},
+  'recommendedFocus':{en:'Recommended focus', ar: 'التركيز الموصى به'},
+  'whyRoute':{en:'Why PEL built this route', ar: 'ليش بنى بيل ذا المسار'},
+  'routeDuration':{en:'Estimated route duration', ar: 'المده التقديريه للمسار'},
+  'remainingStage':{en:'%d lessons left in current stage', ar: 'باقي %d درس في المرحله الحاليه'},
+  'goal':{en:'Learning goal', ar: 'هدف التعلم'},
+  'dailyMin':{en:'Daily minutes', ar: 'الدقايق اليوميه'},
+  'weeklyFreq':{en:'Days per week', ar: 'ايام في الاسبوع'},
+  'outcome':{en:'Desired outcome', ar: 'النتيجه المرغوبه'},
+  'contexts':{en:'Real-life contexts', ar: 'المواقف الحقيقيه'},
+  'weaknesses':{en:'Self-reported weaknesses', ar: 'نقاط الضعف المذكوره'},
+  'enrolled':{en:'Enrolled', ar: 'التسجيل'},
+  'phone':{en:'Phone', ar: 'الجوال'},
+  'whatsapp':{en:'WhatsApp', ar: 'واتساب'},
+  'enrollmentDate':{en:'Enrollment date', ar: 'تاريخ التسجيل'},
+  'intake':{en:'Intake', ar: 'الدفعه'},
+  'role':{en:'Role', ar: 'الدور'},
+  'programRemaining':{en:'Program time remaining', ar: 'المده المتبقيه'},
+  'expiring':{en:'Expiring', ar: 'ينتهي قريب'},
+  'attendance':{en:'Attendance', ar: 'الحضور'},
+  'attendanceRate':{en:'Attendance rate', ar: 'نسبه الحضور'},
+  'sessionDate':{en:'Date', ar: 'التاريخ'}, 'time':{en:'Time', ar: 'الوقت'},
+  'topic':{en:'Topic', ar: 'الموضوع'},
+  'groupName':{en:'Group', ar: 'المجموعه'},
+  'capacity':{en:'Capacity', ar: 'السعه'},
+  'roster':{en:'Roster', ar: 'القايمه'},
+  'waitlist':{en:'Waitlist', ar: 'قايمه الانتظار'},
+  'availableSeats':{en:'%d seats left', ar: 'باقي %d مقاعد'},
+  'groupFull':{en:'Group is full', ar: 'المجموعه ممتليه'},
+  'moveFromWaitlist':{en:'Move into group', ar: 'نقل للمجموعه'},
+  'addStudent':{en:'Add student', ar: 'اضافه طالب'},
+  'createStudent':{en:'Create student', ar: 'انشا طالب'},
+  'createStudentDesc':{en:'Create an account the student can sign in with. Set their name, email, and a password (min 8 chars).', ar: 'انشا حساب يقدر الطالب يدخل فيه. حدد اسمه، ايميله، وكلمه مرور (٨ احرف على الاقل).'},
+  'studentEmail':{en:'Email', ar: 'البريد الالكتروني'},
+  'studentPassword':{en:'Password', ar: 'كلمه المرور'},
+  'pwMinLen':{en:'At least 8 characters', ar: '٨ احرف على الاقل'},
+  'studentCreated':{en:'Student created. Share the email and password with them.', ar: 'انشا الطالب. شارك الايميل وكلمه المرور معه.'},
+  'removeStudent':{en:'Remove', ar: 'ازاله'},
+  'assignTeacher':{en:'Assign teacher', ar: 'اسناد معلم'},
+  'schedule':{en:'Schedule', ar: 'الجدول'},
+  'programCatalog':{en:'Programs & subscriptions', ar: 'البرامج والاشتراكات'},
+  'newProgram':{en:'New program', ar: 'برنامج جديد'},
+  'newSubscription':{en:'New subscription', ar: 'اشتراك جديد'},
+  'durationMonths':{en:'Duration (months)', ar: 'المده (شهور)'},
+  'includedSessions':{en:'Included live sessions', ar: 'الدروس المباشره المشموله'},
+  'startDate':{en:'Start date', ar: 'تاريخ البدايه'},
+  'endDate':{en:'End date', ar: 'تاريخ النهايه'},
+  'subStatus':{en:'Subscription', ar: 'الاشتراك'},
+  'subscriptions':{en:'Subscriptions', ar: 'الاشتراكات'},
+  'newClass':{en:'New live class', ar: 'درس مباشر جديد'},
+  'markAttendance':{en:'Mark attendance', ar: 'تسجيل الحضور'},
+  'markClass':{en:'Mark class status', ar: 'تحديث حاله الدرس'},
+  'student':{en:'Student', ar: 'الطالب'},
+  'action':{en:'Action', ar: 'الاجرا'},
+  'actor':{en:'Actor', ar: 'المنفذ'},
+  'target':{en:'Target', ar: 'الهدف'},
+  'when':{en:'When', ar: 'متى'},
+  'check':{en:'Check', ar: 'الفحص'},
+  'healthy':{en:'Healthy', ar: 'سليم'},
+  'issues':{en:'Issues', ar: 'مشاكل'},
+  'report':{en:'Report', ar: 'التقرير'},
+  'exportCSV':{en:'Export CSV', ar: 'تصدير CSV'},
+  'selectedReport':{en:'Choose a report', ar: 'اختر تقرير'},
+  'generateSnapshot':{en:'Snapshot history', ar: 'سجل اللقطات'},
+  'est':{en:'Est. %d min', ar: 'تقريب %d دقيقه'},
+  'estDaily':{en:'Est. daily pace', ar: 'التقدير اليومي'},
+  'lessonsDoneShort':{en:'lessons done', ar: 'درس منجز'},
+  'lessonsDone':{en:'%d lessons done', ar: '%d درس منجز'},
+  'ofRoute':{en:'of route', ar: 'من المسار'},
+  'nextLesson':{en:'Next lesson', ar: 'الدرس الجاي'},
+  'stage':{en:'Stage', ar: 'المرحله'},
+  'totalLessons':{en:'Total lessons', ar: 'اجمالي الدروس'},
+  'completedCount':{en:'Completed lessons', ar: 'الدروس المنجزه'},
+  'recVsProd':{en:'Recognition vs Production', ar: 'الاسترجاع مقابل الانتاج'},
+  'recVsProdHint':{en:'First-try production is the mastery signal - how often the student can USE the language, not just recognize it.', ar: 'الانتاج من اول محاوله هو موشر الاتقان - يقدر الطالب يستخدم اللغه، وليس التعرف عليها بس.'},
+  'recognition':{en:'Recognition', ar: 'الاسترجاع'},
+  'production':{en:'Production (eventual)', ar: 'الانتاج (مع المحاولات)'},
+  'productionFirst':{en:'Production (first try)', ar: 'الانتاج (اول محاوله)'},
+  'recentLessons':{en:'Recent lessons', ar: 'الدروس الاخيره'},
+  'noStatsYet':{en:'No exercise stats recorded yet. They appear after the first lesson completion.', ar: 'ما فيه احصاييات لسه. تظهر بعد اول درس تكمله.'},
+  'lastStudy':{en:'Last study day', ar: 'اخر يوم دراسه'},
+  'longestStreak':{en:'Longest streak', ar: 'اطول استمرار'},
+  'permissionDenied':{en:'Permission denied.', ar: 'صلاحيه مرفوضه.'},
+  'confirmAction':{en:'Confirm action', ar: 'تاكيد الاجرا'},
+  'createGroup':{en:'New group', ar: 'مجموعه جديده'},
+  'editGroup':{en:'Edit group', ar: 'تعديل المجموعه'},
+  'newTeacher':{en:'New teacher', ar: 'معلم جديد'},
+  'youAreViewing':{en:'You are viewing', ar: 'انت تشاهد'},
+  'studentOf':{en:'Student', ar: 'طالب'},
+  'teacherOf':{en:'Teacher', ar: 'معلم'},
+  'adminOf':{en:'Administrator', ar: 'ادمين'},
+  'superAdminOf':{en:'Super admin', ar: 'مشرف عام'},
+  'langLabel':{en:'Interface', ar: 'الواجهه'},
+  'required':{en:'Required', ar: 'مطلوب'},
+  'noCertificates':{en:'No certificates yet', ar: 'ما فيه شهادات لسه'},
+  'noInterventions':{en:'No interventions yet', ar: 'ما فيه تدخلات لسه'},
+  'noNotes':{en:'No notes yet', ar: 'ما فيه ملاحظات لسه'},
+  'noSubscriptions':{en:'No program subscription yet', ar: 'لا فيه اشتراك برنامج لسه'},
+  'noAttendance':{en:'No live class records yet', ar: 'ما فيه سجلات دروس مباشره لسه'},
+  'noTimeline':{en:'No activity recorded yet', ar: 'لا فيه نشاط مسجل لسه'},
+  'noRecommendations':{en:'No stored recommendations yet', ar: 'ما فيه توصيات محفوظه لسه'},
+  'attentionLabel':{en:'Only attention', ar: 'الانتباه بس'},
+  'apply':{en:'Apply', ar: 'تطبيق'},
+  'reset':{en:'Reset', ar: 'مسح'},
+  'loadMore':{en:'Load more', ar: 'المزيد'},
+  'prev':{en:'Prev', ar: 'اللي فات'},
+  'next':{en:'Next', ar: 'الجاي'},
+  'pageOf':{en:'Page %p of %t', ar: 'صفحه %p من %t'},
+  'totalRow':{en:'%n results', ar: '%n نتيجه'},
+  'assign':{en:'Assign', ar: 'اسناد'},
+  'acceptRec':{en:'Accept & assign', ar: 'قبول واسناد'},
+  'dismissRec':{en:'Dismiss', ar: 'تجاهل'},
+  'replacementLesson':{en:'Replacement lesson', ar: 'الدرس البديل'},
+  'strengthWord':{en:'Strength', ar: 'قوه'},
+  'weekday_0':{en:'Sun',ar: 'الاحد'},'weekday_1':{en:'Mon',ar: 'الاثنين'},'weekday_2':{en:'Tue',ar: 'الثلاثا'},'weekday_3':{en:'Wed',ar: 'الاربعا'},'weekday_4':{en:'Thu',ar: 'الخميس'},'weekday_5':{en:'Fri',ar: 'الجمعه'},'weekday_6':{en:'Sat',ar: 'السبت'},
+  'course':{en:'Course', ar: 'المسار'},
+  'memberCount':{en:'Members', ar: 'الاعضا'},
+  'members':{en:'Members', ar: 'الاعضا'},
+  'paused':{en:'Paused', ar: 'متوقف موقتا'},
+  'archived':{en:'Archived', ar: 'مورشف'},
+  'startTime':{en:'Start', ar: 'البدايه'},
+  'duration':{en:'Duration', ar: 'المده'},
+  'sessionsRemaining':{en:'Remaining', ar: 'المتبقيه'},
+  'changeRole':{en:'Change role', ar: 'تغيير الدور'},
+  'confirmChange':{en:'Are you sure? This is recorded in the audit log.', ar: 'متاكد؟ بنسجل ذا الاجرا بسجل التدقيق.'},
+  'refresh':{en:'Refresh', ar: 'تحديث'},
+  'checks':{en:'Checks', ar: 'الفحوصات'},
+  'type':{en:'Type', ar: 'النوع'},
+  'createdAt':{en:'Created', ar: 'انشي في'},
+  'date':{en:'Date', ar: 'التاريخ'},
+  'openStatus':{en:'Open', ar: 'مفتوح'},
+  'inProgress':{en:'In progress', ar: 'جاري التنفيذ'},
+  'pendingReview':{en:'Pending review', ar: 'بانتظار المراجعه'},
+  'roleStudent':{en:'Student', ar: 'طالب'},
+  'roleTeacher':{en:'Teacher', ar: 'معلم'},
+  'roleAdmin':{en:'Administrator', ar: 'ادمين'},
+  'roleSuperAdmin':{en:'Super admin', ar: 'مشرف عام'},
+  'report_students':{en:'Students roster', ar: 'قايمه الطلاب'},
+  'report_certificates':{en:'Certificates', ar: 'الشهادات'},
+  'report_attendance':{en:'Attendance', ar: 'الحضور'},
+  'report_programs':{en:'Program subscriptions', ar: 'اشتراكات البرامج'},
+  'report_classes':{en:'Live classes', ar: 'الدروس المباشره'},
+  'report_atrisk':{en:'At-risk students', ar: 'الطلاب المعرضون للخطر'},
+  'atRisk':{en:'At risk', ar: 'معرض للخطر'},
+  'openGroup':{en:'Open group', ar: 'فتح المجموعه'},
+  'studentCol':{en:'Student', ar: 'الطالب'},
+  'activePrograms':{en:'Active programs', ar: 'البرامج النشطه'},
+  'totalSubscriptions':{en:'Subscriptions', ar: 'الاشتراكات'},
+  'weeks':{en:'%d w', ar: '%d اسابيع'},
+  'lessonCount':{en:'%d lessons', ar: '%d درس'},
+  'minutes':{en:'%d min', ar: '%d دقيقه'},
+  'levels':{en:'Level %s', ar: 'المستوى %s'},
+  'diffBeginner':{en:'Beginner', ar: 'مبتدي'},
+  'diffIntermediate':{en:'Intermediate', ar: 'متوسط'},
+  'diffAdvanced':{en:'Advanced', ar: 'متقدم'},
+  'diffAll':{en:'All levels', ar: 'كل المستويات'},
+'academyCount':{en:'%d academies', ar: '%d اكاديميات'},
+  'lesson':{en:'Lesson', ar: 'درس'},
+  'noCourses':{en:'No course data available.', ar: 'ما فيه بيانات مسارات.'},
+  'lessonsManagerSub':{en:'Add, edit, reorder and hide lessons - changes reach every student instantly.', ar: 'اضف وعدل ورتب واخفي الدروس - التغييرات توصل لكل طالب فوراً.'},
+  'newAcademy':{en:'New academy', ar: 'اكاديميه جديده'},
+  'newLesson':{en:'New lesson', ar: 'درس جديد'},
+  'editAcademy':{en:'Edit academy', ar: 'تعديل الاكاديميه'},
+  'editLesson':{en:'Edit lesson', ar: 'تعديل الدرس'},
+  'titleEn':{en:'Title (English)', ar: 'العنوان (انجليزي)'},
+  'titleAr':{en:'Title (Arabic)', ar: 'العنوان (عربي)'},
+  'minutesLabel':{en:'Minutes', ar: 'الدقايق'},
+  'difficulty':{en:'Difficulty', ar: 'الصعوبه'},
+  'iconLabel':{en:'Icon', ar: 'الايقونه'},
+  'colorFrom':{en:'Gradient from', ar: 'التدرج من'},
+  'colorTo':{en:'Gradient to', ar: 'التدرج لـ'},
+  'hidden':{en:'Hidden', ar: 'مخفي'},
+  'show':{en:'Show', ar: 'اظهار'},
+  'hide':{en:'Hide', ar: 'اخفا'},
+  'unlink':{en:'Remove', ar: 'ازاله'},
+  'moveUp':{en:'Move up', ar: 'لاعلى'},
+  'moveDown':{en:'Move down', ar: 'لاسفل'},
+  'academy':{en:'Academy', ar: 'الاكاديميه'},
+  'confirmUnlink':{en:'Remove this lesson from this academy? Students lose access to it there.', ar: 'ازاله ذا الدرس من الاكاديميه؟ الطلاب يفقدون الوصول له هنا.'},
+  'lessonSaved':{en:'Lesson saved.', ar: 'حفظنا الدرس.'},
+  'curriculumUpdated':{en:'Curriculum updated.', ar: 'حدثنا المنهج.'},
+  'select':{en:'Select', ar: 'اختيار'},
+  'open':{en:'Open', ar: 'مفتوح'},
+  'in_progress':{en:'In progress', ar: 'جاري التنفيذ'},
+  'resolved':{en:'Resolved', ar: 'محلول'},
+'m':{en:'',ar: ''},
+  'plans':{en:'Plans', ar: 'الباقات'},
+  'announcements':{en:'Announcements', ar: 'الاعلانات'},
+  'plan':{en:'Plan & Access', ar: 'الباقه والوصول'},
+  'activePlans':{en:'Active plans', ar: 'باقات نشطه'},
+  'expiringSoon':{en:'Expiring soon (7d)', ar: 'تنتهي قريبًا (٧ ايام)'},
+  'expiredPlans':{en:'Expired plans', ar: 'باقات منتهيه'},
+  'scheduledPlans':{en:'Scheduled plans', ar: 'باقات محدده'},
+  'suspendedPlans':{en:'Suspended plans', ar: 'باقات موقوفه'},
+  'expired':{en:'Expired', ar: 'منتهيه'},
+  'daysLeft':{en:'%d days left', ar: 'متبقي %d يوم'},
+  'noPlan':{en:'No plan', ar: 'بدون باقه'},
+  'assignPlan':{en:'Assign plan', ar: 'اسناد باقه'},
+  'newPlan':{en:'New plan', ar: 'باقه جديده'},
+  'planCatalog':{en:'Plan catalog', ar: 'كتالوج الباقات'},
+  'perPlan':{en:'per plan', ar: 'لكل باقه'},
+  'savePlan':{en:'Save plan', ar: 'حفظ الباقه'},
+  'planHistory':{en:'Plan history', ar: 'سجل الباقات'},
+  'liveClasses':{en:'Live classes', ar: 'الدروس المباشره'},
+  'upcoming':{en:'Upcoming', ar: 'الجايه'},
+  'recent':{en:'Recent', ar: 'الاخيره'},
+  'durationDays':{en:'Duration (days)', ar: 'المده (ايام)'},
+  'price':{en:'Price', ar: 'السعر'},
+  'currency':{en:'Currency', ar: 'العمله'},
+  'weeklyLive':{en:'Weekly live sessions', ar: 'حصص مباشره اسبوعياً'},
+  'platformAccess':{en:'Platform access', ar: 'وصول المنصه'},
+  'extend':{en:'Extend', ar: 'تمديد'},
+  'extendDays':{en:'Extend +%d days', ar: 'تمديد +%d يوم'},
+  'suspend':{en:'Suspend', ar: 'ايقاف'},
+  'reactivate':{en:'Reactivate', ar: 'اعاده تفعيل'},
+  'reason':{en:'Reason', ar: 'السبب'},
+  'announcementDelivery':{en:'Delivery', ar: 'الوصول'},
+  'newAnnouncement':{en:'New announcement', ar: 'اعلان جديد'},
+  'title':{en:'Title', ar: 'العنوان'},
+  'message':{en:'Message', ar: 'الرساله'},
+  'audience':{en:'Audience', ar: 'الجمهور'},
+  'everyone':{en:'All students', ar: 'كل الطلاب'},
+  'specificStudents':{en:'Specific students', ar: 'طلاب محددون'},
+  'selectStudents':{en:'Select students', ar: 'اختر الطلاب'},
+  'priority':{en:'Priority', ar: 'الاولويه'},
+  'important':{en:'Important', ar: 'مهم'},
+  'normal':{en:'Normal', ar: 'عادي'},
+  'send':{en:'Send', ar: 'ارسال'},
+  'deliveryStats':{en:'Delivery stats', ar: 'احصاييات الوصول'},
+  'deliveredTo':{en:'Delivered to %d students', ar: 'وصل لـ %d طالب'},
+  'readCount':{en:'Read', ar: 'مقرو'},
+  'unreadCount':{en:'Unread', ar: 'غير مقرو'},
+  'noAnnouncements':{en:'No announcements yet.', ar: 'ما فيه اعلانات لسه.'},
+  'link':{en:'Link', ar: 'رابط'},
+  'scheduleFor':{en:'Schedule for (optional)', ar: 'جدوله (اختياري)'},
+  'expiresAt':{en:'Expires at (optional)', ar: 'انتها الصلاحيه (اختياري)'},
+  'choosePlan':{en:'Choose plan', ar: 'اختر الباقه'},
+  'sessionsUsed':{en:'Sessions used', ar: 'الحصص المستخدمه'},
+  'sessionsIncluded':{en:'included', ar: 'مشموله'},
+  'searchStudents':{en:'Search students…', ar: 'ابحث عن طلاب…'},
+  'planChanges':{en:'Plan changes', ar: 'تغييرات الباقه'},
+  'reactivated':{en:'Reactivated', ar: 'اعيد تفعيلها'},
+  'assigned':{en:'Assigned', ar: 'اسندت'},
+  'extended':{en:'Extended', ar: 'مددت'},
+  'scheduledLbl':{en:'Scheduled', ar: 'محدده'},
+  'planNote':{en:'Access expires automatically on the end date (server-enforced). Renewing never resets progress.', ar: 'ينتهي الوصول تلقايياً بتاريخ النهايه (تطبيق من الخادم). التجديد لا يمسّ تقدمك.'},
+  'notificationSent':{en:'Announcement sent.', ar: 'ارسلنا الاعلان.'},
+  'planSaved':{en:'Plan saved.', ar: 'حفظنا الباقه.'},
+  'planAssigned':{en:'Plan assigned.', ar: 'تم اسناد الباقه.'},
+  'planExtended':{en:'Plan extended.', ar: 'تم تمديد الباقه.'},
+  'planStatusChanged':{en:'Plan status updated.', ar: 'حدثنا حاله الباقه.'},
+  'entLabel':{en:'Entitlement', ar: 'الباقه'},
+  'entAny':{en:'All entitlements', ar: 'كل الحالات'},
+  'entExpiring7':{en:'Expiring ≤7 days', ar: 'ينتهي خلال ٧ ايام'},
+  'entExpiring30':{en:'Expiring ≤30 days', ar: 'ينتهي خلال ٣٠ يوم'},
+  'entExpired':{en:'Expired', ar: 'منتهيه'},
+  'entNoPlan':{en:'No plan', ar: 'بدون باقه'},
+  'entSuspended':{en:'Suspended', ar: 'موقوفه'},
+  'seeAll':{en:'See all', ar: 'عرض الكل'},
 };
 function t(k){
   var e = I[k];
@@ -440,7 +440,7 @@ function fmtDate(iso){
     ? new Date(+iso.slice(0,4), +iso.slice(5,7)-1, +iso.slice(8,10))
     : new Date(iso);
   if(isNaN(d.getTime())) return String(iso);
-  return d.toLocaleDateString(lang === 'ar' ? 'ar-SA-u-nu-latn' : 'en-US', {year:'numeric', month:'short', day:'numeric'});
+  return d.toLocaleDateString(lang === 'ar' ? 'ar-SA-u-nu-latn' : 'en-US', {year: 'numeric', month:'short', day:'numeric'});
 }
 function fmtDateShort(iso){
   if(!iso) return '-';
@@ -546,13 +546,13 @@ function canTeacher(){ return me.role === 'teacher' || me.role === 'admin' || me
 /* Level display names - friendly English/Arabic names instead of CEFR codes.
    Internal codes (A0..C2) stay in the DB and as option VALUES only. */
 var LVL_NAMES = {
-  'A0': { en:'English Starter', ar:'انجليزي البدايه' },
-  'A1': { en:'English Basics',   ar:'انجليزي الاساس' },
-  'A2': { en:'English Daily',    ar:'انجليزي اليومي' },
-  'B1': { en:'English Middle',   ar:'انجليزي الوسط' },
-  'B2': { en:'English Strong',   ar:'انجليزي قوي' },
-  'C1': { en:'English High',     ar:'انجليزي عالي' },
-  'C2': { en:'English Pro',      ar:'انجليزي محترف' }
+  'A0': { en:'English Starter', ar: 'انجليزي البدايه' },
+  'A1': { en:'English Basics',   ar: 'انجليزي الاساس' },
+  'A2': { en:'English Daily',    ar: 'انجليزي اليومي' },
+  'B1': { en:'English Middle',   ar: 'انجليزي الوسط' },
+  'B2': { en:'English Strong',   ar: 'انجليزي قوي' },
+  'C1': { en:'English High',     ar: 'انجليزي عالي' },
+  'C2': { en:'English Pro',      ar: 'انجليزي محترف' }
 };
 function lvlName(code){
   var m = LVL_NAMES[code];
@@ -749,32 +749,32 @@ function applyLang(announce){
    5. NAVIGATION
    ============================================================ */
 var NAV = [
-  { label:'overview', items:[ {id:'overview', en:'Overview', ar:'نظره عامه', icon:'layout-dashboard'} ] },
+  { label:'overview', items:[ {id:'overview', en:'Overview', ar: 'نظره عامه', icon:'layout-dashboard'} ] },
   { label:'people', items:[
-    {id:'students', en:'Students', ar:'الطلاب', icon:'users'},
-    {id:'teachers', en:'Teachers', ar:'الاستاذين', icon:'user-check'},
-    {id:'groups', en:'Groups', ar:'المجموعات', icon:'layers'},
+    {id:'students', en:'Students', ar: 'الطلاب', icon:'users'},
+    {id:'teachers', en:'Teachers', ar: 'الاستاذين', icon:'user-check'},
+    {id:'groups', en:'Groups', ar: 'المجموعات', icon:'layers'},
   ]},
   { label:'learning', items:[
-    {id:'courses', en:'Courses', ar:'المسارات', icon:'book-open'},
-    {id:'questions', en:'Test Questions', ar:'بنك الاختبار', icon:'help-circle', perm:'learning.manage'},
-    {id:'interventions', en:'Interventions', ar:'التدخلات', icon:'activity'},
+    {id:'courses', en:'Courses', ar: 'المسارات', icon:'book-open'},
+    {id:'questions', en:'Test Questions', ar: 'بنك الاختبار', icon:'help-circle', perm:'learning.manage'},
+    {id:'interventions', en:'Interventions', ar: 'التدخلات', icon:'activity'},
   ]},
 { label:'operations', items:[
-    {id:'classes', en:'Live Classes', ar:'الدروس المباشره', icon:'video'},
-    {id:'programs', en:'Programs', ar:'البرامج', icon:'credit-card'},
-    {id:'plans', en:'Plans', ar:'الباقات', icon:'badge-check', perm:'subscriptions.manage'},
-    {id:'billing', en:'Billing & Index', ar:'الاسعار وصفحة البدايه', icon:'wallet', perm:'subscriptions.manage'},
-    {id:'liveClasses', en:'Class Requests', ar:'طلبات الحصص', icon:'ticket', perm:'subscriptions.manage'},
-    {id:'settings', en:'Site Settings', ar:'اعدادات الموقع', icon:'settings', perm:'settings.manage'},
+    {id:'classes', en:'Live Classes', ar: 'الدروس المباشره', icon:'video'},
+    {id:'programs', en:'Programs', ar: 'البرامج', icon:'credit-card'},
+    {id:'plans', en:'Plans', ar: 'الباقات', icon:'badge-check', perm:'subscriptions.manage'},
+    {id:'billing', en:'Billing & Index', ar: 'الاسعار وصفحة البدايه', icon:'wallet', perm:'subscriptions.manage'},
+    {id:'liveClasses', en:'Class Requests', ar: 'طلبات الحصص', icon:'ticket', perm:'subscriptions.manage'},
+    {id:'settings', en:'Site Settings', ar: 'اعدادات الموقع', icon:'settings', perm:'settings.manage'},
   ]},
   { label:'trust', items:[
-    {id:'certificates', en:'Certificates', ar:'الشهادات', icon:'graduation-cap'},
-    {id:'announcements', en:'Announcements', ar:'الاعلانات', icon:'megaphone', perm:'announcements.manage'},
-    {id:'roles', en:'Access & Roles', ar:'الادوار والصلاحيات', icon:'shield', perm:'roles.manage'},
-    {id:'health', en:'System Health', ar:'صحه النظام', icon:'heart-pulse', perm:'health.read'},
+    {id:'certificates', en:'Certificates', ar: 'الشهادات', icon:'graduation-cap'},
+    {id:'announcements', en:'Announcements', ar: 'الاعلانات', icon:'megaphone', perm:'announcements.manage'},
+    {id:'roles', en:'Access & Roles', ar: 'الادوار والصلاحيات', icon:'shield', perm:'roles.manage'},
+    {id:'health', en:'System Health', ar: 'صحه النظام', icon:'heart-pulse', perm:'health.read'},
   ]},
-  { label:'reports', items:[ {id:'reports', en:'Reports', ar:'التقارير', icon:'file-bar-chart'} ] },
+  { label:'reports', items:[ {id:'reports', en:'Reports', ar: 'التقارير', icon:'file-bar-chart'} ] },
 ];
 function renderSidebar(){
   var nav = $('sidebarNav');
@@ -1172,7 +1172,7 @@ function render360(){
     '</div>' +
     '<div class="btn-row">' +
     '<button class="btn btn-outline btn-sm" id="s360Preview">' + esc(t('preview')) + '</button>' +
-    (hasPerm('students.manage') ? '<button class="btn btn-danger btn-sm" id="s360Delete">' + esc(lang === 'ar' ? 'حذف الطالب نهائيا' : 'Delete student permanently') + '</button>' : '') +
+    (hasPerm('students.manage') ? '<button class="btn btn-danger btn-sm" id="s360Delete">' + esc(lang === 'ar' ? 'حذف الطالب نهاييا' : 'Delete student permanently') + '</button>' : '') +
     '<button class="btn btn-ghost btn-sm" data-goback="">' + esc(t('back')) + '</button>' +
     '</div></div>';
 
@@ -1325,7 +1325,7 @@ var tabs = [
   var delBtn = $('s360Delete');
   if(delBtn){
     delBtn.addEventListener('click', async function(){
-      if(!confirm(lang === 'ar' ? 'بنحذف حذف حساب الطالب وكل بياناته نهائيا (تبقى الشهادات بس). متابعه؟' : 'This permanently deletes the student account and ALL their history (certificates are kept). Continue?')){ return; }
+      if(!confirm(lang === 'ar' ? 'بنحذف حذف حساب الطالب وكل بياناته نهاييا (تبقى الشهادات بس). متابعه؟' : 'This permanently deletes the student account and ALL their history (certificates are kept). Continue?')){ return; }
       if(!confirm(lang === 'ar' ? 'تاكيد اخير: ذا الاجرا لا تقدر التراجع عنه.' : 'Final confirmation: this cannot be undone.')){ return; }
       delBtn.disabled = true;
       var r = await rpc('admin_student_delete', { p_user_id: current360Uid });
@@ -1499,12 +1499,12 @@ function learningHealth(plan, st, kv){
   var out = { weak:[], strong:[], difficulty:null, strength:null, focus:null };
   if(!window.PEL_ENGINE) return out;
   var specs = [
-    {key:'Speaking', ar:'المحادثه', academyId:'speaking-studio'},
-    {key:'Listening', ar:'الاستماع', academyId:'listening-lounge'},
-    {key:'Grammar', ar:'القواعد', academyId:'grammar-academy'},
-    {key:'Vocabulary', ar:'المفردات', academyId:'vocabulary-vault'},
-    {key:'Pronunciation', ar:'النطق', academyId:'american-accent-lab'},
-    {key:'Writing', ar:'الكتابه', academyId:'writing-workshop'}
+    {key:'Speaking', ar: 'المحادثه', academyId:'speaking-studio'},
+    {key:'Listening', ar: 'الاستماع', academyId:'listening-lounge'},
+    {key:'Grammar', ar: 'القواعد', academyId:'grammar-academy'},
+    {key:'Vocabulary', ar: 'المفردات', academyId:'vocabulary-vault'},
+    {key:'Pronunciation', ar: 'النطق', academyId:'american-accent-lab'},
+    {key:'Writing', ar: 'الكتابه', academyId:'writing-workshop'}
   ];
   var _sc = skillScoresAll(completed);
   var scored = specs.map(function(s){
@@ -1533,7 +1533,7 @@ function renderTabPersonalization(plan){
   var help = '<div class="notice" style="margin-bottom:14px;"><div style="font-weight:600;">' + esc(lang==='ar'?'من وين تجي هذي المعلومات؟':'Where this data comes from') + '</div>' +
     '<div style="margin-top:6px; font-size:.8rem; color:var(--text-muted); line-height:1.7;">' +
     esc(lang==='ar'
-      ? 'هذي خطه الطالب اللي يبنيها بنفسه: يجاوب على أسئله الاهداف والوقت اليومي اول ما يدخل التطبيق او من صفحه البدايه. اذا بنى خطته، تشوف هنا هدفه ووقته ووتيرته. اذا الفضا فاضي، يعني الطالب ما بنى خطته لسه - أسئله يدخل التطبيق ويبنيها، وبتقدر بعدها تسند له الباقه المناسبه.'
+      ? 'هذي خطه الطالب اللي يبنيها بنفسه: يجاوب على اسيله الاهداف والوقت اليومي اول ما يدخل التطبيق او من صفحه البدايه. اذا بنى خطته، تشوف هنا هدفه ووقته ووتيرته. اذا الفضا فاضي، يعني الطالب ما بنى خطته لسه - اسيله يدخل التطبيق ويبنيها، وبتقدر بعدها تسند له الباقه المناسبه.'
       : 'This is the plan the student builds themselves: they answer the goal and daily-time questions on first sign-in or from the home page. Once built, you see their goal, pace and route here. If this is empty, the student has not built their plan yet - have them sign in and build it, then assign the right plan.') +
     '</div></div>';
   if(!plan || !plan.profile){
@@ -1569,12 +1569,12 @@ function renderTabPersonalization(plan){
 function renderTabSkills(plan, st, kv){
   var completed = st.completed_lessons || [];
   var specs = [
-    {key:'Speaking', ar:'المحادثه', academyId:'speaking-studio'},
-    {key:'Listening', ar:'الاستماع', academyId:'listening-lounge'},
-    {key:'Grammar', ar:'القواعد', academyId:'grammar-academy'},
-    {key:'Vocabulary', ar:'المفردات', academyId:'vocabulary-vault'},
-    {key:'Pronunciation', ar:'النطق', academyId:'american-accent-lab'},
-    {key:'Writing', ar:'الكتابه', academyId:'writing-workshop'}
+    {key:'Speaking', ar: 'المحادثه', academyId:'speaking-studio'},
+    {key:'Listening', ar: 'الاستماع', academyId:'listening-lounge'},
+    {key:'Grammar', ar: 'القواعد', academyId:'grammar-academy'},
+    {key:'Vocabulary', ar: 'المفردات', academyId:'vocabulary-vault'},
+    {key:'Pronunciation', ar: 'النطق', academyId:'american-accent-lab'},
+    {key:'Writing', ar: 'الكتابه', academyId:'writing-workshop'}
   ];
   var _sc = skillScoresAll(completed);
   var scored = specs.map(function(s){
@@ -2661,8 +2661,8 @@ async function billingView(){
 
   // ---- pricing matrix ----
   var tiers = [
-    {k:'start_from_zero', en:'Start From 0', ar:'ابد من الصفر'},
-    {k:'exam_prep', en:'Exam Prep', ar:'التجهيز للاختبارات'}
+    {k:'start_from_zero', en:'Start From 0', ar: 'ابد من الصفر'},
+    {k:'exam_prep', en:'Exam Prep', ar: 'التجهيز للاختبارات'}
   ];
   var matrixHtml = '';
   tiers.forEach(function(tier){
@@ -2695,18 +2695,18 @@ async function billingView(){
 
   // ---- FAQ editor (site_settings.faqs = JSON array of {qEn,qAr,aEn,aAr}) ----
   var faqArr = (function(){ try{ var v = kv['faqs']; return Array.isArray(v)?v:(typeof v==='string'?JSON.parse(v||'[]'):[]); }catch(e){ return []; } })();
-  if(!faqArr.length){ faqArr = [{qEn:'',qAr:'',aEn:'',aAr:''}]; }
+  if(!faqArr.length){ faqArr = [{qEn:'',qAr: '',aEn:'',aAr: ''}]; }
   function faqRowHtml(f, i){
     return '<div class="card" style="margin-bottom:12px;" data-faq-row="'+i+'"><div class="form-grid">' +
-      '<div class="field full"><label>'+(lang==='ar'?'سؤال (انجليزي)':'Question (EN)')+'</label><input class="input" data-faq="qEn" data-i="'+i+'" value="'+esc(f.qEn||'')+'"></div>' +
-      '<div class="field full"><label>'+(lang==='ar'?'سؤال (عربي)':'Question (AR)')+'</label><input class="input" data-faq="qAr" data-i="'+i+'" value="'+esc(f.qAr||'')+'"></div>' +
+      '<div class="field full"><label>'+(lang==='ar'?'سوال (انجليزي)':'Question (EN)')+'</label><input class="input" data-faq="qEn" data-i="'+i+'" value="'+esc(f.qEn||'')+'"></div>' +
+      '<div class="field full"><label>'+(lang==='ar'?'سوال (عربي)':'Question (AR)')+'</label><input class="input" data-faq="qAr" data-i="'+i+'" value="'+esc(f.qAr||'')+'"></div>' +
       '<div class="field full"><label>'+(lang==='ar'?'جواب (انجليزي)':'Answer (EN)')+'</label><textarea class="input" rows="2" data-faq="aEn" data-i="'+i+'">'+esc(f.aEn||'')+'</textarea></div>' +
       '<div class="field full"><label>'+(lang==='ar'?'جواب (عربي)':'Answer (AR)')+'</label><textarea class="input" rows="2" data-faq="aAr" data-i="'+i+'">'+esc(f.aAr||'')+'</textarea></div>' +
-      '</div><div class="btn-row" style="margin-top:8px;"><button class="btn btn-ghost btn-sm" data-faq-del="'+i+'">'+esc(lang==='ar'?'حذف السؤال':'Remove')+'</button></div></div>';
+      '</div><div class="btn-row" style="margin-top:8px;"><button class="btn btn-ghost btn-sm" data-faq-del="'+i+'">'+esc(lang==='ar'?'حذف السوال':'Remove')+'</button></div></div>';
   }
-  var faqHtml = '<div class="section-title">'+(lang==='ar'?'الاسئله الشايعه':'FAQs (index)')+'</div>' +
+  var faqHtml = '<div class="section-title">'+(lang==='ar'?'الاسيله الشايعه':'FAQs (index)')+'</div>' +
     '<div id="faqList">'+faqArr.map(faqRowHtml).join('')+'</div>' +
-    '<div class="btn-row" style="margin-bottom:8px;"><button class="btn btn-outline btn-sm" id="faqAdd">'+esc(lang==='ar'?'سؤال جديد':'Add question')+'</button></div>';
+    '<div class="btn-row" style="margin-bottom:8px;"><button class="btn btn-outline btn-sm" id="faqAdd">'+esc(lang==='ar'?'سوال جديد':'Add question')+'</button></div>';
   indexHtml += faqHtml;
 
   $('viewArea').innerHTML = pageHead(lang==='ar'?'الاسعار وصفحة البدايه':'Billing & Index',
@@ -2718,7 +2718,7 @@ async function billingView(){
   // FAQ add/remove wiring
   function faqMaxI(){ var m=-1; document.querySelectorAll('[data-faq-row]').forEach(function(r){ var i=+r.getAttribute('data-faq-row'); if(i>m)m=i; }); return m; }
   var faqAddBtn = $('faqAdd');
-  if(faqAddBtn) faqAddBtn.addEventListener('click', function(){ var ni=faqMaxI()+1; var wrap=document.createElement('div'); wrap.innerHTML=faqRowHtml({qEn:'',qAr:'',aEn:'',aAr:''}, ni); var node=wrap.firstElementChild; $('faqList').appendChild(node); wireFaqRow(node); });
+  if(faqAddBtn) faqAddBtn.addEventListener('click', function(){ var ni=faqMaxI()+1; var wrap=document.createElement('div'); wrap.innerHTML=faqRowHtml({qEn:'',qAr: '',aEn:'',aAr: ''}, ni); var node=wrap.firstElementChild; $('faqList').appendChild(node); wireFaqRow(node); });
   function wireFaqRow(node){
     var del=node.querySelector('[data-faq-del]');
     if(del) del.addEventListener('click', function(){ node.remove(); });
@@ -2784,9 +2784,9 @@ async function questionsView(){
   async function loadList(){
     var r = await pelTableSelect('assessment_questions', '*', { order: 'tier,difficulty_rating,sort_order' });
     ROWS = r.data || [];
-    var addBtn = '<div class="btn-row" style="margin-bottom:16px;"><button class="btn btn-gold btn-sm" id="aqAdd">'+esc(lang==='ar'?'سؤال جديد':'New question')+'</button>'+
+    var addBtn = '<div class="btn-row" style="margin-bottom:16px;"><button class="btn btn-gold btn-sm" id="aqAdd">'+esc(lang==='ar'?'سوال جديد':'New question')+'</button>'+
       '<span class="why">'+(lang==='ar'?'العدد: ':'Count: ')+ROWS.length+'</span></div>';
-    if(!ROWS.length){ $('viewArea').innerHTML = pageHead(title, sub) + addBtn + emptyBlock(lang==='ar'?'ما فيه أسئله لسه':'No questions yet'); wire(); return; }
+    if(!ROWS.length){ $('viewArea').innerHTML = pageHead(title, sub) + addBtn + emptyBlock(lang==='ar'?'ما فيه اسيله لسه':'No questions yet'); wire(); return; }
     var tierLbl = function(t){ return t==='exam_prep'?(lang==='ar'?'تجهيز اختبارات':'Exam Prep'):(lang==='ar'?'البدايه':'Beginner'); };
     var rowsHtml = ROWS.map(function(q){
       var opts = q.options || [];
@@ -2806,7 +2806,7 @@ async function questionsView(){
       '<div class="card" style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;"><thead><tr>'+
       '<th style="text-align:right;padding:8px;">'+esc(lang==='ar'?'الكود':'Code')+'</th>'+
       '<th style="text-align:right;padding:8px;">'+esc(lang==='ar'?'المستوى':'Level')+'</th>'+
-      '<th style="text-align:right;padding:8px;">'+esc(lang==='ar'?'السؤال':'Question')+'</th>'+
+      '<th style="text-align:right;padding:8px;">'+esc(lang==='ar'?'السوال':'Question')+'</th>'+
       '<th style="text-align:right;padding:8px;">'+esc(lang==='ar'?'الحاله':'Status')+'</th>'+
       '<th style="text-align:right;padding:8px;">'+esc(lang==='ar'?'اعمال':'Actions')+'</th>'+
       '</tr></thead><tbody>'+rowsHtml+'</tbody></table></div>';
@@ -2831,7 +2831,7 @@ async function questionsView(){
   }
   function delQ(id){
     var q = ROWS.find(function(x){return x.id===id;});
-    if(!window.confirm(lang==='ar'?'حذف ذا السؤال للابد؟':'Delete this question permanently?')) return;
+    if(!window.confirm(lang==='ar'?'حذف ذا السوال للابد؟':'Delete this question permanently?')) return;
     c.rpc('admin_delete_assessment_question', { p_id: id }).then(function(r){
       if(r.error || (r.data && r.data.ok === false)){ toast(rpcErrMsg(r.error||r.data), true); return; }
       audit('question.delete','assessment_questions',q?q.code:id,{});
@@ -2850,19 +2850,19 @@ async function questionsView(){
       '<div class="field"><label>'+esc(lang==='ar'?'الصعوبه':'Difficulty')+'</label><select class="input" id="qf_diff">'+[1,2,3,4,5].map(function(d){return '<option value="'+d+'"'+(q&&q.difficulty_rating===d?' selected':'')+'>'+d+'</option>';}).join('')+'</select></div>'+
       '<div class="field"><label>'+esc(lang==='ar'?'النوع':'Skill')+'</label><select class="input" id="qf_skill">'+['grammar','vocab','reading','listening'].map(function(s){return '<option value="'+s+'"'+(q&&q.skill_type===s?' selected':'')+'>'+s+'</option>';}).join('')+'</select></div>'+
       '<div class="field"><label><input type="checkbox" id="qf_active" '+(q?(q.active!==false?'checked':''):'checked')+'> '+esc(lang==='ar'?'متاح':'Active')+'</label></div>'+
-      '<div class="field full"><label>'+esc(lang==='ar'?'السؤال (عربي)':'Question (AR)')+'</label><textarea class="input" rows="2" id="qf_qar">'+esc(q?(q.question_ar||''):'')+'</textarea></div>'+
-      '<div class="field full"><label>'+esc(lang==='ar'?'السؤال (انجليزي)':'Question (EN)')+'</label><textarea class="input" rows="2" id="qf_qen">'+esc(q?(q.question_en||''):'')+'</textarea></div>'+
+      '<div class="field full"><label>'+esc(lang==='ar'?'السوال (عربي)':'Question (AR)')+'</label><textarea class="input" rows="2" id="qf_qar">'+esc(q?(q.question_ar||''):'')+'</textarea></div>'+
+      '<div class="field full"><label>'+esc(lang==='ar'?'السوال (انجليزي)':'Question (EN)')+'</label><textarea class="input" rows="2" id="qf_qen">'+esc(q?(q.question_en||''):'')+'</textarea></div>'+
       '<div class="field full"><div class="section-title" style="margin:8px 0;">'+esc(lang==='ar'?'الخيارات (4)':'Options (4)')+'</div></div>'+
       [0,1,2,3].map(function(i){ return '<div class="field"><label>'+esc(lang==='ar'?'خيار '+(i+1)+' (عربي)':'Option '+(i+1)+' (AR)')+'</label><input class="input" id="qf_o'+i+'ar" value="'+opt(i,'ar')+'"></div><div class="field"><label>'+esc(lang==='ar'?'خيار '+(i+1)+' (انجليزي)':'Option '+(i+1)+' (EN)')+'</label><input class="input" id="qf_o'+i+'en" value="'+opt(i,'en')+'"></div>'; }).join('')+
       '<div class="field full"><label>'+esc(lang==='ar'?'الاجابه الصحه':'Correct option')+'</label><select class="input" id="qf_correct">'+[0,1,2,3].map(function(i){return '<option value="'+i+'"'+(q&&q.correct_index===i?' selected':'')+'>Option '+(i+1)+'</option>';}).join('')+'</select></div>'+
       '<div class="field full"><label>'+esc(lang==='ar'?'الترتيب':'Sort order')+'</label><input class="input" type="number" id="qf_sort" value="'+(q?(q.sort_order||0):0)+'"></div>'+
       '</div>';
-    var scrim = modal((isEdit?(lang==='ar'?'تعديل سؤال':'Edit question'):(lang==='ar'?'سؤال جديد':'New question')), body, true,
+    var scrim = modal((isEdit?(lang==='ar'?'تعديل سوال':'Edit question'):(lang==='ar'?'سوال جديد':'New question')), body, true,
       '<button class="btn btn-gold btn-sm" id="qfSave">'+esc(t('save'))+'</button>');
     $('qfSave').addEventListener('click', async function(){
       var code = $('qf_code').value.trim();
       if(!code){ toast(lang==='ar'?'الكود مطلوب':'Code required', true); return; }
-      if(!$('qf_qen').value.trim()){ toast(lang==='ar'?'نص السؤال الانجليزي مطلوب':'English question text required', true); return; }
+      if(!$('qf_qen').value.trim()){ toast(lang==='ar'?'نص السوال الانجليزي مطلوب':'English question text required', true); return; }
       var opts = [0,1,2,3].map(function(i){ return { ar: $('qf_o'+i+'ar').value.trim(), en: $('qf_o'+i+'en').value.trim() }; });
       if(!opts[$('qf_correct').value].en){ toast(lang==='ar'?'الاجابه الصحه ما تنشاف':'Correct option has no text', true); return; }
       var row = {
@@ -3423,7 +3423,7 @@ async function announcementsView(){
     b.addEventListener('click', async function(){
       var id = b.getAttribute('data-del');
       var a = window.__annRows[id] || {};
-      if(!confirm(lang === 'ar' ? 'حذف ذا الاعلان نهائيا؟' : 'Permanently delete this announcement?')){ return; }
+      if(!confirm(lang === 'ar' ? 'حذف ذا الاعلان نهاييا؟' : 'Permanently delete this announcement?')){ return; }
       var r = await rpc('admin_announcement_delete', { p_id: id });
       if(!r.ok){ toast((r.error && r.error.message) || t('permissionDenied'), true); return; }
       toast(lang === 'ar' ? 'حذفنا الاعلان.' : 'Announcement deleted.');
@@ -3540,7 +3540,7 @@ function editAnnouncementForm(a){
 
 async function settingsView(){
   var head = pageHead(lang === 'ar' ? 'اعدادات الموقع' : 'Site Settings',
-    lang === 'ar' ? 'شريط الاعلان الرييسي، الاسئله الشايعه، رقم الواتساب، وخيارات الموقع - التغييرات تظهر للزوار فوراً.' : 'Homepage banner, FAQs, WhatsApp number and site flags - changes go live for visitors instantly.');
+    lang === 'ar' ? 'شريط الاعلان الرييسي، الاسيله الشايعه، رقم الواتساب، وخيارات الموقع - التغييرات تظهر للزوار فوراً.' : 'Homepage banner, FAQs, WhatsApp number and site flags - changes go live for visitors instantly.');
   $('viewArea').innerHTML = head + loadingBlock();
   var c = client();
   if(!c){ $('viewArea').innerHTML = errBlock('no client'); return; }
@@ -3580,10 +3580,10 @@ async function settingsView(){
       '</div>' +
     '</div>' +
     '<div class="card" style="max-width:760px; margin-top:16px;">' +
-      '<div class="s360-meta" style="margin-top:0;"><span class="chip gold">' + esc(lang === 'ar' ? 'الاسئله الشايعه - الصفحه البدايه' : 'Homepage FAQs') + '</span></div>' +
+      '<div class="s360-meta" style="margin-top:0;"><span class="chip gold">' + esc(lang === 'ar' ? 'الاسيله الشايعه - الصفحه البدايه' : 'Homepage FAQs') + '</span></div>' +
       '<p style="margin:10px 0 0; font-size:.76rem; color:var(--text-muted); line-height:1.7;">' +
         esc(lang === 'ar'
-          ? 'كل سطر = سؤال|جواب. لازم نفس عدد الاسطر بالعربي والانجليزي وبنفس الترتيب.'
+          ? 'كل سطر = سوال|جواب. لازم نفس عدد الاسطر بالعربي والانجليزي وبنفس الترتيب.'
           : 'One FAQ per line, format question|answer. Arabic and English must have the same number of lines in the same order.') +
       '</p>' +
       '<div class="form-grid" style="margin-top:12px;">' +
@@ -3608,7 +3608,7 @@ async function settingsView(){
     var arL = faqParse($('stFaqAr').value), enL = faqParse($('stFaqEn').value);
     if(arL.length !== enL.length){
       btn.disabled = false;
-      toast(lang === 'ar' ? 'عدد اسطر الاسئله مختلف بين العربي والانجليزي - سوهم نفس العدد.' : 'FAQ line count differs between Arabic and English - make them match.', true);
+      toast(lang === 'ar' ? 'عدد اسطر الاسيله مختلف بين العربي والانجليزي - سوهم نفس العدد.' : 'FAQ line count differs between Arabic and English - make them match.', true);
       return;
     }
     var faqOut = [];
@@ -3747,11 +3747,11 @@ var mm = $('mobileMenuBtn');
    24b. LIVE CLASS REQUESTS  (student credit requests -> admin approve/decline + city manager)
    ============================================================ */
 var LC_SVC = {
-  group_online_40:{en:'Group online (40m)', ar:'جماعيه اونلوين (40د)'},
-  private_online_40:{en:'Private online (40m)', ar:'خاصه اونلوين (40د)'},
-  in_person_40:{en:'In-person (40m)', ar:'حضوريه (40د)'}
+  group_online_40:{en:'Group online (40m)', ar: 'جماعيه اونلوين (40د)'},
+  private_online_40:{en:'Private online (40m)', ar: 'خاصه اونلوين (40د)'},
+  in_person_40:{en:'In-person (40m)', ar: 'حضوريه (40د)'}
 };
-var LC_ST = {pending:{en:'Pending',ar:'جاري الانتظار'},approved:{en:'Approved',ar:'مقبوله'},declined:{en:'Declined',ar:'مرفوضه'},cancelled:{en:'Cancelled',ar:'ملغيه'}};
+var LC_ST = {pending:{en:'Pending',ar: 'جاري الانتظار'},approved:{en:'Approved',ar: 'مقبوله'},declined:{en:'Declined',ar: 'مرفوضه'},cancelled:{en:'Cancelled',ar: 'ملغيه'}};
 function lcSvcLabel(code){ var m=LC_SVC[code]||{}; return lang==='ar'?(m.ar||code):(m.en||code); }
 function lcStLabel(st){ var m=LC_ST[st]||{en:st,ar:st}; return lang==='ar'?m.ar:m.en; }
 
