@@ -43,3 +43,15 @@ lesson activities without solving anything ("kept clicking and it skipped").
   plus travel/medical/work sets) — no mistranslations found.
 
 Cache-buster: lib/pel_lesson_stage.js?v=fixcheck04
+
+## Addendum 2 — DB-side sweep + third-distractor migration (later on 2026-09-29)
+
+Full database audit via the management API (SQL endpoint):
+- `lesson_items` (2,559 rows): clean — 0 missing Arabic, 0 latin-only ar_meaning, 0 identical en/ar, 0 corrupted text.
+- `lesson_exercises` (1,428 rows): all structurally valid (order answers buildable from tokens incl. phrase chunks; choose quizzes all have exactly 1 ok option).
+- 45 gap-format spell exercises (options as `{t, ok}` letter objects, display like "C _ T"): data is valid — the STAGE `db_spell` activity handles them correctly (letter bank built from the answer, ignores options). The legacy workspace renderer `renderDbPractice` rendered them as "[object Object]" and could never grade them correct — fixed client-side in commit b0b43d6 (render label from `o.t`; gap format grades the single picked letter against the ok flag). No DB change needed for these.
+
+One real DB-side flaw fixed (migration `supabase/migrations/20260929190000_choose_add_third_distractor.sql`, applied live + pushed as f926ed3):
+- 10 choose exercises had only 2 options (50% blind-guess pass): ids 621, 627, 633, 641, 645, 652, 688, 691, 694, 782. Each got a third hand-written learner-error distractor with transliteration. Verified in live DB: 0 choose exercises with <3 options remain; each has exactly 1 correct.
+
+Gotchas: the management-API `/database/query` runner executes one statement per call — inline `;`-terminated statements with trailing comments need careful splitting, and apostrophes in payloads need dollar-quoting (`$j$...$j$`).
