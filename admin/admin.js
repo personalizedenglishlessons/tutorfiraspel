@@ -403,7 +403,7 @@ var I = {
   'assigned':{en:'Assigned', ar:'اسندت'},
   'extended':{en:'Extended', ar:'مددت'},
   'scheduledLbl':{en:'Scheduled', ar:'محدده'},
-  'planNote':{en:'Access expires automatically on the end date (server-enforced). Renewing never resets progress.', ar:'ينتهي الوصول تلقايياً بتاريخ النهايه (تطبيق من الخادم). التجديد لا يمسّ تقدمك.'},
+  'planNote':{en:'Access expires automatically on the end date (server-enforced). Renewing never resets progress.', ar:'ينتهي الوصول تلقائياً بتاريخ النهايه (تطبيق من الخادم). التجديد لا يمسّ تقدمك.'},
   'notificationSent':{en:'Announcement sent.', ar:'ارسلنا الاعلان.'},
   'planSaved':{en:'Plan saved.', ar:'حفظنا الباقه.'},
   'planAssigned':{en:'Plan assigned.', ar:'تم اسناد الباقه.'},
