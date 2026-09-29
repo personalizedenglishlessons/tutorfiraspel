@@ -531,6 +531,10 @@ function applyLoginLang(lang){
     if(el){
       if(sel === '#rememberToggle' || sel === '.brand-heading'){ el.innerHTML = T[sel]; }
       else { el.textContent = T[sel]; }
+      // BiDi fix: English sentences in the RTL page rendered their trailing
+      // period at the start of the line (".For enrolled students...").
+      // Set explicit direction per language on every swapped text node.
+      el.setAttribute('dir', ar ? 'rtl' : 'ltr');
     }
   });
   // Benefit items
@@ -541,6 +545,7 @@ function applyLoginLang(lang){
   benefits.forEach(function(el, i){
     var icon = el.querySelector('.b-icon');
     el.innerHTML = '<span class="b-icon">'+(icon ? icon.textContent : '')+'</span>'+benArr[i];
+    el.setAttribute('dir', ar ? 'rtl' : 'ltr');
   });
   // Trust pills
   var pills = document.querySelectorAll('.trust-pill');
