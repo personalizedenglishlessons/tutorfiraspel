@@ -55,3 +55,12 @@ One real DB-side flaw fixed (migration `supabase/migrations/20260929190000_choos
 - 10 choose exercises had only 2 options (50% blind-guess pass): ids 621, 627, 633, 641, 645, 652, 688, 691, 694, 782. Each got a third hand-written learner-error distractor with transliteration. Verified in live DB: 0 choose exercises with <3 options remain; each has exactly 1 correct.
 
 Gotchas: the management-API `/database/query` runner executes one statement per call — inline `;`-terminated statements with trailing comments need careful splitting, and apostrophes in payloads need dollar-quoting (`$j$...$j$`).
+
+## Addendum 3 — Mistranslation sweep 3 (evening 2026-09-29)
+
+Semantic (not just missing-text) pass over all Arabic content:
+- lesson_items (2,559): 3 real fixes — id 1430 'at' ar_meaning was translit (ات) → في / عند; id 2031 'used to + verb' ar_meaning was translit garbage → كان معتاد + فعل; id 2134 example_ar was translit → real Saudi translation. Loanwords (email/wifi/riyal/latte/December/letter names) are intentional, left as-is.
+- lesson_exercises (1,428): all clean (prompt ar≠tr, translate answers real Arabic, why_ar/meaning Arabic).
+- Hardcoded content: PEL_BEGINNER vocab (674 entries) + app.html lesson content (306 entries) — 0 issues.
+- 68 explain items had note_ar NULL (English-only titles). All translated (migration 20260929220000, applied live + pushed as 3d72a51).
+- Discovered note_en/note_ar were fetched by the student_curriculum RPC but dropped in dbToLesson and never rendered — so translated titles had no surface. Added a 'الفكره الاساسيه / Key idea' line to the stage concept activity + workspace notes section (commit f42ef91, cache-bust pel_lesson_stage.js?v=notekey01). Live-verified on writing-emails-polite.
