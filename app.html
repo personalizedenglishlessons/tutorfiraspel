@@ -23,7 +23,7 @@
 <script src="lib/cert-qr.js?v=a43f19f9" defer></script>
 <script src="lib/cert-sheet.js?v=ece713aa" defer></script>
 <script src="lib/pel_config.js?v=d66df0a3"></script>
-<script src="lib/pel_lesson_stage.js?v=fixcheck04"></script>
+<script src="lib/pel_lesson_stage.js?v=notekey01"></script>
 <script src="lib/pel_dashboard_life.js?v=950ac8f3"></script>
 <script src="lib/pel_curriculum_path.js?v=e4c5c297"></script>
 <style>
@@ -14450,7 +14450,7 @@ function dbToLesson(dbl, academy){
       };
     });
   const notes = items.filter(i => i.kind === 'pattern' || i.kind === 'explain')
-    .map(i => ({ en: i.en, ar: i.ar, note_en: i.note_en || '', tr: i.tr || '' }));
+    .map(i => ({ en: i.en, ar: i.ar, note_en: i.note_en || '', note_ar: i.note_ar || '', tr: i.tr || '' }));
   let flip = false;
   const conversation = items.filter(i => i.kind === 'sentence').map(i => {
     flip = !flip;
@@ -17863,10 +17863,14 @@ function renderLessonReader(container, academy, lesson){
       const terms = collectLessonTerms(lesson);
       const sections = lesson.dbNotes.map(n => {
         const s = sectionNoteText(n.en||'', n.ar||'');
-        return {en:n.en, ar:n.ar, tr:n.tr, sections:s};
+        return {en:n.en, ar:n.ar, tr:n.tr, note_ar:n.note_ar||'', sections:s};
       });
       let html = '<div class="lesson-section"><h3><span class="arabic">لاحظ</span>، Notice</h3><p class="lesson-section-sub"><span class="arabic" style="display:block;">انماط وقواعد مختصره، بالعاميه والانجليزي.</span><span dir="ltr">Compact patterns and rules, in  Arabic and English.</span></p>';
       sections.forEach(ns => {
+        if(ns.note_ar){
+          html += '<div class="concept-section-label"><span class="arabic">الفكره الاساسيه</span></div>';
+          html += renderStepsHtml(ns.note_ar, 'concept-step-ar arabic', terms);
+        }
         if(ns.sections.rule.length){
           html += '<div class="concept-section-label" dir="ltr">Rule</div>';
           html += ns.sections.rule.map(s => renderStepsHtml(s, 'concept-step-en', terms)).join('');
