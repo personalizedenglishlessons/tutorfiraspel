@@ -3310,7 +3310,7 @@ function renderPalette(query){
       }
     });
   }
-  if(matches.length === 0){ paletteResults.innerHTML = `<div class="palette-empty"><span class="arabic" style="display:block;">ما فيه نتايج لـ "${escapeHtml(query)}"</span><span>Try a lesson, word, or setting.</span></div>`; return; }
+  if(matches.length === 0){ paletteResults.innerHTML = `<div class="palette-empty"><span class="arabic" style="display:block;">ما فيه نتائج لـ "${escapeHtml(query)}"</span><span>Try a lesson, word, or setting.</span></div>`; return; }
   const groups = {};
   matches.forEach(m => { (groups[m.group] = groups[m.group] || []).push(m); });
   paletteResults.innerHTML = Object.keys(groups).map(g => `
@@ -8921,7 +8921,7 @@ const SMART_REPLIES = {
   agreement:{ en:'Perfect, that works for me. Anything else I can help with?', ar: 'ممتاز، ذا يضبط معاي. فيه شي ثاني اقدر اساعدك فيه؟', translit: 'بيرفكت، ذات وركس فور مي. انيثينق الس اي كان هيلب وذ؟' },
   greeting: { en:'Hello, nice to see you! How can I help you today?', ar: 'اهلين، تشرفنا بشوفك! كيف اقدر اساعدك اليوم؟', translit: 'هالو، نايس تو سي يو! هاو كان اي هيلب يو تودي؟' },
   thanks:   { en:"You're most welcome. Is there anything else you need?", ar: 'العفو، ولا يهمك. فيه شي ثاني تبغاه؟', translit: 'يور موست ويلكم. از ذير انيثينق الس يو نيد؟' },
-  question: { en:'Good question, let me help you with that. What exactly would you like to know?', ar: 'سوال ممتاز، خلني اساعدك فيه. وش بالضبط تبغى تعرف؟', translit: 'قود كويستشن، ليت مي هيلب يو وذ ذات. وات اكزاكلي ود يو لايك تو نو؟' },
+  question: { en:'Good question, let me help you with that. What exactly would you like to know?', ar: 'سؤال ممتاز، خلني اساعدك فيه. وش بالضبط تبغى تعرف؟', translit: 'قود كويستشن، ليت مي هيلب يو وذ ذات. وات اكزاكلي ود يو لايك تو نو؟' },
   request:  { en:'Of course, I will take care of that right away. Anything else?', ar: 'اكيد، باعتني في ذا الحين. فيه شي ثاني؟', translit: 'اوف كورس، اي ويل تيك كير اوف ذات رايت اوي. انيثينق الس؟' },
   statement:{ en:'I understand. Thanks for letting me know, is there anything else?', ar: 'فهمت عليك. شكرا انك عرّفتني، فيه شي ثاني؟', translit: 'اي اندرستاند. ثانكس فور ليتينق مي نو، از ذير انيثينق الس؟' },
 };
@@ -9104,7 +9104,7 @@ const RP_SCRIPTS = {
     ],
     faq: [
       { match: /(return|ارجاع)/, reply: L('You can return items within 14 days with the receipt.', 'تقدر ترجع البضاعه خلال ١٤ يوم مع الفاتوره.', 'يو كان ريتيرن ايتيمز وذين 14 ديز وذ ذا ريسيت.') },
-      { match: /(discount|خصم)/, reply: L('The discount is already applied at checkout.', 'الخصم ينطبق تلقايي عند الدفع.', 'ذا ديسكاونت از اولريدي اپلايد ات تشيك اوت.') }
+      { match: /(discount|خصم)/, reply: L('The discount is already applied at checkout.', 'الخصم ينطبق تلقائي عند الدفع.', 'ذا ديسكاونت از اولريدي اپلايد ات تشيك اوت.') }
     ]
   },
   'manager': {
@@ -9126,10 +9126,10 @@ const RP_SCRIPTS = {
     role: 'Teacher', studentRole: 'student',
     steps: [
       { key:'questions', expect:'yesno', ask: L("Do you have any questions about today's lesson?", 'عندك اساله على درس اليوم؟', 'دو يو هاف اني كويستشنز اباوت تودييز لسن؟'),
-        yes: { next: 1, reply: L('Go ahead, what is your question?', 'تفضل، وش سوالك؟', 'قو اهيد، وات از يور كويستشن؟') },
+        yes: { next: 1, reply: L('Go ahead, what is your question?', 'تفضل، وش سؤالك؟', 'قو اهيد، وات از يور كويستشن؟') },
         no: { next: 2, reply: L('Great. Let us review the key words. Repeat after me.', 'ممتاز. خلنا نراجع الكلمات المهمه. كرر وراي.', 'قريت. ليت اس ريفيو ذا كي ووردز. ريپيت افتير مي.') } },
-      { key:'question', expect:'open', ask: L('What is your question?', 'وش سوالك؟', 'وات از يور كويستشن؟'),
-        any: { next: 2, reply: L('That is a great question. Let me explain it clearly.', 'سوال ممتاز. خلني اشرحه زين.', 'ذات از ا قريت كويستشن. ليت مي اكسپلين ات كليرلي.') } },
+      { key:'question', expect:'open', ask: L('What is your question?', 'وش سؤالك؟', 'وات از يور كويستشن؟'),
+        any: { next: 2, reply: L('That is a great question. Let me explain it clearly.', 'سؤال ممتاز. خلني اشرحه زين.', 'ذات از ا قريت كويستشن. ليت مي اكسپلين ات كليرلي.') } },
       { key:'practice', expect:'yesno', ask: L('Do you want to practice the dialogue now?', 'تبي نتمرن على الحوار الحين؟', 'دو يو وانت تو پركتيس ذا دايالوق ناو؟'),
         yes: { next: 3 },
         no: { next: 'wrap', reply: L('No problem, we can practice next time.', 'ولا يهمك، نتمرن المره الجايه.', 'نو بروبلم، وي كان پركتيس نيكست تايم.') },
@@ -9291,7 +9291,7 @@ const RP_SCRIPTS = {
         no: { next: 'wrap', reply: L('Alright, follow me then.', 'طيب، اتبعوني.', 'اولرايت، فولو مي ذين.') },
         info: { next: 2, reply: L('Sure, what would you like to ask?', 'اكيد، وش تحب تسال؟', 'شور، وات ود يو لايك تو اسك؟') } },
       { key:'question', expect:'open', ask: L('What would you like to know?', 'وش تحب تعرف؟', 'وات ود يو لايك تو نو؟'),
-        any: { next: 'wrap', reply: L('Good question, I will explain on the way.', 'سوال ممتاز، بشرح لكم بالطريق.', 'قود كويستشن، اي ويل اكسپلين اون ذا وي.') } },
+        any: { next: 'wrap', reply: L('Good question, I will explain on the way.', 'سؤال ممتاز، بشرح لكم بالطريق.', 'قود كويستشن، اي ويل اكسپلين اون ذا وي.') } },
       { key:'wrap', wrap: L('Enjoy the tour!', 'استمتعوا بالجوله!', 'انجوي ذا تور!') }
     ],
     faq: [
@@ -9363,12 +9363,12 @@ const RP_ALT = {
     'progress.any': L('Solid progress. Do you need any support from me?', 'تقدم ممتاز. محتاج دعم مني؟', 'سوليد پروقرس. دو يو نيد اني سپورت فروم مي؟'),
     'help.yes': L('Of course, tell me what you need and I will handle it.', 'اكيد، قول لي وش تحتاج وانا اتولى.', 'اوف كورس، تيل مي وات يو نيد اند اي ويل هاندل ات.'),
     'help.no': L('Excellent, keep it going.', 'ممتاز، كمل.', 'اكسيلنت، كيپ ات قوينق.'),
-    'help.any': L('Alright, I will take care of it.', 'طيب، انا بتحمل المسووليه.', 'اولرايت، اي ويل تيك كير اوف ات.')
+    'help.any': L('Alright, I will take care of it.', 'طيب، انا بتحمل المسؤوليه.', 'اولرايت، اي ويل تيك كير اوف ات.')
   },
   'teacher': {
     'questions.yes': L('Please, what is on your mind?', 'تفضل، وش ببالك؟', 'بليز، وات از اون يور مويند؟'),
     'questions.no': L('Perfect. Then let us practice the dialogue. Ready?', 'ممتاز. نتمرن على الحوار. جاهز؟', 'بيرفكت. ذين ليت اس پركتيس ذا دايالوق. ريدي؟'),
-    'question.any': L('Great question, I am happy to explain.', 'سوال ممتاز، يسعدني اشرح.', 'قريت كويستشن، اي ام هپي تو اكسپلين.'),
+    'question.any': L('Great question, I am happy to explain.', 'سؤال ممتاز، يسعدني اشرح.', 'قريت كويستشن، اي ام هپي تو اكسپلين.'),
     'practice.no': L('No problem, we will do it next time.', 'ولا يهمك، نسويها المره الجايه.', 'نو بروبلم، وي ويل دو ات نيكست تايم.'),
     'next.any': L('Well done. See you at the next lesson!', 'ما شا الله. نشوفك بالدرس الجاي!', 'ويل دون. سي يو ات ذا نيكست لسن!')
   },
@@ -9431,7 +9431,7 @@ const RP_ALT = {
     'questions.yes': L('Go on, what do you want to know?', 'تفضل، وش تبي تعرف؟', 'قو اون، وات دو يو وانت تو نو؟'),
     'questions.no': L('Perfect, follow me then.', 'ممتاز، اتبعوني.', 'بيرفكت، فولو مي ذين.'),
     'questions.info': L('Sure, what would you like to ask?', 'اكيد، وش تحب تسال؟', 'شور، وات ود يو لايك تو اسك؟'),
-    'question.any': L('Great one, I will explain it on the way.', 'سوال حلو، بشرحه لكم بالطريق.', 'قريت ون، اي ويل اكسپلين ات اون ذا وي.')
+    'question.any': L('Great one, I will explain it on the way.', 'سؤال حلو، بشرحه لكم بالطريق.', 'قريت ون، اي ويل اكسپلين ات اون ذا وي.')
   }
 };
 
@@ -9549,21 +9549,21 @@ function explainReply(step, leadAr){
   }
   if(step.expect === 'yesno'){
     return L('The question "' + step.ask.en + '" is a yes or no question. Answer with yes or no, then add details if you like.',
-             'السوال "' + step.ask.ar + '" سوال بايه او لا. جاوب بايه او لا، وبعدين تضيف تفاصيل اذا تبي.',
+             'السؤال "' + step.ask.ar + '" سؤال بايه او لا. جاوب بايه او لا، وبعدين تضيف تفاصيل اذا تبي.',
              'جاوب بايه او لا.');
   }
   if(step.expect === 'name'){
     return L('The question "' + step.ask.en + '" is asking for your name. Answer with your name.',
-             'السوال "' + step.ask.ar + '" يسال عن اسمك. جاوب باسمك.',
+             'السؤال "' + step.ask.ar + '" يسال عن اسمك. جاوب باسمك.',
              'جاوب باسمك.');
   }
   if(step.expect === 'time'){
     return L('The question "' + step.ask.en + '" is asking for a time. Answer with the time, like three o clock.',
-             'السوال "' + step.ask.ar + '" يسال عن الوقت. جاوب بالوقت، مثل الساعه ثلاثه.',
+             'السؤال "' + step.ask.ar + '" يسال عن الوقت. جاوب بالوقت، مثل الساعه ثلاثه.',
              'جاوب بالوقت.');
   }
   return L('The question "' + step.ask.en + '" is open. Answer in your own words.',
-           'السوال "' + step.ask.ar + '" مفتوح. جاوب بكلامك.',
+           'السؤال "' + step.ask.ar + '" مفتوح. جاوب بكلامك.',
            'جاوب بكلامك.');
 }
 function converseWith(persona, state, text){
@@ -10186,7 +10186,7 @@ function triplet(en, ar, translit, cardStyle){
 const LESSON_TITLE_BANK = [
   {id:'meeting-someone-new', en:'Meeting Someone New', ar: 'التعرف على شخص جديد', translit: 'ميتنج سام ون نيو'},
   {id:'ordering-coffee', en:'Ordering Coffee', ar: 'طلب قهوه', translit: 'اوردرنج كوفي'},
-  {id:'talking-with-friends', en:'Talking With Friends', ar: 'السوالف مع الاصحاب', translit: 'توكنج وذ فريندز'},
+  {id:'talking-with-friends', en:'Talking With Friends', ar: 'السؤالف مع الاصحاب', translit: 'توكنج وذ فريندز'},
   {id:'introducing-yourself', en:'Introducing Yourself', ar: 'تعرف بنفسك', translit: 'انترودوسنج يورسلف'},
   {id:'going-to-airport', en:'Going To The Airport', ar: 'الذهاب للمطار', translit: 'جوينج تو ذا ايربورت'},
   {id:'booking-hotel', en:'Booking A Hotel', ar: 'حجز فندق', translit: 'بوكنج ا هوتيل'},
@@ -10204,7 +10204,7 @@ const ACADEMIES = [
      never listed here, so the Levels view showed 'Content for this level
      is coming' for A0. Metadata mirrors public.academies.) ------- */
   {id:'a0-sentence-building', en:'Sentence Building', ar: 'بنا الجمل', translit: 'سنتنس بيلدنج', cat:'Foundations', icon:'blocks', from:'#C8A96A', to:'#A88345', difficulty:'Beginner', duration:'2h', lessons:8},
-  {id:'a0-question-words', en:'Question Words', ar: 'كلمات السوال', translit: 'كويستشن وردز', cat:'Foundations', icon:'message-circle-question', from:'#D9B87C', to:'#B08D57', difficulty:'Beginner', duration:'2h', lessons:8},
+  {id:'a0-question-words', en:'Question Words', ar: 'كلمات السؤال', translit: 'كويستشن وردز', cat:'Foundations', icon:'message-circle-question', from:'#D9B87C', to:'#B08D57', difficulty:'Beginner', duration:'2h', lessons:8},
   {id:'a0-spelling-sounds', en:'Spelling and Sounds', ar: 'الاملا والاصوات', translit: 'سبيلنج اند ساوندز', cat:'Foundations', icon:'spell-check', from:'#CBB27E', to:'#9C7C46', difficulty:'Beginner', duration:'3h', lessons:10},
   {id:'a0-error-clinic', en:'Error Clinic', ar: 'عياده الاغلاط', translit: 'ايرور كلينك', cat:'Foundations', icon:'wand-2', from:'#BFA06A', to:'#8F7040', difficulty:'Beginner', duration:'3h', lessons:9},
   {id:'a0-social-english', en:'Social English', ar: 'الانجليزي الاجتماعي', translit: 'سوشل انجلش', cat:'Foundations', icon:'users', from:'#D4B476', to:'#A5854B', difficulty:'Beginner', duration:'2h', lessons:8},
@@ -10345,7 +10345,7 @@ const VOCAB_BANK = [
   {en:'Detour', ipa:'/ˈdiːtʊr/', ar: 'تحويله', translit: 'ديتور', example:{en:'There is a detour, the road is closed.', ar: 'فيه تحويله، الطريق مسدود.', translit: 'ذير از ا ديتور، ذا رود از كلوزد.'}, synonyms:'Diversion, reroute', antonyms:'Direct route', family:'detour, detoured', collocations:'take a detour, traffic detour', category:'Driving English', difficulty:'Intermediate', tip:'You will often see a yellow sign with "Detour" on it.', synonyms_ar: 'تحويله', antonyms_ar: 'طريق مباشر', family_ar: 'تحويله، محوّل', collocations_ar: 'خذ تحويله، تحويله مرور', tip_ar: 'غالبا تشوف لافته صفرا مكتوب عليها Detour', mistake:'Saying "change road" instead of "detour."'},
   {en:'Fire Escape', ipa:'/faɪər ɪˈskeɪp/', ar: 'مخرج الحريق', translit: 'فاير اسكيب', example:{en:'Where is the fire escape?', ar: 'وين مخرج الحريق؟', translit: 'وير از ذا فاير اسكيب؟'}, synonyms:'Emergency exit', antonyms:'-', family:'escape, escaped', collocations:'fire escape route, fire exit', category:'Emergency English', difficulty:'Intermediate', tip: 'Hotels must show the fire escape route on the back of the door.', synonyms_ar: 'مخرج حريق', antonyms_ar: '-', family_ar: 'يهرب، هارب', collocations_ar: 'مسار مخرج الحريق، مخرج حريق', tip_ar: 'الفنادق لازم تعرض مسار الهروب ورا الباب', mistake:'Saying "fire stairs" instead of "fire escape" or "fire exit."'},
   {en:'Fire Extinguisher', ipa:'/faɪər ɪkˈstɪŋɡwɪʃər/', ar: 'طفايه حريق', translit: 'فاير اكستنجويشر', example:{en:'Grab the fire extinguisher from the wall.', ar: 'خذ الطفايه من الحايط.', translit: 'قراب ذا فاير اكستنجويشر فروم ذا ول.'}, synonyms:'Fire suppressor', antonyms:'-', family:'extinguish, extinguished', collocations:'use a fire extinguisher', category:'Emergency English', difficulty:'Advanced', tip: 'It is a long word, break it: ex-TIN-gwi-sher.', synonyms_ar: 'طفايه حريق', antonyms_ar: '-', family_ar: 'يطفى، مطفى', collocations_ar: 'استخدم طفايه الحريق', tip_ar: 'كلمه طويله، قسمها: ex-TIN-gwi-sher', mistake:'Pronouncing it "extinguish-er" with extra syllables.'},
-  {en:'Interviewer', ipa:'/ˈɪntərˌvjuːər/', ar: 'اللي يجري المقابله (المقابل)', translit: 'انترڤيوَر', example:{en:'The interviewer asked about my experience.', ar: 'المقابل سالني عن خبرتي.', translit: 'ذا انترڤيوَر اسكت اباوت ماي اكسبيرينس.'}, synonyms:'Recruiter, hiring manager', antonyms:'Interviewee', family:'interview, interviewed', collocations:'interview process, job interview', category:'Job Interview Academy', difficulty:'Advanced', tip: 'The person answering is the interviewee, the one asking is the interviewer.', synonyms_ar: 'مسوول التوظيف', antonyms_ar: 'المتقدم للمقابله', family_ar: 'مقابله، قابل', collocations_ar: 'عمليه المقابله، مقابله عمل', tip_ar: 'اللي يسال في المقابله هو اللي يجريها (interviewer)، واللي يجاوب هو المتقدم (interviewee)', mistake:'Mixing up interviewer and interviewee.'},
+  {en:'Interviewer', ipa:'/ˈɪntərˌvjuːər/', ar: 'اللي يجري المقابله (المقابل)', translit: 'انترڤيوَر', example:{en:'The interviewer asked about my experience.', ar: 'المقابل سالني عن خبرتي.', translit: 'ذا انترڤيوَر اسكت اباوت ماي اكسبيرينس.'}, synonyms:'Recruiter, hiring manager', antonyms:'Interviewee', family:'interview, interviewed', collocations:'interview process, job interview', category:'Job Interview Academy', difficulty:'Advanced', tip: 'The person answering is the interviewee, the one asking is the interviewer.', synonyms_ar: 'مسؤول التوظيف', antonyms_ar: 'المتقدم للمقابله', family_ar: 'مقابله، قابل', collocations_ar: 'عمليه المقابله، مقابله عمل', tip_ar: 'اللي يسال في المقابله هو اللي يجريها (interviewer)، واللي يجاوب هو المتقدم (interviewee)', mistake:'Mixing up interviewer and interviewee.'},
   {en:'Reference', ipa:'/ˈrɛfərəns/', ar: 'مرجع وظيفي', translit: 'ريفْرنس', example:{en:'Can I list you as a reference?', ar: 'اقدر احطك كمرجع وظيفي؟', translit: 'كان اي لست يو از ا ريفْرنس؟'}, synonyms:'Recommender', antonyms:'-', family:'refer, referred', collocations:'professional reference, character reference', category:'Job Interview Academy', difficulty:'Advanced', tip: 'Ask permission before listing someone as a reference.', synonyms_ar: 'مرجع وظيفي', antonyms_ar: '-', family_ar: 'يحيل، محال', collocations_ar: 'مرجع مهني، مرجع شخصي', tip_ar: 'اسال قبل ما تحط احد كمرجع', mistake:'Saying "referee" instead of "reference" for jobs.'},
   {en:'Overtime', ipa:'/ˈoʊvərtaɪm/', ar: 'دوام اضافي', translit: 'اوڤرتيم', example:{en:'I worked overtime all week.', ar: 'داومت اضافي كل الاسبوع.', translit: 'اي وركت اوڤرتيم اول ويك.'}, synonyms:'Extra hours', antonyms:'-', family:'-', collocations:'work overtime, overtime pay', category:'Workplace Communication', difficulty:'Intermediate', tip:'"Time and a half" means one and a half times your normal pay.', synonyms_ar: 'دوام اضافي', antonyms_ar: '-', family_ar: '-', collocations_ar: 'اشتغل اضافي، اجر الاضافي', tip_ar: 'time and a half يعني اجر ونص زياده', mistake:'Saying "extra work" when you mean working extra hours, overtime.'},
   {en:'Raise', ipa:'/reɪz/', ar: 'زياده راتب', translit: 'ريز', example:{en:'I asked my manager for a raise.', ar: 'طلبت من مديري زياده راتب.', translit: 'اي اسكت ماي مانجر فور ا ريز.'}, synonyms:'Pay increase', antonyms:'Pay cut', family:'raise, raised', collocations:'get a raise, ask for a raise', category:'Workplace Communication', difficulty:'Intermediate', tip:'"I would like to discuss my salary" is the polite opener.', synonyms_ar: 'زياده راتب', antonyms_ar: 'تخفيض راتب', family_ar: 'يزيد، زايد', collocations_ar: 'خذ زياده، اطلب زياده', tip_ar: 'حاب اتناقش براتبي هي الطريقه المهذبه', mistake:'Saying "salary increase" is formal, "raise" is the everyday word.'},
@@ -10369,7 +10369,7 @@ const VOCAB_BANK = [
 {en:'Small talk', ipa:'/ˌsmɔːl ˈtɔːk/', ar: 'حديث ودي مهذّب، ثرثره لطيفه', translit: 'سمول توك', example:{en:'We made small talk about the weather.', ar: 'دار بيننا حديث ودي عن الطقس.', translit: 'وي ميد سمول توك اباوت ذا ويذر.'}, synonyms:'chitchat, banter', antonyms:'deep talk, silence', family:'talk, talking', collocations:'make small talk, engage in small talk', category:'American Conversations', difficulty:'Intermediate', tip: 'Small talk opens doors before serious talk.', synonyms_ar: 'ثرثره لطيفه', antonyms_ar: 'حديث عميق، صمت', family_ar: 'يتكلم، يتكلم', collocations_ar: 'سوي ثرثره، ابدا ثرثره', tip_ar: 'الثرثره تفتح ابواب قبل الكلام الجدي', mistake:'Saying "do small talk" instead of "make small talk."'},
 {en:'Hang out', ipa:'/ˈhæŋ ˌaʊt/', ar: 'يقضي وقتًا مع، يتسكّع', translit: 'هانق اوت', example:{en:'We hang out at the mall on weekends.', ar: 'نتسكع في المول اخر الاسبوع.', translit: 'وي هانق اوت ات ذا مول اون ويك اندز.'}, synonyms:'spend time, chill', antonyms:'avoid, stay away', family:'hang, hanging out', collocations:'hang out with, hang out at', category:'American Conversations', difficulty:'Intermediate', tip:'In past tense it becomes "hung out."', synonyms_ar: 'يقضي وقت مع، يتسكع', antonyms_ar: 'يتجنب', family_ar: 'يتسكع، يتسكع', collocations_ar: 'تسكع مع، تسكع في', tip_ar: 'بالماضي تصير hung out', mistake:'Saying "hangouted" instead of "hung out."'},
 {en:'By the way', ipa:'/baɪ ðə ˈweɪ/', ar: 'على فكره، بالمناسبه', translit: 'باي ذا وي', example:{en:'By the way, did you call her?', ar: 'على فكره، هل اتصلت بها؟', translit: 'باي ذا وي، ديد يو كول هر؟'}, synonyms:'incidentally, speaking of which', antonyms:'', family:'way, ways', collocations:'by the way, just by the way', category:'American Conversations', difficulty:'Intermediate', tip: 'Use it to add a side note mid-conversation.', synonyms_ar: 'على فكره', antonyms_ar: '', family_ar: 'طريق، طرق', collocations_ar: 'على فكره، بس على فكره', tip_ar: 'استخدمها عشان تضيف ملاحظه جانبيه بالكلام', mistake:'Writing "bytheway" as one word instead of three.'},
-{en:'What\'s up', ipa:'/ˈwɒts ʌp/', ar: 'ما الاخبار؟ وش الحال؟', translit: 'واتس اب', example:{en:'Hey, what\'s up?', ar: 'اهلًا، ما الاخبار؟', translit: 'هي، واتس اب؟'}, synonyms:'how\'s it going, what\'s new', antonyms:'', family:'up', collocations:'what\'s up with, what\'s up man', category:'American Conversations', difficulty:'Intermediate', tip: 'It\'s a greeting, not a real question about problems.', synonyms_ar: 'ما الاخبار؟ وش الحال؟', antonyms_ar: '', family_ar: 'فوق', collocations_ar: 'ما الاخبار مع، وش اخبارك', tip_ar: 'هي تحيه مو سوال حقيقي عن المشاكل', mistake:'Answering with a long story instead of "not much, you?"'},
+{en:'What\'s up', ipa:'/ˈwɒts ʌp/', ar: 'ما الاخبار؟ وش الحال؟', translit: 'واتس اب', example:{en:'Hey, what\'s up?', ar: 'اهلًا، ما الاخبار؟', translit: 'هي، واتس اب؟'}, synonyms:'how\'s it going, what\'s new', antonyms:'', family:'up', collocations:'what\'s up with, what\'s up man', category:'American Conversations', difficulty:'Intermediate', tip: 'It\'s a greeting, not a real question about problems.', synonyms_ar: 'ما الاخبار؟ وش الحال؟', antonyms_ar: '', family_ar: 'فوق', collocations_ar: 'ما الاخبار مع، وش اخبارك', tip_ar: 'هي تحيه مو سؤال حقيقي عن المشاكل', mistake:'Answering with a long story instead of "not much, you?"'},
 {en:'Fluency', ipa:'/ˈfluːənsi/', ar: 'طلاقه، سلاسه في الكلام', translit: 'فلونسي', example:{en:'Her fluency in English improved fast.', ar: 'تحسّنت طلاقتها في الانجليزيه بسرعه.', translit: 'هر فلونسي ان انجلش امبروفد فاست.'}, synonyms:'smoothness, flow', antonyms:'hesitation, stumbling', family:'fluent, fluently', collocations:'speak with fluency, build fluency', category:'Speaking Studio', difficulty:'Intermediate', tip: 'Fluency is about flow, not perfect grammar.', synonyms_ar: 'طلاقه، سلاسه', antonyms_ar: 'تردد، تلعثم', family_ar: 'طليق، بطلاقه', collocations_ar: 'تكلم بطلاقه، ابني طلاقتك', tip_ar: 'الطلاقه عن الانسياب مو القواعد الممتازه', mistake:'Stopping at every small mistake kills fluency.'},
 {en:'Pronunciation', ipa:'/prəˌnʌnsiˈeɪʃən/', ar: 'النطق، طريقه لفظ الكلمات', translit: 'پرنانسييهيشِن', example:{en:'His pronunciation is very clear.', ar: 'نطقه واضح جدًا.', translit: 'هيز پرنانسييهيشِن از فيري كلير.'}, synonyms:'articulation, diction', antonyms:'mispronunciation', family:'pronounce, pronounced', collocations:'clear pronunciation, improve pronunciation', category:'Speaking Studio', difficulty:'Intermediate', tip:'The word itself has no "o" after the "n."', synonyms_ar: 'النطق', antonyms_ar: 'غلط نطق', family_ar: 'ينطق، منطوق', collocations_ar: 'نطق واضح، حسّن نطقك', tip_ar: 'الكلمه نفسها ما فيها o بعد الـ n', mistake:'Spelling it "pronounciation."'},
 {en:'Pause', ipa:'/pɔːz/', ar: 'وقفه، توقف قصير', translit: 'بوز', example:{en:'Take a short pause to breathe.', ar: 'خذ وقفه قصيره لتتنفس.', translit: 'تيك ا شورت بوز تو بريث.'}, synonyms:'break, stop', antonyms:'continue, rush', family:'pause, paused, pausing', collocations:'take a pause, pause for effect', category:'Speaking Studio', difficulty:'Intermediate', tip: 'A pause adds power to your words.', synonyms_ar: 'وقفه، توقف قصير', antonyms_ar: 'يكمل، يستعجل', family_ar: 'وقفه، توقف', collocations_ar: 'خذ وقفه، وقفه للتاثير', tip_ar: 'الوقفه تعطي قوه لكلامك', mistake:'Filling every pause with "um" and "uh."'},
@@ -10379,7 +10379,7 @@ const VOCAB_BANK = [
 {en:'Consonant', ipa:'/ˈkɒnsənənt/', ar: 'حرف ساكن (مثل b, c, d)', translit: 'كونسوننت', example:{en:'"B" is a consonant letter.', ar:'حرف "B" حرف ساكن.', translit: 'بي از ا كونسوننت ليتر.'}, synonyms:'consonant sound', antonyms:'vowel', family:'consonant, consonantal', collocations:'voiced consonant, double consonant', category:'American Accent Lab', difficulty:'Intermediate', tip: 'Consonants carry rhythm, vowels carry melody.', synonyms_ar: 'حرف ساكن', antonyms_ar: 'حرف متحرك', family_ar: 'حرف ساكن', collocations_ar: 'حرف ساكن مهموس، حرف ساكن مزدوج', tip_ar: 'السواكن تحمل الايقاع والمتغيرات تحمل اللحن', mistake:'Pronouncing silent consonants like the "k" in "knee."'},
 {en:'Stress', ipa:'/strɛs/', ar: 'النبر، التشديد على مقطع', translit: 'سترِس', example:{en:'Stress the second syllable.', ar: 'شدّد على المقطع الثاني.', translit: 'سترِس ذا سيكند سيلابل.'}, synonyms:'emphasis, accent', antonyms:'unstress', family:'stress, stressed, stressing', collocations:'word stress, stress a syllable', category:'American Accent Lab', difficulty:'Intermediate', tip: 'Stress changes meaning: REcord vs reCORD.', synonyms_ar: 'النبر، التشديد', antonyms_ar: 'بدون نبر', family_ar: 'نبر، مشدد', collocations_ar: 'نبر الكلمه، شدد على مقطع', tip_ar: 'النبر يغير المعنى: REcord مقابل reCORD', mistake:'Stressing every syllable equally.'},
 {en:'Syllable', ipa:'/ˈsɪləbəl/', ar: 'مقطع لفظي', translit: 'سيلابَل', example:{en:'"Water" has two syllables.', ar:'كلمه "water" تتكون من مقطعين.', translit: 'واتر هاز تو سيلابَلز.'}, synonyms:'beat, unit of sound', antonyms:'', family:'syllable, syllabic', collocations:'stressed syllable, count syllables', category:'American Accent Lab', difficulty:'Intermediate', tip: 'Clap the word to count its syllables.', synonyms_ar: 'مقطع لفظي', antonyms_ar: '', family_ar: 'مقطع، مقطعي', collocations_ar: 'مقطع مشدد، عد المقاطع', tip_ar: 'صفّق الكلمه عشان تعد مقاطعها', mistake:'Saying "sy-lla-ble" as four parts; it is three.'},
-{en:'Intonation', ipa:'/ˌɪntəˈneɪʃən/', ar: 'التنغيم، نبره الجمله', translit: 'انتونيهيشِن', example:{en:'Rising intonation marks a question.', ar: 'التنغيم الصاعد يدل على سوال.', translit: 'رايزينق انتونيهيشِن ماركس ا كويستشن.'}, synonyms:'pitch, melody', antonyms:'monotone', family:'intonate, intonation', collocations:'rising intonation, falling intonation', category:'American Accent Lab', difficulty:'Intermediate', tip: 'Your voice rises for questions, falls for statements.', synonyms_ar: 'التنغيم، نبره الجمله', antonyms_ar: 'رتيب', family_ar: 'ينغّم، تنغيم', collocations_ar: 'تنغيم صاعد، تنغيم هابط', tip_ar: 'صوتك يطلع للاسئله وينزل للجمل', mistake:'Speaking in a flat, robot-like tone.'},
+{en:'Intonation', ipa:'/ˌɪntəˈneɪʃən/', ar: 'التنغيم، نبره الجمله', translit: 'انتونيهيشِن', example:{en:'Rising intonation marks a question.', ar: 'التنغيم الصاعد يدل على سؤال.', translit: 'رايزينق انتونيهيشِن ماركس ا كويستشن.'}, synonyms:'pitch, melody', antonyms:'monotone', family:'intonate, intonation', collocations:'rising intonation, falling intonation', category:'American Accent Lab', difficulty:'Intermediate', tip: 'Your voice rises for questions, falls for statements.', synonyms_ar: 'التنغيم، نبره الجمله', antonyms_ar: 'رتيب', family_ar: 'ينغّم، تنغيم', collocations_ar: 'تنغيم صاعد، تنغيم هابط', tip_ar: 'صوتك يطلع للاسئله وينزل للجمل', mistake:'Speaking in a flat, robot-like tone.'},
 {en:'Synonym', ipa:'/ˈsɪnənɪm/', ar: 'مرادف، كلمه بنفس المعنى', translit: 'سينونيم', example:{en:'"Happy" is a synonym of "glad."', ar:'كلمه "happy" مرادف لكلمه "glad."', translit: 'هابي از ا سينونيم اوف گلاد.'}, synonyms:'equivalent, match', antonyms:'antonym', family:'synonym, synonymous', collocations:'exact synonym, near synonym', category:'Vocabulary Vault', difficulty:'Intermediate', tip: 'Learn synonyms to avoid repeating words.', synonyms_ar: 'مرادف', antonyms_ar: 'ضد', family_ar: 'مرادف، مترادف', collocations_ar: 'مرادف مطابق، مرادف قريب', tip_ar: 'تعلّم الكلمات اللي مثلها عشان ما تكرر كلمات', mistake:'Thinking synonyms are always interchangeable in tone.'},
 {en:'Antonym', ipa:'/ˈæntənɪm/', ar: 'ضد، كلمه يعني معاكس', translit: 'انتونيم', example:{en:'"Hot" is an antonym of "cold."', ar:'كلمه "hot" ضد لكلمه "cold."', translit: 'هوت از ان انتونيم اوف كولد.'}, synonyms:'opposite', antonyms:'synonym', family:'antonym, antonymous', collocations:'exact antonym', category:'Vocabulary Vault', difficulty:'Intermediate', tip: 'Pair new words with their antonyms to remember both.', synonyms_ar: 'ضد', antonyms_ar: 'مرادف', family_ar: 'ضد، متضاد', collocations_ar: 'ضد مطابق', tip_ar: 'اربط الكلمات الجديده باضدادها عشان تحفظها', mistake:'Confusing antonym with "anonymous."'},
 {en:'Context', ipa:'/ˈkɒntɛkst/', ar: 'السياق، القرينه', translit: 'كونتيكست', example:{en:'Guess the word from its context.', ar: 'خمّن الكلمه من سياقها.', translit: 'گيس ذا ورد فروم ايتس كونتيكست.'}, synonyms:'setting, situation', antonyms:'', family:'context, contextual', collocations:'in context, out of context', category:'Vocabulary Vault', difficulty:'Intermediate', tip: 'Context tells you which meaning fits.', synonyms_ar: 'السياق', antonyms_ar: '', family_ar: 'سياق، سياقي', collocations_ar: 'في السياق، خارج السياق', tip_ar: 'السياق يقولك اي معنى يناسب', mistake:'Quoting a word "out of context" changes its sense.'},
@@ -10400,7 +10400,7 @@ const VOCAB_BANK = [
 {en:'Passage', ipa:'/ˈpæsɪdʒ/', ar: 'مقطع، فقره نصيه', translit: 'باسيج', example:{en:'Read the first passage carefully.', ar: 'اقرا المقطع الاول بعنايه.', translit: 'ريد ذا فيرست باسيج كيرفلي.'}, synonyms:'text, excerpt', antonyms:'', family:'passage, passages', collocations:'reading passage, short passage', category:'Reading Corner', difficulty:'Intermediate', tip: 'A passage is a short piece of writing.', synonyms_ar: 'مقطع، فقره', antonyms_ar: '', family_ar: 'مقطع، مقاطع', collocations_ar: 'اقرا مقطع، مقطع قصير', tip_ar: 'المقطع قطعه قصيره من نص', mistake:'Pronouncing it like "massage."'},
 {en:'Headline', ipa:'/ˈhɛdlaɪn/', ar: 'عنوان رييسي', translit: 'هيدلاين', example:{en:'The headline caught my eye.', ar: 'لفت العنوان الرييسي انتباهي.', translit: 'ذا هيدلاين كاوت ماي اي.'}, synonyms:'title, header', antonyms:'footer', family:'headline, headlined', collocations:'front-page headline, write a headline', category:'Reading Corner', difficulty:'Intermediate', tip: 'Headlines summarize the whole story.', synonyms_ar: 'عنوان رييسي', antonyms_ar: 'تذييل', family_ar: 'عنوان، عناوين', collocations_ar: 'عنوان الصفحه الاولى، اكتب عنوان', tip_ar: 'العناوين تلخص القصه كامله', mistake:'Writing a headline that is too long.'},
 {en:'Summarize', ipa:'/ˈsʌməraɪz/', ar: 'يلخّص', translit: 'سَمريايز', example:{en:'Summarize the story in one sentence.', ar: 'لخّص القصه في جمله واحده.', translit: 'سَمريايز ذا ستوري ان وان سينتينس.'}, synonyms:'condense, outline', antonyms:'expand, detail', family:'summary, summarizing', collocations:'summarize in, briefly summarize', category:'Reading Corner', difficulty:'Intermediate', tip: 'A summary keeps only the main points.', synonyms_ar: 'يلخّص', antonyms_ar: 'يوسّع، يفصّل', family_ar: 'ملخص، تلخيص', collocations_ar: 'لخّص في، لخّص باختصار', tip_ar: 'الملخص يبقي النقاط الرييسيه بس', mistake:'Adding new ideas instead of summarizing.'},
-{en:'Essay', ipa:'/ˈɛseɪ/', ar: 'مقال، موضوع', translit: 'اسّاي', example:{en:'Write a short essay on the topic.', ar: 'اكتب مقالًا قصيرًا عن الموضوع.', translit: 'رايت ا شورت اسّاي اون ذا تابيك.'}, synonyms:'paper, composition', antonyms:'', family:'essay, essayist', collocations:'write an essay, essay question', category:'Writing Workshop', difficulty:'Advanced', tip: 'An essay has intro, body, conclusion.', synonyms_ar: 'مقال', antonyms_ar: '', family_ar: 'مقال، كاتب مقالات', collocations_ar: 'اكتب مقال، سوال مقال', tip_ar: 'المقال فيه مقدمه وموضوع وخاتمه', mistake:'Skipping the conclusion of an essay.'},
+{en:'Essay', ipa:'/ˈɛseɪ/', ar: 'مقال، موضوع', translit: 'اسّاي', example:{en:'Write a short essay on the topic.', ar: 'اكتب مقالًا قصيرًا عن الموضوع.', translit: 'رايت ا شورت اسّاي اون ذا تابيك.'}, synonyms:'paper, composition', antonyms:'', family:'essay, essayist', collocations:'write an essay, essay question', category:'Writing Workshop', difficulty:'Advanced', tip: 'An essay has intro, body, conclusion.', synonyms_ar: 'مقال', antonyms_ar: '', family_ar: 'مقال، كاتب مقالات', collocations_ar: 'اكتب مقال، سؤال مقال', tip_ar: 'المقال فيه مقدمه وموضوع وخاتمه', mistake:'Skipping the conclusion of an essay.'},
 {en:'Thesis', ipa:'/ˈθiːsɪs/', ar: 'اطروحه، فكره رييسيه', translit: 'ثيسيس', example:{en:'State your thesis early.', ar: 'اذكر فكرتك الرييسيه مبكرًا.', translit: 'ستيت يور ثيسيس ارلي.'}, synonyms:'main idea, argument', antonyms:'', family:'thesis', collocations:'thesis statement, defend a thesis', category:'Writing Workshop', difficulty:'Advanced', tip: 'One sentence that holds the whole essay.', synonyms_ar: 'فكره رييسيه', antonyms_ar: '', family_ar: 'اطروحه', collocations_ar: 'جمله الفكره، دافع عن الفكره', tip_ar: 'جمله وحده تحمل المقال كله', mistake:'Writing a thesis that is too vague.'},
 {en:'Draft', ipa:'/drɑːft/', ar: 'مسوده، نسخه اوليه', translit: 'درافت', example:{en:'This is just a first draft.', ar: 'هذي مجرد مسوده اولى.', translit: 'ذيس از جاست ا فيرست درافت.'}, synonyms:'outline, sketch', antonyms:'final version', family:'draft, drafted, drafting', collocations:'rough draft, draft an essay', category:'Writing Workshop', difficulty:'Advanced', tip: 'A draft is meant to be improved.', synonyms_ar: 'مسوده', antonyms_ar: 'نسخه نهاييه', family_ar: 'مسوده، مسوّد', collocations_ar: 'مسوده اوليه، سوّد مقال', tip_ar: 'المسوده مصممه للتحسين', mistake:'Treating the first draft as the final version.'},
 {en:'Revise', ipa:'/rɪˈvaɪz/', ar: 'يراجع ويعدّل', translit: 'ريفايز', example:{en:'Revise your draft for clarity.', ar: 'راجع مسودتك لتكون اوضح.', translit: 'ريفايز يور درافت فور كليريتي.'}, synonyms:'edit, rewrite', antonyms:'keep, leave', family:'revise, revision', collocations:'revise for, revise a draft', category:'Writing Workshop', difficulty:'Advanced', tip: 'Revise for ideas, then edit for grammar.', synonyms_ar: 'يراجع ويعدّل', antonyms_ar: 'يبقي', family_ar: 'يراجع، مراجعه', collocations_ar: 'راجع من اجل، راجع مسوده', tip_ar: 'راجع للافكار بعدين عدّل للقواعد', mistake:'Revising and editing at the same time.'},
@@ -10716,8 +10716,8 @@ window.SAUDI_MISTAKE_COACH = [
         titleEn: 'Statement as question',
         wrong: 'You like coffee?',
         correct: 'Do you like coffee?',
-        whyAr: 'بالعربي نرفع الصوت في الاخر ونسويها سوال. بالانجليزي لازم كلمه مساعده (do/does/did) بالبدايه.',
-        ruleAr: 'سوال = كلمه مساعده + فاعل + فعل: Do you like? Does she work? Did he go?',
+        whyAr: 'بالعربي نرفع الصوت في الاخر ونسويها سؤال. بالانجليزي لازم كلمه مساعده (do/does/did) بالبدايه.',
+        ruleAr: 'سؤال = كلمه مساعده + فاعل + فعل: Do you like? Does she work? Did he go?',
         practice: [
           {q:'Choose the correct question:', options:['Where you live?','Where do you live?','Where live you?','Where you do live?'], correct:1},
           {q:'Choose the correct question:', options:['What she does?','What does she do?','What she do?','What does she?'], correct:1},
@@ -11164,7 +11164,7 @@ const FLAGSHIP_LESSONS = {
     summary:'You practiced ordering a drink politely, choosing between "for here" and "to go," and asking for a receipt.',
   },
   'american-conversations::talking-with-friends': {
-    title:'Talking With Friends', ar: 'السوالف مع الاصحاب', translit: 'توكنج وذ فريندز',
+    title:'Talking With Friends', ar: 'السؤالف مع الاصحاب', translit: 'توكنج وذ فريندز',
     difficulty:'Intermediate', duration:'8 min',
     vocab:[VOCAB_BANK[1], VOCAB_BANK[11]],
     grammar:{title:'Present Perfect vs Past Simple', rule:'Use present perfect for unfinished time, past simple for a finished, specific time.', saudi:'استخدم present perfect للفتره اللي ما خلصت، و past simple للوقت المحدد اللي خلص.', wrong:'I have seen him yesterday.', right:'I saw him yesterday.', mistakes:['Adding "have" with a finished time word like "yesterday."']},
@@ -11232,7 +11232,7 @@ const LESSON_LIBRARY = {
       {who:'A', en:'How do you spell your first name?', ar: 'كيف تهجّي اسمك الاول؟', translit: 'هاو دو يو سبل يور فيرست نيم؟'},
       {who:'B', en:"It's F-A-I-S-A-L.", ar: 'ف-ا-ي-س-ا-ل.', translit: 'اتس اف-اي-اي-اس-اي-ال.'},
       {who:'A', en:'Got it. Do you spell it with one S?', ar: 'تمام. تهجّيها بحرف اس واحد؟', translit: 'قات ات. دو يو سبل ات وذ وان اس؟'},
-      {who:'B', en:'Yes, one S. Thanks for asking.', ar: 'ايه، اس واحد. شكرا لسوالك.', translit: 'يس، وان اس. ثانكس فور اسكنق.'},
+      {who:'B', en:'Yes, one S. Thanks for asking.', ar: 'ايه، اس واحد. شكرا لسؤالك.', translit: 'يس، وان اس. ثانكس فور اسكنق.'},
     ],
     quiz:[
       {qAr: 'كم عدد الحروف الانجليزيه؟', qEn:'How many letters are in the English alphabet?', options:['26','28','32'], correct:0},
@@ -11317,7 +11317,7 @@ const LESSON_LIBRARY = {
     title:'Basic Questions With What, Where, When', ar: 'الاساله الاساسيه: وش، وين، متى', translit: 'بيسك كويستشنز وذ وات، وير، وين',
     duration:'8 min', difficulty:'Beginner',
     vocab:[VOCAB_BANK[13], VOCAB_BANK[2]],
-    grammar:{title:'WH- Question Order', rule:'A WH- question starts with the question word, then the auxiliary, then the subject: Where are you? What do you do?', saudi:'ترتيب السوال: كلمه السوال، بعدين كلمه مساعده، بعدين الشخص. مو مثل العربي اللي يبدا بالشخص.', wrong:'You are from where?', right:'Where are you from?', mistakes:['Putting the question word at the end in English, it stays at the start.','Forgetting the auxiliary: "Where you live?" instead of "Where do you live?"']},
+    grammar:{title:'WH- Question Order', rule:'A WH- question starts with the question word, then the auxiliary, then the subject: Where are you? What do you do?', saudi:'ترتيب السؤال: كلمه السؤال، بعدين كلمه مساعده، بعدين الشخص. مو مثل العربي اللي يبدا بالشخص.', wrong:'You are from where?', right:'Where are you from?', mistakes:['Putting the question word at the end in English, it stays at the start.','Forgetting the auxiliary: "Where you live?" instead of "Where do you live?"']},
     conversation:[
       {who:'A', en:'Where are you from?', ar: 'انت من وين؟', translit: 'وير ار يو فروم؟'},
       {who:'B', en:'I am from Riyadh. What about you?', ar: 'انا من الرياض. وانت؟', translit: 'ايم فروم رياض. وات اباوت يو؟'},
@@ -11325,14 +11325,14 @@ const LESSON_LIBRARY = {
       {who:'B', en:'I am a student. When do your classes start?', ar: 'انا طالب. متى تبدا محاضراتك؟', translit: 'ايم ا ستودنت. وين دو يور كلاسيز ستارت؟'},
     ],
     quiz:[
-      {qAr: 'اي سوال صح؟', qEn:'Which question is correct?', options:['Where you live?','Where do you live?','You live where?'], correct:1},
+      {qAr: 'اي سؤال صح؟', qEn:'Which question is correct?', options:['Where you live?','Where do you live?','You live where?'], correct:1},
       {qAr:'وش معنى "What do you do?"', qEn:'"What do you do?" asks about your...', options:['Job','Age','Address'], correct:0},
     ],
     summary:'You practiced the three most useful question words and the correct English word order for questions.',
     takeaway:'اسال شخص بالانجليزي اليوم: Where are you from? وشوف وش يرد عليك.',
   },
   'small-talk-weather': {
-    title:'Small Talk: The Weather', ar: 'سوالف خفيفه: الجو', translit: 'سمول توك: ذا ويذر',
+    title:'Small Talk: The Weather', ar: 'سؤالف خفيفه: الجو', translit: 'سمول توك: ذا ويذر',
     duration:'7 min', difficulty:'Beginner',
     vocab:[VOCAB_BANK[1], VOCAB_BANK[13]],
     grammar:{title:'It Is + Adjective', rule:'Talk about weather with "It is" plus an adjective: It is hot, it is rainy, it is windy.', saudi:'لوصف الجو نستخدم It is مع صفه: الجو حار، الجو ممطر.', wrong:'The weather is rain today.', right:'It is rainy today.', mistakes:['Using a noun where an adjective is needed: "it is rain" instead of "it is rainy."','Saying "the weather is hot today" is fine, but "it is hot" is more natural.']},
@@ -11484,7 +11484,7 @@ const LESSON_LIBRARY = {
     conversation:[
       {who:'A', en:'So you want the meeting moved to Sunday?', ar: 'يعني تبغى الاجتماع يتنقل للاحد؟', translit: 'سو يو وانت ذا ميتنق موڤد تو ساندي؟'},
       {who:'B', en:'Oh, I think we misunderstood. I said Saturday, not Sunday.', ar: 'اي، اتوقع حصل سو فهم. انا قلت السبت مو الاحد.', translit: 'او، اي ثينك وي ميساندرستود. اي سيد ساتردي، نات ساندي.'},
-      {who:'A', en:'My bad, Saturday then. Let me rephrase my question.', ar: 'غلطتي، السبت اذن. خلني اعيد صياغه سوالي.', translit: 'ماي باد، ساتردي ذن. ليت مي ريفريز ماي كويستشن.'},
+      {who:'A', en:'My bad, Saturday then. Let me rephrase my question.', ar: 'غلطتي، السبت اذن. خلني اعيد صياغه سؤالي.', translit: 'ماي باد، ساتردي ذن. ليت مي ريفريز ماي كويستشن.'},
       {who:'B', en:'No worries, it happens.', ar: 'ولا يهمك، تصير.', translit: 'نو وريز، ات هابنز.'},
     ],
     quiz:[
@@ -11859,7 +11859,7 @@ const LESSON_LIBRARY = {
     title:'Asking Prices', ar: 'تسال عن الاسعار', translit: 'اسكنق پرايسز',
     duration:'7 min', difficulty:'Beginner',
     vocab:[VOCAB_BANK[26], VOCAB_BANK[15]],
-    grammar:{title:'How Much Is This?', rule:'Ask: How much is this? Is there a discount? Do you have this in another color?', saudi:'للسوال عن السعر: بكم ذا؟ فيه خصم؟', wrong:'This how much?', right:'How much is this?', mistakes:['Putting the question word at the end.','Not asking about tax, which is added at the register in the US.']},
+    grammar:{title:'How Much Is This?', rule:'Ask: How much is this? Is there a discount? Do you have this in another color?', saudi:'للسؤال عن السعر: بكم ذا؟ فيه خصم؟', wrong:'This how much?', right:'How much is this?', mistakes:['Putting the question word at the end.','Not asking about tax, which is added at the register in the US.']},
     conversation:[
       {who:'A', en:'Excuse me, how much is this jacket?', ar: 'لو سمحت، بكم ذا الجاكيت؟', translit: 'اكسكوز مي، هاو ماتش از ذيس جاكيت؟'},
       {who:'B', en:'It is ninety dollars, but it is on sale today.', ar: 'تسعين دولار، بس عليه خصم اليوم.', translit: 'ات از نوينتي دولارز، بات ات از اون سيل تودي.'},
@@ -12022,7 +12022,7 @@ const LESSON_LIBRARY = {
     title:'Business Phone Calls', ar: 'مكالمات الشغل', translit: 'فون كولز بزنس',
     duration:'9 min', difficulty:'Advanced',
     vocab:[VOCAB_BANK[38], VOCAB_BANK[36]],
-    grammar:{title:'Phone Call Phrases', rule:'Use standard call phrases: This is Ahmed speaking. May I ask who is calling? I will put you through.', saudi:'عبارات المكالمات: معاك احمد، ممكن اعرف مع من اتكلم؟ باحولك على المسوول.', wrong:'Who are you?', right:'May I ask who is calling?', mistakes:['Being abrupt at the start of a business call.','Not confirming the purpose: "Could you tell me the reason for your call?"']},
+    grammar:{title:'Phone Call Phrases', rule:'Use standard call phrases: This is Ahmed speaking. May I ask who is calling? I will put you through.', saudi:'عبارات المكالمات: معاك احمد، ممكن اعرف مع من اتكلم؟ باحولك على المسؤول.', wrong:'Who are you?', right:'May I ask who is calling?', mistakes:['Being abrupt at the start of a business call.','Not confirming the purpose: "Could you tell me the reason for your call?"']},
     conversation:[
       {who:'A', en:'Hello, this is Sara from the marketing team.', ar: 'السلام عليكم، معاك ساره من فريق التسويق.', translit: 'هيلو، ذيس از سارا فروم ذا ماركتنق تيم.'},
       {who:'B', en:'Good morning, how can I help you?', ar: 'صباح الخير، كيف اقدر اساعدك؟', translit: 'قود مورننج، هاو كان اي هيلب يو؟'},
@@ -12174,7 +12174,7 @@ const LESSON_LIBRARY = {
       {who:'B', en:'I heard. Did they share the slides?', ar: 'سمعت. شاركوا الشرايح؟', translit: 'اي هيرد. ديد ذي شير ذا سلايدز؟'},
     ],
     quiz:[
-      {qAr: 'اي سوال صح؟', qEn:'Which question is correct?', options:['Did you go to the meeting?','Did you went to the meeting?','Did you going to the meeting?'], correct:0},
+      {qAr: 'اي سؤال صح؟', qEn:'Which question is correct?', options:['Did you go to the meeting?','Did you went to the meeting?','Did you going to the meeting?'], correct:0},
       {qAr: 'النفي بالماضي:', qEn:'The past negative is:', options:['I did not go.','I did not went.','I not go.'], correct:0},
     ],
     summary:'You practiced past simple questions and negatives with did plus the base form.',
@@ -12367,7 +12367,7 @@ const LESSON_LIBRARY = {
     vocab:[VOCAB_BANK[4], VOCAB_BANK[38]],
     grammar:{title:'Could You Please', rule:'Politeness in writing comes from modals: Could you please...? Would it be possible to...?', saudi:'التادب بالكتابه من الافعال المساعده: ممكن لو سمحت؟', wrong:'Send the file.', right:'Could you please send the file?', mistakes:['Writing demands in short imperatives.','Forgetting the subject line.']},
     conversation:[
-      {who:'A', en:'Subject: Quick question about the report', ar: 'الموضوع: سوال سريع عن التقرير', translit: 'سابجكت: كويك كويستشن اباوت ذا ريبورت'},
+      {who:'A', en:'Subject: Quick question about the report', ar: 'الموضوع: سؤال سريع عن التقرير', translit: 'سابجكت: كويك كويستشن اباوت ذا ريبورت'},
       {who:'B', en:'Dear Omar, could you please send the updated report?', ar: 'عزيزي عمر، ممكن ترسل التقرير المحدث؟', translit: 'دير عمر، كود يو بليز سند ذا اپديتد ريبورت؟'},
       {who:'A', en:'Would it be possible to get it by noon?', ar: 'ممكن يصير جاهز قبل الظهر؟', translit: 'ود ات بي پوسيبل تو قيت ات باي نون؟'},
       {who:'B', en:'Thanks in advance, Sara.', ar: 'شكرا مقدمًا، ساره.', translit: 'ثانكس ان ادفانس، سارا.'},
@@ -12585,15 +12585,15 @@ const LESSON_LIBRARY = {
       {en:'And you?', ar: 'وانت؟', translit: 'wenta?', tip: 'Always bounce the question back, it is expected.'},
       {en:'Fine / well', ar: 'بخير', translit: 'bikhair', tip: 'Short and polite, good for formal settings.'},
     ],
-    grammar:{title:'The exchange pattern', rule:'In conversation, "how are you" is a ritual: you ask, they answer with a blessing, and you answer back. Always return the question.', saudi:'السوال عن الحال طقس: تسال، يجاوبون، وتسال انت لسه. ما يصير تسال وما ترد السوال.', wrong:'Answer "tamaam" and walk away without asking back.', right:'"Tamaam, wenta?" (I am good, and you?)', mistakes:['Answering only yes/no and stopping the exchange.','Answering with a long story, keep it short unless they ask more.']},
+    grammar:{title:'The exchange pattern', rule:'In conversation, "how are you" is a ritual: you ask, they answer with a blessing, and you answer back. Always return the question.', saudi:'السؤال عن الحال طقس: تسال، يجاوبون، وتسال انت لسه. ما يصير تسال وما ترد السؤال.', wrong:'Answer "tamaam" and walk away without asking back.', right:'"Tamaam, wenta?" (I am good, and you?)', mistakes:['Answering only yes/no and stopping the exchange.','Answering with a long story, keep it short unless they ask more.']},
     conversation:[
       {who:'A', ar: 'كيفك اليوم؟', translit: 'keef halak alyoum?', en:'How are you today?'},
       {who:'B', ar: 'الحمدلله بخير، وانت كيفك؟', translit: 'alhamdulillah bikhair, wenta keefak?', en:'Fine, praise God, and how are you?'},
-      {who:'A', ar: 'تمام، مشكور على السوال.', translit: 'tamaam, mashkoor ala alsuaal', en:'Great, thanks for asking.'},
+      {who:'A', ar: 'تمام، مشكور على السؤال.', translit: 'tamaam, mashkoor ala alsuaal', en:'Great, thanks for asking.'},
     ],
     quiz:[
       {qAr:'وش الرد الطبيعي على "كيفك؟"؟', qEn:'What is the natural reply to "Keefak?"?', options:['الحمدلله تمام / Fine, praise God','طيب وين؟ / OK where?','متى؟ / When?'], correct:0},
-      {qAr: 'وش تسوي لسه ما ترد على السوال؟', qEn:'After answering, what do you do?', options:['تسال السوال نفسه / Ask the same question back','تمشي / Walk away','تسكت / Stay silent'], correct:0},
+      {qAr: 'وش تسوي لسه ما ترد على السؤال؟', qEn:'After answering, what do you do?', options:['تسال السؤال نفسه / Ask the same question back','تمشي / Walk away','تسكت / Stay silent'], correct:0},
     ],
     summary:'You practiced the polite how-are-you ritual and learned that returning the question is part of the greeting, not optional.',
     takeaway:'احفظ: تمام + الحمدلله + وانت؟ = رده فعل طبيعيه.',
@@ -12702,7 +12702,7 @@ const LESSON_LIBRARY = {
       {who:'B', ar: 'انا من جده، وش تشتغل انت؟', translit: 'ana min jeddah, wesh tashtaghel enta?', en:'I am from Jeddah, what do you do?'},
     ],
     quiz:[
-      {qAr: 'وش السوال الثاني الطبيعي لسه الاسم؟', qEn:'What is the natural second question after the name?', options:['من وين انت؟ / Where are you from?','كم عمرك؟ / How old are you?','كم راتبك؟ / What is your salary?'], correct:0},
+      {qAr: 'وش السؤال الثاني الطبيعي لسه الاسم؟', qEn:'What is the natural second question after the name?', options:['من وين انت؟ / Where are you from?','كم عمرك؟ / How old are you?','كم راتبك؟ / What is your salary?'], correct:0},
       {qAr: 'وش تقول للضيف الجديد؟', qEn:'What do you say to a newcomer?', options:['نورتنا / You honored us','مع السلامه / Goodbye','لا تشكرني / Do not thank me'], correct:0},
     ],
     summary:'You learned the real getting-to-know-you flow and why the fast questions are friendly, not rude.',
@@ -12710,7 +12710,7 @@ const LESSON_LIBRARY = {
     situation:{
       hear:[{ar: 'نورتنا، من وين انت؟', translit: 'nawwartna, min wen enta?', en:'Welcome, where are you from?'},{ar: 'وش تشتغل؟', translit: 'wesh tashtaghel?', en:'What do you do?'}],
       say:[{ar: 'انا من الدمام، اشتغل بمدرسه.', translit: 'ana min aldamam, ashtaghel bimadrasa', en:'I am from Dammam, I work at a school.'}],
-      recover:[{ar: 'ما فهمت السوال، ممكن تعيده؟', translit: 'ma fahemt alsuaal, mumkin taeedo?', en:'I did not understand the question, can you repeat it?'}],
+      recover:[{ar: 'ما فهمت السؤال، ممكن تعيده؟', translit: 'ma fahemt alsuaal, mumkin taeedo?', en:'I did not understand the question, can you repeat it?'}],
     },
   },
   'sa-taxi-driver': {
@@ -12770,7 +12770,7 @@ const LESSON_LIBRARY = {
     },
   },
   'sa-family-talk': {
-    title:'Talking About Family', ar: 'سوالف العايله', translit: 'sawalif aleela', dir:'ar',
+    title:'Talking About Family', ar: 'سؤالف العايله', translit: 'sawalif aleela', dir:'ar',
     duration:'8 min', difficulty:'Beginner',
     vocab:[
       {en:'My family', ar: 'اهلي', translit: 'ahli', tip:'In Arabic, "ahl" covers the whole family.'},
@@ -12938,7 +12938,7 @@ const LESSON_LIBRARY = {
     },
   },
   'sa-coffee-smalltalk': {
-    title:'Small Talk at the Coffee Shop', ar: 'سوالف الكوفي', translit: 'sawalif alkafi', dir:'ar',
+    title:'Small Talk at the Coffee Shop', ar: 'سؤالف الكوفي', translit: 'sawalif alkafi', dir:'ar',
     duration:'7 min', difficulty:'Intermediate',
     vocab:[
       {en:'Do you come here often?', ar: 'تجي هنا دايم؟', translit: 'teji huna dayim?', tip: 'The classic opener between regulars.'},
@@ -12958,7 +12958,7 @@ const LESSON_LIBRARY = {
       {qAr: 'كيف تسال عن اقتراح؟', qEn:'How do you ask for a recommendation?', options:['وش تنصحني؟ / What do you recommend?','بكم؟ / How much?','وين؟ / Where?'], correct:0},
     ],
     summary:'You learned the light social talk that turns a coffee run into a real interaction.',
-    takeaway:'الزحمه + وش تنصحني + بالعافيه = سوالف كوفي كامله.',
+    takeaway:'الزحمه + وش تنصحني + بالعافيه = سؤالف كوفي كامله.',
     situation:{
       hear:[{ar: 'تجي هنا دايم؟', translit: 'teji huna dayim?', en:'Do you come here often?'},{ar: 'جرب ذا، مره حلو.', translit: 'jarb dha, marra hilo', en:'Try this one, it is really good.'}],
       say:[{ar: 'اول مره اجي، وش المشهور عندكم؟', translit: 'awwal marra aji, wesh almashhoor indakum?', en:'First time here, what is popular here?'}],
@@ -12994,7 +12994,7 @@ const LESSON_LIBRARY = {
     },
   },
   'sa-smalltalk-work': {
-    title:'Small Talk at Work', ar: 'سوالف الدوام', translit: 'sawalif aldawam', dir:'ar',
+    title:'Small Talk at Work', ar: 'سؤالف الدوام', translit: 'sawalif aldawam', dir:'ar',
     duration:'7 min', difficulty:'Intermediate',
     vocab:[
       {en:'How is work?', ar: 'كيف الدوام؟', translit: 'keef aldawam?', tip: 'The morning opener in any office.'},
@@ -13010,11 +13010,11 @@ const LESSON_LIBRARY = {
       {who:'B', ar: 'والله محتاجها.', translit: 'wallah muhtaajha', en:'I really need it.'},
     ],
     quiz:[
-      {qAr: 'وش اول سوال بالدوام؟', qEn:'What is the first work question?', options:['كيف الدوام؟ / How is work?','كم راتبك؟ / What is your salary?','وش سرك؟ / What is your secret?'], correct:0},
-      {qAr: 'كيف ترد على السوال بطريقه خفيف؟', qEn:'How do you answer lightly?', options:['زحمه شغل بس تمام / Busy but fine','افصل بكره / I quit tomorrow','لا تسالني / Do not ask'], correct:0},
+      {qAr: 'وش اول سؤال بالدوام؟', qEn:'What is the first work question?', options:['كيف الدوام؟ / How is work?','كم راتبك؟ / What is your salary?','وش سرك؟ / What is your secret?'], correct:0},
+      {qAr: 'كيف ترد على السؤال بطريقه خفيف؟', qEn:'How do you answer lightly?', options:['زحمه شغل بس تمام / Busy but fine','افصل بكره / I quit tomorrow','لا تسالني / Do not ask'], correct:0},
     ],
     summary:'You learned the daily work greeting ritual and how to answer without starting a meeting.',
-    takeaway:'كيف الدوام + زحمه شغل = سوالف دوام جاهزه.',
+    takeaway:'كيف الدوام + زحمه شغل = سؤالف دوام جاهزه.',
     situation:{
       hear:[{ar: 'كيف الدوام اليوم؟', translit: 'keef aldawam alyoum?', en:'How is work today?'},{ar: 'شكلك تعبان.', translit: 'shaklak taban', en:'You look tired.'}],
       say:[{ar: 'شوي، بس الحمدلله.', translit: 'shway, bas alhamdulillah', en:'A bit, but praise God.'}],
@@ -13095,7 +13095,7 @@ const LESSON_LIBRARY = {
     ],
     quiz:[
       {qAr: 'وش الرد الطبيعي على الاعتذار؟', qEn:'What is the natural reply to an apology?', options:['ما عليك / It is fine','وين؟ / Where?','شكرا / Thanks'], correct:0},
-      {qAr: 'كيف تتحمل المسووليه؟', qEn:'How do you take responsibility?', options:['الغلطه مني / My fault','مو انا / Not me','الظروف / Circumstances'], correct:0},
+      {qAr: 'كيف تتحمل المسؤوليه؟', qEn:'How do you take responsibility?', options:['الغلطه مني / My fault','مو انا / Not me','الظروف / Circumstances'], correct:0},
     ],
     summary:'You learned the fast apology: aasif, the reason, and the forgiving reply.',
     takeaway:'اسف + سبب قصير، والرد دايم: ما عليك.',
@@ -13416,7 +13416,7 @@ const LESSON_LIBRARY = {
     },
   },
   'sa-family-marriage': {
-    title:'Wedding Talk', ar: 'سوالف العرس', translit: 'sawalif al-urs', dir:'ar',
+    title:'Wedding Talk', ar: 'سؤالف العرس', translit: 'sawalif al-urs', dir:'ar',
     duration:'8 min', difficulty:'Intermediate',
     vocab:[
       {en:'Wedding', ar: 'عرس', translit: 'urs', tip: 'The wedding celebration, often a big multi day event.'},
@@ -13480,7 +13480,7 @@ const LESSON_LIBRARY = {
       {en:'Hospitality', ar: 'ضيافه', translit: 'dayafa', tip: 'Offering food and drink to guests.'},
       {en:'Welcome guest', ar: 'ضيف', translit: 'dayf', tip: 'The guest is treated with great respect.'},
     ],
-    grammar:{title:'The visit pattern', rule:'visits come with hospitality: tea or coffee first, then the conversation. You announce a visit with bnazoor + the relative.', saudi:'الزياره عندنا تبدا بالقهوه، بعدين السوالف. تقول: بنزور عمي.', wrong:'Show up unannounced for a visit, call first.', right:'"Bnazoor khalaal, akeed." (We will visit the aunt, of course.)', mistakes:['Refusing the first cup of coffee, part of the hospitality ritual.','Staying too long, short visits are appreciated.']},
+    grammar:{title:'The visit pattern', rule:'visits come with hospitality: tea or coffee first, then the conversation. You announce a visit with bnazoor + the relative.', saudi:'الزياره عندنا تبدا بالقهوه، بعدين السؤالف. تقول: بنزور عمي.', wrong:'Show up unannounced for a visit, call first.', right:'"Bnazoor khalaal, akeed." (We will visit the aunt, of course.)', mistakes:['Refusing the first cup of coffee, part of the hospitality ritual.','Staying too long, short visits are appreciated.']},
     conversation:[
       {who:'You', ar: 'بنزور خالي اليوم.', translit: 'bnazoor khaali alyoum', en:'We will visit my uncle today.'},
       {who:'Relative', ar: 'اهلا وسهلا، تفضل القهوه.', translit: 'ahlan wa sahlan, tafaddal algahwa', en:'Welcome, have some coffee.'},
@@ -13602,7 +13602,7 @@ const LESSON_LIBRARY = {
       {who:'You', ar: 'وين انتظر؟', translit: 'wen anthir?', en:'Where do I wait?'},
     ],
     quiz:[
-      {qAr: 'وش اول سوال بالاستقبال؟', qEn:'What is the first reception question?', options:['الاسم لو سمحت / Your name please','بكم؟ / How much?','وين بيتك؟ / Where is your house?'], correct:0},
+      {qAr: 'وش اول سؤال بالاستقبال؟', qEn:'What is the first reception question?', options:['الاسم لو سمحت / Your name please','بكم؟ / How much?','وين بيتك؟ / Where is your house?'], correct:0},
       {qAr: 'كيف تاكد عندك موعد؟', qEn:'How do you confirm you have an appointment?', options:['عندي موعد / I have an appointment','ما عندي شي / I have nothing','الموعد مشغول / The appointment is busy'], correct:0},
     ],
     summary:'You learned the reception check-in flow and the waiting direction.',
@@ -13736,7 +13736,7 @@ const LESSON_LIBRARY = {
       {en:'The room', ar: 'الغرفه', translit: 'alghurfa', tip: 'Your room.'},
       {en:'Check out', ar: 'المغادره', translit: 'almughadara', tip: 'When you leave the hotel.'},
     ],
-    grammar:{title:'Checking in', rule:'At the hotel: indi hajz (I have a reservation) + your name, then ask for the room and amenities.', saudi:'بالفندق: عندي حجز باسم + سوال عن الغرفه.', wrong:'Walk in without stating you have a reservation.', right:'"Indi hajz bism Khaled." (I have a reservation under Khaled.)', mistakes:['Forgetting to ask about breakfast, al-futoor matters.','Not confirming the checkout time.']},
+    grammar:{title:'Checking in', rule:'At the hotel: indi hajz (I have a reservation) + your name, then ask for the room and amenities.', saudi:'بالفندق: عندي حجز باسم + سؤال عن الغرفه.', wrong:'Walk in without stating you have a reservation.', right:'"Indi hajz bism Khaled." (I have a reservation under Khaled.)', mistakes:['Forgetting to ask about breakfast, al-futoor matters.','Not confirming the checkout time.']},
     conversation:[
       {who:'You', ar: 'عندي حجز باسم ساره.', translit: 'indi hajz bism sara', en:'I have a reservation under Sara.'},
       {who:'Reception', ar: 'اهلا ساره، غرفتك جاهزه.', translit: 'ahla sara, ghurftik jaheza', en:'Welcome Sara, your room is ready.'},
@@ -13756,7 +13756,7 @@ const LESSON_LIBRARY = {
     },
   },
   'sa-travel-directions': {
-    title:'Asking for Directions', ar: 'سوال عن الاتجاهات', translit: 'suaal an al-itijaahaat', dir:'ar',
+    title:'Asking for Directions', ar: 'سؤال عن الاتجاهات', translit: 'suaal an al-itijaahaat', dir:'ar',
     duration:'7 min', difficulty:'Beginner',
     vocab:[
       {en:'Where is...?', ar: 'وين...؟', translit: 'wen...?', tip: 'The universal question starter.'},
@@ -15954,9 +15954,9 @@ const LOCAL_RULES = [
   },
   {
     id:'question-inversion', category:'word-order',
-    ar:'في السوال نعكس الفعل والشخص: "where are you going" مو "where you are going".',
+    ar:'في السؤال نعكس الفعل والشخص: "where are you going" مو "where you are going".',
     en:'In a question the verb comes before the subject: "where are you going", not "where you are going".',
-    whyAr: 'كلمه السوال بعدها am/is/are بعدين الشخص.',
+    whyAr: 'كلمه السؤال بعدها am/is/are بعدين الشخص.',
     whyEn:'A question word is followed by am/is/are, then the subject.',
     learn:{ ar: 'Where are you? What is your name?', en:'Wh-word + am/is/are + subject.' },
     find(tokens, i){
@@ -16238,26 +16238,26 @@ window.pelConversationFit = function(userText, botLine){
     const wbBad = /^(no|nope|no!+|no{2,}|never|nothing|none|nobody|bad|terrible|awful|worst|not good|not well|not great|no thanks?)(\s*!*)*$/i.test(low);
     if(wbBad || (isBare && /^(no|nope|never|nothing)/i.test(low))){
       off=true;
-      ar="السوال يسال عن اخبارك (how are you)، وردّك 'لا' ما يعتبر جواب. ما تقول 'لا' هنا لان السايل يبي يعرف حالك - قول كيفك.";
+      ar="السؤال يسال عن اخبارك (how are you)، وردّك 'لا' ما يعتبر جواب. ما تقول 'لا' هنا لان السايل يبي يعرف حالك - قول كيفك.";
       en="They asked how you are - answering 'no' isn't an answer. Don't say 'no' here; tell them how you're doing.";
     }
   } else if(type==='name' && (isBare || words.length<2)){
     off=true;
-    ar="السوال عن اسمك - جاوب باسمك مو بـ 'لا' او 'ايه'.";
+    ar="السؤال عن اسمك - جاوب باسمك مو بـ 'لا' او 'ايه'.";
     en="They asked your name - answer with your name, not 'no' or 'yes'.";
   } else if(type==='occupation' && (isBare || words.length<2)){
     off=true;
-    ar="السوال عن شغلك - جاوب بعملك او قول 'I'm a student'.";
+    ar="السؤال عن شغلك - جاوب بعملك او قول 'I'm a student'.";
     en="They asked about your work - answer with your job or 'I'm a student'.";
   } else if(type==='quantity' && isBare){
     off=true;
-    ar="السوال يبي رقم/كميه - جاوب برقم.";
+    ar="السؤال يبي رقم/كميه - جاوب برقم.";
     en="They asked for an amount - answer with a number.";
   } else if(type==='yesno' && isBare){
     off=false; // bare yes/no to a yes/no question is fine.
   } else if(isQuestion && type!=='yesno' && isBare){
     off=true;
-    ar="جوابك قصير - السوال يحتاج رد اكمل من كذا.";
+    ar="جوابك قصير - السؤال يحتاج رد اكمل من كذا.";
     en="Your answer is too short - the question needs a fuller reply.";
   }
 
@@ -17024,7 +17024,7 @@ const SAUDI_SWAPS = [
   ['الخطة', 'الخطه'], ['الخطوة', 'الخطوه'], ['القصة', 'القصه'], ['النقطة', 'النقطه'],
   ['النهاية', 'النهايه'], ['النسخة', 'النسخه'], ['المكتبة', 'المكتبه'], ['الاستاذة', 'الاستاذه'],
   ['المدينة', 'المدينه'], ['البطاقة', 'البطاقه'], ['الفاتورة', 'الفاتوره'], ['السياسة', 'السياسه'],
-  ['الخصوصية', 'الخصوصيه'], ['المسوولية', 'المسووليه'], ['الصحة', 'الصحه'], ['الصيدلية', 'الصيدليه'],
+  ['الخصوصية', 'الخصوصيه'], ['المسؤولية', 'المسؤوليه'], ['الصحة', 'الصحه'], ['الصيدلية', 'الصيدليه'],
   ['العيادة', 'العياده'], ['البوابة', 'البوابه'], ['القهوة', 'القهوه'], ['الساعة', 'الساعه'],
   ['الحالة', 'الحاله'], ['الحياة', 'الحيا'], ['اللحظة', 'اللحظه'], ['الليلة', 'الليله'],
   ['الاستاذ', 'الاستاذ'], ['المنهج', 'المنهج'], ['المنهج', 'المنهج'], ['الترم', 'الترم'], ['الترم', 'الترم']
@@ -17076,7 +17076,7 @@ function renderQuiz(container, questions, keyPrefix){
   function renderQ(){
     const q = questions[current];
     container.innerHTML = `
-      <p style="font-size:.72rem; color:var(--text-muted); margin-bottom:8px;"><span class="arabic">سوال ${current+1} من ${questions.length}</span><br><span dir="ltr">Question ${current+1} of ${questions.length}</span></p>
+      <p style="font-size:.72rem; color:var(--text-muted); margin-bottom:8px;"><span class="arabic">سؤال ${current+1} من ${questions.length}</span><br><span dir="ltr">Question ${current+1} of ${questions.length}</span></p>
       <h4 style="font-size:1.02rem; margin-bottom:16px; display:flex; align-items:flex-start; gap:8px;"><span style="flex:1;" dir="ltr">${q.qEn ? escapeHtml(q.qEn) + (q.qAr ? '<div class="arabic" style="font-size:.85rem;font-weight:400;margin-top:4px;">' + escapeHtml(q.qAr) + '</div>' : '') + (q.qTr ? '<div class="arabic" style="font-size:.76rem;color:var(--gold-soft);margin-top:3px;">' + escapeHtml(q.qTr) + '</div>' : '') : escapeHtml(q.q||'')}</span><button type="button" class="icon-btn speak-btn" data-speak="${escapeHtml((q.qEn||q.q||'').match(/[A-Za-z][A-Za-z\s,?'-.]+$/) ? (q.qEn||q.q||'').match(/[A-Za-z][A-Za-z\s,?'-.]+$/)[0].trim() : '')}" aria-label="Listen" style="flex-shrink:0;width:26px;height:26px;"><i data-lucide="volume-2" width="12" height="12"></i></button></h4>
       <div id="${keyPrefix}-options"></div>`;
     const optWrap = container.querySelector('#'+keyPrefix+'-options');
@@ -17928,7 +17928,7 @@ function renderLessonReader(container, academy, lesson){
     ${lesson.situation ? `
     <div class="lesson-section">
       <h3><span class="arabic">خطه الموقف</span>، <span dir="ltr">Situation Plan</span></h3>
-      <p class="lesson-section-sub"><span class="arabic" style="display:block;">وش بتسمع، وش تقول، ووش تسوي لو ما فهمت. ذا الموقف يجهزك لسوالف حقيقيه.</span><span dir="ltr">What you will hear, what to say, and what to do if it goes wrong. This prepares you for the real conversation.</span></p>
+      <p class="lesson-section-sub"><span class="arabic" style="display:block;">وش بتسمع، وش تقول، ووش تسوي لو ما فهمت. ذا الموقف يجهزك لسؤالف حقيقيه.</span><span dir="ltr">What you will hear, what to say, and what to do if it goes wrong. This prepares you for the real conversation.</span></p>
       ${lesson.situation.hear ? `<div class="situation-block"><div class="situation-label"><i data-lucide="ear" width="14" height="14"></i> <span class="arabic">بتسمع</span>، <span dir="ltr">You will hear</span></div>${lesson.situation.hear.map(h => `<div class="situation-line"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:6px;"><div style="flex:1;"><div class="situation-ar">${escapeHtml(h.ar||'')}</div><div class="situation-en" dir="ltr">${h.translit ? '<span class="situation-translit">' + escapeHtml(h.translit) + '</span>، ' : ''}${escapeHtml(h.en||'')}</div></div><button type="button" class="icon-btn speak-btn" data-speak="${escapeHtml(h.en||'')}" aria-label="Listen" style="flex-shrink:0;width:26px;height:26px;"><i data-lucide="volume-2" width="12" height="12"></i></button></div></div>`).join('')}</div>` : ''}
       ${lesson.situation.say ? `<div class="situation-block"><div class="situation-label"><span class="arabic">تقدر تقول</span>، <span dir="ltr">You can say</span></div>${lesson.situation.say.map(h => `<div class="situation-line"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:6px;"><div style="flex:1;"><div class="situation-ar">${escapeHtml(h.ar||'')}</div><div class="situation-en" dir="ltr">${h.translit ? '<span class="situation-translit">' + escapeHtml(h.translit) + '</span>، ' : ''}${escapeHtml(h.en||'')}</div></div><button type="button" class="icon-btn speak-btn" data-speak="${escapeHtml(h.en||'')}" aria-label="Listen" style="flex-shrink:0;width:26px;height:26px;"><i data-lucide="volume-2" width="12" height="12"></i></button></div></div>`).join('')}</div>` : ''}
       ${lesson.situation.recover ? `<div class="situation-block"><div class="situation-label">🆘 <span class="arabic">لو ما فهمت</span>، <span dir="ltr">If you do not understand</span></div>${lesson.situation.recover.map(h => `<div class="situation-line"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:6px;"><div style="flex:1;"><div class="situation-ar">${escapeHtml(h.ar||'')}</div><div class="situation-en" dir="ltr">${h.translit ? '<span class="situation-translit">' + escapeHtml(h.translit) + '</span>، ' : ''}${escapeHtml(h.en||'')}</div></div><button type="button" class="icon-btn speak-btn" data-speak="${escapeHtml(h.en||'')}" aria-label="Listen" style="flex-shrink:0;width:26px;height:26px;"><i data-lucide="volume-2" width="12" height="12"></i></button></div></div>`).join('')}</div>` : ''}
@@ -18192,7 +18192,7 @@ function renderVocabulary(){
   // --- Study Mode ---
   function startStudy(category, customWords){
     if(customWords){
-      vvCategory = arMode ? 'نتايج البحث' : 'Search results';
+      vvCategory = arMode ? 'نتائج البحث' : 'Search results';
       vvDeck = customWords;
     } else {
       vvCategory = category;
@@ -18661,7 +18661,7 @@ function getPronCumulativeScore(){
 function pronGrade(score){ return score>=85?'A':score>=70?'B':score>=55?'C':'D'; }
 
 const PRON_DRILLS = [
-  { id:'greetings', title:'Greetings', ar: 'التحيات', focusAr: 'التحيه والسوال عن الحال',
+  { id:'greetings', title:'Greetings', ar: 'التحيات', focusAr: 'التحيه والسؤال عن الحال',
     levels:[
       { id:'words', type:'word', title:'Words', ar: 'كلمات', weight:0.35, targets:[
         {en:'Hi',ar: 'هاي'},{en:'Hello',ar: 'هلو'},{en:'Thanks',ar: 'شكرا'} ] },
@@ -18670,7 +18670,7 @@ const PRON_DRILLS = [
       { id:'sentences', type:'sentence', title:'Sentences', ar: 'جمل كامله', weight:0.35, targets:[
         {en:'Hi, how are you today?',ar: 'هاي، كيفك اليوم؟'},{en:'I am good, thank you.',ar: 'انا بخير، شكرا لك.'},{en:'Hello, nice to meet you.',ar: 'هلو، تشرفت بمعرفتك.'} ] }
     ],
-    writingPrompt:{ ar: 'اكتب محادثه قصيره تبدا بتحيه وتسال عن الحال، بعدين رد على سوال صاحبك «how are you».', en:'Write a short greeting conversation: greet, ask how someone is, and reply to "how are you".' }
+    writingPrompt:{ ar: 'اكتب محادثه قصيره تبدا بتحيه وتسال عن الحال، بعدين رد على سؤال صاحبك «how are you».', en:'Write a short greeting conversation: greet, ask how someone is, and reply to "how are you".' }
   },
   { id:'classroom', title:'Classroom', ar: 'الفصل', focusAr: 'تعليمات الفصل والمتابعه',
     levels:[
@@ -18703,7 +18703,7 @@ const PRON_DRILLS = [
       { id:'sentences', type:'sentence', title:'Sentences', ar: 'جمل كامله', weight:0.35, targets:[
         {en:'I want some water, please.',ar: 'ابي ما لو سمحت.'},{en:'Can you help me, please?',ar: 'تقدر تساعدني لو سمحت؟'},{en:'I need help right now.',ar: 'احتاج مساعده الحين.'} ] }
     ],
-    writingPrompt:{ ar: 'اكتب طلبا مهذبا بالانجليزي لموقف يومي (مطعم، محل، شارع) مع استخدام please وكلمه سوال صحه.', en:'Write a polite everyday request (restaurant, shop, street) using "please" and a correct question word.' }
+    writingPrompt:{ ar: 'اكتب طلبا مهذبا بالانجليزي لموقف يومي (مطعم، محل، شارع) مع استخدام please وكلمه سؤال صحه.', en:'Write a polite everyday request (restaurant, shop, street) using "please" and a correct question word.' }
   },
 ];
 function pronDrillNextPack(id){
@@ -19517,7 +19517,7 @@ function renderReview(){
   }else if(q.length){
     deck.innerHTML = `<div class="empty-state" style="margin:0 0 26px;"><i class="empty-icon" data-lucide="calendar-check"></i><h3><span class="arabic" style="display:block; font-size:.8em; font-weight:400; color:var(--text-muted); margin-bottom:4px;">ما فيه كلمات جاهزه اليوم</span>Nothing due today</h3><p><span class="arabic" style="display:block; margin-bottom:4px;">كل شي تحت السيطره. راجع باقي الكلمات في الايام الجايه.</span>All clear. Your next words are scheduled below.</p></div>`;
   }else{
-    deck.innerHTML = `<div class="empty-state" style="margin:0 0 26px;"><i class="empty-icon" data-lucide="rotate-ccw"></i><h3><span class="arabic" style="display:block; font-size:.8em; font-weight:400; color:var(--text-muted); margin-bottom:4px;">ابدا باول درس</span>Your review queue starts with your first lesson</h3><p><span class="arabic" style="display:block; margin-bottom:4px;">اكمل اي درس، وكلماته بتدخل قايمه المراجعه تلقاييا.</span>Complete any lesson and its vocabulary joins this queue automatically.</p></div>`;
+    deck.innerHTML = `<div class="empty-state" style="margin:0 0 26px;"><i class="empty-icon" data-lucide="rotate-ccw"></i><h3><span class="arabic" style="display:block; font-size:.8em; font-weight:400; color:var(--text-muted); margin-bottom:4px;">ابدا باول درس</span>Your review queue starts with your first lesson</h3><p><span class="arabic" style="display:block; margin-bottom:4px;">اكمل اي درس، وكلماته بتدخل قايمه المراجعه تلقائيا.</span>Complete any lesson and its vocabulary joins this queue automatically.</p></div>`;
   }
 
   const up = document.getElementById('reviewUpcoming');
@@ -20231,7 +20231,7 @@ function renderProfile(){
       <button type="button" class="btn-outline" id="editGoalBtn"><span class="arabic">تعديل هدف التعلم</span>، Edit learning goal</button>
     </div>
 
-    <div class="eyebrow" style="margin-bottom:14px;"><span class="arabic">الاحصاييات</span>، Statistics</div>
+    <div class="eyebrow" style="margin-bottom:14px;"><span class="arabic">الاحصائيات</span>، Statistics</div>
     <div class="grid" style="grid-template-columns:repeat(auto-fit, minmax(140px, 1fr)); margin-bottom:30px;" id="profileStatsGrid"></div>
 
     <div class="card card-elevated" style="display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin-bottom:30px;">

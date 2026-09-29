@@ -403,7 +403,7 @@ var I = {
   'assigned':{en:'Assigned', ar: 'اسندت'},
   'extended':{en:'Extended', ar: 'مددت'},
   'scheduledLbl':{en:'Scheduled', ar: 'محدده'},
-  'planNote':{en:'Access expires automatically on the end date (server-enforced). Renewing never resets progress.', ar: 'ينتهي الوصول تلقايياً بتاريخ النهايه (تطبيق من الخادم). التجديد لا يمسّ تقدمك.'},
+  'planNote':{en:'Access expires automatically on the end date (server-enforced). Renewing never resets progress.', ar: 'ينتهي الوصول تلقائياً بتاريخ النهايه (تطبيق من الخادم). التجديد لا يمسّ تقدمك.'},
   'notificationSent':{en:'Announcement sent.', ar: 'ارسلنا الاعلان.'},
   'planSaved':{en:'Plan saved.', ar: 'حفظنا الباقه.'},
   'planAssigned':{en:'Plan assigned.', ar: 'تم اسناد الباقه.'},
@@ -1172,7 +1172,7 @@ function render360(){
     '</div>' +
     '<div class="btn-row">' +
     '<button class="btn btn-outline btn-sm" id="s360Preview">' + esc(t('preview')) + '</button>' +
-    (hasPerm('students.manage') ? '<button class="btn btn-danger btn-sm" id="s360Delete">' + esc(lang === 'ar' ? 'حذف الطالب نهاييا' : 'Delete student permanently') + '</button>' : '') +
+    (hasPerm('students.manage') ? '<button class="btn btn-danger btn-sm" id="s360Delete">' + esc(lang === 'ar' ? 'حذف الطالب نهائيا' : 'Delete student permanently') + '</button>' : '') +
     '<button class="btn btn-ghost btn-sm" data-goback="">' + esc(t('back')) + '</button>' +
     '</div></div>';
 
@@ -1325,7 +1325,7 @@ var tabs = [
   var delBtn = $('s360Delete');
   if(delBtn){
     delBtn.addEventListener('click', async function(){
-      if(!confirm(lang === 'ar' ? 'بنحذف حذف حساب الطالب وكل بياناته نهاييا (تبقى الشهادات بس). متابعه؟' : 'This permanently deletes the student account and ALL their history (certificates are kept). Continue?')){ return; }
+      if(!confirm(lang === 'ar' ? 'بنحذف حذف حساب الطالب وكل بياناته نهائيا (تبقى الشهادات بس). متابعه؟' : 'This permanently deletes the student account and ALL their history (certificates are kept). Continue?')){ return; }
       if(!confirm(lang === 'ar' ? 'تاكيد اخير: ذا الاجرا لا تقدر التراجع عنه.' : 'Final confirmation: this cannot be undone.')){ return; }
       delBtn.disabled = true;
       var r = await rpc('admin_student_delete', { p_user_id: current360Uid });
@@ -2698,15 +2698,15 @@ async function billingView(){
   if(!faqArr.length){ faqArr = [{qEn:'',qAr: '',aEn:'',aAr: ''}]; }
   function faqRowHtml(f, i){
     return '<div class="card" style="margin-bottom:12px;" data-faq-row="'+i+'"><div class="form-grid">' +
-      '<div class="field full"><label>'+(lang==='ar'?'سوال (انجليزي)':'Question (EN)')+'</label><input class="input" data-faq="qEn" data-i="'+i+'" value="'+esc(f.qEn||'')+'"></div>' +
-      '<div class="field full"><label>'+(lang==='ar'?'سوال (عربي)':'Question (AR)')+'</label><input class="input" data-faq="qAr" data-i="'+i+'" value="'+esc(f.qAr||'')+'"></div>' +
+      '<div class="field full"><label>'+(lang==='ar'?'سؤال (انجليزي)':'Question (EN)')+'</label><input class="input" data-faq="qEn" data-i="'+i+'" value="'+esc(f.qEn||'')+'"></div>' +
+      '<div class="field full"><label>'+(lang==='ar'?'سؤال (عربي)':'Question (AR)')+'</label><input class="input" data-faq="qAr" data-i="'+i+'" value="'+esc(f.qAr||'')+'"></div>' +
       '<div class="field full"><label>'+(lang==='ar'?'جواب (انجليزي)':'Answer (EN)')+'</label><textarea class="input" rows="2" data-faq="aEn" data-i="'+i+'">'+esc(f.aEn||'')+'</textarea></div>' +
       '<div class="field full"><label>'+(lang==='ar'?'جواب (عربي)':'Answer (AR)')+'</label><textarea class="input" rows="2" data-faq="aAr" data-i="'+i+'">'+esc(f.aAr||'')+'</textarea></div>' +
-      '</div><div class="btn-row" style="margin-top:8px;"><button class="btn btn-ghost btn-sm" data-faq-del="'+i+'">'+esc(lang==='ar'?'حذف السوال':'Remove')+'</button></div></div>';
+      '</div><div class="btn-row" style="margin-top:8px;"><button class="btn btn-ghost btn-sm" data-faq-del="'+i+'">'+esc(lang==='ar'?'حذف السؤال':'Remove')+'</button></div></div>';
   }
   var faqHtml = '<div class="section-title">'+(lang==='ar'?'الاسئله الشايعه':'FAQs (index)')+'</div>' +
     '<div id="faqList">'+faqArr.map(faqRowHtml).join('')+'</div>' +
-    '<div class="btn-row" style="margin-bottom:8px;"><button class="btn btn-outline btn-sm" id="faqAdd">'+esc(lang==='ar'?'سوال جديد':'Add question')+'</button></div>';
+    '<div class="btn-row" style="margin-bottom:8px;"><button class="btn btn-outline btn-sm" id="faqAdd">'+esc(lang==='ar'?'سؤال جديد':'Add question')+'</button></div>';
   indexHtml += faqHtml;
 
   $('viewArea').innerHTML = pageHead(lang==='ar'?'الاسعار وصفحة البدايه':'Billing & Index',
@@ -2784,7 +2784,7 @@ async function questionsView(){
   async function loadList(){
     var r = await pelTableSelect('assessment_questions', '*', { order: 'tier,difficulty_rating,sort_order' });
     ROWS = r.data || [];
-    var addBtn = '<div class="btn-row" style="margin-bottom:16px;"><button class="btn btn-gold btn-sm" id="aqAdd">'+esc(lang==='ar'?'سوال جديد':'New question')+'</button>'+
+    var addBtn = '<div class="btn-row" style="margin-bottom:16px;"><button class="btn btn-gold btn-sm" id="aqAdd">'+esc(lang==='ar'?'سؤال جديد':'New question')+'</button>'+
       '<span class="why">'+(lang==='ar'?'العدد: ':'Count: ')+ROWS.length+'</span></div>';
     if(!ROWS.length){ $('viewArea').innerHTML = pageHead(title, sub) + addBtn + emptyBlock(lang==='ar'?'ما فيه اسئله لسه':'No questions yet'); wire(); return; }
     var tierLbl = function(t){ return t==='exam_prep'?(lang==='ar'?'تجهيز اختبارات':'Exam Prep'):(lang==='ar'?'البدايه':'Beginner'); };
@@ -2806,7 +2806,7 @@ async function questionsView(){
       '<div class="card" style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;"><thead><tr>'+
       '<th style="text-align:right;padding:8px;">'+esc(lang==='ar'?'الكود':'Code')+'</th>'+
       '<th style="text-align:right;padding:8px;">'+esc(lang==='ar'?'المستوى':'Level')+'</th>'+
-      '<th style="text-align:right;padding:8px;">'+esc(lang==='ar'?'السوال':'Question')+'</th>'+
+      '<th style="text-align:right;padding:8px;">'+esc(lang==='ar'?'السؤال':'Question')+'</th>'+
       '<th style="text-align:right;padding:8px;">'+esc(lang==='ar'?'الحاله':'Status')+'</th>'+
       '<th style="text-align:right;padding:8px;">'+esc(lang==='ar'?'اعمال':'Actions')+'</th>'+
       '</tr></thead><tbody>'+rowsHtml+'</tbody></table></div>';
@@ -2831,7 +2831,7 @@ async function questionsView(){
   }
   function delQ(id){
     var q = ROWS.find(function(x){return x.id===id;});
-    if(!window.confirm(lang==='ar'?'حذف ذا السوال للابد؟':'Delete this question permanently?')) return;
+    if(!window.confirm(lang==='ar'?'حذف ذا السؤال للابد؟':'Delete this question permanently?')) return;
     c.rpc('admin_delete_assessment_question', { p_id: id }).then(function(r){
       if(r.error || (r.data && r.data.ok === false)){ toast(rpcErrMsg(r.error||r.data), true); return; }
       audit('question.delete','assessment_questions',q?q.code:id,{});
@@ -2850,19 +2850,19 @@ async function questionsView(){
       '<div class="field"><label>'+esc(lang==='ar'?'الصعوبه':'Difficulty')+'</label><select class="input" id="qf_diff">'+[1,2,3,4,5].map(function(d){return '<option value="'+d+'"'+(q&&q.difficulty_rating===d?' selected':'')+'>'+d+'</option>';}).join('')+'</select></div>'+
       '<div class="field"><label>'+esc(lang==='ar'?'النوع':'Skill')+'</label><select class="input" id="qf_skill">'+['grammar','vocab','reading','listening'].map(function(s){return '<option value="'+s+'"'+(q&&q.skill_type===s?' selected':'')+'>'+s+'</option>';}).join('')+'</select></div>'+
       '<div class="field"><label><input type="checkbox" id="qf_active" '+(q?(q.active!==false?'checked':''):'checked')+'> '+esc(lang==='ar'?'متاح':'Active')+'</label></div>'+
-      '<div class="field full"><label>'+esc(lang==='ar'?'السوال (عربي)':'Question (AR)')+'</label><textarea class="input" rows="2" id="qf_qar">'+esc(q?(q.question_ar||''):'')+'</textarea></div>'+
-      '<div class="field full"><label>'+esc(lang==='ar'?'السوال (انجليزي)':'Question (EN)')+'</label><textarea class="input" rows="2" id="qf_qen">'+esc(q?(q.question_en||''):'')+'</textarea></div>'+
+      '<div class="field full"><label>'+esc(lang==='ar'?'السؤال (عربي)':'Question (AR)')+'</label><textarea class="input" rows="2" id="qf_qar">'+esc(q?(q.question_ar||''):'')+'</textarea></div>'+
+      '<div class="field full"><label>'+esc(lang==='ar'?'السؤال (انجليزي)':'Question (EN)')+'</label><textarea class="input" rows="2" id="qf_qen">'+esc(q?(q.question_en||''):'')+'</textarea></div>'+
       '<div class="field full"><div class="section-title" style="margin:8px 0;">'+esc(lang==='ar'?'الخيارات (4)':'Options (4)')+'</div></div>'+
       [0,1,2,3].map(function(i){ return '<div class="field"><label>'+esc(lang==='ar'?'خيار '+(i+1)+' (عربي)':'Option '+(i+1)+' (AR)')+'</label><input class="input" id="qf_o'+i+'ar" value="'+opt(i,'ar')+'"></div><div class="field"><label>'+esc(lang==='ar'?'خيار '+(i+1)+' (انجليزي)':'Option '+(i+1)+' (EN)')+'</label><input class="input" id="qf_o'+i+'en" value="'+opt(i,'en')+'"></div>'; }).join('')+
       '<div class="field full"><label>'+esc(lang==='ar'?'الاجابه الصحه':'Correct option')+'</label><select class="input" id="qf_correct">'+[0,1,2,3].map(function(i){return '<option value="'+i+'"'+(q&&q.correct_index===i?' selected':'')+'>Option '+(i+1)+'</option>';}).join('')+'</select></div>'+
       '<div class="field full"><label>'+esc(lang==='ar'?'الترتيب':'Sort order')+'</label><input class="input" type="number" id="qf_sort" value="'+(q?(q.sort_order||0):0)+'"></div>'+
       '</div>';
-    var scrim = modal((isEdit?(lang==='ar'?'تعديل سوال':'Edit question'):(lang==='ar'?'سوال جديد':'New question')), body, true,
+    var scrim = modal((isEdit?(lang==='ar'?'تعديل سؤال':'Edit question'):(lang==='ar'?'سؤال جديد':'New question')), body, true,
       '<button class="btn btn-gold btn-sm" id="qfSave">'+esc(t('save'))+'</button>');
     $('qfSave').addEventListener('click', async function(){
       var code = $('qf_code').value.trim();
       if(!code){ toast(lang==='ar'?'الكود مطلوب':'Code required', true); return; }
-      if(!$('qf_qen').value.trim()){ toast(lang==='ar'?'نص السوال الانجليزي مطلوب':'English question text required', true); return; }
+      if(!$('qf_qen').value.trim()){ toast(lang==='ar'?'نص السؤال الانجليزي مطلوب':'English question text required', true); return; }
       var opts = [0,1,2,3].map(function(i){ return { ar: $('qf_o'+i+'ar').value.trim(), en: $('qf_o'+i+'en').value.trim() }; });
       if(!opts[$('qf_correct').value].en){ toast(lang==='ar'?'الاجابه الصحه ما تنشاف':'Correct option has no text', true); return; }
       var row = {
@@ -3423,7 +3423,7 @@ async function announcementsView(){
     b.addEventListener('click', async function(){
       var id = b.getAttribute('data-del');
       var a = window.__annRows[id] || {};
-      if(!confirm(lang === 'ar' ? 'حذف ذا الاعلان نهاييا؟' : 'Permanently delete this announcement?')){ return; }
+      if(!confirm(lang === 'ar' ? 'حذف ذا الاعلان نهائيا؟' : 'Permanently delete this announcement?')){ return; }
       var r = await rpc('admin_announcement_delete', { p_id: id });
       if(!r.ok){ toast((r.error && r.error.message) || t('permissionDenied'), true); return; }
       toast(lang === 'ar' ? 'حذفنا الاعلان.' : 'Announcement deleted.');
@@ -3583,7 +3583,7 @@ async function settingsView(){
       '<div class="s360-meta" style="margin-top:0;"><span class="chip gold">' + esc(lang === 'ar' ? 'الاسئله الشايعه - الصفحه البدايه' : 'Homepage FAQs') + '</span></div>' +
       '<p style="margin:10px 0 0; font-size:.76rem; color:var(--text-muted); line-height:1.7;">' +
         esc(lang === 'ar'
-          ? 'كل سطر = سوال|جواب. لازم نفس عدد الاسطر بالعربي والانجليزي وبنفس الترتيب.'
+          ? 'كل سطر = سؤال|جواب. لازم نفس عدد الاسطر بالعربي والانجليزي وبنفس الترتيب.'
           : 'One FAQ per line, format question|answer. Arabic and English must have the same number of lines in the same order.') +
       '</p>' +
       '<div class="form-grid" style="margin-top:12px;">' +
