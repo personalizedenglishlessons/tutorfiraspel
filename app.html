@@ -14531,12 +14531,16 @@ function renderDbPractice(container, exercises){
     }
     if(x.type === 'spell'){
       const p = x.payload || {};
+      // Gap format (phonics lessons): options are {t, ok} letter objects and the
+      // display shows a blank ("C _ T") - the student picks the missing letter.
+      // Full format: options are plain letter strings - the student spells the word.
+      const gapFormat = Array.isArray(p.options) && p.options.length && (typeof p.options[0] === 'object');
       return head('Spell it', `
         <div style="font-size:1.15rem; font-family:'Fraunces',serif; letter-spacing:.35em; margin-bottom:4px;">${esc(p.display||'')}</div>
         <div style="font-size:.8rem; color:var(--text-muted); margin-bottom:10px;"><span class="arabic">المعنى</span>: ${esc(p.meaning||'')} · <span class="arabic">${esc(p.translit||'')}</span></div>
         <div class="dbx-answer" style="font-family:'Fraunces',serif; min-height:34px; border:1px dashed var(--border); border-radius:10px; padding:6px 9px; margin-bottom:10px; letter-spacing:.3em;"></div>
         <div class="dbx-tokens" style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px;">
-          ${(p.options||[]).map(t => `<button type="button" class="quiz-option dbx-token" style="padding:5px 11px;">${esc(t)}</button>`).join('')}
+          ${(p.options||[]).map(t => `<button type="button" class="quiz-option dbx-token" style="padding:5px 11px;">${esc(typeof t === 'object' && t ? t.t : t)}</button>`).join('')}
         </div>
         <button type="button" class="btn-outline dbx-check"><span class="arabic">تحقق</span>، Check</button>`, x.payload.answer);
     }
@@ -14617,7 +14621,16 @@ function renderDbPractice(container, exercises){
       const p = x.payload || {};
       let ok = false, reveal = '';
       if(x.type === 'order'){ ok = norm(picked.map(t => t.textContent).join(' ')) === norm(p.answer||''); reveal = p.answer||''; }
-      else if(x.type === 'spell'){ ok = norm(picked.map(t => t.textContent).join('')) === norm(p.answer||''); reveal = p.answer||''; }
+      else if(x.type === 'spell'){
+        const gapFormat = Array.isArray(p.options) && p.options.length && (typeof p.options[0] === 'object');
+        if(gapFormat){
+          // Fill-the-blank: exactly one letter picked and it must be the ok one.
+          ok = picked.length === 1 && !!p.options.some(o => o && o.ok && String(o.t) === picked[0].textContent);
+        } else {
+          ok = norm(picked.map(t => t.textContent).join('')) === norm(p.answer||'');
+        }
+        reveal = p.answer||'';
+      }
       else if(x.type === 'translate'){
         const inp = card.querySelector('.dbx-input');
         const accepted = [p.answer].concat(Array.isArray(p.accept) ? p.accept : []).map(norm);
