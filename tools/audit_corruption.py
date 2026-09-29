@@ -62,7 +62,7 @@ PATTERNS = [
 
 SCAN_GLOBS = ["*.html", "*.js", "*.py"]
 SKIP_DIRS = {"node_modules", ".git", "memory", "current_session_context", "downloads"}
-SKIP_FILES = {"audit_corruption.py"}
+SKIP_FILES = {"audit_corruption.py", "full_audit.py", "fix_all_issues.py"}
 
 DB_SQL = (
     "-- Sweep every Arabic-bearing content column for the garbage families.\n"
