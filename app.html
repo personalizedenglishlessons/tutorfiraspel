@@ -15502,11 +15502,28 @@ function loadCompromise(){
 function posTokens(nlpImpl, text){
   const out = [];
   try{
+    // Use sentences() to preserve sentence boundaries — the tense-marker rule
+    // must not match a past-time word in the NEXT sentence.
     const arr = nlpImpl(text).terms().out('offsets');
+    // Build a set of term texts that are the last term in their sentence,
+    // so we can flag sentence endings without keeping the full sentence structure.
+    const sentences = nlpImpl(text).sentences().out('offsets');
+    const lastTermTexts = new Set();
+    for(const s of sentences){
+      const terms = s.terms || [];
+      if(terms.length){
+        const last = terms[terms.length - 1];
+        if(last && last.normal) lastTermTexts.add(last.normal);
+      }
+    }
+    let prevEnd = 0;
     for(const e of arr){
       const t = e && e.terms && e.terms[0];
       if(!t || !t.offset) continue;
       if(t.offset.length === 0) continue; // implicit ghost terms ("not" inside don't)
+      // Check for sentence-ending punctuation between previous token and this one
+      const gap = text.slice(prevEnd, t.offset.start);
+      const sentenceBreak = /[.!?]/.test(gap);
       out.push({
         text: e.text || t.text || '',
         normal: (t.normal || '').toLowerCase(),
@@ -15514,8 +15531,10 @@ function posTokens(nlpImpl, text){
         start: t.offset.start,
         length: t.offset.length,
         machine: t.machine || '',
-        implicit: t.implicit || ''
+        implicit: t.implicit || '',
+        sentenceBreak: sentenceBreak
       });
+      prevEnd = t.offset.start + t.offset.length;
     }
   }catch(e){ /* tagging failed, fall back to regex layer */ }
   return out;
@@ -15749,6 +15768,12 @@ const LOCAL_RULES = [
         if(k > i+1) break;
       }
       if(markerIdx === -1) return null;
+      // Don't match across sentence boundaries — a past-time word in the
+      // next sentence (e.g. "English. Yesterday I eat") must not trigger
+      // a tense fix for a verb in the previous sentence.
+      for(let k = i+1; k <= markerIdx; k++){
+        if(tokens[k].sentenceBreak) return null;
+      }
       const conj = conjugateVerb(nlpImpl, v.normal);
       if(!conj.PastTense || conj.PastTense === v.normal) return null;
       return { i, j: i, replace: capFix(v, conj.PastTense) };
