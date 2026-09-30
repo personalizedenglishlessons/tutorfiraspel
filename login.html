@@ -566,6 +566,7 @@ function applyLoginLang(lang){
     if(b) b.textContent = mcArr[i][0];
     if(s) s.textContent = mcArr[i][1];
   });
+  syncRememberCheckbox();
 }
 const loginLangBtn = document.getElementById('loginLangBtn');
 if(loginLangBtn) loginLangBtn.addEventListener('click', () => applyLoginLang(root.lang === 'ar' ? 'en' : 'ar'));
@@ -589,12 +590,15 @@ document.querySelectorAll('.toggle-eye').forEach(btn => {
 
 /* ============ REMEMBER ME + LAST EMAIL ============ */
 const rememberToggle = document.getElementById('rememberToggle');
-const rememberCheckbox = document.getElementById('rememberCheckbox');
-let remembered = localStorage.getItem('pel-remember') === '1';
-rememberCheckbox.classList.toggle('checked', remembered);
+var remembered = localStorage.getItem('pel-remember') === '1';
+function syncRememberCheckbox(){
+  const cb = document.getElementById('rememberCheckbox');
+  if(cb) cb.classList.toggle('checked', remembered);
+}
+syncRememberCheckbox();
 rememberToggle.addEventListener('click', () => {
   remembered = !remembered;
-  rememberCheckbox.classList.toggle('checked', remembered);
+  syncRememberCheckbox();
   localStorage.setItem('pel-remember', remembered ? '1' : '0');
 });
 const loginEmailInput = document.getElementById('loginEmail');
