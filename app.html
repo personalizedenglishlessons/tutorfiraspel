@@ -14565,7 +14565,7 @@ function renderDbPractice(container, exercises){
       const srcIsEn = !/[\u0600-\u06FF]/.test(p.source || '');
       return head(srcIsEn ? 'Translate to Arabic' : 'Translate to English', `
         <div style="font-size:.98rem; margin-bottom:10px;" class="${srcIsEn ? '' : 'arabic'}">${esc(p.source||'')}<div class="${srcIsEn ? 'arabic' : ''}" style="font-size:.82rem; color:var(--gold-soft); margin-top:4px;">${srcIsEn ? esc(p.source_tr || '') : ''}</div></div>
-        <input class="dbx-input" type="text" dir="auto" placeholder="${srcIsEn ? 'اكتب الترجمه بالعربي...' : 'Type the English translation...'}" style="width:100%; background:var(--card); border:1px solid var(--border); border-radius:10px; padding:10px 12px; color:var(--text); font-size:.92rem; margin-bottom:10px;">
+        <input class="dbx-input" type="text" dir="auto" aria-label="${srcIsEn ? 'الترجمه بالعربي' : 'English translation'}" placeholder="${srcIsEn ? 'اكتب الترجمه بالعربي...' : 'Type the English translation...'}" style="width:100%; background:var(--card); border:1px solid var(--border); border-radius:10px; padding:10px 12px; color:var(--text); font-size:.92rem; margin-bottom:10px;">
         <button type="button" class="btn-outline dbx-check"><span class="arabic">تحقق</span>، Check</button>
         <div class="dbx-reveal" style="display:none; font-size:.82rem; color:var(--gold-soft); margin-top:8px;"></div>`, p.source);
     }
