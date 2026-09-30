@@ -2259,6 +2259,8 @@ function clearUserLocalKeys(){
    ============================================================ */
 let subPlan = { hasPlan:false, status:'none', accessState:'none', isAdmin:false, canAccess:false, rpcFailed:null, plan:null, startDate:null, endDate:null, daysLeft:0, sessionsUsed:0, sessionsLeft:0, platformAccess:true };
 let annCache = { unread:0, items:[] };
+let _pelHomeIntelTs = 0; // cache timestamp for renderHomeIntel
+let _pelEffStateTs = 0; // cache timestamp for effective state
 let entRecheckTimer = null;
 
 function subBlocked(){
@@ -2517,6 +2519,10 @@ async function renderHomeIntel(){
   const clsEl = document.getElementById('homeLiveClasses');
   const ar = accountPrefs.lang === 'ar';
   if(!c || !annEl || !clsEl) return;
+  // Cache: don't re-fetch announcements/classes if fetched < 60s ago
+  var cacheAge = Date.now() - _pelHomeIntelTs;
+  if(cacheAge < 60000) return;
+  _pelHomeIntelTs = Date.now();
   annEl.innerHTML = '<span class="eyebrow" style="margin:0 0 10px;">' + (ar ? 'اعلانات الاكاديميه' : 'Announcements') + '</span><div id="annBody"><div style="font-size:.8rem; color:var(--text-muted);">' + (ar ? 'لحظات…' : 'Loading…') + '</div></div>';
   clsEl.innerHTML = '<span class="eyebrow" style="margin:0 0 10px;">' + (ar ? 'حصصك المباشره' : 'Your Live Classes') + '</span><div id="clsBody"><div style="font-size:.8rem; color:var(--text-muted);">' + (ar ? 'لحظات…' : 'Loading…') + '</div></div>';
   try{
@@ -19973,9 +19979,13 @@ function renderActivePath(){
 function c_rpc_effective_state(){
   const c = client();
   if(!c || !currentUser) return Promise.resolve(false);
+  // Cache: if effective state fetched < 30s ago, reuse it (reduces DB queries)
+  if(window.PEL_EFFECTIVE_STATE && (Date.now() - _pelEffStateTs) < 30000){
+    return Promise.resolve(true);
+  }
   return pelRpc('student_effective_state').then(({ data, error }) => {
     if(error || !data || data.ok === false || !data.stage){ return false; }
-    window.PEL_EFFECTIVE_STATE = data; return true;
+    window.PEL_EFFECTIVE_STATE = data; _pelEffStateTs = Date.now(); return true;
   }).catch(() => false);
 }
 /* Hydrate a plan from the server so an admin-assigned subscription clears the
