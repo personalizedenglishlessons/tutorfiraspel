@@ -12801,7 +12801,7 @@ const LESSON_LIBRARY = {
     title:'Weekend Plans', ar: 'خطط الويكند', translit: 'khutat alweekend', dir:'ar',
     duration:'7 min', difficulty:'Beginner',
     vocab:[
-      {en:'What are you doing today?', ar: 'وش تسوي اليوم؟', translit: 'wesh taswi alyoum?', en:'The standard plans question.'},
+      {en:'What are you doing today?', ar: 'وش تسوي اليوم؟', translit: 'wesh taswi alyoum?', tip:'The standard plans question.'},
       {en:'Let us go out', ar: 'نطلع', translit: 'nitla', tip:'The universal "let us go out" in Arabic.'},
       {en:'Where to?', ar: 'وين؟', translit: 'wen?', tip: 'Short and natural, no verb needed.'},
       {en:'Agreed / deal', ar: 'ماشي / تم', translit: 'maashi / tam', tip: 'Mashi is casual, tam is confirmed.'},
@@ -13817,7 +13817,7 @@ const LESSON_LIBRARY = {
     vocab:[
       {en:'Delayed', ar: 'متاخره', translit: 'mitaakhira', tip: 'The flight is delayed.'},
       {en:'Cancelled', ar: 'ملغاه', translit: 'mulgha', tip: 'The flight is cancelled.'},
-      {en:'How long?', ar: 'كم المده؟', translit: 'kam almudda?', en:'How long?'},
+      {en:'How long?', ar: 'كم المده؟', translit: 'kam almudda?', tip: 'How long? Ask this to get a duration.'},
       {en:'Another flight', ar: 'رحله ثانيه', translit: 'rihla thanya', tip: 'Ask for a rebooking.'},
     ],
     grammar:{title:'Asking about delays', rule:'Ask is the flight mitaakhira or mulgha, then kam almudda (how long) and request rihla thanya (another flight).', saudi:'تسال: الرحله متاخره؟ كم المده؟', wrong:'Stay quiet and miss updates.', right:'"Alrihla mitaakhira, kam almudda?" (The flight is delayed, how long?)', mistakes:['Using the formal taakhir (delay) instead of mitaakhira for the status.','Forgetting to ask for a rebooking when it is mulgha.']},
@@ -14155,7 +14155,7 @@ const LESSON_LIBRARY = {
     title:'Ending a Call', ar: 'انها المكالمه', translit: 'inhaa almukaalama', dir:'ar',
     duration:'6 min', difficulty:'Intermediate',
     vocab:[
-      {en:'Goodbye', ar: 'مع السلامه', translit: 'maa alsalama', en:'The closing.'},
+      {en:'Goodbye', ar: 'مع السلامه', translit: 'maa alsalama', tip: 'The closing.'},
       {en:'We will talk', ar: 'نتكلم', translit: 'natkallam', tip: 'The plan to talk again.'},
       {en:'Thank you for calling', ar: 'شكرا على اتصالك', translit: 'shukran ala ittisaalak', tip: 'Polite closing.'},
       {en:'Take care', ar: 'الله يسلمك', translit: 'allah ysallimak', tip: 'The warm goodbye.'},
@@ -14495,6 +14495,7 @@ function dbToLesson(dbl, academy){
 
 /* Interactive runner for order / spell / correct / translate exercises. */
 function renderDbPractice(container, exercises){
+  const esc = (s) => escapeHtml(String(s==null?'':s));
   if(!container) return;
   const norm = s => String(s || '').toLowerCase().replace(/[’']/g, "'").replace(/[^a-z0-9'\u0600-\u06FF ]/g, '').replace(/\s+/g, ' ').trim();
   container.innerHTML = exercises.map((x, xi) => {
@@ -18110,8 +18111,8 @@ function renderVocabulary(){
   el.dataset.rendered = '1';
   const arMode = document.body.classList.contains('ui-ar');
   const VV_CAT_ICONS = {
-    'Restaurant English':'utensils','Hospital English':'stethoscope','Business English':'briefcase',
-    'Airport English':'plane','Shopping English':'shopping-bag','Travel English':'globe',
+    'Restaurant English':'utensils','Business English':'briefcase',
+    'Airport English':'plane','Shopping English':'shopping-bag',
     'Workplace Communication':'building-2','Job Interview Academy':'user-check','Family':'users',
     'Colors':'palette','Daily Life':'coffee','General':'book-open','Emergency English':'shield-alert',
     'Driving English':'car','Hotel English':'bed-double','Greetings':'hand','Conversations':'message-circle',
@@ -21619,6 +21620,12 @@ function renderDashboardIntel(){
   /* ---- PEL DASHBOARD LIFE (single source of truth: lib/pel_dashboard_life.js) ----
      Was inline near the top of this script; now injected here so every dep
      it needs is already declared at this point in the file. */
+  /* Global bridge so separate script blocks (e.g. live classes widget)
+     can register view renderers — viewRenderers is IIFE-scoped here. */
+  window.__pelRegisterViewRenderer = function(id, fn){
+    try{ viewRenderers[id] = fn; return true; }catch(e){ return false; }
+  };
+
   if (window.PEL_DASH_LIFE_FACTORY) {
     window.PEL_DASH_LIFE = window.PEL_DASH_LIFE_FACTORY({
       viewRenderers: viewRenderers,
@@ -22258,9 +22265,12 @@ if(window.lucide) lucide.createIcons();
     pelGlobalWelcome();
     const target=document.getElementById('view-liveClasses'); if(!target) return;
     // Register as a proper viewRenderer so goToView calls it directly
-    // (instead of relying on MutationObserver which causes a blank flash)
-    if(typeof viewRenderers !== 'undefined'){
-      viewRenderers['liveClasses'] = function(){ loadOverview().then(render); };
+    // (instead of relying on MutationObserver which causes a blank flash).
+    // viewRenderers is scoped inside the main app IIFE, so register via the
+    // global bridge it exposes — the old bare `typeof viewRenderers` guard
+    // could never see it and silently skipped registration.
+    if(typeof window.__pelRegisterViewRenderer === 'function'){
+      window.__pelRegisterViewRenderer('liveClasses', function(){ loadOverview().then(render); });
     }
     // Keep MutationObserver as fallback for edge cases
     const mo=new MutationObserver(()=>{ if(target.classList.contains('active')){ loadOverview().then(render); } });
