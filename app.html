@@ -18024,7 +18024,7 @@ function renderLessonReader(container, academy, lesson){
     <div class="lesson-actions-row">
       <button type="button" class="btn-outline${bookmarked?' toggled':''}" id="lessonBookmarkBtn"><i data-lucide="bookmark" width="15" height="15"></i> ${bookmarked?'<span class="arabic">محفوظ</span>، <span dir="ltr">Bookmarked</span>':'<span class="arabic">حفظ</span>، <span dir="ltr">Bookmark</span>'}</button>
       <button type="button" class="btn-outline${favLesson?' toggled':''}" id="lessonFavBtn"><i data-lucide="heart" width="15" height="15"></i> ${favLesson?'<span class="arabic">مفضّل</span>، <span dir="ltr">Favourited</span>':'<span class="arabic">تفضيل</span>، <span dir="ltr">Favourite</span>'}</button>
-      <button type="button" class="btn-gold" id="lessonCompleteBtn">${done?'<span class="arabic">مكتمل</span> ✓':'<span class="arabic">ابسل الدرس</span>، <span dir="ltr">Mark Complete</span>'}</button>
+      <button type="button" class="btn-gold" id="lessonCompleteBtn">${done?'<span class="arabic">مكتمل</span> ✓':'<span class="arabic">اكمل الدرس</span>، <span dir="ltr">Mark Complete</span>'}</button>
     </div>
     ${done && nextItem ? `
     <div class="lesson-section" style="background:rgba(63,140,114,.08); border:1px solid rgba(63,140,114,.3); border-radius:16px; padding:20px; margin-top:22px;">
