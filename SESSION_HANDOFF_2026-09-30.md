@@ -67,3 +67,39 @@ breaks the endpoint's parser).
 - Learning-goal prompt is still a native prompt() — could be an
   in-app modal for polish.
 - verify.html theme-toggle aria-label stays English.
+
+## Addendum — Lesson Flow v2 (2026-09-30, later session)
+
+Research: prequestioning (Pan et al. 2019 — recall attempt before
+re-study is as effective as retrieval practice), interleaved practice
+(Bjork desirable difficulties; Rohrer & Taylor 2007), SDT competence
+signals. Web-researched THEN extended with PEL-unique ideas.
+
+Four new flow features (commits 9c58f98, b8700c2 — cache busters
+flow2a/flow2b; NOTE tools/bust_lib_cache.py only rewrites ?v= hex
+tags, hand tags like notekey01 are skipped — bump manually):
+
+1. **cold_recall (ذاكرتك)** — lesson opener. Student recalls 2-3 words
+   from their PREVIOUS lesson (app.html saves up to 4 words in
+   pel_last_lesson_words on completion; dep recentLessonWords feeds the
+   stage). Reveal + honest self-report (عرفتها / نسيتها). Forgotten
+   words are spliced back into the CURRENT lesson as recognize
+   activities (_taught:true skips the generic teach panel). Verified
+   live: splice grows seq 24→25, feedback + LTR word counter render
+   correctly.
+2. **Interleaved authored practice** — DB order/spell/translate/correct
+   exercises now round-robin mixed at the step-4 practice zone instead
+   of blocked same-type runs. Teach-first structure untouched.
+3. **Mid-lesson milestone** — one-time halfway toast "نص السبق!" for
+   lessons with 8+ activities (render() midpointShown guard).
+4. **step_tip (نصيحه ستيب)** — rotating Saudi-crafted STEP exam strategy
+   cards (8 in PEL_STEP_TIPS), one per STEP-academy lesson, inserted
+   after guided_production / before free_response. Verified live at
+   position 21/24, clean bilingual rendering.
+
+Live-verified via Playwright (testmail1): full sequence 0:cold_recall →
+1:concept_examples → 2-5:learn/learn_sentence/how_to_say → 6-9:recognize/
+db_translate/spell → 10-14:listening block + pronunciation/speaking →
+15-19:writing/mistake coach/guided production → 20:step_tip → 21-23:
+free_response/review/challenge. ZERO console/page errors throughout.
+Tests: 65/65 pass after changes.
