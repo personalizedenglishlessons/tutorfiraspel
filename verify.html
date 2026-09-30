@@ -149,6 +149,10 @@ body.ui-ar .card, body.ui-ar .site-foot{ text-align:right; }
 body.ui-ar .lookup-form input{ direction:ltr; text-align:center; }
 body.ui-ar .eyebrow{ direction:rtl; }
 
+/* Light mode: gold text needs darker shade for WCAG AA contrast */
+html[data-theme="light"] .eyebrow{ color:var(--bronze); }
+html[data-theme="light"] .genuine{ color:var(--bronze); }
+
 /* interface-language pairing: render exactly one language */
 body.ui-ar .t-en{ display:none !important; }
 body.ui-en .t-ar{ display:none !important; }
