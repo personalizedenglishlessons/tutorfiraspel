@@ -103,3 +103,63 @@ db_translate/spell → 10-14:listening block + pronunciation/speaking →
 15-19:writing/mistake coach/guided production → 20:step_tip → 21-23:
 free_response/review/challenge. ZERO console/page errors throughout.
 Tests: 65/65 pass after changes.
+
+## Addendum 2 — Static bug-hunt round (2026-09-30, same session)
+
+Method: ESLint v10 flat-config static analysis over (a) all inline
+script blocks of every page concatenated in document order, (b) all
+lib/*.js + admin/admin.js; plus targeted greps (JSON.parse guards,
+duplicate DOM ids, broken hrefs/src, innerHTML injection paths).
+Remaining ESLint no-undef hits after fixes are verified false
+positives (window.* bridge globals, typeof-guarded probes, comments).
+
+Bugs found & fixed (commits 3ac202d + follow-ups):
+
+1. **renderDbPractice esc() crash** — the authored-exercises
+   worksheet view (app.html renderDbPractice, called when a lesson
+   has DB exercises) called esc() which only exists inside OTHER
+   function scopes (17669/19041/21995) → ReferenceError whenever
+   that view rendered. Added a local esc() over escapeHtml.
+2. **Corrupted vocab entries** — three dataset entries (Weekend
+   Plans, airport, phone-call lessons) had a duplicate 'en:' key
+   whose second value (a tip) silently overwrote the English word
+   ('What are you doing today?' showed as 'The standard plans
+   question.' etc). Second key now 'tip:'.
+3. **liveClasses renderer never registered** — the widget used a
+   bare 'typeof viewRenderers' guard, but viewRenderers is scoped
+   inside the main app IIFE (block 1836-21650) → registration
+   silently never ran; view fell back to MutationObserver (blank
+   flash). Main IIFE now exposes
+   window.__pelRegisterViewRenderer and the widget uses it.
+4. **accountPrefs JSON.parse brick** — corrupt
+   localStorage.pel_account_prefs threw at script-eval time inside
+   the main IIFE → app would never boot for that student. Now
+   try/catch with default fallback.
+5. **verify.html a11y** — theme-toggle and language-pill
+   aria-label/title now switch with interface language (were
+   English-only).
+6. **VV_CAT_ICONS dedupe** — 'Hospital English'/'Travel English'
+   keys appeared twice (later value wins; behavior preserved).
+
+Verified NOT bugs (leave alone):
+- Dead hero-card code (heroRing/quickWin*/continueLearning*) —
+  hero card intentionally removed in commit 7bf317b; all usages
+  null-guarded no-ops. Cleanup optional, low priority.
+- openLesson monkey-patch at app.html ~21612 — deliberate
+  classic-view → Stage-dialog wrap with _origOpenLesson fallback.
+- openLesson = function reassignment (no-func-assign flag) is that
+  same intentional wrap.
+- Lib var-redeclarations (sess in admin boot, pool/wEl/aEl/trEl in
+  dashboard_life, _lessonText, taughtWords ×2 in lesson_stage) —
+  legal var redeclarations in mutually exclusive branches.
+- Benign duplicate 'to' key in lesson_stage mini-translation map
+  (~7050, same value both times) — cosmetic only, would need a
+  cache-buster bump if cleaned.
+- e2e_sw.js 'Response' no-undef — Service Worker global, correct
+  in SW scope.
+- nlp (compromise) loads on demand from jsdelivr — CSP allows it.
+
+Also verified: all pages' inline scripts + lib files +
+tv-vocab-test.html/legal.html lint-clean; 0 static duplicate DOM
+ids; 0 broken internal hrefs/src; typed student answers never
+reach innerHTML (property assignment only).

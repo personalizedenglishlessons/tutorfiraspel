@@ -270,11 +270,13 @@ function applyVerifyLang(lang){
   const ariaSwaps = [
     ['badCode', 'رمز التحقق', 'Verification code'],
     ['mainCode', 'رمز التحقق', 'Verification code'],
-    ['numCode', 'رقم الشهاده', 'Certificate number']
+    ['numCode', 'رقم الشهاده', 'Certificate number'],
+    ['themeToggle', 'بدل المظهر', 'Toggle theme'],
+    ['verifyLangBtn', 'بدل لغه الواجهه', 'Switch interface language']
   ];
   ariaSwaps.forEach(function(swap){
     const inp = document.getElementById(swap[0]);
-    if(inp) inp.setAttribute('aria-label', lang === 'ar' ? swap[1] : swap[2]);
+    if(inp){ inp.setAttribute('aria-label', lang === 'ar' ? swap[1] : swap[2]); if(inp.tagName === 'BUTTON') inp.setAttribute('title', lang === 'ar' ? swap[1] : swap[2]); }
   });
   const prefs = readAcctPrefs();
   prefs.lang = lang;
