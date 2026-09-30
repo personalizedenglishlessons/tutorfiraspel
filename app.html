@@ -1842,8 +1842,8 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
 const root = document.documentElement;
 function applyTheme(t){
   root.setAttribute('data-theme', t);
-  localStorage.setItem('pel_app_theme', t);
-  localStorage.setItem('pel-theme', t);
+  try{ localStorage.setItem('pel_app_theme', t); }catch(e){}
+  try{ localStorage.setItem('pel-theme', t); }catch(e){}
   document.getElementById('darkChoiceBtn') && document.getElementById('darkChoiceBtn').classList.toggle('btn-gold', t==='dark');
   document.getElementById('lightChoiceBtn') && document.getElementById('lightChoiceBtn').classList.toggle('btn-gold', t==='light');
 }
@@ -14705,7 +14705,7 @@ function getLesson(academyId, lessonId){
    columns user_id/key/value to actually persist remotely)
    ============================================================ */
 function lsGet(key, fallback){ try{ return JSON.parse(localStorage.getItem(key)) ?? fallback; }catch(e){ return fallback; } }
-function lsSet(key, val){ localStorage.setItem(key, JSON.stringify(val));
+function lsSet(key, val){ try{ localStorage.setItem(key, JSON.stringify(val)); }catch(e){}
   if(window.PEL_COOKIE_AUTH && currentUser){
     pelTableUpsert('student_data', { user_id: currentUser.id, key, value: val }, 'user_id,key').catch(()=>{});
   } else {
@@ -14741,7 +14741,7 @@ function lsGetUser(key, fallback){
 }
 function lsSetUser(key, val){
   const scoped = userKey(key);
-  localStorage.setItem(scoped, JSON.stringify(val));
+  try{ localStorage.setItem(scoped, JSON.stringify(val)); }catch(e){}
 }
 let favorites = new Set();
 let bookmarks = [];
