@@ -113,6 +113,13 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
   transition:transform .15s ease, box-shadow .2s ease;
 }
 .btn-gold:hover{ transform:translateY(-1px); box-shadow:var(--gold-glow); }
+
+/* Mobile: stack the lookup form and pad header for fixed buttons */
+@media(max-width:480px){
+  .site-head{ padding-right:70px; }
+  .lookup-form{ flex-direction:column; }
+  .lookup-form .btn-gold{ width:100%; }
+}
 .btn-ghost{ background:none; border:1px solid var(--border); color:var(--text-secondary); border-radius:12px; padding:12px 20px; font-size:.82rem; transition:border-color .2s ease, color .2s ease; }
 .btn-ghost:hover{ border-color:var(--gold); color:var(--gold); }
 .spinner{
@@ -123,9 +130,9 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
 @keyframes spin{ to{ transform:rotate(360deg); } }
 .site-foot{ text-align:center; padding:0 20px 34px; font-size:.72rem; color:var(--text-muted); line-height:1.8; }
 
-/* interface language pill (fixed, top right) */
+/* interface language pill (fixed, top right, left of theme toggle) */
 .lang-pill{
-  position:fixed; top:22px; right:22px; z-index:60;
+  position:fixed; top:22px; right:64px; z-index:60;
   min-width:46px; height:46px; padding:0 12px; border-radius:14px;
   background:color-mix(in srgb, var(--card-elevated) 80%, transparent);
   backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
