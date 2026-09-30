@@ -650,8 +650,12 @@ function showSuccess(idPrefix){
 }
 function showMessage(idPrefix, text, type){
   const el = document.getElementById(idPrefix + 'Message');
-  el.textContent = text;
+  el.innerHTML = text;
   el.className = 'form-message show ' + type;
+}
+/* Bilingual message markup: Arabic first (app house style), English after. */
+function msgArEn(ar, en){
+  return '<span dir="rtl">' + ar + '</span>، <span dir="ltr">' + en + '</span>';
 }
 
 /* ==========================================================================
@@ -731,7 +735,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
   if(honeypot && honeypot.value){ return; } // honeypot tripped: likely a bot, silently ignore
   const emailOk = validateEmailField(document.getElementById('loginEmail'), document.getElementById('loginEmailField'), document.querySelector('#loginEmailField .field-hint'));
   if(!emailOk || password.length === 0){
-    showMessage('login', 'Please enter a valid email and password.', 'error');
+    showMessage('login', msgArEn('اكتب بريدك وكلمه المرور اول.', 'Please enter a valid email and password.'), 'error');
     return;
   }
   setLoading('login', true);
@@ -741,7 +745,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
   if(!client){
     setTimeout(() => {
       setLoading('login', false);
-      showMessage('login', 'Authentication is not yet configured for this page. Add your Supabase project URL and anon key.', 'error');
+      showMessage('login', msgArEn('الدخول غير مهيأ بعد. لازم يضاف رابط المشروع والمفتاح العام.', 'Authentication is not yet configured for this page. Add your Supabase project URL and anon key.'), 'error');
     }, 600);
     return;
   }
@@ -781,10 +785,10 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
         } else {
           // Auth-specific errors (bad credentials, rate limit) should be shown
           setLoading('login', false);
-          let msg = 'Incorrect email or password.';
-          if(sess.error === 'too_many_attempts') msg = 'Too many login attempts. Please try again in 15 minutes.';
-          else if(sess.error === 'invalid_email') msg = 'Please enter a valid email.';
-          else if(sess.error === 'invalid_password') msg = 'Password must be at least 6 characters.';
+          let msg = msgArEn('البريد او كلمه المرور غلط.', 'Incorrect email or password.');
+          if(sess.error === 'too_many_attempts') msg = msgArEn('محاولات كثيره. انتظر ١٥ دقيقه وحاول مره ثانيه.', 'Too many login attempts. Please try again in 15 minutes.');
+          else if(sess.error === 'invalid_email') msg = msgArEn('اكتب بريد الكتروني صحيح.', 'Please enter a valid email.');
+          else if(sess.error === 'invalid_password') msg = msgArEn('كلمه المرور لازم ٦ حروف على الاقل.', 'Password must be at least 6 characters.');
           showMessage('login', msg, 'error');
           return;
         }
@@ -795,7 +799,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
   if(cookieLoginOk){
     if(remembered){ localStorage.setItem('pel-last-email', email); }
     showSuccess('login');
-    showMessage('login', 'Welcome back. Redirecting to your dashboard.', 'success');
+    showMessage('login', msgArEn('اهلا بعودتك! نفتح لوحه التحكم...', 'Welcome back. Redirecting to your dashboard.'), 'success');
     triggerRedirect();
     return;
   }
@@ -811,7 +815,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     });
   }catch(e){
     setLoading('login', false);
-    showMessage('login', 'Network error. Please try again.', 'error');
+    showMessage('login', msgArEn('مشكله في الاتصال. حاول مره ثانيه.', 'Network error. Please try again.'), 'error');
     return;
   }
 
@@ -821,10 +825,10 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
   if(!fnResp.ok || fnData.error){
     document.getElementById('loginPassword').parentElement.classList.add('invalid');
     setTimeout(() => document.getElementById('loginPassword').parentElement.classList.remove('invalid'), 500);
-    let msg = 'Incorrect email or password.';
-    if(fnData.error === 'too_many_attempts') msg = 'Too many login attempts. Please try again in 15 minutes.';
-    else if(fnData.error === 'invalid_email') msg = 'Please enter a valid email.';
-    else if(fnData.error === 'invalid_password') msg = 'Password must be at least 6 characters.';
+    let msg = msgArEn('البريد او كلمه المرور غلط.', 'Incorrect email or password.');
+    if(fnData.error === 'too_many_attempts') msg = msgArEn('محاولات كثيره. انتظر ١٥ دقيقه وحاول مره ثانيه.', 'Too many login attempts. Please try again in 15 minutes.');
+    else if(fnData.error === 'invalid_email') msg = msgArEn('اكتب بريد الكتروني صحيح.', 'Please enter a valid email.');
+    else if(fnData.error === 'invalid_password') msg = msgArEn('كلمه المرور لازم ٦ حروف على الاقل.', 'Password must be at least 6 characters.');
     showMessage('login', msg, 'error');
     return;
   }
@@ -839,7 +843,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
 
   if(remembered){ localStorage.setItem('pel-last-email', email); }
   showSuccess('login');
-  showMessage('login', 'Welcome back. Redirecting to your dashboard.', 'success');
+  showMessage('login', msgArEn('اهلا بعودتك! نفتح لوحه التحكم...', 'Welcome back. Redirecting to your dashboard.'), 'success');
   triggerRedirect();
 });
 
