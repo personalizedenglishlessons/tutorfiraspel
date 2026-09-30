@@ -2900,13 +2900,17 @@ const PEL_ACTIVITY = (function(){
   function touch(eventType, opts){
     if(!currentUser) return;
     var now = Date.now();
-    // Throttle: heartbeats min 45s apart, other events min 3s apart (except login/logout)
-    if(eventType === 'heartbeat' && now - lastTouch < 45000) return;
-    if(eventType !== 'login' && eventType !== 'logout' && now - lastTouch < 3000) return;
+    // Throttle: heartbeats min 2min apart, other events min 5s apart (except login/logout)
+    if(eventType === 'heartbeat' && now - lastTouch < 120000) return;
+    if(eventType !== 'login' && eventType !== 'logout' && now - lastTouch < 5000) return;
     lastTouch = now;
 
     var c = client();
     if(!c) return;
+    // Skip page_view events for internal navigation (home, review, profile, settings) —
+    // only log meaningful events (login, logout, open_lesson, heartbeat)
+    if(eventType === 'page_view' && opts && opts.page &&
+       ['home','review','profile','settings'].indexOf(opts.page) !== -1) return;
     try{
       pelRpc('student_touch', {
         p_session_id: getSessionId(),
@@ -2925,7 +2929,7 @@ const PEL_ACTIVITY = (function(){
     if(heartbeatId) clearInterval(heartbeatId);
     heartbeatId = setInterval(function(){
       if(!document.hidden && currentUser) touch('heartbeat');
-    }, 60000);
+    }, 180000);
     document.addEventListener('visibilitychange', function(){
       if(!document.hidden && currentUser) touch('heartbeat');
     });
