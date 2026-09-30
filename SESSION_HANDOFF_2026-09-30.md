@@ -163,3 +163,39 @@ Also verified: all pages' inline scripts + lib files +
 tv-vocab-test.html/legal.html lint-clean; 0 static duplicate DOM
 ids; 0 broken internal hrefs/src; typed student answers never
 reach innerHTML (property assignment only).
+
+## Addendum 3 — Arabic content sweep + DB fixes (2026-09-30)
+
+Static files fixed (commit 1b6402b):
+- tv-vocab-test.html: 'Symptom' synonyms_ar عاهه (affliction — wrong
+  word) → دلاله، اشاره
+- app.html quiz option 'تم الغاءء' → 'تم الغاء'
+- app.html takeaway 'العايليهه' → 'العايليه'
+- translit map 'microsoft':'مايكروبتت' → 'مايكروسوفت'
+- 'TYPOS' label 'غلط املايي' → 'غلط املائي'
+- roleplay recover line 'اخصايي العيون' → 'اخصائي العيون'
+
+Supabase lesson_items fixed via Management API (direct UPDATEs,
+verified):
+- 1082, 1084 interview-self-intro: العملاا → العملاء
+- 1872 clothes: حذاا → حذاء (example حذااي → حذائي)
+- 2514 c2-rhetoric: نداا → نداء (example ندا → نداء)
+- 2604 a1pos: الاشياا → الاشياء
+- 2852 a0ec: الاسماا → الاسماء
+
+Also: replaced profile 'edit goal' native prompt() with in-app
+bilingual modal (commit f845750); verify.html button aria-labels
+now bilingual (ca9dd6a). Arabic morphology scanner run over every
+file — remaining flagged words are legitimate (برايي، تحقق، محدد
+etc. house style). Zero double-alef sequences remain anywhere.
+
+Verified clean / skipped intentionally:
+- CSS class audit — dbx-*/vv-*/cefr-* etc. are JS hooks with inline
+  styles, not missing styling.
+- Double-click races — markLessonComplete idempotent
+  (completedLessons.has guard); stage buttons disabled during mark;
+  live-class submit disables its button.
+- setInterval/clearInterval balanced; global error +
+  unhandledrejection handlers exist (app.html ~2694).
+- DB pattern scan (doubled-final letters, stray hamzas): 52 flags,
+  46 legitimate morphology, 6 fixed above.
