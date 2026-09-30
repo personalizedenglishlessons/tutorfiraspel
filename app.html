@@ -20433,8 +20433,35 @@ function renderProfile(){
   document.getElementById('weeklyGoalNum').textContent = studentPrefs.weeklyGoalLessons;
   document.getElementById('monthlyGoalNum').textContent = studentPrefs.monthlyGoalLessons;
   document.getElementById('editGoalBtn').addEventListener('click', () => {
-    const val = prompt('حدّث هدفك التعليمي:\nUpdate your learning goal:', studentPrefs.goal);
-    if(val && val.trim()){ studentPrefs.goal = val.trim(); saveStudentPrefs(); document.getElementById('profileGoalText').textContent = studentPrefs.goal; toast('<span class="arabic">حدثنا هدف التعلم</span>، Learning goal updated'); }
+    // In-app bilingual goal editor (was a native prompt() — felt broken on mobile
+    // and did not match the app's design).
+    const stale = document.getElementById('pelGoalModal');
+    if(stale) stale.remove();
+    const ov = document.createElement('div');
+    ov.id = 'pelGoalModal';
+    ov.style.cssText = 'position:fixed;inset:0;z-index:1200;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;padding:16px;';
+    ov.innerHTML = `
+      <div dir="auto" style="background:var(--card,#1c1b19);border:1px solid var(--border,#393836);border-radius:16px;max-width:420px;width:100%;padding:22px;box-shadow:0 24px 60px rgba(0,0,0,.45);">
+        <h3 style="margin:0;font-size:1.05rem;"><span class="arabic" style="display:block;">حدّث هدفك التعليمي</span><span dir="ltr" style="display:block;font-size:.86rem;color:var(--text-muted,#797876);">Update your learning goal</span></h3>
+        <input id="pelGoalInput" type="text" dir="auto" maxlength="140" value="${escapeHtml(studentPrefs.goal||'')}" placeholder="مثال: اتواصل بثقه بالشغل — e.g. Speak confidently at work" style="width:100%;margin-top:12px;padding:11px 13px;border-radius:10px;border:1px solid var(--border,#393836);background:var(--bg,#141312);color:var(--text,#eee);font-size:.95rem;font-family:inherit;" />
+        <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:16px;">
+          <button type="button" id="pelGoalCancel" class="btn-outline"><span class="arabic">الغاء</span>، <span dir="ltr">Cancel</span></button>
+          <button type="button" id="pelGoalSave" class="btn-gold"><span class="arabic">حفظ</span>، <span dir="ltr">Save</span></button>
+        </div>
+      </div>`;
+    document.body.appendChild(ov);
+    const inp = ov.querySelector('#pelGoalInput');
+    inp.focus(); inp.select();
+    const close = () => ov.remove();
+    const save = () => {
+      const val = inp.value;
+      if(val && val.trim()){ studentPrefs.goal = val.trim(); saveStudentPrefs(); document.getElementById('profileGoalText').textContent = studentPrefs.goal; toast('<span class="arabic">حدثنا هدف التعلم</span>، Learning goal updated'); }
+      close();
+    };
+    ov.querySelector('#pelGoalCancel').addEventListener('click', close);
+    ov.querySelector('#pelGoalSave').addEventListener('click', save);
+    inp.addEventListener('keydown', e => { if(e.key === 'Enter'){ e.preventDefault(); save(); } if(e.key === 'Escape'){ e.preventDefault(); close(); } });
+    ov.addEventListener('click', e => { if(e.target === ov) close(); });
   });
 
   document.getElementById('skillScoresList').innerHTML = isFirstTimeStudent()
