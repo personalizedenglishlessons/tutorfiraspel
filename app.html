@@ -20409,7 +20409,7 @@ function renderProfile(){
   document.getElementById('weeklyGoalNum').textContent = studentPrefs.weeklyGoalLessons;
   document.getElementById('monthlyGoalNum').textContent = studentPrefs.monthlyGoalLessons;
   document.getElementById('editGoalBtn').addEventListener('click', () => {
-    const val = prompt('Update your learning goal:', studentPrefs.goal);
+    const val = prompt('حدّث هدفك التعليمي:\nUpdate your learning goal:', studentPrefs.goal);
     if(val && val.trim()){ studentPrefs.goal = val.trim(); saveStudentPrefs(); document.getElementById('profileGoalText').textContent = studentPrefs.goal; toast('<span class="arabic">حدثنا هدف التعلم</span>، Learning goal updated'); }
   });
 
