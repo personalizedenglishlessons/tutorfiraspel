@@ -265,6 +265,16 @@ function applyVerifyLang(lang){
   document.title = lang === 'ar' ? 'التحقق من الشهاده | PEL' : 'Certificate Verification | PEL';
   const pill = document.getElementById('verifyLangBtn');
   if(pill) pill.textContent = lang === 'ar' ? 'EN' : 'ع';
+  // Keep input aria-labels in sync with the interface language (a11y).
+  const ariaSwaps = [
+    ['badCode', 'رمز التحقق', 'Verification code'],
+    ['mainCode', 'رمز التحقق', 'Verification code'],
+    ['numCode', 'رقم الشهاده', 'Certificate number']
+  ];
+  ariaSwaps.forEach(function(swap){
+    const inp = document.getElementById(swap[0]);
+    if(inp) inp.setAttribute('aria-label', lang === 'ar' ? swap[1] : swap[2]);
+  });
   const prefs = readAcctPrefs();
   prefs.lang = lang;
   try{ localStorage.setItem('pel_account_prefs', JSON.stringify(prefs)); }catch(e){}
@@ -412,7 +422,7 @@ document.getElementById('numForm').addEventListener('submit', function(e){
   const raw = document.getElementById('numCode').value.trim();
   const m = String(raw).toUpperCase().match(/^PEL-(\d{6})-(\d{3})-(\d)$/);
   if(!m){
-    showNumResult(false, 'الصيغه غير صحه.', 'Wrong format. Expected PEL-YYMMDD-SSS-C, e.g. PEL-260813-531-9.');
+    showNumResult(false, 'الصيغه غير صحيحه.', 'Wrong format. Expected PEL-YYMMDD-SSS-C, e.g. PEL-260813-531-9.');
     return;
   }
   if(validCertNumber(raw)){
