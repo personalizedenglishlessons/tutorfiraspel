@@ -14789,6 +14789,7 @@ function markLessonComplete(academyId, lessonId, stats){
             reviewLesson.vocab.forEach(w => enqueueForReview(w, (reviewAcademy ? reviewAcademy.en + ' · ' : '') + reviewLesson.title));
           }
           pelPerfRecord(lessonId, stats);
+          pelRememberLessonWords(lessonId, reviewLesson);
           syncAcademyProgress();
           awardXp(50);
           syncAchievements();
@@ -14814,6 +14815,7 @@ function markLessonComplete(academyId, lessonId, stats){
     reviewLesson.vocab.forEach(w => enqueueForReview(w, (reviewAcademy ? reviewAcademy.en + ' · ' : '') + reviewLesson.title));
   }
   pelPerfRecord(lessonId, stats);
+  pelRememberLessonWords(lessonId, reviewLesson);
   syncAcademyProgress();
   awardXp(50);
   syncAchievements();
@@ -17534,6 +17536,24 @@ function guidedToolsForLevel(levelCode){
    can adapt: excelling students get bonus challenges, struggling
    students get extra reinforcement.
    ============================================================ */
+/* ADAPTIVE MEMORY HOOK: saves the main words of the lesson the student just
+   completed, so the NEXT lesson can open with the cold-recall "ذاكرتك"
+   activity (prequestioning). Kept tiny: max 4 words, en/ar/translit only. */
+function pelRememberLessonWords(lessonId, lesson){
+  try{
+    var words = (lesson && Array.isArray(lesson.vocab) ? lesson.vocab : []).slice(0, 4)
+      .map(function(w){ return { en:w.en, ar:w.ar||'', translit:w.translit||'' }; })
+      .filter(function(w){ return w.en; });
+    if(words.length) lsSetUser('pel_last_lesson_words', { lesson: lessonId, words: words });
+  }catch(e){}
+}
+function pelRecentLessonWords(){
+  try{
+    var rec = lsGetUser('pel_last_lesson_words', null);
+    if(!rec || !Array.isArray(rec.words) || !rec.words.length) return null;
+    return rec;
+  }catch(e){ return null; }
+}
 function pelPerfRecord(lessonId, stats){
   try{
     var perf = lsGetUser('pel_recent_perf', []);
@@ -21567,6 +21587,8 @@ function renderDashboardIntel(){
       // Adaptive performance tracker: returns recent lesson scores so the
       // engine can inject bonus challenges or reinforcement activities
       recentPerformance: pelPerfRecent,
+      // Cold-recall opener (ذاكرتك): words from the student's previous lesson
+      recentLessonWords: pelRecentLessonWords,
       // Daily content (Word/Phrase of the Day) woven into lesson warm-up
       dailyWarmup: function(){ try{ return buildDailyItems ? buildDailyItems().slice(1, 4) : []; }catch(e){ return []; } },
       // SRS server sync (pel_srs_state): the stage engine guards these -
