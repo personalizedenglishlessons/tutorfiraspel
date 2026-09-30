@@ -20443,7 +20443,7 @@ function renderProfile(){
     ov.innerHTML = `
       <div dir="auto" style="background:var(--card,#1c1b19);border:1px solid var(--border,#393836);border-radius:16px;max-width:420px;width:100%;padding:22px;box-shadow:0 24px 60px rgba(0,0,0,.45);">
         <h3 style="margin:0;font-size:1.05rem;"><span class="arabic" style="display:block;">حدّث هدفك التعليمي</span><span dir="ltr" style="display:block;font-size:.86rem;color:var(--text-muted,#797876);">Update your learning goal</span></h3>
-        <input id="pelGoalInput" type="text" dir="auto" maxlength="140" value="${escapeHtml(studentPrefs.goal||'')}" placeholder="مثال: اتواصل بثقه بالشغل — e.g. Speak confidently at work" style="width:100%;margin-top:12px;padding:11px 13px;border-radius:10px;border:1px solid var(--border,#393836);background:var(--bg,#141312);color:var(--text,#eee);font-size:.95rem;font-family:inherit;" />
+        <input id="pelGoalInput" type="text" dir="auto" maxlength="140" aria-label="Learning goal" value="${escapeHtml(studentPrefs.goal||'')}" placeholder="مثال: اتواصل بثقه بالشغل — e.g. Speak confidently at work" style="width:100%;margin-top:12px;padding:11px 13px;border-radius:10px;border:1px solid var(--border,#393836);background:var(--bg,#141312);color:var(--text,#eee);font-size:.95rem;font-family:inherit;" />
         <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:16px;">
           <button type="button" id="pelGoalCancel" class="btn-outline"><span class="arabic">الغاء</span>، <span dir="ltr">Cancel</span></button>
           <button type="button" id="pelGoalSave" class="btn-gold"><span class="arabic">حفظ</span>، <span dir="ltr">Save</span></button>

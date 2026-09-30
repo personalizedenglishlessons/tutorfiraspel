@@ -165,9 +165,11 @@ body.ui-en .t-ar{ display:none !important; }
   .cert-preview .cert-sheet{ transform:none !important; margin:0 !important; }
   .verified-badge, .genuine, #okIdCheck{ display:none !important; }
 }
+.skip-link:focus{left:0!important;}
 </style>
 </head>
 <body>
+<a href="#mainForm" class="skip-link" style="position:absolute;left:-9999px;top:0;z-index:9999;padding:12px 20px;background:var(--gold);color:#171412;font-weight:600;border-radius:0 0 12px 0;">تخطي إلى المحتوى · Skip to content</a>
 <button type="button" id="themeToggle" aria-label="Toggle theme" title="Toggle theme" style="position:fixed;top:14px;right:14px;z-index:100;width:38px;height:38px;border-radius:50%;border:1px solid var(--border);background:var(--surface);color:var(--text-muted);cursor:pointer;font-size:15px;line-height:1;">◐</button>
 
 <header class="site-head">
