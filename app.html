@@ -10216,7 +10216,7 @@ const ACADEMIES = [
   {id:'vocabulary-vault', en:'Vocabulary Vault', ar: 'خزنه الكلمات', translit: 'ڤوكابيولري ڤولت', cat:'Skills', icon:'book-open', from:'#A88345', to:'#C8A96A', difficulty:'All Levels', duration:'10h', lessons:48},
   {id:'grammar-academy', en:'Grammar Academy', ar: 'اكاديميه القواعد', translit: 'جرامر اكاديمي', cat:'Skills', icon:'spell-check', from:'#343744', to:'#262833', difficulty:'All Levels', duration:'9h', lessons:40},
   {id:'listening-lounge', en:'Listening Lounge', ar: 'ركن الاستماع', translit: 'ليسننج لاونج', cat:'Skills', icon:'headphones', from:'#3F8C72', to:'#17171B', difficulty:'Intermediate', duration:'6h', lessons:26},
-  {id:'reading-corner', en:'Reading Corner', ar: 'ركن القراه', translit: 'ريدنج كورنر', cat:'Skills', icon:'book', from:'#C8A96A', to:'#17171B', difficulty:'Intermediate', duration:'6h', lessons:27},
+  {id:'reading-corner', en:'Reading Corner', ar: 'ركن القراءه', translit: 'ريدنج كورنر', cat:'Skills', icon:'book', from:'#C8A96A', to:'#17171B', difficulty:'Intermediate', duration:'6h', lessons:27},
   {id:'writing-workshop', en:'Writing Workshop', ar: 'ورشه الكتابه', translit: 'رايتنج وركشوب', cat:'Skills', icon:'pen-line', from:'#A88345', to:'#17171B', difficulty:'Advanced', duration:'7h', lessons:22},
   {id:'travel-english', en:'Travel English', ar: 'انجليزي السفر', translit: 'ترافل انجلش', cat:'Situational', icon:'plane', from:'#3F8C72', to:'#C8A96A', difficulty:'Intermediate', duration:'5h', lessons:20},
   {id:'business-english', en:'Business English', ar: 'انجليزي الاعمال', translit: 'بزنس انجلش', cat:'Career', icon:'briefcase', from:'#343744', to:'#C8A96A', difficulty:'Advanced', duration:'8h', lessons:34},
@@ -17463,7 +17463,7 @@ const CEFR_LEVELS = [
   { id:'A1', en:'English Basics',   ar: 'انجليزي الاساس',    color:'#3F8C72', descEn:'Greetings, the alphabet, numbers and basic questions.', descAr: 'التحيات، الحروف، الارقام والاساله البسيطة.' },
   { id:'A2', en:'English Daily',    ar: 'انجليزي اليومي',    color:'#5BA88A', descEn:'Survival English for travel, food, shopping and hotels.', descAr: 'انجليزي البقا للسفر والاكل والتسوق والفنادق.' },
   { id:'B1', en:'English Middle',   ar: 'انجليزي الوسط',     color:'#C8A96A', descEn:'Real conversations, opinions and everyday fluency.', descAr: 'محادثات حقيقيه وارا وطلاقة يوميه.' },
-  { id:'B2', en:'English Strong',   ar: 'انجليزي قوي',       color:'#D8BD83', descEn:'Listening, reading, accent and the workplace.', descAr: 'الاستماع والقراه والبسة والدوام.' },
+  { id:'B2', en:'English Strong',   ar: 'انجليزي قوي',       color:'#D8BD83', descEn:'Listening, reading, accent and the workplace.', descAr: 'الاستماع والقراءه واللهجه والدوام.' },
   { id:'C1', en:'English High',     ar: 'انجليزي عالي',      color:'#A88345', descEn:'Business, writing, idioms and media English.', descAr: 'الاعمال والكتابه والتعابير وانجليزي الاعلام.' },
   { id:'C2', en:'English Pro',      ar: 'انجليزي محترف',     color:'#343744', descEn:'Near-native fluency across every domain.', descAr: 'طلاقة شبه اصلية في كل المجالات.' },
 ];
@@ -17515,7 +17515,7 @@ const GUIDED_TOOL_RULES = {
   grammar:       { minLevel:'A1', icon:'spell-check',  ar: 'القواعد',     en:'Grammar',       why:'افهم تركيب الجمل في الدرس' },
   listening:     { minLevel:'A2', icon:'headphones',   ar: 'الاستماع',    en:'Listening',     why:'اسمع وجاوب' },
   speaking:      { minLevel:'A2', icon:'messages-square', ar: 'المحادثه',  en:'Speaking',      why:'تكلم بصوتك' },
-  reading:       { minLevel:'B1', icon:'book-text',    ar: 'القراه',     en:'Reading',       why:'اقرا وتدرب' },
+  reading:       { minLevel:'B1', icon:'book-text',    ar: 'القراءه',     en:'Reading',       why:'اقرا وتدرب' },
   writing:       { minLevel:'B1', icon:'pen-line',     ar: 'الكتابه',     en:'Writing',       why:'اكتب جمله' },
 };
 const CEFR_ORDER = ['A0','A1','A2','B1','B2','C1','C2'];
@@ -18113,7 +18113,7 @@ function renderVocabulary(){
     'At Work':'الشغل','Coffee Shop English':'انجليزي الكوفي','American Slang':'امريكي عامي','American Conversations':'محادثات امريكيه',
     'American Accent Lab':'اللهجه الامريكيه','English Mastery':'اتقان الانجليزي','Fluency Journey':'رحله الطلاقه','Idioms Library':'مكتبه التعابير',
     'Listening Lounge':'ركن الاستماع','Movie English':'انجليزي الافلام','Music English':'انجليزي الاغاني','Phrasal Verbs Lab':'مختبر الافعال',
-    'Reading Corner':'ركن القراه','Speaking Studio':'استوديو المحادثه','TV Series English':'انجليزي المسلسلات','Writing Workshop':'ورشه الكتابه','Grammar Academy':'اكاديميه القواعد',
+    'Reading Corner':'ركن القراءه','Speaking Studio':'استوديو المحادثه','TV Series English':'انجليزي المسلسلات','Writing Workshop':'ورشه الكتابه','Grammar Academy':'اكاديميه القواعد',
     'Vocabulary Vault':'بنك الكلمات','Workplace':'الشغل'
   };
   // Difficulty levels in 
@@ -19625,7 +19625,7 @@ const SKILL_SCORES = [
   {en:'Speaking', ar: 'المحادثه', academyId:'speaking-studio'},
   {en:'Pronunciation', ar: 'النطق', academyId:'american-accent-lab'},
   {en:'Listening', ar: 'الاستماع', academyId:'listening-lounge'},
-  {en:'Reading', ar: 'القراه', academyId:'reading-corner'},
+  {en:'Reading', ar: 'القراءه', academyId:'reading-corner'},
   {en:'Writing', ar: 'الكتابه', academyId:'writing-workshop'},
 ];
 
