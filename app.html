@@ -9966,7 +9966,10 @@ function notifPrefs(){ return lsGetUser('pel_notif_prefs', {daily:true, streak:t
 /* accountPrefs holds the learner's own preferences: interface language
    (lang) and what they are learning (direction). Both are persisted via
    lsSet so they sync to Supabase and follow the student across devices. */
-let accountPrefs = JSON.parse(localStorage.getItem('pel_account_prefs') || 'null') || {lang:'ar', direction:'en'};
+/* Corrupt/partial storage must never brick the app boot — fall back to defaults. */
+let accountPrefs;
+try{ accountPrefs = JSON.parse(localStorage.getItem('pel_account_prefs') || 'null') || {lang:'ar', direction:'en'}; }
+catch(e){ accountPrefs = {lang:'ar', direction:'en'}; }
 function learningDirection(){
   return accountPrefs.direction === 'ar' ? 'ar' : 'en';
 }
