@@ -15688,6 +15688,28 @@ const LOCAL_RULES = [
     }
   },
   {
+    id:'plural-s-verb', category:'agreement',
+    ar:'مع I/we/you/they ما نضيف s للفعل: "I go" مو "I goes".',
+    en:'With I/we/you/they don\'t add "s" to the verb: "I go", not "I goes".',
+    whyAr: 'الفعل مع I/we/you/they يبقى على شكله الاساسي بدون s.',
+    whyEn:'The verb stays in its base form after I/we/you/they — no "s" added.',
+    learn:{ ar: 'I go، We like، They work.', en:'I go, We like, They work.' },
+    find(tokens, i, nlpImpl){
+      const a = tokens[i], b = tokens[i+1];
+      if(!a || !b) return null;
+      if(!['i','you','we','they','these','those'].includes(a.normal)) return null;
+      if(!b.tags.includes('Verb') || b.tags.includes('Auxiliary') || b.tags.includes('Copula') || b.tags.includes('Gerund')) return null;
+      if(!(b.tags.includes('PresentTense') || b.tags.includes('Infinitive'))) return null;
+      if(['am','is','are','was','were','have','has','had','do','does','did','can','could','will','would','should','may','might','must'].includes(b.normal)) return null;
+      // Only fire if the verb is the third-person singular form (PresentTense)
+      // and the infinitive (base form) is different — meaning it has an -s.
+      const conj = conjugateVerb(nlpImpl, b.normal);
+      if(!conj.Infinitive || conj.Infinitive === b.normal) return null;
+      if(!conj.PresentTense || conj.PresentTense !== b.normal) return null;
+      return { i: i+1, j: i+1, replace: capFix(b, conj.Infinitive) };
+    }
+  },
+  {
     id:'did-base-form', category:'tenses',
     ar: 'لسه did/didn\'t نرجع الفعل لاصله: "I didn\'t go" مو "I didn\'t went".',
     en:'After did/didn\'t the verb goes back to its base form: "I didn\'t go", not "I didn\'t went".',
