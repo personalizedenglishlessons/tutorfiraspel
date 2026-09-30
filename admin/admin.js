@@ -1712,7 +1712,7 @@ function renderTabTimeline(p, st, kv, d){
   var plan = p.plan;
   if(plan && plan.onboardingCompleted){
     var planDate = plan.updatedAt || plan.onboardingCompletedAt || p.created_at;
-    events.push({ date: planDate, icon:'map', txt: lang === 'ar' ? 'بنا خطه التعلم الشخصيه' : 'Personalized plan built', sub: plan.profile && (lang === 'ar' ? plan.profile.goalsAr : plan.profile.goalsEn) });
+    events.push({ date: planDate, icon:'map', txt: lang === 'ar' ? 'بناء خطه التعلم الشخصيه' : 'Personalized plan built', sub: plan.profile && (lang === 'ar' ? plan.profile.goalsAr : plan.profile.goalsEn) });
   }
   var compDates = kv['pel_completion_dates'] || {};
   Object.keys(compDates).forEach(function(k){

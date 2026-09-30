@@ -1768,7 +1768,7 @@ function applyIndexLang(lang){
   var previewTabsMap=[
     {sel:'[data-tab="dashboard"]', ar: 'لوحه التحكم', en:'Dashboard'},
     {sel:'[data-tab="lesson"]', ar: 'عرض الدرس', en:'Lesson view'},
-    {sel:'[data-tab="vocab"]', ar: 'بنا المفردات', en:'Vocabulary'},
+    {sel:'[data-tab="vocab"]', ar: 'بناء المفردات', en:'Vocabulary'},
     {sel:'[data-tab="tutor"]', ar: 'مراجعه الكتابه', en:'Writing review'}
   ];
   previewTabsMap.forEach(function(m){ var el=document.querySelector('.preview-tabs '+m.sel); if(el) el.textContent=m[lang]; });
