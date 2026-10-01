@@ -1,0 +1,1443 @@
+======================================================================
+COMPREHENSIVE AUDIT REPORT
+  Exercises: 1428
+  Lesson items: 2559
+  Words: 183
+  PHON_DICT entries: 5263
+  Total issues: 1208
+======================================================================
+
+NO_CORRECT (686 issues):
+  ex#307 (choose): no correct answer
+  ex#308 (choose): no correct answer
+  ex#319 (choose): no correct answer
+  ex#320 (choose): no correct answer
+  ex#323 (choose): no correct answer
+  ex#324 (choose): no correct answer
+  ex#327 (choose): no correct answer
+  ex#328 (choose): no correct answer
+  ex#331 (choose): no correct answer
+  ex#332 (choose): no correct answer
+  ex#335 (choose): no correct answer
+  ex#336 (choose): no correct answer
+  ex#339 (choose): no correct answer
+  ex#340 (choose): no correct answer
+  ex#343 (choose): no correct answer
+  ex#344 (choose): no correct answer
+  ex#347 (choose): no correct answer
+  ex#348 (choose): no correct answer
+  ex#351 (choose): no correct answer
+  ex#352 (choose): no correct answer
+  ex#355 (choose): no correct answer
+  ex#356 (choose): no correct answer
+  ex#359 (choose): no correct answer
+  ex#360 (choose): no correct answer
+  ex#363 (choose): no correct answer
+  ex#364 (choose): no correct answer
+  ex#367 (choose): no correct answer
+  ex#368 (choose): no correct answer
+  ex#375 (choose): no correct answer
+  ex#376 (choose): no correct answer
+  ex#379 (choose): no correct answer
+  ex#380 (choose): no correct answer
+  ex#383 (choose): no correct answer
+  ex#384 (choose): no correct answer
+  ex#387 (choose): no correct answer
+  ex#388 (choose): no correct answer
+  ex#391 (choose): no correct answer
+  ex#392 (choose): no correct answer
+  ex#395 (choose): no correct answer
+  ex#396 (choose): no correct answer
+  ex#399 (choose): no correct answer
+  ex#400 (choose): no correct answer
+  ex#403 (choose): no correct answer
+  ex#404 (choose): no correct answer
+  ex#407 (choose): no correct answer
+  ex#408 (choose): no correct answer
+  ex#411 (choose): no correct answer
+  ex#412 (choose): no correct answer
+  ex#415 (choose): no correct answer
+  ex#416 (choose): no correct answer
+  ... and 636 more
+
+NO_SENTENCE (105 issues):
+  ex#602 (correct): no sentence
+  ex#607 (correct): no sentence
+  ex#613 (correct): no sentence
+  ex#619 (correct): no sentence
+  ex#625 (correct): no sentence
+  ex#629 (correct): no sentence
+  ex#631 (correct): no sentence
+  ex#635 (correct): no sentence
+  ex#643 (correct): no sentence
+  ex#646 (correct): no sentence
+  ex#650 (correct): no sentence
+  ex#655 (correct): no sentence
+  ex#659 (correct): no sentence
+  ex#662 (correct): no sentence
+  ex#677 (correct): no sentence
+  ex#685 (correct): no sentence
+  ex#687 (correct): no sentence
+  ex#689 (correct): no sentence
+  ex#690 (correct): no sentence
+  ex#692 (correct): no sentence
+  ex#693 (correct): no sentence
+  ex#696 (correct): no sentence
+  ex#699 (correct): no sentence
+  ex#721 (correct): no sentence
+  ex#758 (correct): no sentence
+  ex#777 (correct): no sentence
+  ex#787 (correct): no sentence
+  ex#999 (correct): no sentence
+  ex#1003 (correct): no sentence
+  ex#1007 (correct): no sentence
+  ex#1011 (correct): no sentence
+  ex#1015 (correct): no sentence
+  ex#1019 (correct): no sentence
+  ex#1023 (correct): no sentence
+  ex#1027 (correct): no sentence
+  ex#1031 (correct): no sentence
+  ex#1035 (correct): no sentence
+  ex#1040 (correct): no sentence
+  ex#1044 (correct): no sentence
+  ex#1048 (correct): no sentence
+  ex#1052 (correct): no sentence
+  ex#1056 (correct): no sentence
+  ex#1060 (correct): no sentence
+  ex#1064 (correct): no sentence
+  ex#1068 (correct): no sentence
+  ex#1072 (correct): no sentence
+  ex#1076 (correct): no sentence
+  ex#1080 (correct): no sentence
+  ex#1086 (correct): no sentence
+  ex#1091 (correct): no sentence
+  ... and 55 more
+
+NO_WORDS (360 issues):
+  ex#309 (order): no words/pieces
+  ex#321 (order): no words/pieces
+  ex#325 (order): no words/pieces
+  ex#329 (order): no words/pieces
+  ex#333 (order): no words/pieces
+  ex#337 (order): no words/pieces
+  ex#341 (order): no words/pieces
+  ex#345 (order): no words/pieces
+  ex#349 (order): no words/pieces
+  ex#353 (order): no words/pieces
+  ex#357 (order): no words/pieces
+  ex#361 (order): no words/pieces
+  ex#365 (order): no words/pieces
+  ex#369 (order): no words/pieces
+  ex#377 (order): no words/pieces
+  ex#381 (order): no words/pieces
+  ex#385 (order): no words/pieces
+  ex#389 (order): no words/pieces
+  ex#393 (order): no words/pieces
+  ex#397 (order): no words/pieces
+  ex#401 (order): no words/pieces
+  ex#405 (order): no words/pieces
+  ex#409 (order): no words/pieces
+  ex#413 (order): no words/pieces
+  ex#417 (order): no words/pieces
+  ex#421 (order): no words/pieces
+  ex#425 (order): no words/pieces
+  ex#433 (order): no words/pieces
+  ex#437 (order): no words/pieces
+  ex#441 (order): no words/pieces
+  ex#445 (order): no words/pieces
+  ex#449 (order): no words/pieces
+  ex#453 (order): no words/pieces
+  ex#457 (order): no words/pieces
+  ex#461 (order): no words/pieces
+  ex#465 (order): no words/pieces
+  ex#469 (order): no words/pieces
+  ex#473 (order): no words/pieces
+  ex#477 (order): no words/pieces
+  ex#481 (order): no words/pieces
+  ex#485 (order): no words/pieces
+  ex#489 (order): no words/pieces
+  ex#493 (order): no words/pieces
+  ex#497 (order): no words/pieces
+  ex#501 (order): no words/pieces
+  ex#505 (order): no words/pieces
+  ex#509 (order): no words/pieces
+  ex#513 (order): no words/pieces
+  ex#517 (order): no words/pieces
+  ex#521 (order): no words/pieces
+  ... and 310 more
+
+DOUBLED_ALEF (10 issues):
+  ex#362 (translate): field 'answer' has doubled alef: 'باتابع معك بالاايميل.'
+  ex#362 (translate): field 'source_tr' has doubled alef: 'اي ويل فالو اب وذ يو باي اايميل.'
+  ex#486 (translate): field 'answer' has doubled alef: 'باتابع معك بالاايميل.'
+  ex#486 (translate): field 'source_tr' has doubled alef: 'اي ويل فالو اب وذ يو باي اايميل.'
+  ex#510 (translate): field 'answer' has doubled alef: 'باتابع معك بالاايميل.'
+  ex#510 (translate): field 'source_tr' has doubled alef: 'اي ويل فالو اب وذ يو باي اايميل.'
+  ex#566 (translate): field 'answer' has doubled alef: 'باتابع معك بالاايميل.'
+  ex#566 (translate): field 'source_tr' has doubled alef: 'اي ويل فالو اب وذ يو باي اايميل.'
+  ex#578 (translate): field 'answer' has doubled alef: 'باتابع معك بالاايميل.'
+  ex#578 (translate): field 'source_tr' has doubled alef: 'اي ويل فالو اب وذ يو باي اايميل.'
+
+ITEM_DIACRITICS (30 issues):
+  item#598 (word): translit has diacritics
+  item#635 (sentence): translit has diacritics
+  item#675 (sentence): translit has diacritics
+  item#774 (sentence): translit has diacritics
+  item#775 (sentence): translit has diacritics
+  item#808 (word): translit has diacritics
+  item#829 (sentence): translit has diacritics
+  item#835 (sentence): translit has diacritics
+  item#838 (word): translit has diacritics
+  item#859 (sentence): translit has diacritics
+  item#877 (word): translit has diacritics
+  item#890 (sentence): translit has diacritics
+  item#933 (sentence): translit has diacritics
+  item#978 (sentence): translit has diacritics
+  item#993 (sentence): translit has diacritics
+  item#1022 (sentence): translit has diacritics
+  item#1077 (word): translit has diacritics
+  item#1078 (sentence): translit has diacritics
+  item#1079 (word): translit has diacritics
+  item#1080 (sentence): translit has diacritics
+  item#1087 (word): translit has diacritics
+  item#1088 (sentence): translit has diacritics
+  item#1099 (word): translit has diacritics
+  item#1100 (sentence): translit has diacritics
+  item#1160 (sentence): translit has diacritics
+  item#1202 (sentence): translit has diacritics
+  item#1203 (sentence): translit has diacritics
+  item#1240 (sentence): translit has diacritics
+  item#1722 (sentence): translit has diacritics
+  item#2307 (word): translit has diacritics
+
+ITEM_DOUBLED_ALEF (16 issues):
+  item#646 (explain): translit='يوس باسيسيڤ اجيكتيڤز بيفور ناونز: ماي نيم, يور ادريس, هيز فو' has doubled alef
+  item#729 (sentence): translit='اي ويل فالو اب وذ يو باي اايميل.' has doubled alef
+  item#1030 (sentence): translit='اي ويل فالو اب وذ يو باي اايميل.' has doubled alef
+  item#1038 (sentence): translit='اي ويل فالو اب وذ يو باي اايميل.' has doubled alef
+  item#1060 (sentence): translit='اي ويل فالو اب وذ يو باي اايميل.' has doubled alef
+  item#1098 (sentence): translit='اي ويل فالو اب وذ يو باي اايميل.' has doubled alef
+  item#1149 (sentence): translit='اي ويل فالو اب وذ يو باي اايميل.' has doubled alef
+  item#1159 (sentence): translit='اي ويل فالو اب وذ يو باي اايميل.' has doubled alef
+  item#1179 (sentence): translit='اي ويل فالو اب وذ يو باي اايميل.' has doubled alef
+  item#1199 (sentence): translit='اي ويل فالو اب وذ يو باي اايميل.' has doubled alef
+  item#1229 (sentence): translit='اي ويل فالو اب وذ يو باي اايميل.' has doubled alef
+  item#1237 (sentence): translit='اي ويل فالو اب وذ يو باي اايميل.' has doubled alef
+  item#1259 (sentence): translit='اي ويل فالو اب وذ يو باي اايميل.' has doubled alef
+  item#1267 (sentence): translit='اي ويل فالو اب وذ يو باي اايميل.' has doubled alef
+  item#1469 (explain): translit='فول فورم: اي ام. كانتراكشان: ايم. رونج: اام.' has doubled alef
+  item#1557 (sentence): translit='اي واز تايرد، سو اي سلبت اايرلي' has doubled alef
+
+PHON_DOUBLED_ALEF (1 issues):
+  PHON_DICT['ian']='اان' has doubled alef
+
+
+=== ALL ISSUES (detailed) ===
+[NO_CORRECT] ex#307 (choose): no correct answer
+[NO_CORRECT] ex#308 (choose): no correct answer
+[NO_WORDS] ex#309 (order): no words/pieces
+[NO_CORRECT] ex#319 (choose): no correct answer
+[NO_CORRECT] ex#320 (choose): no correct answer
+[NO_WORDS] ex#321 (order): no words/pieces
+[NO_CORRECT] ex#323 (choose): no correct answer
+[NO_CORRECT] ex#324 (choose): no correct answer
+[NO_WORDS] ex#325 (order): no words/pieces
+[NO_CORRECT] ex#327 (choose): no correct answer
+[NO_CORRECT] ex#328 (choose): no correct answer
+[NO_WORDS] ex#329 (order): no words/pieces
+[NO_CORRECT] ex#331 (choose): no correct answer
+[NO_CORRECT] ex#332 (choose): no correct answer
+[NO_WORDS] ex#333 (order): no words/pieces
+[NO_CORRECT] ex#335 (choose): no correct answer
+[NO_CORRECT] ex#336 (choose): no correct answer
+[NO_WORDS] ex#337 (order): no words/pieces
+[NO_CORRECT] ex#339 (choose): no correct answer
+[NO_CORRECT] ex#340 (choose): no correct answer
+[NO_WORDS] ex#341 (order): no words/pieces
+[NO_CORRECT] ex#343 (choose): no correct answer
+[NO_CORRECT] ex#344 (choose): no correct answer
+[NO_WORDS] ex#345 (order): no words/pieces
+[NO_CORRECT] ex#347 (choose): no correct answer
+[NO_CORRECT] ex#348 (choose): no correct answer
+[NO_WORDS] ex#349 (order): no words/pieces
+[NO_CORRECT] ex#351 (choose): no correct answer
+[NO_CORRECT] ex#352 (choose): no correct answer
+[NO_WORDS] ex#353 (order): no words/pieces
+[NO_CORRECT] ex#355 (choose): no correct answer
+[NO_CORRECT] ex#356 (choose): no correct answer
+[NO_WORDS] ex#357 (order): no words/pieces
+[NO_CORRECT] ex#359 (choose): no correct answer
+[NO_CORRECT] ex#360 (choose): no correct answer
+[NO_WORDS] ex#361 (order): no words/pieces
+[DOUBLED_ALEF] ex#362 (translate): field 'answer' has doubled alef: 'باتابع معك بالاايميل.'
+[DOUBLED_ALEF] ex#362 (translate): field 'source_tr' has doubled alef: 'اي ويل فالو اب وذ يو باي اايميل.'
+[NO_CORRECT] ex#363 (choose): no correct answer
+[NO_CORRECT] ex#364 (choose): no correct answer
+[NO_WORDS] ex#365 (order): no words/pieces
+[NO_CORRECT] ex#367 (choose): no correct answer
+[NO_CORRECT] ex#368 (choose): no correct answer
+[NO_WORDS] ex#369 (order): no words/pieces
+[NO_CORRECT] ex#375 (choose): no correct answer
+[NO_CORRECT] ex#376 (choose): no correct answer
+[NO_WORDS] ex#377 (order): no words/pieces
+[NO_CORRECT] ex#379 (choose): no correct answer
+[NO_CORRECT] ex#380 (choose): no correct answer
+[NO_WORDS] ex#381 (order): no words/pieces
+[NO_CORRECT] ex#383 (choose): no correct answer
+[NO_CORRECT] ex#384 (choose): no correct answer
+[NO_WORDS] ex#385 (order): no words/pieces
+[NO_CORRECT] ex#387 (choose): no correct answer
+[NO_CORRECT] ex#388 (choose): no correct answer
+[NO_WORDS] ex#389 (order): no words/pieces
+[NO_CORRECT] ex#391 (choose): no correct answer
+[NO_CORRECT] ex#392 (choose): no correct answer
+[NO_WORDS] ex#393 (order): no words/pieces
+[NO_CORRECT] ex#395 (choose): no correct answer
+[NO_CORRECT] ex#396 (choose): no correct answer
+[NO_WORDS] ex#397 (order): no words/pieces
+[NO_CORRECT] ex#399 (choose): no correct answer
+[NO_CORRECT] ex#400 (choose): no correct answer
+[NO_WORDS] ex#401 (order): no words/pieces
+[NO_CORRECT] ex#403 (choose): no correct answer
+[NO_CORRECT] ex#404 (choose): no correct answer
+[NO_WORDS] ex#405 (order): no words/pieces
+[NO_CORRECT] ex#407 (choose): no correct answer
+[NO_CORRECT] ex#408 (choose): no correct answer
+[NO_WORDS] ex#409 (order): no words/pieces
+[NO_CORRECT] ex#411 (choose): no correct answer
+[NO_CORRECT] ex#412 (choose): no correct answer
+[NO_WORDS] ex#413 (order): no words/pieces
+[NO_CORRECT] ex#415 (choose): no correct answer
+[NO_CORRECT] ex#416 (choose): no correct answer
+[NO_WORDS] ex#417 (order): no words/pieces
+[NO_CORRECT] ex#419 (choose): no correct answer
+[NO_CORRECT] ex#420 (choose): no correct answer
+[NO_WORDS] ex#421 (order): no words/pieces
+[NO_CORRECT] ex#423 (choose): no correct answer
+[NO_CORRECT] ex#424 (choose): no correct answer
+[NO_WORDS] ex#425 (order): no words/pieces
+[NO_CORRECT] ex#431 (choose): no correct answer
+[NO_CORRECT] ex#432 (choose): no correct answer
+[NO_WORDS] ex#433 (order): no words/pieces
+[NO_CORRECT] ex#435 (choose): no correct answer
+[NO_CORRECT] ex#436 (choose): no correct answer
+[NO_WORDS] ex#437 (order): no words/pieces
+[NO_CORRECT] ex#439 (choose): no correct answer
+[NO_CORRECT] ex#440 (choose): no correct answer
+[NO_WORDS] ex#441 (order): no words/pieces
+[NO_CORRECT] ex#443 (choose): no correct answer
+[NO_CORRECT] ex#444 (choose): no correct answer
+[NO_WORDS] ex#445 (order): no words/pieces
+[NO_CORRECT] ex#447 (choose): no correct answer
+[NO_CORRECT] ex#448 (choose): no correct answer
+[NO_WORDS] ex#449 (order): no words/pieces
+[NO_CORRECT] ex#451 (choose): no correct answer
+[NO_CORRECT] ex#452 (choose): no correct answer
+[NO_WORDS] ex#453 (order): no words/pieces
+[NO_CORRECT] ex#455 (choose): no correct answer
+[NO_CORRECT] ex#456 (choose): no correct answer
+[NO_WORDS] ex#457 (order): no words/pieces
+[NO_CORRECT] ex#459 (choose): no correct answer
+[NO_CORRECT] ex#460 (choose): no correct answer
+[NO_WORDS] ex#461 (order): no words/pieces
+[NO_CORRECT] ex#463 (choose): no correct answer
+[NO_CORRECT] ex#464 (choose): no correct answer
+[NO_WORDS] ex#465 (order): no words/pieces
+[NO_CORRECT] ex#467 (choose): no correct answer
+[NO_CORRECT] ex#468 (choose): no correct answer
+[NO_WORDS] ex#469 (order): no words/pieces
+[NO_CORRECT] ex#471 (choose): no correct answer
+[NO_CORRECT] ex#472 (choose): no correct answer
+[NO_WORDS] ex#473 (order): no words/pieces
+[NO_CORRECT] ex#475 (choose): no correct answer
+[NO_CORRECT] ex#476 (choose): no correct answer
+[NO_WORDS] ex#477 (order): no words/pieces
+[NO_CORRECT] ex#479 (choose): no correct answer
+[NO_CORRECT] ex#480 (choose): no correct answer
+[NO_WORDS] ex#481 (order): no words/pieces
+[NO_CORRECT] ex#483 (choose): no correct answer
+[NO_CORRECT] ex#484 (choose): no correct answer
+[NO_WORDS] ex#485 (order): no words/pieces
+[DOUBLED_ALEF] ex#486 (translate): field 'answer' has doubled alef: 'باتابع معك بالاايميل.'
+[DOUBLED_ALEF] ex#486 (translate): field 'source_tr' has doubled alef: 'اي ويل فالو اب وذ يو باي اايميل.'
+[NO_CORRECT] ex#487 (choose): no correct answer
+[NO_CORRECT] ex#488 (choose): no correct answer
+[NO_WORDS] ex#489 (order): no words/pieces
+[NO_CORRECT] ex#491 (choose): no correct answer
+[NO_CORRECT] ex#492 (choose): no correct answer
+[NO_WORDS] ex#493 (order): no words/pieces
+[NO_CORRECT] ex#495 (choose): no correct answer
+[NO_CORRECT] ex#496 (choose): no correct answer
+[NO_WORDS] ex#497 (order): no words/pieces
+[NO_CORRECT] ex#499 (choose): no correct answer
+[NO_CORRECT] ex#500 (choose): no correct answer
+[NO_WORDS] ex#501 (order): no words/pieces
+[NO_CORRECT] ex#503 (choose): no correct answer
+[NO_CORRECT] ex#504 (choose): no correct answer
+[NO_WORDS] ex#505 (order): no words/pieces
+[NO_CORRECT] ex#507 (choose): no correct answer
+[NO_CORRECT] ex#508 (choose): no correct answer
+[NO_WORDS] ex#509 (order): no words/pieces
+[DOUBLED_ALEF] ex#510 (translate): field 'answer' has doubled alef: 'باتابع معك بالاايميل.'
+[DOUBLED_ALEF] ex#510 (translate): field 'source_tr' has doubled alef: 'اي ويل فالو اب وذ يو باي اايميل.'
+[NO_CORRECT] ex#511 (choose): no correct answer
+[NO_CORRECT] ex#512 (choose): no correct answer
+[NO_WORDS] ex#513 (order): no words/pieces
+[NO_CORRECT] ex#515 (choose): no correct answer
+[NO_CORRECT] ex#516 (choose): no correct answer
+[NO_WORDS] ex#517 (order): no words/pieces
+[NO_CORRECT] ex#519 (choose): no correct answer
+[NO_CORRECT] ex#520 (choose): no correct answer
+[NO_WORDS] ex#521 (order): no words/pieces
+[NO_CORRECT] ex#523 (choose): no correct answer
+[NO_CORRECT] ex#524 (choose): no correct answer
+[NO_WORDS] ex#525 (order): no words/pieces
+[NO_CORRECT] ex#527 (choose): no correct answer
+[NO_CORRECT] ex#528 (choose): no correct answer
+[NO_WORDS] ex#529 (order): no words/pieces
+[NO_CORRECT] ex#531 (choose): no correct answer
+[NO_CORRECT] ex#532 (choose): no correct answer
+[NO_WORDS] ex#533 (order): no words/pieces
+[NO_CORRECT] ex#535 (choose): no correct answer
+[NO_CORRECT] ex#536 (choose): no correct answer
+[NO_WORDS] ex#537 (order): no words/pieces
+[NO_CORRECT] ex#539 (choose): no correct answer
+[NO_CORRECT] ex#540 (choose): no correct answer
+[NO_WORDS] ex#541 (order): no words/pieces
+[NO_CORRECT] ex#543 (choose): no correct answer
+[NO_CORRECT] ex#544 (choose): no correct answer
+[NO_WORDS] ex#545 (order): no words/pieces
+[NO_CORRECT] ex#547 (choose): no correct answer
+[NO_CORRECT] ex#548 (choose): no correct answer
+[NO_WORDS] ex#549 (order): no words/pieces
+[NO_CORRECT] ex#551 (choose): no correct answer
+[NO_CORRECT] ex#552 (choose): no correct answer
+[NO_WORDS] ex#553 (order): no words/pieces
+[NO_CORRECT] ex#555 (choose): no correct answer
+[NO_CORRECT] ex#556 (choose): no correct answer
+[NO_WORDS] ex#557 (order): no words/pieces
+[NO_CORRECT] ex#559 (choose): no correct answer
+[NO_CORRECT] ex#560 (choose): no correct answer
+[NO_WORDS] ex#561 (order): no words/pieces
+[NO_CORRECT] ex#563 (choose): no correct answer
+[NO_CORRECT] ex#564 (choose): no correct answer
+[NO_WORDS] ex#565 (order): no words/pieces
+[DOUBLED_ALEF] ex#566 (translate): field 'answer' has doubled alef: 'باتابع معك بالاايميل.'
+[DOUBLED_ALEF] ex#566 (translate): field 'source_tr' has doubled alef: 'اي ويل فالو اب وذ يو باي اايميل.'
+[NO_CORRECT] ex#567 (choose): no correct answer
+[NO_CORRECT] ex#568 (choose): no correct answer
+[NO_WORDS] ex#569 (order): no words/pieces
+[NO_CORRECT] ex#571 (choose): no correct answer
+[NO_CORRECT] ex#572 (choose): no correct answer
+[NO_WORDS] ex#573 (order): no words/pieces
+[NO_CORRECT] ex#575 (choose): no correct answer
+[NO_CORRECT] ex#576 (choose): no correct answer
+[NO_WORDS] ex#577 (order): no words/pieces
+[DOUBLED_ALEF] ex#578 (translate): field 'answer' has doubled alef: 'باتابع معك بالاايميل.'
+[DOUBLED_ALEF] ex#578 (translate): field 'source_tr' has doubled alef: 'اي ويل فالو اب وذ يو باي اايميل.'
+[NO_CORRECT] ex#579 (choose): no correct answer
+[NO_CORRECT] ex#580 (choose): no correct answer
+[NO_WORDS] ex#581 (order): no words/pieces
+[NO_CORRECT] ex#583 (choose): no correct answer
+[NO_CORRECT] ex#584 (choose): no correct answer
+[NO_WORDS] ex#585 (order): no words/pieces
+[NO_CORRECT] ex#587 (choose): no correct answer
+[NO_CORRECT] ex#588 (choose): no correct answer
+[NO_WORDS] ex#589 (order): no words/pieces
+[NO_CORRECT] ex#591 (choose): no correct answer
+[NO_CORRECT] ex#592 (choose): no correct answer
+[NO_WORDS] ex#593 (order): no words/pieces
+[NO_WORDS] ex#595 (order): no words/pieces
+[NO_CORRECT] ex#596 (choose): no correct answer
+[NO_WORDS] ex#598 (order): no words/pieces
+[NO_CORRECT] ex#599 (choose): no correct answer
+[NO_CORRECT] ex#601 (choose): no correct answer
+[NO_SENTENCE] ex#602 (correct): no sentence
+[NO_CORRECT] ex#602 (correct): no correct answer
+[NO_WORDS] ex#603 (order): no words/pieces
+[NO_WORDS] ex#604 (order): no words/pieces
+[NO_CORRECT] ex#605 (choose): no correct answer
+[NO_SENTENCE] ex#607 (correct): no sentence
+[NO_CORRECT] ex#607 (correct): no correct answer
+[NO_WORDS] ex#608 (order): no words/pieces
+[NO_WORDS] ex#610 (order): no words/pieces
+[NO_CORRECT] ex#611 (choose): no correct answer
+[NO_SENTENCE] ex#613 (correct): no sentence
+[NO_CORRECT] ex#613 (correct): no correct answer
+[NO_CORRECT] ex#614 (choose): no correct answer
+[NO_WORDS] ex#615 (order): no words/pieces
+[NO_CORRECT] ex#616 (choose): no correct answer
+[NO_CORRECT] ex#617 (choose): no correct answer
+[NO_WORDS] ex#618 (order): no words/pieces
+[NO_SENTENCE] ex#619 (correct): no sentence
+[NO_CORRECT] ex#619 (correct): no correct answer
+[NO_CORRECT] ex#621 (choose): no correct answer
+[NO_WORDS] ex#622 (order): no words/pieces
+[NO_WORDS] ex#624 (order): no words/pieces
+[NO_SENTENCE] ex#625 (correct): no sentence
+[NO_CORRECT] ex#625 (correct): no correct answer
+[NO_CORRECT] ex#627 (choose): no correct answer
+[NO_WORDS] ex#628 (order): no words/pieces
+[NO_SENTENCE] ex#629 (correct): no sentence
+[NO_CORRECT] ex#629 (correct): no correct answer
+[NO_SENTENCE] ex#631 (correct): no sentence
+[NO_CORRECT] ex#631 (correct): no correct answer
+[NO_WORDS] ex#632 (order): no words/pieces
+[NO_CORRECT] ex#633 (choose): no correct answer
+[NO_WORDS] ex#634 (order): no words/pieces
+[NO_SENTENCE] ex#635 (correct): no sentence
+[NO_CORRECT] ex#635 (correct): no correct answer
+[NO_WORDS] ex#637 (order): no words/pieces
+[NO_CORRECT] ex#639 (choose): no correct answer
+[NO_WORDS] ex#640 (order): no words/pieces
+[NO_CORRECT] ex#641 (choose): no correct answer
+[NO_SENTENCE] ex#643 (correct): no sentence
+[NO_CORRECT] ex#643 (correct): no correct answer
+[NO_WORDS] ex#644 (order): no words/pieces
+[NO_CORRECT] ex#645 (choose): no correct answer
+[NO_SENTENCE] ex#646 (correct): no sentence
+[NO_CORRECT] ex#646 (correct): no correct answer
+[NO_WORDS] ex#647 (order): no words/pieces
+[NO_WORDS] ex#649 (order): no words/pieces
+[NO_SENTENCE] ex#650 (correct): no sentence
+[NO_CORRECT] ex#650 (correct): no correct answer
+[NO_CORRECT] ex#652 (choose): no correct answer
+[NO_WORDS] ex#653 (order): no words/pieces
+[NO_SENTENCE] ex#655 (correct): no sentence
+[NO_CORRECT] ex#655 (correct): no correct answer
+[NO_WORDS] ex#657 (order): no words/pieces
+[NO_WORDS] ex#658 (order): no words/pieces
+[NO_SENTENCE] ex#659 (correct): no sentence
+[NO_CORRECT] ex#659 (correct): no correct answer
+[NO_WORDS] ex#661 (order): no words/pieces
+[NO_SENTENCE] ex#662 (correct): no sentence
+[NO_CORRECT] ex#662 (correct): no correct answer
+[NO_WORDS] ex#664 (order): no words/pieces
+[NO_CORRECT] ex#666 (choose): no correct answer
+[NO_WORDS] ex#667 (order): no words/pieces
+[NO_WORDS] ex#668 (order): no words/pieces
+[NO_CORRECT] ex#669 (choose): no correct answer
+[NO_CORRECT] ex#670 (choose): no correct answer
+[NO_CORRECT] ex#674 (choose): no correct answer
+[NO_SENTENCE] ex#677 (correct): no sentence
+[NO_CORRECT] ex#677 (correct): no correct answer
+[NO_CORRECT] ex#680 (choose): no correct answer
+[NO_CORRECT] ex#681 (choose): no correct answer
+[NO_CORRECT] ex#683 (choose): no correct answer
+[NO_SENTENCE] ex#685 (correct): no sentence
+[NO_CORRECT] ex#685 (correct): no correct answer
+[NO_CORRECT] ex#686 (choose): no correct answer
+[NO_SENTENCE] ex#687 (correct): no sentence
+[NO_CORRECT] ex#687 (correct): no correct answer
+[NO_CORRECT] ex#688 (choose): no correct answer
+[NO_SENTENCE] ex#689 (correct): no sentence
+[NO_CORRECT] ex#689 (correct): no correct answer
+[NO_SENTENCE] ex#690 (correct): no sentence
+[NO_CORRECT] ex#690 (correct): no correct answer
+[NO_CORRECT] ex#691 (choose): no correct answer
+[NO_SENTENCE] ex#692 (correct): no sentence
+[NO_CORRECT] ex#692 (correct): no correct answer
+[NO_SENTENCE] ex#693 (correct): no sentence
+[NO_CORRECT] ex#693 (correct): no correct answer
+[NO_CORRECT] ex#694 (choose): no correct answer
+[NO_WORDS] ex#695 (order): no words/pieces
+[NO_SENTENCE] ex#696 (correct): no sentence
+[NO_CORRECT] ex#696 (correct): no correct answer
+[NO_WORDS] ex#697 (order): no words/pieces
+[NO_CORRECT] ex#698 (choose): no correct answer
+[NO_SENTENCE] ex#699 (correct): no sentence
+[NO_CORRECT] ex#699 (correct): no correct answer
+[NO_WORDS] ex#700 (order): no words/pieces
+[NO_WORDS] ex#701 (order): no words/pieces
+[NO_CORRECT] ex#702 (choose): no correct answer
+[NO_WORDS] ex#703 (order): no words/pieces
+[NO_CORRECT] ex#705 (choose): no correct answer
+[NO_WORDS] ex#706 (order): no words/pieces
+[NO_WORDS] ex#708 (order): no words/pieces
+[NO_CORRECT] ex#712 (choose): no correct answer
+[NO_WORDS] ex#713 (order): no words/pieces
+[NO_CORRECT] ex#715 (choose): no correct answer
+[NO_WORDS] ex#716 (order): no words/pieces
+[NO_WORDS] ex#718 (order): no words/pieces
+[NO_WORDS] ex#720 (order): no words/pieces
+[NO_SENTENCE] ex#721 (correct): no sentence
+[NO_CORRECT] ex#721 (correct): no correct answer
+[NO_WORDS] ex#722 (order): no words/pieces
+[NO_CORRECT] ex#724 (choose): no correct answer
+[NO_WORDS] ex#725 (order): no words/pieces
+[NO_CORRECT] ex#727 (choose): no correct answer
+[NO_WORDS] ex#728 (order): no words/pieces
+[NO_CORRECT] ex#730 (choose): no correct answer
+[NO_WORDS] ex#732 (order): no words/pieces
+[NO_CORRECT] ex#734 (choose): no correct answer
+[NO_WORDS] ex#735 (order): no words/pieces
+[NO_CORRECT] ex#736 (choose): no correct answer
+[NO_WORDS] ex#737 (order): no words/pieces
+[NO_CORRECT] ex#739 (choose): no correct answer
+[NO_WORDS] ex#740 (order): no words/pieces
+[NO_WORDS] ex#742 (order): no words/pieces
+[NO_WORDS] ex#744 (order): no words/pieces
+[NO_WORDS] ex#746 (order): no words/pieces
+[NO_CORRECT] ex#747 (choose): no correct answer
+[NO_WORDS] ex#748 (order): no words/pieces
+[NO_CORRECT] ex#749 (choose): no correct answer
+[NO_WORDS] ex#750 (order): no words/pieces
+[NO_CORRECT] ex#752 (choose): no correct answer
+[NO_WORDS] ex#753 (order): no words/pieces
+[NO_CORRECT] ex#754 (choose): no correct answer
+[NO_WORDS] ex#755 (order): no words/pieces
+[NO_WORDS] ex#757 (order): no words/pieces
+[NO_SENTENCE] ex#758 (correct): no sentence
+[NO_CORRECT] ex#758 (correct): no correct answer
+[NO_WORDS] ex#760 (order): no words/pieces
+[NO_CORRECT] ex#762 (choose): no correct answer
+[NO_CORRECT] ex#763 (choose): no correct answer
+[NO_WORDS] ex#764 (order): no words/pieces
+[NO_WORDS] ex#766 (order): no words/pieces
+[NO_WORDS] ex#768 (order): no words/pieces
+[NO_CORRECT] ex#770 (choose): no correct answer
+[NO_WORDS] ex#771 (order): no words/pieces
+[NO_WORDS] ex#773 (order): no words/pieces
+[NO_CORRECT] ex#774 (choose): no correct answer
+[NO_CORRECT] ex#776 (choose): no correct answer
+[NO_SENTENCE] ex#777 (correct): no sentence
+[NO_CORRECT] ex#777 (correct): no correct answer
+[NO_CORRECT] ex#779 (choose): no correct answer
+[NO_WORDS] ex#780 (order): no words/pieces
+[NO_CORRECT] ex#782 (choose): no correct answer
+[NO_WORDS] ex#783 (order): no words/pieces
+[NO_CORRECT] ex#784 (choose): no correct answer
+[NO_WORDS] ex#785 (order): no words/pieces
+[NO_SENTENCE] ex#787 (correct): no sentence
+[NO_CORRECT] ex#787 (correct): no correct answer
+[NO_WORDS] ex#788 (order): no words/pieces
+[NO_CORRECT] ex#790 (choose): no correct answer
+[NO_CORRECT] ex#791 (choose): no correct answer
+[NO_CORRECT] ex#792 (choose): no correct answer
+[NO_WORDS] ex#794 (order): no words/pieces
+[NO_CORRECT] ex#795 (choose): no correct answer
+[NO_CORRECT] ex#796 (choose): no correct answer
+[NO_CORRECT] ex#797 (choose): no correct answer
+[NO_CORRECT] ex#799 (choose): no correct answer
+[NO_CORRECT] ex#800 (choose): no correct answer
+[NO_CORRECT] ex#801 (choose): no correct answer
+[NO_WORDS] ex#803 (order): no words/pieces
+[NO_CORRECT] ex#804 (choose): no correct answer
+[NO_CORRECT] ex#805 (choose): no correct answer
+[NO_CORRECT] ex#806 (choose): no correct answer
+[NO_WORDS] ex#808 (order): no words/pieces
+[NO_CORRECT] ex#809 (choose): no correct answer
+[NO_CORRECT] ex#810 (choose): no correct answer
+[NO_CORRECT] ex#811 (choose): no correct answer
+[NO_CORRECT] ex#813 (choose): no correct answer
+[NO_CORRECT] ex#814 (choose): no correct answer
+[NO_CORRECT] ex#815 (choose): no correct answer
+[NO_WORDS] ex#817 (order): no words/pieces
+[NO_CORRECT] ex#818 (choose): no correct answer
+[NO_CORRECT] ex#819 (choose): no correct answer
+[NO_CORRECT] ex#820 (choose): no correct answer
+[NO_WORDS] ex#822 (order): no words/pieces
+[NO_CORRECT] ex#823 (choose): no correct answer
+[NO_CORRECT] ex#824 (choose): no correct answer
+[NO_CORRECT] ex#825 (choose): no correct answer
+[NO_WORDS] ex#827 (order): no words/pieces
+[NO_CORRECT] ex#828 (choose): no correct answer
+[NO_CORRECT] ex#829 (choose): no correct answer
+[NO_CORRECT] ex#830 (choose): no correct answer
+[NO_WORDS] ex#832 (order): no words/pieces
+[NO_CORRECT] ex#833 (choose): no correct answer
+[NO_CORRECT] ex#834 (choose): no correct answer
+[NO_CORRECT] ex#835 (choose): no correct answer
+[NO_WORDS] ex#837 (order): no words/pieces
+[NO_CORRECT] ex#838 (choose): no correct answer
+[NO_CORRECT] ex#839 (choose): no correct answer
+[NO_CORRECT] ex#840 (choose): no correct answer
+[NO_WORDS] ex#842 (order): no words/pieces
+[NO_CORRECT] ex#843 (choose): no correct answer
+[NO_CORRECT] ex#844 (choose): no correct answer
+[NO_CORRECT] ex#845 (choose): no correct answer
+[NO_WORDS] ex#847 (order): no words/pieces
+[NO_CORRECT] ex#848 (choose): no correct answer
+[NO_CORRECT] ex#849 (choose): no correct answer
+[NO_CORRECT] ex#850 (choose): no correct answer
+[NO_WORDS] ex#852 (order): no words/pieces
+[NO_CORRECT] ex#853 (choose): no correct answer
+[NO_CORRECT] ex#854 (choose): no correct answer
+[NO_CORRECT] ex#855 (choose): no correct answer
+[NO_WORDS] ex#857 (order): no words/pieces
+[NO_CORRECT] ex#858 (choose): no correct answer
+[NO_CORRECT] ex#859 (choose): no correct answer
+[NO_CORRECT] ex#860 (choose): no correct answer
+[NO_WORDS] ex#862 (order): no words/pieces
+[NO_CORRECT] ex#863 (choose): no correct answer
+[NO_CORRECT] ex#864 (choose): no correct answer
+[NO_CORRECT] ex#865 (choose): no correct answer
+[NO_WORDS] ex#867 (order): no words/pieces
+[NO_CORRECT] ex#868 (choose): no correct answer
+[NO_CORRECT] ex#869 (choose): no correct answer
+[NO_CORRECT] ex#870 (choose): no correct answer
+[NO_WORDS] ex#872 (order): no words/pieces
+[NO_CORRECT] ex#873 (choose): no correct answer
+[NO_CORRECT] ex#874 (choose): no correct answer
+[NO_CORRECT] ex#875 (choose): no correct answer
+[NO_WORDS] ex#877 (order): no words/pieces
+[NO_CORRECT] ex#878 (choose): no correct answer
+[NO_CORRECT] ex#879 (choose): no correct answer
+[NO_CORRECT] ex#880 (choose): no correct answer
+[NO_WORDS] ex#882 (order): no words/pieces
+[NO_CORRECT] ex#883 (choose): no correct answer
+[NO_CORRECT] ex#884 (choose): no correct answer
+[NO_CORRECT] ex#885 (choose): no correct answer
+[NO_WORDS] ex#887 (order): no words/pieces
+[NO_CORRECT] ex#888 (choose): no correct answer
+[NO_CORRECT] ex#889 (choose): no correct answer
+[NO_CORRECT] ex#890 (choose): no correct answer
+[NO_WORDS] ex#892 (order): no words/pieces
+[NO_CORRECT] ex#893 (choose): no correct answer
+[NO_CORRECT] ex#894 (choose): no correct answer
+[NO_CORRECT] ex#895 (choose): no correct answer
+[NO_WORDS] ex#897 (order): no words/pieces
+[NO_CORRECT] ex#898 (choose): no correct answer
+[NO_CORRECT] ex#899 (choose): no correct answer
+[NO_CORRECT] ex#900 (choose): no correct answer
+[NO_WORDS] ex#902 (order): no words/pieces
+[NO_CORRECT] ex#903 (choose): no correct answer
+[NO_CORRECT] ex#904 (choose): no correct answer
+[NO_CORRECT] ex#905 (choose): no correct answer
+[NO_WORDS] ex#907 (order): no words/pieces
+[NO_CORRECT] ex#908 (choose): no correct answer
+[NO_CORRECT] ex#909 (choose): no correct answer
+[NO_CORRECT] ex#910 (choose): no correct answer
+[NO_WORDS] ex#912 (order): no words/pieces
+[NO_CORRECT] ex#913 (choose): no correct answer
+[NO_CORRECT] ex#914 (choose): no correct answer
+[NO_CORRECT] ex#915 (choose): no correct answer
+[NO_WORDS] ex#917 (order): no words/pieces
+[NO_CORRECT] ex#918 (choose): no correct answer
+[NO_CORRECT] ex#919 (choose): no correct answer
+[NO_CORRECT] ex#920 (choose): no correct answer
+[NO_WORDS] ex#922 (order): no words/pieces
+[NO_CORRECT] ex#923 (choose): no correct answer
+[NO_CORRECT] ex#924 (choose): no correct answer
+[NO_CORRECT] ex#925 (choose): no correct answer
+[NO_WORDS] ex#927 (order): no words/pieces
+[NO_CORRECT] ex#928 (choose): no correct answer
+[NO_CORRECT] ex#929 (choose): no correct answer
+[NO_CORRECT] ex#930 (choose): no correct answer
+[NO_WORDS] ex#932 (order): no words/pieces
+[NO_CORRECT] ex#933 (choose): no correct answer
+[NO_CORRECT] ex#934 (choose): no correct answer
+[NO_CORRECT] ex#935 (choose): no correct answer
+[NO_WORDS] ex#937 (order): no words/pieces
+[NO_CORRECT] ex#938 (choose): no correct answer
+[NO_CORRECT] ex#939 (choose): no correct answer
+[NO_CORRECT] ex#940 (choose): no correct answer
+[NO_WORDS] ex#942 (order): no words/pieces
+[NO_CORRECT] ex#943 (choose): no correct answer
+[NO_CORRECT] ex#944 (choose): no correct answer
+[NO_CORRECT] ex#945 (choose): no correct answer
+[NO_WORDS] ex#947 (order): no words/pieces
+[NO_CORRECT] ex#948 (choose): no correct answer
+[NO_CORRECT] ex#949 (choose): no correct answer
+[NO_CORRECT] ex#950 (choose): no correct answer
+[NO_WORDS] ex#952 (order): no words/pieces
+[NO_CORRECT] ex#953 (choose): no correct answer
+[NO_CORRECT] ex#954 (choose): no correct answer
+[NO_CORRECT] ex#955 (choose): no correct answer
+[NO_WORDS] ex#957 (order): no words/pieces
+[NO_CORRECT] ex#958 (choose): no correct answer
+[NO_CORRECT] ex#959 (choose): no correct answer
+[NO_CORRECT] ex#960 (choose): no correct answer
+[NO_WORDS] ex#962 (order): no words/pieces
+[NO_CORRECT] ex#963 (choose): no correct answer
+[NO_CORRECT] ex#964 (choose): no correct answer
+[NO_CORRECT] ex#965 (choose): no correct answer
+[NO_WORDS] ex#967 (order): no words/pieces
+[NO_CORRECT] ex#968 (choose): no correct answer
+[NO_CORRECT] ex#969 (choose): no correct answer
+[NO_CORRECT] ex#970 (choose): no correct answer
+[NO_WORDS] ex#972 (order): no words/pieces
+[NO_CORRECT] ex#973 (choose): no correct answer
+[NO_CORRECT] ex#974 (choose): no correct answer
+[NO_CORRECT] ex#975 (choose): no correct answer
+[NO_WORDS] ex#977 (order): no words/pieces
+[NO_CORRECT] ex#978 (choose): no correct answer
+[NO_CORRECT] ex#979 (choose): no correct answer
+[NO_CORRECT] ex#980 (choose): no correct answer
+[NO_WORDS] ex#982 (order): no words/pieces
+[NO_CORRECT] ex#983 (choose): no correct answer
+[NO_CORRECT] ex#984 (choose): no correct answer
+[NO_CORRECT] ex#985 (choose): no correct answer
+[NO_WORDS] ex#987 (order): no words/pieces
+[NO_CORRECT] ex#988 (choose): no correct answer
+[NO_CORRECT] ex#989 (choose): no correct answer
+[NO_CORRECT] ex#990 (choose): no correct answer
+[NO_WORDS] ex#992 (order): no words/pieces
+[NO_CORRECT] ex#993 (choose): no correct answer
+[NO_WORDS] ex#995 (order): no words/pieces
+[NO_CORRECT] ex#997 (choose): no correct answer
+[NO_WORDS] ex#998 (order): no words/pieces
+[NO_SENTENCE] ex#999 (correct): no sentence
+[NO_CORRECT] ex#999 (correct): no correct answer
+[NO_CORRECT] ex#1001 (choose): no correct answer
+[NO_WORDS] ex#1002 (order): no words/pieces
+[NO_SENTENCE] ex#1003 (correct): no sentence
+[NO_CORRECT] ex#1003 (correct): no correct answer
+[NO_CORRECT] ex#1005 (choose): no correct answer
+[NO_WORDS] ex#1006 (order): no words/pieces
+[NO_SENTENCE] ex#1007 (correct): no sentence
+[NO_CORRECT] ex#1007 (correct): no correct answer
+[NO_CORRECT] ex#1009 (choose): no correct answer
+[NO_WORDS] ex#1010 (order): no words/pieces
+[NO_SENTENCE] ex#1011 (correct): no sentence
+[NO_CORRECT] ex#1011 (correct): no correct answer
+[NO_CORRECT] ex#1013 (choose): no correct answer
+[NO_WORDS] ex#1014 (order): no words/pieces
+[NO_SENTENCE] ex#1015 (correct): no sentence
+[NO_CORRECT] ex#1015 (correct): no correct answer
+[NO_CORRECT] ex#1017 (choose): no correct answer
+[NO_WORDS] ex#1018 (order): no words/pieces
+[NO_SENTENCE] ex#1019 (correct): no sentence
+[NO_CORRECT] ex#1019 (correct): no correct answer
+[NO_CORRECT] ex#1021 (choose): no correct answer
+[NO_WORDS] ex#1022 (order): no words/pieces
+[NO_SENTENCE] ex#1023 (correct): no sentence
+[NO_CORRECT] ex#1023 (correct): no correct answer
+[NO_CORRECT] ex#1025 (choose): no correct answer
+[NO_WORDS] ex#1026 (order): no words/pieces
+[NO_SENTENCE] ex#1027 (correct): no sentence
+[NO_CORRECT] ex#1027 (correct): no correct answer
+[NO_CORRECT] ex#1029 (choose): no correct answer
+[NO_WORDS] ex#1030 (order): no words/pieces
+[NO_SENTENCE] ex#1031 (correct): no sentence
+[NO_CORRECT] ex#1031 (correct): no correct answer
+[NO_CORRECT] ex#1033 (choose): no correct answer
+[NO_WORDS] ex#1034 (order): no words/pieces
+[NO_SENTENCE] ex#1035 (correct): no sentence
+[NO_CORRECT] ex#1035 (correct): no correct answer
+[NO_CORRECT] ex#1038 (choose): no correct answer
+[NO_WORDS] ex#1039 (order): no words/pieces
+[NO_SENTENCE] ex#1040 (correct): no sentence
+[NO_CORRECT] ex#1040 (correct): no correct answer
+[NO_CORRECT] ex#1042 (choose): no correct answer
+[NO_WORDS] ex#1043 (order): no words/pieces
+[NO_SENTENCE] ex#1044 (correct): no sentence
+[NO_CORRECT] ex#1044 (correct): no correct answer
+[NO_CORRECT] ex#1046 (choose): no correct answer
+[NO_WORDS] ex#1047 (order): no words/pieces
+[NO_SENTENCE] ex#1048 (correct): no sentence
+[NO_CORRECT] ex#1048 (correct): no correct answer
+[NO_CORRECT] ex#1050 (choose): no correct answer
+[NO_WORDS] ex#1051 (order): no words/pieces
+[NO_SENTENCE] ex#1052 (correct): no sentence
+[NO_CORRECT] ex#1052 (correct): no correct answer
+[NO_CORRECT] ex#1054 (choose): no correct answer
+[NO_WORDS] ex#1055 (order): no words/pieces
+[NO_SENTENCE] ex#1056 (correct): no sentence
+[NO_CORRECT] ex#1056 (correct): no correct answer
+[NO_CORRECT] ex#1058 (choose): no correct answer
+[NO_WORDS] ex#1059 (order): no words/pieces
+[NO_SENTENCE] ex#1060 (correct): no sentence
+[NO_CORRECT] ex#1060 (correct): no correct answer
+[NO_CORRECT] ex#1062 (choose): no correct answer
+[NO_WORDS] ex#1063 (order): no words/pieces
+[NO_SENTENCE] ex#1064 (correct): no sentence
+[NO_CORRECT] ex#1064 (correct): no correct answer
+[NO_CORRECT] ex#1066 (choose): no correct answer
+[NO_WORDS] ex#1067 (order): no words/pieces
+[NO_SENTENCE] ex#1068 (correct): no sentence
+[NO_CORRECT] ex#1068 (correct): no correct answer
+[NO_CORRECT] ex#1070 (choose): no correct answer
+[NO_WORDS] ex#1071 (order): no words/pieces
+[NO_SENTENCE] ex#1072 (correct): no sentence
+[NO_CORRECT] ex#1072 (correct): no correct answer
+[NO_CORRECT] ex#1074 (choose): no correct answer
+[NO_WORDS] ex#1075 (order): no words/pieces
+[NO_SENTENCE] ex#1076 (correct): no sentence
+[NO_CORRECT] ex#1076 (correct): no correct answer
+[NO_CORRECT] ex#1078 (choose): no correct answer
+[NO_WORDS] ex#1079 (order): no words/pieces
+[NO_SENTENCE] ex#1080 (correct): no sentence
+[NO_CORRECT] ex#1080 (correct): no correct answer
+[NO_CORRECT] ex#1083 (choose): no correct answer
+[NO_WORDS] ex#1084 (order): no words/pieces
+[NO_SENTENCE] ex#1086 (correct): no sentence
+[NO_CORRECT] ex#1086 (correct): no correct answer
+[NO_CORRECT] ex#1088 (choose): no correct answer
+[NO_WORDS] ex#1089 (order): no words/pieces
+[NO_SENTENCE] ex#1091 (correct): no sentence
+[NO_CORRECT] ex#1091 (correct): no correct answer
+[NO_CORRECT] ex#1092 (choose): no correct answer
+[NO_WORDS] ex#1093 (order): no words/pieces
+[NO_SENTENCE] ex#1095 (correct): no sentence
+[NO_CORRECT] ex#1095 (correct): no correct answer
+[NO_CORRECT] ex#1096 (choose): no correct answer
+[NO_WORDS] ex#1097 (order): no words/pieces
+[NO_SENTENCE] ex#1099 (correct): no sentence
+[NO_CORRECT] ex#1099 (correct): no correct answer
+[NO_CORRECT] ex#1100 (choose): no correct answer
+[NO_WORDS] ex#1101 (order): no words/pieces
+[NO_SENTENCE] ex#1103 (correct): no sentence
+[NO_CORRECT] ex#1103 (correct): no correct answer
+[NO_CORRECT] ex#1104 (choose): no correct answer
+[NO_WORDS] ex#1105 (order): no words/pieces
+[NO_SENTENCE] ex#1107 (correct): no sentence
+[NO_CORRECT] ex#1107 (correct): no correct answer
+[NO_CORRECT] ex#1108 (choose): no correct answer
+[NO_WORDS] ex#1109 (order): no words/pieces
+[NO_SENTENCE] ex#1111 (correct): no sentence
+[NO_CORRECT] ex#1111 (correct): no correct answer
+[NO_CORRECT] ex#1112 (choose): no correct answer
+[NO_WORDS] ex#1113 (order): no words/pieces
+[NO_SENTENCE] ex#1115 (correct): no sentence
+[NO_CORRECT] ex#1115 (correct): no correct answer
+[NO_CORRECT] ex#1116 (choose): no correct answer
+[NO_WORDS] ex#1117 (order): no words/pieces
+[NO_SENTENCE] ex#1119 (correct): no sentence
+[NO_CORRECT] ex#1119 (correct): no correct answer
+[NO_CORRECT] ex#1120 (choose): no correct answer
+[NO_WORDS] ex#1121 (order): no words/pieces
+[NO_SENTENCE] ex#1123 (correct): no sentence
+[NO_CORRECT] ex#1123 (correct): no correct answer
+[NO_CORRECT] ex#1124 (choose): no correct answer
+[NO_WORDS] ex#1125 (order): no words/pieces
+[NO_SENTENCE] ex#1127 (correct): no sentence
+[NO_CORRECT] ex#1127 (correct): no correct answer
+[NO_CORRECT] ex#1128 (choose): no correct answer
+[NO_WORDS] ex#1129 (order): no words/pieces
+[NO_SENTENCE] ex#1131 (correct): no sentence
+[NO_CORRECT] ex#1131 (correct): no correct answer
+[NO_CORRECT] ex#1133 (choose): no correct answer
+[NO_WORDS] ex#1134 (order): no words/pieces
+[NO_SENTENCE] ex#1136 (correct): no sentence
+[NO_CORRECT] ex#1136 (correct): no correct answer
+[NO_CORRECT] ex#1137 (choose): no correct answer
+[NO_WORDS] ex#1138 (order): no words/pieces
+[NO_SENTENCE] ex#1140 (correct): no sentence
+[NO_CORRECT] ex#1140 (correct): no correct answer
+[NO_CORRECT] ex#1141 (choose): no correct answer
+[NO_WORDS] ex#1142 (order): no words/pieces
+[NO_SENTENCE] ex#1144 (correct): no sentence
+[NO_CORRECT] ex#1144 (correct): no correct answer
+[NO_CORRECT] ex#1145 (choose): no correct answer
+[NO_WORDS] ex#1146 (order): no words/pieces
+[NO_SENTENCE] ex#1148 (correct): no sentence
+[NO_CORRECT] ex#1148 (correct): no correct answer
+[NO_CORRECT] ex#1149 (choose): no correct answer
+[NO_WORDS] ex#1150 (order): no words/pieces
+[NO_SENTENCE] ex#1152 (correct): no sentence
+[NO_CORRECT] ex#1152 (correct): no correct answer
+[NO_CORRECT] ex#1153 (choose): no correct answer
+[NO_WORDS] ex#1154 (order): no words/pieces
+[NO_SENTENCE] ex#1156 (correct): no sentence
+[NO_CORRECT] ex#1156 (correct): no correct answer
+[NO_CORRECT] ex#1157 (choose): no correct answer
+[NO_WORDS] ex#1158 (order): no words/pieces
+[NO_SENTENCE] ex#1160 (correct): no sentence
+[NO_CORRECT] ex#1160 (correct): no correct answer
+[NO_CORRECT] ex#1161 (choose): no correct answer
+[NO_WORDS] ex#1162 (order): no words/pieces
+[NO_SENTENCE] ex#1164 (correct): no sentence
+[NO_CORRECT] ex#1164 (correct): no correct answer
+[NO_CORRECT] ex#1165 (choose): no correct answer
+[NO_WORDS] ex#1166 (order): no words/pieces
+[NO_SENTENCE] ex#1168 (correct): no sentence
+[NO_CORRECT] ex#1168 (correct): no correct answer
+[NO_CORRECT] ex#1170 (choose): no correct answer
+[NO_WORDS] ex#1171 (order): no words/pieces
+[NO_SENTENCE] ex#1173 (correct): no sentence
+[NO_CORRECT] ex#1173 (correct): no correct answer
+[NO_CORRECT] ex#1174 (choose): no correct answer
+[NO_CORRECT] ex#1175 (choose): no correct answer
+[NO_WORDS] ex#1176 (order): no words/pieces
+[NO_CORRECT] ex#1178 (choose): no correct answer
+[NO_CORRECT] ex#1179 (choose): no correct answer
+[NO_SENTENCE] ex#1181 (correct): no sentence
+[NO_CORRECT] ex#1181 (correct): no correct answer
+[NO_CORRECT] ex#1182 (choose): no correct answer
+[NO_CORRECT] ex#1183 (choose): no correct answer
+[NO_WORDS] ex#1184 (order): no words/pieces
+[NO_SENTENCE] ex#1185 (correct): no sentence
+[NO_CORRECT] ex#1185 (correct): no correct answer
+[NO_CORRECT] ex#1186 (choose): no correct answer
+[NO_CORRECT] ex#1187 (choose): no correct answer
+[NO_WORDS] ex#1188 (order): no words/pieces
+[NO_SENTENCE] ex#1189 (correct): no sentence
+[NO_CORRECT] ex#1189 (correct): no correct answer
+[NO_CORRECT] ex#1190 (choose): no correct answer
+[NO_CORRECT] ex#1191 (choose): no correct answer
+[NO_WORDS] ex#1192 (order): no words/pieces
+[NO_SENTENCE] ex#1193 (correct): no sentence
+[NO_CORRECT] ex#1193 (correct): no correct answer
+[NO_CORRECT] ex#1194 (choose): no correct answer
+[NO_CORRECT] ex#1195 (choose): no correct answer
+[NO_WORDS] ex#1196 (order): no words/pieces
+[NO_CORRECT] ex#1198 (choose): no correct answer
+[NO_CORRECT] ex#1199 (choose): no correct answer
+[NO_WORDS] ex#1200 (order): no words/pieces
+[NO_SENTENCE] ex#1201 (correct): no sentence
+[NO_CORRECT] ex#1201 (correct): no correct answer
+[NO_CORRECT] ex#1202 (choose): no correct answer
+[NO_CORRECT] ex#1203 (choose): no correct answer
+[NO_WORDS] ex#1204 (order): no words/pieces
+[NO_CORRECT] ex#1206 (choose): no correct answer
+[NO_CORRECT] ex#1207 (choose): no correct answer
+[NO_WORDS] ex#1208 (order): no words/pieces
+[NO_SENTENCE] ex#1209 (correct): no sentence
+[NO_CORRECT] ex#1209 (correct): no correct answer
+[NO_CORRECT] ex#1210 (choose): no correct answer
+[NO_CORRECT] ex#1211 (choose): no correct answer
+[NO_WORDS] ex#1212 (order): no words/pieces
+[NO_SENTENCE] ex#1213 (correct): no sentence
+[NO_CORRECT] ex#1213 (correct): no correct answer
+[NO_CORRECT] ex#1214 (choose): no correct answer
+[NO_CORRECT] ex#1215 (choose): no correct answer
+[NO_WORDS] ex#1216 (order): no words/pieces
+[NO_SENTENCE] ex#1217 (correct): no sentence
+[NO_CORRECT] ex#1217 (correct): no correct answer
+[NO_CORRECT] ex#1218 (choose): no correct answer
+[NO_CORRECT] ex#1219 (choose): no correct answer
+[NO_WORDS] ex#1220 (order): no words/pieces
+[NO_SENTENCE] ex#1221 (correct): no sentence
+[NO_CORRECT] ex#1221 (correct): no correct answer
+[NO_CORRECT] ex#1222 (choose): no correct answer
+[NO_CORRECT] ex#1223 (choose): no correct answer
+[NO_WORDS] ex#1224 (order): no words/pieces
+[NO_CORRECT] ex#1226 (choose): no correct answer
+[NO_CORRECT] ex#1227 (choose): no correct answer
+[NO_WORDS] ex#1228 (order): no words/pieces
+[NO_SENTENCE] ex#1229 (correct): no sentence
+[NO_CORRECT] ex#1229 (correct): no correct answer
+[NO_CORRECT] ex#1230 (choose): no correct answer
+[NO_CORRECT] ex#1231 (choose): no correct answer
+[NO_WORDS] ex#1232 (order): no words/pieces
+[NO_SENTENCE] ex#1233 (correct): no sentence
+[NO_CORRECT] ex#1233 (correct): no correct answer
+[NO_CORRECT] ex#1234 (choose): no correct answer
+[NO_CORRECT] ex#1235 (choose): no correct answer
+[NO_WORDS] ex#1236 (order): no words/pieces
+[NO_CORRECT] ex#1238 (choose): no correct answer
+[NO_CORRECT] ex#1239 (choose): no correct answer
+[NO_WORDS] ex#1240 (order): no words/pieces
+[NO_SENTENCE] ex#1241 (correct): no sentence
+[NO_CORRECT] ex#1241 (correct): no correct answer
+[NO_CORRECT] ex#1242 (choose): no correct answer
+[NO_CORRECT] ex#1243 (choose): no correct answer
+[NO_WORDS] ex#1244 (order): no words/pieces
+[NO_SENTENCE] ex#1245 (correct): no sentence
+[NO_CORRECT] ex#1245 (correct): no correct answer
+[NO_CORRECT] ex#1246 (choose): no correct answer
+[NO_CORRECT] ex#1247 (choose): no correct answer
+[NO_WORDS] ex#1248 (order): no words/pieces
+[NO_SENTENCE] ex#1249 (correct): no sentence
+[NO_CORRECT] ex#1249 (correct): no correct answer
+[NO_CORRECT] ex#1250 (choose): no correct answer
+[NO_CORRECT] ex#1251 (choose): no correct answer
+[NO_WORDS] ex#1252 (order): no words/pieces
+[NO_CORRECT] ex#1254 (choose): no correct answer
+[NO_CORRECT] ex#1255 (choose): no correct answer
+[NO_WORDS] ex#1256 (order): no words/pieces
+[NO_SENTENCE] ex#1257 (correct): no sentence
+[NO_CORRECT] ex#1257 (correct): no correct answer
+[NO_CORRECT] ex#1258 (choose): no correct answer
+[NO_CORRECT] ex#1259 (choose): no correct answer
+[NO_WORDS] ex#1260 (order): no words/pieces
+[NO_SENTENCE] ex#1261 (correct): no sentence
+[NO_CORRECT] ex#1261 (correct): no correct answer
+[NO_CORRECT] ex#1262 (choose): no correct answer
+[NO_CORRECT] ex#1263 (choose): no correct answer
+[NO_WORDS] ex#1264 (order): no words/pieces
+[NO_CORRECT] ex#1266 (choose): no correct answer
+[NO_CORRECT] ex#1267 (choose): no correct answer
+[NO_WORDS] ex#1268 (order): no words/pieces
+[NO_SENTENCE] ex#1269 (correct): no sentence
+[NO_CORRECT] ex#1269 (correct): no correct answer
+[NO_CORRECT] ex#1270 (choose): no correct answer
+[NO_CORRECT] ex#1271 (choose): no correct answer
+[NO_WORDS] ex#1272 (order): no words/pieces
+[NO_SENTENCE] ex#1273 (correct): no sentence
+[NO_CORRECT] ex#1273 (correct): no correct answer
+[NO_CORRECT] ex#1274 (choose): no correct answer
+[NO_CORRECT] ex#1275 (choose): no correct answer
+[NO_WORDS] ex#1276 (order): no words/pieces
+[NO_CORRECT] ex#1278 (choose): no correct answer
+[NO_CORRECT] ex#1279 (choose): no correct answer
+[NO_WORDS] ex#1280 (order): no words/pieces
+[NO_SENTENCE] ex#1281 (correct): no sentence
+[NO_CORRECT] ex#1281 (correct): no correct answer
+[NO_CORRECT] ex#1282 (choose): no correct answer
+[NO_CORRECT] ex#1283 (choose): no correct answer
+[NO_WORDS] ex#1284 (order): no words/pieces
+[NO_SENTENCE] ex#1285 (correct): no sentence
+[NO_CORRECT] ex#1285 (correct): no correct answer
+[NO_CORRECT] ex#1286 (choose): no correct answer
+[NO_CORRECT] ex#1287 (choose): no correct answer
+[NO_WORDS] ex#1288 (order): no words/pieces
+[NO_CORRECT] ex#1290 (choose): no correct answer
+[NO_CORRECT] ex#1291 (choose): no correct answer
+[NO_WORDS] ex#1292 (order): no words/pieces
+[NO_SENTENCE] ex#1293 (correct): no sentence
+[NO_CORRECT] ex#1293 (correct): no correct answer
+[NO_CORRECT] ex#1294 (choose): no correct answer
+[NO_CORRECT] ex#1295 (choose): no correct answer
+[NO_WORDS] ex#1296 (order): no words/pieces
+[NO_CORRECT] ex#1298 (choose): no correct answer
+[NO_CORRECT] ex#1299 (choose): no correct answer
+[NO_WORDS] ex#1300 (order): no words/pieces
+[NO_SENTENCE] ex#1301 (correct): no sentence
+[NO_CORRECT] ex#1301 (correct): no correct answer
+[NO_WORDS] ex#1302 (order): no words/pieces
+[NO_CORRECT] ex#1303 (choose): no correct answer
+[NO_WORDS] ex#1305 (order): no words/pieces
+[NO_CORRECT] ex#1306 (choose): no correct answer
+[NO_WORDS] ex#1308 (order): no words/pieces
+[NO_CORRECT] ex#1309 (choose): no correct answer
+[NO_WORDS] ex#1311 (order): no words/pieces
+[NO_CORRECT] ex#1312 (choose): no correct answer
+[NO_WORDS] ex#1314 (order): no words/pieces
+[NO_CORRECT] ex#1315 (choose): no correct answer
+[NO_CORRECT] ex#1317 (choose): no correct answer
+[NO_WORDS] ex#1318 (order): no words/pieces
+[NO_CORRECT] ex#1320 (choose): no correct answer
+[NO_WORDS] ex#1321 (order): no words/pieces
+[NO_CORRECT] ex#1323 (choose): no correct answer
+[NO_WORDS] ex#1324 (order): no words/pieces
+[NO_CORRECT] ex#1326 (choose): no correct answer
+[NO_WORDS] ex#1327 (order): no words/pieces
+[NO_CORRECT] ex#1329 (choose): no correct answer
+[NO_WORDS] ex#1330 (order): no words/pieces
+[NO_CORRECT] ex#1332 (choose): no correct answer
+[NO_WORDS] ex#1333 (order): no words/pieces
+[NO_CORRECT] ex#1335 (choose): no correct answer
+[NO_WORDS] ex#1336 (order): no words/pieces
+[NO_CORRECT] ex#1338 (choose): no correct answer
+[NO_WORDS] ex#1339 (order): no words/pieces
+[NO_CORRECT] ex#1341 (choose): no correct answer
+[NO_WORDS] ex#1342 (order): no words/pieces
+[NO_CORRECT] ex#1344 (choose): no correct answer
+[NO_WORDS] ex#1345 (order): no words/pieces
+[NO_CORRECT] ex#1347 (choose): no correct answer
+[NO_WORDS] ex#1348 (order): no words/pieces
+[NO_CORRECT] ex#1350 (choose): no correct answer
+[NO_WORDS] ex#1351 (order): no words/pieces
+[NO_CORRECT] ex#1353 (choose): no correct answer
+[NO_WORDS] ex#1354 (order): no words/pieces
+[NO_CORRECT] ex#1356 (choose): no correct answer
+[NO_WORDS] ex#1357 (order): no words/pieces
+[NO_CORRECT] ex#1359 (choose): no correct answer
+[NO_WORDS] ex#1360 (order): no words/pieces
+[NO_CORRECT] ex#1362 (choose): no correct answer
+[NO_WORDS] ex#1363 (order): no words/pieces
+[NO_CORRECT] ex#1365 (choose): no correct answer
+[NO_WORDS] ex#1366 (order): no words/pieces
+[NO_CORRECT] ex#1368 (choose): no correct answer
+[NO_WORDS] ex#1369 (order): no words/pieces
+[NO_CORRECT] ex#1371 (choose): no correct answer
+[NO_WORDS] ex#1372 (order): no words/pieces
+[NO_CORRECT] ex#1374 (choose): no correct answer
+[NO_WORDS] ex#1375 (order): no words/pieces
+[NO_CORRECT] ex#1377 (choose): no correct answer
+[NO_WORDS] ex#1378 (order): no words/pieces
+[NO_CORRECT] ex#1380 (choose): no correct answer
+[NO_WORDS] ex#1381 (order): no words/pieces
+[NO_CORRECT] ex#1383 (choose): no correct answer
+[NO_WORDS] ex#1384 (order): no words/pieces
+[NO_CORRECT] ex#1386 (choose): no correct answer
+[NO_WORDS] ex#1387 (order): no words/pieces
+[NO_CORRECT] ex#1389 (choose): no correct answer
+[NO_WORDS] ex#1390 (order): no words/pieces
+[NO_CORRECT] ex#1392 (choose): no correct answer
+[NO_WORDS] ex#1393 (order): no words/pieces
+[NO_CORRECT] ex#1395 (choose): no correct answer
+[NO_WORDS] ex#1396 (order): no words/pieces
+[NO_CORRECT] ex#1398 (choose): no correct answer
+[NO_WORDS] ex#1399 (order): no words/pieces
+[NO_CORRECT] ex#1401 (choose): no correct answer
+[NO_WORDS] ex#1402 (order): no words/pieces
+[NO_CORRECT] ex#1404 (choose): no correct answer
+[NO_WORDS] ex#1405 (order): no words/pieces
+[NO_CORRECT] ex#1407 (choose): no correct answer
+[NO_WORDS] ex#1408 (order): no words/pieces
+[NO_CORRECT] ex#1410 (choose): no correct answer
+[NO_WORDS] ex#1411 (order): no words/pieces
+[NO_CORRECT] ex#1413 (choose): no correct answer
+[NO_WORDS] ex#1414 (order): no words/pieces
+[NO_CORRECT] ex#1416 (choose): no correct answer
+[NO_WORDS] ex#1417 (order): no words/pieces
+[NO_CORRECT] ex#1419 (choose): no correct answer
+[NO_WORDS] ex#1420 (order): no words/pieces
+[NO_CORRECT] ex#1422 (choose): no correct answer
+[NO_WORDS] ex#1423 (order): no words/pieces
+[NO_CORRECT] ex#1425 (choose): no correct answer
+[NO_WORDS] ex#1426 (order): no words/pieces
+[NO_CORRECT] ex#1428 (choose): no correct answer
+[NO_WORDS] ex#1429 (order): no words/pieces
+[NO_CORRECT] ex#1431 (choose): no correct answer
+[NO_WORDS] ex#1432 (order): no words/pieces
+[NO_CORRECT] ex#1434 (choose): no correct answer
+[NO_WORDS] ex#1435 (order): no words/pieces
+[NO_CORRECT] ex#1437 (choose): no correct answer
+[NO_WORDS] ex#1438 (order): no words/pieces
+[NO_CORRECT] ex#1440 (choose): no correct answer
+[NO_WORDS] ex#1441 (order): no words/pieces
+[NO_CORRECT] ex#1443 (choose): no correct answer
+[NO_WORDS] ex#1444 (order): no words/pieces
+[NO_CORRECT] ex#1446 (choose): no correct answer
+[NO_WORDS] ex#1447 (order): no words/pieces
+[NO_CORRECT] ex#1449 (choose): no correct answer
+[NO_WORDS] ex#1450 (order): no words/pieces
+[NO_CORRECT] ex#1452 (choose): no correct answer
+[NO_WORDS] ex#1453 (order): no words/pieces
+[NO_CORRECT] ex#1455 (choose): no correct answer
+[NO_WORDS] ex#1456 (order): no words/pieces
+[NO_CORRECT] ex#1458 (choose): no correct answer
+[NO_WORDS] ex#1459 (order): no words/pieces
+[NO_CORRECT] ex#1461 (choose): no correct answer
+[NO_WORDS] ex#1462 (order): no words/pieces
+[NO_CORRECT] ex#1464 (choose): no correct answer
+[NO_WORDS] ex#1465 (order): no words/pieces
+[NO_CORRECT] ex#1467 (choose): no correct answer
+[NO_WORDS] ex#1468 (order): no words/pieces
+[NO_CORRECT] ex#1470 (choose): no correct answer
+[NO_WORDS] ex#1471 (order): no words/pieces
+[NO_CORRECT] ex#1473 (choose): no correct answer
+[NO_WORDS] ex#1474 (order): no words/pieces
+[NO_CORRECT] ex#1476 (choose): no correct answer
+[NO_WORDS] ex#1477 (order): no words/pieces
+[NO_CORRECT] ex#1479 (choose): no correct answer
+[NO_WORDS] ex#1480 (order): no words/pieces
+[NO_CORRECT] ex#1482 (choose): no correct answer
+[NO_WORDS] ex#1483 (order): no words/pieces
+[NO_CORRECT] ex#1485 (choose): no correct answer
+[NO_WORDS] ex#1486 (order): no words/pieces
+[NO_CORRECT] ex#1488 (choose): no correct answer
+[NO_WORDS] ex#1489 (order): no words/pieces
+[NO_CORRECT] ex#1491 (choose): no correct answer
+[NO_WORDS] ex#1492 (order): no words/pieces
+[NO_CORRECT] ex#1494 (choose): no correct answer
+[NO_WORDS] ex#1495 (order): no words/pieces
+[NO_CORRECT] ex#1497 (choose): no correct answer
+[NO_CORRECT] ex#1499 (choose): no correct answer
+[NO_CORRECT] ex#1501 (choose): no correct answer
+[NO_CORRECT] ex#1503 (choose): no correct answer
+[NO_CORRECT] ex#1505 (choose): no correct answer
+[NO_CORRECT] ex#1507 (choose): no correct answer
+[NO_CORRECT] ex#1509 (choose): no correct answer
+[NO_CORRECT] ex#1511 (choose): no correct answer
+[NO_CORRECT] ex#1513 (choose): no correct answer
+[NO_CORRECT] ex#1515 (choose): no correct answer
+[NO_CORRECT] ex#1517 (choose): no correct answer
+[NO_CORRECT] ex#1519 (choose): no correct answer
+[NO_CORRECT] ex#1521 (choose): no correct answer
+[NO_CORRECT] ex#1523 (choose): no correct answer
+[NO_CORRECT] ex#1525 (choose): no correct answer
+[NO_CORRECT] ex#1527 (choose): no correct answer
+[NO_CORRECT] ex#1529 (choose): no correct answer
+[NO_CORRECT] ex#1530 (choose): no correct answer
+[NO_CORRECT] ex#1531 (choose): no correct answer
+[NO_CORRECT] ex#1532 (choose): no correct answer
+[NO_CORRECT] ex#1533 (choose): no correct answer
+[NO_CORRECT] ex#1534 (choose): no correct answer
+[NO_CORRECT] ex#1535 (choose): no correct answer
+[NO_CORRECT] ex#1536 (choose): no correct answer
+[NO_CORRECT] ex#1537 (choose): no correct answer
+[NO_CORRECT] ex#1538 (choose): no correct answer
+[NO_CORRECT] ex#1539 (choose): no correct answer
+[NO_CORRECT] ex#1540 (choose): no correct answer
+[NO_SENTENCE] ex#1541 (correct): no sentence
+[NO_CORRECT] ex#1541 (correct): no correct answer
+[NO_SENTENCE] ex#1542 (correct): no sentence
+[NO_CORRECT] ex#1542 (correct): no correct answer
+[NO_SENTENCE] ex#1543 (correct): no sentence
+[NO_CORRECT] ex#1543 (correct): no correct answer
+[NO_SENTENCE] ex#1544 (correct): no sentence
+[NO_CORRECT] ex#1544 (correct): no correct answer
+[NO_SENTENCE] ex#1545 (correct): no sentence
+[NO_CORRECT] ex#1545 (correct): no correct answer
+[NO_SENTENCE] ex#1546 (correct): no sentence
+[NO_CORRECT] ex#1546 (correct): no correct answer
+[NO_SENTENCE] ex#1547 (correct): no sentence
+[NO_CORRECT] ex#1547 (correct): no correct answer
+[NO_SENTENCE] ex#1548 (correct): no sentence
+[NO_CORRECT] ex#1548 (correct): no correct answer
+[NO_WORDS] ex#1549 (order): no words/pieces
+[NO_WORDS] ex#1550 (order): no words/pieces
+[NO_WORDS] ex#1551 (order): no words/pieces
+[NO_WORDS] ex#1552 (order): no words/pieces
+[NO_CORRECT] ex#1553 (choose): no correct answer
+[NO_WORDS] ex#1554 (order): no words/pieces
+[NO_SENTENCE] ex#1556 (correct): no sentence
+[NO_CORRECT] ex#1556 (correct): no correct answer
+[NO_CORRECT] ex#1558 (choose): no correct answer
+[NO_WORDS] ex#1559 (order): no words/pieces
+[NO_SENTENCE] ex#1561 (correct): no sentence
+[NO_CORRECT] ex#1561 (correct): no correct answer
+[NO_CORRECT] ex#1563 (choose): no correct answer
+[NO_WORDS] ex#1564 (order): no words/pieces
+[NO_SENTENCE] ex#1566 (correct): no sentence
+[NO_CORRECT] ex#1566 (correct): no correct answer
+[NO_CORRECT] ex#1568 (choose): no correct answer
+[NO_WORDS] ex#1569 (order): no words/pieces
+[NO_SENTENCE] ex#1571 (correct): no sentence
+[NO_CORRECT] ex#1571 (correct): no correct answer
+[NO_CORRECT] ex#1573 (choose): no correct answer
+[NO_WORDS] ex#1574 (order): no words/pieces
+[NO_SENTENCE] ex#1576 (correct): no sentence
+[NO_CORRECT] ex#1576 (correct): no correct answer
+[NO_CORRECT] ex#2223 (choose): no correct answer
+[NO_CORRECT] ex#2224 (choose): no correct answer
+[NO_CORRECT] ex#2225 (choose): no correct answer
+[NO_WORDS] ex#2226 (order): no words/pieces
+[NO_WORDS] ex#2227 (order): no words/pieces
+[NO_CORRECT] ex#2231 (choose): no correct answer
+[NO_CORRECT] ex#2232 (choose): no correct answer
+[NO_CORRECT] ex#2233 (choose): no correct answer
+[NO_WORDS] ex#2234 (order): no words/pieces
+[NO_WORDS] ex#2235 (order): no words/pieces
+[NO_CORRECT] ex#2239 (choose): no correct answer
+[NO_CORRECT] ex#2240 (choose): no correct answer
+[NO_CORRECT] ex#2241 (choose): no correct answer
+[NO_WORDS] ex#2242 (order): no words/pieces
+[NO_WORDS] ex#2243 (order): no words/pieces
+[NO_CORRECT] ex#2247 (choose): no correct answer
+[NO_CORRECT] ex#2248 (choose): no correct answer
+[NO_CORRECT] ex#2249 (choose): no correct answer
+[NO_WORDS] ex#2250 (order): no words/pieces
+[NO_WORDS] ex#2251 (order): no words/pieces
+[NO_CORRECT] ex#2254 (choose): no correct answer
+[NO_CORRECT] ex#2256 (choose): no correct answer
+[NO_CORRECT] ex#2257 (choose): no correct answer
+[NO_CORRECT] ex#2258 (choose): no correct answer
+[NO_WORDS] ex#2259 (order): no words/pieces
+[NO_WORDS] ex#2260 (order): no words/pieces
+[NO_CORRECT] ex#2264 (choose): no correct answer
+[NO_CORRECT] ex#2265 (choose): no correct answer
+[NO_CORRECT] ex#2266 (choose): no correct answer
+[NO_WORDS] ex#2267 (order): no words/pieces
+[NO_WORDS] ex#2268 (order): no words/pieces
+[NO_CORRECT] ex#2272 (choose): no correct answer
+[NO_CORRECT] ex#2273 (choose): no correct answer
+[NO_CORRECT] ex#2274 (choose): no correct answer
+[NO_WORDS] ex#2275 (order): no words/pieces
+[NO_WORDS] ex#2276 (order): no words/pieces
+[NO_CORRECT] ex#2279 (choose): no correct answer
+[NO_CORRECT] ex#2281 (choose): no correct answer
+[NO_CORRECT] ex#2282 (choose): no correct answer
+[NO_CORRECT] ex#2283 (choose): no correct answer
+[NO_WORDS] ex#2284 (order): no words/pieces
+[NO_WORDS] ex#2285 (order): no words/pieces
+[NO_CORRECT] ex#2289 (choose): no correct answer
+[NO_CORRECT] ex#2290 (choose): no correct answer
+[NO_CORRECT] ex#2291 (choose): no correct answer
+[NO_WORDS] ex#2292 (order): no words/pieces
+[NO_WORDS] ex#2293 (order): no words/pieces
+[NO_CORRECT] ex#2297 (choose): no correct answer
+[NO_CORRECT] ex#2298 (choose): no correct answer
+[NO_CORRECT] ex#2299 (choose): no correct answer
+[NO_WORDS] ex#2300 (order): no words/pieces
+[NO_WORDS] ex#2301 (order): no words/pieces
+[NO_CORRECT] ex#2305 (choose): no correct answer
+[NO_CORRECT] ex#2306 (choose): no correct answer
+[NO_CORRECT] ex#2307 (choose): no correct answer
+[NO_WORDS] ex#2308 (order): no words/pieces
+[NO_WORDS] ex#2309 (order): no words/pieces
+[NO_CORRECT] ex#2313 (choose): no correct answer
+[NO_CORRECT] ex#2314 (choose): no correct answer
+[NO_CORRECT] ex#2315 (choose): no correct answer
+[NO_WORDS] ex#2316 (order): no words/pieces
+[NO_WORDS] ex#2317 (order): no words/pieces
+[NO_CORRECT] ex#2320 (choose): no correct answer
+[NO_CORRECT] ex#2322 (choose): no correct answer
+[NO_CORRECT] ex#2323 (choose): no correct answer
+[NO_CORRECT] ex#2324 (choose): no correct answer
+[NO_WORDS] ex#2325 (order): no words/pieces
+[NO_WORDS] ex#2326 (order): no words/pieces
+[NO_CORRECT] ex#2330 (choose): no correct answer
+[NO_CORRECT] ex#2331 (choose): no correct answer
+[NO_CORRECT] ex#2332 (choose): no correct answer
+[NO_WORDS] ex#2333 (order): no words/pieces
+[NO_WORDS] ex#2334 (order): no words/pieces
+[NO_CORRECT] ex#2338 (choose): no correct answer
+[NO_CORRECT] ex#2339 (choose): no correct answer
+[NO_CORRECT] ex#2340 (choose): no correct answer
+[NO_WORDS] ex#2341 (order): no words/pieces
+[NO_WORDS] ex#2342 (order): no words/pieces
+[NO_CORRECT] ex#2346 (choose): no correct answer
+[NO_CORRECT] ex#2347 (choose): no correct answer
+[NO_CORRECT] ex#2348 (choose): no correct answer
+[NO_WORDS] ex#2349 (order): no words/pieces
+[NO_WORDS] ex#2350 (order): no words/pieces
+[NO_CORRECT] ex#2354 (choose): no correct answer
+[NO_CORRECT] ex#2355 (choose): no correct answer
+[NO_CORRECT] ex#2356 (choose): no correct answer
+[NO_WORDS] ex#2357 (order): no words/pieces
+[NO_WORDS] ex#2358 (order): no words/pieces
+[NO_CORRECT] ex#2362 (choose): no correct answer
+[NO_CORRECT] ex#2363 (choose): no correct answer
+[NO_CORRECT] ex#2364 (choose): no correct answer
+[NO_CORRECT] ex#2365 (choose): no correct answer
+[NO_WORDS] ex#2366 (order): no words/pieces
+[NO_WORDS] ex#2367 (order): no words/pieces
+[NO_WORDS] ex#2368 (order): no words/pieces
+[NO_CORRECT] ex#2372 (choose): no correct answer
+[NO_CORRECT] ex#2375 (choose): no correct answer
+[NO_CORRECT] ex#2376 (choose): no correct answer
+[NO_CORRECT] ex#2377 (choose): no correct answer
+[NO_CORRECT] ex#2378 (choose): no correct answer
+[NO_WORDS] ex#2379 (order): no words/pieces
+[NO_WORDS] ex#2380 (order): no words/pieces
+[NO_CORRECT] ex#2384 (choose): no correct answer
+[NO_CORRECT] ex#2385 (choose): no correct answer
+[NO_CORRECT] ex#2386 (choose): no correct answer
+[NO_CORRECT] ex#2387 (choose): no correct answer
+[NO_WORDS] ex#2388 (order): no words/pieces
+[NO_WORDS] ex#2389 (order): no words/pieces
+[NO_WORDS] ex#2390 (order): no words/pieces
+[NO_WORDS] ex#2391 (order): no words/pieces
+[PHON_DOUBLED_ALEF] PHON_DICT['ian']='اان' has doubled alef
+[ITEM_DIACRITICS] item#598 (word): translit has diacritics
+[ITEM_DIACRITICS] item#635 (sentence): translit has diacritics
+[ITEM_DOUBLED_ALEF] item#646 (explain): translit='يوس باسيسيڤ اجيكتيڤز بيفور ناونز: ماي نيم, يور ادريس, هيز فو' has doubled alef
+[ITEM_DIACRITICS] item#675 (sentence): translit has diacritics
+[ITEM_DOUBLED_ALEF] item#729 (sentence): translit='اي ويل فالو اب وذ يو باي اايميل.' has doubled alef
+[ITEM_DIACRITICS] item#774 (sentence): translit has diacritics
+[ITEM_DIACRITICS] item#775 (sentence): translit has diacritics
+[ITEM_DIACRITICS] item#808 (word): translit has diacritics
+[ITEM_DIACRITICS] item#829 (sentence): translit has diacritics
+[ITEM_DIACRITICS] item#835 (sentence): translit has diacritics
+[ITEM_DIACRITICS] item#838 (word): translit has diacritics
+[ITEM_DIACRITICS] item#859 (sentence): translit has diacritics
+[ITEM_DIACRITICS] item#877 (word): translit has diacritics
+[ITEM_DIACRITICS] item#890 (sentence): translit has diacritics
+[ITEM_DIACRITICS] item#933 (sentence): translit has diacritics
+[ITEM_DIACRITICS] item#978 (sentence): translit has diacritics
+[ITEM_DIACRITICS] item#993 (sentence): translit has diacritics
+[ITEM_DIACRITICS] item#1022 (sentence): translit has diacritics
+[ITEM_DOUBLED_ALEF] item#1030 (sentence): translit='اي ويل فالو اب وذ يو باي اايميل.' has doubled alef
+[ITEM_DOUBLED_ALEF] item#1038 (sentence): translit='اي ويل فالو اب وذ يو باي اايميل.' has doubled alef
+[ITEM_DOUBLED_ALEF] item#1060 (sentence): translit='اي ويل فالو اب وذ يو باي اايميل.' has doubled alef
+[ITEM_DIACRITICS] item#1077 (word): translit has diacritics
+[ITEM_DIACRITICS] item#1078 (sentence): translit has diacritics
+[ITEM_DIACRITICS] item#1079 (word): translit has diacritics
+[ITEM_DIACRITICS] item#1080 (sentence): translit has diacritics
+[ITEM_DIACRITICS] item#1087 (word): translit has diacritics
+[ITEM_DIACRITICS] item#1088 (sentence): translit has diacritics
+[ITEM_DOUBLED_ALEF] item#1098 (sentence): translit='اي ويل فالو اب وذ يو باي اايميل.' has doubled alef
+[ITEM_DIACRITICS] item#1099 (word): translit has diacritics
+[ITEM_DIACRITICS] item#1100 (sentence): translit has diacritics
+[ITEM_DOUBLED_ALEF] item#1149 (sentence): translit='اي ويل فالو اب وذ يو باي اايميل.' has doubled alef
+[ITEM_DOUBLED_ALEF] item#1159 (sentence): translit='اي ويل فالو اب وذ يو باي اايميل.' has doubled alef
+[ITEM_DIACRITICS] item#1160 (sentence): translit has diacritics
+[ITEM_DOUBLED_ALEF] item#1179 (sentence): translit='اي ويل فالو اب وذ يو باي اايميل.' has doubled alef
+[ITEM_DOUBLED_ALEF] item#1199 (sentence): translit='اي ويل فالو اب وذ يو باي اايميل.' has doubled alef
+[ITEM_DIACRITICS] item#1202 (sentence): translit has diacritics
+[ITEM_DIACRITICS] item#1203 (sentence): translit has diacritics
+[ITEM_DOUBLED_ALEF] item#1229 (sentence): translit='اي ويل فالو اب وذ يو باي اايميل.' has doubled alef
+[ITEM_DOUBLED_ALEF] item#1237 (sentence): translit='اي ويل فالو اب وذ يو باي اايميل.' has doubled alef
+[ITEM_DIACRITICS] item#1240 (sentence): translit has diacritics
+[ITEM_DOUBLED_ALEF] item#1259 (sentence): translit='اي ويل فالو اب وذ يو باي اايميل.' has doubled alef
+[ITEM_DOUBLED_ALEF] item#1267 (sentence): translit='اي ويل فالو اب وذ يو باي اايميل.' has doubled alef
+[ITEM_DOUBLED_ALEF] item#1469 (explain): translit='فول فورم: اي ام. كانتراكشان: ايم. رونج: اام.' has doubled alef
+[ITEM_DOUBLED_ALEF] item#1557 (sentence): translit='اي واز تايرد، سو اي سلبت اايرلي' has doubled alef
+[ITEM_DIACRITICS] item#1722 (sentence): translit has diacritics
+[ITEM_DIACRITICS] item#2307 (word): translit has diacritics
