@@ -65,7 +65,7 @@ function check(name, cond){ if(cond){ pass++; console.log('PASS  '+name); } else
 var phTired = pronunciationHint({en:'tired'});
 check('pron tired returns hint', phTired !== null);
 check('pron tired has تايرد', phTired && phTired.ar && phTired.ar.indexOf('تايرد') !== -1);
-check('pron tired has avoid تاي-رِد', phTired && phTired.avoid && phTired.avoid.indexOf('تاي-رِد') !== -1);
+check('pron tired has avoid تاي-رد', phTired && phTired.avoid && phTired.avoid.indexOf('تاي-رد') !== -1);
 
 // 7. pronunciationHint('three') returns TH hint
 var phThree = pronunciationHint({en:'three'});

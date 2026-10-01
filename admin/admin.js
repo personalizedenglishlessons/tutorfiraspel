@@ -100,7 +100,7 @@ var I = {
   'forbiddenTitle':{en:'Access denied', ar: 'الوصول مرفوض'},
   'forbiddenText':{en:'Your account does not have admin or teacher access.', ar: 'حسابك ما عندك صلاحيه الاداره او التدريس.'},
   'today':{en:'today', ar: 'اليوم'}, 'yesterday':{en:'yesterday', ar: 'امس'}, 'daysAgo':{en:'%d days ago', ar: 'قبل %d يوم'},
-  'loading':{en:'Loading…', ar: 'جارٍ التحميل…'},
+  'loading':{en:'Loading…', ar: 'جار التحميل…'},
   'saved':{en:'Saved', ar: 'تم الحفظ'},
   'save':{en:'Save', ar: 'حفظ'},
   'cancel':{en:'Cancel', ar: 'الغا'},
@@ -317,7 +317,7 @@ var I = {
 'academyCount':{en:'%d academies', ar: '%d اكاديميات'},
   'lesson':{en:'Lesson', ar: 'درس'},
   'noCourses':{en:'No course data available.', ar: 'ما فيه بيانات مسارات.'},
-  'lessonsManagerSub':{en:'Add, edit, reorder and hide lessons - changes reach every student instantly.', ar: 'اضف وعدل ورتب واخفي الدروس - التغييرات توصل لكل طالب فوراً.'},
+  'lessonsManagerSub':{en:'Add, edit, reorder and hide lessons - changes reach every student instantly.', ar: 'اضف وعدل ورتب واخفي الدروس - التغييرات توصل لكل طالب فورا.'},
   'newAcademy':{en:'New academy', ar: 'اكاديميه جديده'},
   'newLesson':{en:'New lesson', ar: 'درس جديد'},
   'editAcademy':{en:'Edit academy', ar: 'تعديل الاكاديميه'},
@@ -348,7 +348,7 @@ var I = {
   'announcements':{en:'Announcements', ar: 'الاعلانات'},
   'plan':{en:'Plan & Access', ar: 'الباقه والوصول'},
   'activePlans':{en:'Active plans', ar: 'باقات نشطه'},
-  'expiringSoon':{en:'Expiring soon (7d)', ar: 'تنتهي قريبًا (٧ ايام)'},
+  'expiringSoon':{en:'Expiring soon (7d)', ar: 'تنتهي قريبا (٧ ايام)'},
   'expiredPlans':{en:'Expired plans', ar: 'باقات منتهيه'},
   'scheduledPlans':{en:'Scheduled plans', ar: 'باقات محدده'},
   'suspendedPlans':{en:'Suspended plans', ar: 'باقات موقوفه'},
@@ -367,7 +367,7 @@ var I = {
   'durationDays':{en:'Duration (days)', ar: 'المده (ايام)'},
   'price':{en:'Price', ar: 'السعر'},
   'currency':{en:'Currency', ar: 'العمله'},
-  'weeklyLive':{en:'Weekly live sessions', ar: 'حصص مباشره اسبوعياً'},
+  'weeklyLive':{en:'Weekly live sessions', ar: 'حصص مباشره اسبوعيا'},
   'platformAccess':{en:'Platform access', ar: 'وصول المنصه'},
   'extend':{en:'Extend', ar: 'تمديد'},
   'extendDays':{en:'Extend +%d days', ar: 'تمديد +%d يوم'},
@@ -403,7 +403,7 @@ var I = {
   'assigned':{en:'Assigned', ar: 'اسندت'},
   'extended':{en:'Extended', ar: 'مددت'},
   'scheduledLbl':{en:'Scheduled', ar: 'محدده'},
-  'planNote':{en:'Access expires automatically on the end date (server-enforced). Renewing never resets progress.', ar: 'ينتهي الوصول تلقائياً بتاريخ النهايه (تطبيق من الخادم). التجديد لا يمسّ تقدمك.'},
+  'planNote':{en:'Access expires automatically on the end date (server-enforced). Renewing never resets progress.', ar: 'ينتهي الوصول تلقائيا بتاريخ النهايه (تطبيق من الخادم). التجديد لا يمس تقدمك.'},
   'notificationSent':{en:'Announcement sent.', ar: 'ارسلنا الاعلان.'},
   'planSaved':{en:'Plan saved.', ar: 'حفظنا الباقه.'},
   'planAssigned':{en:'Plan assigned.', ar: 'تم اسناد الباقه.'},
@@ -2247,7 +2247,7 @@ async function courses(){
   var totalLessons = Object.keys(_cur.lessons).length;
   var activeAcads = _cur.academies.filter(function(a){ return a.active; }).length;
   var cards = _cur.academies.map(academyCard).join('') || emptyBlock(t('noCourses'));
-  $('viewArea').innerHTML = pageHead(t('courses'), lang === 'ar' ? 'المنهج الكامل - يوصل للطلاب فوراً' : 'The full catalog - reaches students instantly') +
+  $('viewArea').innerHTML = pageHead(t('courses'), lang === 'ar' ? 'المنهج الكامل - يوصل للطلاب فورا' : 'The full catalog - reaches students instantly') +
     '<div class="kpi-grid">' +
       '<div class="kpi-card accent"><div class="k-label">' + esc(t('academyCount')) + '</div><div class="k-value">' + fmtN(activeAcads) + '</div></div>' +
       '<div class="kpi-card"><div class="k-label">' + esc(lang === 'ar' ? 'اجمالي الدروس' : 'Total lessons') + '</div><div class="k-value">' + fmtN(totalLessons) + '</div></div>' +
@@ -2650,7 +2650,7 @@ function programForm(){
    ============================================================ */
 async function billingView(){
   $('viewArea').innerHTML = pageHead(lang==='ar'?'الاسعار وصفحة البدايه':'Billing & Index',
-    lang==='ar'?'عدل اسعار الباقات ونص الصفحه البدايه - التغييرات توصل لـ /index فوراً':'Edit plan prices and index copy - changes reach /index immediately') + loadingBlock();
+    lang==='ar'?'عدل اسعار الباقات ونص الصفحه البدايه - التغييرات توصل لـ /index فورا':'Edit plan prices and index copy - changes reach /index immediately') + loadingBlock();
   var c = client();
   var [pp, ss] = await Promise.all([
     pelTableSelect('plan_pricing', '*', { order: 'tier,duration_months' }),
@@ -2673,7 +2673,7 @@ async function billingView(){
       matrixHtml += '<div class="reason-item" style="flex-wrap:wrap;gap:8px;">' +
         '<div style="font-weight:700;min-width:90px;">'+esc(mo+' '+(lang==='ar'?'اشهر':'months'))+'</div>' +
         '<label style="display:flex;align-items:center;gap:6px;font-size:.78rem;">'+esc(t('price'))+' <input class="input" type="number" style="width:90px" data-pp="price" data-tier="'+tier.k+'" data-mo="'+mo+'" value="'+(r.price||0)+'"></label>' +
-        '<label style="display:flex;align-items:center;gap:6px;font-size:.78rem;">'+(lang==='ar'?'حصص اسبوعياً':'Weekly classes')+' <input class="input" type="number" style="width:70px" data-pp="weekly_live_classes" data-tier="'+tier.k+'" data-mo="'+mo+'" value="'+(r.weekly_live_classes||0)+'"></label>' +
+        '<label style="display:flex;align-items:center;gap:6px;font-size:.78rem;">'+(lang==='ar'?'حصص اسبوعيا':'Weekly classes')+' <input class="input" type="number" style="width:70px" data-pp="weekly_live_classes" data-tier="'+tier.k+'" data-mo="'+mo+'" value="'+(r.weekly_live_classes||0)+'"></label>' +
         '<label style="display:flex;align-items:center;gap:6px;font-size:.78rem;"><input type="checkbox" data-pp="featured" data-tier="'+tier.k+'" data-mo="'+mo+'" '+(r.featured?'checked':'')+'> '+(lang==='ar'?'مميزه':'Featured')+'</label>' +
         '<label style="display:flex;align-items:center;gap:6px;font-size:.78rem;"><input type="checkbox" data-pp="active" data-tier="'+tier.k+'" data-mo="'+mo+'" '+(r.active!==false?'checked':'')+'> '+(lang==='ar'?'متاحه':'Active')+'</label>' +
         '</div>';
@@ -2775,7 +2775,7 @@ async function billingView(){
 async function questionsView(){
   if(!hasPerm('learning.manage')){ $('viewArea').innerHTML = emptyBlock(lang==='ar'?'ما عندك صلاحيه':'No access'); return; }
   var title = lang==='ar'?'بنك الاختبار':'Assessment Questions';
-  var sub = lang==='ar'?'تعديل بنك الاختبار - التغييرات توصل للطلاب فوراً':'Edit the adaptive placement-test questions - changes reach students immediately';
+  var sub = lang==='ar'?'تعديل بنك الاختبار - التغييرات توصل للطلاب فورا':'Edit the adaptive placement-test questions - changes reach students immediately';
   $('viewArea').innerHTML = pageHead(title, sub) + loadingBlock();
   var c = client();
   var ROWS = [];
@@ -3202,7 +3202,7 @@ function planStatusChip(status){
   var map = { active:'green', expiring:'warn', expired:'red', suspended:'red', scheduled:'bronze', cancelled:'muted', none:'muted' };
   var cls = map[status] || 'muted';
   var key = status === 'scheduled' ? 'scheduledLbl' : status;
-  var text = lang === 'ar' ? (key === 'expiring' ? 'تنتهي قريبً' : (I[key] || {ar:key}).ar || key) : (key === 'expiring' ? 'Expiring' : (I[key] || {en:key}).en || key);
+  var text = lang === 'ar' ? (key === 'expiring' ? 'تنتهي قريب' : (I[key] || {ar:key}).ar || key) : (key === 'expiring' ? 'Expiring' : (I[key] || {en:key}).en || key);
   return '<span class="chip ' + cls + '"><span class="badge-dot ' + cls + '"></span>' + esc(text) + '</span>';
 }
 async function plansView(){
@@ -3500,7 +3500,7 @@ function createAnnouncementForm(){
       p_class_id: null, p_scheduled_at: sched, p_expires_at: exp
     });
     if(!r.ok){ btn.disabled = false; toast((r.error && r.error.message) || t('permissionDenied'), true); return; }
-    closeModal(s); toast(r.data && r.data.duplicate ? (lang === 'ar' ? 'تم الارسال مسبقاً - تم التخطي.' : 'Already sent - skipped.') : t('notificationSent'));
+    closeModal(s); toast(r.data && r.data.duplicate ? (lang === 'ar' ? 'تم الارسال مسبقا - تم التخطي.' : 'Already sent - skipped.') : t('notificationSent'));
     announcementsView();
   });
 }
@@ -3540,7 +3540,7 @@ function editAnnouncementForm(a){
 
 async function settingsView(){
   var head = pageHead(lang === 'ar' ? 'اعدادات الموقع' : 'Site Settings',
-    lang === 'ar' ? 'شريط الاعلان الرييسي، الاسئله الشايعه، رقم الواتساب، وخيارات الموقع - التغييرات تظهر للزوار فوراً.' : 'Homepage banner, FAQs, WhatsApp number and site flags - changes go live for visitors instantly.');
+    lang === 'ar' ? 'شريط الاعلان الرييسي، الاسئله الشايعه، رقم الواتساب، وخيارات الموقع - التغييرات تظهر للزوار فورا.' : 'Homepage banner, FAQs, WhatsApp number and site flags - changes go live for visitors instantly.');
   $('viewArea').innerHTML = head + loadingBlock();
   var c = client();
   if(!c){ $('viewArea').innerHTML = errBlock('no client'); return; }
@@ -3646,7 +3646,7 @@ async function renderTabPlan(d){
 
   var statusLine;
   if(!has){
-    statusLine = '<div class="notice"><div>' + (lang === 'ar' ? 'ذا الطالب بدون باقه حالياً.' : 'This student has no active plan.') + '</div></div>';
+    statusLine = '<div class="notice"><div>' + (lang === 'ar' ? 'ذا الطالب بدون باقه حاليا.' : 'This student has no active plan.') + '</div></div>';
   } else {
     var planName = lang === 'ar' ? (plan.name_ar || plan.name_en) : plan.name_en;
     statusLine = '<div class="s360-meta" style="margin-top:0;">' + planStatusChip(ps.status) + chip(esc(planName), 'gold') +
@@ -3669,7 +3669,7 @@ async function renderTabPlan(d){
   }
 
   var history = (x.history || []).map(function(h){
-    var act = lang === 'ar' ? ({assigned:'اسندت', extended:'مددت', suspended:'اوقفت', reactivated:'اعيد تفعيلها', renewed:'جددت', changed:'غيّرت'}[h.action] || h.action) : h.action;
+    var act = lang === 'ar' ? ({assigned:'اسندت', extended:'مددت', suspended:'اوقفت', reactivated:'اعيد تفعيلها', renewed:'جددت', changed:'غيرت'}[h.action] || h.action) : h.action;
     return '<div class="reason-item"><span class="badge-dot gold" style="margin-top:5px;"></span><div><div>' + esc(act) + ' - ' + esc(lang === 'ar' ? h.plan_ar : h.plan) + '</div>' +
       '<span class="why">' + (h.old_end_date ? fmtDate(h.old_end_date) + ' → ' : '') + fmtDate(h.new_end_date) + (h.reason ? ' · ' + esc(h.reason) : '') + ' · ' + relTime(h.created_at) + '</span></div></div>';
   }).join('') || '<div class="sub">' + esc(t('noData')) + '</div>';
