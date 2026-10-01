@@ -18121,10 +18121,6 @@ function renderLessonReader(container, academy, lesson){
    ============================================================ */
 function renderVocabulary(){
   const el = document.getElementById('view-vocabulary');
-  // Guard against re-rendering: clean up old keydown listener to prevent accumulation
-  if(el.dataset.rendered === '1' && el._vvKeyHandler){
-    document.removeEventListener('keydown', el._vvKeyHandler);
-  }
   el.dataset.rendered = '1';
   const arMode = document.body.classList.contains('ui-ar');
   const VV_CAT_ICONS = {
@@ -18279,10 +18275,7 @@ function renderVocabulary(){
       </div>`;
     }).join('') || `<div class="vv-empty"><div class="icon"><i data-lucide="search-x" width="44" height="44"></i></div><h3>${arMode?'ما حصلت كلمات':'No words found'}</h3><p>${arMode?'جرب كلمه ثانيه.':'Try another search term.'}</p></div>`;
     catGridEl.querySelectorAll('.vv-cat-card').forEach(card => {
-      card.addEventListener('click', () => {
-        try { startStudy(card.dataset.cat); }
-        catch(e){ console.error('[PEL] vocab startStudy failed:', e.message||e); }
-      });
+      card.addEventListener('click', () => startStudy(card.dataset.cat));
     });
     catGridEl.querySelectorAll('.vv-word-chip').forEach(chip => {
       chip.addEventListener('click', () => {
@@ -18318,11 +18311,10 @@ function renderVocabulary(){
   }
   function renderStudyCard(){
     cardScene.innerHTML = '';
-    // Lazy-load: only build the current card to avoid mobile memory issues
-    if(vvOrder.length > 0){
-      const c = buildStudyCard(vvDeck[vvOrder[0]]);
+    vvOrder.forEach(i => {
+      const c = buildStudyCard(vvDeck[i]);
       cardScene.appendChild(c);
-    }
+    });
     if(cardScene.children.length) cardScene.children[0].classList.add('active');
     buildNavDots();
     vvCurrent = 0; vvFlipped = false; vvSeen.clear();
@@ -18536,21 +18528,21 @@ function renderVocabulary(){
   }
   function showStudyCard(idx, dir){
     const cards = cardScene.children;
-    if(!cards.length || idx<0 || idx>=vvOrder.length) return;
+    if(!cards.length || idx<0 || idx>=cards.length) return;
     vvFlipped = false;
-    // Lazy-load: rebuild card for the new index
-    if(idx !== vvCurrent || cards.length <= 1){
-      cardScene.innerHTML = '';
-      const c = buildStudyCard(vvDeck[vvOrder[idx]]);
-      cardScene.appendChild(c);
-      if(window.lucide) lucide.createIcons();
+    const oldCard = cards[vvCurrent];
+    const newCard = cards[idx];
+    if(oldCard && oldCard !== newCard){
+      oldCard.classList.remove('active','flipped');
     }
+    newCard.classList.add('active');
+    newCard.classList.remove('flipped');
     vvCurrent = idx;
     updateStudyProgress();
   }
   function flipCard(){
     vvFlipped = !vvFlipped;
-    const card = cardScene.children[0];
+    const card = cardScene.children[vvCurrent];
     if(card){
       card.classList.toggle('flipped', vvFlipped);
     }
@@ -18619,7 +18611,6 @@ function renderVocabulary(){
     }
   }
   document.addEventListener('keydown', vvKeyHandler);
-  el._vvKeyHandler = vvKeyHandler;
   // --- Touch / Swipe support ---
   let vvTouchStartX = 0, vvTouchStartY = 0;
   cardScene.addEventListener('touchstart', (e) => {
