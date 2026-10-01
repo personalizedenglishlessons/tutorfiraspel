@@ -20165,8 +20165,8 @@ function renderContinueLearning(){
     if(resumeText) resumeText.innerHTML = (hasPlan() && firstObj)
       ? `<span class="arabic">${escapeHtml(firstObj.ar || '')}</span> · ${escapeHtml(firstObj.title || '')}`
       : (dirAr
-          ? `<span class="arabic" style="display:block">لنبدا رحلتك في تعلم اللهجه العربيه. اكمل درسك الاول لفتح لوحتك الشخصيه.</span><span class="pel-en-copy" style="display:block">Let's begin your Arabic journey. Complete your first lesson to unlock your personalized dashboard.</span>`
-          : `<span class="arabic" style="display:block">لنبدا رحلتك في تعلم الانجليزي. اكمل درسك الاول لفتح لوحتك الشخصيه.</span><span class="pel-en-copy" style="display:block">Let's begin your English journey. Complete your first lesson to unlock your personalized dashboard.</span>`);
+          ? `<span class="arabic" style="display:block">ابدا اول درس باللهجه العربيه. لوحتك تنفتح اول ما تخلصه.</span><span class="pel-en-copy" style="display:block">Start your first Arabic lesson. Your dashboard opens once you finish it.</span>`
+          : `<span class="arabic" style="display:block">ابدا اول درس انجليزي. لوحتك تنفتح اول ما تخلصه.</span><span class="pel-en-copy" style="display:block">Start your first lesson. Your dashboard opens once you finish it.</span>`);
     setHomeSubtitle((hasPlan() && firstObj)
       ? `اول خطوه: ${escapeHtml(firstObj.ar||'')}.`
       : (dirAr ? 'اول خطوه: اكمل درسك الاول باللهجه العربيه، ولوحتك تنفتح.' : 'اول خطوه: اكمل درسك الاول، ولوحتك تنفتح.'),
