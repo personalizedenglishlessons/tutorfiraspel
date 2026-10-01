@@ -2495,7 +2495,7 @@ function renderSubBanner(){
       '<div class="tile-icon" style="margin:0;"><i data-lucide="hourglass" width="18" height="18"></i></div>' +
       '<div style="flex:1; min-width:200px;"><b>' + (ar ? 'باقتك قربت تخلص' : 'Your plan is expiring soon') + '</b>' +
       '<div style="font-size:.8rem; color:var(--text-secondary); margin-top:3px;">' + (ar ? ('باقي ' + subPlan.daysLeft + ' يوم، جدد قبل لا توقف عليك الدروس.') : (subPlan.daysLeft + ' days left. Renew before it ends to keep learning without a break.')) + '</div></div>' +
-      '<button type="button" class="btn-gold" id="subRenewBtn">' + (ar ? 'جدد الحين' : 'Renew Now') + '</button>' +
+      '<button type="button" class="btn-gold" id="subRenewBtn2">' + (ar ? 'جدد الحين' : 'Renew Now') + '</button>' +
       '</div></div>';
   } else if(!subPlan.hasPlan){
     html = '<div class="card" style="border-color:rgba(63,140,114,.35); background:linear-gradient(135deg, rgba(63,140,114,.08), rgba(63,140,114,.02));">' +
@@ -2503,12 +2503,12 @@ function renderSubBanner(){
       '<div class="tile-icon" style="margin:0;"><i data-lucide="sparkles" width="18" height="18"></i></div>' +
       '<div style="flex:1; min-width:200px;"><b>' + (ar ? 'اختر باقتك وخلنا نبدا' : 'Choose your plan') + '</b>' +
       '<div style="font-size:.8rem; color:var(--text-secondary); margin-top:3px;">' + (ar ? 'الاكاديميه بالاشتراك، شوف الباقات واختر اللي تناسبك.' : 'The academy runs on plans. Pick the one that fits your goals.') + '</div></div>' +
-      '<button type="button" class="btn-gold" id="subRenewBtn">' + (ar ? 'شوف الباقات' : 'See Plans') + '</button>' +
+      '<button type="button" class="btn-gold" id="subRenewBtn3">' + (ar ? 'شوف الباقات' : 'See Plans') + '</button>' +
       '</div></div>';
   }
   if(!html) return;
   el.innerHTML = html;
-  const btn = document.getElementById('subRenewBtn');
+  const btn = document.getElementById('subRenewBtn') || document.getElementById('subRenewBtn2') || document.getElementById('subRenewBtn3');
   if(btn) btn.addEventListener('click', showRenewal);
   if(window.lucide) lucide.createIcons();
 }
@@ -18071,7 +18071,7 @@ function renderLessonReader(container, academy, lesson){
     <div class="lesson-section" style="background:rgba(200,169,106,.07); border:1px solid rgba(200,169,106,.28); border-radius:16px; padding:20px; margin-top:22px;">
       <h3 style="font-size:1.02rem;"><span class="arabic">اكملت ذا المسار</span>، <span dir="ltr">Academy Complete</span></h3>
       <p style="margin-top:8px; font-size:.86rem; color:var(--text-secondary);"><span class="arabic">ما شا الله، خلصت اخر درس في ${escapeHtml(academy.ar||'')}. راجع الكلمات في المراجعه الذكيه، او ابدا اكاديميه ثانيه.</span><span dir="ltr">You finished the last lesson of ${escapeHtml(academy.en||'')}. Review your words in Smart Review, or start another academy.</span></p>
-      <button type="button" class="btn-outline" id="lessonNextBtn" style="margin-top:14px;"><span class="arabic">شوف الاكاديميات</span>، <span dir="ltr">Browse Academies</span></button>
+      <button type="button" class="btn-outline" id="lessonNextBtn2" style="margin-top:14px;"><span class="arabic">شوف الاكاديميات</span>، <span dir="ltr">Browse Academies</span></button>
     </div>` : ''}
   `;
   if(lesson.quiz && lesson.quiz.length) renderQuiz(document.getElementById('lessonQuizWrap'), lesson.quiz, 'lq');
@@ -18099,7 +18099,7 @@ function renderLessonReader(container, academy, lesson){
     this.innerHTML = '<span class="arabic">مكتمل</span> ✓';
     renderWorkspace();
   });
-  const lessonNextBtn = container.querySelector('#lessonNextBtn');
+  const lessonNextBtn = container.querySelector('#lessonNextBtn, #lessonNextBtn2');
   if(lessonNextBtn){
     lessonNextBtn.addEventListener('click', () => {
       if(nextItem) openLesson(academy.id, nextItem.id);

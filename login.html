@@ -521,7 +521,7 @@ function applyLoginLang(lang){
     '.form-sub': ar?'للطلاب المسجلين. سجل دخولك للوحه التحكم.':'For enrolled students. Sign in to your dashboard.',
     'label[for="loginEmail"]': ar?'البريد الالكتروني':'Email Address',
     'label[for="loginPassword"]': ar?'كلمه المرور':'Password',
-    '#rememberToggle': ar?'<span class="checkbox" id="rememberCheckbox"></span> تذكرني':'<span class="checkbox" id="rememberCheckbox"></span> Remember me',
+    '#rememberToggle': ar?'<span class="checkbox remember-checkbox"></span> تذكرني':'<span class="checkbox remember-checkbox"></span> Remember me',
     '#loginBtnLabel': ar?'دخول':'Log In',
     '.divider-line': ar?'اكاديميتك الخاصه':'Your Private Academy',
     '.security-badge:nth-of-type(1)': ar?'تسجيل مشفر':'Encrypted Login',
@@ -594,7 +594,7 @@ document.querySelectorAll('.toggle-eye').forEach(btn => {
 const rememberToggle = document.getElementById('rememberToggle');
 var remembered = localStorage.getItem('pel-remember') === '1';
 function syncRememberCheckbox(){
-  const cb = document.getElementById('rememberCheckbox');
+  const cb = document.querySelector('#rememberCheckbox, .remember-checkbox');
   if(cb) cb.classList.toggle('checked', remembered);
 }
 syncRememberCheckbox();

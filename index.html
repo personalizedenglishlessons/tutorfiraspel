@@ -2130,7 +2130,15 @@ window.addEventListener('storage', function(e){ if(e.key==='pel_account_prefs') 
       scene.classList.remove('fade-out');
     }, 400);
   }
-  setInterval(rotate, 4000);
+  var _rotInterval = setInterval(rotate, 4000);
+  // Pause rotation when tab is hidden to save resources
+  document.addEventListener('visibilitychange', function(){
+    if(document.hidden){
+      clearInterval(_rotInterval);
+    } else {
+      _rotInterval = setInterval(rotate, 4000);
+    }
+  });
 })();
 
 /* FAQ DATA - bilingual. DB copy (site_settings.faqs, editable in Admin >

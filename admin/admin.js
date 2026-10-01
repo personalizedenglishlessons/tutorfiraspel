@@ -715,7 +715,7 @@ async function boot(){
 
   // Periodic cookie session check (replaces onAuthStateChange for cookie auth)
   if(window.PEL_COOKIE_AUTH){
-    setInterval(async function(){
+    window._adminSessionInterval = setInterval(async function(){
       if(!window.PEL_COOKIE_AUTH) return;
       try{
         var check = await pelAuth('session');
@@ -731,6 +731,10 @@ async function boot(){
       if(event === 'SIGNED_OUT' || !session){ window.location.href = 'login.html'; }
     });
   }
+  // Cleanup interval on page unload to prevent memory leaks
+  window.addEventListener('beforeunload', function(){
+    if(window._adminSessionInterval) clearInterval(window._adminSessionInterval);
+  });
 }
 function authGateFail(msg){
   $('authGate').innerHTML = '<div class="ring"><img class="pel-logo" src="brand/pel-wordmark.svg" alt="PEL"></div><p>' + esc(msg) + '</p>';
