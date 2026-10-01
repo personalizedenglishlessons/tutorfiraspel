@@ -8929,18 +8929,18 @@ function detectIntent(text){
 // Each entry gives a short natural reply the persona would actually say.
 const SMART_REPLIES = {
   refusal:  { en:'No problem at all, we can work something out. What would you like to do?', ar: 'ولا يهمك، اقدر نعدل الوضع. وش تحب نسوي؟', translit: 'نو بروبلم ات اول، وي كان ورك سمثنق اوت. وات ود يو لايك تو دو؟' },
-  agreement:{ en:'Perfect, that works for me. Anything else I can help with?', ar: 'ممتاز، ذا يضبط معاي. فيه شي ثاني اقدر اساعدك فيه؟', translit: 'بيرفكت، ذات وركس فور مي. انيثينق الس اي كان هيلب وذ؟' },
+  agreement:{ en:'Perfect, that works for me. Anything else I can help with?', ar: 'ممتاز، ذا يضبط معاي. فيه شي ثاني اقدر اساعدك فيه؟', translit: 'بيرفكت، ذات وركس فور مي. انيثينج الس اي كان هيلب وذ؟' },
   greeting: { en:'Hello, nice to see you! How can I help you today?', ar: 'اهلين، تشرفنا بشوفك! كيف اقدر اساعدك اليوم؟', translit: 'هالو، نايس تو سي يو! هاو كان اي هيلب يو تودي؟' },
-  thanks:   { en:"You're most welcome. Is there anything else you need?", ar: 'العفو، ولا يهمك. فيه شي ثاني تبغاه؟', translit: 'يور موست ويلكم. از ذير انيثينق الس يو نيد؟' },
+  thanks:   { en:"You're most welcome. Is there anything else you need?", ar: 'العفو، ولا يهمك. فيه شي ثاني تبغاه؟', translit: 'يور موست ويلكم. از ذير انيثينج الس يو نيد؟' },
   question: { en:'Good question, let me help you with that. What exactly would you like to know?', ar: 'سؤال ممتاز، خلني اساعدك فيه. وش بالضبط تبغى تعرف؟', translit: 'قود كويستشن، ليت مي هيلب يو وذ ذات. وات اكزاكلي ود يو لايك تو نو؟' },
-  request:  { en:'Of course, I will take care of that right away. Anything else?', ar: 'اكيد، باعتني في ذا الحين. فيه شي ثاني؟', translit: 'اوف كورس، اي ويل تيك كير اوف ذات رايت اوي. انيثينق الس؟' },
-  statement:{ en:'I understand. Thanks for letting me know, is there anything else?', ar: 'فهمت عليك. شكرا انك عرفتني، فيه شي ثاني؟', translit: 'اي اندرستاند. ثانكس فور ليتينق مي نو، از ذير انيثينق الس؟' },
+  request:  { en:'Of course, I will take care of that right away. Anything else?', ar: 'اكيد، باعتني في ذا الحين. فيه شي ثاني؟', translit: 'اوف كورس، اي ويل تيك كير اوف ذات رايت اوي. انيثينج الس؟' },
+  statement:{ en:'I understand. Thanks for letting me know, is there anything else?', ar: 'فهمت عليك. شكرا انك عرفتني، فيه شي ثاني؟', translit: 'اي اندرستاند. ثانكس فور ليتينج مي نو، از ذير انيثينج الس؟' },
 };
 // Natural short follow-ups so the scene keeps moving with variety.
 const SMART_FOLLOWUPS = [
-  { en:'Is there anything else you need?', ar: 'فيه شي ثاني تبغاه؟', translit: 'از ذير انيثينق الس يو نيد؟' },
-  { en:'Let me know if you need anything else.', ar: 'لو احتجت شي ثاني خبرني.', translit: 'ليت مي نو اف يو نيد انيثينق الس.' },
-  { en:'Anything else I can do for you?', ar: 'فيه شي ثاني اقدر اسويه لك؟', translit: 'انيثينق الس اي كان دو فور يو؟' },
+  { en:'Is there anything else you need?', ar: 'فيه شي ثاني تبغاه؟', translit: 'از ذير انيثينج الس يو نيد؟' },
+  { en:'Let me know if you need anything else.', ar: 'لو احتجت شي ثاني خبرني.', translit: 'ليت مي نو اف يو نيد انيثينج الس.' },
+  { en:'Anything else I can do for you?', ar: 'فيه شي ثاني اقدر اسويه لك؟', translit: 'انيثينج الس اي كان دو فور يو؟' },
   { en:'Alright, take your time.', ar: 'حاضر، خذ راحتك.', translit: 'اولرايت، تيك يور تايم.' },
 ];
 /* ============================================================
@@ -8991,7 +8991,7 @@ const RP_SCRIPTS = {
     faq: [
       { match: /(what time do you close|when do you close|closing time|how late|تسكر|متى تقفل)/, reply: L('We close at 8 PM on weekdays.', 'نسكر الساعه ٨ مسا بايام الاسبوع.', 'وي كلوز ات 8 بي ام اون ويكدايز.') },
       { match: /(how much|cost|price|fee|بكم|كم التكلفه)/, reply: L('A consultation costs 150 SAR.', 'الكشفيه ١٥٠ ريال.', 'ا كونسلتيشن كوستس 150 سار.') },
-      { match: /(insurance|تامين|تامين)/, reply: L('We accept most insurance plans. Please bring your insurance card.', 'نقبل اغلب التامينات. اجلب بطاقه التامين لو سمحت.', 'وي اكسبت موست انسيورنس بلانز. بليز برينق يور انسيورنس كارد.') },
+      { match: /(insurance|تامين|تامين)/, reply: L('We accept most insurance plans. Please bring your insurance card.', 'نقبل اغلب التامينات. اجلب بطاقه التامين لو سمحت.', 'وي اكسبت موست انسيورنس بلانز. بليز برينج يور انسيورنس كارد.') },
       { match: /(parking|مواقف)/, reply: L('There is free parking behind the building.', 'فيه مواقف مجانيه ورا المبنى.', 'ذير از فري باركينج بيهيند ذا بلدنق.') },
       { match: /(emergency|طواري)/, reply: L('For an emergency, please call 997.', 'للطواري اتصل على 997.', 'فور ان اميرجنسي، بليز كول 997.') }
     ]
@@ -9006,8 +9006,8 @@ const RP_SCRIPTS = {
         any: { next: 2, reply: L('Great choice. Are you ready to order your meal?', 'اختيار ممتاز. جاهز تطلب الوجبه؟', 'قريت تشويس. ار يو ريدي تو اوردر يور ميل؟') } },
       { key:'meal', expect:'open', ask: L('Are you ready to order your meal?', 'جاهز تطلب الوجبه؟', 'ار يو ريدي تو اوردر يور ميل؟'),
         no: { next: 2, reply: L('No problem, take your time. Let me know when you are ready.', 'ولا يهمك، خذ راحتك. قول لي لما تكون جاهز.', 'نو بروبلم، تيك يور تايم. ليت مي نو وين يو ار ريدي.') },
-        any: { slot:'meal', next: 3, reply: (s) => L('Perfect, ' + (s.meal || 'that') + '. I will put that in right away. Would you like anything else?', 'ممتاز، ' + (s.meal || 'ذاك') + '. رح ابلغهم الحين. تبي شي ثاني؟', 'بيرفكت، ' + (s.meal || 'ذات') + '. اي ويل بوت ذات ان رايت اوي. ود يو لايك انيثينق الس؟') } },
-      { key:'more', expect:'any', ask: L('Would you like anything else?', 'تبي شي ثاني؟', 'ود يو لايك انيثينق الس؟'),
+        any: { slot:'meal', next: 3, reply: (s) => L('Perfect, ' + (s.meal || 'that') + '. I will put that in right away. Would you like anything else?', 'ممتاز، ' + (s.meal || 'ذاك') + '. رح ابلغهم الحين. تبي شي ثاني؟', 'بيرفكت، ' + (s.meal || 'ذات') + '. اي ويل بوت ذات ان رايت اوي. ود يو لايك انيثينج الس؟') } },
+      { key:'more', expect:'any', ask: L('Would you like anything else?', 'تبي شي ثاني؟', 'ود يو لايك انيثينج الس؟'),
         no: { next: 'wrap', reply: L('Alright. Your food will be out shortly. Enjoy your meal!', 'حاضر. اكلك بيوصلك قريب. بالعافيه!', 'اولرايت. يور فود ويل بي اوت شورتلي. انجوي يور ميل!') },
         any: { next: 3, reply: L('Sure, what else can I get for you?', 'اكيد، وش ثاني اجيب لك؟', 'شور، وات الس كان اي قيت فور يو؟') } },
       { key:'wrap', wrap: L('Enjoy your meal!', 'بالعافيه!', 'انجوي يور ميل!') }
@@ -9016,7 +9016,7 @@ const RP_SCRIPTS = {
       { match: /(today's special|special|تخصص|مميز)/, reply: L('Today the special is grilled chicken with rice.', 'تخصص اليوم دجاج مشوي مع رز.', 'توديز ذا سبيشل از قريلد تشيكن وذ رايس.') },
       { match: /(spicy|حار)/, reply: L('We can make it mild or spicy.', 'اقدر نسويه خفيف او حار.', 'وي كان ميك ات مايلد اور سبايسي.') },
       { match: /(vegetarian|نباتي)/, reply: L('Yes, we have vegetarian options on the menu.', 'ايه، عندنا خيارات نباتيه.', 'يس، وي هاف ڤيجيتيريان اوبشنز اون ذا مينيو.') },
-      { match: /(the bill|check|حساب)/, reply: L('Of course, I will bring the bill.', 'اكيد، بجيب لك الحساب.', 'اوف كورس، اي ويل برينق ذا بيل.') }
+      { match: /(the bill|check|حساب)/, reply: L('Of course, I will bring the bill.', 'اكيد، بجيب لك الحساب.', 'اوف كورس، اي ويل برينج ذا بيل.') }
     ]
   },
   'receptionist': {
@@ -9026,12 +9026,12 @@ const RP_SCRIPTS = {
         explain: { word:'reservation', ar: 'حجز', sentence: L('A reservation is a room you booked in advance.', 'الحجز غرفه حجزتها من قبل.', 'ا ريزرڤيشن از ا روم يو بوكت ان ادفانس.') },
         yes: { next: 1 },
         yesInfo: { slot:'nights', next: 1, reply: (s) => L('Great, I can see your booking. Can I have your name, please?', 'ممتاز، اشوف حجزك. ممكن اسمك لو سمحت؟', 'قريت، اي كان سي يور بوكنق. كان اي هاف يور نيم، بليز؟') },
-        no: { next: 2, reply: L('No problem, we have rooms available. How many nights will you be staying?', 'ولا يهمك، عندنا غرف فاضيه. كم ليله رح تبقي؟', 'نو بروبلم، وي هاف رومز اڤايلابل. هاو مني نايتس ويل يو بي ستيينق؟') },
-        info: { next: 2, reply: L('Okay, let me see what we have. How many nights will you be staying?', 'تمام، خلني اشوف اللي عندنا. كم ليله؟', 'اوكي، ليت مي سي وات وي هاف. هاو مني نايتس ويل يو بي ستيينق؟') }
+        no: { next: 2, reply: L('No problem, we have rooms available. How many nights will you be staying?', 'ولا يهمك، عندنا غرف فاضيه. كم ليله رح تبقي؟', 'نو بروبلم، وي هاف رومز اڤايلابل. هاو مني نايتس ويل يو بي ستيينج؟') },
+        info: { next: 2, reply: L('Okay, let me see what we have. How many nights will you be staying?', 'تمام، خلني اشوف اللي عندنا. كم ليله؟', 'اوكي، ليت مي سي وات وي هاف. هاو مني نايتس ويل يو بي ستيينج؟') }
       },
       { key:'name', expect:'name', ask: L('Can I have your name, please?', 'ممكن اسمك لو سمحت؟', 'كان اي هاف يور نيم، بليز؟'),
-        any: { slot:'name', next: 2, reply: (s) => L('Thanks, ' + s.name + '. How many nights will you be staying?', 'شكرا ' + s.name + '. كم ليله رح تبقي؟', 'ثانكس، ' + s.name + '. هاو مني نايتس ويل يو بي ستيينق؟') } },
-      { key:'nights', expect:'open', ask: L('How many nights will you be staying?', 'كم ليله رح تبقي؟', 'هاو مني نايتس ويل يو بي ستيينق؟'),
+        any: { slot:'name', next: 2, reply: (s) => L('Thanks, ' + s.name + '. How many nights will you be staying?', 'شكرا ' + s.name + '. كم ليله رح تبقي؟', 'ثانكس، ' + s.name + '. هاو مني نايتس ويل يو بي ستيينج؟') } },
+      { key:'nights', expect:'open', ask: L('How many nights will you be staying?', 'كم ليله رح تبقي؟', 'هاو مني نايتس ويل يو بي ستيينج؟'),
         any: { next: 'wrap', reply: L('Great, we have a room ready for you. Your room is 402 and checkout is at noon.', 'ممتاز، عندنا غرفه جاهزه. غرفتك 402 والتسليم الظهر.', 'قريت، وي هاف ا روم ريدي فور يو. يور روم از فور او تو اند تشيك اوت از ات نون.') } },
       { key:'wrap', wrap: L('Enjoy your stay.', 'نتمنى لك اقامه مبسوطه.', 'انجوي يور ستي.') }
     ],
@@ -9047,11 +9047,11 @@ const RP_SCRIPTS = {
       { key:'docs', expect:'open', ask: L('Passport and boarding pass, please.', 'الجواز وبطاقه الصعود لو سمحت.', 'باسبورت اند بوردنج باس، بليز.'),
         any: { next: 1, reply: L('Thank you. What is your final destination?', 'شكرا. وين وجهتك النهائيه؟', 'ثانك يو. وات از يور فوينل ديستنيشن؟') } },
       { key:'destination', expect:'open', ask: L('What is your final destination?', 'وين وجهتك النهائيه؟', 'وات از يور فوينل ديستنيشن؟'),
-        any: { next: 'wrap', reply: L('Enjoy your flight. Gate 12 is boarding now.', 'رحله مبسوطه. بوابه 12 يصعدون الحين.', 'انجوي يور فلايت. قيت تويلف از بوردينق ناو.') } },
+        any: { next: 'wrap', reply: L('Enjoy your flight. Gate 12 is boarding now.', 'رحله مبسوطه. بوابه 12 يصعدون الحين.', 'انجوي يور فلايت. قيت تويلف از بوردينج ناو.') } },
       { key:'wrap', wrap: L('Have a safe trip.', 'رحله امنه.', 'هاف ا سيف تريب.') }
     ],
     faq: [
-      { match: /(which gate|gate number|بوابه)/, reply: L('Your gate is printed on your boarding pass.', 'البوابه مكتوبه على بطاقه الصعود.', 'يور قيت از برينتد اون يور بوردينق باس.') },
+      { match: /(which gate|gate number|بوابه)/, reply: L('Your gate is printed on your boarding pass.', 'البوابه مكتوبه على بطاقه الصعود.', 'يور قيت از برينتد اون يور بوردينج باس.') },
       { match: /(luggage|baggage|شنته|شنط)/, reply: L('Please place your bags on the belt.', 'حط شنطك على الحزام لو سمحت.', 'بليز بليس يور باجز اون ذا بيلت.') }
     ]
   },
@@ -9079,8 +9079,8 @@ const RP_SCRIPTS = {
     steps: [
       { key:'symptoms', expect:'open', ask: L('What symptoms have you been having?', 'وش الاعراض اللي عندك؟', 'وات سيمبتومز هاف يو بين هافينج؟'),
         explain: { word:'symptoms', ar: 'اعراض', sentence: L('Symptoms are the signs of sickness you feel, like pain or fever.', 'الاعراض هي علامات المرض اللي تحس فيها، مثل الالم او الحمى.', 'سمبتمز ار ذا سوينز اوف سكنس يو فيل، لايك بين اور ڤيڤر.') },
-        any: { next: 1, reply: L('I see. How long has this been going on?', 'فهمت. من متى ذا الوضع؟', 'اي سي. هاو لونق هاز ذيس بين قوينق اون؟') } },
-      { key:'duration', expect:'open', ask: L('How long has this been going on?', 'من متى ذا الوضع؟', 'هاو لونق هاز ذيس بين قوينق اون؟'),
+        any: { next: 1, reply: L('I see. How long has this been going on?', 'فهمت. من متى ذا الوضع؟', 'اي سي. هاو لونق هاز ذيس بين قوينج اون؟') } },
+      { key:'duration', expect:'open', ask: L('How long has this been going on?', 'من متى ذا الوضع؟', 'هاو لونق هاز ذيس بين قوينج اون؟'),
         any: { next: 2, reply: L('Okay. Do you have any allergies to medication?', 'تمام. عندك حساسيه من اي دواو؟', 'اوكي. دو يو هاف اني اليرجيز تو ميديكيشن؟') } },
       { key:'allergy', expect:'yesno', ask: L('Do you have any allergies to medication?', 'عندك حساسيه من اي دواو؟', 'دو يو هاف اني اليرجيز تو ميديكيشن؟'),
         yes: { next: 3, reply: L('Good to know, I will avoid those.', 'تمام عرفت، رح اتجنبها.', 'قود تو نو، اي ويل اڤويد ذوز.') },
@@ -9122,8 +9122,8 @@ const RP_SCRIPTS = {
     role: 'Manager', studentRole: 'employee',
     steps: [
       { key:'progress', expect:'open', ask: L("Let's go over your progress this month.", 'خلنا نراجع تقدمك ذا الشهر.', 'ليتس قو اوڤر يور بروقرس ذيس مانث.'),
-        any: { next: 1, reply: L('Good work. Is there anything you need help with?', 'شغل ممتاز. فيه شي محتاج مساعده فيه؟', 'قود ورك. از ذير انيثينق يو نيد هيلب وذ؟') } },
-      { key:'help', expect:'yesno', ask: L('Is there anything you need help with?', 'فيه شي محتاج مساعده فيه؟', 'از ذير انيثينق يو نيد هيلب وذ؟'),
+        any: { next: 1, reply: L('Good work. Is there anything you need help with?', 'شغل ممتاز. فيه شي محتاج مساعده فيه؟', 'قود ورك. از ذير انيثينج يو نيد هيلب وذ؟') } },
+      { key:'help', expect:'yesno', ask: L('Is there anything you need help with?', 'فيه شي محتاج مساعده فيه؟', 'از ذير انيثينج يو نيد هيلب وذ؟'),
         yes: { next: 'wrap', reply: L('Tell me what you need and I will arrange it.', 'قولي وش تحتاج وبنسويه.', 'تيل مي وات يو نيد اند اي ويل اريينج ات.') },
         no: { next: 'wrap', reply: L('Great, keep up the good work.', 'ممتاز، كمل بنفس المستوى.', 'قريت، كيب اب ذا قود ورك.') },
         any: { next: 'wrap', reply: L('Okay, I will arrange it.', 'طيب، بنسويه لك.', 'اوكي، اي ويل اريينج ات.') } },
@@ -9181,10 +9181,10 @@ const RP_SCRIPTS = {
       { key:'item', expect:'open', ask: L('What are you looking for?', 'وش تدور عليه؟', 'وات ار يو لوكنق فور؟'),
         any: { next: 2, reply: L('Let me show you. Is this what you wanted?', 'خلني اوريك. ذا اللي تبيه؟', 'ليت مي شو يو. از ذيس وات يو وانتيد؟') } },
       { key:'want', expect:'yesno', ask: L('Is this what you wanted?', 'ذا اللي تبيه؟', 'از ذيس وات يو وانتيد؟'),
-        yes: { next: 3, reply: L('Great, anything else you need?', 'ممتاز، تبي شي ثاني؟', 'قريت، انيثينق الس يو نيد؟') },
+        yes: { next: 3, reply: L('Great, anything else you need?', 'ممتاز، تبي شي ثاني؟', 'قريت، انيثينج الس يو نيد؟') },
         no: { next: 2, reply: L('Sorry, let me find another option for you.', 'اسف، خلني ادور لك خيار ثاني.', 'سوري، ليت مي فايند انذر ابشن فور يو.') },
         info: { next: 2, reply: L('I will find something closer to that.', 'بدور لك على شي قريب من ذا.', 'اي ويل فايند سمثنق كلوزر تو ذات.') } },
-      { key:'more', expect:'any', ask: L('Anything else you need?', 'تبي شي ثاني؟', 'انيثينق الس يو نيد؟'),
+      { key:'more', expect:'any', ask: L('Anything else you need?', 'تبي شي ثاني؟', 'انيثينج الس يو نيد؟'),
         no: { next: 'wrap', reply: L('Alright, I will take you to the checkout.', 'طيب، اوديك للدفع.', 'اولرايت، اي ويل تيك يو تو ذا تشيك اوت.') },
         any: { next: 3, reply: L('Sure, what else can I help you find?', 'اكيد، وش ثاني ادور لك؟', 'شور، وات الس كان اي هيلب يو فايند؟') } },
       { key:'wrap', wrap: L('Thank you, come again.', 'شكرا، تفضل مره ثانيه.', 'ثانك يو، كام اجين.') }
@@ -9202,10 +9202,10 @@ const RP_SCRIPTS = {
         info: { next: 2, reply: L('Welcome. I live in apartment 5, next door.', 'اهلا. انا ساكن بالشقه ٥، جنبكم.', 'ويلكم. اي ليڤ ان ابارتمنت فايڤ، نيكست دور.') } },
       { key:'boxes', expect:'yesno', ask: L('Do you need help with your boxes?', 'محتاجين مساعده بالصناديق؟', 'دو يو نيد هيلب وذ يور بوكسيز؟'),
         yes: { next: 'wrap', reply: L('Happy to help. Just let me know when you are ready.', 'بسعد بمساعدتك. قول لي متى تكون جاهز.', 'هبي تو هيلب. جاست ليت مي نو وين يو ار ريدي.') },
-        no: { next: 'wrap', reply: L('No problem. Ring my doorbell if you need anything.', 'ولا يهمك. دق جرسي اذا احتجت شي.', 'نو بروبلم. رينق ماي دوربل اف يو نيد انيثينق.') },
-        info: { next: 'wrap', reply: L('Okay. Ring my doorbell if you need anything.', 'طيب. دق جرسي اذا احتجت شي.', 'اوكي. رينق ماي دوربل اف يو نيد انيثينق.') } },
+        no: { next: 'wrap', reply: L('No problem. Ring my doorbell if you need anything.', 'ولا يهمك. دق جرسي اذا احتجت شي.', 'نو بروبلم. رينق ماي دوربل اف يو نيد انيثينج.') },
+        info: { next: 'wrap', reply: L('Okay. Ring my doorbell if you need anything.', 'طيب. دق جرسي اذا احتجت شي.', 'اوكي. رينق ماي دوربل اف يو نيد انيثينج.') } },
       { key:'about', expect:'open', ask: L('Where are you from?', 'من وين انت؟', 'وير ار يو فروم؟'),
-        any: { next: 'wrap', reply: L('Nice to meet you. Let me know if you need anything.', 'تشرفنا. خبرني اذا احتجت شي.', 'نايس تو ميت يو. ليت مي نو اف يو نيد انيثينق.') } },
+        any: { next: 'wrap', reply: L('Nice to meet you. Let me know if you need anything.', 'تشرفنا. خبرني اذا احتجت شي.', 'نايس تو ميت يو. ليت مي نو اف يو نيد انيثينج.') } },
       { key:'wrap', wrap: L('Welcome to the neighbourhood.', 'اهلا بك بالحي.', 'ويلكم تو ذا نيبورهود.') }
     ],
     faq: [
@@ -9219,7 +9219,7 @@ const RP_SCRIPTS = {
         any: { next: 1, reply: L('Of course. Could I see your ID, please?', 'اكيد. ممكن اشوف هويتك لو سمحت؟', 'اوف كورس. كود اي سي يور اي دي، بليز؟') } },
       { key:'id', expect:'open', ask: L('Could I see your ID, please?', 'ممكن اشوف هويتك لو سمحت؟', 'كود اي سي يور اي دي، بليز؟'),
         any: { next: 2, reply: L('Thank you. One moment while I process that.', 'شكرا. لحظه وانا اجهزها.', 'ثانك يو. ون مومنت ويل اي بروسس ذات.') } },
-      { key:'process', expect:'any', ask: L('Would you like anything else today?', 'تبي شي ثاني اليوم؟', 'ود يو لايك انيثينق الس تودي؟'),
+      { key:'process', expect:'any', ask: L('Would you like anything else today?', 'تبي شي ثاني اليوم؟', 'ود يو لايك انيثينج الس تودي؟'),
         no: { next: 'wrap', reply: L('Thank you. Have a nice day.', 'شكرا. يومك مبسوط.', 'ثانك يو. هاف ا نايس داي.') },
         any: { next: 2, reply: L('Sure, what else can I do for you?', 'اكيد، وش ثاني اسوي لك؟', 'شور، وات الس كان اي دو فور يو؟') } },
       { key:'wrap', wrap: L('Goodbye.', 'مع السلامه.', 'قودباي.') }
@@ -9233,13 +9233,13 @@ const RP_SCRIPTS = {
     role: 'Flight Attendant', studentRole: 'passenger',
     steps: [
       { key:'drink', expect:'open', ask: L('Welcome aboard. Would you like something to drink?', 'اهلا بكم على متن الرحله. تبي شي تشربه؟', 'ويلكم ابورد. ود يو لايك سمثنق تو درينك؟'),
-        any: { next: 1, reply: L('Coming right up. Would you like anything to eat?', 'الحين اجيبه. تبي شي تاكله؟', 'كمنق رايت اب. ود يو لايك انيثينق تو ات؟') } },
-      { key:'food', expect:'open', ask: L('Would you like anything to eat?', 'تبي شي تاكله؟', 'ود يو لايك انيثينق تو ات؟'),
+        any: { next: 1, reply: L('Coming right up. Would you like anything to eat?', 'الحين اجيبه. تبي شي تاكله؟', 'كمنق رايت اب. ود يو لايك انيثينج تو ات؟') } },
+      { key:'food', expect:'open', ask: L('Would you like anything to eat?', 'تبي شي تاكله؟', 'ود يو لايك انيثينج تو ات؟'),
         any: { next: 'wrap', reply: L('Here you go. Enjoy your flight.', 'تفضل. رحله مبسوطه.', 'هير يو قو. انجوي يور فلايت.') } },
-      { key:'wrap', wrap: L('Let me know if you need anything during the flight.', 'خبرني اذا احتجت شي اثناء الرحله.', 'ليت مي نو اف يو نيد انيثينق ديورينق ذا فلايت.') }
+      { key:'wrap', wrap: L('Let me know if you need anything during the flight.', 'خبرني اذا احتجت شي اثناء الرحله.', 'ليت مي نو اف يو نيد انيثينج ديورينق ذا فلايت.') }
     ],
     faq: [
-      { match: /(water|مويه)/, reply: L('Of course, I will bring you some water.', 'اكيد، بجيب لك مويه.', 'اوف كورس، اي ويل برينق يو سم ووتر.') },
+      { match: /(water|مويه)/, reply: L('Of course, I will bring you some water.', 'اكيد، بجيب لك مويه.', 'اوف كورس، اي ويل برينج يو سم ووتر.') },
       { match: /(blanket|بطانيه)/, reply: L('We have blankets in the overhead bin.', 'عندنا بطانيات بالخزوين فوق.', 'وي هاف بلانكتس ان ذي اوڤرهيد بين.') },
       { match: /(arrival|وصلنا|متى نوصل)/, reply: L('We arrive in about two hours.', 'نوصل تقريب لسه ساعتين.', 'وي ارايف ان اباوت تو اورز.') }
     ]
@@ -9285,7 +9285,7 @@ const RP_SCRIPTS = {
       { key:'id', expect:'open', ask: L('Good evening, can I see your ID, please?', 'مساء الخير، ممكن اشوف الهويه لو سمحت؟', 'قود ايڤنينج، كان اي سي يور اي دي، بليز؟'),
         any: { next: 1, reply: L('Thank you. Do you know why I stopped you?', 'شكرا. تدري ليش وقفتك؟', 'ثانك يو. دو يو نو واي اي ستوبد يو؟') } },
       { key:'why', expect:'open', ask: L('Do you know why I stopped you?', 'تدري ليش وقفتك؟', 'دو يو نو واي اي ستوبد يو؟'),
-        any: { next: 'wrap', reply: L('You were going a bit over the speed limit. I will give you a warning this time.', 'كنت مسرع شويه فوق السرعه المحدده. بكتفي بتحذير هالمره.', 'يو ور قوينق ا بت اوڤر ذا سبيد لمت. اي ويل قيڤ يو ا وورنينق ذيس تايم.') } },
+        any: { next: 'wrap', reply: L('You were going a bit over the speed limit. I will give you a warning this time.', 'كنت مسرع شويه فوق السرعه المحدده. بكتفي بتحذير هالمره.', 'يو ور قوينج ا بت اوڤر ذا سبيد لمت. اي ويل قيڤ يو ا وورنينق ذيس تايم.') } },
       { key:'wrap', wrap: L('Drive safely.', 'قود بحذر.', 'درايڤ سيفلي.') }
     ],
     faq: [
@@ -9333,20 +9333,20 @@ const RP_ALT = {
     'drink.no': L('No worries at all. Are you ready to order?', 'ولا يهمك ابدا. جاهز تطلب؟', 'نو وريز ات اول. ار يو ريدي تو اوردر؟'),
     'drink.any': L('Good pick. Ready to order your meal?', 'اختيار حلو. جاهز تطلب الوجبه؟', 'قود بيك. ريدي تو اوردر يور ميل؟'),
     'meal.no': L('Sure, take your time. Just call me when you are ready.', 'طيب، خذ راحتك. ناديني لما تكون جاهز.', 'شور، تيك يور تايم. جاست كول مي وين يو ار ريدي.'),
-    'meal.any': L('Excellent, I will send that to the kitchen. Anything else?', 'ممتاز، ببعت الطلب للمطبخ. تبي شي ثاني؟', 'اكسيلنت، اي ويل سند ذات تو ذا كيجن. انيثينق الس؟'),
+    'meal.any': L('Excellent, I will send that to the kitchen. Anything else?', 'ممتاز، ببعت الطلب للمطبخ. تبي شي ثاني؟', 'اكسيلنت، اي ويل سند ذات تو ذا كيجن. انيثينج الس؟'),
     'more.no': L('Perfect. Your meal will be right out. Enjoy!', 'ممتاز. اكلك بيدخل الحين. بالعافيه!', 'بيرفكت. يور ميل ويل بي رايت اوت. انجوي!'),
     'more.any': L('Happy to help. What else would you like?', 'بخدمك. وش ثاني تحب؟', 'هبي تو هيلب. وات الس ود يو لايك؟')
   },
   'receptionist': {
     'reservation.yes': L('Wonderful. What name is the booking under?', 'رايع. الحجز باسم مين؟', 'وندرفول. وات نيم از ذا بوكنق اندر؟'),
     'reservation.no': L('No problem at all. We have rooms free. How many nights?', 'ولا مشكله ابدا. عندنا غرف. كم ليله؟', 'نو بروبلم ات اول. وي هاف رومز فري. هاو مني نايتس؟'),
-    'reservation.info': L('Okay, let me look. How many nights will you be staying?', 'طيب، خلني اشوف. كم ليله رح تبقي؟', 'اوكي، ليت مي لوك. هاو مني نايتس ويل يو بي ستيينق؟'),
-    'name.any': (s) => L('Thank you, ' + s.name + '. How many nights will you be staying?', 'مشكور ' + s.name + '. كم ليله رح تبقي؟', 'ثانك يو، ' + s.name + '. هاو مني نايتس ويل يو بي ستيينق؟'),
+    'reservation.info': L('Okay, let me look. How many nights will you be staying?', 'طيب، خلني اشوف. كم ليله رح تبقي؟', 'اوكي، ليت مي لوك. هاو مني نايتس ويل يو بي ستيينج؟'),
+    'name.any': (s) => L('Thank you, ' + s.name + '. How many nights will you be staying?', 'مشكور ' + s.name + '. كم ليله رح تبقي؟', 'ثانك يو، ' + s.name + '. هاو مني نايتس ويل يو بي ستيينج؟'),
     'nights.any': L('Perfect, I have a room ready. It is room 402, checkout at noon.', 'ممتاز، عندي غرفه جاهزه. الغرفه 402، والتسليم الظهر.', 'بيرفكت، اي هاف ا روم ريدي. ات از روم فور او تو، تشيك اوت ات نون.')
   },
   'airport-officer': {
     'docs.any': L('All set. What is your final destination?', 'تمام. وين وجهتك النهائيه؟', 'اول سيت. وات از يور فوينل ديستنيشن؟'),
-    'destination.any': L('Perfect, have a pleasant flight. Gate 12 is boarding.', 'ممتاز، رحله ممتعه. بوابه 12 يصعدون الحين.', 'بيرفكت، هاف ا بليزنت فلايت. قيت تويلف از بوردينق.')
+    'destination.any': L('Perfect, have a pleasant flight. Gate 12 is boarding.', 'ممتاز، رحله ممتعه. بوابه 12 يصعدون الحين.', 'بيرفكت، هاف ا بليزنت فلايت. قيت تويلف از بوردينج.')
   },
   'taxi-driver': {
     'destination.any': L('Right, that is about twenty minutes. Bags in the trunk?', 'تم، تقريب عشرين دقيقه. الشنط بالصندوق؟', 'رايت، ذات از اباوت توانتي مينتس. باجز ان ذا ترنك؟'),
@@ -9373,7 +9373,7 @@ const RP_ALT = {
   'manager': {
     'progress.any': L('Solid progress. Do you need any support from me?', 'تقدم ممتاز. محتاج دعم مني؟', 'سوليد بروقرس. دو يو نيد اني سبورت فروم مي؟'),
     'help.yes': L('Of course, tell me what you need and I will handle it.', 'اكيد، قول لي وش تحتاج وانا اتولى.', 'اوف كورس، تيل مي وات يو نيد اند اي ويل هاندل ات.'),
-    'help.no': L('Excellent, keep it going.', 'ممتاز، كمل.', 'اكسيلنت، كيب ات قوينق.'),
+    'help.no': L('Excellent, keep it going.', 'ممتاز، كمل.', 'اكسيلنت، كيب ات قوينج.'),
     'help.any': L('Alright, I will take care of it.', 'طيب، انا بتحمل المسؤوليه.', 'اولرايت، اي ويل تيك كير اوف ات.')
   },
   'teacher': {
@@ -9394,8 +9394,8 @@ const RP_ALT = {
   'customer': {
     'find.any': L('Happy to help. What can I find for you?', 'بخدمك. وش ادور لك؟', 'هبي تو هيلب. وات كان اي فايند فور يو؟'),
     'item.any': L('Come with me, is this the one?', 'تعال معاي، ذا هو؟', 'كم وذ مي، از ذيس ذا ون؟'),
-    'want.yes': L('Lovely. Anything else you need?', 'حلو. تبي شي ثاني؟', 'لوڤلي. انيثينق الس يو نيد؟'),
-    'want.no': L('No problem, I will bring other options.', 'ولا يهمك، بجيب لك خيارات ثانيه.', 'نو بروبلم، اي ويل برينق انذر ابشنز.'),
+    'want.yes': L('Lovely. Anything else you need?', 'حلو. تبي شي ثاني؟', 'لوڤلي. انيثينج الس يو نيد؟'),
+    'want.no': L('No problem, I will bring other options.', 'ولا يهمك، بجيب لك خيارات ثانيه.', 'نو بروبلم، اي ويل برينج انذر ابشنز.'),
     'want.info': L('I will look for something closer to that.', 'بدور لك على شي اقرب من ذا.', 'اي ويل لوك فور سمثنق كلوزر تو ذات.'),
     'more.no': L('Great, let me take you to the counter.', 'ممتاز، خلني اوصلك للكاشير.', 'قريت، ليت مي تيك يو تو ذا كاونتر.'),
     'more.any': L('Sure, what else shall I find?', 'اكيد، وش ثاني ادور لك؟', 'شور، وات الس شال اي فايند؟')
@@ -9405,9 +9405,9 @@ const RP_ALT = {
     'moving.no': L('Welcome anyway. I am in apartment 5 next door.', 'اهلا وسهلا. انا بالشقه ٥ جنبكم.', 'ويلكم انيوي. اي ام ان ابارتمنت فايڤ نيكست دور.'),
     'moving.info': L('Welcome! I live right next door in 5.', 'اهلا! ساكن جنبكم بالشقه ٥.', 'ويلكم! اي ليڤ رايت نيكست دور ان فايڤ.'),
     'boxes.yes': L('Anytime. Just give me a shout.', 'انا جاهز. بس ناديني.', 'اني تايم. جاست قيڤ مي ا شاوت.'),
-    'boxes.no': L('All good. Knock on my door if you need anything.', 'طيب. دق جرسي اذا احتجت شي.', 'اول قود. نوك اون ماي دور اف يو نيد انيثينق.'),
+    'boxes.no': L('All good. Knock on my door if you need anything.', 'طيب. دق جرسي اذا احتجت شي.', 'اول قود. نوك اون ماي دور اف يو نيد انيثينج.'),
     'boxes.info': L('Alright, my door is always open.', 'طيب، بابي مفتوح دايما.', 'اولرايت، ماي دور از اولويز اوبن.'),
-    'about.any': L('Nice to meet you. Call me if you need anything.', 'تشرفنا. ناديني اذا احتجت شي.', 'نايس تو ميت يو. كول مي اف يو نيد انيثينق.')
+    'about.any': L('Nice to meet you. Call me if you need anything.', 'تشرفنا. ناديني اذا احتجت شي.', 'نايس تو ميت يو. كول مي اف يو نيد انيثينج.')
   },
   'bank-teller': {
     'need.any': L('Of course, may I see your ID first?', 'اكيد، ممكن اشوف هويتك اول؟', 'اوف كورس، ماي اي سي يور اي دي فيرست؟'),
@@ -9545,7 +9545,7 @@ function replyOut(script, state, leadAr, obj){
 const RP_WRAPS = [
   L('Thank you, take care!', 'شكرا لك، مع السلامه!', 'ثانك يو، تيك كير!'),
   L('Have a great day.', 'يومك مبسوط.', 'هاف ا قريت داي.'),
-  L('Let me know if there is anything else I can do for you.', 'خبرني اذا فيه شي ثاني اقدر اسويه لك.', 'ليت مي نو اف ذير از انيثينق الس اي كان دو فور يو.')
+  L('Let me know if there is anything else I can do for you.', 'خبرني اذا فيه شي ثاني اقدر اسويه لك.', 'ليت مي نو اف ذير از انيثينج الس اي كان دو فور يو.')
 ];
 function warnReply(step, leadAr, custom){
   const w = custom || L('Sorry, could you say that again?', 'اسف، ممكن تعيد جوابك بطريقه اوضح؟', 'سوري، كود يو سي ذات اجين؟');
@@ -10482,7 +10482,7 @@ const VOCAB_BANK = [
 {en:'Ticket', ipa:'/ˈtɪkɪt/', ar: 'تذكره', translit: 'تيكيت', example:{en:'Show your ticket at the gate.', ar: 'اعرض تذكرتك عند البوابه.', translit: 'شو يور تيكيت ات ذا جيت.'}, synonyms:'pass, boarding card', antonyms:'', family:'ticket, tickets', collocations:'book a ticket, plane ticket', category:'Travel English', difficulty:'Beginner', tip: 'Keep your ticket ready at the gate.', synonyms_ar: 'تذكره', antonyms_ar: '', family_ar: 'تذكره، تذاكر', collocations_ar: 'احجز تذكره، تذكره طياره', tip_ar: 'خلي تذكرتك جاهزه عند البوابه', mistake:'Losing the ticket before boarding.'},
 {en:'Passport', ipa:'/ˈpæspɔːrt/', ar: 'جواز سفر', translit: 'باسبورت', example:{en:'Your passport, please.', ar: 'جواز سفرك لو سمحت.', translit: 'يور باسبورت، بليز.'}, synonyms:'ID, travel document', antonyms:'', family:'passport, passports', collocations:'show your passport, renew a passport', category:'Travel English', difficulty:'Beginner', tip: 'Check your passport\'s expiry date.', synonyms_ar: 'جواز سفر', antonyms_ar: '', family_ar: 'جواز، جوازات', collocations_ar: 'اعرض جوازك، جدد جواز', tip_ar: 'تاكد من تاريخ انتها الجواز', mistake:'Traveling with an expired passport.'},
 {en:'Luggage', ipa:'/ˈlʌɡɪdʒ/', ar: 'امتعه، شنط', translit: 'لاگيج', example:{en:'Where is the luggage?', ar: 'وين الامتعه؟', translit: 'وير از ذا لاگيج؟'}, synonyms:'bags, baggage', antonyms:'', family:'luggage', collocations:'pack luggage, luggage allowance', category:'Travel English', difficulty:'Beginner', tip: 'Luggage is uncountable; don\'t say "luggages."', synonyms_ar: 'امتعه، شنط', antonyms_ar: '', family_ar: 'امتعه', collocations_ar: 'حزم الامتعه، وزن الامتعه المسموح', tip_ar: 'luggage ما تعد؛ لا تقل luggages', mistake:'Saying "luggages" with an -s.'},
-{en:'Boarding', ipa:'/ˈbɔːrdɪŋ/', ar: 'صعود (الطايره)', translit: 'بوردينج', example:{en:'Boarding starts now.', ar: 'الصعود يبدا الحين.', translit: 'بوردينق ستارتس ناو.'}, synonyms:'embarking, getting on', antonyms:'disembarking', family:'board, boarding', collocations:'boarding pass, boarding gate', category:'Travel English', difficulty:'Beginner', tip: 'Boarding is getting on the plane.', synonyms_ar: 'صعود الطايره', antonyms_ar: 'نزول', family_ar: 'يصعد، صعود', collocations_ar: 'تذكره الصعود، بوابه الصعود', tip_ar: 'الصعود يعني تركب الطايره', mistake:'Confusing boarding with landing.'},
+{en:'Boarding', ipa:'/ˈbɔːrdɪŋ/', ar: 'صعود (الطايره)', translit: 'بوردينج', example:{en:'Boarding starts now.', ar: 'الصعود يبدا الحين.', translit: 'بوردينج ستارتس ناو.'}, synonyms:'embarking, getting on', antonyms:'disembarking', family:'board, boarding', collocations:'boarding pass, boarding gate', category:'Travel English', difficulty:'Beginner', tip: 'Boarding is getting on the plane.', synonyms_ar: 'صعود الطايره', antonyms_ar: 'نزول', family_ar: 'يصعد، صعود', collocations_ar: 'تذكره الصعود، بوابه الصعود', tip_ar: 'الصعود يعني تركب الطايره', mistake:'Confusing boarding with landing.'},
 {en:'Departure', ipa:'/dɪˈpɑːrtʃər/', ar: 'مغادره، اقلاع', translit: 'ديبارتشر', example:{en:'Departure is at six.', ar: 'المغادره الساعه السادسه.', translit: 'ديبارتشر از ات سيكس.'}, synonyms:'leaving, takeoff', antonyms:'arrival', family:'depart, departure', collocations:'departure time, departure gate', category:'Travel English', difficulty:'Beginner', tip: 'Departure is when you leave.', synonyms_ar: 'مغادره، اقلاع', antonyms_ar: 'وصول', family_ar: 'يغادر، مغادره', collocations_ar: 'وقت المغادره، بوابه المغادره', tip_ar: 'المغادره هي لما تروح', mistake:'Confusing departure with arrival.'},
 {en:'Etiquette', ipa:'/ˈɛtɪkɛt/', ar: 'اداب، اتيكيت', translit: 'اتيكيت', example:{en:'Learn mosque etiquette.', ar: 'تعلم اداب المسجد.', translit: 'ليرن موسك اتيكيت.'}, synonyms:'manners, customs', antonyms:'rudeness', family:'etiquette', collocations:'proper etiquette, dress etiquette', category:'Mosque Etiquette', difficulty:'Intermediate', tip: 'Etiquette is polite behavior in a place.', synonyms_ar: 'اداب، اتيكيت', antonyms_ar: 'قله ادب', family_ar: 'اتيكيت', collocations_ar: 'اتيكيت صح، اتيكيت لبس', tip_ar: 'الاتيكيت هو تصرف مهذب في مكان', mistake:'Pronouncing it "etti-ket."'},
 {en:'Prayer', ipa:'/prɛr/', ar: 'صلاه، دعا', translit: 'برير', example:{en:'Prayer time is near.', ar: 'وقت الصلاه اقترب.', translit: 'برير تايم از نير.'}, synonyms:'worship, supplication', antonyms:'', family:'pray, prayer', collocations:'prayer time, prayer hall', category:'Mosque Etiquette', difficulty:'Intermediate', tip: 'Keep quiet during prayer time.', synonyms_ar: 'صلاه، دعا', antonyms_ar: '', family_ar: 'يصلي، صلاه', collocations_ar: 'وقت الصلاه، قاعه صلاه', tip_ar: 'خلي هادي وقت الصلاه', mistake:'Talking loudly during prayer.'},
@@ -11388,7 +11388,7 @@ const LESSON_LIBRARY = {
     grammar:{title:'Going To for Plans', rule:'Use "going to" plus a verb for plans you already made: I am going to visit my grandparents.', saudi:'لما تكون قررت تخطط لشي، استخدم going to مع الفعل.', wrong:'I will visit my grandparents next weekend, I already booked.', right:'I am going to visit my grandparents next weekend, I already booked.', mistakes:['Using "will" for an already-made plan.','Saying "I go to visit" instead of "I am going to visit."']},
     conversation:[
       {who:'A', en:'What are you doing this weekend?', ar: 'وش تسوي هالويكند؟', translit: 'وات ار يو دوينق ذيس ويكيند؟'},
-      {who:'B', en:'I am going to visit my grandparents in Dammam.', ar: 'بروح ازور جدي وجدتي بالدمام.', translit: 'ايم قوينق تو ڤيزت ماي قرانبيرنتس ان دمام.'},
+      {who:'B', en:'I am going to visit my grandparents in Dammam.', ar: 'بروح ازور جدي وجدتي بالدمام.', translit: 'ايم قوينج تو ڤيزت ماي قرانبيرنتس ان دمام.'},
       {who:'A', en:'That sounds nice. Are you driving?', ar: 'حلو والله. بتطلع بسيارتك؟', translit: 'ذات ساوندز نايس. ار يو درايفنق؟'},
       {who:'B', en:'Yes, the road is quiet early in the morning.', ar: 'ايه، الطريق فاضي الصبح بدري.', translit: 'يس، ذا رود از كوايت ايرلي ان ذا مورننج.'},
     ],
@@ -12195,13 +12195,13 @@ const LESSON_LIBRARY = {
     takeaway:'احفظ: Did you...? و I did not... والفعل بدون تصريف.',
   },
   'future-forms-lesson': {
-    title:'Future Forms: Will and Going To', ar: 'المستقبل: will و going to', translit: 'فيوتشر فورمز: ويل اند قوينق تو',
+    title:'Future Forms: Will and Going To', ar: 'المستقبل: will و going to', translit: 'فيوتشر فورمز: ويل اند قوينج تو',
     duration:'9 min', difficulty:'Intermediate',
     vocab:[VOCAB_BANK[5], VOCAB_BANK[16]],
     grammar:{title:'Choice of Future Form', rule:'Going to = decided plan. Will = decision now, promise, or prediction.', saudi:'going to للخطه الجاهزه، will للقرار اللحظي او الوعد.', wrong:'I will going to visit him.', right:'I am going to visit him, or I will call him now.', mistakes:['Mixing both: "will going to."','Using "will" for a plan made long ago.']},
     conversation:[
       {who:'A', en:'Have you decided about the trip?', ar: 'قررت بشان الرحله؟', translit: 'هاف يو دسايدد اباوت ذا تريب؟'},
-      {who:'B', en:'Yes, I am going to visit my family in Abha next week.', ar: 'ايه، بروح ازور اهلي بابها الاسبوع الجاي.', translit: 'يس، ايم قوينق تو ڤيزت ماي فاميلي ان ابها نكست ويك.'},
+      {who:'B', en:'Yes, I am going to visit my family in Abha next week.', ar: 'ايه، بروح ازور اهلي بابها الاسبوع الجاي.', translit: 'يس، ايم قوينج تو ڤيزت ماي فاميلي ان ابها نكست ويك.'},
       {who:'A', en:'Nice. I will join you if I finish early.', ar: 'حلو. باجي معاك لو خلصت بدري.', translit: 'نايس. اي ويل جوين يو اف اي فينيش ايرلي.'},
       {who:'B', en:'Deal, I will text you the details tonight.', ar: 'تم، بارسل لك التفاصيل الليله.', translit: 'ديل، اي ويل تكست يو ذا ديتيلز تونايت.'},
     ],
