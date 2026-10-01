@@ -1254,7 +1254,7 @@ var tabs = [
           (ledger.length ? ledger.map(function(l){
             var d = l.delta>=0?'+'+l.delta:l.delta;
             return '<div class="reason-item"><div style="flex:1;">'+esc(l.reason||'-')+'<div class="why">'+esc(fmtDate(l.created_at))+'</div></div>' +
-              '<b style="color:'+(l.delta>=0?'var(--green, #437A22)':'var(--danger,#c0392b)')+';">'+esc(d)+'</b>' +
+              '<b style="color:'+(l.delta>=0?'var(--success)':'var(--danger,#c0392b)')+';">'+esc(d)+'</b>' +
               '<span class="chip muted">'+esc(lang==='ar'?'الرصيد':'bal')+' '+esc(l.balance_after)+'</span></div>';
           }).join('') : emptyBlock(lang==='ar'?'لا فيه عمليات لسه':'No transactions yet')) +
         '</div>';
@@ -1289,7 +1289,7 @@ var tabs = [
             if(chips){ var lastChip = chips.querySelector('.chip.green'); if(lastChip) lastChip.textContent = (b.live_class_credits||0)+' '+(lang==='ar'?'رصيد حصص':'class credits'); }
             // Update ledger
             var led = $('credLedger');
-            if(led){ led.innerHTML = ledger.length ? ledger.map(function(l){ var d=l.delta>=0?'+'+l.delta:l.delta; return '<div class="reason-item"><div style="flex:1;">'+esc(l.reason||'-')+'<div class="why">'+esc(fmtDate(l.created_at))+'</div></div><b style="color:'+(l.delta>=0?'var(--green, #437A22)':'var(--danger,#c0392b)')+';">'+esc(d)+'</b><span class="chip muted">'+esc(lang==='ar'?'الرصيد':'bal')+' '+esc(l.balance_after)+'</span></div>'; }).join('') : emptyBlock(lang==='ar'?'لا فيه عمليات لسه':'No transactions yet'); }
+            if(led){ led.innerHTML = ledger.length ? ledger.map(function(l){ var d=l.delta>=0?'+'+l.delta:l.delta; return '<div class="reason-item"><div style="flex:1;">'+esc(l.reason||'-')+'<div class="why">'+esc(fmtDate(l.created_at))+'</div></div><b style="color:'+(l.delta>=0?'var(--success)':'var(--danger,#c0392b)')+';">'+esc(d)+'</b><span class="chip muted">'+esc(lang==='ar'?'الرصيد':'bal')+' '+esc(l.balance_after)+'</span></div>'; }).join('') : emptyBlock(lang==='ar'?'لا فيه عمليات لسه':'No transactions yet'); }
             deltaInput.value = '';
             reasonInput.value = '';
           }catch(e){ toast(lang==='ar'?'غلط غير متوقع':'Unexpected error', true); }

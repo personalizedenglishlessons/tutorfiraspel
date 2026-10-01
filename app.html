@@ -17827,7 +17827,7 @@ function showWordCard(v, anchor){
   let card = document.getElementById('pelWordCard');
   if(!card){
     card = document.createElement('div'); card.id = 'pelWordCard'; document.body.appendChild(card);
-    const st = document.createElement('style'); st.textContent = '#pelWordCard{position:absolute;z-index:2600;width:min(300px,86vw);background:var(--bg-card,var(--card,#211d19));border:1px solid var(--border);border-radius:14px;padding:14px 16px;box-shadow:0 18px 50px rgba(0,0,0,.45);display:none;}';
+    const st = document.createElement('style'); st.textContent = '#pelWordCard{position:absolute;z-index:2600;width:min(300px,86vw);background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 16px;box-shadow:0 18px 50px rgba(0,0,0,.45);display:none;}';
     document.head.appendChild(st);
     document.addEventListener('click', e => { const c = document.getElementById('pelWordCard'); if(c && !c.contains(e.target) && !(e.target.closest && e.target.closest('[data-wc-idx]'))) c.style.display='none'; });
   }
