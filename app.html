@@ -18343,29 +18343,7 @@ function renderVocabulary(){
       if(!s) return '';
       return String(s)
         .replace(/[\u064B-\u065F\u0670\u0640]/g,'')        // remove diacritics + tatweel
-        // hamza stripping disabled — user requested hamza kept
-        // .replace(/ا|ا|ا/g,'ا')
-        // .replace(/و/g,'و')
-        // .replace(/ي/g,'ي')
         .replace(/—|–/g,'،')                                    // em/en dash → comma
-        .replace(/مره/g,'مره')                                  // very → marra ()
-        .replace(/لو سمحت/g,'لو سمحت')                          // please → law samaht
-        .replace(/عندك/g,'عندك')                                // you have → indik
-        .replace(/هذي/g,'هذي')                                  // this (f) → hathi
-        .replace(/ذاك/g,'ذاك')                                  // that → thak
-        .replace(/تقدر/g,'تقدر')                              // you can → tiqdar
-        .replace(/اللي/g,'اللي')                                // which → illi
-        .replace(/اللي/g,'اللي')                                // who → illi
-        .replace(/احنا/g,'احنا')                                // we → ihna
-        .replace(/تقدر/g,'تقدر')                               // you can → tiqdar
-        .replace(/لازم/g,'لازم')                                 // must → lazim
-        .replace(/بت/g,'بت')                                   // will → bt
-        .replace(/بس/g,'بس')                                   // trim overly formal
-        .replace(/لان/g,'لان')                                  // since → la-an
-        .replace(/بنفس/g,'بنفس')                               // keep as-is if already 
-        .replace(/الكلمات/g,'الكلمات')                          // vocabulary → words
-        .replace(/حصول/g,'حصول')                              // found → got
-        .replace(/ما/g,'ما')                                // was not → ma
         .replace(/بحث اخرى/g,'بحث ثانيه')                       // another search → thaniya
         .replace(/شايعه/g,'كثير')                               // common → kithir
         .replace(/المجموع/g,'الكل')                             // total → all
@@ -18373,103 +18351,20 @@ function renderVocabulary(){
         .replace(/تصفح/g,'شوف')                                 // browse → shoof
         .replace(/متقدمه/g,'صعبه شوي')                         // advanced → hard a bit
         .replace(/اختر/g,'اختار')                                // choose → ikhtar
-        .replace(/ابدا/g,'ابدا')                                // start (fix hamza)
         .replace(/الدراسه/g,'دراسه')                           // study
         .replace(/لترى/g,'وتشوف')                               // to see → w tshoof
-        .replace(/المعنى/g,'المعنى')                           // keep
-        .replace(/الكلمات اللي مثلها/g,'الكلمات اللي مثلها')            // synonyms → words like it
-        .replace(/النطق/g,'النطق')                              // keep
-        .replace(/محفوظه/g,'محفوظه')                           // keep
-        .replace(/جمله توضيحيه/g,'جمله توضيحيه')               // keep
-        .replace(/كلمات نفس المعنى/g,'كلمات نفس المعنى')       // keep
-        .replace(/عكس الكلمه/g,'عكس الكلمه')                   // keep
-        .replace(/من نفس الاصل/g,'من نفس الاصل')               // keep
-        .replace(/كلمات تجي معاها/g,'كلمات تجي معاها')         // keep
-        .replace(/المعنى/g,'المعنى')                             // keep - common enough
-        .replace(/النطق/g,'النطق')                               // keep
-        .replace(/يصير/g,'يصير')                                 // be → ysir
-        .replace(/من/g,'من')                                    // since → min
-        .replace(/بسن/g,'بسن')                                 // also → kaman
-        .replace(/بسن/g,'بسن')                                 // also → kaman
-        .replace(/بعض/g,'بعض')                                   // keep - common Saudi
-        .replace(/الكل/g,'كل')                                   // all → kul
-        .replace(/اللي/g,'اللي')                               // those who → illi
-        .replace(/اللي/g,'اللي')                                 // which → illi (redundant safety)
-        .replace(/اللي/g,'اللي')                                 // who → illi (redundant safety)
-        .replace(/هذي/g,'هذي')                                   // this → hathi (redundant safety)
-        .replace(/ذاك/g,'ذاك')                                   // that → thak (redundant safety)
-        .replace(/تقدر/g,'تقدر')                               // you can → tiqdar (redundant safety)
-        .replace(/تقدر/g,'تقدر')                                // you can → tiqdar (redundant safety)
-        .replace(/لازم/g,'لازم')                                  // must → lazim (redundant safety)
-        .replace(/بت/g,'بت')                                    // will → bt (redundant safety)
-        .replace(/عندك/g,'عندك')                                 // you have → indik (redundant safety)
-        .replace(/احنا/g,'احنا')                                 // we → ihna (redundant safety)
-        .replace(/بس/g,'بس')                                    // trim formal (redundant safety)
-        .replace(/لان/g,'لان')                                   // since → la-an (redundant safety)
-        .replace(/لو سمحت/g,'لو سمحت')                           // please → law samaht (redundant safety)
-        .replace(/مره/g,'مره')                                   // very → marra (redundant safety)
-        .replace(/حصول/g,'حصول')                               // found → husul (redundant safety)
-        .replace(/ما/g,'ما')                                 // was not → ma (redundant safety)
-        .replace(/الكلمات/g,'الكلمات')                          // vocabulary → words (redundant safety)
-        .replace(/الكلمات اللي مثلها/g,'الكلمات اللي مثلها')              // synonyms (redundant safety)
-        .replace(/الكلمات العكس/g,'الكلمات العكس')                  // antonyms
-        .replace(/الاصل/g,'الاصل')                             // family → origin
-        .replace(/كلمات تجي معاها/g,'كلمات تجي معاها')                // collocations (redundant safety)
-        .replace(/الجمله/g,'جمله')                                // sentence
-        .replace(/الشرح/g,'الشرح')                               // keep
-        .replace(/الشرح/g,'الشرح')                             // explanation → sharh
-        .replace(/عشان/g,'عشان')                              // regarding → ashan
-        .replace(/عن طريق/g,'عن طريق')                           // through → an tariq
-        .replace(/عن طريق/g,'عن طريق')                            // by → an tariq
-        .replace(/بطريقه/g,'بطريقه')                               // in a way → b tareeqa
-        .replace(/بطريقه/g,'بطريقه')                             // in a way → b tareeqa
         .replace(/عبر/g,'عن طريق')                               // via → an tariq
-        .replace(/داخل/g,'داخل')                                  // within → dakhil
-        .replace(/وقت/g,'وقت')                                 // during → waqt
         .replace(/خلال/g,'مده')                                  // during → mudda
-        .replace(/عشان/g,'عشان')                                 // because → ashan
         .replace(/حول/g,'عن')                                    // about → an
-        .replace(/لـ/g,'لـ')                                    // towards → la
-        .replace(/بدون/g,'بدون')                                  // without → bdoon
-        .replace(/بدون/g,'بدون')                                 // keep
-        .replace(/غير/g,'غير')                                   // except → ghair
-        .replace(/غير/g,'غير')                                   // except → ghair
-        .replace(/بس/g,'بس')                                    // only → bas
-        .replace(/كلهم/g,'كلهم')                               // altogether → kulhum
         .replace(/معا/g,'مع بعض')                               // together → ma baad
-        .replace(/وكمان/g,'وبعد')                            // in addition → w baad (Saudi dialect)
+        .replace(/وكمان/g,'وبعد')                            // in addition → w baad
         .replace(/فضلا/g,'وبعد')                               // in addition → w baad
         .replace(/علاوه/g,'وبعد')                             // moreover → w baad
         .replace(/اخويرا/g,'اخيرا')                               // finally (fix hamza)
-        .replace(/بالاخير/g,'بالاخير')                         // in conclusion → bil akheer
         .replace(/وخلاصه/g,'بالاخير')                            // in conclusion → bil akheer
-        .replace(/اللي طلع/g,'اللي طلع')                          // result → illi tala
         .replace(/\bيمكن\b/g,'تقدر')                                   // may → yimkin
-        .replace(/كان/g,'كان')                                   // keep - common
-        .replace(/كانت/g,'كانت')                                 // keep - common
-        .replace(/لان/g,'لان')                                   // because → la-an
-        .replace(/لانه/g,'لانه')                                 // because → la-anhu
-        .replace(/بس/g,'بس')                                    // but → bas
-        .replace(/بل/g,'بل')                                     // keep - rare in context
-        .replace(/لو/g,'لو')                                    // if → law
-        .replace(/عند/g,'عند')                                   // keep - common Saudi
-        .replace(/عليه/g,'عليه')                                 // keep - common
-        .replace(/عليها/g,'عليها')                               // keep - common
-        .replace(/به/g,'به')                                     // keep - common
-        .replace(/بها/g,'بها')                                   // keep - common
-        .replace(/فيه/g,'فيه')                                   // keep - common Saudi
-        .replace(/فيها/g,'فيها')                                 // keep - common Saudi
-        .replace(/منه/g,'منه')                                   // keep - common
-        .replace(/منها/g,'منها')                                 // keep - common
-        .replace(/له/g,'له')                                     // keep - common Saudi
-        .replace(/لها/g,'لها')                                   // keep - common Saudi
-        .replace(/له/g,'له')                                  // to him → la
-        .replace(/لها/g,'لها')                                 // to her → laha
-        .replace(/استخدام/g,'استخدام')                           // keep - common
-        .replace(/بعض/g,'بعض')                                   // keep
-        .replace(/كثير/g,'كثير')                                 // keep - common Saudi
-        .replace(/او/g,'او')                                     // or (fix hamza)
-        .replace(/ام/g,'ام')                                     // or (fix hamza);
+        .replace(/الكل/g,'كل')                                   // all → kul
+        .replace(/الجمله/g,'جمله')                                // sentence
     }
     wrap.innerHTML = `
       <div class="vv-card-face vv-card-front">
