@@ -6600,7 +6600,7 @@ const PHON_DICT = {
 'nights':'نايتس',
 'nikon':'نايكون',
 'nine':'ناين',
-'ninety':'نوينتي',
+'ninety':'ناينتي',
 'nintendo':'نينتيندو',
 'no':'نو',
 'nobody':'نوبودي',
@@ -6716,7 +6716,7 @@ const PHON_DICT = {
 'operator':'وبيريتر',
 'operators':'وبيريتيرز',
 'opinion':'اپينيان',
-'opinions':'ابينيانز',
+'opinions':'اپينيانز',
 'opportunities':'وبيرتوناتيز',
 'opportunity':'وبيرتوناتي',
 'optical':'وبتيكال',
@@ -9052,7 +9052,7 @@ const RP_SCRIPTS = {
     ],
     faq: [
       { match: /(which gate|gate number|بوابه)/, reply: L('Your gate is printed on your boarding pass.', 'البوابه مكتوبه على بطاقه الصعود.', 'يور قيت از برينتد اون يور بوردينق باس.') },
-      { match: /(luggage|baggage|شنته|فعلايب)/, reply: L('Please place your bags on the belt.', 'حط شنطك على الحزام لو سمحت.', 'بليز بليس يور باجز اون ذا بيلت.') }
+      { match: /(luggage|baggage|شنته|شنط)/, reply: L('Please place your bags on the belt.', 'حط شنطك على الحزام لو سمحت.', 'بليز بليس يور باجز اون ذا بيلت.') }
     ]
   },
   'taxi-driver': {
@@ -9276,7 +9276,7 @@ const RP_SCRIPTS = {
     ],
     faq: [
       { match: /(salary|راتب)/, reply: L('The salary range is 5,000 to 7,000 per month.', 'الراتب بين ٥٠٠٠ و٧٠٠٠ شهريا.', 'ذا سالري رينج از فايڤ تو سفن ثاوزند بير مانث.') },
-      { match: /(hours|دوام)/, reply: L('Working hours are from 9 to 5, Sunday to Thursday.', 'الدوام من ٩ لـ ٥، من الاحد لـ الخميس.', 'وركنق اورز ار فروم نوين تو فايڤ، صندي تو ثرزدي.') }
+      { match: /(hours|دوام)/, reply: L('Working hours are from 9 to 5, Sunday to Thursday.', 'الدوام من ٩ لـ ٥، من الاحد لـ الخميس.', 'وركنق اورز ار فروم ناين تو فايڤ، صندي تو ثرزدي.') }
     ]
   },
   'police-officer': {
@@ -10240,7 +10240,7 @@ const ACADEMIES = [
   {id:'restaurant-english', en:'Restaurant English', ar: 'انجليزي المطاعم', translit: 'ريستورانت انجلش', cat:'Situational', icon:'utensils', from:'#C8A96A', to:'#A88345', difficulty:'Beginner', duration:'3h', lessons:16},
   {id:'coffee-shop-english', en:'Coffee Shop English', ar: 'انجليزي الكوفي', translit: 'كوفي شوب انجلش', cat:'Situational', icon:'coffee', from:'#A88345', to:'#D8BD83', difficulty:'Beginner', duration:'2h', lessons:10},
   {id:'hotel-english', en:'Hotel English', ar: 'انجليزي الفنادق', translit: 'هوتيل انجلش', cat:'Situational', icon:'bed', from:'#343744', to:'#C8A96A', difficulty:'Beginner', duration:'3h', lessons:15},
-  {id:'hospital-english', en:'Hospital English', ar: 'انجليزي المستشفى', translit: 'هاسبتل انجلش', cat:'Situational', icon:'cross', from:'#3F8C72', to:'#343744', difficulty:'Intermediate', duration:'3h', lessons:16},
+  {id:'hospital-english', en:'Hospital English', ar: 'انجليزي المستشفى', translit: 'هوسبيتال انجلش', cat:'Situational', icon:'cross', from:'#3F8C72', to:'#343744', difficulty:'Intermediate', duration:'3h', lessons:16},
   {id:'shopping-english', en:'Shopping English', ar: 'انجليزي التسوق', translit: 'شوبنج انجلش', cat:'Situational', icon:'shopping-bag', from:'#C8A96A', to:'#3F8C72', difficulty:'Beginner', duration:'3h', lessons:14},
   {id:'driving-english', en:'Driving English', ar: 'انجليزي القياده', translit: 'درايفنج انجلش', cat:'Situational', icon:'car', from:'#262833', to:'#D8BD83', difficulty:'Beginner', duration:'2h', lessons:12},
   {id:'emergency-english', en:'Emergency English', ar: 'انجليزي الطواري', translit: 'اميرجنسي انجلش', cat:'Situational', icon:'siren', from:'#D25C5C', to:'#343744', difficulty:'Intermediate', duration:'2h', lessons:10},
@@ -10481,7 +10481,7 @@ const VOCAB_BANK = [
 {en:'Checkup', ipa:'/ˈtʃɛkʌp/', ar: 'فحص طبي دوري', translit: 'تشيك اب', example:{en:'Get a yearly checkup.', ar: 'اجر فحصا سنويا.', translit: 'جيت ا ييرلي تشيك اب.'}, synonyms:'examination, screening', antonyms:'', family:'check, checkup', collocations:'routine checkup, medical checkup', category:'Hospital English', difficulty:'Intermediate', tip: 'A checkup catches problems early.', synonyms_ar: 'فحص طبي دوري', antonyms_ar: '', family_ar: 'يفحص، فحص', collocations_ar: 'فحص دوري، فحص طبي', tip_ar: 'الفحص يكشف المشاكل بدري', mistake:'Skipping checkups when you feel fine.'},
 {en:'Ticket', ipa:'/ˈtɪkɪt/', ar: 'تذكره', translit: 'تيكيت', example:{en:'Show your ticket at the gate.', ar: 'اعرض تذكرتك عند البوابه.', translit: 'شو يور تيكيت ات ذا جيت.'}, synonyms:'pass, boarding card', antonyms:'', family:'ticket, tickets', collocations:'book a ticket, plane ticket', category:'Travel English', difficulty:'Beginner', tip: 'Keep your ticket ready at the gate.', synonyms_ar: 'تذكره', antonyms_ar: '', family_ar: 'تذكره، تذاكر', collocations_ar: 'احجز تذكره، تذكره طياره', tip_ar: 'خلي تذكرتك جاهزه عند البوابه', mistake:'Losing the ticket before boarding.'},
 {en:'Passport', ipa:'/ˈpæspɔːrt/', ar: 'جواز سفر', translit: 'باسبورت', example:{en:'Your passport, please.', ar: 'جواز سفرك لو سمحت.', translit: 'يور باسبورت، بليز.'}, synonyms:'ID, travel document', antonyms:'', family:'passport, passports', collocations:'show your passport, renew a passport', category:'Travel English', difficulty:'Beginner', tip: 'Check your passport\'s expiry date.', synonyms_ar: 'جواز سفر', antonyms_ar: '', family_ar: 'جواز، جوازات', collocations_ar: 'اعرض جوازك، جدد جواز', tip_ar: 'تاكد من تاريخ انتها الجواز', mistake:'Traveling with an expired passport.'},
-{en:'Luggage', ipa:'/ˈlʌɡɪdʒ/', ar: 'امتعه، فعلايب', translit: 'لاگيج', example:{en:'Where is the luggage?', ar: 'وين الامتعه؟', translit: 'وير از ذا لاگيج؟'}, synonyms:'bags, baggage', antonyms:'', family:'luggage', collocations:'pack luggage, luggage allowance', category:'Travel English', difficulty:'Beginner', tip: 'Luggage is uncountable; don\'t say "luggages."', synonyms_ar: 'امتعه، فعلايب', antonyms_ar: '', family_ar: 'امتعه', collocations_ar: 'حزم الامتعه، وزن الامتعه المسموح', tip_ar: 'luggage ما تعد؛ لا تقل luggages', mistake:'Saying "luggages" with an -s.'},
+{en:'Luggage', ipa:'/ˈlʌɡɪdʒ/', ar: 'امتعه، شنط', translit: 'لاگيج', example:{en:'Where is the luggage?', ar: 'وين الامتعه؟', translit: 'وير از ذا لاگيج؟'}, synonyms:'bags, baggage', antonyms:'', family:'luggage', collocations:'pack luggage, luggage allowance', category:'Travel English', difficulty:'Beginner', tip: 'Luggage is uncountable; don\'t say "luggages."', synonyms_ar: 'امتعه، شنط', antonyms_ar: '', family_ar: 'امتعه', collocations_ar: 'حزم الامتعه، وزن الامتعه المسموح', tip_ar: 'luggage ما تعد؛ لا تقل luggages', mistake:'Saying "luggages" with an -s.'},
 {en:'Boarding', ipa:'/ˈbɔːrdɪŋ/', ar: 'صعود (الطايره)', translit: 'بوردينق', example:{en:'Boarding starts now.', ar: 'الصعود يبدا الحين.', translit: 'بوردينق ستارتس ناو.'}, synonyms:'embarking, getting on', antonyms:'disembarking', family:'board, boarding', collocations:'boarding pass, boarding gate', category:'Travel English', difficulty:'Beginner', tip: 'Boarding is getting on the plane.', synonyms_ar: 'صعود الطايره', antonyms_ar: 'نزول', family_ar: 'يصعد، صعود', collocations_ar: 'تذكره الصعود، بوابه الصعود', tip_ar: 'الصعود يعني تركب الطايره', mistake:'Confusing boarding with landing.'},
 {en:'Departure', ipa:'/dɪˈpɑːrtʃər/', ar: 'مغادره، اقلاع', translit: 'ديبارتشر', example:{en:'Departure is at six.', ar: 'المغادره الساعه السادسه.', translit: 'ديبارتشر از ات سيكس.'}, synonyms:'leaving, takeoff', antonyms:'arrival', family:'depart, departure', collocations:'departure time, departure gate', category:'Travel English', difficulty:'Beginner', tip: 'Departure is when you leave.', synonyms_ar: 'مغادره، اقلاع', antonyms_ar: 'وصول', family_ar: 'يغادر، مغادره', collocations_ar: 'وقت المغادره، بوابه المغادره', tip_ar: 'المغادره هي لما تروح', mistake:'Confusing departure with arrival.'},
 {en:'Etiquette', ipa:'/ˈɛtɪkɛt/', ar: 'اداب، اتيكيت', translit: 'اتيكيت', example:{en:'Learn mosque etiquette.', ar: 'تعلم اداب المسجد.', translit: 'ليرن موسك اتيكيت.'}, synonyms:'manners, customs', antonyms:'rudeness', family:'etiquette', collocations:'proper etiquette, dress etiquette', category:'Mosque Etiquette', difficulty:'Intermediate', tip: 'Etiquette is polite behavior in a place.', synonyms_ar: 'اداب، اتيكيت', antonyms_ar: 'قله ادب', family_ar: 'اتيكيت', collocations_ar: 'اتيكيت صح، اتيكيت لبس', tip_ar: 'الاتيكيت هو تصرف مهذب في مكان', mistake:'Pronouncing it "etti-ket."'},
@@ -11876,7 +11876,7 @@ const LESSON_LIBRARY = {
     grammar:{title:'How Much Is This?', rule:'Ask: How much is this? Is there a discount? Do you have this in another color?', saudi:'للسؤال عن السعر: بكم ذا؟ فيه خصم؟', wrong:'This how much?', right:'How much is this?', mistakes:['Putting the question word at the end.','Not asking about tax, which is added at the register in the US.']},
     conversation:[
       {who:'A', en:'Excuse me, how much is this jacket?', ar: 'لو سمحت، بكم ذا الجاكيت؟', translit: 'اكسكوز مي، هاو ماتش از ذيس جاكيت؟'},
-      {who:'B', en:'It is ninety dollars, but it is on sale today.', ar: 'تسعين دولار، بس عليه خصم اليوم.', translit: 'ات از نوينتي دولارز، بات ات از اون سيل تودي.'},
+      {who:'B', en:'It is ninety dollars, but it is on sale today.', ar: 'تسعين دولار، بس عليه خصم اليوم.', translit: 'ات از ناينتي دولارز، بات ات از اون سيل تودي.'},
       {who:'A', en:'How much is it with the discount?', ar: 'بكم يصير مع الخصم؟', translit: 'هاو ماتش از ات وذ ذا ديسكاونت؟'},
       {who:'B', en:'Seventy two dollars, tax not included.', ar: 'اثنين وسبعين دولار، بدون الضريبه.', translit: 'سڤنتي تو دولارز، تاكس نات انكلودد.'},
     ],
@@ -11965,7 +11965,7 @@ const LESSON_LIBRARY = {
     vocab:[VOCAB_BANK[31], VOCAB_BANK[30]],
     grammar:{title:'Emergency Sentences', rule:'State the emergency type, location, and condition: There is a fire on King Road. Someone is injured.', saudi:'للاتصال بالطواري: نوع الحاله، المكان، الحاله الصحيه.', wrong:'Fire, come!', right:'There is a fire at 12 King Road. Please send help.', mistakes:['Panicking and giving only one word.','Giving the address last, it is the most important detail.']},
     conversation:[
-      {who:'Operator', en:'Nine one one, what is your emergency?', ar: 'طواري، وش حالتك؟', translit: 'نوين وان وان، وات از يور اميرجنسي؟'},
+      {who:'Operator', en:'Nine one one, what is your emergency?', ar: 'طواري، وش حالتك؟', translit: 'ناين وان وان، وات از يور اميرجنسي؟'},
       {who:'You', en:'There is a fire in the building across from my house.', ar: 'فيه حريق بالعماره المقابله لبيتنا.', translit: 'ذير از ا فاير ان ذا بلدنق اكراس فروم ماي هاوس.'},
       {who:'Operator', en:'What is your address?', ar: 'وش عنوانك؟', translit: 'وات از يور ادرس؟'},
       {who:'You', en:'14 King Fahd Street, near the big mosque.', ar: 'شارع الملك فهد 14، قريب من الجامع الكبير.', translit: 'فورتين كينق فهد ستريت، نير ذا بيك موسك.'},
@@ -12058,7 +12058,7 @@ const LESSON_LIBRARY = {
     conversation:[
       {who:'A', en:'Hi, I am new here. I am Omar, nice to meet you.', ar: 'هلا، انا جديد هنا. انا عمر، تشرفنا.', translit: 'هاي، ايم نو هير. ايم عمر، نايس تو ميت يو.'},
       {who:'B', en:'Welcome aboard! What time do we start?', ar: 'حياك! متى نبدا الدوام؟', translit: 'ويلكم ابورد! وات تايم دو وي ستارت؟'},
-      {who:'A', en:'At nine, and lunch is at one. Need anything?', ar: 'التسعه، والبكره الواحده. تبي شي؟', translit: 'ات نوين، اند لانش از ات وان. نيد اني ثينق؟'},
+      {who:'A', en:'At nine, and lunch is at one. Need anything?', ar: 'التسعه، والبكره الواحده. تبي شي؟', translit: 'ات ناين، اند لانش از ات وان. نيد اني ثينق؟'},
       {who:'B', en:'Just the Wi-Fi password, please.', ar: 'بس باسورد الواي فاي لو سمحت.', translit: 'جاست ذا واي فاي باسورد، بليز.'},
     ],
     quiz:[
@@ -12165,7 +12165,7 @@ const LESSON_LIBRARY = {
     grammar:{title:'The -s Rule', rule:'He, she, it take the -s form: he works, she studies, it rains. Negatives use does not: he does not work.', saudi:'مع he/she/it يضاف s للفعل، والنفي بـ does not.', wrong:'She work in a hospital.', right:'She works in a hospital.', mistakes:['Forgetting the -s with he/she/it.','Saying "she don\'t" instead of "she doesn\'t."']},
     conversation:[
       {who:'A', en:'Where does your sister work?', ar: 'وين تشتغل اختك؟', translit: 'وير داز يور سستر ورك؟'},
-      {who:'B', en:'She works at a hospital in Jeddah.', ar: 'تشتغل بمستشفى بجده.', translit: 'شي وركس ات ا هاسبتل ان جده.'},
+      {who:'B', en:'She works at a hospital in Jeddah.', ar: 'تشتغل بمستشفى بجده.', translit: 'شي وركس ات ا هوسبيتال ان جده.'},
       {who:'A', en:'Does she work on weekends?', ar: 'تشتغل بالويكند؟', translit: 'داز شي ورك اون ويكيندز؟'},
       {who:'B', en:'Sometimes, but she does not mind it.', ar: 'احيانا، بس ما تزعل.', translit: 'سامتايمز، بات شي داز نات مويند ات.'},
     ],
