@@ -3892,7 +3892,7 @@ const PHON_DICT = {
 'begin':'بيقين',
 'beginning':'بيقينينج',
 'begins':'بيقينز',
-'behalf':'بيهاف',
+'behalf':'بيهاڤ',
 'behavior':'بيهيڤير',
 'behaviour':'بيهيڤير',
 'behind':'بيهايند',
@@ -5236,7 +5236,7 @@ const PHON_DICT = {
 'federation':'فيديريشان',
 'fee':'في',
 'feed':'فيد',
-'feedback':'فيدباك',
+'feedback':'ڤيدباك',
 'feeds':'فيدز',
 'feel':'فيل',
 'feeling':'فيلينج',
@@ -5467,8 +5467,8 @@ const PHON_DICT = {
 'getting':'قيتينج',
 'ghost':'قوست',
 'giant':'جايانت',
-'gift':'قيفت',
-'gifts':'قيفتس',
+'gift':'قيڤت',
+'gifts':'قيڤتس',
 'girl':'قيرل',
 'girls':'قيرلز',
 'give':'قيڤ',
@@ -5575,7 +5575,7 @@ const PHON_DICT = {
 'hair':'هير',
 'hairy':'هيري',
 'hala':'هلا',
-'half':'هاف',
+'half':'هاڤ',
 'hall':'هول',
 'hamilton':'هامالتان',
 'hampshire':'هامبشر',
@@ -8961,25 +8961,25 @@ const RP_SCRIPTS = {
     role: 'Clinic Receptionist', studentRole: 'patient',
     steps: [
       { key:'appointment', expect:'yesno',
-        ask: L('Do you have an appointment today?', 'عندك موعد اليوم؟', 'دو يو هاف ان ابوينتمنت تودي؟'),
+        ask: L('Do you have an appointment today?', 'عندك موعد اليوم؟', 'دو يو هاڤ ان ابوينتمنت تودي؟'),
         explain: { word:'appointment', ar: 'موعد', sentence: L('An appointment is a set time you arranged with the doctor.', 'الموعد وقت محدد اتفقت عليه مع الدكتور.', 'ان ابوينتمنت از ا سيت تايم يو اريينجد وذ ذا دكتور.') },
         yes: { next: 1 },
-        yesInfo: { slot:'time', next: 1, reply: (s) => L('Okay, an appointment at ' + s.time + '. Can I have your name, please?', 'تمام، موعد ' + s.time + '. ممكن اسمك لو سمحت؟', 'اوكي، ان ابوينتمنت ات ' + s.time + '. كان اي هاف يور نيم، بليز؟') },
+        yesInfo: { slot:'time', next: 1, reply: (s) => L('Okay, an appointment at ' + s.time + '. Can I have your name, please?', 'تمام، موعد ' + s.time + '. ممكن اسمك لو سمحت؟', 'اوكي، ان ابوينتمنت ات ' + s.time + '. كان اي هاڤ يور نيم، بليز؟') },
         no: { next: 2, reply: L('No problem. Are you here to see a doctor today?', 'ولا يهمك. جاي اليوم تشوف دكتور؟', 'نو بروبلم. ار يو هير تو سي ا دكتور تودي؟') },
         noInfo: { next: 2, reply: L('Okay, I see. Are you here because you need to see a doctor today?', 'تمام، فهمت. جاي اليوم لانك محتاج تشوف دكتور؟', 'اوكي، اي سي. ار يو هير بيكوز يو نيد تو سي ا دكتور تودي؟') },
-        info: { next: 1, reply: L('I am sorry to hear that. I will get you checked in. Can I have your name, please?', 'اسف على ذا. بخليك تدخل. ممكن اسمك لو سمحت؟', 'اي ام سوري تو هير ذات. اي ويل قيت يو تشكد ان. كان اي هاف يور نيم، بليز؟') }
+        info: { next: 1, reply: L('I am sorry to hear that. I will get you checked in. Can I have your name, please?', 'اسف على ذا. بخليك تدخل. ممكن اسمك لو سمحت؟', 'اي ام سوري تو هير ذات. اي ويل قيت يو تشكد ان. كان اي هاڤ يور نيم، بليز؟') }
       },
       { key:'name', expect:'name',
-        ask: L('Can I have your name, please?', 'ممكن اسمك لو سمحت؟', 'كان اي هاف يور نيم، بليز؟'),
+        ask: L('Can I have your name, please?', 'ممكن اسمك لو سمحت؟', 'كان اي هاڤ يور نيم، بليز؟'),
         explain: { word:'name', ar: 'اسم', sentence: L('Your name is what people call you.', 'اسمك هو اللي الناس ينادونك فيه.', 'يور نيم از وات بيبل كول يو.') },
         any: { slot:'name', next: 4, reply: (s) => L('Thanks, ' + s.name + '. What time is your appointment?', 'شكرا ' + s.name + '. متى موعدك؟', 'ثانكس، ' + s.name + '. وات تايم از يور ابوينتمنت؟') }
       },
       { key:'reason', expect:'open',
         ask: L('Are you here to see a doctor today?', 'جاي اليوم تشوف دكتور؟', 'ار يو هير تو سي ا دكتور تودي؟'),
-        any: { next: 3, reply: L('I see. What symptoms are you having?', 'فهمت. وش الاعراض اللي عندك؟', 'اي سي. وات سيمبتومز ار يو هافينج؟') }
+        any: { next: 3, reply: L('I see. What symptoms are you having?', 'فهمت. وش الاعراض اللي عندك؟', 'اي سي. وات سيمبتومز ار يو هاڤينج؟') }
       },
       { key:'symptoms', expect:'open',
-        ask: L('What symptoms are you having?', 'وش الاعراض اللي عندك؟', 'وات سيمبتومز ار يو هافينج؟'),
+        ask: L('What symptoms are you having?', 'وش الاعراض اللي عندك؟', 'وات سيمبتومز ار يو هاڤينج؟'),
         any: { next: 'wrap', reply: L('Thank you. I will let the nurse know. Please take a seat and someone will call you shortly.', 'شكرا. بخلي الممرضه تعرف. تفضل اقعد، وبنادي عليك قريب.', 'ثانك يو. اي ويل ليت ذا نيرس نو. بليز تيك ا سيت اند سمون ويل كول يو شورتلي.') }
       },
       { key:'time', expect:'time',
@@ -9015,24 +9015,24 @@ const RP_SCRIPTS = {
     faq: [
       { match: /(today's special|special|تخصص|مميز)/, reply: L('Today the special is grilled chicken with rice.', 'تخصص اليوم دجاج مشوي مع رز.', 'توديز ذا سبيشل از قريلد تشيكن وذ رايس.') },
       { match: /(spicy|حار)/, reply: L('We can make it mild or spicy.', 'اقدر نسويه خفيف او حار.', 'وي كان ميك ات مايلد اور سبايسي.') },
-      { match: /(vegetarian|نباتي)/, reply: L('Yes, we have vegetarian options on the menu.', 'ايه، عندنا خيارات نباتيه.', 'يس، وي هاف ڤيجيتيريان اوبشنز اون ذا مينيو.') },
+      { match: /(vegetarian|نباتي)/, reply: L('Yes, we have vegetarian options on the menu.', 'ايه، عندنا خيارات نباتيه.', 'يس، وي هاڤ ڤيجيتيريان اوبشنز اون ذا مينيو.') },
       { match: /(the bill|check|حساب)/, reply: L('Of course, I will bring the bill.', 'اكيد، بجيب لك الحساب.', 'اوف كورس، اي ويل برينج ذا بيل.') }
     ]
   },
   'receptionist': {
     role: 'Hotel Receptionist', studentRole: 'guest',
     steps: [
-      { key:'reservation', expect:'yesno', ask: L('Welcome, do you have a reservation with us?', 'حياكم، عندكم حجز معانا؟', 'ويلكم، دو يو هاف ا ريزرڤيشن وذ اس؟'),
+      { key:'reservation', expect:'yesno', ask: L('Welcome, do you have a reservation with us?', 'حياكم، عندكم حجز معانا؟', 'ويلكم، دو يو هاڤ ا ريزرڤيشن وذ اس؟'),
         explain: { word:'reservation', ar: 'حجز', sentence: L('A reservation is a room you booked in advance.', 'الحجز غرفه حجزتها من قبل.', 'ا ريزرڤيشن از ا روم يو بوكت ان ادفانس.') },
         yes: { next: 1 },
-        yesInfo: { slot:'nights', next: 1, reply: (s) => L('Great, I can see your booking. Can I have your name, please?', 'ممتاز، اشوف حجزك. ممكن اسمك لو سمحت؟', 'قريت، اي كان سي يور بوكنق. كان اي هاف يور نيم، بليز؟') },
-        no: { next: 2, reply: L('No problem, we have rooms available. How many nights will you be staying?', 'ولا يهمك، عندنا غرف فاضيه. كم ليله رح تبقي؟', 'نو بروبلم، وي هاف رومز اڤايلابل. هاو مني نايتس ويل يو بي ستيينج؟') },
-        info: { next: 2, reply: L('Okay, let me see what we have. How many nights will you be staying?', 'تمام، خلني اشوف اللي عندنا. كم ليله؟', 'اوكي، ليت مي سي وات وي هاف. هاو مني نايتس ويل يو بي ستيينج؟') }
+        yesInfo: { slot:'nights', next: 1, reply: (s) => L('Great, I can see your booking. Can I have your name, please?', 'ممتاز، اشوف حجزك. ممكن اسمك لو سمحت؟', 'قريت، اي كان سي يور بوكنق. كان اي هاڤ يور نيم، بليز؟') },
+        no: { next: 2, reply: L('No problem, we have rooms available. How many nights will you be staying?', 'ولا يهمك، عندنا غرف فاضيه. كم ليله رح تبقي؟', 'نو بروبلم، وي هاڤ رومز اڤايلابل. هاو مني نايتس ويل يو بي ستيينج؟') },
+        info: { next: 2, reply: L('Okay, let me see what we have. How many nights will you be staying?', 'تمام، خلني اشوف اللي عندنا. كم ليله؟', 'اوكي، ليت مي سي وات وي هاڤ. هاو مني نايتس ويل يو بي ستيينج؟') }
       },
-      { key:'name', expect:'name', ask: L('Can I have your name, please?', 'ممكن اسمك لو سمحت؟', 'كان اي هاف يور نيم، بليز؟'),
+      { key:'name', expect:'name', ask: L('Can I have your name, please?', 'ممكن اسمك لو سمحت؟', 'كان اي هاڤ يور نيم، بليز؟'),
         any: { slot:'name', next: 2, reply: (s) => L('Thanks, ' + s.name + '. How many nights will you be staying?', 'شكرا ' + s.name + '. كم ليله رح تبقي؟', 'ثانكس، ' + s.name + '. هاو مني نايتس ويل يو بي ستيينج؟') } },
       { key:'nights', expect:'open', ask: L('How many nights will you be staying?', 'كم ليله رح تبقي؟', 'هاو مني نايتس ويل يو بي ستيينج؟'),
-        any: { next: 'wrap', reply: L('Great, we have a room ready for you. Your room is 402 and checkout is at noon.', 'ممتاز، عندنا غرفه جاهزه. غرفتك 402 والتسليم الظهر.', 'قريت، وي هاف ا روم ريدي فور يو. يور روم از فور او تو اند تشيك اوت از ات نون.') } },
+        any: { next: 'wrap', reply: L('Great, we have a room ready for you. Your room is 402 and checkout is at noon.', 'ممتاز، عندنا غرفه جاهزه. غرفتك 402 والتسليم الظهر.', 'قريت، وي هاڤ ا روم ريدي فور يو. يور روم از فور او تو اند تشيك اوت از ات نون.') } },
       { key:'wrap', wrap: L('Enjoy your stay.', 'نتمنى لك اقامه مبسوطه.', 'انجوي يور ستي.') }
     ],
     faq: [
@@ -9048,7 +9048,7 @@ const RP_SCRIPTS = {
         any: { next: 1, reply: L('Thank you. What is your final destination?', 'شكرا. وين وجهتك النهائيه؟', 'ثانك يو. وات از يور فوينل ديستنيشن؟') } },
       { key:'destination', expect:'open', ask: L('What is your final destination?', 'وين وجهتك النهائيه؟', 'وات از يور فوينل ديستنيشن؟'),
         any: { next: 'wrap', reply: L('Enjoy your flight. Gate 12 is boarding now.', 'رحله مبسوطه. بوابه 12 يصعدون الحين.', 'انجوي يور فلايت. قيت تويلف از بوردينج ناو.') } },
-      { key:'wrap', wrap: L('Have a safe trip.', 'رحله امنه.', 'هاف ا سيف تريب.') }
+      { key:'wrap', wrap: L('Have a safe trip.', 'رحله امنه.', 'هاڤ ا سيف تريب.') }
     ],
     faq: [
       { match: /(which gate|gate number|بوابه)/, reply: L('Your gate is printed on your boarding pass.', 'البوابه مكتوبه على بطاقه الصعود.', 'يور قيت از برينتد اون يور بوردينج باس.') },
@@ -9066,7 +9066,7 @@ const RP_SCRIPTS = {
         info: { next: 2, reply: L('Okay, hop in then.', 'طيب، اركب.', 'اوكي، هوب ان ذين.') } },
       { key:'go', expect:'any', ask: L('Ready to go?', 'جاهز ننطلق؟', 'ريدي تو قو؟'),
         any: { next: 'wrap', reply: L('Alright, here we go.', 'طيب، انطلقنا.', 'اولرايت، هير وي قو.') } },
-      { key:'wrap', wrap: L('Here we are. Have a great day.', 'وصلنا. يومك مبسوط.', 'هير وي ار. هاف ا قريت داي.') }
+      { key:'wrap', wrap: L('Here we are. Have a great day.', 'وصلنا. يومك مبسوط.', 'هير وي ار. هاڤ ا قريت داي.') }
     ],
     faq: [
       { match: /(how much|fare|بكم|الاجره)/, reply: L('The fare is about 40 riyals for this trip.', 'الاجره تقريب ٤٠ ريال لهذي الرحله.', 'ذا فير از اباوت فورتي ريالز فور ذيس تريب.') },
@@ -9077,12 +9077,12 @@ const RP_SCRIPTS = {
   'doctor': {
     role: 'Doctor', studentRole: 'patient',
     steps: [
-      { key:'symptoms', expect:'open', ask: L('What symptoms have you been having?', 'وش الاعراض اللي عندك؟', 'وات سيمبتومز هاف يو بين هافينج؟'),
+      { key:'symptoms', expect:'open', ask: L('What symptoms have you been having?', 'وش الاعراض اللي عندك؟', 'وات سيمبتومز هاڤ يو بين هاڤينج؟'),
         explain: { word:'symptoms', ar: 'اعراض', sentence: L('Symptoms are the signs of sickness you feel, like pain or fever.', 'الاعراض هي علامات المرض اللي تحس فيها، مثل الالم او الحمى.', 'سمبتمز ار ذا سوينز اوف سكنس يو فيل، لايك بين اور ڤيڤر.') },
         any: { next: 1, reply: L('I see. How long has this been going on?', 'فهمت. من متى ذا الوضع؟', 'اي سي. هاو لونق هاز ذيس بين قوينج اون؟') } },
       { key:'duration', expect:'open', ask: L('How long has this been going on?', 'من متى ذا الوضع؟', 'هاو لونق هاز ذيس بين قوينج اون؟'),
-        any: { next: 2, reply: L('Okay. Do you have any allergies to medication?', 'تمام. عندك حساسيه من اي دواو؟', 'اوكي. دو يو هاف اني اليرجيز تو ميديكيشن؟') } },
-      { key:'allergy', expect:'yesno', ask: L('Do you have any allergies to medication?', 'عندك حساسيه من اي دواو؟', 'دو يو هاف اني اليرجيز تو ميديكيشن؟'),
+        any: { next: 2, reply: L('Okay. Do you have any allergies to medication?', 'تمام. عندك حساسيه من اي دواو؟', 'اوكي. دو يو هاڤ اني اليرجيز تو ميديكيشن؟') } },
+      { key:'allergy', expect:'yesno', ask: L('Do you have any allergies to medication?', 'عندك حساسيه من اي دواو؟', 'دو يو هاڤ اني اليرجيز تو ميديكيشن؟'),
         yes: { next: 3, reply: L('Good to know, I will avoid those.', 'تمام عرفت، رح اتجنبها.', 'قود تو نو، اي ويل اڤويد ذوز.') },
         no: { next: 3, reply: L('Good.', 'ممتاز.', 'قود.') },
         info: { next: 3, reply: L('I will make a note of that.', 'رح اسجل ذا.', 'اي ويل ميك ا نوت اوف ذات.') } },
@@ -9110,7 +9110,7 @@ const RP_SCRIPTS = {
       { key:'looking', expect:'open', ask: L('What are you looking for?', 'وش تدور؟', 'وات ار يو لوكنق فور؟'),
         any: { next: 'wrap', reply: L('Let me check for you. I will call you when it is ready.', 'خلني اشوف لك. بنادي عليك لما يصير جاهز.', 'ليت مي تشيك فور يو. اي ويل كول يو وين ات از ريدي.') } },
       { key:'payment', expect:'open', ask: L('That will be twelve fifty. Cash or card?', 'المجموع ١٢.٥٠. كاش او كارت؟', 'ذات ويل بي تويلف فيفتي. كاش اور كارد؟'),
-        any: { next: 'wrap', reply: L('Thank you. Have a great day!', 'شكرا. يومك مبسوط!', 'ثانك يو. هاف ا قريت داي!') } },
+        any: { next: 'wrap', reply: L('Thank you. Have a great day!', 'شكرا. يومك مبسوط!', 'ثانك يو. هاڤ ا قريت داي!') } },
       { key:'wrap', wrap: L('See you next time.', 'نشوفك المره الجايه.', 'سي يو نيكست تايم.') }
     ],
     faq: [
@@ -9136,9 +9136,9 @@ const RP_SCRIPTS = {
   'teacher': {
     role: 'Teacher', studentRole: 'student',
     steps: [
-      { key:'questions', expect:'yesno', ask: L("Do you have any questions about today's lesson?", 'عندك اساله على درس اليوم؟', 'دو يو هاف اني كويستشنز اباوت تودييز لسن؟'),
+      { key:'questions', expect:'yesno', ask: L("Do you have any questions about today's lesson?", 'عندك اساله على درس اليوم؟', 'دو يو هاڤ اني كويستشنز اباوت تودييز لسن؟'),
         yes: { next: 1, reply: L('Go ahead, what is your question?', 'تفضل، وش سؤالك؟', 'قو اهيد، وات از يور كويستشن؟') },
-        no: { next: 2, reply: L('Great. Let us review the key words. Repeat after me.', 'ممتاز. خلنا نراجع الكلمات المهمه. كرر وراي.', 'قريت. ليت اس ريفيو ذا كي ووردز. ريبيت افتير مي.') } },
+        no: { next: 2, reply: L('Great. Let us review the key words. Repeat after me.', 'ممتاز. خلنا نراجع الكلمات المهمه. كرر وراي.', 'قريت. ليت اس ريڤيو ذا كي ووردز. ريبيت افتير مي.') } },
       { key:'question', expect:'open', ask: L('What is your question?', 'وش سؤالك؟', 'وات از يور كويستشن؟'),
         any: { next: 2, reply: L('That is a great question. Let me explain it clearly.', 'سؤال ممتاز. خلني اشرحه زين.', 'ذات از ا قريت كويستشن. ليت مي اكسبلين ات كليرلي.') } },
       { key:'practice', expect:'yesno', ask: L('Do you want to practice the dialogue now?', 'تبي نتمرن على الحوار الحين؟', 'دو يو وانت تو بركتيس ذا دايالوق ناو؟'),
@@ -9157,9 +9157,9 @@ const RP_SCRIPTS = {
   'friend': {
     role: 'Friend', studentRole: 'friend',
     steps: [
-      { key:'how', expect:'open', ask: L('Hey, long time no see. How have you been?', 'هلا والله، من زمان. اخبارك؟', 'هاي، لونق تايم نو سي. هاو هاف يو بين؟'),
-        any: { next: 1, reply: L('Glad to hear it. What have you been up to lately?', 'الخير. وش تسوي هالفتره؟', 'قلاد تو هير ات. وات هاف يو بين اب تو ليتلي؟') } },
-      { key:'up', expect:'open', ask: L('What have you been up to lately?', 'وش تسوي هالفتره؟', 'وات هاف يو بين اب تو ليتلي؟'),
+      { key:'how', expect:'open', ask: L('Hey, long time no see. How have you been?', 'هلا والله، من زمان. اخبارك؟', 'هاي، لونق تايم نو سي. هاو هاڤ يو بين؟'),
+        any: { next: 1, reply: L('Glad to hear it. What have you been up to lately?', 'الخير. وش تسوي هالفتره؟', 'قلاد تو هير ات. وات هاڤ يو بين اب تو ليتلي؟') } },
+      { key:'up', expect:'open', ask: L('What have you been up to lately?', 'وش تسوي هالفتره؟', 'وات هاڤ يو بين اب تو ليتلي؟'),
         any: { next: 2, reply: L('Nice. Do you want to hang out this weekend?', 'حلو. تبي نطلع ذا الويكند؟', 'نايس. دو يو وانت تو هانق اوت ذيس ويكيند؟') } },
       { key:'weekend', expect:'yesno', ask: L('Do you want to hang out this weekend?', 'تبي نطلع ذا الويكند؟', 'دو يو وانت تو هانق اوت ذيس ويكيند؟'),
         yes: { next: 3, reply: L('Perfect. How about the mall on Friday?', 'ممتاز. وش رايك المول يوم الجمعه؟', 'بيرفكت. هاو اباوت ذا مول اون فرايدي؟') },
@@ -9220,7 +9220,7 @@ const RP_SCRIPTS = {
       { key:'id', expect:'open', ask: L('Could I see your ID, please?', 'ممكن اشوف هويتك لو سمحت؟', 'كود اي سي يور اي دي، بليز؟'),
         any: { next: 2, reply: L('Thank you. One moment while I process that.', 'شكرا. لحظه وانا اجهزها.', 'ثانك يو. ون مومنت ويل اي بروسس ذات.') } },
       { key:'process', expect:'any', ask: L('Would you like anything else today?', 'تبي شي ثاني اليوم؟', 'ود يو لايك انيثينج الس تودي؟'),
-        no: { next: 'wrap', reply: L('Thank you. Have a nice day.', 'شكرا. يومك مبسوط.', 'ثانك يو. هاف ا نايس داي.') },
+        no: { next: 'wrap', reply: L('Thank you. Have a nice day.', 'شكرا. يومك مبسوط.', 'ثانك يو. هاڤ ا نايس داي.') },
         any: { next: 2, reply: L('Sure, what else can I do for you?', 'اكيد، وش ثاني اسوي لك؟', 'شور، وات الس كان اي دو فور يو؟') } },
       { key:'wrap', wrap: L('Goodbye.', 'مع السلامه.', 'قودباي.') }
     ],
@@ -9240,8 +9240,8 @@ const RP_SCRIPTS = {
     ],
     faq: [
       { match: /(water|مويه)/, reply: L('Of course, I will bring you some water.', 'اكيد، بجيب لك مويه.', 'اوف كورس، اي ويل برينج يو سم ووتر.') },
-      { match: /(blanket|بطانيه)/, reply: L('We have blankets in the overhead bin.', 'عندنا بطانيات بالخزوين فوق.', 'وي هاف بلانكتس ان ذي اوڤرهيد بين.') },
-      { match: /(arrival|وصلنا|متى نوصل)/, reply: L('We arrive in about two hours.', 'نوصل تقريب لسه ساعتين.', 'وي ارايف ان اباوت تو اورز.') }
+      { match: /(blanket|بطانيه)/, reply: L('We have blankets in the overhead bin.', 'عندنا بطانيات بالخزوين فوق.', 'وي هاڤ بلانكتس ان ذي اوڤرهيد بين.') },
+      { match: /(arrival|وصلنا|متى نوصل)/, reply: L('We arrive in about two hours.', 'نوصل تقريب لسه ساعتين.', 'وي ارايڤ ان اباوت تو اورز.') }
     ]
   },
   'coworker': {
@@ -9318,15 +9318,15 @@ const RP_SCRIPTS = {
    Keys are "stepKey.handler". */
 const RP_ALT = {
   'receptionist-clinic': {
-    'appointment.yes': L('Great. Can I have your name, please?', 'ممتاز. ممكن اسمك لو سمحت؟', 'قريت. كان اي هاف يور نيم، بليز؟'),
+    'appointment.yes': L('Great. Can I have your name, please?', 'ممتاز. ممكن اسمك لو سمحت؟', 'قريت. كان اي هاڤ يور نيم، بليز؟'),
     'appointment.no': L('That is fine. Are you here to see a doctor today?', 'ولا مشكله. جاي اليوم تشوف دكتور؟', 'ذات از فوين. ار يو هير تو سي ا دكتور تودي؟'),
     'appointment.yesInfo': (s) => L('Got it, an appointment at ' + s.time + '. Could I take your name?', 'تم، موعد ' + s.time + '. ممكن اسمك؟', 'قات ات، ان ابوينتمنت ات ' + s.time + '. كود اي تيك يور نيم؟'),
     'appointment.noInfo': L('I understand. Are you here to see a doctor today?', 'فهمت عليك. جاي اليوم تشوف دكتور؟', 'اي اندرستاند. ار يو هير تو سي ا دكتور تودي؟'),
     'appointment.info': L('I am sorry to hear that. Let me check you in. What is your name?', 'اسف على ذا. خلني اسجل دخولك. وش اسمك؟', 'اي ام سوري تو هير ذات. ليت مي تشيك يو ان. وات از يور نيم؟'),
     'name.any': (s) => L('Thank you, ' + s.name + '. What time is your appointment?', 'مشكور ' + s.name + '. متى موعدك؟', 'ثانك يو، ' + s.name + '. وات تايم از يور ابوينتمنت؟'),
-    'reason.any': L('Okay. What symptoms are you having?', 'طيب. وش الاعراض اللي عندك؟', 'اوكي. وات سيمبتومز ار يو هافينج؟'),
+    'reason.any': L('Okay. What symptoms are you having?', 'طيب. وش الاعراض اللي عندك؟', 'اوكي. وات سيمبتومز ار يو هاڤينج؟'),
     'symptoms.any': L('Thanks for telling me. The nurse will see you soon. Please take a seat.', 'شكرا انك قلت لي. الممرضه بتشوفك قريب. تفضل اقعد.', 'ثانكس فور تيلينج مي. ذا نيرس ويل سي يو سون. بليز تيك ا سيت.'),
-    'time.any': (s) => L('Perfect, ' + s.time + '. I will check that now. Please have a seat.', 'ممتاز ' + s.time + '. الحين اتاكد. تفضل اقعد.', 'بيرفكت، ' + s.time + '. اي ويل تشيك ذات ناو. بليز هاف ا سيت.')
+    'time.any': (s) => L('Perfect, ' + s.time + '. I will check that now. Please have a seat.', 'ممتاز ' + s.time + '. الحين اتاكد. تفضل اقعد.', 'بيرفكت، ' + s.time + '. اي ويل تشيك ذات ناو. بليز هاڤ ا سيت.')
   },
   'waiter': {
     'table.any': L('Of course, follow me. Can I get you a drink first?', 'اكيد، تفضل معاي. تشرب شي قبل؟', 'اوف كورس، فولو مي. كان اي قيت يو ا درينك فيرست؟'),
@@ -9339,14 +9339,14 @@ const RP_ALT = {
   },
   'receptionist': {
     'reservation.yes': L('Wonderful. What name is the booking under?', 'رايع. الحجز باسم مين؟', 'وندرفول. وات نيم از ذا بوكنق اندر؟'),
-    'reservation.no': L('No problem at all. We have rooms free. How many nights?', 'ولا مشكله ابدا. عندنا غرف. كم ليله؟', 'نو بروبلم ات اول. وي هاف رومز فري. هاو مني نايتس؟'),
+    'reservation.no': L('No problem at all. We have rooms free. How many nights?', 'ولا مشكله ابدا. عندنا غرف. كم ليله؟', 'نو بروبلم ات اول. وي هاڤ رومز فري. هاو مني نايتس؟'),
     'reservation.info': L('Okay, let me look. How many nights will you be staying?', 'طيب، خلني اشوف. كم ليله رح تبقي؟', 'اوكي، ليت مي لوك. هاو مني نايتس ويل يو بي ستيينج؟'),
     'name.any': (s) => L('Thank you, ' + s.name + '. How many nights will you be staying?', 'مشكور ' + s.name + '. كم ليله رح تبقي؟', 'ثانك يو، ' + s.name + '. هاو مني نايتس ويل يو بي ستيينج؟'),
-    'nights.any': L('Perfect, I have a room ready. It is room 402, checkout at noon.', 'ممتاز، عندي غرفه جاهزه. الغرفه 402، والتسليم الظهر.', 'بيرفكت، اي هاف ا روم ريدي. ات از روم فور او تو، تشيك اوت ات نون.')
+    'nights.any': L('Perfect, I have a room ready. It is room 402, checkout at noon.', 'ممتاز، عندي غرفه جاهزه. الغرفه 402، والتسليم الظهر.', 'بيرفكت، اي هاڤ ا روم ريدي. ات از روم فور او تو، تشيك اوت ات نون.')
   },
   'airport-officer': {
     'docs.any': L('All set. What is your final destination?', 'تمام. وين وجهتك النهائيه؟', 'اول سيت. وات از يور فوينل ديستنيشن؟'),
-    'destination.any': L('Perfect, have a pleasant flight. Gate 12 is boarding.', 'ممتاز، رحله ممتعه. بوابه 12 يصعدون الحين.', 'بيرفكت، هاف ا بليزنت فلايت. قيت تويلف از بوردينج.')
+    'destination.any': L('Perfect, have a pleasant flight. Gate 12 is boarding.', 'ممتاز، رحله ممتعه. بوابه 12 يصعدون الحين.', 'بيرفكت، هاڤ ا بليزنت فلايت. قيت تويلف از بوردينج.')
   },
   'taxi-driver': {
     'destination.any': L('Right, that is about twenty minutes. Bags in the trunk?', 'تم، تقريب عشرين دقيقه. الشنط بالصندوق؟', 'رايت، ذات از اباوت توانتي مينتس. باجز ان ذا ترنك؟'),
@@ -9355,7 +9355,7 @@ const RP_ALT = {
     'go.any': L('Okay, off we go.', 'طيب، انطلقنا.', 'اوكي، اوف وي قو.')
   },
   'doctor': {
-    'symptoms.any': L('I see. How long have you felt this way?', 'فهمت. من متى تحس بذا؟', 'اي سي. هاو لونق هاف يو فيلت ذيس وي؟'),
+    'symptoms.any': L('I see. How long have you felt this way?', 'فهمت. من متى تحس بذا؟', 'اي سي. هاو لونق هاڤ يو فيلت ذيس وي؟'),
     'duration.any': L('Okay. Any allergies to any medicine?', 'طيب. عندك حساسيه من اي دواو؟', 'اوكي. اني اليرجيز تو اني مديسن؟'),
     'allergy.yes': L('Good to know, I will avoid those medicines.', 'عرفت، رح اتجنب هذي الادويه.', 'قود تو نو، اي ويل اڤويد ذوز ميديسنز.'),
     'allergy.no': L('Perfect.', 'ممتاز.', 'بيرفكت.'),
@@ -9368,7 +9368,7 @@ const RP_ALT = {
     'bag.yes': L('Here you go.', 'تفضل.', 'هير يو قو.'),
     'bag.no': L('Alright.', 'حاضر.', 'اولرايت.'),
     'looking.any': L('Let me check the back for you. I will call you when it is ready.', 'خلني اشوف المخزن. بنادي عليك لما يصير جاهز.', 'ليت مي تشيك ذا باك فور يو. اي ويل كول يو وين ات از ريدي.'),
-    'payment.any': L('Thanks very much. Have a lovely day!', 'شكرا جزيلا. يومك حلو!', 'ثانكس ڤري مج. هاف ا لوڤلي داي!')
+    'payment.any': L('Thanks very much. Have a lovely day!', 'شكرا جزيلا. يومك حلو!', 'ثانكس ڤري مج. هاڤ ا لوڤلي داي!')
   },
   'manager': {
     'progress.any': L('Solid progress. Do you need any support from me?', 'تقدم ممتاز. محتاج دعم مني؟', 'سوليد بروقرس. دو يو نيد اني سبورت فروم مي؟'),
@@ -9384,7 +9384,7 @@ const RP_ALT = {
     'next.any': L('Well done. See you at the next lesson!', 'ما شا الله. نشوفك بالدرس الجاي!', 'ويل دون. سي يو ات ذا نيكست لسن!')
   },
   'friend': {
-    'how.any': L('Good to hear. What have you been doing lately?', 'الخير والحمدلله. وش تسوي هالفتره؟', 'قود تو هير. وات هاف يو بين دوينج ليتلي؟'),
+    'how.any': L('Good to hear. What have you been doing lately?', 'الخير والحمدلله. وش تسوي هالفتره؟', 'قود تو هير. وات هاڤ يو بين دوينج ليتلي؟'),
     'up.any': L('That sounds fun. Want to meet up this weekend?', 'حلو ذا. تبي نتقابل ذا الويكند؟', 'ذات ساوندز فن. وانت تو ميت اب ذيس ويكيند؟'),
     'weekend.yes': L('Awesome. What about the mall on Friday?', 'عظيم. وش رايك المول يوم الجمعه؟', 'اوسم. وات اباوت ذا مول اون فرايدي؟'),
     'weekend.no': L('All good, another time then.', 'ولا يهمك، وقت ثاني.', 'اول قود، انذر تايم ذين.'),
@@ -9412,12 +9412,12 @@ const RP_ALT = {
   'bank-teller': {
     'need.any': L('Of course, may I see your ID first?', 'اكيد، ممكن اشوف هويتك اول؟', 'اوف كورس، ماي اي سي يور اي دي فيرست؟'),
     'id.any': L('Perfect, give me one moment to process it.', 'ممتاز، اعطني لحظه اجهزها.', 'بيرفكت، قيڤ مي ون مومنت تو بروسس ات.'),
-    'process.no': L('Thank you. Have a wonderful day.', 'شكرا. يومك حلو.', 'ثانك يو. هاف ا وندر فول داي.'),
+    'process.no': L('Thank you. Have a wonderful day.', 'شكرا. يومك حلو.', 'ثانك يو. هاڤ ا وندر فول داي.'),
     'process.any': L('Of course, what else can I do?', 'اكيد، وش ثاني اسوي لك؟', 'اوف كورس، وات الس كان اي دو؟')
   },
   'flight-attendant': {
     'drink.any': L('Coming up. Would you like something to eat as well?', 'الحين اجيبه. تبي شي تاكله لسه؟', 'كمنق اب. ود يو لايك سمثنق تو ات از ويل؟'),
-    'food.any': L('There you go. Have a pleasant flight.', 'تفضل. رحله ممتعه.', 'ذير يو قو. هاف ا بليزنت فلايت.')
+    'food.any': L('There you go. Have a pleasant flight.', 'تفضل. رحله ممتعه.', 'ذير يو قو. هاڤ ا بليزنت فلايت.')
   },
   'coworker': {
     'lunch.yes': L('Nice one. Any place in mind?', 'حلو. عندك مكان ببالك؟', 'نايس ون. اني بليس ان مويند؟'),
@@ -9544,7 +9544,7 @@ function replyOut(script, state, leadAr, obj){
 }
 const RP_WRAPS = [
   L('Thank you, take care!', 'شكرا لك، مع السلامه!', 'ثانك يو، تيك كير!'),
-  L('Have a great day.', 'يومك مبسوط.', 'هاف ا قريت داي.'),
+  L('Have a great day.', 'يومك مبسوط.', 'هاڤ ا قريت داي.'),
   L('Let me know if there is anything else I can do for you.', 'خبرني اذا فيه شي ثاني اقدر اسويه لك.', 'ليت مي نو اف ذير از انيثينج الس اي كان دو فور يو.')
 ];
 function warnReply(step, leadAr, custom){
@@ -10330,13 +10330,13 @@ function directionAcademies(){
 
 /* ---- vocabulary bank (full trilingual flashcard fields) ---- */
 const VOCAB_BANK = [
-  {en:'Reservation', ipa:'/ˌrɛzərˈveɪʃən/', ar: 'حجز', translit: 'ريزرڤيشن', example:{en:'I have a reservation for two.', ar: 'عندي حجز لشخصين.', translit: 'اي هاف ا ريزرڤيشن فور تو.'}, synonyms:'Booking', antonyms:'Cancellation', family:'reserve, reserved, reserving', collocations:'make a reservation, confirm a reservation', category:'Restaurant English', difficulty:'Intermediate', tip:'Many Arabic speakers say "booking" instead, both are fine, "reservation" sounds more formal.', synonyms_ar: 'حجز', antonyms_ar: 'الغاء', family_ar: 'ريزيرف، محجوز، يحجز', collocations_ar: 'احجز، اكد الحجز', tip_ar: 'ناس كثير يقولون booking بدل reservation، الاثنين صح بس reservation احلى', mistake:'Saying "I have booking" instead of "I have a reservation" or "I have a booking."'},
+  {en:'Reservation', ipa:'/ˌrɛzərˈveɪʃən/', ar: 'حجز', translit: 'ريزرڤيشن', example:{en:'I have a reservation for two.', ar: 'عندي حجز لشخصين.', translit: 'اي هاڤ ا ريزرڤيشن فور تو.'}, synonyms:'Booking', antonyms:'Cancellation', family:'reserve, reserved, reserving', collocations:'make a reservation, confirm a reservation', category:'Restaurant English', difficulty:'Intermediate', tip:'Many Arabic speakers say "booking" instead, both are fine, "reservation" sounds more formal.', synonyms_ar: 'حجز', antonyms_ar: 'الغاء', family_ar: 'ريزيرف، محجوز، يحجز', collocations_ar: 'احجز، اكد الحجز', tip_ar: 'ناس كثير يقولون booking بدل reservation، الاثنين صح بس reservation احلى', mistake:'Saying "I have booking" instead of "I have a reservation" or "I have a booking."'},
   {en:'Confident', ipa:'/ˈkɑːnfɪdənt/', ar: 'واثق', translit: 'كونفادانت', example:{en:'She feels confident speaking English now.', ar: 'صارت تحس بثقه وهي تتكلم انجليزي.', translit: 'شي فيلز كانفدنت سبيكنج انجلش ناو.'}, synonyms:'Self-assured, certain', antonyms:'Nervous, unsure', family:'confidence, confidently', collocations:'feel confident, sound confident', category:'General', difficulty:'Beginner', tip: 'Stress the first syllable: CON-fi-dent.', synonyms_ar: 'واثق، متاكد', antonyms_ar: 'متوتر، غير متاكد', family_ar: 'ثقه، بثقه', collocations_ar: 'تحس بثقه، يبان واثق', tip_ar: 'شد على اول جز: CON-fi-dent', mistake:'Pronouncing it as "con-FI-dent" with wrong stress.'},
   {en:'Negotiate', ipa:'/nɪˈɡoʊʃieɪt/', ar: 'يتفاوض', translit: 'ناقوشييت', example:{en:'We negotiated a better price.', ar: 'تفاوضنا على سعر افضل.', translit: 'وي نيقوشييتد ا بيتر برايس.'}, synonyms:'Bargain, discuss', antonyms:'Concede', family:'negotiation, negotiator', collocations:'negotiate a deal, negotiate a price', category:'Business English', difficulty:'Advanced', tip: 'Common in salary and price conversations.', synonyms_ar: 'فاوض، ناقش', antonyms_ar: 'تنازل', family_ar: 'تفاوض، مفاوض', collocations_ar: 'فاوض على صفقه، فاوض على سعر', tip_ar: 'كلمه شايعه في محادثات الراتب والاسعار', mistake:'Confusing "negotiate" with "argue," negotiating is calm and respectful.'},
   {en:'Deadline', ipa:'/ˈdɛdlaɪn/', ar: 'موعد نهائي', translit: 'ديدلاين', example:{en:'The deadline is next Thursday.', ar: 'الموعد النهائي يوم الخميس الجاي.', translit: 'ذا دد لاين از نكست ثيرزداي.'}, synonyms:'Due date', antonyms:'-', family:'-', collocations:'meet a deadline, miss a deadline', category:'Workplace Communication', difficulty:'Intermediate', tip: 'Very common word in office English.', synonyms_ar: 'موعد نهائي', antonyms_ar: 'تمديد', family_ar: 'موعد نهائي، مواعيد نهائيه', collocations_ar: 'تلحق بالموعد النهائي، يفوتك الموعد النهائي', tip_ar: 'الموعد النهائي هو اخر وقت للتسليم', mistake:'Saying "the last date" instead of "the deadline."'},
   {en:'Itinerary', ipa:'/aɪˈtɪnəˌrɛri/', ar: 'خط سير الرحله', translit: 'ايتينيريري', example:{en:'Can you send me the itinerary?', ar: 'ممكن ترسل لي خط سير الرحله؟', translit: 'كان يو سند مي ذا ايتنراري؟'}, synonyms:'Travel plan, schedule', antonyms:'-', family:'-', collocations:'travel itinerary, daily itinerary', category:'Travel English', difficulty:'Advanced', tip: 'A slightly formal word, common with travel agents and hotels.', synonyms_ar: 'خط سير، جدول', antonyms_ar: '-', family_ar: '-', collocations_ar: 'خط سير رحله، خط سير يومي', tip_ar: 'كلمه شوي راقيه، شايعه مع السفر والفنادق', mistake:'Mispronouncing as "eye-tin-uh-ree," it is "eye-TIN-uh-rer-ee."'},
   {en:'Refund', ipa:'/ˈriːfʌnd/', ar: 'استرجاع المبلغ', translit: 'ريفاند', example:{en:'I would like a refund for this item.', ar: 'ابي استرجاع المبلغ لذلك الغرض.', translit: 'اي ود لايك ا ريفاند فور ذيس ايتام.'}, synonyms:'Reimbursement', antonyms:'Charge', family:'refunded, refunding', collocations:'request a refund, full refund', category:'Shopping English', difficulty:'Intermediate', tip:'Noun stress is on the first syllable, verb stress moves to the second: "please REfund me" vs "a REfund."', synonyms_ar: 'استرجاع المبلغ', antonyms_ar: 'رسوم', family_ar: 'مسترجع، يسترجع', collocations_ar: 'اطلب استرجاع، استرجاع كامل', tip_ar: 'الاسم تشديد على اول جز، الفعل تشديد على ثاني جز', mistake:'Asking "give me back money" instead of "I would like a refund."'},
-  {en:'Layover', ipa:'/ˈleɪˌoʊvər/', ar: 'توقف بين رحلتين', translit: 'لايوڤر', example:{en:'We have a two hour layover in Dubai.', ar: 'عندنا توقف ساعتين في دبي.', translit: 'وي هاف ا تو اور لاي اوڤر ان دبي.'}, synonyms:'Stopover', antonyms:'Direct flight', family:'-', collocations:'short layover, long layover', category:'Airport English', difficulty:'Intermediate', tip: 'Very common word at check-in counters.', synonyms_ar: 'توقف بين رحلتين', antonyms_ar: 'رحله مباشره', family_ar: '-', collocations_ar: 'توقف قصير، توقف طويل', tip_ar: 'كلمه شايعه عند كاونتر تسجيل الدخول', mistake:'Using "stop" alone instead of "layover" or "stopover."'},
+  {en:'Layover', ipa:'/ˈleɪˌoʊvər/', ar: 'توقف بين رحلتين', translit: 'لايوڤر', example:{en:'We have a two hour layover in Dubai.', ar: 'عندنا توقف ساعتين في دبي.', translit: 'وي هاڤ ا تو اور لاي اوڤر ان دبي.'}, synonyms:'Stopover', antonyms:'Direct flight', family:'-', collocations:'short layover, long layover', category:'Airport English', difficulty:'Intermediate', tip: 'Very common word at check-in counters.', synonyms_ar: 'توقف بين رحلتين', antonyms_ar: 'رحله مباشره', family_ar: '-', collocations_ar: 'توقف قصير، توقف طويل', tip_ar: 'كلمه شايعه عند كاونتر تسجيل الدخول', mistake:'Using "stop" alone instead of "layover" or "stopover."'},
   {en:'Complimentary', ipa:'/ˌkɑːmplɪˈmɛntəri/', ar: 'مجاني، مقدم كهديه', translit: 'كومبلامينتيري', example:{en:'Breakfast is complimentary at this hotel.', ar: 'الفطور مجاني في ذا الفندق.', translit: 'بريكفاست از كامبلمنتري ات ذيس هوتيل.'}, synonyms:'Free, gratis', antonyms:'Paid', family:'compliment, complimented', collocations:'complimentary breakfast, complimentary wifi', category:'Hotel English', difficulty:'Advanced', tip:'Do not confuse with "complementary" (matching), spelled with an e.', synonyms_ar: 'مجاني، هديه', antonyms_ar: 'مدفوع', family_ar: 'مجامله', collocations_ar: 'فطور مجاني، واي فاي مجاني', tip_ar: 'لا تخلط بينها وبين complementary اللي معناها متكامل', mistake:'Saying "free" is fine casually, but hotels prefer "complimentary."'},
   {en:'Colleague', ipa:'/ˈkɑːliːɡ/', ar: 'زميل بالشغل', translit: 'كوليق', example:{en:'My colleague will join the meeting.', ar: 'زميلي بينضم للاجتماع.', translit: 'ماي كولييج ويل جوين ذا ميتنج.'}, synonyms:'Coworker', antonyms:'-', family:'-', collocations:'close colleague, former colleague', category:'Workplace Communication', difficulty:'Intermediate', tip:'More professional than "coworker."', synonyms_ar: 'زميل عمل', antonyms_ar: 'منافس', family_ar: 'زميل، زملاء', collocations_ar: 'زميل مقرب، زميل عمل', tip_ar: 'الزميل هو احد تشتغل معه', mistake:'Pronouncing the "gue" ending, it is silent: "co-LEEG."'},
   {en:'Punctual', ipa:'/ˈpʌŋktʃuəl/', ar: 'يلتزم بالمواعيد', translit: 'بانجكتشوال', example:{en:'He is always punctual for meetings.', ar: 'دايم يلتزم بالوقت في الاجتماعات.', translit: 'هي از اولويز بنكتشول فور ميتنجز.'}, synonyms:'On time, prompt', antonyms:'Late, tardy', family:'punctuality', collocations:'punctual arrival', category:'Business English', difficulty:'Advanced', tip: 'Highly valued in American workplace culture.', synonyms_ar: 'دقيق بالوقت، ملتزم', antonyms_ar: 'متاخر', family_ar: 'دقه', collocations_ar: 'وصول دقيق', tip_ar: 'مهمه مره في ثقافه الشغل الامريكيه', mistake:'Saying "on the time" instead of "on time" or "punctual."'},
@@ -10347,11 +10347,11 @@ const VOCAB_BANK = [
   {en:'Exchange Rate', ipa:'/ɪksˈtʃeɪndʒ reɪt/', ar: 'سعر الصرف', translit: 'اكستشينج ريت', example:{en:'What is the exchange rate today?', ar: 'كم سعر الصرف اليوم؟', translit: 'وات از ذا اكس تشينج ريت تودي؟'}, synonyms:'Conversion rate', antonyms:'-', family:'exchange, exchanged', collocations:'exchange rate, exchange money', category:'Travel English', difficulty:'Intermediate', tip: 'Airport counters usually give worse rates than banks.', synonyms_ar: 'سعر الصرف', antonyms_ar: '-', family_ar: 'يصرف، مصروف', collocations_ar: 'سعر الصرف، صرف فلوس', tip_ar: 'كاونترات المطار عاده تعطي اسعار اقل من البنوك', mistake:'Saying "change rate" instead of "exchange rate."'},
   {en:'Currency', ipa:'/ˈkɜːrənsi/', ar: 'عمله', translit: 'كيرانسي', example:{en:'Which currency should I use in Turkey?', ar: 'اي عمله استخدم في تركيا؟', translit: 'ويتش كيرنسي شود اي يوز ان تركي؟'}, synonyms:'Money, tender', antonyms:'-', family:'-', collocations:'foreign currency, local currency', category:'Travel English', difficulty:'Intermediate', tip: 'Most ATMs ask which currency to charge, choose local.', synonyms_ar: 'عمله', antonyms_ar: '-', family_ar: '-', collocations_ar: 'عمله اجنبيه، عمله محليه', tip_ar: 'اكثر ATM يسال عن نوع الشغله، اختار المحليه', mistake:'Saying "cash" when you mean the type of money, currency.'},
   {en:'Side Dish', ipa:'/saɪd dɪʃ/', ar: 'طبق جانبي', translit: 'سايديش', example:{en:'Does the grilled chicken come with a side dish?', ar: 'الدجاج المشوي يجي معه طبق جانبي؟', translit: 'داز ذا قريلد تشكن كم وذ ا سايد ديش؟'}, synonyms:'Accompaniment', antonyms:'Main course', family:'-', collocations:'side salad, side of fries', category:'Restaurant English', difficulty:'Beginner', tip:'"With a side of fries" is the natural way to ask.', synonyms_ar: 'طبق جانبي', antonyms_ar: 'طبق رييسي', family_ar: '-', collocations_ar: 'سلطه جانبيه، بطاطا جانبيه', tip_ar: 'with a side of fries هي الطريقه الطبيعيه للطلب', mistake:'Saying "small dish" instead of "side dish."'},
-  {en:'The Check', ipa:'/ðə tʃek/', ar: 'الحساب (فاتوره المطعم)', translit: 'ذا تشيك', example:{en:'Could we have the check, please?', ar: 'ممكن الحساب لو سمحت؟', translit: 'كود وي هاف ذا تشيك، بليز؟'}, synonyms:'The bill', antonyms:'-', family:'-', collocations:'ask for the check, pay the check', category:'Restaurant English', difficulty:'Beginner', tip:'In the US you ask for "the check", in the UK it is "the bill."', synonyms_ar: 'الحساب', antonyms_ar: '-', family_ar: '-', collocations_ar: 'اطلب الحساب، ادفع الحساب', tip_ar: 'في امريكا تقول the check وفي بريطانيا the bill', mistake:'Saying "the account" instead of "the check" or "the bill."'},
+  {en:'The Check', ipa:'/ðə tʃek/', ar: 'الحساب (فاتوره المطعم)', translit: 'ذا تشيك', example:{en:'Could we have the check, please?', ar: 'ممكن الحساب لو سمحت؟', translit: 'كود وي هاڤ ذا تشيك، بليز؟'}, synonyms:'The bill', antonyms:'-', family:'-', collocations:'ask for the check, pay the check', category:'Restaurant English', difficulty:'Beginner', tip:'In the US you ask for "the check", in the UK it is "the bill."', synonyms_ar: 'الحساب', antonyms_ar: '-', family_ar: '-', collocations_ar: 'اطلب الحساب، ادفع الحساب', tip_ar: 'في امريكا تقول the check وفي بريطانيا the bill', mistake:'Saying "the account" instead of "the check" or "the bill."'},
   {en:'Tip', ipa:'/tɪp/', ar: 'بقشيش', translit: 'تيب', example:{en:'Is the tip included in the total?', ar: 'البقشيش داخل في الاجمالي؟', translit: 'از ذا تيب انكلودد ان ذا توتل؟'}, synonyms:'Gratuity', antonyms:'-', family:'tipping, tipped', collocations:'leave a tip, generous tip', category:'Restaurant English', difficulty:'Intermediate', tip: 'In the US, 15 to 20 percent is the usual tip at sit-down restaurants.', synonyms_ar: 'بقشيش', antonyms_ar: '-', family_ar: 'بقشيش، بقشيش', collocations_ar: 'اعطي بقشيش، بقشيش كريم', tip_ar: 'في امريكا 15 لـ 20 بالميه عاده البقشيش بالمطاعم', mistake:'Leaving no tip and not knowing why the waiter looks upset.'},
-  {en:'Allergy', ipa:'/ˈælərdʒi/', ar: 'حساسيه', translit: 'اليرجي', example:{en:'I have a peanut allergy, is that safe?', ar: 'عندي حساسيه فول سوداني، ذا امن؟', translit: 'اي هاف ا بينت اليرجي، از ذات سيف؟'}, synonyms:'Intolerance', antonyms:'-', family:'allergic, allergist', collocations:'food allergy, allergic to', category:'Restaurant English', difficulty:'Intermediate', tip:'Always say "I am allergic to..." clearly, allergies are taken seriously.', synonyms_ar: 'حساسيه', antonyms_ar: '-', family_ar: 'حساس، حساسيه', collocations_ar: 'حساسيه اكل، حساس لـ', tip_ar: 'دايما قول عندي حساسيه من... بوضوح، الحساسيه شي مهم', mistake:'Saying "I have allergy" without "an" before it.'},
-  {en:'Prescription', ipa:'/prɪˈskrɪpʃən/', ar: 'وصفه طبيه', translit: 'براسكريبشان', example:{en:'The doctor gave me a prescription for antibiotics.', ar: 'الدكتور عطاني وصفه مضادات حيويه.', translit: 'ذا داكتور قيف مي ا بريسكربشن فور انتيبايتكس.'}, synonyms:'Medical order', antonyms:'-', family:'prescribe, prescribed', collocations:'fill a prescription, prescription medication', category:'Hospital English', difficulty:'Advanced', tip:'"Fill a prescription" means getting the medicine from the pharmacy.', synonyms_ar: 'وصفه طبيه', antonyms_ar: '-', family_ar: 'يوصف، موصوف', collocations_ar: 'صرف وصفه، دوا بوصفه', tip_ar: 'fill a prescription يعني تاخذ الدوا من الصيدليه', mistake:'Saying "recipe" instead of "prescription" at the pharmacy.'},
-  {en:'Painkiller', ipa:'/ˈpeɪnˌkɪlər/', ar: 'مسكن الالم', translit: 'بينكيلر', example:{en:'Do you have something for a headache, a painkiller?', ar: 'عندك شي للصداع، مسكن؟', translit: 'دو يو هاف سمثنق فور ا هيديك، ا بين كيلر؟'}, synonyms:'Pain reliever', antonyms:'-', family:'-', collocations:'take a painkiller, strong painkiller', category:'Hospital English', difficulty:'Intermediate', tip:'In a pharmacy, ask for the active ingredient, e.g. "ibuprofen."', synonyms_ar: 'مسكن الالم', antonyms_ar: '-', family_ar: '-', collocations_ar: 'خذ مسكن، مسكن قوي', tip_ar: 'في الصيدليه اسال عن الماده الفعاله مثل ibuprofen', mistake:'Saying "pain medicine" is fine, "painkiller" is more natural.'},
+  {en:'Allergy', ipa:'/ˈælərdʒi/', ar: 'حساسيه', translit: 'اليرجي', example:{en:'I have a peanut allergy, is that safe?', ar: 'عندي حساسيه فول سوداني، ذا امن؟', translit: 'اي هاڤ ا بينت اليرجي، از ذات سيف؟'}, synonyms:'Intolerance', antonyms:'-', family:'allergic, allergist', collocations:'food allergy, allergic to', category:'Restaurant English', difficulty:'Intermediate', tip:'Always say "I am allergic to..." clearly, allergies are taken seriously.', synonyms_ar: 'حساسيه', antonyms_ar: '-', family_ar: 'حساس، حساسيه', collocations_ar: 'حساسيه اكل، حساس لـ', tip_ar: 'دايما قول عندي حساسيه من... بوضوح، الحساسيه شي مهم', mistake:'Saying "I have allergy" without "an" before it.'},
+  {en:'Prescription', ipa:'/prɪˈskrɪpʃən/', ar: 'وصفه طبيه', translit: 'براسكريبشان', example:{en:'The doctor gave me a prescription for antibiotics.', ar: 'الدكتور عطاني وصفه مضادات حيويه.', translit: 'ذا داكتور قيڤ مي ا بريسكربشن فور انتيبايتكس.'}, synonyms:'Medical order', antonyms:'-', family:'prescribe, prescribed', collocations:'fill a prescription, prescription medication', category:'Hospital English', difficulty:'Advanced', tip:'"Fill a prescription" means getting the medicine from the pharmacy.', synonyms_ar: 'وصفه طبيه', antonyms_ar: '-', family_ar: 'يوصف، موصوف', collocations_ar: 'صرف وصفه، دوا بوصفه', tip_ar: 'fill a prescription يعني تاخذ الدوا من الصيدليه', mistake:'Saying "recipe" instead of "prescription" at the pharmacy.'},
+  {en:'Painkiller', ipa:'/ˈpeɪnˌkɪlər/', ar: 'مسكن الالم', translit: 'بينكيلر', example:{en:'Do you have something for a headache, a painkiller?', ar: 'عندك شي للصداع، مسكن؟', translit: 'دو يو هاڤ سمثنق فور ا هيديك، ا بين كيلر؟'}, synonyms:'Pain reliever', antonyms:'-', family:'-', collocations:'take a painkiller, strong painkiller', category:'Hospital English', difficulty:'Intermediate', tip:'In a pharmacy, ask for the active ingredient, e.g. "ibuprofen."', synonyms_ar: 'مسكن الالم', antonyms_ar: '-', family_ar: '-', collocations_ar: 'خذ مسكن، مسكن قوي', tip_ar: 'في الصيدليه اسال عن الماده الفعاله مثل ibuprofen', mistake:'Saying "pain medicine" is fine, "painkiller" is more natural.'},
   {en:'Warranty', ipa:'/ˈwɔːrənti/', ar: 'ضمان', translit: 'ورانتي', example:{en:'This phone is still under warranty.', ar: 'ذا الجوال ما زال تحت الضمان.', translit: 'ذيس فون از ستل اندر وارنتي.'}, synonyms:'Guarantee', antonyms:'-', family:'warrant', collocations:'under warranty, warranty period', category:'Shopping English', difficulty:'Advanced', tip:'"Under warranty" means it is still covered for repairs.', synonyms_ar: 'ضمان', antonyms_ar: '-', family_ar: 'ضمان', collocations_ar: 'تحت الضمان، فتره الضمان', tip_ar: 'under warranty يعني لسه مغطى للتصليح', mistake:'Saying "in warranty" instead of "under warranty."'},
   {en:'Discount', ipa:'/ˈdɪskaʊnt/', ar: 'خصم', translit: 'ديسكاونت', example:{en:'Is there a discount if I pay in cash?', ar: 'فيه خصم لو دفعت كاش؟', translit: 'از ذير ا ديسكاونت اف اي بي ان كاش؟'}, synonyms:'Reduction, markdown', antonyms:'Surcharge', family:'discount, discounted', collocations:'get a discount, student discount', category:'Shopping English', difficulty:'Intermediate', tip:'"On sale" means the price is reduced right now.', synonyms_ar: 'خصم', antonyms_ar: 'رسوم اضافيه', family_ar: 'خصم، مخفض', collocations_ar: 'خذ خصم، خصم طالب', tip_ar: 'on sale يعني السعر مخفوض الحين', mistake:'Saying "there is discount" without "a" before it.'},
   {en:'Fitting Room', ipa:'/ˈfɪtɪŋ ruːm/', ar: 'غرفه القياس', translit: 'فيتينج روم', example:{en:'Where is the fitting room?', ar: 'وين غرفه القياس؟', translit: 'وير از ذا فيتينج روم؟'}, synonyms:'Dressing room', antonyms:'-', family:'fit, fitted', collocations:'try it on, fitting room', category:'Shopping English', difficulty:'Beginner', tip:'"Can I try this on?" is the phrase you need before the room.', synonyms_ar: 'غرفه القياس', antonyms_ar: '-', family_ar: 'يصلح، مظبوط', collocations_ar: 'جربها، غرفه القياس', tip_ar: 'Can I try this on? هي الكلمه اللي تحتاجها قبل الغرفه', mistake:'Saying "measure room" instead of "fitting room."'},
@@ -10364,7 +10364,7 @@ const VOCAB_BANK = [
   {en:'Overtime', ipa:'/ˈoʊvərtaɪm/', ar: 'دوام اضافي', translit: 'وڤيرتايم', example:{en:'I worked overtime all week.', ar: 'داومت اضافي كل الاسبوع.', translit: 'اي وركت اوڤرتيم اول ويك.'}, synonyms:'Extra hours', antonyms:'-', family:'-', collocations:'work overtime, overtime pay', category:'Workplace Communication', difficulty:'Intermediate', tip:'"Time and a half" means one and a half times your normal pay.', synonyms_ar: 'دوام اضافي', antonyms_ar: '-', family_ar: '-', collocations_ar: 'اشتغل اضافي، اجر الاضافي', tip_ar: 'time and a half يعني اجر ونص زياده', mistake:'Saying "extra work" when you mean working extra hours, overtime.'},
   {en:'Raise', ipa:'/reɪz/', ar: 'زياده راتب', translit: 'ريز', example:{en:'I asked my manager for a raise.', ar: 'طلبت من مديري زياده راتب.', translit: 'اي اسكت ماي مانجر فور ا ريز.'}, synonyms:'Pay increase', antonyms:'Pay cut', family:'raise, raised', collocations:'get a raise, ask for a raise', category:'Workplace Communication', difficulty:'Intermediate', tip:'"I would like to discuss my salary" is the polite opener.', synonyms_ar: 'زياده راتب', antonyms_ar: 'تخفيض راتب', family_ar: 'يزيد، زايد', collocations_ar: 'خذ زياده، اطلب زياده', tip_ar: 'حاب اتناقش براتبي هي الطريقه المهذبه', mistake:'Saying "salary increase" is formal, "raise" is the everyday word.'},
   {en:'Agenda', ipa:'/əˈdʒɛndə/', ar: 'جدول الاعمال (اجنده)', translit: 'اجيندا', example:{en:'What is on the agenda for today?', ar: 'وش على الاجنده اليوم؟', translit: 'وات از اون ذا اجندا فور تودي؟'}, synonyms:'Schedule, plan', antonyms:'-', family:'-', collocations:'meeting agenda, on the agenda', category:'Business English', difficulty:'Advanced', tip:'"The first item on the agenda" is a common meeting phrase.', synonyms_ar: 'جدول اعمال', antonyms_ar: '-', family_ar: '-', collocations_ar: 'جدول الاجتماع، على الجدول', tip_ar: 'اول بند على الجدول كلمه شايعه بالاجتماعات', mistake:'Saying "the agenda of the meeting" is heavy, say "the meeting agenda."'},
-  {en:'Feedback', ipa:'/ˈfiːdbæk/', ar: 'ملاحظات، راي', translit: 'فيدباك', example:{en:'Could you give me some feedback on my report?', ar: 'ممكن تعطيني ملاحظات على تقريري؟', translit: 'كود يو قيف مي سم فيدباك اون ماي ريبورت؟'}, synonyms:'Comments, input', antonyms:'-', family:'-', collocations:'give feedback, positive feedback', category:'Business English', difficulty:'Advanced', tip:'"Constructive feedback" means helpful, not harsh, criticism.', synonyms_ar: 'ملاحظات، راي', antonyms_ar: '-', family_ar: '-', collocations_ar: 'اعطي ملاحظات، ملاحظات ايجابيه', tip_ar: 'constructive feedback يعني نقد مفيد مو قاسي', mistake:'Saying "feedbacks" with an s, it is uncountable.'},
+  {en:'Feedback', ipa:'/ˈfiːdbæk/', ar: 'ملاحظات، راي', translit: 'ڤيدباك', example:{en:'Could you give me some feedback on my report?', ar: 'ممكن تعطيني ملاحظات على تقريري؟', translit: 'كود يو قيڤ مي سم ڤيدباك اون ماي ريبورت؟'}, synonyms:'Comments, input', antonyms:'-', family:'-', collocations:'give feedback, positive feedback', category:'Business English', difficulty:'Advanced', tip:'"Constructive feedback" means helpful, not harsh, criticism.', synonyms_ar: 'ملاحظات، راي', antonyms_ar: '-', family_ar: '-', collocations_ar: 'اعطي ملاحظات، ملاحظات ايجابيه', tip_ar: 'constructive feedback يعني نقد مفيد مو قاسي', mistake:'Saying "feedbacks" with an s, it is uncountable.'},
   {en:'Follow Up', ipa:'/ˈfɑːloʊ ʌp/', ar: 'متابعه', translit: 'فولو اب', example:{en:'I will follow up with you by email.', ar: 'باتابع معاك بالايميل.', translit: 'اي ويل فالو اب وذ يو باي ايميل.'}, synonyms:'Check back', antonyms:'-', family:'follow-up (noun)', collocations:'follow up with, follow-up email', category:'Business English', difficulty:'Intermediate', tip: 'After interviews and meetings, a follow-up email is expected.', synonyms_ar: 'متابعه', antonyms_ar: '-', family_ar: 'متابعه', collocations_ar: 'تابع مع، ايميل متابعه', tip_ar: 'لسه المقابلات والاجتماعات، ايميل متابعه متوقع', mistake:'Saying "follow" without "up": "I will follow you" changes the meaning.'},
   {en:'Father', ipa:'/ˈfɑːðər/', ar: 'اب', translit: 'فاذر', example:{en:'My father works in a hospital.', ar: 'ابوي يشتغل بمستشفى.', translit: 'ماي فاذر وركس ان ا هاسبيتل.'}, synonyms:'Dad', antonyms:'-', family:'fatherhood', collocations:'my father, father and son', category:'Family', difficulty:'Beginner', tip:'The "th" is soft, like in "the": FA-ther.', synonyms_ar: 'اب', antonyms_ar: '-', family_ar: 'ابوه', collocations_ar: 'ابوي، اب وابن', tip_ar: 'حرف th خفيف زي the: FA-ther', mistake:'Saying "fazer" with a z sound instead of the soft th.'},
   {en:'Mother', ipa:'/ˈmʌðər/', ar: 'ام', translit: 'ماذر', example:{en:'My mother cooks the best food.', ar: 'امي تطبخ احلى اكل.', translit: 'ماي ماذر كوكس ذا بيست فود.'}, synonyms:'Mom', antonyms:'-', family:'motherhood', collocations:'my mother, mother tongue', category:'Family', difficulty:'Beginner', tip:'Same soft "th" as father: MU-ther.', synonyms_ar: 'ام', antonyms_ar: '-', family_ar: 'امومه', collocations_ar: 'امي، لغه الام', tip_ar: 'نفس حرف th الخفيف: MU-ther', mistake:'Pronouncing it "mo-zer" instead of "mu-ther."'},
@@ -10373,7 +10373,7 @@ const VOCAB_BANK = [
   {en:'Red', ipa:'/rɛd/', ar: 'احمر', translit: 'ريد', example:{en:'The car is red.', ar: 'السياره حمرا.', translit: 'ذا كار از ريد.'}, synonyms:'Crimson', antonyms:'-', family:'reddish', collocations:'red car, light red', category:'Colors', difficulty:'Beginner', tip: 'One short syllable, keep it quick.', synonyms_ar: 'احمر', antonyms_ar: '-', family_ar: 'محمر', collocations_ar: 'سياره حمرا، احمر فاتح', tip_ar: 'مقطع واحد قصير، خليه سريع', mistake:'Stretching it into "re-ed" with two syllables.'},
   {en:'Blue', ipa:'/bluː/', ar: 'ازرق', translit: 'بلو', example:{en:'The sky is blue today.', ar: 'السما زرقا اليوم.', translit: 'ذا سكاي از بلو تودي.'}, synonyms:'Azure', antonyms:'-', family:'bluish', collocations:'blue sky, dark blue', category:'Colors', difficulty:'Beginner', tip: 'One long vowel sound: bloo.', synonyms_ar: 'ازرق', antonyms_ar: '-', family_ar: 'زرق', collocations_ar: 'سما زرقا، ازرق غامق', tip_ar: 'حرف متحرك واحد طويل: bloo', mistake:'Pronouncing it like "bluh" with a short cut-off.'},
   {en:'Green', ipa:'/ɡriːn/', ar: 'اخضر', translit: 'قرين', example:{en:'The grass is green.', ar: 'العشب اخضر.', translit: 'ذا قراس از قرين.'}, synonyms:'Emerald', antonyms:'-', family:'greenish', collocations:'green light, dark green', category:'Colors', difficulty:'Beginner', tip: 'Long ee sound: green.', synonyms_ar: 'اخضر', antonyms_ar: '-', family_ar: 'خضر', collocations_ar: 'ضو اخضر، اخضر غامق', tip_ar: 'صوت ee طويل: green', mistake:'Saying "grin" with a short i, which is a different word.'},
-  {en:'White', ipa:'/waɪt/', ar: 'ابيض', translit: 'وايت', example:{en:'I have a white shirt.', ar: 'عندي قميص ابيض.', translit: 'اي هاف ا وايت شيرت.'}, synonyms:'Ivory', antonyms:'Black', family:'whitish', collocations:'white shirt, pure white', category:'Colors', difficulty:'Beginner', tip:'The "h" is silent: wyte.', synonyms_ar: 'ابيض', antonyms_ar: 'اسود', family_ar: 'ابيض', collocations_ar: 'قميص ابيض، ابيض نقي', tip_ar: 'حرف h ساكن: wyte', mistake:'Pronouncing the h: "hwite."'},
+  {en:'White', ipa:'/waɪt/', ar: 'ابيض', translit: 'وايت', example:{en:'I have a white shirt.', ar: 'عندي قميص ابيض.', translit: 'اي هاڤ ا وايت شيرت.'}, synonyms:'Ivory', antonyms:'Black', family:'whitish', collocations:'white shirt, pure white', category:'Colors', difficulty:'Beginner', tip:'The "h" is silent: wyte.', synonyms_ar: 'ابيض', antonyms_ar: 'اسود', family_ar: 'ابيض', collocations_ar: 'قميص ابيض، ابيض نقي', tip_ar: 'حرف h ساكن: wyte', mistake:'Pronouncing the h: "hwite."'},
   {en:'Morning', ipa:'/ˈmɔːrnɪŋ/', ar: 'صباح', translit: 'مورنينج', example:{en:'I drink coffee in the morning.', ar: 'اشرب قهوه بالصبح.', translit: 'اي درينك كوفي ان ذا مورنينج.'}, synonyms:'Dawn', antonyms:'Evening', family:'mornings', collocations:'in the morning, early morning', category:'Daily Life', difficulty:'Beginner', tip: 'Stress the first syllable: MORN-ing.', synonyms_ar: 'صباح', antonyms_ar: 'مسا', family_ar: 'صباحات', collocations_ar: 'بالصبح، صباح بدري', tip_ar: 'شد على اول جز: MORN-ing', mistake:'Saying "mor-ning" with even stress.'},
   {en:'Coffee', ipa:'/ˈkɔːfi/', ar: 'قهوه', translit: 'كوفي', example:{en:'I make coffee every morning.', ar: 'اسوي قهوه كل صباح.', translit: 'اي ميك كوفي ايڤري مورنينج.'}, synonyms:'Espresso', antonyms:'-', family:'coffees', collocations:'cup of coffee, make coffee', category:'Daily Life', difficulty:'Beginner', tip: 'Two clear syllables: COFF-ee.', synonyms_ar: 'قهوه', antonyms_ar: '-', family_ar: 'قهوات', collocations_ar: 'فنجان قهوه، سوي قهوه', tip_ar: 'مقطعين واضحين: COFF-ee', mistake:'Saying "coff-ee" too quickly and dropping a syllable.'},
   {en:'Routine', ipa:'/ruːˈtiːn/', ar: 'روتين', translit: 'روتين', example:{en:'My morning routine is simple.', ar: 'روتين الصباح عندي بسيط.', translit: 'ماي مورنينج روتين از سيمبل.'}, synonyms:'Habit, schedule', antonyms:'-', family:'routines', collocations:'daily routine, morning routine', category:'Daily Life', difficulty:'Beginner', tip: 'Stress the last syllable: rou-TINE.', synonyms_ar: 'روتين', antonyms_ar: '-', family_ar: 'روتينات', collocations_ar: 'روتين يومي، روتين صباحي', tip_ar: 'شد على اخر جز: rou-TINE', mistake:'Stressing the first part: "ROU-tine" which sounds odd.'},
@@ -10419,11 +10419,11 @@ const VOCAB_BANK = [
 {en:'Draft', ipa:'/drɑːft/', ar: 'مسوده، نسخه اوليه', translit: 'درافت', example:{en:'This is just a first draft.', ar: 'هذي مجرد مسوده اولى.', translit: 'ذيس از جاست ا فيرست درافت.'}, synonyms:'outline, sketch', antonyms:'final version', family:'draft, drafted, drafting', collocations:'rough draft, draft an essay', category:'Writing Workshop', difficulty:'Advanced', tip: 'A draft is meant to be improved.', synonyms_ar: 'مسوده', antonyms_ar: 'نسخه نهائيه', family_ar: 'مسوده، مسود', collocations_ar: 'مسوده اوليه، سود مقال', tip_ar: 'المسوده مصممه للتحسين', mistake:'Treating the first draft as the final version.'},
 {en:'Revise', ipa:'/rɪˈvaɪz/', ar: 'يراجع ويعدل', translit: 'ريفايز', example:{en:'Revise your draft for clarity.', ar: 'راجع مسودتك لتكون اوضح.', translit: 'ريفايز يور درافت فور كليريتي.'}, synonyms:'edit, rewrite', antonyms:'keep, leave', family:'revise, revision', collocations:'revise for, revise a draft', category:'Writing Workshop', difficulty:'Advanced', tip: 'Revise for ideas, then edit for grammar.', synonyms_ar: 'يراجع ويعدل', antonyms_ar: 'يبقي', family_ar: 'يراجع، مراجعه', collocations_ar: 'راجع من اجل، راجع مسوده', tip_ar: 'راجع للافكار بعدين عدل للقواعد', mistake:'Revising and editing at the same time.'},
 {en:'Paragraph', ipa:'/ˈpærəɡræf/', ar: 'فقره', translit: 'باراقراف', example:{en:'Each paragraph needs one main idea.', ar: 'كل فقره تحتاج فكره رييسيه واحده.', translit: 'اتش باراجراف نيدز وان مين ايديا.'}, synonyms:'section, stanza', antonyms:'', family:'paragraph', collocations:'opening paragraph, topic sentence', category:'Writing Workshop', difficulty:'Advanced', tip: 'Start a paragraph with its main idea.', synonyms_ar: 'فقره', antonyms_ar: '', family_ar: 'فقره', collocations_ar: 'فقره افتتاحيه، جمله موضوع', tip_ar: 'ابدا الفقره بفكرتها الرييسيه', mistake:'Putting several ideas in one paragraph.'},
-{en:'Espresso', ipa:'/ɛˈsprɛsoʊ/', ar: 'اسبريسو، قهوه مركزه', translit: 'اسبريسو', example:{en:'I\'ll have an espresso, please.', ar: 'ابي اسبريسو لو سمحت.', translit: 'ايل هاف ان اسبريسو، بليز.'}, synonyms:'short black', antonyms:'', family:'espresso', collocations:'double espresso, espresso shot', category:'Coffee Shop English', difficulty:'Beginner', tip: 'Espresso is the base for many drinks.', synonyms_ar: 'اسبريسو', antonyms_ar: '', family_ar: 'اسبريسو', collocations_ar: 'اسبريسو مضاعف، شوت اسبريسو', tip_ar: 'الاسبريسو اساس لكثير مشروبات', mistake:'Pronouncing it as "expresso."'},
+{en:'Espresso', ipa:'/ɛˈsprɛsoʊ/', ar: 'اسبريسو، قهوه مركزه', translit: 'اسبريسو', example:{en:'I\'ll have an espresso, please.', ar: 'ابي اسبريسو لو سمحت.', translit: 'ايل هاڤ ان اسبريسو، بليز.'}, synonyms:'short black', antonyms:'', family:'espresso', collocations:'double espresso, espresso shot', category:'Coffee Shop English', difficulty:'Beginner', tip: 'Espresso is the base for many drinks.', synonyms_ar: 'اسبريسو', antonyms_ar: '', family_ar: 'اسبريسو', collocations_ar: 'اسبريسو مضاعف، شوت اسبريسو', tip_ar: 'الاسبريسو اساس لكثير مشروبات', mistake:'Pronouncing it as "expresso."'},
 {en:'Latte', ipa:'/ˈlɑːteɪ/', ar: 'لاتيه، قهوه بالحليب', translit: 'لاتيه', example:{en:'A latte has more milk than coffee.', ar: 'اللاتيه فيه حليب اكثر من القهوه.', translit: 'ا لاتيه هاز مور ميلك ذان كوفي.'}, synonyms:'cafe latte', antonyms:'', family:'latte', collocations:'order a latte, iced latte', category:'Coffee Shop English', difficulty:'Beginner', tip: 'Stress the second part: la-TAY.', synonyms_ar: 'لاتيه', antonyms_ar: '', family_ar: 'لاتيه', collocations_ar: 'اطلب لاتيه، لاتيه مثلج', tip_ar: 'شد على الجزء الثاني: la-TAY', mistake:'Saying "lat-ee" instead of "la-TAY."'},
 {en:'Barista', ipa:'/bəˈriːstə/', ar: 'باريستا، صانع القهوه', translit: 'باريستا', example:{en:'The barista made a nice latte art.', ar: 'الباريستا صمم رسمه لاتيه حلوه.', translit: 'ذا باريستا ميد ا نايس لاتيه ارت.'}, synonyms:'coffee maker', antonyms:'', family:'barista', collocations:'ask the barista, skilled barista', category:'Coffee Shop English', difficulty:'Beginner', tip: 'A barista prepares and serves coffee.', synonyms_ar: 'باريستا', antonyms_ar: '', family_ar: 'باريستا', collocations_ar: 'اسال الباريستا، باريستا محترف', tip_ar: 'الباريستا يجهز ويقدم القهوه', mistake:'Pronouncing it "bar-ista" with wrong stress.'},
 {en:'To Go', ipa:'/tu ɡoʊ/', ar: 'للسفري، يوخذ معاك', translit: 'تو قو', example:{en:'Coffee to go, please.', ar: 'قهوه للسفري لو سمحت.', translit: 'كوفي تو قو، بليز.'}, synonyms:'takeaway, takeout', antonyms:'for here, dine in', family:'go', collocations:'to go order, for here or to go', category:'Coffee Shop English', difficulty:'Beginner', tip:'"To go" means take it with you.', synonyms_ar: 'للسفري', antonyms_ar: 'للحضور', family_ar: 'يروح', collocations_ar: 'طلب سفري، هنا ولا سفري', tip_ar: 'to go يعني خذها معاك', mistake:'Saying "to go away" instead of "to go."'},
-{en:'Decaf', ipa:'/ˈdiːkæf/', ar: 'قهوه منزوعه الكافيين', translit: 'ديكاف', example:{en:'I\'ll have decaf, please.', ar: 'ابي قهوه منزوعه الكافيين لو سمحت.', translit: 'ايل هاف ديكاف، بليز.'}, synonyms:'caffeine-free', antonyms:'regular, caffeinated', family:'decaf, decaffeinated', collocations:'order decaf, decaf coffee', category:'Coffee Shop English', difficulty:'Beginner', tip: 'Decaf is short for decaffeinated.', synonyms_ar: 'قهوه منزوع الكافيين', antonyms_ar: 'عادي', family_ar: 'منزوع الكافيين', collocations_ar: 'اطلب ديكاف، قهوه ديكاف', tip_ar: 'decaf اختصار ل decaffeinated', mistake:'Thinking decaf has zero caffeine; it has a little.'},
+{en:'Decaf', ipa:'/ˈdiːkæf/', ar: 'قهوه منزوعه الكافيين', translit: 'ديكاف', example:{en:'I\'ll have decaf, please.', ar: 'ابي قهوه منزوعه الكافيين لو سمحت.', translit: 'ايل هاڤ ديكاف، بليز.'}, synonyms:'caffeine-free', antonyms:'regular, caffeinated', family:'decaf, decaffeinated', collocations:'order decaf, decaf coffee', category:'Coffee Shop English', difficulty:'Beginner', tip: 'Decaf is short for decaffeinated.', synonyms_ar: 'قهوه منزوع الكافيين', antonyms_ar: 'عادي', family_ar: 'منزوع الكافيين', collocations_ar: 'اطلب ديكاف، قهوه ديكاف', tip_ar: 'decaf اختصار ل decaffeinated', mistake:'Thinking decaf has zero caffeine; it has a little.'},
 {en:'Cool', ipa:'/kuːl/', ar: 'رايع، ممتاز', translit: 'كول', example:{en:'That movie was cool!', ar: 'ذاك الفيلم كان رايعا!', translit: 'ذا موفي واز كول!'}, synonyms:'awesome, great', antonyms:'lame, uncool', family:'cool, cooler', collocations:'look cool, pretty cool', category:'American Slang', difficulty:'Advanced', tip:'"Cool" means good or okay in slang.', synonyms_ar: 'رايع، ممتاز', antonyms_ar: 'سخيف', family_ar: 'كول، اروع', collocations_ar: 'يبان كول، كول مره', tip_ar: 'cool تعني حلو او تمام بالعاميه', mistake:'Using "cool" only for temperature.'},
 {en:'Buck', ipa:'/bʌk/', ar: 'دولار', translit: 'بك', example:{en:'It costs five bucks.', ar: 'يكلف خمسه دولارات.', translit: 'ات كوستس فايڤ بكس.'}, synonyms:'dollar, bill', antonyms:'', family:'buck, bucks', collocations:'a few bucks, make a buck', category:'American Slang', difficulty:'Advanced', tip:'"Buck" is slang for one dollar.', synonyms_ar: 'دولار', antonyms_ar: '', family_ar: 'دولار، دولارات', collocations_ar: 'كم دولار، اصنع دولار', tip_ar: 'buck عاميه تعني دولار واحد', mistake:'Thinking it only means a male deer.'},
 {en:'Hang Out', ipa:'/ˈhæŋ ˌaʊt/', ar: 'يقضي وقتا مع، يتسكع', translit: 'هانج اوت', example:{en:'Let\'s hang out this weekend.', ar: 'خلنا نتسكع نهايه الاسبوع.', translit: 'ليتس هانق اوت ذيس ويك اند.'}, synonyms:'chill, spend time', antonyms:'avoid', family:'hang, hanging out', collocations:'hang out with, hang out at', category:'American Slang', difficulty:'Advanced', tip:'Past tense is "hung out."', synonyms_ar: 'يقضي وقت مع، يتسكع', antonyms_ar: 'يتجنب', family_ar: 'يتسكع، يتسكع', collocations_ar: 'تسكع مع، تسكع في', tip_ar: 'بالماضي تصير hung out', mistake:'Saying "hangouted" instead of "hung out."'},
@@ -10466,7 +10466,7 @@ const VOCAB_BANK = [
 {en:'Thank you', ipa:'/θæŋk juː/', ar: 'شكرا لك', translit: 'ثانك يو', example:{en:'Thank you for your help.', ar: 'شكرا لك على مساعدتك.', translit: 'ثانك يو فور يور هيلب.'}, synonyms:'thanks, much obliged', antonyms:'', family:'thank, thanks', collocations:'say thank you, thank you so much', category:'Greetings', difficulty:'Beginner', tip:'"Thank you" shows gratitude.', synonyms_ar: 'شكرا لك', antonyms_ar: '', family_ar: 'شكرا، شكر', collocations_ar: 'قل شكرا، شكرا جزيلا', tip_ar: 'شكرا تظهر الامتنان', mistake:'Forgetting to thank someone who helped.'},
 {en:'Invitation', ipa:'/ˌɪnvɪˈteɪʃən/', ar: 'دعوه', translit: 'انڤيتيشان', example:{en:'Thank you for the invitation.', ar: 'شكرا على الدعوه.', translit: 'ثانك يو فور ذا انفيتيهيشن.'}, synonyms:'invite, summons', antonyms:'rejection', family:'invite, invited', collocations:'accept an invitation, send an invitation', category:'Conversations', difficulty:'Intermediate', tip: 'An invitation asks someone to come.', synonyms_ar: 'دعوه', antonyms_ar: 'رفض', family_ar: 'يدعو، مدعو', collocations_ar: 'اقبل دعوه، ابعت دعوه', tip_ar: 'الدعوه تطلب من احد يجي', mistake:'Forgetting to RSVP to an invitation.'},
 {en:'Host', ipa:'/hoʊst/', ar: 'مضيف', translit: 'هوست', example:{en:'Our host welcomed everyone.', ar: 'مضيفنا رحب بالكل.', translit: 'اور هوست ولكمد افريوان.'}, synonyms:'host, entertainer', antonyms:'guest', family:'host, hosted', collocations:'play host, host a gathering', category:'Conversations', difficulty:'Intermediate', tip: 'The host receives the guests.', synonyms_ar: 'مضيف', antonyms_ar: 'ضيف', family_ar: 'مضيف، استضاف', collocations_ar: 'استضاف، استضاف تجمع', tip_ar: 'المضيف يستقبل الضيوف', mistake:'Confusing host (person) with host (a lot).'},
-{en:'Guest', ipa:'/ɡɛst/', ar: 'ضيف', translit: 'قيست', example:{en:'We have guests tonight.', ar: 'عندنا ضيوف الليله.', translit: 'وي هاف جستس تونايت.'}, synonyms:'visitor', antonyms:'host', family:'guest, guests', collocations:'welcome a guest, house guest', category:'Conversations', difficulty:'Intermediate', tip: 'A guest is someone you invited.', synonyms_ar: 'ضيف', antonyms_ar: 'مضيف', family_ar: 'ضيف، ضيوف', collocations_ar: 'رحب بضيف، ضيف بالبيت', tip_ar: 'الضيف هو احد مدعو', mistake:'Confusing "guest" with "quest."'},
+{en:'Guest', ipa:'/ɡɛst/', ar: 'ضيف', translit: 'قيست', example:{en:'We have guests tonight.', ar: 'عندنا ضيوف الليله.', translit: 'وي هاڤ جستس تونايت.'}, synonyms:'visitor', antonyms:'host', family:'guest, guests', collocations:'welcome a guest, house guest', category:'Conversations', difficulty:'Intermediate', tip: 'A guest is someone you invited.', synonyms_ar: 'ضيف', antonyms_ar: 'مضيف', family_ar: 'ضيف، ضيوف', collocations_ar: 'رحب بضيف، ضيف بالبيت', tip_ar: 'الضيف هو احد مدعو', mistake:'Confusing "guest" with "quest."'},
 {en:'Gathering', ipa:'/ˈɡæðərɪŋ/', ar: 'تجمع، مجلس', translit: 'قاذيرينج', example:{en:'The family gathering was lovely.', ar: 'كان تجمع العايله لطيفا.', translit: 'ذا فاميلي قاذيرينج واز لافلي.'}, synonyms:'meetup, assembly', antonyms:'dispersal', family:'gather, gathering', collocations:'family gathering, social gathering', category:'Conversations', difficulty:'Intermediate', tip: 'A gathering is people meeting together.', synonyms_ar: 'تجمع، مجلس', antonyms_ar: 'تفرق', family_ar: 'يجتمع، تجمع', collocations_ar: 'تجمع عايلي، تجمع اجتماعي', tip_ar: 'التجمع هو ناس يجتمعون مع بعض', mistake:'Calling every gathering a "party."'},
 {en:'Hospitality', ipa:'/ˌhɒspɪˈtæləti/', ar: 'كرم الضيافه', translit: 'هاسباتالاتي', example:{en:'Arab hospitality is famous.', ar: 'كرم الضيافه العربي معروف.', translit: 'عرب هوسبيتاليتي از فايمس.'}, synonyms:'welcome, generosity', antonyms:'coldness', family:'hospitable, hospitality', collocations:'show hospitality, generous hospitality', category:'Conversations', difficulty:'Intermediate', tip: 'Hospitality is warm welcoming of guests.', synonyms_ar: 'كرم الضيافه', antonyms_ar: 'برود', family_ar: 'ضيافي، ضيافه', collocations_ar: 'اظهر ضيافه، ضيافه كريمه', tip_ar: 'الضيافه هي استقبال الضيوف بحراره', mistake:'Confusing it with "hospital."'},
 {en:'Meeting', ipa:'/ˈmiːtɪŋ/', ar: 'اجتماع', translit: 'ميتينج', example:{en:'The meeting starts at ten.', ar: 'الاجتماع يبدا العاشره.', translit: 'ذا ميتينج ستارتس ات تين.'}, synonyms:'gathering, discussion', antonyms:'breakup', family:'meet, meeting', collocations:'schedule a meeting, team meeting', category:'At Work', difficulty:'Intermediate', tip: 'A meeting is a planned work talk.', synonyms_ar: 'اجتماع', antonyms_ar: 'تفرق', family_ar: 'يلتقي، اجتماع', collocations_ar: 'جدول اجتماع، اجتماع فريق', tip_ar: 'الاجتماع حديث عمل مخطط له', mistake:'Confusing "meeting" (event) with "meet" (verb).'},
@@ -10474,10 +10474,10 @@ const VOCAB_BANK = [
 {en:'Colleague', ipa:'/ˈkɒliːɡ/', ar: 'زميل عمل', translit: 'كوليق', example:{en:'My colleague helped me.', ar: 'ساعدني زميلي في الشغل.', translit: 'ماي كوليج هيلب مي.'}, synonyms:'coworker, associate', antonyms:'rival', family:'colleague, colleagues', collocations:'a close colleague, work colleague', category:'At Work', difficulty:'Intermediate', tip: 'A colleague is someone you work with.', synonyms_ar: 'زميل عمل', antonyms_ar: 'منافس', family_ar: 'زميل، زملاء', collocations_ar: 'زميل مقرب، زميل عمل', tip_ar: 'الزميل هو احد تشتغل معه', mistake:'Pronouncing it "col-league" as two words.'},
 {en:'Shift', ipa:'/ʃɪft/', ar: 'ورديه عمل', translit: 'شيفت', example:{en:'I work the night shift.', ar: 'اعمل في ورديه الليل.', translit: 'اي ورك ذا نايت شفت.'}, synonyms:'work period, turn', antonyms:'day off', family:'shift, shifts', collocations:'night shift, day shift', category:'At Work', difficulty:'Intermediate', tip: 'A shift is one work period.', synonyms_ar: 'ورديه عمل', antonyms_ar: 'اجازه', family_ar: 'ورديه، ورديات', collocations_ar: 'ورديه ليل، ورديه نهار', tip_ar: 'الورديه هي فتره عمل واحده', mistake:'Confusing shift (work) with shift (move).'},
 {en:'Approve', ipa:'/əˈpruːv/', ar: 'يوافق، يعتمد', translit: 'ابروف', example:{en:'The manager approved my request.', ar: 'وافق المدير على طلبي.', translit: 'ذا ماناجر ابروفد ماي ريكويست.'}, synonyms:'accept, authorize', antonyms:'reject, deny', family:'approve, approval', collocations:'approve a request, approve of', category:'At Work', difficulty:'Intermediate', tip:'"Approve a request" = accept it officially.', synonyms_ar: 'يوافق', antonyms_ar: 'يرفض', family_ar: 'يوافق، موافقه', collocations_ar: 'وافق على طلب، وافق على', tip_ar: 'وافق على طلب يعني قبله رسميا', mistake:'Saying "approve on" instead of "approve."'},
-{en:'Appointment', ipa:'/əˈpɔɪntmənt/', ar: 'موعد (طبي)', translit: 'ابوينتمنت', example:{en:'I have a doctor\'s appointment.', ar: 'عندي موعد مع الطبيب.', translit: 'اي هاف ا دوكتورز ابوينتمنت.'}, synonyms:'booking, slot', antonyms:'cancellation', family:'appoint, appointment', collocations:'make an appointment, cancel an appointment', category:'Hospital English', difficulty:'Intermediate', tip: 'Book an appointment before you go.', synonyms_ar: 'موعد طبي', antonyms_ar: 'الغاء', family_ar: 'يعين، موعد', collocations_ar: 'احجز موعد، الغي موعد', tip_ar: 'احجز موعد قبل ما تروح', mistake:'Saying "I have appointment" instead of "an appointment."'},
+{en:'Appointment', ipa:'/əˈpɔɪntmənt/', ar: 'موعد (طبي)', translit: 'ابوينتمنت', example:{en:'I have a doctor\'s appointment.', ar: 'عندي موعد مع الطبيب.', translit: 'اي هاڤ ا دوكتورز ابوينتمنت.'}, synonyms:'booking, slot', antonyms:'cancellation', family:'appoint, appointment', collocations:'make an appointment, cancel an appointment', category:'Hospital English', difficulty:'Intermediate', tip: 'Book an appointment before you go.', synonyms_ar: 'موعد طبي', antonyms_ar: 'الغاء', family_ar: 'يعين، موعد', collocations_ar: 'احجز موعد، الغي موعد', tip_ar: 'احجز موعد قبل ما تروح', mistake:'Saying "I have appointment" instead of "an appointment."'},
 {en:'Symptom', ipa:'/ˈsɪmptəm/', ar: 'عرض مرضي', translit: 'سيمبتام', example:{en:'A fever is a symptom.', ar: 'الحمى عرض مرضي.', translit: 'ا فيفر از ا سيمبتوم.'}, synonyms:'sign, indication', antonyms:'', family:'symptom, symptomatic', collocations:'mild symptom, common symptom', category:'Hospital English', difficulty:'Intermediate', tip: 'A symptom is a sign of illness.', synonyms_ar: 'عرض مرضي', antonyms_ar: '', family_ar: 'عرض، عرضي', collocations_ar: 'عرض خفيف، عرض شايع', tip_ar: 'العرض اشاره على المرض', mistake:'Confusing symptom with the illness itself.'},
 {en:'Recovery', ipa:'/rɪˈkʌvəri/', ar: 'تعافي، شفا', translit: 'ريكاڤري', example:{en:'Her recovery was quick.', ar: 'تعافيها كان سريعا.', translit: 'هر ريكوفري واز كويك.'}, synonyms:'healing, improvement', antonyms:'relapse', family:'recover, recovery', collocations:'full recovery, speed up recovery', category:'Hospital English', difficulty:'Intermediate', tip: 'Recovery is getting better after illness.', synonyms_ar: 'تعافي', antonyms_ar: 'انتكاسه', family_ar: 'يتعافى، تعافي', collocations_ar: 'تعافي كامل، تسريع التعافي', tip_ar: 'التعافي هو التحسن بعد المرض', mistake:'Confusing recovery with discovery.'},
-{en:'Insurance', ipa:'/ɪnˈʃʊərəns/', ar: 'تامين (صحي)', translit: 'انشورانس', example:{en:'Do you have health insurance?', ar: 'هل عندك تامين صحي؟', translit: 'دو يو هاف هيلث انشورينس؟'}, synonyms:'cover, coverage', antonyms:'', family:'insure, insurance', collocations:'health insurance, insurance card', category:'Hospital English', difficulty:'Intermediate', tip: 'Insurance helps pay for treatment.', synonyms_ar: 'تامين صحي', antonyms_ar: '', family_ar: 'يومن، تامين', collocations_ar: 'تامين صحي، بطاقه التامين', tip_ar: 'التامين يساعد يدفع تكاليف العلاج', mistake:'Forgetting the insurance card at home.'},
+{en:'Insurance', ipa:'/ɪnˈʃʊərəns/', ar: 'تامين (صحي)', translit: 'انشورانس', example:{en:'Do you have health insurance?', ar: 'هل عندك تامين صحي؟', translit: 'دو يو هاڤ هيلث انشورينس؟'}, synonyms:'cover, coverage', antonyms:'', family:'insure, insurance', collocations:'health insurance, insurance card', category:'Hospital English', difficulty:'Intermediate', tip: 'Insurance helps pay for treatment.', synonyms_ar: 'تامين صحي', antonyms_ar: '', family_ar: 'يومن، تامين', collocations_ar: 'تامين صحي، بطاقه التامين', tip_ar: 'التامين يساعد يدفع تكاليف العلاج', mistake:'Forgetting the insurance card at home.'},
 {en:'Checkup', ipa:'/ˈtʃɛkʌp/', ar: 'فحص طبي دوري', translit: 'تشيك اب', example:{en:'Get a yearly checkup.', ar: 'اجر فحصا سنويا.', translit: 'جيت ا ييرلي تشيك اب.'}, synonyms:'examination, screening', antonyms:'', family:'check, checkup', collocations:'routine checkup, medical checkup', category:'Hospital English', difficulty:'Intermediate', tip: 'A checkup catches problems early.', synonyms_ar: 'فحص طبي دوري', antonyms_ar: '', family_ar: 'يفحص، فحص', collocations_ar: 'فحص دوري، فحص طبي', tip_ar: 'الفحص يكشف المشاكل بدري', mistake:'Skipping checkups when you feel fine.'},
 {en:'Ticket', ipa:'/ˈtɪkɪt/', ar: 'تذكره', translit: 'تيكيت', example:{en:'Show your ticket at the gate.', ar: 'اعرض تذكرتك عند البوابه.', translit: 'شو يور تيكيت ات ذا جيت.'}, synonyms:'pass, boarding card', antonyms:'', family:'ticket, tickets', collocations:'book a ticket, plane ticket', category:'Travel English', difficulty:'Beginner', tip: 'Keep your ticket ready at the gate.', synonyms_ar: 'تذكره', antonyms_ar: '', family_ar: 'تذكره، تذاكر', collocations_ar: 'احجز تذكره، تذكره طياره', tip_ar: 'خلي تذكرتك جاهزه عند البوابه', mistake:'Losing the ticket before boarding.'},
 {en:'Passport', ipa:'/ˈpæspɔːrt/', ar: 'جواز سفر', translit: 'باسبورت', example:{en:'Your passport, please.', ar: 'جواز سفرك لو سمحت.', translit: 'يور باسبورت، بليز.'}, synonyms:'ID, travel document', antonyms:'', family:'passport, passports', collocations:'show your passport, renew a passport', category:'Travel English', difficulty:'Beginner', tip: 'Check your passport\'s expiry date.', synonyms_ar: 'جواز سفر', antonyms_ar: '', family_ar: 'جواز، جوازات', collocations_ar: 'اعرض جوازك، جدد جواز', tip_ar: 'تاكد من تاريخ انتها الجواز', mistake:'Traveling with an expired passport.'},
@@ -11025,16 +11025,16 @@ const PRONUNCIATION_TOPICS = [
 /* ---- speaking studio personas ---- */
 const SPEAKING_PERSONAS = [
   {id:'waiter', title:'Restaurant Waiter', icon:'utensils', opener:{en:"Good evening, welcome. Table for how many?", ar: 'مسا الخير وحياكم، طاوله كم شخص؟', translit: 'قود ايڤنينج، ويلكم. تيبل فور هاو مني؟'}},
-  {id:'receptionist', title:'Hotel Receptionist', icon:'bed', opener:{en:'Welcome, do you have a reservation with us?', ar: 'حياكم، عندكم حجز معانا؟', translit: 'ويلكم، دو يو هاف ا ريزرڤيشن وذ اس؟'}},
+  {id:'receptionist', title:'Hotel Receptionist', icon:'bed', opener:{en:'Welcome, do you have a reservation with us?', ar: 'حياكم، عندكم حجز معانا؟', translit: 'ويلكم، دو يو هاڤ ا ريزرڤيشن وذ اس؟'}},
   {id:'airport-officer', title:'Airport Officer', icon:'plane', opener:{en:'Passport and boarding pass, please.', ar: 'الجواز وبطاقه الصعود لو سمحت.', translit: 'باسبورت اند بوردنج باس، بليز.'}},
   {id:'taxi-driver', title:'Taxi Driver', icon:'car', opener:{en:'Where are you headed today?', ar: 'وين وجهتك اليوم؟', translit: 'وير ار يو هيدد تودي؟'}},
-  {id:'doctor', title:'Doctor', icon:'stethoscope', opener:{en:'What symptoms have you been having?', ar: 'وش الاعراض اللي عندك؟', translit: 'وات سيمبتومز هاف يو بين هافينج؟'}},
+  {id:'doctor', title:'Doctor', icon:'stethoscope', opener:{en:'What symptoms have you been having?', ar: 'وش الاعراض اللي عندك؟', translit: 'وات سيمبتومز هاڤ يو بين هاڤينج؟'}},
   {id:'cashier', title:'Cashier', icon:'shopping-bag', opener:{en:'Did you find everything you needed?', ar: 'لقيت كل اللي تبيه؟', translit: 'ديد يو فايند اڤري ثينج يو نيدد؟'}},
   {id:'manager', title:'Manager', icon:'briefcase', opener:{en:"Let's go over your progress this month.", ar: 'خلنا نراجع تقدمك ذا الشهر.', translit: 'ليتس قو اوڤر يور بروقرس ذيس مانث.'}},
-  {id:'teacher', title:'Teacher', icon:'graduation-cap', opener:{en:"Do you have any questions about today's lesson?", ar: 'عندك اساله على درس اليوم؟', translit: 'دو يو هاف اني كويستشنز اباوت تودييز لسن؟'}},
-  {id:'friend', title:'Friend', icon:'smile', opener:{en:'Hey, long time no see, how have you been?', ar: 'هلا والله، من زمان، اخبارك؟', translit: 'هاي، لونق تايم نو سي، هاو هاف يو بين؟'}},
+  {id:'teacher', title:'Teacher', icon:'graduation-cap', opener:{en:"Do you have any questions about today's lesson?", ar: 'عندك اساله على درس اليوم؟', translit: 'دو يو هاڤ اني كويستشنز اباوت تودييز لسن؟'}},
+  {id:'friend', title:'Friend', icon:'smile', opener:{en:'Hey, long time no see, how have you been?', ar: 'هلا والله، من زمان، اخبارك؟', translit: 'هاي، لونق تايم نو سي، هاو هاڤ يو بين؟'}},
   {id:'customer', title:'Customer', icon:'user', opener:{en:'Excuse me, can you help me find something?', ar: 'لو سمحت، تقدر تساعدني الاقي شي؟', translit: 'اكسكوز مي، كان يو هيلب مي فايند سمثنق؟'}},
-  {id:'receptionist-clinic', title:'Clinic Receptionist', icon:'clipboard', opener:{en:'Do you have an appointment today?', ar: 'عندك موعد اليوم؟', translit: 'دو يو هاف ان ابوينتمنت تودي؟'}},
+  {id:'receptionist-clinic', title:'Clinic Receptionist', icon:'clipboard', opener:{en:'Do you have an appointment today?', ar: 'عندك موعد اليوم؟', translit: 'دو يو هاڤ ان ابوينتمنت تودي؟'}},
   {id:'neighbour', title:'Neighbour', icon:'home', opener:{en:'Good morning, moving in today?', ar: 'صباح الخير، بتنتقلون اليوم؟', translit: 'قود مورننج، موينج ان تودي؟'}},
   {id:'bank-teller', title:'Bank Teller', icon:'landmark', opener:{en:'Good morning, how can I help you today?', ar: 'صباح الخير، كيف اقدر اساعدك اليوم؟', translit: 'قود مورننج، هاو كان اي هيلب يو تودي؟'}},
   {id:'flight-attendant', title:'Flight Attendant', icon:'plane', opener:{en:'Welcome aboard. Would you like something to drink?', ar: 'اهلا بكم على متن الرحله. تبي شي تشربه؟', translit: 'ويلكم ابورد. ود يو لايك سمثنق تو درينك؟'}},
@@ -11048,14 +11048,14 @@ const SPEAKING_PERSONAS = [
 const LISTENING_TRACKS = [
   {id:'airport-announcement', title:'Airport Announcement', lines:[
     {en:'Flight 204 to Jeddah is now boarding at gate twelve.', ar: 'رحله 204 لجده الحين تصعيد عند بوابه اثنا عشر.', translit: 'فلايت تو او فور تو جده از ناو بوردنج ات قيت تويلف.'},
-    {en:'Please have your boarding pass and ID ready.', ar: 'خلوا بطاقه الصعود والهويه جاهزه.', translit: 'بليز هاف يور بوردنج باس اند اي دي ردي.'},
+    {en:'Please have your boarding pass and ID ready.', ar: 'خلوا بطاقه الصعود والهويه جاهزه.', translit: 'بليز هاڤ يور بوردنج باس اند اي دي ردي.'},
   ]},
   {id:'coffee-order', title:'At The Coffee Counter', lines:[
     {en:"I'd like a medium latte with oat milk, please.", ar: 'ابي لاتيه وسط بحليب الشوفان لو سمحت.', translit: 'ايد لايك ا ميديم لاتيه وذ اوت ميلك، بليز.'},
     {en:'That will be five Bucks, for here or to go?', ar: 'المجموع خمس دولار، هنا وللا تيك اواي؟', translit: 'ذات ويل بي فايڤ باكس، فور هير اور تو قو؟'},
   ]},
   {id:'hotel-checkin', title:'Hotel Check-in', lines:[
-    {en:'Welcome back, we have you in a king suite.', ar: 'حياك من جديد، مجهزين لك جناح بسرير كبير.', translit: 'ويلكم باك، وي هاف يو ان ا كينج سويت.'},
+    {en:'Welcome back, we have you in a king suite.', ar: 'حياك من جديد، مجهزين لك جناح بسرير كبير.', translit: 'ويلكم باك، وي هاڤ يو ان ا كينج سويت.'},
     {en:'Checkout is at noon, and breakfast starts at seven.', ar: 'تسليم الغرفه الظهر، والفطور يبدا الساعه سبعه.', translit: 'تشيك اوت از ات نون، اند بريكفاست ستارتس ات سڤن.'},
   ]},
   {id:'taxi-ride', title:'Taxi Ride To The Hotel', lines:[
@@ -11064,15 +11064,15 @@ const LISTENING_TRACKS = [
   ]},
   {id:'doctor-visit', title:'At The Doctor', lines:[
     {en:'Good morning, what brings you in today?', ar: 'صباح الخير، وش جابك اليوم؟', translit: 'قود مورننج، وات برنقز يو ان تودي؟'},
-    {en:'I have had a sore throat since yesterday.', ar: 'عندي التهاب بالحلق من امس.', translit: 'اي هاف هاد ا سور ثروت سينس يستردي.'},
+    {en:'I have had a sore throat since yesterday.', ar: 'عندي التهاب بالحلق من امس.', translit: 'اي هاڤ هاد ا سور ثروت سينس يستردي.'},
   ]},
   {id:'job-interview', title:'A Job Interview', lines:[
     {en:'Thank you for coming in. Walk me through your experience.', ar: 'شكرا لحضورك. احك لي عن خبرتك.', translit: 'ثانكس فور كمنق ان. وك مي ثرو يور اكسبيرينس.'},
-    {en:'I have three years of experience in customer service.', ar: 'عندي ثلاث سنوات خبره في خدمه العملا.', translit: 'اي هاف ثري ييرز اوف اكسبيرينس ان كستمر سيرفس.'},
+    {en:'I have three years of experience in customer service.', ar: 'عندي ثلاث سنوات خبره في خدمه العملا.', translit: 'اي هاڤ ثري ييرز اوف اكسبيرينس ان كستمر سيرفس.'},
   ]},
   {id:'shopping-return', title:'Returning An Item', lines:[
     {en:'Hi, I would like to return this shirt, it is too small.', ar: 'هلا، ابي ارجع ذا القميص، صغير علي.', translit: 'هاي، اي ود لايك تو ريتيرن ذيس شيرت، ات از تو سمول.'},
-    {en:'No problem. Do you have the receipt?', ar: 'ولا يهمك. عندك الايصال؟', translit: 'نو بروبلم. دو يو هاف ذا ريسيت؟'},
+    {en:'No problem. Do you have the receipt?', ar: 'ولا يهمك. عندك الايصال؟', translit: 'نو بروبلم. دو يو هاڤ ذا ريسيت؟'},
   ]},
 ];
 
@@ -11183,7 +11183,7 @@ const FLAGSHIP_LESSONS = {
     vocab:[VOCAB_BANK[1], VOCAB_BANK[11]],
     grammar:{title:'Present Perfect vs Past Simple', rule:'Use present perfect for unfinished time, past simple for a finished, specific time.', saudi:'استخدم present perfect للفتره اللي ما خلصت، و past simple للوقت المحدد اللي خلص.', wrong:'I have seen him yesterday.', right:'I saw him yesterday.', mistakes:['Adding "have" with a finished time word like "yesterday."']},
     conversation:[
-      {who:'A', en:'Hey, long time no see! How have you been?', ar: 'هلا والله، من زمان، اخبارك؟', translit: 'هاي، لونق تايم نو سي! هاو هاف يو بين؟'},
+      {who:'A', en:'Hey, long time no see! How have you been?', ar: 'هلا والله، من زمان، اخبارك؟', translit: 'هاي، لونق تايم نو سي! هاو هاڤ يو بين؟'},
       {who:'B', en:"I've been good, just busy with work.", ar: 'تمام الحمدلله، بس مشغول بالدوام.', translit: 'ايڤ بين قود، جست بيزي وذ ورك.'},
       {who:'A', en:'We should catch up soon, grab coffee?', ar: 'لازم نتونس قريب، نشرب قهوه؟', translit: 'وي شود كاتش اب سون، قراب كوفي؟'},
       {who:'B', en:"Sounds great, I'm free this weekend.", ar: 'حلوه، فاضي نهايه الاسبوع.', translit: 'ساوندز قريت، ايم فري ذيس ويكيند.'},
@@ -11217,7 +11217,7 @@ const FLAGSHIP_LESSONS = {
     vocab:[VOCAB_BANK[8], VOCAB_BANK[0]],
     grammar:{title:'Articles: A, An, The', rule:'Use "a" before consonant sounds and "the" for something specific both people know.', saudi:'استخدم a قبل الصوت الساكن و the لشي محدد يعرفه الطرفين.', wrong:'I need room for tonight.', right:'I need a room for tonight.', mistakes:['Dropping the article "a" before "room."']},
     conversation:[
-      {who:'You', en:'Hi, I have a reservation under Al-Otaibi.', ar: 'هلا، عندي حجز باسم العتيبي.', translit: 'هاي، اي هاف ا ريزرڤيشن اندر العتيبي.'},
+      {who:'You', en:'Hi, I have a reservation under Al-Otaibi.', ar: 'هلا، عندي حجز باسم العتيبي.', translit: 'هاي، اي هاڤ ا ريزرڤيشن اندر العتيبي.'},
       {who:'Receptionist', en:'Yes, a king suite for three nights.', ar: 'ايه، جناح بسرير كبير لثلاث ليالي.', translit: 'يس، ا كينج سويت فور ثري نايتس.'},
       {who:'You', en:'Is breakfast complimentary?', ar: 'الفطور مجاني؟', translit: 'از بريكفاست كامبلمنتري؟'},
       {who:'Receptionist', en:'Yes, from seven to ten in the lobby restaurant.', ar: 'ايه، من سبعه لـ عشره في مطعم اللوبي.', translit: 'يس، فروم سڤن تو تن ان ذا لوبي ريسترانت.'},
@@ -11263,7 +11263,7 @@ const LESSON_LIBRARY = {
     conversation:[
       {who:'A', en:'Good morning! How are you today?', ar: 'صباح الخير! كيفك اليوم؟', translit: 'قود مورننج! هاو ار يو تودي؟'},
       {who:'B', en:"I'm doing well, thank you. And you?", ar: 'تمام الحمدلله، شكرا. وانت؟', translit: 'ايم دوينج ويل، ثانك يو. اند يو؟'},
-      {who:'A', en:"Can't complain. Have a great day!", ar: 'ما فيه شي. يومك مبسوط!', translit: 'كانت كامبلين. هاف ا قريت داي!'},
+      {who:'A', en:"Can't complain. Have a great day!", ar: 'ما فيه شي. يومك مبسوط!', translit: 'كانت كامبلين. هاڤ ا قريت داي!'},
       {who:'B', en:'Thanks, you too. See you tomorrow!', ar: 'شكرا، وانت لسه. اشوفك بكره!', translit: 'ثانكس، يو تو. سي يو تومورو!'},
     ],
     quiz:[
@@ -11281,7 +11281,7 @@ const LESSON_LIBRARY = {
     conversation:[
       {who:'A', en:"Hi, I'm Sarah. I don't think we've met.", ar: 'هلا، انا ساره. ما اتوقع نعرف بعض.', translit: 'هاي، ايم سارا. اي دونت ثينك ويڤ ميت.'},
       {who:'B', en:"Nice to meet you. I'm Ahmed, I work in IT.", ar: 'تشرفنا. انا احمد، اشتغل في تقنيه المعلومات.', translit: 'نايس تو ميت يو. ايم احمد، اي ورك ان اي تي.'},
-      {who:'A', en:'Nice, how long have you been there?', ar: 'حلو، من متى وانت هناك؟', translit: 'نايس، هاو لونق هاف يو بين ذير؟'},
+      {who:'A', en:'Nice, how long have you been there?', ar: 'حلو، من متى وانت هناك؟', translit: 'نايس، هاو لونق هاڤ يو بين ذير؟'},
       {who:'B', en:'About three years. What about you?', ar: 'تقريبا ثلاث سنوات. وانت؟', translit: 'اباوت ثري ييرز. وات اباوت يو؟'},
     ],
     quiz:[
@@ -11369,8 +11369,8 @@ const LESSON_LIBRARY = {
     vocab:[VOCAB_BANK[10], VOCAB_BANK[2]],
     grammar:{title:'Has / Have for Family', rule:'Use "have" with I, you, we, they and "has" with he, she, it: I have two brothers, she has one sister.', saudi:'مع العايله نستخدم have او has حسب الشخص: انا عندي، هو عنده.', wrong:'My father have three brothers.', right:'My father has three brothers.', mistakes:['Using "have" with he/she: "my father have."','Forgetting the -s: "she have" instead of "she has."']},
     conversation:[
-      {who:'A', en:'Do you have any siblings?', ar: 'عندك اخوان؟', translit: 'دو يو هاف اني سبلنقز؟'},
-      {who:'B', en:'Yes, I have two brothers and one sister.', ar: 'ايه، عندي اخوين واخت.', translit: 'يس، اي هاف تو براذرز اند وان سستر.'},
+      {who:'A', en:'Do you have any siblings?', ar: 'عندك اخوان؟', translit: 'دو يو هاڤ اني سبلنقز؟'},
+      {who:'B', en:'Yes, I have two brothers and one sister.', ar: 'ايه، عندي اخوين واخت.', translit: 'يس، اي هاڤ تو براذرز اند وان سستر.'},
       {who:'A', en:'Nice. Is your sister older or younger?', ar: 'حلو. اختك اكبر ولا اصغر؟', translit: 'نايس. از يور سستر اولدر اور يونقر؟'},
       {who:'B', en:'She is younger, she is still in school.', ar: 'هي اصغر، لسه بالمتوسط.', translit: 'شي از يونقر، شي از ستل ان سكول.'},
     ],
@@ -11406,7 +11406,7 @@ const LESSON_LIBRARY = {
     grammar:{title:'Present Simple for Habits', rule:'Present simple describes what you do every day. Add -s for he/she/it and use adverbs: always, usually, never.', saudi:'روتينك اليومي يوصف بالحاضر البسيط، ومع he/she/it يضاف s.', wrong:'I usually wake up at six, then I go work.', right:'I usually wake up at six, then I go to work.', mistakes:['Dropping "to" before places: "go work" instead of "go to work."','Saying "I always am tired" instead of "I am always tired."']},
     conversation:[
       {who:'A', en:'What time do you usually wake up?', ar: 'عاده تقوم متى؟', translit: 'وات تايم دو يو يوجوالي ويك اب؟'},
-      {who:'B', en:'Around six, I like to pray and then have coffee.', ar: 'حوالي السادسه، احب اصلي وبعدها اشرب قهوتي.', translit: 'اراوند سيكس، اي لايك تو بري اند ذن هاف كوفي.'},
+      {who:'B', en:'Around six, I like to pray and then have coffee.', ar: 'حوالي السادسه، احب اصلي وبعدها اشرب قهوتي.', translit: 'اراوند سيكس، اي لايك تو بري اند ذن هاڤ كوفي.'},
       {who:'A', en:'Do you go to the gym in the morning?', ar: 'تروح النادي الصبح؟', translit: 'دو يو قو تو ذا جيم ان ذا مورننج؟'},
       {who:'B', en:'Three times a week, after work.', ar: 'ثلاث مرات بالاسبوع، لسه الدوام.', translit: 'ثري تايمز ا ويك، افتر ورك.'},
     ],
@@ -11441,8 +11441,8 @@ const LESSON_LIBRARY = {
     vocab:[VOCAB_BANK[1], VOCAB_BANK[20]],
     grammar:{title:'Present Perfect for News', rule:'Use present perfect (have/has + past participle) to share news without a specific time: I have started a new job.', saudi:'لما تقول خبر بدون وقت محدد، استخدم present perfect: بدات شغل جديد.', wrong:'I have started my new job last Monday.', right:'I started my new job last Monday.', mistakes:['Using present perfect with a finished time word like "last Monday."','Saying "I have been to Riyadh yesterday."']},
     conversation:[
-      {who:'A', en:'Hey, long time no see! How have you been?', ar: 'هلا والله، من زمان! وش اخبارك؟', translit: 'هاي، لونق تايم نو سي! هاو هاف يو بين؟'},
-      {who:'B', en:'Pretty good, I have started a new job.', ar: 'الحمدلله، بدات شغل جديد.', translit: 'بريتي قود، اي هاف ستارتد ا نو جوب.'},
+      {who:'A', en:'Hey, long time no see! How have you been?', ar: 'هلا والله، من زمان! وش اخبارك؟', translit: 'هاي، لونق تايم نو سي! هاو هاڤ يو بين؟'},
+      {who:'B', en:'Pretty good, I have started a new job.', ar: 'الحمدلله، بدات شغل جديد.', translit: 'بريتي قود، اي هاڤ ستارتد ا نو جوب.'},
       {who:'A', en:'Mashallah, where?', ar: 'ماشا الله، وين؟', translit: 'ماشا الله، وير؟'},
       {who:'B', en:'In a logistics company. We should meet for coffee soon.', ar: 'بشركه لوجستيات. لازم نطلع قهوه قريب.', translit: 'ان ا لوجستكس كمبني. وي شود ميت فور كوفي سون.'},
     ],
@@ -11569,7 +11569,7 @@ const LESSON_LIBRARY = {
     grammar:{title:'Polite Requests', rule:'Make requests with "Could I...?" or "Can I...?": Could I have a window seat?', saudi:'الطلبات المهذبه تبدا بـ Could I: ممكن مقعد بجنب الشباك؟', wrong:'I want window seat.', right:'Could I have a window seat, please?', mistakes:['Using "I want" in service contexts, it sounds demanding.','Dropping the article: "I want window seat" instead of "a window seat."']},
     conversation:[
       {who:'Agent', en:'Good morning, can I see your passport and ticket?', ar: 'صباح الخير، الجواز والتذكره لو سمحت.', translit: 'قود مورننج، كان اي سي يور باسبورت اند تيكت؟'},
-      {who:'You', en:'Here you go. Could I have a window seat?', ar: 'اتفضل. ممكن مقعد بجنب الشباك؟', translit: 'هير يو قو. كود اي هاف ا ويندو سيت؟'},
+      {who:'You', en:'Here you go. Could I have a window seat?', ar: 'اتفضل. ممكن مقعد بجنب الشباك؟', translit: 'هير يو قو. كود اي هاڤ ا ويندو سيت؟'},
       {who:'Agent', en:'Let me check. Yes, seat 21A. Any bags to check in?', ar: 'خلني اشوف. ايه، مقعد 21A. عندك شنط تحجز؟', translit: 'ليت مي تشيك. يس، سيت توانتي ون اي. اني باجز تو تشيك ان؟'},
       {who:'You', en:'Just this carry-on, thank you.', ar: 'بس هذي الشنطه اليد، شكرا.', translit: 'جاست ذيس كاري اون، ثانك يو.'},
     ],
@@ -11606,7 +11606,7 @@ const LESSON_LIBRARY = {
     conversation:[
       {who:'You', en:'Excuse me, is the flight to Riyadh delayed?', ar: 'لو سمحت، رحله الرياض متاخره؟', translit: 'اكسكوز مي، از ذا فلايت تو رياض ديليدد؟'},
       {who:'Agent', en:'Yes, about two hours due to the weather.', ar: 'ايه، تقريبا ساعتين عشان الجو.', translit: 'يس، اباوت تو اورز دو تو ذا ويذر.'},
-      {who:'You', en:'I have a connection in Jeddah. Will I make it?', ar: 'عندي رحله ربط بجده. بلحق عليها؟', translit: 'اي هاف ا كونكشن ان جده. ويل اي ميك ات؟'},
+      {who:'You', en:'I have a connection in Jeddah. Will I make it?', ar: 'عندي رحله ربط بجده. بلحق عليها؟', translit: 'اي هاڤ ا كونكشن ان جده. ويل اي ميك ات؟'},
       {who:'Agent', en:'Let me rebook you on a later connection, no extra charge.', ar: 'خلني اعيد حجزك على رحله ربط بعدين، بدون رسوم.', translit: 'ليت مي ريبوك يو اون ا ليتر كونكشن، نو اكسترا تشارج.'},
     ],
     quiz:[
@@ -11623,7 +11623,7 @@ const LESSON_LIBRARY = {
     grammar:{title:'Present Perfect for Booking', rule:'Confirm your booking with present perfect: I have a reservation, or I have booked a room.', saudi:'لتاكيد الحجز: عندي حجز، انا حجزت غرفه.', wrong:'I book a room last week.', right:'I have booked a room, or I have a reservation.', mistakes:['Using present simple for a past booking: "I book a room."','Forgetting the article: "I have reservation" instead of "a reservation."']},
     conversation:[
       {who:'Receptionist', en:'Welcome to the Grand Hotel, how can I help?', ar: 'حياك الله في فندق جراند، كيف اقدر اساعدك؟', translit: 'ويلكم تو ذا قراند هوتيل، هاو كان اي هيلب؟'},
-      {who:'You', en:'Hi, I have a reservation under Al-Otaibi.', ar: 'هلا، عندي حجز باسم العتيبي.', translit: 'هاي، اي هاف ا ريزرڤيشن اندر العتيبي.'},
+      {who:'You', en:'Hi, I have a reservation under Al-Otaibi.', ar: 'هلا، عندي حجز باسم العتيبي.', translit: 'هاي، اي هاڤ ا ريزرڤيشن اندر العتيبي.'},
       {who:'Receptionist', en:'Let me pull it up. A king room for three nights, correct?', ar: 'خلني اشيك. غرفه بسرير كبير ثلاث ليالي، صح؟', translit: 'ليت مي بول ات اب. ا كينج روم فور ثري نايتس، كوركت؟'},
       {who:'You', en:'Yes, and is breakfast included?', ar: 'ايه، والفطور داخل؟', translit: 'يس، اند از بريكفاست انكلودد؟'},
     ],
@@ -11640,7 +11640,7 @@ const LESSON_LIBRARY = {
     vocab:[VOCAB_BANK[8], VOCAB_BANK[24]],
     grammar:{title:'Could I / Can You', rule:'Requests at a hotel: Could I have an extra towel? Can you call a taxi?', saudi:'طلبات الفندق: Could I للاشيا، Can you للخدمات.', wrong:'I need towels now, bring them.', right:'Could I have some extra towels, please?', mistakes:['Commanding staff: "bring me..."','Forgetting "please" in every request.']},
     conversation:[
-      {who:'You', en:'Could I have an extra pillow and a blanket?', ar: 'ممكن مخده اضافيه وغطا؟', translit: 'كود اي هاف وين اكسترا بيلو اند ا بلانكت؟'},
+      {who:'You', en:'Could I have an extra pillow and a blanket?', ar: 'ممكن مخده اضافيه وغطا؟', translit: 'كود اي هاڤ وين اكسترا بيلو اند ا بلانكت؟'},
       {who:'Receptionist', en:'Of course, I will send them right up.', ar: 'اكيد، بابعثهم لك الحين.', translit: 'اوف كورس، اي ويل سند ذيم رايت اب.'},
       {who:'You', en:'And can you call a taxi for 8 am tomorrow?', ar: 'وممكن تكلمون لي تكسي الساعه ثمان الصبح بكره؟', translit: 'اند كان يو كول ا تاكسي فور ايت اي ام تومورو؟'},
       {who:'Receptionist', en:'Sure, I will note it down. Anything else?', ar: 'اكيد، باسجله. فيه شي ثاني؟', translit: 'شور، اي ويل نوت ات داون. اني ثينج الس؟'},
@@ -11696,7 +11696,7 @@ const LESSON_LIBRARY = {
     grammar:{title:'I Would Like / I Will Have', rule:'Order with "I would like" or "I will have" followed by the dish and any changes.', saudi:'للطلب: I will have للاختيار النهائي، و I would like للطلب المهذب.', wrong:'Give me chicken rice.', right:'I will have the chicken rice, please.', mistakes:['Using "give me" at restaurants, it sounds rude in English.','Ordering without saying what you want to drink.']},
     conversation:[
       {who:'Waiter', en:'Are you ready to order?', ar: 'جاهزين تطلبون؟', translit: 'ار يو ريدي تو اوردر؟'},
-      {who:'You', en:'Yes, I will have the grilled chicken with rice, please.', ar: 'ايه، ابي الدجاج المشوي مع الرز لو سمحت.', translit: 'يس، اي ويل هاف ذا قريلد تشكن وذ رايس، بليز.'},
+      {who:'You', en:'Yes, I will have the grilled chicken with rice, please.', ar: 'ايه، ابي الدجاج المشوي مع الرز لو سمحت.', translit: 'يس، اي ويل هاڤ ذا قريلد تشكن وذ رايس، بليز.'},
       {who:'Waiter', en:'Would you like a side salad with that?', ar: 'تبغى سلطه جانبيه معه؟', translit: 'ود يو لايك ا سايد سالاد وذ ذات؟'},
       {who:'You', en:'Yes, please. And a bottle of water, no ice.', ar: 'ايه لو سمحت. وقاروره ما بدون ثلج.', translit: 'يس، بليز. اند ا بوتل اوف وتر، نو ايس.'},
     ],
@@ -11731,7 +11731,7 @@ const LESSON_LIBRARY = {
     vocab:[VOCAB_BANK[19], VOCAB_BANK[20]],
     grammar:{title:'Is The Tip Included?', rule:'Ask directly: Is the tip included? Can I pay by card? Could we split the bill?', saudi:'لما تخلص اكل: ممكن الحساب؟ ادفع بالبطاقه؟ البقشيش داخل؟', wrong:'Bill please, how much?', right:'Could we have the check, please? Can I pay by card?', mistakes:['Saying "the account" instead of "the check" or "the bill."','Assuming the tip is included, it usually is not in the US.']},
     conversation:[
-      {who:'You', en:'Could we have the check, please?', ar: 'ممكن الحساب لو سمحت؟', translit: 'كود وي هاف ذا تشيك، بليز؟'},
+      {who:'You', en:'Could we have the check, please?', ar: 'ممكن الحساب لو سمحت؟', translit: 'كود وي هاڤ ذا تشيك، بليز؟'},
       {who:'Waiter', en:'Sure, here you go. Take your time.', ar: 'اتفضل، خذ راحتك.', translit: 'شور، هير يو قو. تيك يور تايم.'},
       {who:'You', en:'Is the tip included, or should I leave it?', ar: 'البقشيش داخل وللا اخليه؟', translit: 'از ذا تيب انكلودد، اور شود اي ليف ات؟'},
       {who:'Waiter', en:'It is not included, but no pressure.', ar: 'مو داخل، بس ولا تزعل.', translit: 'ات از نات انكلودد، بات نو بريشر.'},
@@ -11804,7 +11804,7 @@ const LESSON_LIBRARY = {
     grammar:{title:'Present Perfect Continuous', rule:'Describe how long: I have been feeling sick since yesterday. I have had a headache all day.', saudi:'لوصف المده: حاس فيني دوخه من امس.', wrong:'I am sick since yesterday.', right:'I have been feeling sick since yesterday.', mistakes:['Using present simple with "since": "I am sick since..."','Not saying where it hurts exactly.']},
     conversation:[
       {who:'Doctor', en:'What brings you in today?', ar: 'وش جابك اليوم؟', translit: 'وات برنقز يو ان تودي؟'},
-      {who:'You', en:'I have had a sore throat and a fever since last night.', ar: 'عندي التهاب حلق وحمى من الليله اللي فاتت.', translit: 'اي هاف هاد ا سور ثروت اند ا فيڤر سينس لاست نايت.'},
+      {who:'You', en:'I have had a sore throat and a fever since last night.', ar: 'عندي التهاب حلق وحمى من الليله اللي فاتت.', translit: 'اي هاڤ هاد ا سور ثروت اند ا فيڤر سينس لاست نايت.'},
       {who:'Doctor', en:'Any cough or shortness of breath?', ar: 'فيه كحه وللا ضيق تنفس؟', translit: 'اني كاف اور شورتنيس اوف بريث؟'},
       {who:'You', en:'A little cough, but no trouble breathing.', ar: 'كحه خفيفه، بس ما عندي مشكله بالتنفس.', translit: 'ا ليتل كاف، بات نو ترابل بريثنق.'},
     ],
@@ -11821,7 +11821,7 @@ const LESSON_LIBRARY = {
     vocab:[VOCAB_BANK[22], VOCAB_BANK[23]],
     grammar:{title:'Do You Have Anything For...', rule:'Ask the pharmacist: Do you have anything for a headache? I need something for allergies.', saudi:'اسال الصيدلي: عندك شي للصداع؟ ابي شي للحساسيه.', wrong:'Give me medicine for headache.', right:'Do you have anything for a headache?', mistakes:['Commanding the pharmacist: "give me."','Saying "medicine" for everything, ask by symptom or name.']},
     conversation:[
-      {who:'You', en:'Excuse me, do you have anything for a sore throat?', ar: 'لو سمحت، عندك شي لالتهاب الحلق؟', translit: 'اكسكوز مي، دو يو هاف اني ثينج فور ا سور ثروت؟'},
+      {who:'You', en:'Excuse me, do you have anything for a sore throat?', ar: 'لو سمحت، عندك شي لالتهاب الحلق؟', translit: 'اكسكوز مي، دو يو هاڤ اني ثينج فور ا سور ثروت؟'},
       {who:'Pharmacist', en:'Yes, this lozenge works well. Any allergies?', ar: 'ايه، هالمصاص حلو. عندك حساسيه؟', translit: 'يس، ذيس لازنج وركس ويل. اني الرجيز؟'},
       {who:'You', en:'No, I am fine. How often should I take it?', ar: 'لا، الحمدلله. كم مره اخذه؟', translit: 'نو، ايم فوين. هاو اوفن شود اي تيك ات؟'},
       {who:'Pharmacist', en:'One every four hours, not more than four a day.', ar: 'واحده كل اربع ساعات، وما تزيد عن اربع باليوم.', translit: 'وان اڤري فور اورز، نات مور ذان فور ا داي.'},
@@ -11842,7 +11842,7 @@ const LESSON_LIBRARY = {
       {who:'You', en:'Excuse me, this is urgent. My father fainted.', ar: 'لو سمحت، ذا عاجل. الوالد غاب عن الوعي.', translit: 'اكسكوز مي، ذيس از ارجنت. ماي فاذر فينتيد.'},
       {who:'Nurse', en:'Right away, sit him here. What happened?', ar: 'الحين، خليه يجلس هنا. وش صار؟', translit: 'رايت اوي، سيت هيم هير. وات هابنيد؟'},
       {who:'You', en:'He felt dizzy and collapsed about ten minutes ago.', ar: 'حس بدوخه ووقع قبل عشر دقايق تقريبا.', translit: 'هي فيلت ديزي اند كولابسد اباوت تن مينتس اقو.'},
-      {who:'Nurse', en:'Does he have any medical conditions?', ar: 'عنده امراض مزمنه؟', translit: 'داز هيه هاف اني ميديكل كنديشنز؟'},
+      {who:'Nurse', en:'Does he have any medical conditions?', ar: 'عنده امراض مزمنه؟', translit: 'داز هيه هاڤ اني ميديكل كنديشنز؟'},
     ],
     quiz:[
       {qAr: 'بالطواري وش تقول اول؟', qEn:'At the ER, you say first:', options:['This is urgent, my father fainted.','My father is old.','Sorry to bother you.'], correct:0},
@@ -11859,7 +11859,7 @@ const LESSON_LIBRARY = {
     conversation:[
       {who:'A', en:'Can I try this shirt on?', ar: 'ممكن اجرب ذا القميص؟', translit: 'كان اي تراي ذيس شيرت اون؟'},
       {who:'B', en:'Of course, the fitting room is over there.', ar: 'اكيد، غرفه القياس هناك.', translit: 'اوف كورس، ذا فيتينج روم از اوڤر ذير.'},
-      {who:'A', en:'Thanks. Do you have it in a medium?', ar: 'شكرا. عندك مقاس وسط؟', translit: 'ثانكس. دو يو هاف ات ان ا ميديم؟'},
+      {who:'A', en:'Thanks. Do you have it in a medium?', ar: 'شكرا. عندك مقاس وسط؟', translit: 'ثانكس. دو يو هاڤ ات ان ا ميديم؟'},
       {who:'B', en:'Let me check the back, one moment.', ar: 'خلني اشوف بالمخزن، لحظه.', translit: 'ليت مي تشيك ذا باك، وان مومنت.'},
     ],
     quiz:[
@@ -11894,7 +11894,7 @@ const LESSON_LIBRARY = {
     grammar:{title:'Explaining Problems', rule:'Explain the issue then the request: This does not fit, I would like to exchange it. It stopped working, I want a refund.', saudi:'اشرح المشكله بعدين اطلب: المقاس ما ضبط، ابي استبدال.', wrong:'I want return this.', right:'I would like to return this, it is too small.', mistakes:['Saying "I want return" without "to": "I want to return."','Throwing away the receipt, stores need it for returns.']},
     conversation:[
       {who:'A', en:'Hi, I would like to return this shirt, it is too small.', ar: 'هلا، ابي ارجع ذا القميص، صغير علي.', translit: 'هاي، اي ود لايك تو ريتيرن ذيس شيرت، ات از تو سمول.'},
-      {who:'B', en:'No problem. Do you have the receipt?', ar: 'ولا يهمك. عندك الايصال؟', translit: 'نو بروبلم. دو يو هاف ذا ريسيت؟'},
+      {who:'B', en:'No problem. Do you have the receipt?', ar: 'ولا يهمك. عندك الايصال؟', translit: 'نو بروبلم. دو يو هاڤ ذا ريسيت؟'},
       {who:'A', en:'Yes, here it is. I would prefer an exchange if possible.', ar: 'ايه، اتفضل. افضل استبدال لو ممكن.', translit: 'يس، هير ات از. اي ود بريفير ان اكس تشينج اف بوسيبل.'},
       {who:'B', en:'Sure, pick the new size and bring it to the register.', ar: 'اكيد، اختار المقاس الجديد وخذها للكاشير.', translit: 'شور، بيك ذا نو سايز اند برنق ات تو ذا ريجستر.'},
     ],
@@ -12087,7 +12087,7 @@ const LESSON_LIBRARY = {
     takeaway:'اطلب المساعده بجمله كامله: Could you...?',
   },
   'giving-feedback': {
-    title:'Giving And Receiving Feedback', ar: 'تعطي وتاخذ ملاحظات', translit: 'قيڤنق اند ريسيڤنق فيدباك',
+    title:'Giving And Receiving Feedback', ar: 'تعطي وتاخذ ملاحظات', translit: 'قيڤنق اند ريسيڤنق ڤيدباك',
     duration:'9 min', difficulty:'Advanced',
     vocab:[VOCAB_BANK[37], VOCAB_BANK[4]],
     grammar:{title:'Softening Criticism', rule:'Soften criticism: I think this part could be clearer. Maybe we can try another approach.', saudi:'لما تعطي ملاحظه: اتوقع هالجزء يقدر يصير اوضح.', wrong:'This is bad, do it again.', right:'I think this section could be clearer, could we revise it together?', mistakes:['Attacking the person, not the work.','Never giving positive feedback before the negative.']},
@@ -12111,7 +12111,7 @@ const LESSON_LIBRARY = {
     grammar:{title:'Present Perfect for Experience', rule:'Use present perfect for experience: I have worked in sales for five years. Then present simple for what you do now.', saudi:'للخبره: اشتغلت بالمبيعات خمس سنين. وللحين: اشتغل حاليا...', wrong:'I am working in sales for five years.', right:'I have worked in sales for five years. I currently manage a small team.', mistakes:['Using present continuous for a finished time period.','Talking for five minutes without structure.']},
     conversation:[
       {who:'Interviewer', en:'Tell me about yourself.', ar: 'عرفني بنفسك.', translit: 'تيل مي اباوت يورسلف.'},
-      {who:'You', en:'I have worked in customer service for four years.', ar: 'اشتغلت بخدمه العملا اربع سنين.', translit: 'اي هاف وركت ان كستمر سيرفس فور ييرز.'},
+      {who:'You', en:'I have worked in customer service for four years.', ar: 'اشتغلت بخدمه العملا اربع سنين.', translit: 'اي هاڤ وركت ان كستمر سيرفس فور ييرز.'},
       {who:'Interviewer', en:'What do you enjoy most about it?', ar: 'وش اكثر شي تحبه فيه؟', translit: 'وات دو يو انجوي موست اباوت ات؟'},
       {who:'You', en:'Solving problems and making customers happy.', ar: 'حل المشاكل واسعاد العملا.', translit: 'سولڤنق بروبلمز اند ميكنق كستمرز هابي.'},
     ],
@@ -12200,7 +12200,7 @@ const LESSON_LIBRARY = {
     vocab:[VOCAB_BANK[5], VOCAB_BANK[16]],
     grammar:{title:'Choice of Future Form', rule:'Going to = decided plan. Will = decision now, promise, or prediction.', saudi:'going to للخطه الجاهزه، will للقرار اللحظي او الوعد.', wrong:'I will going to visit him.', right:'I am going to visit him, or I will call him now.', mistakes:['Mixing both: "will going to."','Using "will" for a plan made long ago.']},
     conversation:[
-      {who:'A', en:'Have you decided about the trip?', ar: 'قررت بشان الرحله؟', translit: 'هاف يو دسايدد اباوت ذا تريب؟'},
+      {who:'A', en:'Have you decided about the trip?', ar: 'قررت بشان الرحله؟', translit: 'هاڤ يو دسايدد اباوت ذا تريب؟'},
       {who:'B', en:'Yes, I am going to visit my family in Abha next week.', ar: 'ايه، بروح ازور اهلي بابها الاسبوع الجاي.', translit: 'يس، ايم قوينج تو ڤيزت ماي فاميلي ان ابها نكست ويك.'},
       {who:'A', en:'Nice. I will join you if I finish early.', ar: 'حلو. باجي معاك لو خلصت بدري.', translit: 'نايس. اي ويل جوين يو اف اي فينيش ايرلي.'},
       {who:'B', en:'Deal, I will text you the details tonight.', ar: 'تم، بارسل لك التفاصيل الليله.', translit: 'ديل، اي ويل تكست يو ذا ديتيلز تونايت.'},
@@ -12220,7 +12220,7 @@ const LESSON_LIBRARY = {
     conversation:[
       {who:'A', en:'How do you remember new words?', ar: 'كيف تذكر الكلمات الجديده؟', translit: 'هاو دو يو ريممبر نو وردز؟'},
       {who:'B', en:'I write one sentence with each word, in my own life.', ar: 'اكتب جمله مع كل كلمه من واقع حياتي.', translit: 'اي رايت وان ستننس وذ اتش ورد، ان ماي اون لايف.'},
-      {who:'A', en:'And you review them when?', ar: 'وتراجعها متى؟', translit: 'اند يو ريفيو ذم وين؟'},
+      {who:'A', en:'And you review them when?', ar: 'وتراجعها متى؟', translit: 'اند يو ريڤيو ذم وين؟'},
       {who:'B', en:'The next day and again after a week.', ar: 'اليوم الثاني، ومره ثانيه لسه اسبوع.', translit: 'ذا نكست داي اند اقين افتر ا ويك.'},
     ],
     quiz:[
@@ -12238,7 +12238,7 @@ const LESSON_LIBRARY = {
     conversation:[
       {who:'A', en:'We need to make a decision about the budget.', ar: 'لازم ناخذ قرار بشان الميزانيه.', translit: 'وي نيد تو ميك ا دسايشن اباوت ذا بدجت.'},
       {who:'B', en:'True. Let me take a look at the numbers first.', ar: 'صح. خلني القي نظره على الارقام اول.', translit: 'ترو. ليت مي تيك ا لوك ات ذا نمبرز فيرست.'},
-      {who:'A', en:'And give me a call after lunch.', ar: 'وكلمني لسه البكره.', translit: 'اند قيف مي ا كول افتر لانش.'},
+      {who:'A', en:'And give me a call after lunch.', ar: 'وكلمني لسه البكره.', translit: 'اند قيڤ مي ا كول افتر لانش.'},
       {who:'B', en:'Will do, take your time.', ar: 'ان شا الله، خذ راحتك.', translit: 'ويل دو، تيك يور تايم.'},
     ],
     quiz:[
@@ -12345,7 +12345,7 @@ const LESSON_LIBRARY = {
     vocab:[VOCAB_BANK[4], VOCAB_BANK[36]],
     grammar:{title:'Skimming For The Ask', rule:'Most emails follow: context, then the ask. Find the ask first: "Could you...?", "Please send...", "By Friday."', saudi:'معظم الايميلات: سياق، بعدين الطلب. دور على الطلب اول.', wrong:'Reading every email word by word and drowning in inbox.', right:'Scanning for the request and the deadline first.', mistakes:['Missing deadlines because you read but did not find the date.','Replying without answering the actual ask.']},
     conversation:[
-      {who:'A', en:'Subject: Feedback on your draft', ar: 'الموضوع: ملاحظات على مسودتك', translit: 'سابجكت: فيدباك اون يور درافت'},
+      {who:'A', en:'Subject: Feedback on your draft', ar: 'الموضوع: ملاحظات على مسودتك', translit: 'سابجكت: ڤيدباك اون يور درافت'},
       {who:'B', en:'Thanks for the draft. Please add the budget numbers by Friday.', ar: 'شكرا على المسوده. ياليت اضافه ارقام الميزانيه قبل الجمعه.', translit: 'ثانكس فور ذا درافت. بليز اد ذا بدجت نمبرز باي فرايدي.'},
       {who:'A', en:'Also, could you confirm the meeting time?', ar: 'وبرضه ممكن تاكد وقت الاجتماع؟', translit: 'اولسو، كود يو كونفيرم ذا ميتنق تايم؟'},
       {who:'B', en:'Thanks, Khalid.', ar: 'شكرا، خالد.', translit: 'ثانكس، خالد.'},
@@ -12448,15 +12448,15 @@ const LESSON_LIBRARY = {
     takeaway:'تعلم تعبير واحد كل يوم واستخدمه ٣ مرات باليوم.',
   },
   'phrasal-basics': {
-    title:'Phrasal Verbs: Look, Give, Call', ar: 'الافعال المركبه الشايعه', translit: 'فرايزل ڤيربز: لوك، قيف، كول',
+    title:'Phrasal Verbs: Look, Give, Call', ar: 'الافعال المركبه الشايعه', translit: 'فرايزل ڤيربز: لوك، قيڤ، كول',
     duration:'9 min', difficulty:'Advanced',
     vocab:[VOCAB_BANK[38], VOCAB_BANK[4]],
     grammar:{title:'Separable Phrasal Verbs', rule:'Many phrasal verbs split: look it up, not look up it. But some never split: run out of.', saudi:'بعض الافعال المركبه تنقسم: look it up. وبعضها ما تنقسم: run out of.', wrong:'I looked up it in the dictionary.', right:'I looked it up in the dictionary.', mistakes:['Putting the pronoun after the particle.','Memorizing phrasal verbs without their object rules.']},
     conversation:[
       {who:'A', en:'What does this word mean?', ar: 'وش معنى هالكلمه؟', translit: 'وات داز ذيس ورد مين؟'},
       {who:'B', en:'I will look it up for you.', ar: 'بشيك عليها لك.', translit: 'اي ويل لوك ات اب فور يو.'},
-      {who:'A', en:'Thanks. I give up on guessing.', ar: 'شكرا. استسلمت من التخمين.', translit: 'ثانكس. اي قيف اب اون قسنق.'},
-      {who:'B', en:'Do not give up, you are doing great.', ar: 'لا تستسلم، انت ممتاز.', translit: 'دو نات قيف اب، يو ار دوينج قريت.'},
+      {who:'A', en:'Thanks. I give up on guessing.', ar: 'شكرا. استسلمت من التخمين.', translit: 'ثانكس. اي قيڤ اب اون قسنق.'},
+      {who:'B', en:'Do not give up, you are doing great.', ar: 'لا تستسلم، انت ممتاز.', translit: 'دو نات قيڤ اب، يو ار دوينج قريت.'},
     ],
     quiz:[
       {qAr: 'الصيغه الصح:', qEn:'The correct order is:', options:['I looked it up.','I looked up it.','I looked up.'], correct:0},
@@ -12471,7 +12471,7 @@ const LESSON_LIBRARY = {
     vocab:[VOCAB_BANK[37], VOCAB_BANK[20]],
     grammar:{title:'Recommendations', rule:'Recommend with: You should watch... It is worth watching. I highly recommend it.', saudi:'للتوصيه: لازم تشوفه، يستاهل.', wrong:'Movie good, you watch.', right:'You should watch it, it is really worth it.', mistakes:['Giving one-word opinions without a reason.','Spoiling the ending while recommending.']},
     conversation:[
-      {who:'A', en:'Have you watched anything good lately?', ar: 'شفت شي حلو موخرا؟', translit: 'هاف يو واتشد اني ثينج قود ليتلي؟'},
+      {who:'A', en:'Have you watched anything good lately?', ar: 'شفت شي حلو موخرا؟', translit: 'هاڤ يو واتشد اني ثينج قود ليتلي؟'},
       {who:'B', en:'Yes, I highly recommend the new sci-fi movie.', ar: 'ايه، انصحك وبقوه بالفيلم الجديد.', translit: 'يس، اي هايلي ركمند ذا نو ساي فاي موڤي.'},
       {who:'A', en:'What is it about?', ar: 'عن ايش؟', translit: 'وات از ات اباوت؟'},
       {who:'B', en:'A pilot who gets stuck in a time loop. No spoilers!', ar: 'طيار عالق بحلقه زمنيه. بدون حرق!', translit: 'ا بايلت هو قيتس ستاك ان ا تايم لوب. نو سبويلرز!'},
@@ -12502,12 +12502,12 @@ const LESSON_LIBRARY = {
     takeaway:'احفظ: I am into... و I enjoy listening to...',
   },
   'mastery-review': {
-    title:'Mastery Review: Build Your Own Lesson', ar: 'مراجعه الاتقان', translit: 'ماستري ريفيو',
+    title:'Mastery Review: Build Your Own Lesson', ar: 'مراجعه الاتقان', translit: 'ماستري ريڤيو',
     duration:'10 min', difficulty:'Advanced',
     vocab:[VOCAB_BANK[37], VOCAB_BANK[4]],
     grammar:{title:'Reviewing What You Know', rule:'The best review is teaching: explain one grammar rule and one idiom to a friend in English.', saudi:'افضل مراجعه انك تشرح: اشرح قاعده وتعبير لصاحبك بالانجليزي.', wrong:'Rereading notes and thinking you know it.', right:'Explaining it out loud, if you cannot explain it, you do not know it.', mistakes:['Passive review: reading without producing.','Reviewing everything at once instead of in small daily chunks.']},
     conversation:[
-      {who:'A', en:'How do you review your English?', ar: 'كيف تراجع انجليزيك؟', translit: 'هاو دو يو ريفيو يور انجلش؟'},
+      {who:'A', en:'How do you review your English?', ar: 'كيف تراجع انجليزيك؟', translit: 'هاو دو يو ريڤيو يور انجلش؟'},
       {who:'B', en:'I explain lessons to my brother out loud.', ar: 'اشرح الدروس لاخوي بصوت عالي.', translit: 'اي اكسبلين ليسنز تو ماي براذر اوت لاود.'},
       {who:'A', en:'That is smart, teaching forces clarity.', ar: 'ذا شي ذكيه، الشرح يفرض الوضوح.', translit: 'ذات از سمارت، تيتشنق فورسز كلاريتي.'},
       {who:'B', en:'Exactly, and I notice my gaps fast.', ar: 'بالضبط، واكتشف ثغراتي بسرعه.', translit: 'اجزكتلي، اند اي نوتيس ماي قابس فاست.'},
@@ -14199,8 +14199,8 @@ const LESSON_LIBRARY = {
     vocab:[VOCAB_BANK[39], VOCAB_BANK[40], VOCAB_BANK[41], VOCAB_BANK[42]],
     grammar:{title:'Possessive \'s', rule:'Add \'s after a person to show relationship or ownership: my father\'s car, my sister\'s name.', saudi:'نضيف \'s لسه الشخص لنبين الصله او الملكيه: سياره ابي، اسم اختي.', wrong:'My brother car is new.', right:'My brother\'s car is new.', mistakes:['Forgetting the apostrophe: "my brothers car" instead of "my brother\'s car."','Saying "the car of my brother" which sounds heavy.']},
     conversation:[
-      {who:'A', en:'Do you have any brothers or sisters?', ar: 'عندك اخوان ولا اخوات؟', translit: 'دو يو هاف اني براذرز اور سيسترز؟'},
-      {who:'B', en:'I have one older brother and a sister.', ar: 'عندي اخ اكبر واخت.', translit: 'اي هاف ون اولدر براذر اند ا سيستر.'},
+      {who:'A', en:'Do you have any brothers or sisters?', ar: 'عندك اخوان ولا اخوات؟', translit: 'دو يو هاڤ اني براذرز اور سيسترز؟'},
+      {who:'B', en:'I have one older brother and a sister.', ar: 'عندي اخ اكبر واخت.', translit: 'اي هاڤ ون اولدر براذر اند ا سيستر.'},
       {who:'A', en:'What does your father do?', ar: 'ابوك وين يشتغل؟', translit: 'وات داز يور فاذر دو؟'},
       {who:'B', en:'My father is a nurse at the hospital.', ar: 'ابوي ممرض بالمستشفى.', translit: 'ماي فاذر از ا نرس ات ذا هاسبيتال.'},
     ],
