@@ -2372,7 +2372,7 @@ function academyForm(academyId){
     '</div>' +
     '<div class="btn-row"><button class="btn btn-gold btn-sm" id="acSave">' + esc(t('save')) + '</button><button class="btn btn-ghost btn-sm" data-close>' + esc(t('cancel')) + '</button></div>');
   s.querySelector('[data-close]').addEventListener('click', function(){ closeModal(s); });
-  s.querySelector('#acSave').addEventListener('click', async function(){
+  var _sb = s.querySelector('#acSave'); if(_sb) _sb.addEventListener('click', async function(){
     var en = s.querySelector('#acEn').value.trim();
     var ar = s.querySelector('#acAr').value.trim();
     if(!en || !ar){ toast(lang === 'ar' ? 'العنوانان مطلوبان.' : 'Both titles are required.', true); return; }
@@ -2407,7 +2407,7 @@ function lessonForm(academyId, lessonId){
     '</div>' +
     '<div class="btn-row"><button class="btn btn-gold btn-sm" id="lsSave">' + esc(t('save')) + '</button><button class="btn btn-ghost btn-sm" data-close>' + esc(t('cancel')) + '</button></div>');
   s.querySelector('[data-close]').addEventListener('click', function(){ closeModal(s); });
-  s.querySelector('#lsSave').addEventListener('click', async function(){
+  var _sb = s.querySelector('#lsSave'); if(_sb) _sb.addEventListener('click', async function(){
     var en = s.querySelector('#lsEn').value.trim();
     var ar = s.querySelector('#lsAr').value.trim();
     if(!en || !ar){ toast(lang === 'ar' ? 'العنوانان مطلوبان.' : 'Both titles are required.', true); return; }

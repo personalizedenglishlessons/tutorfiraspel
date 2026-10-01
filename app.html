@@ -18848,8 +18848,8 @@ function renderPronDrill(card, drill){
           <div class="voice-feedback" id="drill-fb" style="display:none;margin-top:16px;font-size:.85rem;padding:12px 14px;border-radius:12px;background:var(--card-elevated);line-height:1.6;text-align:right;"></div>
         </div>`;
       if(window.lucide) lucide.createIcons();
-      card.querySelector('[data-dspeak]').addEventListener('click', () => speak(tgt.en));
-      card.querySelector('[data-drec]').addEventListener('click', function(){
+      var _sp = card.querySelector('[data-dspeak]'); if(_sp) _sp.addEventListener('click', () => speak(tgt.en));
+      var _rc = card.querySelector('[data-drec]'); if(_rc) _rc.addEventListener('click', function(){
         const fb = document.getElementById('drill-fb'); fb.style.display='block'; fb.innerHTML='<span class="arabic">جاري الاستماع...</span> Listening...';
         recordAndScore((heard, score, err) => {
           if(heard === null){ fb.innerHTML = `<span class="arabic">${micErrorMessage(err)}</span>`; return; }
@@ -20472,8 +20472,8 @@ function renderProfile(){
       if(val && val.trim()){ studentPrefs.goal = val.trim(); saveStudentPrefs(); document.getElementById('profileGoalText').textContent = studentPrefs.goal; toast('<span class="arabic">حدثنا هدف التعلم</span>، Learning goal updated'); }
       close();
     };
-    ov.querySelector('#pelGoalCancel').addEventListener('click', close);
-    ov.querySelector('#pelGoalSave').addEventListener('click', save);
+    var _gc = ov.querySelector('#pelGoalCancel'); if(_gc) _gc.addEventListener('click', close);
+    var _gs = ov.querySelector('#pelGoalSave'); if(_gs) _gs.addEventListener('click', save);
     inp.addEventListener('keydown', e => { if(e.key === 'Enter'){ e.preventDefault(); save(); } if(e.key === 'Escape'){ e.preventDefault(); close(); } });
     ov.addEventListener('click', e => { if(e.target === ov) close(); });
   });
@@ -21137,7 +21137,7 @@ function renderPlanSettings(){
   }));
   const freqSel = document.getElementById('planFreqSelect');
   if(freqSel) freqSel.addEventListener('change', () => { state.freqDays = parseInt(freqSel.value, 10); preview(); });
-  wrap.querySelector('[data-plan-save]').addEventListener('click', () => {
+  var _ps = wrap.querySelector('[data-plan-save]'); if(_ps) _ps.addEventListener('click', () => {
     const next = getPlan();
     if(!next) return;
     next.profile.dailyMinutes = state.daily;
@@ -22297,7 +22297,7 @@ if(window.lucide) lucide.createIcons();
     if(home){ home.insertBefore(el, home.firstChild); }
     else { const cc=document.querySelector('.content-cols'); if(cc) cc.insertBefore(el, cc.firstChild); else document.body.insertBefore(el, document.body.firstChild); }
     if(window.lucide) lucide.createIcons({nodes:[el]});
-    el.querySelector('[data-welcome]').addEventListener('click', markWelcome);
+    var _wb = el.querySelector('[data-welcome]'); if(_wb) _wb.addEventListener('click', markWelcome);
   }
   function dismissGlobalWelcome(){
     const el=document.getElementById('pelGlobalWelcome'); if(el) el.remove();
