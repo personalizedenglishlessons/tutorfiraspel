@@ -8790,13 +8790,14 @@ function phonToAr(ph){
       case 'EH': rep = wordStart ? 'ا' : 'ي'; break;
       case 'ER':
         if (prev === 'W') rep = 'ور';
+        else if (wordStart) rep = 'اير';
         else rep = (stress && stress[0] === '0' && wordEnd) ? 'ر' : 'ير';
         break;
       case 'EY': rep = (wordStart || next === 'OW' || next === 'IH' || next === 'AH' || next === 'ER' || next === 'IY' || next === 'EY' || next === 'AE' || next === 'EH') ? 'اي' : 'ي'; break;
       case 'IH':
         rep = (wordStart && next !== 'NG') ? 'ا' : 'ي';
         break;
-      case 'IY': rep = 'ي'; break;
+      case 'IY': rep = wordStart ? 'اي' : 'ي'; break;
       case 'OW': rep = 'و'; break;
       case 'OY': rep = 'وي'; break;
       case 'UH': rep = 'و'; break;
