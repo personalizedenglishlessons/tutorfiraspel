@@ -8787,7 +8787,7 @@ function phonToAr(ph){
       case 'AO': rep = 'و'; break;
       case 'AW': rep = 'او'; break;
       case 'AY': rep = wordStart ? 'اي' : 'اي'; break;
-      case 'EH': rep = 'ي'; break;
+      case 'EH': rep = wordStart ? 'ا' : 'ي'; break;
       case 'ER':
         if (prev === 'W') rep = 'ور';
         else rep = (stress && stress[0] === '0' && wordEnd) ? 'ر' : 'ير';
