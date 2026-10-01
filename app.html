@@ -14443,6 +14443,9 @@ function academyLessonList(academy){
    sentences become the example conversation, patterns/notes become a
    notes section, choose-exercises feed the mini quiz and every other
    exercise type lands in the interactive Practice section. */
+/* Safe JSON parse helper — falls back to defaultValue on failure. */
+function safeParse(str, defaultValue){ try{ return JSON.parse(str); }catch(e){ return defaultValue; } }
+
 function dbToLesson(dbl, academy){
   const items = dbl.items || [];
   const vocab = items.filter(i => i.kind === 'word' || i.kind === 'phrase')
@@ -14477,15 +14480,15 @@ function dbToLesson(dbl, academy){
   }));
   const quiz = (dbl.exercises || []).filter(x => x.type === 'choose').map(x => {
     const p = x.payload || {};
-    const q = p.question || {};
+    const q = (typeof p.question === 'string') ? safeParse(p.question, {}) : (p.question || {});
     const qEn = q.en || '';
     const qAr = q.ar || '';
     const qtr = q.tr || translitEn(qEn);
     return {
     q: escapeHtml(qEn) + (qAr ? '<div class="arabic" style="font-size:.8rem; font-weight:400; margin-top:4px;">' + escapeHtml(qAr) + '</div>' : '') + (qtr ? '<div class="arabic translit" style="font-size:.76rem; color:var(--gold-soft); margin-top:3px;">' + escapeHtml(qtr) + '</div>' : ''),
     qEn: qEn, qAr: qAr, qTr: qtr,
-    options: (p.options||[]).map(o => ({ t: o.t||'', tr: o.tr || translitEn(o.t || '') })),
-    correct: (p.options||[]).findIndex(o => o.ok),
+    options: (p.options||[]).map(o => { var _o = (typeof o==='string') ? safeParse(o, {}) : (o||{}); return { t: _o.t||'', tr: _o.tr || translitEn(_o.t || '') }; }),
+    correct: (p.options||[]).findIndex(o => { var _o = (typeof o==='string') ? safeParse(o, {}) : (o||{}); return _o.ok; }),
     _hint: x.hint_ar ? { en: x.hint_en, ar: x.hint_ar } : null
     };
   });
