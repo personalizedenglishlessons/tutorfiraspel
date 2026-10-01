@@ -1222,7 +1222,7 @@ var tabs = [
       var b = (r.data && r.data.billing) || {};
       var ledger = (r.data && r.data.ledger) || [];
       var tierAr = b.tier==='exam_prep'?'التجهيز للاختبارات':(b.tier==='start_from_zero'?'ابد من الصفر':'-');
-      var trackAr = b.assessed_track==='exam_prep'?'متقدم':(b.assessed_track==='start_from_zero'?'مبتدي':(b.assessed_track==='step'?'ستيپ':'-'));
+      var trackAr = b.assessed_track==='exam_prep'?'متقدم':(b.assessed_track==='start_from_zero'?'مبتدي':(b.assessed_track==='step'?'ستيب':'-'));
       host.innerHTML =
         '<div class="section-title" style="margin-top:0;">'+(lang==='ar'?'الباقه والرصيد':'Plan & credits')+'</div>' +
         '<div class="s360-meta" style="margin-bottom:10px;">' +
@@ -1283,7 +1283,7 @@ var tabs = [
             if(r3.ok && r3.data){ b = r3.data.billing || {}; ledger = r3.data.ledger || []; }
             // Re-render the entire billing section to ensure UI is fresh
             var tierAr2 = b.tier==='exam_prep'?'التجهيز للاختبارات':(b.tier==='start_from_zero'?'ابد من الصفر':'-');
-            var trackAr2 = b.assessed_track==='exam_prep'?'متقدم':(b.assessed_track==='start_from_zero'?'مبتدي':(b.assessed_track==='step'?'ستيپ':'-'));
+            var trackAr2 = b.assessed_track==='exam_prep'?'متقدم':(b.assessed_track==='start_from_zero'?'مبتدي':(b.assessed_track==='step'?'ستيب':'-'));
             // Update credits chip
             var chips = host.querySelector('.s360-meta');
             if(chips){ var lastChip = chips.querySelector('.chip.green'); if(lastChip) lastChip.textContent = (b.live_class_credits||0)+' '+(lang==='ar'?'رصيد حصص':'class credits'); }
