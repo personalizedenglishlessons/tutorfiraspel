@@ -968,7 +968,7 @@ function openCreateStudent(){
       '<div class="field"><label>' + esc(t('studentPassword')) + '</label><input class="input" type="text" id="csPass" autocomplete="off" placeholder="' + esc(t('pwMinLen')) + '"></div>' +
     '</div>' +
     '<div class="btn-row"><button class="btn btn-gold btn-sm" id="csSave">' + esc(t('save')) + '</button><button class="btn btn-ghost btn-sm" data-close>' + esc(t('cancel')) + '</button></div>');
-  s.querySelector('[data-close]').addEventListener('click', function(){ closeModal(s); });
+  var _dc=s.querySelector('[data-close]'); if(_dc) _dc.addEventListener('click', function(){ closeModal(s); });
   $('csSave').addEventListener('click', async function(){
     var name = $('csName').value.trim();
     var email = $('csEmail').value.trim();
@@ -1825,7 +1825,7 @@ function overrideRec(){
     toast(t('saved'));
     reload360();
   });
-  s.querySelector('[data-close]').addEventListener('click', function(){ closeModal(s); });
+  var _dc=s.querySelector('[data-close]'); if(_dc) _dc.addEventListener('click', function(){ closeModal(s); });
 }
 async function saveIntervention(){
   var type = $('invType').value;
@@ -1899,7 +1899,7 @@ async function revokeCert(certId){
     toast(t('certRevoked'));
     reload360();
   });
-  s.querySelector('[data-close]').addEventListener('click', function(){ closeModal(s); });
+  var _dc=s.querySelector('[data-close]'); if(_dc) _dc.addEventListener('click', function(){ closeModal(s); });
 }
 async function reissueCert(certId){
   var r = await rpc('reissue_certificate', { p_cert_id: certId });
@@ -1936,7 +1936,7 @@ function renderPreview(){
     '<div class="card" style="margin-top:12px;"><div class="bar-row"><div class="bar-label">' + esc(t('progress')) + '</div><div class="bar-track"><div class="bar-fill" style="width:' + pct + '%"></div></div><div class="bar-val">' + fmtN(pct) + '%</div></div>' +
     '<div style="margin-top:6px; color:var(--text-muted); font-size:.78rem;">' + esc(t('lessonsDone').replace('%d', arNum(completed.length))) + ' · ' + fmtN(st.xp) + ' XP</div></div>' +
     '<div class="btn-row" style="margin-top:16px;"><button class="btn btn-outline btn-sm" data-close>' + esc(t('close')) + '</button></div>', false);
-  s.querySelector('[data-close]').addEventListener('click', function(){ closeModal(s); });
+  var _dc=s.querySelector('[data-close]'); if(_dc) _dc.addEventListener('click', function(){ closeModal(s); });
 }
 
 /* ============================================================
@@ -2042,7 +2042,7 @@ function groupForm(existing){
       '<div class="field full"><label>' + esc(t('teacher')) + '</label><select class="input" id="grTeacher"><option value="">-</option></select></div>' +
     '</div>' +
     '<div class="btn-row"><button class="btn btn-gold btn-sm" id="grSave">' + esc(t('save')) + '</button><button class="btn btn-ghost btn-sm" data-close>' + esc(t('cancel')) + '</button></div>');
-  s.querySelector('[data-close]').addEventListener('click', function(){ closeModal(s); });
+  var _dc=s.querySelector('[data-close]'); if(_dc) _dc.addEventListener('click', function(){ closeModal(s); });
   (async function(){
     var t = await rpc('admin_teachers');
     var tsel = $('grTeacher');
@@ -2158,7 +2158,7 @@ function addMemberModal(groupId){
     '<div class="field" style="margin-bottom:12px;"><input class="input" id="amSearch" placeholder="' + esc(t('searchPlaceholder')) + '"></div>' +
     '<div id="amResults"></div>' +
     '<div class="btn-row"><button class="btn btn-ghost btn-sm" data-close>' + esc(t('close')) + '</button></div>');
-  s.querySelector('[data-close]').addEventListener('click', function(){ closeModal(s); });
+  var _dc=s.querySelector('[data-close]'); if(_dc) _dc.addEventListener('click', function(){ closeModal(s); });
   var input = $('amSearch');
   var results = $('amResults');
   var timer = null;
@@ -2190,7 +2190,7 @@ function addMemberModal(groupId){
 function assignTeacherModal(groupId){
   var s = modal(t('assignTeacher'), '<select class="input" id="atSel"><option value="">-</option></select>' +
     '<div class="btn-row"><button class="btn btn-gold btn-sm" id="atSave">' + esc(t('assign')) + '</button><button class="btn btn-ghost btn-sm" data-close>' + esc(t('cancel')) + '</button></div>');
-  s.querySelector('[data-close]').addEventListener('click', function(){ closeModal(s); });
+  var _dc=s.querySelector('[data-close]'); if(_dc) _dc.addEventListener('click', function(){ closeModal(s); });
   (async function(){
     var t = await rpc('admin_teachers');
     var sel = $('atSel');
@@ -2371,7 +2371,7 @@ function academyForm(academyId){
       '<div class="field"><label>' + esc(t('colorTo')) + '</label><input class="input" type="color" id="acTo" value="' + esc(a ? (a.color_to || '#A88345') : '#A88345') + '"></div>' +
     '</div>' +
     '<div class="btn-row"><button class="btn btn-gold btn-sm" id="acSave">' + esc(t('save')) + '</button><button class="btn btn-ghost btn-sm" data-close>' + esc(t('cancel')) + '</button></div>');
-  s.querySelector('[data-close]').addEventListener('click', function(){ closeModal(s); });
+  var _dc=s.querySelector('[data-close]'); if(_dc) _dc.addEventListener('click', function(){ closeModal(s); });
   var _sb = s.querySelector('#acSave'); if(_sb) _sb.addEventListener('click', async function(){
     var en = s.querySelector('#acEn').value.trim();
     var ar = s.querySelector('#acAr').value.trim();
@@ -2406,7 +2406,7 @@ function lessonForm(academyId, lessonId){
         LESSON_LEVELS.map(function(v){ return '<option' + (l && l.level === v ? ' selected' : '') + '>' + v + '</option>'; }).join('') + '</select></div>' +
     '</div>' +
     '<div class="btn-row"><button class="btn btn-gold btn-sm" id="lsSave">' + esc(t('save')) + '</button><button class="btn btn-ghost btn-sm" data-close>' + esc(t('cancel')) + '</button></div>');
-  s.querySelector('[data-close]').addEventListener('click', function(){ closeModal(s); });
+  var _dc=s.querySelector('[data-close]'); if(_dc) _dc.addEventListener('click', function(){ closeModal(s); });
   var _sb = s.querySelector('#lsSave'); if(_sb) _sb.addEventListener('click', async function(){
     var en = s.querySelector('#lsEn').value.trim();
     var ar = s.querySelector('#lsAr').value.trim();
@@ -2504,7 +2504,7 @@ function classForm(groupsArr){
       '<div class="field"><label>Course / lesson</label><input class="input" id="clCourse" placeholder="speaking-studio"></div>' +
     '</div>' +
     '<div class="btn-row"><button class="btn btn-gold btn-sm" id="clSave">' + esc(t('create')) + '</button><button class="btn btn-ghost btn-sm" data-close>' + esc(t('cancel')) + '</button></div>');
-  s.querySelector('[data-close]').addEventListener('click', function(){ closeModal(s); });
+  var _dc=s.querySelector('[data-close]'); if(_dc) _dc.addEventListener('click', function(){ closeModal(s); });
   $('clSave').addEventListener('click', async function(){
     var payload = {
       group_id: $('clGroup').value || null,
@@ -2543,7 +2543,7 @@ async function attendanceSheet(classId){
     }).join('') + (roster.length ? '' : emptyBlock(t('noData'))) +
     '</div>' +
     '<div class="btn-row"><button class="btn btn-gold btn-sm" id="attSave">' + esc(t('save')) + '</button><button class="btn btn-ghost btn-sm" data-close>' + esc(t('cancel')) + '</button></div>', true);
-  s.querySelector('[data-close]').addEventListener('click', function(){ closeModal(s); });
+  var _dc=s.querySelector('[data-close]'); if(_dc) _dc.addEventListener('click', function(){ closeModal(s); });
   $('attSave').addEventListener('click', async function(){
     var rows = roster.map(function(m){
       var sel = s.querySelector('[data-att-status="' + m.id + '"]');
@@ -2562,7 +2562,7 @@ function classStatusModal(classId){
       return '<option value="' + x[1] + '">' + esc(t(x[1])) + '</option>';
     }).join('') + '</select>' +
     '<div class="btn-row"><button class="btn btn-gold btn-sm" id="csSave">' + esc(t('save')) + '</button><button class="btn btn-ghost btn-sm" data-close>' + esc(t('cancel')) + '</button></div>');
-  s.querySelector('[data-close]').addEventListener('click', function(){ closeModal(s); });
+  var _dc=s.querySelector('[data-close]'); if(_dc) _dc.addEventListener('click', function(){ closeModal(s); });
   $('csSave').addEventListener('click', async function(){
     var r = await rpc('admin_class_status', { p_class_id: classId, p_status: $('csSel').value });
     if(!r.ok){ toast(rpcErrMsg(r), true); return; }
@@ -2625,7 +2625,7 @@ function programForm(){
       '<div class="field full"><label>Description</label><textarea class="input" id="pgDesc" rows="2"></textarea></div>' +
     '</div>' +
     '<div class="btn-row"><button class="btn btn-gold btn-sm" id="pgSave">' + esc(t('create')) + '</button><button class="btn btn-ghost btn-sm" data-close>' + esc(t('cancel')) + '</button></div>');
-  s.querySelector('[data-close]').addEventListener('click', function(){ closeModal(s); });
+  var _dc=s.querySelector('[data-close]'); if(_dc) _dc.addEventListener('click', function(){ closeModal(s); });
   $('pgSave').addEventListener('click', async function(){
     var payload = {
       code: $('pgCode').value.trim(), name_en: $('pgEn').value.trim(), name_ar: $('pgAr').value.trim() || $('pgEn').value.trim(),
@@ -2978,7 +2978,7 @@ function verifyCertModal(){
   var s = modal(t('verifyCode'), '<div class="field"><label>' + esc(t('code')) + '</label><input class="input" id="vfCode" placeholder="A1B2C3D4E5F6A7B8 / PEL-YYMMDD-SSS-C"></div>' +
     '<div id="vfResult"></div>' +
     '<div class="btn-row"><button class="btn btn-gold btn-sm" id="vfGo">' + esc(t('verifyCode')) + '</button><button class="btn btn-ghost btn-sm" data-close>' + esc(t('close')) + '</button></div>');
-  s.querySelector('[data-close]').addEventListener('click', function(){ closeModal(s); });
+  var _dc=s.querySelector('[data-close]'); if(_dc) _dc.addEventListener('click', function(){ closeModal(s); });
   $('vfGo').addEventListener('click', async function(){
     var code = $('vfCode').value.trim();
     if(!code){ toast(t('required'), true); return; }
@@ -3014,7 +3014,7 @@ function openCertIssueModal(uid){
     '<button class="btn btn-outline btn-sm" id="ciPreview">' + esc(t('certPreview')) + '</button>' +
     '<button class="btn btn-ghost btn-sm" data-close>' + esc(t('cancel')) + '</button></div>' +
     '<div class="preview-wrap" id="ciPreviewWrap" style="display:none;margin-top:14px;overflow:auto;max-height:340px;background:#121216;border:1px solid #2A2826;border-radius:10px;"></div>');
-  s.querySelector('[data-close]').addEventListener('click', function(){ closeModal(s); });
+  var _dc=s.querySelector('[data-close]'); if(_dc) _dc.addEventListener('click', function(){ closeModal(s); });
 
   var picked = uid;
   var nameInput = $('ciName');
@@ -3310,7 +3310,7 @@ async function openAssignPlanModal(uid, onDone, curTier, curLevel){
     '</div>' +
     '<div class="btn-row"><button class="btn btn-gold btn-sm" id="apSave">' + esc(t('save')) + '</button><button class="btn btn-ghost btn-sm" data-close>' + esc(t('cancel')) + '</button></div>' +
     '<div class="sub" style="margin-top:8px;color:var(--text-muted);">' + esc(lang==='ar'?'يحدد البرنامج + المده + نوع الخطه + المستوى اللي تاخذ منه الدروس':'Sets program + duration + plan type + level that drives their lessons') + '</div>');
-  ms.querySelector('[data-close]').addEventListener('click', function(){ closeModal(ms); });
+  var _dc=ms.querySelector('[data-close]'); if(_dc) _dc.addEventListener('click', function(){ closeModal(ms); });
   $('apSave').addEventListener('click', async function(){
     var btn = $('apSave'); btn.disabled = true; var orig = btn.textContent; btn.textContent = '...';
     var end = $('apEnd').value || (function(){ var days = +($('apProg').options[$('apProg').selectedIndex].getAttribute('data-days')||30); var d = new Date($('apStart').value); d.setDate(d.getDate()+days); return d.toISOString().slice(0,10); })();
@@ -3328,7 +3328,7 @@ function assignPlanForm(catalog){
   var s = modal(t('assignPlan'), '' +
     '<div class="field full"><label>' + esc(t('student')) + '</label><div class="search-wrap"><input class="input" id="apSearch" placeholder="' + esc(t('searchStudents')) + '"><div id="apResults"></div></div></div>' +
     '<div class="btn-row"><button class="btn btn-ghost btn-sm" data-close>' + esc(t('cancel')) + '</button></div>');
-  s.querySelector('[data-close]').addEventListener('click', function(){ closeModal(s); });
+  var _dc=s.querySelector('[data-close]'); if(_dc) _dc.addEventListener('click', function(){ closeModal(s); });
   var input = $('apSearch'), results = $('apResults');
   var timer = null;
   input.addEventListener('input', function(){
@@ -3367,7 +3367,7 @@ function savePlanForm(catalog){
       '<div class="field full"><label>Description</label><textarea class="input" id="pgDesc" rows="2"></textarea></div>' +
     '</div>' +
     '<div class="btn-row"><button class="btn btn-gold btn-sm" id="pgSave">' + esc(t('savePlan')) + '</button><button class="btn btn-ghost btn-sm" data-close>' + esc(t('cancel')) + '</button></div>');
-  s.querySelector('[data-close]').addEventListener('click', function(){ closeModal(s); });
+  var _dc=s.querySelector('[data-close]'); if(_dc) _dc.addEventListener('click', function(){ closeModal(s); });
   $('pgSave').addEventListener('click', async function(){
     var btn = $('pgSave'); btn.disabled = true;
     var r = await rpc('admin_save_plan', {
@@ -3456,7 +3456,7 @@ function createAnnouncementForm(){
       '<div class="field full" id="anSelWrap" style="display:none;"><label>' + esc(t('selectStudents')) + '</label><div class="search-wrap"><input class="input" id="anSearch" placeholder="' + esc(t('searchStudents')) + '"><div id="anResults"></div></div><div id="anPicked" style="margin-top:8px; display:flex; flex-wrap:wrap; gap:6px;"></div></div>' +
     '</div>' +
     '<div class="btn-row"><button class="btn btn-gold btn-sm" id="anSave">' + esc(t('send')) + '</button><button class="btn btn-ghost btn-sm" data-close>' + esc(t('cancel')) + '</button></div>');
-  s.querySelector('[data-close]').addEventListener('click', function(){ closeModal(s); });
+  var _dc=s.querySelector('[data-close]'); if(_dc) _dc.addEventListener('click', function(){ closeModal(s); });
   var picked = {}; // uid -> label
   function renderPicked(){
     var ids = Object.keys(picked);
@@ -3524,7 +3524,7 @@ function editAnnouncementForm(a){
       '<div class="field full"><label style="display:flex; align-items:center; gap:8px;"><input type="checkbox" id="anEActive"' + (a.active !== false ? ' checked' : '') + '> ' + esc(lang === 'ar' ? 'ظاهر للطلاب' : 'Visible to students') + '</label></div>' +
     '</div>' +
     '<div class="btn-row"><button class="btn btn-gold btn-sm" id="anESave">' + esc(lang === 'ar' ? 'حفظ التغييرات' : 'Save changes') + '</button><button class="btn btn-ghost btn-sm" data-close>' + esc(t('cancel')) + '</button></div>');
-  s.querySelector('[data-close]').addEventListener('click', function(){ closeModal(s); });
+  var _dc=s.querySelector('[data-close]'); if(_dc) _dc.addEventListener('click', function(){ closeModal(s); });
   $('anESave').addEventListener('click', async function(){
     var btn = $('anESave'); btn.disabled = true;
     var r = await rpc('admin_announcement_update', {
