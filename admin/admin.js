@@ -768,7 +768,7 @@ var NAV = [
     {id:'classes', en:'Live Classes', ar: 'الدروس المباشره', icon:'video'},
     {id:'programs', en:'Programs', ar: 'البرامج', icon:'credit-card'},
     {id:'plans', en:'Plans', ar: 'الباقات', icon:'badge-check', perm:'subscriptions.manage'},
-    {id:'billing', en:'Billing & Index', ar: 'الاسعار وصفحة البدايه', icon:'wallet', perm:'subscriptions.manage'},
+    {id:'billing', en:'Billing & Index', ar: 'الاسعار وصفحه البدايه', icon:'wallet', perm:'subscriptions.manage'},
     {id:'liveClasses', en:'Class Requests', ar: 'طلبات الحصص', icon:'ticket', perm:'subscriptions.manage'},
     {id:'settings', en:'Site Settings', ar: 'اعدادات الموقع', icon:'settings', perm:'settings.manage'},
   ]},
@@ -2653,7 +2653,7 @@ function programForm(){
    (hero / pricing copy). No payment gateway - CTAs are WhatsApp.
    ============================================================ */
 async function billingView(){
-  $('viewArea').innerHTML = pageHead(lang==='ar'?'الاسعار وصفحة البدايه':'Billing & Index',
+  $('viewArea').innerHTML = pageHead(lang==='ar'?'الاسعار وصفحه البدايه':'Billing & Index',
     lang==='ar'?'عدل اسعار الباقات ونص الصفحه البدايه - التغييرات توصل لـ /index فورا':'Edit plan prices and index copy - changes reach /index immediately') + loadingBlock();
   var c = client();
   var [pp, ss] = await Promise.all([
@@ -2713,7 +2713,7 @@ async function billingView(){
     '<div class="btn-row" style="margin-bottom:8px;"><button class="btn btn-outline btn-sm" id="faqAdd">'+esc(lang==='ar'?'سؤال جديد':'Add question')+'</button></div>';
   indexHtml += faqHtml;
 
-  $('viewArea').innerHTML = pageHead(lang==='ar'?'الاسعار وصفحة البدايه':'Billing & Index',
+  $('viewArea').innerHTML = pageHead(lang==='ar'?'الاسعار وصفحه البدايه':'Billing & Index',
     lang==='ar'?'عدل اسعار الباقات ونص الصفحه البدايه':'Edit plan prices and index copy') +
     '<div class="btn-row" style="margin-bottom:16px;"><button class="btn btn-gold btn-sm" id="ppSave">'+esc(t('save'))+'</button>' +
     '<span class="why">'+(lang==='ar'?'الدفع عبر واتساب - ما في بوابه دفع':'WhatsApp checkout only - no payment gateway')+'</span></div>' +
