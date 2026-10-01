@@ -85,7 +85,7 @@ input,select,textarea{font-family:inherit;}
 ul{list-style:none; margin:0; padding:0;}
 ::selection{ background:var(--gold); color:#0E0E10; }
 html[data-theme="light"] ::selection{ background:rgba(0,113,227,.2); color:var(--text); }
-  .arabic, [dir="rtl"]{ font-family:'Cairo','Tajawal',sans-serif; direction:rtl; line-height:1.95; letter-spacing:0; font-weight:400; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; unicode-bidi:isolate; }
+  .arabic, [dir="rtl"]{ font-family:'Cairo','Tajawal',sans-serif; direction:rtl; line-height:1.95; letter-spacing:0; font-weight:400; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; unicode-bidi:isolate; overflow-wrap:break-word; word-break:break-word; }
   /* Bigger, more readable Arabic everywhere (captions, chips, body, sidebar).
      Uses a floor with !important so tiny inline sizes (0.68–0.78rem) are raised
      to a readable minimum - but headings are excluded so large titles keep
@@ -181,7 +181,7 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
 .side-badge{ position:absolute; top:7px; right:8px; min-width:19px; height:19px; border-radius:10px; background:var(--gold); color:#17171B; font-size:.62rem; font-weight:800; display:flex; align-items:center; justify-content:center; padding:0 6px; box-shadow:0 2px 8px rgba(0,0,0,.35); }
 
 .side-text-wrap{ display:flex; flex-direction:column; transition:opacity .2s ease; overflow:hidden; }
-.side-text-wrap .ar{ font-family:'Cairo','Tajawal',sans-serif; direction:rtl; text-align:left; line-height:1.3; }
+.side-text-wrap .ar{ font-family:'Cairo','Tajawal',sans-serif; direction:rtl; text-align:left; line-height:1.3; overflow-wrap:break-word; word-break:break-word; }
 .side-text-wrap .en{ font-size:.68rem; color:var(--text-muted); line-height:1.3; margin-top:1px; }
 
 
@@ -205,7 +205,7 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
 
 /* sidebar group labels (student-friendly sections) */
 .side-label{ margin:14px 12px 6px; display:flex; flex-direction:column; }
-.side-label .ar{ font-family:'Cairo','Tajawal',sans-serif; direction:rtl; font-size:.68rem; color:var(--text-muted); font-weight:700; letter-spacing:.02em; }
+.side-label .ar{ font-family:'Cairo','Tajawal',sans-serif; direction:rtl; font-size:.68rem; color:var(--text-muted); font-weight:700; letter-spacing:.02em; overflow-wrap:break-word; word-break:break-word; }
 .side-label .en{ font-size:.58rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:.12em; margin-top:1px; }
 
 /* tablet icon rail (portrait tablets / small landscape) */
@@ -578,7 +578,7 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
 .mini-list-item:last-child{ border-bottom:none; }
 .mini-list-item .ml-en{ color:var(--text); font-weight:500; }
 .mini-list-item .ml-tr{ color:var(--gold-soft); font-size:.76rem; direction:ltr; margin-top:2px; }
-.mini-list-item .ml-ar{ font-family:'Cairo','Tajawal',sans-serif; direction:rtl; color:var(--text-muted); font-size:.76rem; margin-top:2px; }
+.mini-list-item .ml-ar{ font-family:'Cairo','Tajawal',sans-serif; direction:rtl; color:var(--text-muted); font-size:.76rem; margin-top:2px; overflow-wrap:break-word; word-break:break-word; }
 
 /* confetti */
 .confetti-piece{ position:fixed; top:-10px; width:8px; height:14px; z-index:4000; pointer-events:none; border-radius:2px; }
@@ -600,14 +600,14 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
 .concept-num{flex-shrink:0;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-soft));color:#171412;display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:700;}
 .concept-step-body{flex:1;min-width:0;}
 .concept-step-en{font-size:.98rem;font-weight:600;line-height:1.5;direction:ltr;}
-.concept-step-ar{font-size:.92rem;line-height:1.7;direction:rtl;text-align:start;}
+.concept-step-ar{font-size:.92rem;line-height:1.7;direction:rtl;text-align:start;overflow-wrap:break-word;word-break:break-word;}
 .key-term{color:var(--gold);font-weight:700;}
 .concept-section-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted);margin:18px 0 8px;display:flex;align-items:center;gap:6px;}
 .concept-section-label:first-child{margin-top:2px;}
 .concept-examples{display:flex;flex-direction:column;gap:8px;margin-top:8px;}
 .concept-ex{padding:12px 14px;background:rgba(200,169,106,.06);border:1px solid rgba(200,169,106,.18);border-radius:12px;}
 .concept-ex .ex-en{font-size:.95rem;font-weight:600;direction:ltr;}
-.concept-ex .ex-ar{font-size:.86rem;color:var(--text-secondary);margin-top:4px;direction:rtl;text-align:start;}
+.concept-ex .ex-ar{font-size:.86rem;color:var(--text-secondary);margin-top:4px;direction:rtl;text-align:start;overflow-wrap:break-word;word-break:break-word;}
 
 /* library toolbar */
 .lib-toolbar{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-bottom:26px; }
@@ -631,8 +631,8 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
 .academy-fav.active{ color:var(--gold); }
 .academy-badges{ position:absolute; bottom:10px; left:14px; display:flex; gap:6px; z-index:2; }
 .academy-body{ padding:16px 18px 18px; }
-.academy-title-ar{ font-family:'Cairo','Tajawal',sans-serif; direction:rtl; font-size:.8rem; color:var(--text-muted); margin-top:4px; }
-.academy-translit{ font-family:'Cairo','Tajawal',sans-serif; direction:rtl; font-size:.72rem; color:var(--text-muted); opacity:.75; }
+.academy-title-ar{ font-family:'Cairo','Tajawal',sans-serif; direction:rtl; font-size:.8rem; color:var(--text-muted); margin-top:4px; overflow-wrap:break-word; word-break:break-word; }
+.academy-translit{ font-family:'Cairo','Tajawal',sans-serif; direction:rtl; font-size:.72rem; color:var(--text-muted); opacity:.75; overflow-wrap:break-word; word-break:break-word; }
 .academy-meta-row{ display:flex; align-items:center; gap:10px; margin-top:12px; font-size:.72rem; color:var(--text-muted); flex-wrap:wrap; }
 .academy-meta-row span{ display:flex; align-items:center; gap:5px; }
 
@@ -990,7 +990,7 @@ body.ui-ar .vv-collection-card .col-desc{ font-family:'Cairo','Tajawal',sans-ser
 .fb-learn{ margin-top:8px; font-size:.72rem; }
 .fb-learn-item{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; padding:8px 0; border-top:1px solid var(--border); font-size:.82rem; line-height:1.6; }
 .fb-learn-item:first-child{ border-top:none; padding-top:0; }
-.fb-ar-meaning{ font-family:'Cairo','Tajawal',sans-serif; direction:rtl; text-align:right; font-size:.95rem; line-height:1.9; background:var(--card-elevated); border:1px solid var(--border); border-radius:12px; padding:14px; }
+.fb-ar-meaning{ font-family:'Cairo','Tajawal',sans-serif; direction:rtl; text-align:right; font-size:.95rem; line-height:1.9; background:var(--card-elevated); border:1px solid var(--border); border-radius:12px; padding:14px; overflow-wrap:break-word; word-break:break-word; }
 
 /* ============================================================
    INTERFACE LANGUAGE (ar / en) + RTL refinements
@@ -1075,7 +1075,7 @@ body.ui-ar .btn-gold .pel-dash-shimmer{ left:auto; right:-130%; animation-name:p
 .situation-label{ font-size:.7rem; text-transform:uppercase; letter-spacing:.06em; color:var(--gold); margin-bottom:12px; font-weight:600; }
 .situation-line{ padding:10px 0; border-top:1px solid var(--border); }
 .situation-line:first-of-type{ border-top:none; padding-top:0; }
-.situation-ar{ font-family:'Cairo','Tajawal',sans-serif; direction:rtl; text-align:right; font-size:.95rem; line-height:1.8; color:var(--text); }
+.situation-ar{ font-family:'Cairo','Tajawal',sans-serif; direction:rtl; text-align:right; font-size:.95rem; line-height:1.8; color:var(--text); overflow-wrap:break-word; word-break:break-word; }
 .situation-en{ font-size:.84rem; color:var(--text-secondary); line-height:1.6; margin-top:2px; }
 .situation-translit{ color:var(--text-muted); font-size:.76rem; }
 
