@@ -488,7 +488,7 @@ root.setAttribute('data-theme', localStorage.getItem('pel-theme') || 'dark');
 themeToggle.addEventListener('click', () => {
   const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
   root.setAttribute('data-theme', next);
-  localStorage.setItem('pel-theme', next);
+  try{ localStorage.setItem('pel-theme', next); }catch(e){}
 });
 
 /* ============ INTERFACE LANGUAGE (ar / en) + RTL ============
@@ -601,7 +601,7 @@ syncRememberCheckbox();
 rememberToggle.addEventListener('click', () => {
   remembered = !remembered;
   syncRememberCheckbox();
-  localStorage.setItem('pel-remember', remembered ? '1' : '0');
+  try{ localStorage.setItem('pel-remember', remembered ? '1' : '0'); }catch(e){}
 });
 const loginEmailInput = document.getElementById('loginEmail');
 const lastEmail = localStorage.getItem('pel-last-email');
@@ -710,7 +710,7 @@ async function triggerRedirect(){
   var enableCookieAuth = (localStorage.getItem('pel_cookie_test') === '1') || (new URLSearchParams(window.location.search).get('cookie_auth') === '1');
   // Propagate cookie test flag via localStorage so it survives redirect
   if(new URLSearchParams(window.location.search).get('cookie_auth') === '1'){
-    localStorage.setItem('pel_cookie_test', '1');
+    try{ localStorage.setItem('pel_cookie_test', '1'); }catch(e){}
   }
   try{
     // Only try cookie-based API if test flag is enabled
@@ -804,7 +804,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
   }
 
   if(cookieLoginOk){
-    if(remembered){ localStorage.setItem('pel-last-email', email); }
+    if(remembered){ try{ localStorage.setItem('pel-last-email', email); }catch(e){} }
     showSuccess('login');
     showMessage('login', msgArEn('اهلا بعودتك! نفتح لوحه التحكم...', 'Welcome back. Redirecting to your dashboard.'), 'success');
     triggerRedirect();
@@ -848,7 +848,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     }
   }
 
-  if(remembered){ localStorage.setItem('pel-last-email', email); }
+  if(remembered){ try{ localStorage.setItem('pel-last-email', email); }catch(e){} }
   showSuccess('login');
   showMessage('login', msgArEn('اهلا بعودتك! نفتح لوحه التحكم...', 'Welcome back. Redirecting to your dashboard.'), 'success');
   triggerRedirect();

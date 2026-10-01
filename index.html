@@ -1514,7 +1514,7 @@ themeToggle.addEventListener('click', () => {
   const current = root.getAttribute('data-theme');
   const next = current === 'light' ? 'dark' : 'light';
   root.setAttribute('data-theme', next);
-  localStorage.setItem('pel-theme', next);
+  try{ localStorage.setItem('pel-theme', next); }catch(e){}
 });
 
 /* LANGUAGE - global pel_account_prefs, persists from landing */

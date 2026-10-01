@@ -477,7 +477,7 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-of
   document.getElementById('themeToggle').addEventListener('click', () => {
     const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
     root.setAttribute('data-theme', next);
-    localStorage.setItem('pel-theme', next);
+    try{ localStorage.setItem('pel-theme', next); }catch(e){}
   });
   const backToTop = document.getElementById('backToTop');
   window.addEventListener('scroll', () => {

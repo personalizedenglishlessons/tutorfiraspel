@@ -18607,6 +18607,7 @@ function renderVocabulary(){
       case 'ArrowLeft': e.preventDefault(); if(rtl){ flipThenAdvance(); } else { if(vvCurrent>0) showStudyCard(vvCurrent-1,-1); } break;
       case 'ArrowUp': case 'ArrowDown': case 'Enter': e.preventDefault(); flipCard(); break;
       case 'Escape': e.preventDefault(); backToCategories(); break;
+      default: break;
     }
   }
   document.addEventListener('keydown', vvKeyHandler);
