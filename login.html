@@ -155,13 +155,14 @@ body.ui-ar .brand-copy, body.ui-ar .brand-arabic{ text-align:right; }
 .auth-shell{
   position:relative; z-index:2; min-height:100vh; min-height:100dvh;
   display:grid; grid-template-columns:1.05fr .95fr;
+  max-width:1320px; margin:0 auto;
 }
 @media(max-width:980px){ .auth-shell{ grid-template-columns:1fr; } }
 
 /* ===== BRAND SIDE ===== */
 .brand-side{
   display:flex; flex-direction:column; justify-content:center;
-  padding:60px 60px; position:relative;
+  padding:60px 48px 60px 60px; position:relative;
   animation:brandSlide .8s var(--ease);
 }
 @keyframes brandSlide{ from{ opacity:0; transform:translateY(16px);} to{ opacity:1; transform:translateY(0);} }
@@ -296,7 +297,7 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
 /* ===== auth panel ===== */
 .panel-side{
   display:flex; align-items:center; justify-content:center;
-  padding:40px 32px;
+  padding:40px 48px 40px 32px;
 }
 @media(max-width:980px){ .panel-side{ padding:20px 22px 70px; } }
 
