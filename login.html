@@ -196,13 +196,13 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
 /* ===== dashboard preview card ===== */
 .dash-preview{
   margin-top:48px; max-width:440px;
-  background:color-mix(in srgb, var(--card) 50%, transparent);
-  backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
-  border:1px solid color-mix(in srgb, var(--border) 65%, transparent);
+  background:color-mix(in srgb, var(--card) 65%, transparent);
+  backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border:1px solid color-mix(in srgb, var(--border) 55%, transparent);
   border-radius:22px; padding:24px;
-  box-shadow:0 24px 60px -24px rgba(0,0,0,0.5), 0 0 0 1px rgba(200,169,106,0.04);
+  box-shadow:0 24px 60px -24px rgba(0,0,0,0.6), 0 0 0 1px rgba(200,169,106,0.06), 0 0 80px -20px rgba(200,169,106,0.1);
   position:relative; overflow:hidden;
-  transform-style:preserve-3d; perspective:600px;
+  transform-style:preserve-3d;
 }
 .dash-preview::before{
   content:""; position:absolute; top:0; left:0; right:0; height:1px;
@@ -229,8 +229,8 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
 .dp-lesson{
   display:flex; align-items:center; gap:14px; margin-top:20px; position:relative; z-index:1;
   padding:16px; border-radius:16px;
-  background:color-mix(in srgb, var(--surface) 60%, transparent);
-  border:1px solid color-mix(in srgb, var(--border) 50%, transparent);
+  background:color-mix(in srgb, var(--surface) 75%, transparent);
+  border:1px solid color-mix(in srgb, var(--border) 40%, transparent);
   transition:border-color .3s ease, transform .3s ease;
 }
 .dp-lesson:hover{ border-color:rgba(200,169,106,0.3); transform:translateY(-2px); }
@@ -259,8 +259,8 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
 .dp-stats{ display:flex; gap:12px; margin-top:16px; position:relative; z-index:1; }
 .dp-stat{
   flex:1; display:flex; align-items:center; gap:10px; padding:14px;
-  border-radius:14px; background:color-mix(in srgb, var(--surface) 50%, transparent);
-  border:1px solid color-mix(in srgb, var(--border) 50%, transparent);
+  border-radius:14px; background:color-mix(in srgb, var(--surface) 70%, transparent);
+  border:1px solid color-mix(in srgb, var(--border) 40%, transparent);
   transition:border-color .3s ease, transform .3s ease;
 }
 .dp-stat:hover{ border-color:rgba(200,169,106,0.3); transform:translateY(-2px); }
