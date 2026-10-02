@@ -139,11 +139,9 @@ html[data-theme="light"] .bg-grid{
 body.ui-ar .brand-heading-ar{ text-align:right; }
 body.ui-ar .panel-label, body.ui-ar .form-title, body.ui-ar .form-sub{ text-align:right; }
 body.ui-ar .field label, body.ui-ar .remember{ direction:rtl; }
-body.ui-ar .benefits, body.ui-ar .trust-strip p{ text-align:right; }
 body.ui-ar .brand-copy, body.ui-ar .brand-arabic{ text-align:right; }
-body.ui-ar .divider-line{ direction:ltr; }
 @media(max-width:980px){
-  body.ui-ar .brand-heading-ar, body.ui-ar .brand-copy, body.ui-ar .brand-arabic, body.ui-ar .benefits{ text-align:center; }
+  body.ui-ar .brand-heading-ar, body.ui-ar .brand-copy, body.ui-ar .brand-arabic{ text-align:center; }
 }
 
 .back-home{
@@ -426,27 +424,6 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
 .form-message.error{ background:rgba(210,92,92,0.1); color:var(--error); border:1px solid rgba(210,92,92,0.25); }
 .form-message.success{ background:rgba(66,163,106,0.1); color:var(--success); border:1px solid rgba(66,163,106,0.25); }
 
-.divider-line{ display:flex; align-items:center; gap:14px; margin-top:28px; color:var(--text-muted); font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; }
-.divider-line::before, .divider-line::after{ content:""; flex:1; height:1px; background:var(--border); }
-
-.benefits{ margin-top:22px; display:grid; grid-template-columns:1fr 1fr; gap:10px 14px; }
-.benefit-item{ display:flex; align-items:center; gap:9px; font-size:.76rem; color:var(--text-secondary); }
-.benefit-item .b-icon{ color:var(--gold); flex-shrink:0; display:flex; align-items:center; justify-content:center; width:20px; height:20px; }
-@media(max-width:420px){ .benefits{ grid-template-columns:1fr; } }
-
-.security-row{ margin-top:24px; display:flex; gap:10px; flex-wrap:wrap; }
-.security-badge{
-  display:flex; align-items:center; gap:6px; font-size:.68rem; color:var(--text-muted);
-  border:1px solid var(--border); border-radius:999px; padding:6px 12px;
-}
-.security-badge svg{ width:12px; height:12px; color:var(--gold); }
-
-/* trust row below card */
-.trust-strip{ max-width:440px; margin:26px auto 0; text-align:center; }
-.trust-strip p{ font-size:.78rem; color:var(--text-muted); }
-.trust-pills{ margin-top:14px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
-.trust-pill{ font-size:.7rem; padding:6px 14px; border-radius:999px; border:1px solid var(--border); color:var(--text-muted); }
-
 /* loading overlay before redirect */
 .redirect-overlay{
   position:fixed; inset:0; z-index:100; background:var(--bg);
@@ -517,8 +494,8 @@ a:focus-visible, button:focus-visible, input:focus-visible{
     </div>
     <div class="brand-heading-ar">حياك الله</div>
     <h1 class="brand-heading">Welcome back. <em>Pick up where you left off.</em></h1>
-    <p class="brand-copy">Step into your private academy. American English, explained in your language, guided by Tutor Firas.</p>
-    <p class="arabic brand-arabic">حياك في اكاديميه الاستاذ فراس. منهج امريكي كامل، شرح بالعربي، وكل شي على مستواك</p>
+    <p class="brand-copy">Sign in to access your lessons, pronunciation practice, writing feedback, and subscription status.</p>
+    <p class="arabic brand-arabic">سجل دخولك للوصول الى دروسك، تدريب النطق، تصحيح الكتابه، وحاله الاشتراك</p>
 
     <div class="dash-preview" aria-hidden="true">
       <div class="dp-header">
@@ -636,37 +613,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
             </button>
 
             <div class="form-message" id="loginMessage"></div>
-
-            <div class="divider-line">Your Private Academy</div>
-
-            <div class="security-row">
-              <div class="security-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l7 4v6c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6l7-4z"/></svg> Encrypted Login</div>
-              <div class="security-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg> Private Student Access</div>
-            </div>
           </form>
-        </div>
-
-        <div class="benefits">
-          <div class="benefit-item"><span class="b-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg></span><span class="b-label">Hundreds of real-world lessons</span></div>
-          <div class="benefit-item"><span class="b-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg></span><span class="b-label">Writing feedback coach</span></div>
-          <div class="benefit-item"><span class="b-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></span><span class="b-label">Speaking practice</span></div>
-          <div class="benefit-item"><span class="b-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3"/></svg></span><span class="b-label">Pronunciation training</span></div>
-          <div class="benefit-item"><span class="b-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0118 0M3 12a9 9 0 0018 0"/><path d="M8 12h.01M12 12h.01M16 12h.01"/></svg></span><span class="b-label">Saudi Arabian Arabic explanations</span></div>
-          <div class="benefit-item"><span class="b-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="7" height="16" rx="1"/><rect x="13" y="4" width="7" height="16" rx="1"/><path d="M8 8h.01M17 8h.01"/></svg></span><span class="b-label">Arabic transliteration</span></div>
-          <div class="benefit-item"><span class="b-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="14" height="14" rx="2"/><path d="M7 2v4M13 2v4M3 12h14"/></svg></span><span class="b-label">Vocabulary builder</span></div>
-          <div class="benefit-item"><span class="b-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></span><span class="b-label">Grammar academy</span></div>
-          <div class="benefit-item"><span class="b-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-5"/></svg></span><span class="b-label">Progress tracking</span></div>
-          <div class="benefit-item"><span class="b-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span><span class="b-label">Private dashboard</span></div>
-        </div>
-      </div>
-
-      <div class="trust-strip">
-        <p>Students learning with Tutor Firas.</p>
-        <div class="trust-pills">
-          <span class="trust-pill">Private Academy</span>
-          <span class="trust-pill">American Curriculum</span>
-          <span class="trust-pill">Secure Authentication</span>
-          <span class="trust-pill">Learn with Tutor Firas</span>
         </div>
       </div>
     </div>
@@ -689,7 +636,7 @@ let mx=0,my=0, rx=0, ry=0;
 window.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; dot.style.left=mx+'px'; dot.style.top=my+'px'; });
 function ringLoop(){ rx += (mx-rx)*0.18; ry += (my-ry)*0.18; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(ringLoop); }
 ringLoop();
-document.querySelectorAll('a, button, input, .dash-preview, .dp-lesson, .dp-chip, .dp-fb-row, .trust-pill, .security-badge').forEach(el => {
+document.querySelectorAll('a, button, input, .dash-preview, .dp-feature, .dp-sub-row, .dp-access-badge').forEach(el => {
   el.addEventListener('mouseenter', () => ring.classList.add('hover'));
   el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
 });
@@ -739,7 +686,7 @@ function applyLoginLang(lang){
   var T = {
     '.back-home .label': ar?'العوده للمنصه':'Back to Academy',
     '.brand-heading': ar?'<em>كمل من وين وقفت</em>':'Welcome back. <em>Pick up where you left off.</em>',
-    '.brand-copy': ar?'ادخل اكاديميتك الخاصه. انجليزي امريكي، بشرح بالعربي، مع الاستاذ فراس.':'Step into your private academy. American English, explained in your language, guided by Tutor Firas.',
+    '.brand-copy': ar?'سجل دخولك للوصول الى دروسك، تدريب النطق، تصحيح الكتابه، وحاله الاشتراك':'Sign in to access your lessons, pronunciation practice, writing feedback, and subscription status.',
     '.panel-label': ar?'دخول الطلاب':'Student Login',
     '.form-title': ar?'تسجيل الدخول':'Sign In',
     '.form-sub': ar?'للطلاب المسجلين. سجل دخولك للوحه التحكم.':'For enrolled students. Sign in to your dashboard.',
@@ -747,10 +694,6 @@ function applyLoginLang(lang){
     'label[for="loginPassword"]': ar?'كلمه المرور':'Password',
     '#rememberToggle': ar?'<span class="checkbox remember-checkbox"></span> تذكرني':'<span class="checkbox remember-checkbox"></span> Remember me',
     '#loginBtnLabel': ar?'دخول':'Log In',
-    '.divider-line': ar?'اكاديميتك الخاصه':'Your Private Academy',
-    '.security-badge:nth-of-type(1)': ar?'تسجيل مشفر':'Encrypted Login',
-    '.security-badge:nth-of-type(2)': ar?'وصول خاص للطلاب':'Private Student Access',
-    '.trust-strip p': ar?'طلاب يتعلمون مع الاستاذ فراس.':'Students learning with Tutor Firas.',
     '.redirect-overlay p': ar?'نفتح لوحه التحكم...':'Opening your dashboard...'
   };
   Object.keys(T).forEach(function(sel){
@@ -764,22 +707,6 @@ function applyLoginLang(lang){
       el.setAttribute('dir', ar ? 'rtl' : 'ltr');
     }
   });
-  // Benefit items — update label text only, preserve SVG icons
-  var benefits = document.querySelectorAll('.benefit-item');
-  var benAr = ['ميات الدروس من الواقع','مدرب كتابه','تدريب المحادثه','تدريب النطق','شرح بالعربي السعودي','نطق عربي للحروف','بناء المفردات','اكاديميه القواعد','تتبع التقدم','لوحه تحكم خاصه'];
-  var benEn = ['Hundreds of real-world lessons','Writing feedback coach','Speaking practice','Pronunciation training','Saudi Arabian Arabic explanations','Arabic transliteration','Vocabulary builder','Grammar academy','Progress tracking','Private dashboard'];
-  var benArr = ar ? benAr : benEn;
-  benefits.forEach(function(el, i){
-    var label = el.querySelector('.b-label');
-    if(label) label.textContent = benArr[i];
-    el.setAttribute('dir', ar ? 'rtl' : 'ltr');
-  });
-  // Trust pills
-  var pills = document.querySelectorAll('.trust-pill');
-  var pillAr = ['اكاديميه خاصه','منهج امريكي','تسجيل امن','تعلم مع الاستاذ فراس'];
-  var pillEn = ['Private Academy','American Curriculum','Secure Authentication','Learn with Tutor Firas'];
-  var pillArr = ar ? pillAr : pillEn;
-  pills.forEach(function(el, i){ if(pillArr[i]) el.textContent = pillArr[i]; });
   // Access guide card — features + subscription info
   var dpTag = document.querySelector('.dp-tag');
   var dpStreakText = document.querySelector('.dp-streak-text');
