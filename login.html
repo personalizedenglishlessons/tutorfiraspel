@@ -213,7 +213,7 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
   background:linear-gradient(90deg, transparent, rgba(200,169,106,0.5), transparent);
   opacity:0; transition:opacity .35s ease;
 }
-.feature-card:hover{ border-color:rgba(200,169,106,0.35); transform:translateY(-3px); box-shadow:0 12px 32px -12px rgba(0,0,0,0.4); background:color-mix(in srgb, var(--card) 65%, transparent); }
+.feature-card:hover{ border-color:rgba(200,169,106,0.35); box-shadow:0 16px 40px -12px rgba(0,0,0,0.5); background:color-mix(in srgb, var(--card) 65%, transparent); }
 .feature-card:hover::before{ opacity:1; }
 .fc-icon{
   width:36px; height:36px; border-radius:12px; flex-shrink:0;
@@ -394,6 +394,35 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   outline:2px solid var(--gold); outline-offset:2px; border-radius:6px;
 }
 .skip-link:focus{left:0!important;}
+
+/* ===== custom cursor ===== */
+.cursor-dot{
+  position:fixed; width:8px; height:8px; border-radius:50%;
+  background:var(--gold); pointer-events:none; z-index:9998;
+  transform:translate(-50%,-50%);
+  transition:opacity .3s ease, transform .15s ease;
+  mix-blend-mode:difference;
+}
+.cursor-ring{
+  position:fixed; width:34px; height:34px; border-radius:50%;
+  border:1px solid rgba(200,169,106,0.55); pointer-events:none; z-index:9998;
+  transform:translate(-50%,-50%);
+  transition:width .25s var(--ease), height .25s var(--ease), opacity .3s ease, border-color .3s ease;
+}
+.cursor-ring.hover{ width:56px; height:56px; border-color:var(--gold); }
+@media(hover:none), (max-width:900px){ .cursor-dot,.cursor-ring{display:none;} }
+
+/* ===== 3D feature cards ===== */
+.feature-card{ transform-style:preserve-3d; }
+.feature-grid{ perspective:800px; }
+
+/* ===== ambient orbs ===== */
+.ambient-orb{
+  position:fixed; border-radius:50%; filter:blur(80px); opacity:.3; pointer-events:none; z-index:0;
+}
+.ambient-orb-1{ width:400px; height:400px; background:var(--gold); top:-120px; right:-80px; }
+.ambient-orb-2{ width:300px; height:300px; background:var(--emerald); bottom:-100px; left:-60px; opacity:.15; }
+@media(max-width:980px){ .ambient-orb{ display:none; } }
 </style>
 </head>
 <body>
@@ -401,6 +430,10 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 
 <div class="bg-mesh" aria-hidden="true"></div>
 <div class="bg-grid" aria-hidden="true"></div>
+<div class="ambient-orb ambient-orb-1" aria-hidden="true"></div>
+<div class="ambient-orb ambient-orb-2" aria-hidden="true"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
 
 <a href="app.html" class="back-home">&#8592; <span class="label">Back to Academy</span></a>
 <button type="button" class="lang-pill" id="loginLangBtn" aria-label="Switch interface language">EN</button>
@@ -526,6 +559,29 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 
 <script>
 (function(){
+
+/* ============ CUSTOM CURSOR ============ */
+const dot = document.getElementById('cursorDot');
+const ring = document.getElementById('cursorRing');
+let mx=0,my=0, rx=0, ry=0;
+window.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; dot.style.left=mx+'px'; dot.style.top=my+'px'; });
+function ringLoop(){ rx += (mx-rx)*0.18; ry += (my-ry)*0.18; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(ringLoop); }
+ringLoop();
+document.querySelectorAll('a, button, input, .feature-card, .trust-pill, .security-badge').forEach(el => {
+  el.addEventListener('mouseenter', () => ring.classList.add('hover'));
+  el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
+});
+
+/* ============ 3D FEATURE CARD TILT ============ */
+document.querySelectorAll('.feature-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left - r.width/2) / r.width;
+    const y = (e.clientY - r.top - r.height/2) / r.height;
+    card.style.transform = `translateY(-4px) perspective(600px) rotateY(${x * 6}deg) rotateX(${-y * 6}deg)`;
+  });
+  card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+});
 
 /* ============ THEME ============ */
 const root = document.documentElement;
