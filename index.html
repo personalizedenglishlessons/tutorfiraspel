@@ -1367,7 +1367,7 @@ section{ padding-top:70px; padding-bottom:70px; }
         html += '<div class="price-value"><span class="amount">'+r.price+'<small>'+(ar?'ريال':'SAR')+'</small></span><span class="per">/ '+r.duration_months+(ar?' اشهر':' mo')+'</span></div>';
         html += '<div class="price-save">'+(ar?'يعادل':'about')+' '+pm+' '+(ar?'ريال شهريا':'SAR / mo')+'</div>';
         if(r.weekly_live_classes>0){
-          html += '<div style="margin:14px 0 0;padding:12px 14px;border:1px solid rgba(200,169,106,.35);border-radius:12px;background:rgba(200,169,106,.08);"><b style="color:var(--gold);font-size:.92rem;">'+r.weekly_live_classes+' '+(ar?'حصص اسبوعيه':'classes/week')+'</b><br><span style="font-size:.74rem;color:var(--text-muted);">'+(ar?'مشموله معاك بهالباقه':'included')+'</span></div>';
+          html += '<div style="margin:14px 0 0;padding:12px 14px;border:1px solid rgba(200,169,106,.35);border-radius:12px;background:rgba(200,169,106,.08);"><b style="color:var(--gold);font-size:.92rem;">'+r.weekly_live_classes+' '+(ar?(r.weekly_live_classes===1?'حصه اسبوعيه':'حصص اسبوعيه'):(r.weekly_live_classes===1?'class/week':'classes/week'))+'</b><br><span style="font-size:.74rem;color:var(--text-muted);">'+(ar?'مشموله معاك بهالباقه':'included')+'</span></div>';
         } else if(tier==='exam_prep'){
           html += '<div style="margin:14px 0 0;font-size:.78rem;color:var(--text-muted);">'+(ar?'ما فيها حصص مباشره بهالمده':'No live classes at this duration')+'</div>';
         } else {
@@ -1573,7 +1573,11 @@ function applyIndexLang(lang){
   if(pathHint) setLang(pathHint, 'اختبر مستواك مجانا، عرف وش تحتاج بالضبط', 'Find out your level, it\'s free');
   var pathHintEn=document.querySelector('.path-hint-en');
   if(pathHintEn) pathHintEn.textContent = lang==='ar' ? '' : 'First lesson is free, try it before you pay anything';
-  // (trust items removed)
+  // trust items (bilingual)
+  var trustItems=document.querySelectorAll('.trust-item');
+  var trustAr=['محادثه افتراضيه مع شخصيات حقيقيه','بنك كلمات ببطاقات تسمع نطقها','تصحيح كتابتك فورا','تتبع تقدمك يوم بيوم'];
+  var trustEn=['Roleplay simulator with real characters','Vocab vault with audio flashcards','Instant writing correction','Track your progress day by day'];
+  trustItems.forEach(function(el,i){ if(trustAr[i]&&trustEn[i]){ el.innerHTML='<span class="dot"></span>'+(lang==='ar'?trustAr[i]:trustEn[i]); el.setAttribute('dir',lang==='ar'?'rtl':'ltr'); } });
 
   // hero social proof removed: fabricated statistics are not allowed on PEL
   var heroWa=document.querySelector('#heroWaBtn span');
