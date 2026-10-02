@@ -1334,8 +1334,8 @@ section{ padding-top:70px; padding-bottom:70px; }
       {tier:'start_from_zero',duration_months:2,price:800,weekly_live_classes:0,featured:false},
       {tier:'start_from_zero',duration_months:3,price:1300,weekly_live_classes:2,featured:true},
       {tier:'exam_prep',duration_months:1,price:1000,weekly_live_classes:1,featured:false},
-      {tier:'exam_prep',duration_months:2,price:1300,weekly_live_classes:2,featured:false},
-      {tier:'exam_prep',duration_months:3,price:2200,weekly_live_classes:3,featured:true}
+      {tier:'exam_prep',duration_months:2,price:1550,weekly_live_classes:2,featured:false},
+      {tier:'exam_prep',duration_months:3,price:2350,weekly_live_classes:3,featured:true}
     ];
   }
   if(!document.getElementById('pel-pricing-style')){ var st=document.createElement('style'); st.id='pel-pricing-style'; st.textContent='.pel-track{padding:34px;border:1px solid var(--border);border-radius:24px;background:linear-gradient(180deg,var(--surface),var(--card));}.pel-subgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch;}@media(max-width:980px){.pel-subgrid{grid-template-columns:1fr;max-width:440px;margin:0 auto;}}'; document.head.appendChild(st); }
@@ -1367,7 +1367,7 @@ section{ padding-top:70px; padding-bottom:70px; }
         html += '<div class="price-value"><span class="amount">'+r.price+'<small>'+(ar?'ريال':'SAR')+'</small></span><span class="per">/ '+r.duration_months+(ar?' اشهر':' mo')+'</span></div>';
         html += '<div class="price-save">'+(ar?'يعادل':'about')+' '+pm+' '+(ar?'ريال شهريا':'SAR / mo')+'</div>';
         if(r.weekly_live_classes>0){
-          html += '<div style="margin:14px 0 0;padding:12px 14px;border:1px solid rgba(200,169,106,.35);border-radius:12px;background:rgba(200,169,106,.08);"><b style="color:var(--gold);font-size:.92rem;">'+r.weekly_live_classes+' '+(ar?'حصص مباشره كل اسبوع':'live class/week')+'</b><br><span style="font-size:.74rem;color:var(--text-muted);">'+(ar?'مشموله معاك بهالباقه':'included')+'</span></div>';
+          html += '<div style="margin:14px 0 0;padding:12px 14px;border:1px solid rgba(200,169,106,.35);border-radius:12px;background:rgba(200,169,106,.08);"><b style="color:var(--gold);font-size:.92rem;">'+r.weekly_live_classes+' '+(ar?'حصص اسبوعيه':'classes/week')+'</b><br><span style="font-size:.74rem;color:var(--text-muted);">'+(ar?'مشموله معاك بهالباقه':'included')+'</span></div>';
         } else if(tier==='exam_prep'){
           html += '<div style="margin:14px 0 0;font-size:.78rem;color:var(--text-muted);">'+(ar?'ما فيها حصص مباشره بهالمده':'No live classes at this duration')+'</div>';
         } else {
