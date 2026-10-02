@@ -140,6 +140,9 @@ body.ui-ar .brand-heading-ar{ text-align:right; }
 body.ui-ar .panel-label, body.ui-ar .form-title, body.ui-ar .form-sub{ text-align:right; }
 body.ui-ar .field label, body.ui-ar .remember{ direction:rtl; }
 body.ui-ar .brand-copy, body.ui-ar .brand-arabic{ text-align:right; }
+body.ui-ar .brand-copy{ font-family:'Tajawal','Cairo',sans-serif; direction:rtl; }
+body.ui-ar .brand-heading{ font-family:'Tajawal','Cairo',sans-serif; }
+body.ui-ar .brand-arabic{ display:none; }
 @media(max-width:980px){
   body.ui-ar .brand-heading-ar, body.ui-ar .brand-copy, body.ui-ar .brand-arabic{ text-align:center; }
 }
@@ -690,10 +693,10 @@ function applyLoginLang(lang){
   var T = {
     '.back-home .label': ar?'العوده للمنصه':'Back to Academy',
     '.brand-heading': ar?'<em>كمل من وين وقفت</em>':'Welcome back. <em>Pick up where you left off.</em>',
-    '.brand-copy': ar?'سجل دخولك للوصول الى دروسك، تدريب النطق، تصحيح الكتابه، وحاله الاشتراك':'Sign in to access your lessons, pronunciation practice, writing feedback, and subscription status.',
+    '.brand-copy': ar?'سجل دخولك عشان تكمل دروسك وتشوف تقدمك':'Sign in to continue your lessons and track your progress.',
     '.panel-label': ar?'دخول الطلاب':'Student Login',
     '.form-title': ar?'تسجيل الدخول':'Sign In',
-    '.form-sub': ar?'للطلاب المسجلين. سجل دخولك للوحه التحكم.':'For enrolled students. Sign in to your dashboard.',
+    '.form-sub': ar?'سجل دخولك للوحه التحكم.':'Sign in to your dashboard.',
     'label[for="loginEmail"]': ar?'البريد الالكتروني':'Email Address',
     'label[for="loginPassword"]': ar?'كلمه المرور':'Password',
     '#rememberToggle': ar?'<span class="checkbox remember-checkbox"></span> تذكرني':'<span class="checkbox remember-checkbox"></span> Remember me',
@@ -723,8 +726,8 @@ function applyLoginLang(lang){
   if(dpStreakText) dpStreakText.textContent = ar ? 'دخول امن' : 'Secure Login';
   var ftAr = ['مكتبه الدروس كامله','مدرب النطق','تصحيح الكتابه'];
   var ftEn = ['Full lesson library','Pronunciation coach','Writing feedback'];
-  var fsAr = ['ميات الدروس من الواقع','تصحيح ذكي لكل تسجيل','تصحيح القواعد بالعربي'];
-  var fsEn = ['Hundreds of real-world lessons','AI feedback on every recording','Grammar fixes explained in Arabic'];
+  var fsAr = ['دروس من الواقع','تصحيح لكل تسجيل','تصحيح القواعد'];
+  var fsEn = ['Real-world lessons','Feedback on every recording','Grammar fixes'];
   if(dpSubTitle) dpSubTitle.textContent = ar ? 'لما ينتهي اشتراكك' : 'When your subscription ends';
   var subAr = ['تقدمك يبقى محفوظ','تقدر تراجع دروسك القديمه','الدروس الجديده تحتاج اشتراك فعال'];
   var subEn = ['Your progress stays saved','You can still review past lessons','New lessons need an active plan'];
