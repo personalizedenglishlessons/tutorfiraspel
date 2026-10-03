@@ -19426,7 +19426,7 @@ function renderWriting(){
       ? '<span class="arabic">فحص عن طريق محرك LanguageTool</span>، Checked by the LanguageTool engine'
       : '<span class="arabic">فحص عن طريق المحرك المدمج</span>، Checked by the built-in engine';
     const cleanScore = Math.max(0, Math.min(100, Math.round(100 - (found.length * 12) / Math.max(1, sentences))));
-    const freeNote = '<span class="chip" style="background:rgba(67,122,34,.12); color:#7BBF45; border:1px solid rgba(67,122,34,.3); font-size:.68rem;"><span class="arabic">مراجعه محليه مجانيه</span> · Free local feedback</span>';
+    const freeNote = '<span class="chip" style="background:rgba(66,163,106,.12); color:var(--success); border:1px solid rgba(66,163,106,.3); font-size:.68rem;"><span class="arabic">مراجعه محليه مجانيه</span> · Free local feedback</span>';
     fb.innerHTML = `
       <div class="feedback-block">
         <div class="fb-head">
@@ -22131,7 +22131,7 @@ if(window.lucide) lucide.createIcons();
 .pel-req-st{font-size:.74rem;font-weight:700;padding:4px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.03em;white-space:nowrap}
 .pel-req-st.pending{background:rgba(200,169,106,.16);color:var(--gold)}
 .pel-req-st.approved{background:rgba(66,163,106,.16);color:var(--success)}
-.pel-req-st.declined{background:rgba(244,67,54,.14);color:#f44336}
+.pel-req-st.declined{background:rgba(210,92,92,.14);color:var(--error)}
 .pel-req-st.cancelled{background:rgba(128,128,128,.16);color:var(--text-muted)}
 .pel-empty{color:var(--text-muted);font-size:.86rem;padding:18px 0;text-align:center}
 .pel-req-list{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:4px 16px}
