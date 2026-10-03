@@ -51,12 +51,49 @@ for both. (Currently 0 groups in DB, so no live data was ever at risk.)
 
 Cache busters bumped via tools/bust_lib_cache.py (admin.js 7f580d4a).
 
-## Remaining ideas (unchanged from 2026-09-30 handoff)
+## Phase 2 — PDPL compliance package (fa7dd64, ec72931)
+
+Owner asked (from a 20-item legal checklist) what's needed to avoid
+Saudi-government/customer legal exposure. No payment gateway; sells
+to Saudi/Arab students; foreign individual owner with NO CR and
+cannot obtain one (non-national). All Tier 1 items done:
+
+### legal.html (fa7dd64)
+- §1 + Terms §1: honest individual-tutor framing (never fake a CR)
+- §5: cross-border disclosure — Supabase servers in Tokyo, Japan,
+  outside KSA (PDPL requirement)
+- §6: full PDPL rights — copy, correction, deletion, withdrawal of
+  consent, 30-day action window, SDAIA complaint right
+- §7: under-18 guardian consent (PDPL-aligned; was 'under 13'),
+  guardian takedown path
+- New §8: cookie/device-storage notice (strictly-necessary only);
+  old §8 → §9
+
+### In-app deletion requests (ec72931, migration 202610030007 applied)
+- account_deletion_requests table + RLS (own insert/select for
+  students, students.manage for admins)
+- student_request_deletion() — idempotent while pending
+- app.html settings → Privacy card → bilingual confirm modal →
+  toast (30-day promise, certificates stay verifiable, refund note)
+- admin.js: pending-requests banner in Students view; 'Delete now'
+  (admin_student_delete, request rows cascade) or 'Dismiss'
+- 65/65 tests pass; node --check clean
+
+### Not done (owner decision pending)
+- verify.html theme-toggle aria-label: already fixed (checked, swap
+  works) — remove from old handoff's remaining list
+- Owner should investigate legal basis for operating as a foreign
+  individual in KSA (Qiwa freelance work certificate for expats in
+  qualifying activities, or partner/CR route) — website text can't
+  fix this; not legal advice
+- When a payment gateway is added: e-commerce law obligations grow
+  (invoices, full store policies, unsubscribe in any marketing emails)
+
+## Remaining ideas (from before this phase)
 
 - index.html copy rewrite ("AI vibe") — owner deprioritized.
-- verify.html theme-toggle aria-label may still be English-only.
-- Cleanup RPCs (admin_cleanup_*) — not yet reviewed in detail; UI wiring
-  not verified this session.
+- Cleanup RPCs (admin_cleanup_*) — UI wiring reviewed this session,
+  looks correct; not live-tested.
 
 ## Notes for next session
 
