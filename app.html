@@ -164,7 +164,7 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
 .sidebar-name{ font-family:'Fraunces',serif; font-size:.95rem; white-space:normal; overflow:visible; line-height:1.35; opacity:1; transition:opacity .2s ease; }
 /* sidebar collapsed → fully hidden (width:0, overflow:hidden) */
 .sidebar-collapse-btn{
-  margin-left:auto; width:30px; height:30px; border-radius:9px; border:1px solid var(--border); color:var(--text-muted);
+  margin-left:auto; width:40px; height:40px; border-radius:9px; border:1px solid var(--border); color:var(--text-muted);
   display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:.25s ease;
 }
 .sidebar-collapse-btn:hover{ border-color:var(--gold); color:var(--gold); }
@@ -281,7 +281,8 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
 }
 @media(min-width:1920px){ .icon-btn{ width:46px; height:46px; } .icon-btn svg{ width:22px; height:22px; } }
 @media(min-width:2560px){ .icon-btn{ width:52px; height:52px; } .icon-btn svg{ width:26px; height:26px; } }
-@media(max-width:640px){ .icon-btn{ width:38px; height:38px; } }
+@media(max-width:640px){ .icon-btn{ width:36px; height:36px; } }
+@media(max-width:480px){ .icon-btn{ width:40px; height:40px; } }
 .icon-btn:hover{ border-color:var(--gold); color:var(--gold); transform:translateY(-1px); }
 .notif-dot{ position:absolute; top:8px; right:9px; width:7px; height:7px; border-radius:50%; background:var(--gold); box-shadow:0 0 0 2px var(--bg); }
 .pill-stat{ display:flex; align-items:center; gap:7px; font-size:.78rem; color:var(--text-secondary); padding:8px 14px; border-radius:999px; border:1px solid var(--border); background:var(--card); }
@@ -379,7 +380,7 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
 .btn-gold:hover{ transform:translateY(-2px); box-shadow:0 0 50px -6px rgba(200,169,106,.6); }
 .btn-outline{ display:inline-flex; align-items:center; gap:9px; padding:12px 22px; border-radius:999px; border:1px solid var(--border); color:var(--text); font-weight:600; font-size:.85rem; transition:.3s ease; }
 .btn-outline:hover{ border-color:var(--gold); background:rgba(200,169,106,.06); }
-.btn-ghost-sm{ font-size:.78rem; color:var(--text-muted); padding:7px 11px; border-radius:9px; display:inline-flex; align-items:center; gap:6px; }
+.btn-ghost-sm{ font-size:.78rem; color:var(--text-muted); padding:9px 13px; min-height:40px; min-width:40px; border-radius:9px; display:inline-flex; align-items:center; justify-content:center; gap:6px; }
 .btn-ghost-sm:hover{ color:var(--gold); background:var(--card-elevated); }
 .ripple{ position:absolute; border-radius:50%; background:rgba(255,255,255,.5); transform:scale(0); animation:rippleAnim .6s ease-out; pointer-events:none; }
 @keyframes rippleAnim{ to{ transform:scale(3); opacity:0; } }
@@ -567,7 +568,7 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
 .pomo-display{ text-align:center; }
 .pomo-time{ font-family:'Fraunces',serif; font-size:2.2rem; color:var(--gold); }
 .pomo-controls{ display:flex; gap:8px; justify-content:center; margin-top:14px; }
-.pomo-btn{ width:38px; height:38px; border-radius:50%; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; color:var(--text-secondary); }
+.pomo-btn{ width:40px; height:40px; border-radius:50%; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; color:var(--text-secondary); }
 .pomo-btn:hover{ border-color:var(--gold); color:var(--gold); }
 
 /* mini calendar */
@@ -1491,7 +1492,7 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
   html{ font-size:15px; }
   .topbar{ height:64px; padding:0 14px; gap:10px; }
   .topbar-actions{ gap:8px; }
-  .icon-btn{ width:36px; height:36px; }
+  .icon-btn{ width:40px; height:40px; }
   .content{ padding:18px 14px 72px; }
   .content-cols{ flex-direction:column; }
   .page-head{ margin-bottom:16px; }
@@ -1514,9 +1515,11 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
   .palette-results{ max-height:calc(76vh - 70px); }
   #accessGate{ padding:16px; }
   #accessGate .gate-card{ padding:0 4px; }
-  .dash-stats-bar{ gap:14px !important; padding:12px 14px !important; overflow-x:auto; flex-wrap:nowrap !important; -webkit-overflow-scrolling:touch; }
+  .dash-stats-bar{ gap:10px !important; padding:12px 14px !important; overflow-x:auto; flex-wrap:nowrap !important; -webkit-overflow-scrolling:touch; }
   .dash-stats-bar > div{ flex-shrink:0; }
-  .dash-stats-bar .arabic{ font-size:.72rem; }
+  .dash-stats-bar .arabic{ font-size:.7rem; }
+  .dash-stats-bar b{ font-size:.85rem; }
+  .dash-stats-bar > div > div > span{ font-size:.7rem !important; }
   .qt-popup{ bottom:140px; right:12px; left:12px; width:auto; }
 }
 

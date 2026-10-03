@@ -1,0 +1,137 @@
+[
+  {
+    "type": "missing_id",
+    "ref": "accessGate",
+    "msg": "getElementById/querySelector('#accessGate') but no id='accessGate' in HTML"
+  },
+  {
+    "type": "missing_id",
+    "ref": "certPrintRoot",
+    "msg": "getElementById/querySelector('#certPrintRoot') but no id='certPrintRoot' in HTML"
+  },
+  {
+    "type": "missing_id",
+    "ref": "certVerifyModal",
+    "msg": "getElementById/querySelector('#certVerifyModal') but no id='certVerifyModal' in HTML"
+  },
+  {
+    "type": "missing_id",
+    "ref": "continueLearningBody",
+    "msg": "getElementById/querySelector('#continueLearningBody') but no id='continueLearningBody' in HTML"
+  },
+  {
+    "type": "missing_id",
+    "ref": "continueLearningLabel",
+    "msg": "getElementById/querySelector('#continueLearningLabel') but no id='continueLearningLabel' in HTML"
+  },
+  {
+    "type": "missing_id",
+    "ref": "dailyQuizModal",
+    "msg": "getElementById/querySelector('#dailyQuizModal') but no id='dailyQuizModal' in HTML"
+  },
+  {
+    "type": "missing_id",
+    "ref": "heroDirectionTag",
+    "msg": "getElementById/querySelector('#heroDirectionTag') but no id='heroDirectionTag' in HTML"
+  },
+  {
+    "type": "missing_id",
+    "ref": "heroEstChip",
+    "msg": "getElementById/querySelector('#heroEstChip') but no id='heroEstChip' in HTML"
+  },
+  {
+    "type": "missing_id",
+    "ref": "heroLevelChip",
+    "msg": "getElementById/querySelector('#heroLevelChip') but no id='heroLevelChip' in HTML"
+  },
+  {
+    "type": "missing_id",
+    "ref": "heroPathBody",
+    "msg": "getElementById/querySelector('#heroPathBody') but no id='heroPathBody' in HTML"
+  },
+  {
+    "type": "missing_id",
+    "ref": "heroResumeBtn",
+    "msg": "getElementById/querySelector('#heroResumeBtn') but no id='heroResumeBtn' in HTML"
+  },
+  {
+    "type": "missing_id",
+    "ref": "heroResumeText",
+    "msg": "getElementById/querySelector('#heroResumeText') but no id='heroResumeText' in HTML"
+  },
+  {
+    "type": "missing_id",
+    "ref": "heroResumeTitle",
+    "msg": "getElementById/querySelector('#heroResumeTitle') but no id='heroResumeTitle' in HTML"
+  },
+  {
+    "type": "missing_id",
+    "ref": "heroResumeWhy",
+    "msg": "getElementById/querySelector('#heroResumeWhy') but no id='heroResumeWhy' in HTML"
+  },
+  {
+    "type": "missing_id",
+    "ref": "heroRing",
+    "msg": "getElementById/querySelector('#heroRing') but no id='heroRing' in HTML"
+  },
+  {
+    "type": "missing_id",
+    "ref": "heroRingLabel",
+    "msg": "getElementById/querySelector('#heroRingLabel') but no id='heroRingLabel' in HTML"
+  },
+  {
+    "type": "missing_id",
+    "ref": "lessonNextBtn, #lessonNextBtn2",
+    "msg": "getElementById/querySelector('#lessonNextBtn, #lessonNextBtn2') but no id='lessonNextBtn, #lessonNextBtn2' in HTML"
+  },
+  {
+    "type": "missing_id",
+    "ref": "pelGoalModal",
+    "msg": "getElementById/querySelector('#pelGoalModal') but no id='pelGoalModal' in HTML"
+  },
+  {
+    "type": "missing_id",
+    "ref": "pelWordCard",
+    "msg": "getElementById/querySelector('#pelWordCard') but no id='pelWordCard' in HTML"
+  },
+  {
+    "type": "missing_id",
+    "ref": "quickWinBtn",
+    "msg": "getElementById/querySelector('#quickWinBtn') but no id='quickWinBtn' in HTML"
+  },
+  {
+    "type": "missing_id",
+    "ref": "quickWinCard",
+    "msg": "getElementById/querySelector('#quickWinCard') but no id='quickWinCard' in HTML"
+  },
+  {
+    "type": "missing_id",
+    "ref": "quickWinTitle",
+    "msg": "getElementById/querySelector('#quickWinTitle') but no id='quickWinTitle' in HTML"
+  },
+  {
+    "type": "missing_id",
+    "ref": "quickWinWhy",
+    "msg": "getElementById/querySelector('#quickWinWhy') but no id='quickWinWhy' in HTML"
+  },
+  {
+    "type": "missing_id",
+    "ref": "sidebarNav .side-link[data-min-done]",
+    "msg": "getElementById/querySelector('#sidebarNav .side-link[data-min-done]') but no id='sidebarNav .side-link[data-min-done]' in HTML"
+  },
+  {
+    "type": "missing_id",
+    "ref": "view-home .progress-fill",
+    "msg": "getElementById/querySelector('#view-home .progress-fill') but no id='view-home .progress-fill' in HTML"
+  },
+  {
+    "type": "missing_css_var",
+    "ref": "mx",
+    "msg": "var(--mx) used but --mx never defined"
+  },
+  {
+    "type": "missing_css_var",
+    "ref": "my",
+    "msg": "var(--my) used but --my never defined"
+  }
+]
