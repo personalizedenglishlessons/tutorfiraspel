@@ -12,7 +12,11 @@
 -- Security: only safe public-config keys are exposed to anon. Admin-only
 -- keys (if any are added later) are NOT automatically public.
 --
--- Idempotent: GRANT and CREATE POLICY IF NOT EXISTS are safe to re-run.
+-- Idempotent: DROP + CREATE ensures deterministic behavior even if a
+-- broader policy with the same name already exists.
+
+-- 0. Drop any existing policy with this name (could be a broader USING(true))
+DROP POLICY IF EXISTS "site_settings_public_read" ON public.site_settings;
 
 -- 1. Table-level grant for anon + authenticated (PostgREST requires this
 --    even with RLS — RLS further filters which rows are visible)
@@ -20,31 +24,22 @@ GRANT SELECT ON public.site_settings TO anon, authenticated;
 
 -- 2. RLS policy: allow anon + authenticated to read only safe public keys.
 --    Writes are gated by admin_upsert_site_setting RPCs (SECURITY DEFINER).
-DO $$
-BEGIN
-  IF NOT EXISTS (
-    SELECT 1 FROM pg_policies
-    WHERE schemaname = 'public' AND tablename = 'site_settings'
-      AND policyname = 'site_settings_public_read'
-  ) THEN
-    CREATE POLICY "site_settings_public_read"
-      ON public.site_settings
-      FOR SELECT
-      TO anon, authenticated
-      USING (
-        key IN (
-          'banner',
-          'whatsapp_contact',
-          'maintenance_mode',
-          'plan_6m_available',
-          'faqs',
-          'hero_headline_ar',
-          'hero_headline_en',
-          'hero_sub_ar',
-          'hero_sub_en',
-          'pricing_note_ar',
-          'pricing_note_en'
-        )
-      );
-  END IF;
-END $$;
+CREATE POLICY "site_settings_public_read"
+  ON public.site_settings
+  FOR SELECT
+  TO anon, authenticated
+  USING (
+    key IN (
+      'banner',
+      'whatsapp_contact',
+      'maintenance_mode',
+      'plan_6m_available',
+      'faqs',
+      'hero_headline_ar',
+      'hero_headline_en',
+      'hero_sub_ar',
+      'hero_sub_en',
+      'pricing_note_ar',
+      'pricing_note_en'
+    )
+  );

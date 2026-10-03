@@ -2568,7 +2568,7 @@ async function renderHomeIntel(){
         body = '<div style="font-size:.8rem; color:var(--text-muted);">' + (ar ? 'ما فيه اعلانات الحين.' : 'No announcements right now.') + '</div>';
       }
       annEl.innerHTML = head + '<div>' + body + '</div>';
-      document.querySelectorAll('[data-ann]').forEach(b => b.addEventListener('click', () => {
+      annEl.querySelectorAll('[data-ann]').forEach(b => b.addEventListener('click', () => {
         const link = b.getAttribute('data-ann-link');
         if(link && /^https?:\/\//i.test(link)) window.open(link, '_blank', 'noopener');
         markAnnouncementRead(b.getAttribute('data-ann'));
@@ -2590,7 +2590,12 @@ async function renderHomeIntel(){
       }
       clsEl.innerHTML = '<span class="eyebrow" style="margin:0 0 10px;">' + (ar ? 'حصصك المباشره' : 'Your Live Classes') + '</span><div>' + rows + '</div>';
     }
-  }catch(e){ /* keep the loading placeholders */ }
+  }catch(e){
+    /* Show error state instead of leaving "Loading..." forever */
+    var errMsg = (ar ? 'صار خلل بسيط، حاول مره ثانيه.' : 'Something went wrong, try refreshing.');
+    if(annEl) annEl.innerHTML = '<span class="eyebrow" style="margin:0 0 10px;">' + (ar ? 'اعلانات الاكاديميه' : 'Announcements') + '</span><div style="font-size:.8rem; color:var(--text-muted);">' + errMsg + '</div>';
+    if(clsEl) clsEl.innerHTML = '<span class="eyebrow" style="margin:0 0 10px;">' + (ar ? 'حصصك المباشره' : 'Your Live Classes') + '</span><div style="font-size:.8rem; color:var(--text-muted);">' + errMsg + '</div>';
+  }
 }
 
 async function markAnnouncementRead(id){
@@ -2640,7 +2645,7 @@ function showAnnouncementsModal(){
     const overlay = document.createElement('div');
     overlay.className = 'modal-scrim';
     const rows = items.map(a => {
-      return '<div class="card" style="margin-bottom:12px; ' + (a.read ? '' : 'border-color:rgba(200,169,106,.5);') + '">' +
+      return '<div class="card" style="margin-bottom:12px; cursor:pointer;' + (a.read ? '' : 'border-color:rgba(200,169,106,.5);') + '" data-ann-modal-id="' + a.id + '">' +
         '<div style="display:flex; justify-content:space-between; gap:10px; align-items:flex-start;"><b>' + escapeHtml(saudiifyAr(a.title)) + '</b>' + (a.read ? '' : '<span class="chip gold">' + (ar ? 'جديد' : 'New') + '</span>') + '</div>' +
         '<div style="font-size:.85rem; color:var(--text-secondary); margin-top:6px;">' + escapeHtml(saudiifyAr(a.message)) + '</div>' +
         (a.link && /^https?:\/\//i.test(a.link) ? '<a class="btn-ghost-sm" href="' + escapeHtml(a.link) + '" target="_blank" rel="noopener" style="margin-top:10px; display:inline-block;">' + (ar ? 'افتح الرابط ↗' : 'Open link ↗') + '</a>' : '') +
@@ -2652,7 +2657,13 @@ function showAnnouncementsModal(){
     document.body.appendChild(overlay);
     document.getElementById('annModalClose').addEventListener('click', () => overlay.remove());
     overlay.addEventListener('click', e => { if(e.target === overlay) overlay.remove(); });
-    items.filter(a => !a.read).forEach(a => { pelRpc('student_mark_announcement_read', { p_announcement_id: a.id }).catch(() => {}); });
+    /* Mark as read only when clicked, not all at once */
+    overlay.querySelectorAll('[data-ann-modal-id]').forEach(el => el.addEventListener('click', () => {
+      const id = el.getAttribute('data-ann-modal-id');
+      pelRpc('student_mark_announcement_read', { p_announcement_id: id }).catch(() => {});
+      el.querySelector('.chip.gold')?.remove();
+      el.style.borderColor = '';
+    }));
   }).catch(() => {
     toast(ar ? 'ما قدرنا نحمل الاعلانات.' : 'Could not load announcements.');
   });

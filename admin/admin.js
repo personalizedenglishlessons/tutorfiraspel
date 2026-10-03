@@ -3146,17 +3146,59 @@ async function roles(){
 async function health(){
   $('viewArea').innerHTML = pageHead(t('health'), lang === 'ar' ? 'فحوصات صحه النظام' : 'System health checks') + loadingBlock();
   var r = await rpc('system_health');
-  if(!r.ok){ $('viewArea').innerHTML = errBlock(rpcErrMsg(r)); return; }
-  var checks = (r.data && r.data.checks) || [];
-  var html = checks.map(function(c){
-    var ok = (c.count || 0) === 0;
+  var dbChecks = (r.ok && r.data && r.data.checks) ? r.data.checks : [];
+  var dbError = r.ok ? null : rpcErrMsg(r);
+
+  /* Client-side connectivity checks */
+  var clientChecks = [];
+  var sbUrl = (window.PEL_CONFIG && PEL_CONFIG.SUPABASE_URL) || '';
+  var sbKey = (window.PEL_CONFIG && PEL_CONFIG.SUPABASE_ANON_KEY) || '';
+
+  // 1. Supabase REST reachable (anon key)
+  if(sbUrl && sbKey){
+    try{
+      var res = await fetch(sbUrl + '/rest/v1/site_settings?select=key&limit=1', {
+        headers: { apikey: sbKey, Authorization: 'Bearer ' + sbKey }
+      });
+      clientChecks.push({ label: lang === 'ar' ? 'Supabase REST متاح' : 'Supabase REST reachable', code: res.ok ? 'ok' : 'http_' + res.status, ok: res.ok });
+    }catch(e){
+      clientChecks.push({ label: 'Supabase REST reachable', code: String(e.message||e).slice(0,80), ok: false });
+    }
+  } else {
+    clientChecks.push({ label: lang === 'ar' ? 'Supabase REST متاح' : 'Supabase REST reachable', code: 'no_config', ok: false });
+  }
+
+  // 2. Edge Function (pel-api) reachable
+  if(sbUrl){
+    try{
+      var efRes = await fetch(sbUrl + '/functions/v1/pel-api', { method: 'OPTIONS' });
+      clientChecks.push({ label: lang === 'ar' ? 'Edge Function متاح' : 'Edge Function reachable', code: efRes.ok || efRes.status === 204 ? 'ok' : 'http_' + efRes.status, ok: efRes.ok || efRes.status === 204 });
+    }catch(e){
+      clientChecks.push({ label: 'Edge Function reachable', code: String(e.message||e).slice(0,80), ok: false });
+    }
+  }
+
+  // 3. Session active
+  var sessionOk = !!(me.id && me.email);
+  clientChecks.push({ label: lang === 'ar' ? 'الجلسه فعاله' : 'Session active', code: sessionOk ? 'ok' : 'no_session', ok: sessionOk });
+
+  var allChecks = clientChecks.concat(dbChecks.map(function(c){
+    return { label: c.label, code: c.code, ok: (c.count || 0) === 0, count: c.count };
+  }));
+
+  var html = allChecks.map(function(c){
+    var ok = c.ok;
     return '<div class="reason-item"><span class="badge-dot ' + (ok ? 'green' : 'red') + '" style="margin-top:5px;"></span>' +
       '<div style="flex:1;"><div style="font-weight:600;">' + esc(c.label) + '</div>' +
       '<span class="why">' + esc(c.code) + '</span></div>' +
-      chip(ok ? t('healthy') : t('issues') + ': ' + fmtN(c.count), ok ? 'green' : 'red') + '</div>';
+      chip(ok ? t('healthy') : (c.count ? t('issues') + ': ' + fmtN(c.count) : t('issues')), ok ? 'green' : 'red') + '</div>';
   }).join('') || emptyBlock(t('noData'));
+
+  var errHtml = dbError ? '<div class="card" style="margin-bottom:14px;border-color:var(--red);"><div class="reason-item"><span class="badge-dot red"></span><div style="flex:1;"><div style="font-weight:600;">' + esc(lang === 'ar' ? 'خطا في فحص قاعده البيانات' : 'DB health check failed') + '</div><span class="why">' + esc(dbError) + '</span></div></div></div>' : '';
+
   $('viewArea').innerHTML = pageHead(t('health'), lang === 'ar' ? 'صحه النظام' : 'System health') +
     '<div class="btn-row" style="margin-bottom:16px;"><button class="btn btn-outline btn-sm" id="healthRefresh">' + esc(t('refresh')) + '</button></div>' +
+    errHtml +
     '<div class="card"><div class="reason-list">' + html + '</div></div>';
   loadIcons();
   var rb = $('healthRefresh');
@@ -3580,6 +3622,7 @@ async function settingsView(){
   $('viewArea').innerHTML = head +
     '<div class="card" style="max-width:760px;">' +
       '<div class="s360-meta" style="margin-top:0;"><span class="chip gold">' + esc(lang === 'ar' ? 'شريط الاعلان الرييسي' : 'Homepage banner') + '</span></div>' +
+      '<div id="bannerPreview" style="display:none;margin:12px 0;padding:.6rem 1.1rem;font-size:.85rem;line-height:1.6;text-align:center;background:linear-gradient(90deg,#8f7030,var(--gold) 50%,#8f7030);color:#171412;border-radius:8px;overflow-wrap:break-word"></div>' +
       '<div class="form-grid" style="margin-top:14px;">' +
         '<div class="field full">' + chk('stBannerActive', 'تشغيل الشريط', 'Banner enabled', b.active !== false) + '</div>' +
         '<div class="field full"><label>' + esc(lang === 'ar' ? 'النص بالعربي' : 'Arabic text') + '</label><textarea class="input" id="stBannerAr" rows="2" dir="rtl">' + esc(b.ar || '') + '</textarea></div>' +
@@ -3608,8 +3651,48 @@ async function settingsView(){
     '</div>';
   loadIcons();
 
+  /* Live banner preview - updates as you type */
+  function updateBannerPreview(){
+    var pv = $('bannerPreview'); if(!pv) return;
+    var active = $('stBannerActive');
+    var ar = $('stBannerAr'), en = $('stBannerEn'), link = $('stBannerLink');
+    if(!active || !active.checked){ pv.style.display = 'none'; return; }
+    var text = lang === 'ar' ? (ar.value.trim() || en.value.trim()) : (en.value.trim() || ar.value.trim());
+    if(!text){ pv.style.display = 'none'; return; }
+    pv.textContent = '';
+    pv.appendChild(document.createTextNode(text));
+    if(link && link.value.trim() && /^https?:\/\//i.test(link.value.trim())){
+      var a = document.createElement('a');
+      a.href = link.value.trim();
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.textContent = lang === 'ar' ? 'تواصل معنا' : 'Contact us';
+      a.style.cssText = 'color:#171412;font-weight:700;text-decoration:underline;text-underline-offset:3px;margin-inline-start:.45rem;white-space:nowrap';
+      pv.appendChild(a);
+    }
+    pv.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    pv.style.display = 'block';
+  }
+  ['stBannerActive','stBannerAr','stBannerEn','stBannerLink'].forEach(function(id){
+    var el = $(id); if(el) el.addEventListener('input', updateBannerPreview);
+  });
+  updateBannerPreview();
+
   $('stSave').addEventListener('click', async function(){
     var btn = $('stSave'); btn.disabled = true;
+    /* Validate: warn if banner enabled with no text in either language */
+    if($('stBannerActive').checked && !$('stBannerAr').value.trim() && !$('stBannerEn').value.trim()){
+      btn.disabled = false;
+      toast(lang === 'ar' ? 'الشريط شغال بس ما فيه نص - اكتب نص بالعربي او الانجليزي' : 'Banner is enabled but has no text - add Arabic or English text first', true);
+      return;
+    }
+    /* Validate: warn if link is not a valid URL */
+    var linkVal = $('stBannerLink').value.trim();
+    if(linkVal && !/^https?:\/\//i.test(linkVal)){
+      btn.disabled = false;
+      toast(lang === 'ar' ? 'الرابط لازم يبدا بـ http:// او https://' : 'Link must start with http:// or https://', true);
+      return;
+    }
     var rows = [
       { key:'banner', value:{ active:$('stBannerActive').checked, ar:$('stBannerAr').value.trim(), en:$('stBannerEn').value.trim(), link:$('stBannerLink').value.trim() } },
       { key:'whatsapp_contact', value:$('stWa').value.replace(/[^0-9]/g, '') },
