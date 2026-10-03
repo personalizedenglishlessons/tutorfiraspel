@@ -97,6 +97,7 @@ html[data-theme="light"] .pel-logo-light{ display:inline; }
 .side-link:hover{ background:var(--card); color:var(--text); }
 .side-link:hover .side-icon{ color:var(--gold); }
 .side-link.active{ background:linear-gradient(90deg, rgba(200,169,106,.14), transparent); color:var(--text); }
+html[dir="rtl"] .side-link.active{ background:linear-gradient(270deg, rgba(200,169,106,.14), transparent); }
 .side-link.active .side-icon{ color:var(--gold); }
 .side-link.active::before{ content:""; position:absolute; inset-inline-start:0; top:7px; bottom:7px; width:3px; border-radius:3px; background:var(--gold); }
 .side-link .side-sub{ margin-inline-start:auto; font-size:.62rem; color:var(--text-muted); background:var(--card); border-radius:8px; padding:1px 7px; }
