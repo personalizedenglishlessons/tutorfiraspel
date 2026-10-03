@@ -181,6 +181,20 @@ body.ui-ar .dp-tag{
 .back-home:hover{ color:var(--gold); }
 @media(max-width:900px){ .back-home span.label{ display:none; } }
 
+/* Visually-hidden skip link: clip method doesn't cause horizontal scroll in RTL
+   (left:-9999px creates a 9999px scrollable area in RTL mode on mobile) */
+.skip-link{
+  position:absolute !important; width:1px !important; height:1px !important;
+  padding:0 !important; margin:-1px !important; overflow:hidden !important;
+  clip:rect(0,0,0,0) !important; white-space:nowrap !important; border:0 !important;
+}
+.skip-link:focus{
+  position:fixed !important; top:0; left:0 !important; width:auto !important; height:auto !important;
+  padding:12px 20px !important; margin:0 !important; overflow:visible !important;
+  clip:auto !important; z-index:9999; background:var(--gold); color:#171412;
+  font-weight:600; border-radius:0 0 12px 0;
+}
+
 /* ===== layout ===== */
 .auth-shell{
   position:relative; z-index:2; min-height:100vh; min-height:100dvh;
@@ -503,7 +517,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 </style>
 </head>
 <body>
-<a href="#loginForm" class="skip-link" style="position:absolute;left:-9999px;top:0;z-index:9999;padding:12px 20px;background:var(--gold);color:#171412;font-weight:600;border-radius:0 0 12px 0;overflow:hidden;">تخطي إلى المحتوى · Skip to content</a>
+<a href="#loginForm" class="skip-link">تخطي إلى المحتوى · Skip to content</a>
 
 <div class="bg-mesh" aria-hidden="true"></div>
 <div class="bg-grid" aria-hidden="true"></div>
@@ -633,7 +647,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
               <div class="caps-warning" id="loginCapsWarning"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg> Caps Lock is on</div>
             </div>
 
-            <input type="text" name="website" id="loginWebsite" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;" aria-hidden="true">
+            <input type="text" name="website" id="loginWebsite" tabindex="-1" autocomplete="off" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;" aria-hidden="true">
             <div class="row-between">
               <label class="remember" id="rememberToggle">
                 <span class="checkbox" id="rememberCheckbox"></span> تذكرني
