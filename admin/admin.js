@@ -445,13 +445,21 @@ function fmtDate(iso){
 }
 function fmtDateShort(iso){
   if(!iso) return '-';
-  var d = new Date(iso);
+  var s = String(iso);
+  // Date-only strings (YYYY-MM-DD) are parsed as UTC by Date(); append T00:00:00 to parse as local time
+  if(/^\d{4}-\d{2}-\d{2}$/.test(s)) s = s + 'T00:00:00';
+  var d = new Date(s);
   if(isNaN(d.getTime())) return String(iso);
-  return d.toISOString ? d.toISOString().slice(0,10) : iso;
+  var y = d.getFullYear();
+  var m = String(d.getMonth()+1).padStart(2,'0');
+  var day = String(d.getDate()).padStart(2,'0');
+  return y + '-' + m + '-' + day;
 }
 function relTime(iso){
   if(!iso) return '-';
-  var diff = (Date.now() - new Date(iso).getTime()) / 86400000;
+  var s = String(iso);
+  if(/^\d{4}-\d{2}-\d{2}$/.test(s)) s = s + 'T00:00:00';
+  var diff = (Date.now() - new Date(s).getTime()) / 86400000;
   if(diff < 1) return t('today');
   if(diff < 2) return t('yesterday');
   return t('daysAgo').replace('%d', Math.floor(diff));
@@ -462,7 +470,7 @@ function statusChip(status){
               issued:'green', revoked:'red', reissued:'gold', draft:'muted',
               present:'green', absent:'red', late:'warn', excused:'bronze',
               scheduled:'bronze', completed:'green', cancelled:'red', rescheduled:'warn',
-              open:'warn', in_progress:'gold', resolved:'green', cancelled2:'muted' };
+              open:'warn', in_progress:'gold', resolved:'green', cancelled:'muted' };
   var cls = map[status] || 'muted';
   var label = (I[status] || {en:status, ar:status});
   var text = lang === 'ar' ? (label.ar || label.en) : label.en;
@@ -1958,8 +1966,8 @@ async function acceptRec(){
 async function dismissRec(){
   var rec = computeNextRec(currentPlan(), current360.state, current360.kv);
   if(!rec.rec){ return; }
-  var { ok, data } = await rpc('store_recommendation', { p_user_id: current360Uid, p_academy_id: rec.rec.academyId, p_lesson_id: rec.rec.lessonId, p_reason_en: rec.rec.whyEn, p_reason_ar: rec.rec.whyAr, p_status: 'dismissed' });
-  if(!ok){ toast(rpcErrMsg(data), true); return; }
+  var r = await rpc('store_recommendation', { p_user_id: current360Uid, p_academy_id: rec.rec.academyId, p_lesson_id: rec.rec.lessonId, p_reason_en: rec.rec.whyEn, p_reason_ar: rec.rec.whyAr, p_status: 'dismissed' });
+  if(!r.ok){ toast(rpcErrMsg(r), true); return; }
   await audit('recommendation.dismiss', 'student', current360Uid, {});
   toast(t('saved'));
   reload360();
@@ -3381,7 +3389,7 @@ async function health(){
       chip(ok ? t('healthy') : (c.count ? t('issues') + ': ' + fmtN(c.count) : t('issues')), ok ? 'green' : 'red') + '</div>';
   }).join('') || emptyBlock(t('noData'));
 
-  var errHtml = dbError ? '<div class="card" style="margin-bottom:14px;border-color:var(--red);"><div class="reason-item"><span class="badge-dot red"></span><div style="flex:1;"><div style="font-weight:600;">' + esc(lang === 'ar' ? 'خطا في فحص قاعده البيانات' : 'DB health check failed') + '</div><span class="why">' + esc(dbError) + '</span></div></div></div>' : '';
+  var errHtml = dbError ? '<div class="card" style="margin-bottom:14px;border-color:var(--danger);"><div class="reason-item"><span class="badge-dot red"></span><div style="flex:1;"><div style="font-weight:600;">' + esc(lang === 'ar' ? 'خطا في فحص قاعده البيانات' : 'DB health check failed') + '</div><span class="why">' + esc(dbError) + '</span></div></div></div>' : '';
 
   $('viewArea').innerHTML = pageHead(t('health'), lang === 'ar' ? 'صحه النظام' : 'System health') +
     '<div class="btn-row" style="margin-bottom:16px;"><button class="btn btn-outline btn-sm" id="healthRefresh">' + esc(t('refresh')) + '</button></div>' +
@@ -3441,7 +3449,7 @@ function reports(){
 function planStatusChip(status){
   var map = { active:'green', expiring:'warn', expired:'red', suspended:'red', scheduled:'bronze', cancelled:'muted', none:'muted' };
   var cls = map[status] || 'muted';
-  var key = status === 'scheduled' ? 'scheduledLbl' : status;
+  var key = status === 'scheduled' ? 'scheduledLbl' : (status === 'none' ? 'noPlan' : status);
   var text = lang === 'ar' ? (key === 'expiring' ? 'تنتهي قريب' : (I[key] || {ar:key}).ar || key) : (key === 'expiring' ? 'Expiring' : (I[key] || {en:key}).en || key);
   return '<span class="chip ' + cls + '"><span class="badge-dot ' + cls + '"></span>' + esc(text) + '</span>';
 }
@@ -3485,7 +3493,7 @@ async function plansView(){
     return '<div class="card" style="margin-bottom:14px;">' +
       '<div class="s360-meta" style="margin-top:0;">' + chip(esc(lang === 'ar' ? x.name_ar : x.name_en), 'gold') + statusChip(x.active ? 'active' : 'inactive') + '</div>' +
       '<div class="s360-meta" style="margin-top:10px; color:var(--text-muted); font-size:.76rem;">' +
-        '<span>' + fmtN(x.duration_days || (x.duration_months * 30)) + ' ' + esc(t('durationDays')) + '</span>' +
+        '<span>' + fmtN(x.duration_days || (x.duration_months ? x.duration_months * 30 : 0)) + ' ' + esc(t('durationDays')) + '</span>' +
         '<span>· ' + fmtN(x.weekly_live_sessions || 0) + ' ' + esc(t('weeklyLive')) + '</span>' +
         (x.price ? '<span>· ' + esc(x.price) + ' ' + (window.PEL_RIYAL ? PEL_RIYAL() : esc(x.currency || 'SAR')) + '</span>' : '') +
       '</div>' +
@@ -3993,7 +4001,7 @@ async function settingsView(){
     // Build confirmation modal
     var selected = cleanupTargets.filter(function(tg){
       var delEl = $('cl-del-'+tg.key);
-      return delEl && parseInt(delEl.getAttribute('data-count')||'0',10) > 0;
+      return delEl && parseInt(delEl.textContent||'0',10) > 0;
     });
     if(!selected.length){ toast(lang==='ar'?'ما فيه بيانات قديمه للحذف':'No old data to clean'); return; }
     var listHtml = selected.map(function(tg){

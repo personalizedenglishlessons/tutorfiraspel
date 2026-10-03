@@ -25,7 +25,7 @@
 :root{
   --bg:#0E0E10; --surface:#17171B; --card:#1E1F25; --card-elevated:#262833;
   --border:#343744; --text:#F7F4EF; --text-secondary:#D0CBC4; --text-muted:#9B98A2;
-  --gold:#C8A96A; --gold-soft:#D8BD83; --bronze:#A88345; --success:#42A36A; --error:#D25C5C;
+  --gold:#C8A96A; --gold-soft:#D8BD83; --bronze:#A88345; --success:#42A36A; --error:#D25C5C; --warning:#D89C3D;
   --shadow-lift:0 30px 90px -25px rgba(0,0,0,.7);
   --gold-glow:0 0 40px -8px rgba(200,169,106,.45);
   --ease:cubic-bezier(.16,.84,.32,1);
@@ -33,7 +33,7 @@
 html[data-theme="light"]{
   --bg:#F3EEE2; --surface:#EFE9DE; --card:#EFE9DE; --card-elevated:#EFE9DE;
   --border:#E5DFD2; --text:#17171B; --text-secondary:#4B463D; --text-muted:#6E6962;
-  --gold:#B8821E; --gold-soft:#D4A534; --bronze:#8B6212; --success:#2F8A57; --error:#C25C5C;
+  --gold:#B8821E; --gold-soft:#D4A534; --bronze:#8B6212; --success:#2F8A57; --error:#C25C5C; --warning:#8B6C2F;
   caret-color:var(--gold);
   accent-color:var(--gold);
   --shadow-lift:0 32px 80px -28px rgba(40,28,12,.26);
@@ -72,6 +72,8 @@ button{ font-family:inherit; cursor:pointer; }
 .site-logo img{ height:32px; width:auto; }
 .pel-logo{ display:inline-block; vertical-align:middle; }
 .pel-logo-light{ display:none; vertical-align:middle; }
+html[data-theme="light"] .pel-logo{ display:none; }
+html[data-theme="light"] .pel-logo-light{ display:inline-block; }
 .site-name{ font-size:.9rem; color:var(--text-secondary); line-height:1.4; }
 .site-name b{ color:var(--text); font-weight:600; }
 
@@ -453,7 +455,7 @@ document.getElementById('numForm').addEventListener('submit', function(e){
   }
   if(validCertNumber(raw)){
     const d = m[1];
-    showNumResult(true, 'رقم سليم: تاريخ الاصدار ' + d.slice(0,2) + '/' + d.slice(2,4) + '/' + '20' + d.slice(0,2) + ' ورقم التحقق مطابق.',
+    showNumResult(true, 'رقم سليم: تاريخ الاصدار ' + '20' + d.slice(0,2) + '/' + d.slice(2,4) + '/' + d.slice(4,6) + ' ورقم التحقق مطابق.',
       'Valid number: issued ' + '20' + d.slice(0,2) + '-' + d.slice(2,4) + '-' + d.slice(4,6) + ', checksum matches. Authenticity still requires the secret verification code.');
   }else{
     showNumResult(false, 'رقم مزور او تالف: خانه التحقق غير مطابقه.', 'This number is forged or corrupted: the checksum digit does not match.');
