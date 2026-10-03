@@ -878,7 +878,22 @@ function renderSidebar(){
   $('adminRole').textContent = lang === 'ar' ? (roleLbl.ar || me.role) : me.role;
   loadIcons();
 }
+var viewPerms = {
+  questions: 'learning.manage',
+  plans: 'subscriptions.manage',
+  billing: 'subscriptions.manage',
+  liveClasses: 'subscriptions.manage',
+  settings: 'settings.manage',
+  announcements: 'announcements.manage',
+  roles: 'roles.manage',
+  health: 'health.read'
+};
 function goTo(id, arg){
+  var perm = viewPerms[id];
+  if(perm && !hasPerm(perm)){
+    $('viewArea').innerHTML = emptyBlock(t('permissionDenied'));
+    return;
+  }
   if(id === 'student' && arg){ viewState.student = { uid: arg }; id = 'student'; }
   document.querySelectorAll('.side-link').forEach(function(l){ l.classList.toggle('active', l.dataset.view === id); });
   $('sidebar').classList.remove('mobile-open');
