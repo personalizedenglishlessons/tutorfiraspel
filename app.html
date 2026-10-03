@@ -64,7 +64,7 @@ html[data-theme="light"]{
   --stage-bar-border:#D2D2D7;
 }
 *,*::before,*::after{box-sizing:border-box;}
-html{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; text-rendering:optimizeLegibility; font-optical-sizing:auto; font-size:17px; }
+html{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; text-rendering:optimizeLegibility; font-optical-sizing:auto; font-size:17px; overflow-x:hidden; }
 html,body{min-height:100%;}
 html{ -webkit-tap-highlight-color:transparent; }
 body{
@@ -86,6 +86,17 @@ ul{list-style:none; margin:0; padding:0;}
 ::selection{ background:var(--gold); color:#0E0E10; }
 html[data-theme="light"] ::selection{ background:rgba(0,113,227,.2); color:var(--text); }
   .arabic, [dir="rtl"]{ font-family:'Cairo','Tajawal',sans-serif; direction:rtl; line-height:1.95; letter-spacing:0; font-weight:400; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; unicode-bidi:isolate; overflow-wrap:break-word; word-break:break-word; }
+  /* Arabic is a connected script — letter-spacing breaks letter connections,
+     and text-transform:uppercase can garble Arabic on some mobile browsers.
+     Disable both on any element that renders Arabic text in RTL mode. */
+  [dir="rtl"] .eyebrow,
+  [dir="rtl"] .context-panel h4,
+  [dir="rtl"] .palette-group-label,
+  [dir="rtl"] .concept-section-label,
+  [dir="rtl"] .workspace-nav h4,
+  [dir="rtl"] .side-label .en{
+    letter-spacing:0 !important; text-transform:none !important;
+  }
   /* Bigger, more readable Arabic everywhere (captions, chips, body, sidebar).
      Uses a floor with !important so tiny inline sizes (0.68–0.78rem) are raised
      to a readable minimum - but headings are excluded so large titles keep
@@ -10419,7 +10430,7 @@ const VOCAB_BANK = [
 {en:'Draft', ipa:'/drɑːft/', ar: 'مسوده، نسخه اوليه', translit: 'درافت', example:{en:'This is just a first draft.', ar: 'هذي مجرد مسوده اولى.', translit: 'ذيس از جاست ا فيرست درافت.'}, synonyms:'outline, sketch', antonyms:'final version', family:'draft, drafted, drafting', collocations:'rough draft, draft an essay', category:'Writing Workshop', difficulty:'Advanced', tip: 'A draft is meant to be improved.', synonyms_ar: 'مسوده', antonyms_ar: 'نسخه نهائيه', family_ar: 'مسوده، مسود', collocations_ar: 'مسوده اوليه، سود مقال', tip_ar: 'المسوده مصممه للتحسين', mistake:'Treating the first draft as the final version.'},
 {en:'Revise', ipa:'/rɪˈvaɪz/', ar: 'يراجع ويعدل', translit: 'ريفايز', example:{en:'Revise your draft for clarity.', ar: 'راجع مسودتك لتكون اوضح.', translit: 'ريفايز يور درافت فور كليريتي.'}, synonyms:'edit, rewrite', antonyms:'keep, leave', family:'revise, revision', collocations:'revise for, revise a draft', category:'Writing Workshop', difficulty:'Advanced', tip: 'Revise for ideas, then edit for grammar.', synonyms_ar: 'يراجع ويعدل', antonyms_ar: 'يبقي', family_ar: 'يراجع، مراجعه', collocations_ar: 'راجع من اجل، راجع مسوده', tip_ar: 'راجع للافكار بعدين عدل للقواعد', mistake:'Revising and editing at the same time.'},
 {en:'Paragraph', ipa:'/ˈpærəɡræf/', ar: 'فقره', translit: 'باراقراف', example:{en:'Each paragraph needs one main idea.', ar: 'كل فقره تحتاج فكره رييسيه واحده.', translit: 'اتش باراجراف نيدز وان مين ايديا.'}, synonyms:'section, stanza', antonyms:'', family:'paragraph', collocations:'opening paragraph, topic sentence', category:'Writing Workshop', difficulty:'Advanced', tip: 'Start a paragraph with its main idea.', synonyms_ar: 'فقره', antonyms_ar: '', family_ar: 'فقره', collocations_ar: 'فقره افتتاحيه، جمله موضوع', tip_ar: 'ابدا الفقره بفكرتها الرييسيه', mistake:'Putting several ideas in one paragraph.'},
-{en:'Espresso', ipa:'/ɛˈsprɛsoʊ/', ar: 'اسبريسو، قهوه مركزه', translit: 'اسپريسو', example:{en:'I\'ll have an espresso, please.', ar: 'ابي اسبريسو لو سمحت.', translit: 'ايل هاڤ ان اسبريسو، بليز.'}, synonyms:'short black', antonyms:'', family:'espresso', collocations:'double espresso, espresso shot', category:'Coffee Shop English', difficulty:'Beginner', tip: 'Espresso is the base for many drinks.', synonyms_ar: 'اسبريسو', antonyms_ar: '', family_ar: 'اسبريسو', collocations_ar: 'اسبريسو مضاعف، شوت اسبريسو', tip_ar: 'الاسبريسو اساس لكثير مشروبات', mistake:'Pronouncing it as "expresso."'},
+{en:'Espresso', ipa:'/ɛˈsprɛsoʊ/', ar: 'اسپريسو، قهوه مركزه', translit: 'اسپريسو', example:{en:'I\'ll have an espresso, please.', ar: 'ابي اسبريسو لو سمحت.', translit: 'ايل هاڤ ان اسبريسو، بليز.'}, synonyms:'short black', antonyms:'', family:'espresso', collocations:'double espresso, espresso shot', category:'Coffee Shop English', difficulty:'Beginner', tip: 'Espresso is the base for many drinks.', synonyms_ar: 'اسبريسو', antonyms_ar: '', family_ar: 'اسبريسو', collocations_ar: 'اسبريسو مضاعف، شوت اسبريسو', tip_ar: 'الاسبريسو اساس لكثير مشروبات', mistake:'Pronouncing it as "expresso."'},
 {en:'Latte', ipa:'/ˈlɑːteɪ/', ar: 'لاتيه، قهوه بالحليب', translit: 'لاتيه', example:{en:'A latte has more milk than coffee.', ar: 'اللاتيه فيه حليب اكثر من القهوه.', translit: 'ا لاتيه هاز مور ميلك ذان كوفي.'}, synonyms:'cafe latte', antonyms:'', family:'latte', collocations:'order a latte, iced latte', category:'Coffee Shop English', difficulty:'Beginner', tip: 'Stress the second part: la-TAY.', synonyms_ar: 'لاتيه', antonyms_ar: '', family_ar: 'لاتيه', collocations_ar: 'اطلب لاتيه، لاتيه مثلج', tip_ar: 'شد على الجزء الثاني: la-TAY', mistake:'Saying "lat-ee" instead of "la-TAY."'},
 {en:'Barista', ipa:'/bəˈriːstə/', ar: 'باريستا، صانع القهوه', translit: 'باريستا', example:{en:'The barista made a nice latte art.', ar: 'الباريستا صمم رسمه لاتيه حلوه.', translit: 'ذا باريستا ميد ا نايس لاتيه ارت.'}, synonyms:'coffee maker', antonyms:'', family:'barista', collocations:'ask the barista, skilled barista', category:'Coffee Shop English', difficulty:'Beginner', tip: 'A barista prepares and serves coffee.', synonyms_ar: 'باريستا', antonyms_ar: '', family_ar: 'باريستا', collocations_ar: 'اسال الباريستا، باريستا محترف', tip_ar: 'الباريستا يجهز ويقدم القهوه', mistake:'Pronouncing it "bar-ista" with wrong stress.'},
 {en:'To Go', ipa:'/tu ɡoʊ/', ar: 'للسفري، يوخذ معاك', translit: 'تو قو', example:{en:'Coffee to go, please.', ar: 'قهوه للسفري لو سمحت.', translit: 'كوفي تو قو، پليز.'}, synonyms:'takeaway, takeout', antonyms:'for here, dine in', family:'go', collocations:'to go order, for here or to go', category:'Coffee Shop English', difficulty:'Beginner', tip:'"To go" means take it with you.', synonyms_ar: 'للسفري', antonyms_ar: 'للحضور', family_ar: 'يروح', collocations_ar: 'طلب سفري، هنا ولا سفري', tip_ar: 'to go يعني خذها معاك', mistake:'Saying "to go away" instead of "to go."'},
