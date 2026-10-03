@@ -47,7 +47,7 @@ function cookieValue(req: Request, name: string): string | null {
   return null;
 }
 
-function parseJwt(token: string): { sub: string; email: string; role: string } | null {
+function parseJwt(token: string): { sub: string; email: string; role: string; exp?: number } | null {
   try {
     const parts = token.split(".");
     if (parts.length !== 3) return null;
@@ -56,6 +56,7 @@ function parseJwt(token: string): { sub: string; email: string; role: string } |
       sub: payload.sub || "",
       email: payload.email || "",
       role: payload.role || "authenticated",
+      exp: payload.exp,
     };
   } catch {
     return null;

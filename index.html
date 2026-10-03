@@ -1300,6 +1300,7 @@ section{ padding-top:70px; padding-bottom:70px; }
 </section>
 
 <script src="lib/pel-plans.js?v=b7ef7805"></script>
+<script src="lib/pel_config.js?v=d66df0a3"></script>
 <script src="lib/pel-settings.js?v=30360798"></script>
 <script>
 /* PRICING - rendered from the live plan_pricing matrix (admin-editable via
@@ -1732,7 +1733,12 @@ function applyIndexLang(lang){
   var pricingP=document.querySelector('#pricing .section-head p');
   if(pricingP) setLang(pricingP, 'مسارين: واحد لللي يبدا من الصفر، و واحد لللي يستعد للستب او التوفل او الايلتس. تدفع عبر واتساب ونتفعل حسابك خلال دقايق.', 'One path starts from zero, the other preps you for STEP, TOEFL, or IELTS. Pay on WhatsApp, we set up your account in minutes.');
   var pricingNote=document.querySelector('.pricing-note');
-  if(pricingNote) pricingNote.innerHTML = lang==='ar' ? '<b>ما تعرف وش يناسبك؟</b> راسلنا واتساب ونساعدك تختار.' : '<b>Not sure which one?</b> Message us on WhatsApp, we\'ll help you pick.';
+  if(pricingNote){
+    var pn = (window.PEL_SITE && PEL_SITE.pricingNote) ? PEL_SITE.pricingNote : null;
+    var pnAr = (pn && pn.ar) || '<b>ما تعرف وش يناسبك؟</b> راسلنا واتساب ونساعدك تختار.';
+    var pnEn = (pn && pn.en) || '<b>Not sure which one?</b> Message us on WhatsApp, we\'ll help you pick.';
+    pricingNote.innerHTML = lang==='ar' ? pnAr : pnEn;
+  }
   // footer + remaining section heads (minimal bilingual to satisfy full-site requirement)
   var footerBrandP=document.querySelector('.footer-brand p.arabic');
   if(footerBrandP) footerBrandP.textContent = lang==='ar' ? 'PEL مع الاستاذ فراس: انجليزي عملي، وتمرين يخليك تستخدم الكلام برا الدرس.' : 'PEL with Tutor Firas, real English you can actually use outside the app.';
@@ -2165,18 +2171,26 @@ const faqs = [
 const faqList = document.getElementById('faqList');
 function renderFaqs(){
   var ar = (function(){ try{ var p=JSON.parse(localStorage.getItem('pel_account_prefs')||'null'); return p&&p.lang==='ar'; }catch(e){ return document.documentElement.lang==='ar'; } })();
-  var live = faqs;
+  var live = (window.PEL_SITE && PEL_SITE.faqs && PEL_SITE.faqs.length) ? PEL_SITE.faqs : faqs;
   faqList.innerHTML='';
   live.forEach(function(f){
-    var q = ar ? f.qAr : f.qEn;
-    var a = ar ? f.aAr : f.aEn;
+    var q = ar ? (f.qAr || f.qEn) : (f.qEn || f.qAr);
+    var a = ar ? (f.aAr || f.aEn) : (f.aEn || f.aAr);
     if(!q || !a) return;
     var item = document.createElement('div');
     item.className = 'faq-item';
-    item.innerHTML = '<button type="button" class="faq-q"><span>' + q + '</span><span class="plus">+</span></button><div class="faq-a"><div class="faq-a-inner">' + a + '</div></div>';
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'faq-q';
+    var qSpan = document.createElement('span'); qSpan.textContent = q;
+    var plusSpan = document.createElement('span'); plusSpan.className = 'plus'; plusSpan.textContent = '+';
+    btn.appendChild(qSpan); btn.appendChild(plusSpan);
+    var panel = document.createElement('div'); panel.className = 'faq-a';
+    var panelInner = document.createElement('div'); panelInner.className = 'faq-a-inner';
+    panelInner.textContent = a;
+    panel.appendChild(panelInner);
+    item.appendChild(btn); item.appendChild(panel);
     faqList.appendChild(item);
-    var btn = item.querySelector('.faq-q');
-    var panel = item.querySelector('.faq-a');
     btn.addEventListener('click', function(){
       var isOpen = item.classList.contains('open');
       faqList.querySelectorAll('.faq-item').forEach(function(other){ other.classList.remove('open'); other.querySelector('.faq-a').style.maxHeight = null; });
@@ -2230,7 +2244,7 @@ window.addEventListener('storage', function(e){ if(e.key==='pel_account_prefs') 
     if(!bar) return;
     var data = window.PEL_SITE && window.PEL_SITE.banner;
     if(!data || !data.active){ bar.classList.remove('show'); updateBannerOffset(); return; }
-    var text = currentLang() === 'ar' ? data.ar : data.en;
+    var text = currentLang() === 'ar' ? (data.ar || data.en) : (data.en || data.ar);
     if(!text){ bar.classList.remove('show'); updateBannerOffset(); return; }
     bar.textContent = '';
     bar.appendChild(document.createTextNode(text));

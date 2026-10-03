@@ -536,6 +536,13 @@ async function rpc(name, args){
     return { ok:false, error:e };
   }
 }
+/* Legacy RPC adapter: returns {data, error} for code using destructuring.
+   Routes through rpc() (which handles cookie auth) while preserving
+   the old {data, error} return shape. */
+async function legacyRpc(name, args){
+  var r = await rpc(name, args);
+  return { data: r.data, error: r.ok ? null : r.error };
+}
 /* Audit every admin mutation. */
 async function audit(action, targetType, targetId, metadata){
   try{ await rpc('audit_action', { p_action:action, p_target_type:targetType, p_target_id:targetId, p_metadata:metadata || {} }); }catch(e){}
@@ -1835,7 +1842,7 @@ async function saveIntervention(){
   var reasonAr = $('invReasonAr').value.trim();
   if(!titleEn){ toast(t('required'), true); return; }
   var c = client();
-  var { data, error } = await c.rpc('admin_add_intervention', { p_payload: {
+  var { data, error } = await legacyRpc('admin_add_intervention', { p_payload: {
     user_id: current360Uid, type: type, title_en: titleEn, title_ar: titleAr || titleEn,
     reason_en: reasonEn, reason_ar: reasonAr, assignee_role: me.role
   }});
@@ -1848,7 +1855,7 @@ async function saveNote(){
   var body = $('noteBody').value.trim();
   if(!body){ toast(t('required'), true); return; }
   var c = client();
-  var { data, error } = await c.rpc('admin_add_student_note', { p_user_id: current360Uid, p_body: body, p_category: 'note' });
+  var { data, error } = await legacyRpc('admin_add_student_note', { p_user_id: current360Uid, p_body: body, p_category: 'note' });
   if(error || (data && data.ok === false)){ toast((error && (error.message || String(error))) || (data && data.error && data.error.message) || t('permissionDenied'), true); return; }
   await audit('student.note', 'student', current360Uid, {});
   toast(t('saved'));
@@ -1856,7 +1863,7 @@ async function saveNote(){
 }
 async function saveProfile(){
   var c = client();
-  var { data, error } = await c.rpc('admin_upsert_student_profile', { p_payload: {
+  var { data, error } = await legacyRpc('admin_upsert_student_profile', { p_payload: {
     user_id: current360Uid,
     phone: $('prPhone').value.trim(), whatsapp: $('prWhatsapp').value.trim(),
     status: $('prStatus').value, intake: $('prIntake').value.trim(),
@@ -1876,7 +1883,7 @@ async function saveSnapshot(){
   var specs = ['speaking-studio','listening-lounge','grammar-academy','vocabulary-vault','american-accent-lab','writing-workshop'];
   specs.forEach(function(a){ scores[a] = academyProgress(a, completed); });
   var c = client();
-  var { data, error } = await c.rpc('admin_add_learning_snapshot', { p_payload: {
+  var { data, error } = await legacyRpc('admin_add_learning_snapshot', { p_payload: {
     user_id: current360Uid, snapshot_date: new Date().toISOString().slice(0,10),
     level: level, skill_scores: scores, xp: st.xp || 0, completed_lessons: completed.length
   }});
@@ -2070,7 +2077,7 @@ function groupForm(existing){
       name: payload.name, teacher_id: payload.teacher_id || '',
       status: payload.status, description: payload.description || ''
     };
-    var { data, error } = await c.rpc('admin_save_group', { p_payload: rpcPayload });
+    var { data, error } = await legacyRpc('admin_save_group', { p_payload: rpcPayload });
     if(error || (data && data.ok === false)){ toast(t('permissionDenied'), true); return; }
     var newId = (data && data.data && data.data.id) || (isEdit ? existing.id : '');
     await audit(isEdit ? 'group.edit' : 'group.create', 'group', newId, { name: payload.name });
@@ -2201,7 +2208,7 @@ function assignTeacherModal(groupId){
   $('atSave').addEventListener('click', async function(){
     var val = $('atSel').value;
     var c = client();
-    var { data, error } = await c.rpc('admin_set_group_teacher', { p_group_id: groupId, p_teacher_id: val || null });
+    var { data, error } = await legacyRpc('admin_set_group_teacher', { p_group_id: groupId, p_teacher_id: val || null });
     if(error || (data && data.ok === false)){ toast(t('permissionDenied'), true); return; }
     await audit('group.teacher', 'group', groupId, { teacher_id: val });
     closeModal(s);
@@ -2515,7 +2522,7 @@ function classForm(groupsArr){
       course_id: $('clCourse').value.trim() || null
     };
     var c = client();
-    var { data, error } = await c.rpc('admin_create_live_class', { p_payload: payload });
+    var { data, error } = await legacyRpc('admin_create_live_class', { p_payload: payload });
     if(error || (data && data.ok === false)){ toast(t('permissionDenied'), true); return; }
     var newId = (data && data.data && data.data.id) || '';
     await audit('class.create', 'class', newId, { topic: payload.topic });
@@ -2636,7 +2643,7 @@ function programForm(){
     };
     if(!payload.code || !payload.name_en){ toast(t('required'), true); return; }
     var c = client();
-    var { data, error } = await c.rpc('admin_create_program', { p_payload: payload });
+    var { data, error } = await legacyRpc('admin_create_program', { p_payload: payload });
     if(error || (data && data.ok === false)){ toast(t('permissionDenied'), true); return; }
     var newId = (data && data.data && data.data.id) || '';
     await audit('program.create', 'program', newId, { code: payload.code });
@@ -2744,13 +2751,13 @@ async function billingView(){
       else byKey[k][f] = inp.checked;
     });
     var rows = Object.keys(byKey).map(function(k){ return byKey[k]; });
-    var { data: ppData, error: ppErr } = await c.rpc('admin_upsert_plan_pricing', { p_rows: rows });
-    if(ppErr || (ppData && ppData.ok === false)){ console.warn('plan_pricing save', ppErr || ppData); noteErr(ppErr || ppData); }
+    var ppRes = await rpc('admin_upsert_plan_pricing', { p_rows: rows });
+    if(!ppRes.ok){ console.warn('plan_pricing save', ppRes.error); noteErr(ppRes.error); }
     // index content (awaited so failures are counted accurately)
     await Promise.all(Array.prototype.slice.call(document.querySelectorAll('[data-ix]')).map(function(ta){
       var key = ta.dataset.ix, v = ta.value.trim();
-      return c.rpc('admin_upsert_site_setting', { p_key: key, p_value: v }).then(function(r){
-        if(r.error || (r.data && r.data.ok === false)){ console.warn('site_settings save',key,r.error||r.data); noteErr(r.error||r.data); }
+      return rpc('admin_upsert_site_setting', { p_key: key, p_value: v }).then(function(r){
+        if(!r.ok){ console.warn('site_settings save',key,r.error); noteErr(r.error); }
       }).catch(function(e){ console.warn('site_settings save',key,e); noteErr(e); });
     }));
     // FAQs (collect rows in DOM order, drop fully-blank ones)
@@ -2761,8 +2768,8 @@ async function billingView(){
       if(q.qEn||q.qAr||q.aEn||q.aAr) faqOut.push(q);
     });
     try{
-      var fr = await c.rpc('admin_upsert_site_setting', { p_key: 'faqs', p_value: faqOut });
-      if(fr.error || (fr.data && fr.data.ok === false)){ console.warn('site_settings faqs save',fr.error||fr.data); noteErr(fr.error||fr.data); }
+      var fr = await rpc('admin_upsert_site_setting', { p_key: 'faqs', p_value: faqOut });
+      if(!fr.ok){ console.warn('site_settings faqs save',fr.error); noteErr(fr.error); }
     }catch(e){ console.warn('site_settings faqs save',e); noteErr(e); }
     await audit('billing.update', 'plan_pricing', '', { cells: Object.keys(byKey).length });
     this.disabled = false; this.textContent = t('save');
@@ -2827,7 +2834,7 @@ async function questionsView(){
 
   function toggleQ(id){
     var q = ROWS.find(function(x){return x.id===id;}); if(!q) return;
-    c.rpc('admin_toggle_assessment_question', { p_id: id }).then(function(r){
+    legacyRpc('admin_toggle_assessment_question', { p_id: id }).then(function(r){
       if(r.error || (r.data && r.data.ok === false)){ toast(rpcErrMsg(r.error||r.data), true); return; }
       audit('question.toggle','assessment_questions',q.code,{active:!q.active});
       toast(t('saved')); loadList();
@@ -2836,7 +2843,7 @@ async function questionsView(){
   function delQ(id){
     var q = ROWS.find(function(x){return x.id===id;});
     if(!window.confirm(lang==='ar'?'حذف ذا السؤال للابد؟':'Delete this question permanently?')) return;
-    c.rpc('admin_delete_assessment_question', { p_id: id }).then(function(r){
+    legacyRpc('admin_delete_assessment_question', { p_id: id }).then(function(r){
       if(r.error || (r.data && r.data.ok === false)){ toast(rpcErrMsg(r.error||r.data), true); return; }
       audit('question.delete','assessment_questions',q?q.code:id,{});
       toast(t('saved')); loadList();
@@ -2885,7 +2892,7 @@ async function questionsView(){
       this.disabled = true; this.textContent = '...';
       // Use the admin_save_assessment_question RPC for both insert and update
       var rpcPayload = Object.assign({}, row, { id: isEdit ? q.id : '' });
-      var { data, error } = await c.rpc('admin_save_assessment_question', { p_payload: rpcPayload });
+      var { data, error } = await legacyRpc('admin_save_assessment_question', { p_payload: rpcPayload });
       this.disabled = false; this.textContent = t('save');
       if(error || (data && data.ok === false)){ toast(rpcErrMsg(error||data), true); return; }
       await audit('question.upsert','assessment_questions',code,{tier:row.tier,level:row.level,difficulty:row.difficulty_rating});
@@ -3413,10 +3420,13 @@ async function announcementsView(){
   }).join('') || emptyBlock(t('noAnnouncements'));
 
   $('viewArea').innerHTML = pageHead(t('announcements'), lang === 'ar' ? 'اعلانات المنصه وتتبع الوصول.' : 'Platform announcements and delivery tracking.') +
-    '<div class="btn-row" style="margin-bottom:16px;"><button class="btn btn-gold btn-sm" id="annNewBtn">' + esc(t('newAnnouncement')) + '</button></div>' +
+    '<div class="btn-row" style="margin-bottom:16px;"><button class="btn btn-gold btn-sm" id="annNewBtn">' + esc(t('newAnnouncement')) + '</button>' +
+    '<button class="btn btn-outline btn-sm" id="annBannerBtn">' + esc(lang === 'ar' ? 'تعديل شريط الصفحه الرئيسيه' : 'Edit homepage banner') + '</button></div>' +
     '<div>' + html + '</div>';
   loadIcons();
   $('annNewBtn').addEventListener('click', function(){ createAnnouncementForm(); });
+  var bannerBtn = $('annBannerBtn');
+  if(bannerBtn) bannerBtn.addEventListener('click', function(){ goTo('settings'); });
   document.querySelectorAll('[data-edit]').forEach(function(b){
     b.addEventListener('click', function(){
       var a = window.__annRows[b.getAttribute('data-edit')];
@@ -3625,8 +3635,8 @@ async function settingsView(){
       if(fq.qAr || fq.qEn) faqOut.push(fq);
     }
     rows.push({ key:'faqs', value:faqOut });
-    var r2 = await c.rpc('admin_upsert_site_settings_batch', { p_rows: rows });
-    if(r2.error || (r2.data && r2.data.ok === false)){ btn.disabled = false; toast(((r2.error&&r2.error.message) || (r2.data&&r2.data.error&&r2.data.error.message) || t('errorGeneric')), true); return; }
+    var r2 = await rpc('admin_upsert_site_settings_batch', { p_rows: rows });
+    if(!r2.ok){ btn.disabled = false; toast((r2.error && r2.error.message) || t('errorGeneric'), true); return; }
     audit('settings.update', 'site_settings', 'site_settings', { banner_active: rows[0].value.active, plan_6m_available: rows[3].value, faq_count: faqOut.length });
     toast(lang === 'ar' ? 'تم النشر - يظهر للزوار الحين' : 'Published - live for visitors now');
     btn.disabled = false;
