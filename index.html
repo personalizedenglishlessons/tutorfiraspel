@@ -94,6 +94,19 @@ html[data-theme="light"]{
 }
 html[data-theme="light"] .mini-icon.pi{ color:#9A6E16; background:rgba(154,110,22,.14); }
 html[data-theme="light"] .hero-preview{ background:linear-gradient(150deg, rgba(255,255,255,.7), rgba(255,255,255,.35)); border-color:rgba(0,0,0,.07); box-shadow:0 32px 80px -44px rgba(0,0,0,.35); }
+html[data-theme="light"] .btn-gold{
+  background:linear-gradient(135deg, #C8931C 0%, #B8821E 50%, #9A6E16 100%);
+  color:#FFFFFF;
+  text-shadow:0 1px 2px rgba(0,0,0,.18);
+  box-shadow:0 4px 14px -4px rgba(184,130,30,.4), inset 0 1px 0 rgba(255,255,255,.2);
+}
+html[data-theme="light"] .btn-gold:hover{
+  box-shadow:0 8px 24px -6px rgba(184,130,30,.5), inset 0 1px 0 rgba(255,255,255,.3);
+}
+html[data-theme="light"] .cursor-dot{ background:#17171B; mix-blend-mode:normal; }
+html[data-theme="light"] .cursor-ring{ border-color:rgba(184,130,30,.5); }
+html[data-theme="light"] #personalPreview,
+html[data-theme="light"] #pricing{ background:var(--card); }
 
 *,*::before,*::after{box-sizing:border-box;}
 html{scroll-behavior:smooth; overflow-x:hidden; scroll-padding-top:calc(var(--header-h) + var(--site-banner-h, 0px)); -webkit-tap-highlight-color:transparent; }

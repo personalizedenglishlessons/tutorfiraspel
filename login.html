@@ -503,6 +503,8 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 }
 .cursor-ring.hover{ width:56px; height:56px; border-color:var(--gold); }
 @media(hover:none), (max-width:900px){ .cursor-dot,.cursor-ring{display:none;} }
+html[data-theme="light"] .cursor-dot{ background:#17171B; mix-blend-mode:normal; }
+html[data-theme="light"] .cursor-ring{ border-color:rgba(184,130,30,.5); }
 
 /* ===== 3D dashboard preview ===== */
 .dash-preview{ transform-style:preserve-3d; }

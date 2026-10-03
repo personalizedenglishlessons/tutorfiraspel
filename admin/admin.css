@@ -159,6 +159,12 @@ html[dir="rtl"] #sidebar{ border-right:none; border-left:1px solid var(--border)
 .btn{ display:inline-flex; align-items:center; gap:8px; padding:9px 16px; border-radius:11px; font-size:.82rem; font-weight:600; transition:.25s ease; }
 .btn-gold{ background:linear-gradient(135deg, var(--gold), var(--bronze)); color:#17171B; }
 .btn-gold:hover{ filter:brightness(1.08); box-shadow:var(--gold-glow, 0 0 40px -10px rgba(200,169,106,.45)); }
+html[data-theme="light"] .btn-gold{
+  background:linear-gradient(135deg, #C8931C 0%, #B8821E 50%, #9A6E16 100%);
+  color:#FFFFFF;
+  text-shadow:0 1px 2px rgba(0,0,0,.18);
+  box-shadow:0 4px 14px -4px rgba(184,130,30,.4), inset 0 1px 0 rgba(255,255,255,.2);
+}
 .btn-outline{ border:1px solid var(--border); color:var(--text-secondary); background:var(--surface); }
 .btn-outline:hover{ border-color:var(--gold); color:var(--gold); }
 .btn-danger{ background:rgba(210,92,92,.14); border:1px solid rgba(210,92,92,.45); color:var(--danger); }
