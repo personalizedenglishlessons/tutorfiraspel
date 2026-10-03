@@ -976,14 +976,14 @@ $('viewArea').innerHTML = pageHead(t('overview'), lang === 'ar' ? 'وش يصير
   }).join('') || '<div class="sub">' + esc(t('noData')) + '</div>';
 
   var quickActions = [
-    {icon:'user-plus', label:lang==='ar'?'اضافه طالب':'Add Student', view:'students'},
-    {icon:'megaphone', label:lang==='ar'?'اعلان جديد':'New Announcement', view:'announcements'},
-    {icon:'calendar-plus', label:lang==='ar'?'حصه مباشره':'Live Class', view:'liveClasses'},
-    {icon:'award', label:lang==='ar'?'اصدار شهاده':'Issue Cert', view:'certificates'},
-    {icon:'settings', label:lang==='ar'?'اعدادات الموقع':'Site Settings', view:'settings'},
-    {icon:'heart-pulse', label:lang==='ar'?'صحه النظام':'System Health', view:'health'}
+    {icon:'user-plus', label:lang==='ar'?'اضافه طالب':'Add Student', view:'students', perm:'students.manage'},
+    {icon:'megaphone', label:lang==='ar'?'اعلان جديد':'New Announcement', view:'announcements', perm:'announcements.manage'},
+    {icon:'calendar-plus', label:lang==='ar'?'حصه مباشره':'Live Class', view:'liveClasses', perm:'classes.manage'},
+    {icon:'award', label:lang==='ar'?'اصدار شهاده':'Issue Cert', view:'certificates', perm:'certs.issue'},
+    {icon:'settings', label:lang==='ar'?'اعدادات الموقع':'Site Settings', view:'settings', perm:'settings.manage'},
+    {icon:'heart-pulse', label:lang==='ar'?'صحه النظام':'System Health', view:'health', perm:'health.view'}
   ];
-  var qaHtml = quickActions.map(function(qa){
+  var qaHtml = quickActions.filter(function(qa){ return !qa.perm || hasPerm(qa.perm); }).map(function(qa){
     return '<button class="btn btn-outline btn-sm" data-qa-go="' + qa.view + '" style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 10px;min-width:90px;"><i data-lucide="' + qa.icon + '" width="20" height="20"></i><span style="font-size:.72rem;text-align:center;">' + esc(qa.label) + '</span></button>';
   }).join('');
 
@@ -3192,15 +3192,18 @@ function openCertIssueModal(uid){
   var _dc=s.querySelector('[data-close]'); if(_dc) _dc.addEventListener('click', function(){ closeModal(s); });
 
   var picked = uid;
+  var currentMode = uid ? 'student' : 'manual';
   var nameInput = $('ciName');
   if(uid && current360 && current360.profile && current360.profile.full_name){
     nameInput.value = current360.profile.full_name;
     $('ciStudentWrap').style.display = 'none';
   }
   function setMode(mode){
+    currentMode = mode;
     document.querySelectorAll('#ciTabs .tab').forEach(function(tab){ tab.classList.toggle('active', tab.getAttribute('data-mode') === mode); });
     $('ciStudentWrap').style.display = mode === 'manual' ? 'none' : '';
-    if(mode === 'manual') picked = null;
+    if(mode === 'manual'){ picked = null; }
+    else if(mode === 'student' && uid && !picked){ picked = uid; if(current360 && current360.profile && current360.profile.full_name) nameInput.value = current360.profile.full_name; }
   }
   document.querySelectorAll('#ciTabs .tab').forEach(function(tab){
     tab.addEventListener('click', function(){ setMode(tab.getAttribute('data-mode')); });
@@ -3262,7 +3265,7 @@ var prevWrap = $('ciPreviewWrap');
       p_issue_date: new Date().toISOString().slice(0,10)
     };
     if(!payload.p_student_name){ toast(t('required'), true); return; }
-    var r = picked
+    var r = (currentMode === 'student' && picked)
       ? await rpc('issue_certificate_admin', { p_user_id: picked, ...payload })
       : await rpc('issue_certificate_manual', payload);
     closeModal(s);
