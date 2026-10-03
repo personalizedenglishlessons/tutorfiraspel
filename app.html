@@ -2943,6 +2943,11 @@ document.getElementById('logoutBtn').addEventListener('click', async () => {
   // Legacy: sign out via Supabase JS client
   if(c){ try{ PEL_ACTIVITY.touch('logout'); }catch(e){} try{ await c.auth.signOut(); }catch(e){ console.warn('[PEL] auth signOut failed:', e.message||e); } }
   clearUserLocalKeys();
+  window._pelCredits = 0;
+  window._pelOverviewCache = null;
+  window._pelOverviewTs = 0;
+  const creditsPill = document.getElementById('topbarCredits');
+  if(creditsPill) creditsPill.style.display = 'none';
   window.location.href = 'login.html';
 });
 
@@ -9961,7 +9966,7 @@ function renderMiniCal(){
     const key = pelDateKey(d);
     const cell = document.createElement('div');
     cell.className = 'mini-cal-day' + (studyDays.indexOf(key)!==-1 ? ' studied' : '') + (i===0 ? ' today' : '');
-    cell.innerHTML = `<span class="mc-dow">${['S','M','T','W','T','F','S'][d.getDay()]}</span><span class="mc-date">${d.getDate()}</span>`;
+    cell.innerHTML = `<span class="mc-dow">${(document.documentElement.lang==='ar'?['أحد','اثن','ثلا','أرب','خمي','جمع','سبت']:['S','M','T','W','T','F','S'])[d.getDay()]}</span><span class="mc-date">${d.getDate()}</span>`;
     miniCal.appendChild(cell);
   }
 }
@@ -9978,7 +9983,7 @@ function renderPomo(){
   if(tot){
     try{
       const t = (studentPrefs && studentPrefs.timer) || {};
-      const ar = learningDirection() === 'ar';
+      const ar = accountPrefs.lang === 'ar';
       tot.textContent = ar ? `مجموع وقت الدراسه: ${t.total_min||0} دقيقه` : `Total study time: ${t.total_min||0} min`;
     }catch(e){ /* studentPrefs not initialized yet - totals appear once state loads */ }
   }
