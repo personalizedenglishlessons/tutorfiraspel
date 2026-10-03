@@ -1553,7 +1553,7 @@ function renderTabProfile(p, d){
   var items = [
     ['email', p.email], ['phone', p.phone], ['whatsapp', p.whatsapp],
     ['status', p.status], ['role', p.role], ['enrollmentDate', p.enrollment_date],
-    ['intake', p.intake], ['created_at', fmtDate(p.created_at)]
+    ['intake', p.intake], ['createdAt', fmtDate(p.created_at)]
   ];
   var kv = items.map(function(i){
     var lbl = (I[i[0]] || {en:i[0], ar:i[0]});
@@ -1858,7 +1858,7 @@ function renderTabActivity(st, kv, d){
       '<span class="why">' + esc(relTime(e.created_at)) + '</span></div></div>';
   }).join('') || '<div class="sub">' + esc(lang==='ar'?'لا فيه نشاط':'No activity') + '</div>';
 
-  return '<div class="grid grid-2"><div><div class="section-title">' + esc(t('recentCompletions')) + ' (' + fmtN(studyDays.length) + ' ' + esc(t('totalLessons')) + ')</div><div class="card"><div class="reason-list">' + recent + '</div></div></div>' +
+  return '<div class="grid grid-2"><div><div class="section-title">' + esc(t('recentCompletions')) + ' (' + fmtN(studyDays.length) + ' ' + esc(lang === 'ar' ? 'ايام دراسه' : 'study days') + ')</div><div class="card"><div class="reason-list">' + recent + '</div></div></div>' +
     '<div><div class="section-title">' + esc(lang==='ar'?'النشاط الحديث':'Recent Activity') + '</div><div class="card"><div class="reason-list">' + activityEvents + '</div></div></div></div>' +
     '<div style="margin-top:18px;"><div class="section-title">' + esc(t('attendance')) + '</div><div class="card"><div class="reason-list">' + att + '</div></div></div>';
 }
@@ -1868,7 +1868,7 @@ function renderTabCertificates(d){
       '<div><div>' + esc(c.academy_en) + ' · ' + esc(c.student_name) + '</div>' +
       '<span class="why">' + esc(c.cert_id) + ' · ' + statusChip(c.status) + (c.revoke_reason ? ' · ' + esc(c.revoke_reason) : '') + '</span>' +
       (hasPerm('certificates.revoke') || hasPerm('certificates.issue') ? '<div class="btn-row" style="margin-top:8px;">' +
-        (c.status === 'issued' && hasPerm('certificates.revoke') ? '<button class="btn btn-danger btn-sm" data-action="revoke-cert" data-cert="' + esc(c.cert_id) + '">' + esc(t('revoke')) + '</button>' : '') +
+        ((c.status === 'issued' || c.status === 'reissued') && hasPerm('certificates.revoke') ? '<button class="btn btn-danger btn-sm" data-action="revoke-cert" data-cert="' + esc(c.cert_id) + '">' + esc(t('revoke')) + '</button>' : '') +
         (c.status === 'issued' && hasPerm('certificates.issue') ? '<button class="btn btn-outline btn-sm" data-action="reissue-cert" data-cert="' + esc(c.cert_id) + '">' + esc(t('reissue')) + '</button>' : '') +
         '</div>' : '') +
       '</div></div>';
@@ -3105,7 +3105,7 @@ async function certificates(){
       '<span class="why">' + esc(x.cert_id) + ' · ' + fmtDate(x.created_at) + (x.level ? ' · ' + esc(x.level) : '') + (x.revoke_reason ? ' · ' + esc(x.revoke_reason) : '') + '</span></div>' +
 statusChip(x.status) +
       (x.user_id ? '<a class="row-link" data-open-student="' + x.user_id + '" style="font-size:.72rem;">' + esc(t('student')) + '</a>' : '') +
-      (x.status === 'issued' && hasPerm('certificates.revoke') ? '<button class="btn btn-danger btn-sm" data-revoke="' + esc(x.cert_id) + '">' + esc(t('revoke')) + '</button>' : '') +
+      ((x.status === 'issued' || x.status === 'reissued') && hasPerm('certificates.revoke') ? '<button class="btn btn-danger btn-sm" data-revoke="' + esc(x.cert_id) + '">' + esc(t('revoke')) + '</button>' : '') +
       (hasPerm('settings.manage') ? '<button class="btn btn-outline btn-sm" data-del-cert="' + esc(x.id) + '">' + esc(lang==='ar'?'حذف':'Delete') + '</button>' : '') +
       '<button class="btn btn-outline btn-sm" data-print-cert="' + esc(x.cert_id) + '">' + esc(t('print')) + '</button>' +
       '</div>';
@@ -4056,7 +4056,7 @@ async function renderTabPlan(d){
       '<div class="s360-meta" style="margin-top:10px; color:var(--text-muted); font-size:.78rem;">' +
         (ps.start_date ? '<span>' + esc(t('startDate')) + ': ' + fmtDate(ps.start_date) + '</span>' : '') +
         (ps.end_date ? '<span>· ' + esc(t('endDate')) + ': ' + fmtDate(ps.end_date) + '</span>' : '') +
-        (has ? '<span>· ' + t('daysLeft').replace('%d', fmtN(ps.days_remaining)) + '</span>' : '') +
+        (has && ps.days_remaining != null ? '<span>· ' + t('daysLeft').replace('%d', fmtN(ps.days_remaining)) + '</span>' : '') +
         '<span>· ' + fmtN(ps.sessions_used) + '/' + fmtN(plan.included_live_sessions || 0) + ' ' + esc(t('sessionsIncluded')) + '</span>' +
       '</div>';
   }
