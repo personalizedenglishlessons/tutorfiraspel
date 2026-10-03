@@ -595,9 +595,14 @@ async function adminDelete(entity, id, onDone){
     if(!r.ok){ toast((r.error && r.error.message) || t('errorGeneric'), true); return; }
     var res = r.data || {};
     if(res.error){
-      toast(res.error === 'not_found'
+      var errMsg = res.error === 'not_found'
         ? (lang === 'ar' ? 'ما حصلنا العنصر — يمكن انحذف من قبل.' : 'Item not found — it may have already been deleted.')
-        : res.error, true);
+        : res.error === 'live_classes_exist'
+        ? (lang === 'ar' ? 'مربوط بحصص مباشره (' + (res.count || '') + ') — الغِ الحصص او غير المجموعه فيها قبل الحذف.' : 'This group has ' + (res.count || '?') + ' live class(es) attached — cancel or reassign them first.')
+        : res.error === 'fk_blocked'
+        ? (lang === 'ar' ? 'عناصر مرتبطه تمنع الحذف.' : 'Linked records prevent deletion.')
+        : res.error;
+      toast(errMsg, true);
       if(typeof onDone === 'function') onDone();
       return;
     }
