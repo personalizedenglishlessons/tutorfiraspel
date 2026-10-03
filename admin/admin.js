@@ -1001,10 +1001,10 @@ $('viewArea').innerHTML = pageHead(t('overview'), lang === 'ar' ? 'وش يصير
   var quickActions = [
     {icon:'user-plus', label:lang==='ar'?'اضافه طالب':'Add Student', view:'students', perm:'students.manage'},
     {icon:'megaphone', label:lang==='ar'?'اعلان جديد':'New Announcement', view:'announcements', perm:'announcements.manage'},
-    {icon:'calendar-plus', label:lang==='ar'?'حصه مباشره':'Live Class', view:'liveClasses', perm:'classes.manage'},
+    {icon:'calendar-plus', label:lang==='ar'?'حصه مباشره':'Live Class', view:'liveClasses', perm:'subscriptions.manage'},
     {icon:'award', label:lang==='ar'?'اصدار شهاده':'Issue Cert', view:'certificates', perm:'certs.issue'},
     {icon:'settings', label:lang==='ar'?'اعدادات الموقع':'Site Settings', view:'settings', perm:'settings.manage'},
-    {icon:'heart-pulse', label:lang==='ar'?'صحه النظام':'System Health', view:'health', perm:'health.view'}
+    {icon:'heart-pulse', label:lang==='ar'?'صحه النظام':'System Health', view:'health', perm:'health.read'}
   ];
   var qaHtml = quickActions.filter(function(qa){ return !qa.perm || hasPerm(qa.perm); }).map(function(qa){
     return '<button class="btn btn-outline btn-sm" data-qa-go="' + qa.view + '" style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 10px;min-width:90px;"><i data-lucide="' + qa.icon + '" width="20" height="20"></i><span style="font-size:.72rem;text-align:center;">' + esc(qa.label) + '</span></button>';
@@ -3495,7 +3495,7 @@ async function plansView(){
       '<div class="s360-meta" style="margin-top:10px; color:var(--text-muted); font-size:.76rem;">' +
         '<span>' + fmtN(x.duration_days || (x.duration_months ? x.duration_months * 30 : 0)) + ' ' + esc(t('durationDays')) + '</span>' +
         '<span>· ' + fmtN(x.weekly_live_sessions || 0) + ' ' + esc(t('weeklyLive')) + '</span>' +
-        (x.price ? '<span>· ' + esc(x.price) + ' ' + (window.PEL_RIYAL ? PEL_RIYAL() : esc(x.currency || 'SAR')) + '</span>' : '') +
+        (x.price ? '<span>· ' + esc(x.price) + ' ' + (typeof window.PEL_RIYAL === 'function' ? PEL_RIYAL() : esc(x.currency || 'SAR')) + '</span>' : '') +
       '</div>' +
       (x.description ? '<div class="sub" style="margin-top:10px;">' + esc(x.description) + '</div>' : '') +
       '</div>';
@@ -4053,7 +4053,7 @@ async function renderTabPlan(d){
   } else {
     var planName = lang === 'ar' ? (plan.name_ar || plan.name_en) : plan.name_en;
     statusLine = '<div class="s360-meta" style="margin-top:0;">' + planStatusChip(ps.status) + chip(esc(planName), 'gold') +
-      (plan.price ? chip(esc(plan.price) + ' ' + (window.PEL_RIYAL ? PEL_RIYAL() : esc(plan.currency || 'SAR')), '') : '') + '</div>' +
+      (plan.price ? chip(esc(plan.price) + ' ' + (typeof window.PEL_RIYAL === 'function' ? PEL_RIYAL() : esc(plan.currency || 'SAR')), '') : '') + '</div>' +
       '<div class="s360-meta" style="margin-top:10px; color:var(--text-muted); font-size:.78rem;">' +
         (ps.start_date ? '<span>' + esc(t('startDate')) + ': ' + fmtDate(ps.start_date) + '</span>' : '') +
         (ps.end_date ? '<span>· ' + esc(t('endDate')) + ': ' + fmtDate(ps.end_date) + '</span>' : '') +
