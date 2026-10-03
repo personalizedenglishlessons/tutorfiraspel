@@ -51,7 +51,7 @@ def main() -> int:
 
     repo = {}
     for fname in sorted(os.listdir(MIGRATIONS_DIR)):
-        m = re.match(r'(\d{12})_([\w.]+)\.sql$', fname)
+        m = re.match(r'(\d+)_([\w.]+)\.sql$', fname)
         if m:
             repo[m.group(1)] = (m.group(2), os.path.join(MIGRATIONS_DIR, fname))
 

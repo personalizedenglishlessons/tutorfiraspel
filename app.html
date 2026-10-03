@@ -18,12 +18,12 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.50.0/dist/umd/supabase.js" integrity="sha384-K0oxqktRvaThvYgGL4G+OK2Ih6VS6Uyu7j3+7WJgp/uWM0Yv6Xi4YEiw0BB+mPfi" crossorigin="anonymous" defer></script>
 <script src="lib/daily-lesson.js?v=de75b95f" defer></script>
 <script src="lib/pel-personalization.js?v=f0285e0e" defer></script>
-<script src="lib/pel-plans.js?v=264be9bd" defer></script>
+<script src="lib/pel-plans.js?v=b7ef7805" defer></script>
 <script src="lib/pel-settings.js?v=30360798" defer></script>
 <script src="lib/cert-qr.js?v=a43f19f9" defer></script>
 <script src="lib/cert-sheet.js?v=a1f37a19" defer></script>
 <script src="lib/pel_config.js?v=d66df0a3"></script>
-<script src="lib/pel_lesson_stage.js?v=flow2b"></script>
+<script src="lib/pel_lesson_stage.js?v=d1368184"></script>
 <script src="lib/pel_dashboard_life.js?v=6e677875"></script>
 <script src="lib/pel_curriculum_path.js?v=2a1761b7"></script>
 <style>
@@ -6677,7 +6677,7 @@ const PHON_DICT = {
 'oct':'وكت',
 'october':'اوكتوبر',
 'odds':'ودز',
-'of':'اوف',
+'of':'اوڤ',
 'off':'وف',
 'offer':'وفر',
 'offered':'وفيرد',
@@ -8944,7 +8944,7 @@ const SMART_REPLIES = {
   greeting: { en:'Hello, nice to see you! How can I help you today?', ar: 'اهلين، تشرفنا بشوفك! كيف اقدر اساعدك اليوم؟', translit: 'هالو، نايس تو سي يو! هاو كان اي هيلب يو تودي؟' },
   thanks:   { en:"You're most welcome. Is there anything else you need?", ar: 'العفو، ولا يهمك. فيه شي ثاني تبغاه؟', translit: 'يور موست ويلكم. از ذير انيثينج الس يو نيد؟' },
   question: { en:'Good question, let me help you with that. What exactly would you like to know?', ar: 'سؤال ممتاز، خلني اساعدك فيه. وش بالضبط تبغى تعرف؟', translit: 'قود كويستشن، ليت مي هيلب يو وذ ذات. وات اكزاكلي ود يو لايك تو نو؟' },
-  request:  { en:'Of course, I will take care of that right away. Anything else?', ar: 'اكيد، باعتني في ذا الحين. فيه شي ثاني؟', translit: 'اوف كورس، اي ويل تيك كير اوڤ ذات رايت اوي. انيثينج الس؟' },
+  request:  { en:'Of course, I will take care of that right away. Anything else?', ar: 'اكيد، باعتني في ذا الحين. فيه شي ثاني؟', translit: 'اوڤ كورس، اي ويل تيك كير اوڤ ذات رايت اوي. انيثينج الس؟' },
   statement:{ en:'I understand. Thanks for letting me know, is there anything else?', ar: 'فهمت عليك. شكرا انك عرفتني، فيه شي ثاني؟', translit: 'اي اندرستاند. ثانكس فور ليتينج مي نو، از ذير انيثينج الس؟' },
 };
 // Natural short follow-ups so the scene keeps moving with variety.
@@ -9027,7 +9027,7 @@ const RP_SCRIPTS = {
       { match: /(today's special|special|تخصص|مميز)/, reply: L('Today the special is grilled chicken with rice.', 'تخصص اليوم دجاج مشوي مع رز.', 'توديز ذا سبيشل از قريلد تشيكن وذ رايس.') },
       { match: /(spicy|حار)/, reply: L('We can make it mild or spicy.', 'اقدر نسويه خفيف او حار.', 'وي كان ميك ات مايلد اور سبايسي.') },
       { match: /(vegetarian|نباتي)/, reply: L('Yes, we have vegetarian options on the menu.', 'ايه، عندنا خيارات نباتيه.', 'يس، وي هاڤ ڤيجيتيريان اوبشنز اون ذا مينيو.') },
-      { match: /(the bill|check|حساب)/, reply: L('Of course, I will bring the bill.', 'اكيد، بجيب لك الحساب.', 'اوف كورس، اي ويل برينج ذا بيل.') }
+      { match: /(the bill|check|حساب)/, reply: L('Of course, I will bring the bill.', 'اكيد، بجيب لك الحساب.', 'اوڤ كورس، اي ويل برينج ذا بيل.') }
     ]
   },
   'receptionist': {
@@ -9188,7 +9188,7 @@ const RP_SCRIPTS = {
     role: 'Customer', studentRole: 'assistant',
     steps: [
       { key:'find', expect:'open', ask: L('Excuse me, can you help me find something?', 'لو سمحت، تقدر تساعدني الاقي شي؟', 'اكسكوز مي، كان يو هيلب مي فايند سمثنق؟'),
-        any: { next: 1, reply: L('Of course. What are you looking for?', 'اكيد. وش تدور عليه؟', 'اوف كورس. وات ار يو لوكنق فور؟') } },
+        any: { next: 1, reply: L('Of course. What are you looking for?', 'اكيد. وش تدور عليه؟', 'اوڤ كورس. وات ار يو لوكنق فور؟') } },
       { key:'item', expect:'open', ask: L('What are you looking for?', 'وش تدور عليه؟', 'وات ار يو لوكنق فور؟'),
         any: { next: 2, reply: L('Let me show you. Is this what you wanted?', 'خلني اوريك. ذا اللي تبيه؟', 'ليت مي شو يو. از ذيس وات يو وانتيد؟') } },
       { key:'want', expect:'yesno', ask: L('Is this what you wanted?', 'ذا اللي تبيه؟', 'از ذيس وات يو وانتيد؟'),
@@ -9227,7 +9227,7 @@ const RP_SCRIPTS = {
     role: 'Bank Teller', studentRole: 'customer',
     steps: [
       { key:'need', expect:'open', ask: L('Good morning, how can I help you today?', 'صباح الخير، كيف اقدر اساعدك اليوم؟', 'قود مورننج، هاو كان اي هيلب يو تودي؟'),
-        any: { next: 1, reply: L('Of course. Could I see your ID, please?', 'اكيد. ممكن اشوف هويتك لو سمحت؟', 'اوف كورس. كود اي سي يور اي دي، بليز؟') } },
+        any: { next: 1, reply: L('Of course. Could I see your ID, please?', 'اكيد. ممكن اشوف هويتك لو سمحت؟', 'اوڤ كورس. كود اي سي يور اي دي، بليز؟') } },
       { key:'id', expect:'open', ask: L('Could I see your ID, please?', 'ممكن اشوف هويتك لو سمحت؟', 'كود اي سي يور اي دي، بليز؟'),
         any: { next: 2, reply: L('Thank you. One moment while I process that.', 'شكرا. لحظه وانا اجهزها.', 'ثانك يو. ون مومنت ويل اي بروسس ذات.') } },
       { key:'process', expect:'any', ask: L('Would you like anything else today?', 'تبي شي ثاني اليوم؟', 'ود يو لايك انيثينج الس تودي؟'),
@@ -9250,7 +9250,7 @@ const RP_SCRIPTS = {
       { key:'wrap', wrap: L('Let me know if you need anything during the flight.', 'خبرني اذا احتجت شي اثناء الرحله.', 'ليت مي نو اف يو نيد انيثينج ديورينج ذا فلايت.') }
     ],
     faq: [
-      { match: /(water|مويه)/, reply: L('Of course, I will bring you some water.', 'اكيد، بجيب لك مويه.', 'اوف كورس، اي ويل برينج يو سم ووتر.') },
+      { match: /(water|مويه)/, reply: L('Of course, I will bring you some water.', 'اكيد، بجيب لك مويه.', 'اوڤ كورس، اي ويل برينج يو سم ووتر.') },
       { match: /(blanket|بطانيه)/, reply: L('We have blankets in the overhead bin.', 'عندنا بطانيات بالخزوين فوق.', 'وي هاڤ بلانكتس ان ذي اوڤرهيد بين.') },
       { match: /(arrival|وصلنا|متى نوصل)/, reply: L('We arrive in about two hours.', 'نوصل تقريب لسه ساعتين.', 'وي ارايڤ ان اباوت تو اورز.') }
     ]
@@ -9340,7 +9340,7 @@ const RP_ALT = {
     'time.any': (s) => L('Perfect, ' + s.time + '. I will check that now. Please have a seat.', 'ممتاز ' + s.time + '. الحين اتاكد. تفضل اقعد.', 'بيرفكت، ' + s.time + '. اي ويل تشيك ذات ناو. بليز هاڤ ا سيت.')
   },
   'waiter': {
-    'table.any': L('Of course, follow me. Can I get you a drink first?', 'اكيد، تفضل معاي. تشرب شي قبل؟', 'اوف كورس، فولو مي. كان اي قيت يو ا درينك فيرست؟'),
+    'table.any': L('Of course, follow me. Can I get you a drink first?', 'اكيد، تفضل معاي. تشرب شي قبل؟', 'اوڤ كورس، فولو مي. كان اي قيت يو ا درينك فيرست؟'),
     'drink.no': L('No worries at all. Are you ready to order?', 'ولا يهمك ابدا. جاهز تطلب؟', 'نو وريز ات اول. ار يو ريدي تو اوردر؟'),
     'drink.any': L('Good pick. Ready to order your meal?', 'اختيار حلو. جاهز تطلب الوجبه؟', 'قود بيك. ريدي تو اوردر يور ميل؟'),
     'meal.no': L('Sure, take your time. Just call me when you are ready.', 'طيب، خذ راحتك. ناديني لما تكون جاهز.', 'شور، تيك يور تايم. جاست كول مي وين يو ار ريدي.'),
@@ -9383,7 +9383,7 @@ const RP_ALT = {
   },
   'manager': {
     'progress.any': L('Solid progress. Do you need any support from me?', 'تقدم ممتاز. محتاج دعم مني؟', 'سوليد بروقرس. دو يو نيد اني سبورت فروم مي؟'),
-    'help.yes': L('Of course, tell me what you need and I will handle it.', 'اكيد، قول لي وش تحتاج وانا اتولى.', 'اوف كورس، تيل مي وات يو نيد اند اي ويل هاندل ات.'),
+    'help.yes': L('Of course, tell me what you need and I will handle it.', 'اكيد، قول لي وش تحتاج وانا اتولى.', 'اوڤ كورس، تيل مي وات يو نيد اند اي ويل هاندل ات.'),
     'help.no': L('Excellent, keep it going.', 'ممتاز، كمل.', 'اكسيلنت، كيب ات قوينج.'),
     'help.any': L('Alright, I will take care of it.', 'طيب، انا بتحمل المسؤوليه.', 'اولرايت، اي ويل تيك كير اوڤ ات.')
   },
@@ -9421,10 +9421,10 @@ const RP_ALT = {
     'about.any': L('Nice to meet you. Call me if you need anything.', 'تشرفنا. ناديني اذا احتجت شي.', 'نايس تو ميت يو. كول مي اف يو نيد انيثينج.')
   },
   'bank-teller': {
-    'need.any': L('Of course, may I see your ID first?', 'اكيد، ممكن اشوف هويتك اول؟', 'اوف كورس، ماي اي سي يور اي دي فيرست؟'),
+    'need.any': L('Of course, may I see your ID first?', 'اكيد، ممكن اشوف هويتك اول؟', 'اوڤ كورس، ماي اي سي يور اي دي فيرست؟'),
     'id.any': L('Perfect, give me one moment to process it.', 'ممتاز، اعطني لحظه اجهزها.', 'بيرفكت، قيڤ مي ون مومنت تو بروسس ات.'),
     'process.no': L('Thank you. Have a wonderful day.', 'شكرا. يومك حلو.', 'ثانك يو. هاڤ ا وندر فول داي.'),
-    'process.any': L('Of course, what else can I do?', 'اكيد، وش ثاني اسوي لك؟', 'اوف كورس، وات الس كان اي دو؟')
+    'process.any': L('Of course, what else can I do?', 'اكيد، وش ثاني اسوي لك؟', 'اوڤ كورس، وات الس كان اي دو؟')
   },
   'flight-attendant': {
     'drink.any': L('Coming up. Would you like something to eat as well?', 'الحين اجيبه. تبي شي تاكله لسه؟', 'كمنق اب. ود يو لايك سمثنق تو ات از ويل؟'),
@@ -10396,7 +10396,7 @@ const VOCAB_BANK = [
 {en:'By the way', ipa:'/baɪ ðə ˈweɪ/', ar: 'على فكره، بالمناسبه', translit: 'باي ذا وي', example:{en:'By the way, did you call her?', ar: 'على فكره، هل اتصلت بها؟', translit: 'باي ذا وي، ديد يو كول هر؟'}, synonyms:'incidentally, speaking of which', antonyms:'', family:'way, ways', collocations:'by the way, just by the way', category:'American Conversations', difficulty:'Intermediate', tip: 'Use it to add a side note mid-conversation.', synonyms_ar: 'على فكره', antonyms_ar: '', family_ar: 'طريق، طرق', collocations_ar: 'على فكره، بس على فكره', tip_ar: 'استخدمها عشان تضيف ملاحظه جانبيه بالكلام', mistake:'Writing "bytheway" as one word instead of three.'},
 {en:'What\'s up', ipa:'/ˈwɒts ʌp/', ar: 'ما الاخبار؟ وش الحال؟', translit: 'واتس اب', example:{en:'Hey, what\'s up?', ar: 'اهلا، ما الاخبار؟', translit: 'هي، واتس اب؟'}, synonyms:'how\'s it going, what\'s new', antonyms:'', family:'up', collocations:'what\'s up with, what\'s up man', category:'American Conversations', difficulty:'Intermediate', tip: 'It\'s a greeting, not a real question about problems.', synonyms_ar: 'ما الاخبار؟ وش الحال؟', antonyms_ar: '', family_ar: 'فوق', collocations_ar: 'ما الاخبار مع، وش اخبارك', tip_ar: 'هي تحيه مو سؤال حقيقي عن المشاكل', mistake:'Answering with a long story instead of "not much, you?"'},
 {en:'Fluency', ipa:'/ˈfluːənsi/', ar: 'طلاقه، سلاسه في الكلام', translit: 'فلوانسي', example:{en:'Her fluency in English improved fast.', ar: 'تحسنت طلاقتها في الانجليزيه بسرعه.', translit: 'هر فلونسي ان انجلش امپروفد فاست.'}, synonyms:'smoothness, flow', antonyms:'hesitation, stumbling', family:'fluent, fluently', collocations:'speak with fluency, build fluency', category:'Speaking Studio', difficulty:'Intermediate', tip: 'Fluency is about flow, not perfect grammar.', synonyms_ar: 'طلاقه، سلاسه', antonyms_ar: 'تردد، تلعثم', family_ar: 'طليق، بطلاقه', collocations_ar: 'تكلم بطلاقه، ابني طلاقتك', tip_ar: 'الطلاقه عن الانسياب مو القواعد الممتازه', mistake:'Stopping at every small mistake kills fluency.'},
-{en:'Pronunciation', ipa:'/prəˌnʌnsiˈeɪʃən/', ar: 'النطق، طريقه لفظ الكلمات', translit: 'پرونانسييشان', example:{en:'His pronunciation is very clear.', ar: 'نطقه واضح جدا.', translit: 'هيز پرنانسييهيشن از فيري كلير.'}, synonyms:'articulation, diction', antonyms:'mispronunciation', family:'pronounce, pronounced', collocations:'clear pronunciation, improve pronunciation', category:'Speaking Studio', difficulty:'Intermediate', tip:'The word itself has no "o" after the "n."', synonyms_ar: 'النطق', antonyms_ar: 'غلط نطق', family_ar: 'ينطق، منطوق', collocations_ar: 'نطق واضح، حسن نطقك', tip_ar: 'الكلمه نفسها ما فيها o بعد الـ n', mistake:'Spelling it "pronounciation."'},
+{en:'Pronunciation', ipa:'/prəˌnʌnsiˈeɪʃən/', ar: 'النطق، طريقه لفظ الكلمات', translit: 'پرونانسييشان', example:{en:'His pronunciation is very clear.', ar: 'نطقه واضح جدا.', translit: 'هيز پرنانسييهيشن از ڤيري كلير.'}, synonyms:'articulation, diction', antonyms:'mispronunciation', family:'pronounce, pronounced', collocations:'clear pronunciation, improve pronunciation', category:'Speaking Studio', difficulty:'Intermediate', tip:'The word itself has no "o" after the "n."', synonyms_ar: 'النطق', antonyms_ar: 'غلط نطق', family_ar: 'ينطق، منطوق', collocations_ar: 'نطق واضح، حسن نطقك', tip_ar: 'الكلمه نفسها ما فيها o بعد الـ n', mistake:'Spelling it "pronounciation."'},
 {en:'Pause', ipa:'/pɔːz/', ar: 'وقفه، توقف قصير', translit: 'پوز', example:{en:'Take a short pause to breathe.', ar: 'خذ وقفه قصيره لتتنفس.', translit: 'تيك ا شورت بوز تو بريث.'}, synonyms:'break, stop', antonyms:'continue, rush', family:'pause, paused, pausing', collocations:'take a pause, pause for effect', category:'Speaking Studio', difficulty:'Intermediate', tip: 'A pause adds power to your words.', synonyms_ar: 'وقفه، توقف قصير', antonyms_ar: 'يكمل، يستعجل', family_ar: 'وقفه، توقف', collocations_ar: 'خذ وقفه، وقفه للتاثير', tip_ar: 'الوقفه تعطي قوه لكلامك', mistake:'Filling every pause with "um" and "uh."'},
 {en:'Hesitate', ipa:'/ˈhezɪteɪt/', ar: 'يتردد، يتوقف غير متاكد', translit: 'هزيتيت', example:{en:'Don\'t hesitate to ask questions.', ar: 'لا تتردد في طرح الاساله.', translit: 'دونت هزيتيت تو اسك كويستشنز.'}, synonyms:'waver, falter', antonyms:'decide, act', family:'hesitation, hesitantly', collocations:'hesitate to, hesitate before', category:'Speaking Studio', difficulty:'Intermediate', tip: 'Confidence grows when you speak anyway.', synonyms_ar: 'يتردد', antonyms_ar: 'يقرر، يتصرف', family_ar: 'تردد، بتردد', collocations_ar: 'يتردد في، يتردد قبل', tip_ar: 'الثقه تكبر لما تتكلم على كل حال', mistake:'Saying "hestitate" and dropping a syllable.'},
 {en:'Express', ipa:'/ɪkˈsprɛs/', ar: 'يعبر، يوضح', translit: 'اكسپريس', example:{en:'Express your idea simply.', ar: 'عبر عن فكرتك ببساطه.', translit: 'اكسپريس يور ايديا سيمپلي.'}, synonyms:'convey, state', antonyms:'hide, suppress', family:'expression, expressive', collocations:'express yourself, express an opinion', category:'Speaking Studio', difficulty:'Intermediate', tip: 'Simple words express ideas best.', synonyms_ar: 'يعبر، يوضح', antonyms_ar: 'يخفي، يكتم', family_ar: 'تعبير، تعبيري', collocations_ar: 'عبر عن نفسك، عبر عن راي', tip_ar: 'الكلمات البسيطه تعبر عن الافكار احسن', mistake:'Saying "I am express" instead of "I express."'},
@@ -10419,7 +10419,7 @@ const VOCAB_BANK = [
 {en:'Audio', ipa:'/ˈɔːdi.oʊ/', ar: 'صوت مسجل', translit: 'وديو', example:{en:'The audio is too quiet.', ar: 'الصوت المسجل منخفض جدا.', translit: 'ذا اوديو از تو كوايت.'}, synonyms:'sound, recording', antonyms:'silence', family:'audio, audiovisual', collocations:'audio clip, play the audio', category:'Listening Lounge', difficulty:'Intermediate', tip: 'Good audio helps you catch every word.', synonyms_ar: 'صوت مسجل', antonyms_ar: 'صمت', family_ar: 'صوتي، سمعاي بصري', collocations_ar: 'مقطع صوتي، شغل الصوت', tip_ar: 'الصوت الواضح يساعدك تلتقط كل كلمه', mistake:'Saying "the audios" as a plural noun.'},
 {en:'Replay', ipa:'/ˌriːˈpleɪ/', ar: 'اعاده، يشغل مره ثانيه', translit: 'ريپلاي', example:{en:'Replay the part you missed.', ar: 'اعد تشغيل الجزء اللي فاتك.', translit: 'ري پلاي ذا پارت يو ميست.'}, synonyms:'play again, repeat', antonyms:'skip', family:'replay, replayed', collocations:'replay a clip, hit replay', category:'Listening Lounge', difficulty:'Intermediate', tip: 'Replay hard parts until they feel easy.', synonyms_ar: 'اعاده تشغيل', antonyms_ar: 'تخطي', family_ar: 'يعيد، معاد', collocations_ar: 'اعد تشغيل مقطع، اضغط اعاده', tip_ar: 'اعد الاجزا الصعبه لين تصير سهله', mistake:'Moving on without replaying unclear parts.'},
 {en:'Mumble', ipa:'/ˈmʌmbəl/', ar: 'يهمس، يتكلم بغير وضوح', translit: 'ممبل', example:{en:'Don\'t mumble; speak clearly.', ar: 'لا تهمس؛ تكلم بوضوح.', translit: 'دونت ممبل؛ سبيك كليرلي.'}, synonyms:'mutter, whisper', antonyms:'enunciate, shout', family:'mumble, mumbled', collocations:'mumble words, mumble to yourself', category:'Listening Lounge', difficulty:'Intermediate', tip: 'Open your mouth more to avoid mumbling.', synonyms_ar: 'يهمس، يتكلم بغير وضوح', antonyms_ar: 'ينطق بوضوح، يصرخ', family_ar: 'يهمس، مهموم', collocations_ar: 'يهمس كلمات، يهمس لنفسه', tip_ar: 'افتح فمك اكثر عشان ما تهمس', mistake:'Mumbling from nervousness and losing the listener.'},
-{en:'Volume', ipa:'/ˈvɒljuːm/', ar: 'مستوى الصوت، ارتفاعه', translit: 'ڤوليوم', example:{en:'Turn up the volume.', ar: 'ارفع مستوى الصوت.', translit: 'تيرن اپ ذا فوليوم.'}, synonyms:'loudness, level', antonyms:'mute', family:'volume', collocations:'turn up the volume, lower the volume', category:'Listening Lounge', difficulty:'Intermediate', tip: 'A clear volume helps you catch detail.', synonyms_ar: 'مستوى الصوت', antonyms_ar: 'كتم', family_ar: 'مستوى الصوت', collocations_ar: 'ارفع الصوت، خفض الصوت', tip_ar: 'الصوت الواضح يساعدك تلتقط التفاصيل', mistake:'Setting volume too high and missing soft sounds.'},
+{en:'Volume', ipa:'/ˈvɒljuːm/', ar: 'مستوى الصوت، ارتفاعه', translit: 'ڤوليوم', example:{en:'Turn up the volume.', ar: 'ارفع مستوى الصوت.', translit: 'تيرن اپ ذا ڤوليوم.'}, synonyms:'loudness, level', antonyms:'mute', family:'volume', collocations:'turn up the volume, lower the volume', category:'Listening Lounge', difficulty:'Intermediate', tip: 'A clear volume helps you catch detail.', synonyms_ar: 'مستوى الصوت', antonyms_ar: 'كتم', family_ar: 'مستوى الصوت', collocations_ar: 'ارفع الصوت، خفض الصوت', tip_ar: 'الصوت الواضح يساعدك تلتقط التفاصيل', mistake:'Setting volume too high and missing soft sounds.'},
 {en:'Skim', ipa:'/skɪm/', ar: 'يقرا بسرعه، يتصفح', translit: 'سكيم', example:{en:'Skim the article for the main idea.', ar: 'تصفح المقال بسرعه لتاخذ الفكره العامه.', translit: 'سكيم ذا ارتيكل فور ذا مين ايديا.'}, synonyms:'browse, glance', antonyms:'study, read closely', family:'skim, skimmed, skimming', collocations:'skim through, skim a text', category:'Reading Corner', difficulty:'Intermediate', tip: 'Skimming is for the gist, not details.', synonyms_ar: 'يقرا بسرعه', antonyms_ar: 'يدرس بعمق', family_ar: 'يقرا بسرعه، تصفح', collocations_ar: 'تصفح بسرعه، تصفح نص', tip_ar: 'التصفح السريع للفكره العامه مو للتفاصيل', mistake:'Trying to understand every word while skimming.'},
 {en:'Scan', ipa:'/skæn/', ar: 'يبحث سريعا عن معلومه', translit: 'سكان', example:{en:'Scan the page for the date.', ar: 'ابحث في الصفحه عن التاريخ بسرعه.', translit: 'سكان ذا پايج فور ذا ديت.'}, synonyms:'search, comb', antonyms:'browse', family:'scan, scanned, scanning', collocations:'scan for, scan a list', category:'Reading Corner', difficulty:'Intermediate', tip: 'Scanning looks for one specific thing.', synonyms_ar: 'يبحث بسرعه', antonyms_ar: 'يتصفح', family_ar: 'يبحث، بحث', collocations_ar: 'ابحث عن، افحص قايمه', tip_ar: 'البحث السريع يدور على شي محدد', mistake:'Confusing scan (search) with skim (overview).'},
 {en:'Passage', ipa:'/ˈpæsɪdʒ/', ar: 'مقطع، فقره نصيه', translit: 'پاسيج', example:{en:'Read the first passage carefully.', ar: 'اقرا المقطع الاول بعنايه.', translit: 'ريد ذا فيرست پاسيج كيرفلي.'}, synonyms:'text, excerpt', antonyms:'', family:'passage, passages', collocations:'reading passage, short passage', category:'Reading Corner', difficulty:'Intermediate', tip: 'A passage is a short piece of writing.', synonyms_ar: 'مقطع، فقره', antonyms_ar: '', family_ar: 'مقطع، مقاطع', collocations_ar: 'اقرا مقطع، مقطع قصير', tip_ar: 'المقطع قطعه قصيره من نص', mistake:'Pronouncing it like "massage."'},
@@ -10502,7 +10502,7 @@ const VOCAB_BANK = [
 {en:'Quiet', ipa:'/ˈkwaɪət/', ar: 'هادي، صامت', translit: 'كوايت', example:{en:'Please be quiet.', ar: 'لو سمحت اهدا.', translit: 'بليز بي كوايت.'}, synonyms:'silent, calm', antonyms:'loud, noisy', family:'quiet, quietly', collocations:'keep quiet, quiet place', category:'Mosque Etiquette', difficulty:'Intermediate', tip:'"Quiet" is two syllables: qui-et.', synonyms_ar: 'هادي، صامت', antonyms_ar: 'صاخب', family_ar: 'هادي، بهدو', collocations_ar: 'خليك هادي، مكان هادي', tip_ar: 'quiet مقطعين: qui-et', mistake:'Spelling it "quite," which means "fairly."'},
 {en:'Caller', ipa:'/ˈkɔːlər/', ar: 'المتصل', translit: 'كولر', example:{en:'The caller hung up.', ar: 'اغلق المتصل الخط.', translit: 'ذا كولر هانق اپ.'}, synonyms:'caller, phoner', antonyms:'receiver', family:'call, caller', collocations:'unknown caller, frequent caller', category:'Phone Calls', difficulty:'Intermediate', tip: 'The caller is the one who phones.', synonyms_ar: 'المتصل', antonyms_ar: 'المستقبل', family_ar: 'يتصل، متصل', collocations_ar: 'متصل مجهول، متصل دايم', tip_ar: 'المتصل هو اللي يرفع السماعه', mistake:'Confusing caller with receiver.'},
 {en:'Hold', ipa:'/hoʊld/', ar: 'انتظار (على الخط)', translit: 'هولد', example:{en:'Please hold for a moment.', ar: 'ابق على الخط لحظه لو سمحت.', translit: 'پليز هولد فور ا مومنت.'}, synonyms:'wait, pause', antonyms:'hang up', family:'hold, holding', collocations:'on hold, put on hold', category:'Phone Calls', difficulty:'Intermediate', tip:'"Hold" means wait on the phone.', synonyms_ar: 'انتظار على الخط', antonyms_ar: 'يغلق الخط', family_ar: 'يمسك، انتظار', collocations_ar: 'على الانتظار، حط على الانتظار', tip_ar: 'hold يعني انتظر على التلفون', mistake:'Hanging up instead of holding.'},
-{en:'Voicemail', ipa:'/ˈvɔɪsmeɪl/', ar: 'بريد صوتي', translit: 'فويسميل', example:{en:'Leave a voicemail.', ar: 'اترك رساله صوتيه.', translit: 'ليف ا فويسميل.'}, synonyms:'voice message, answering machine', antonyms:'', family:'voice, mail', collocations:'leave a voicemail, check voicemail', category:'Phone Calls', difficulty:'Intermediate', tip: 'Voicemail records your message.', synonyms_ar: 'بريد صوتي', antonyms_ar: '', family_ar: 'صوت، بريد', collocations_ar: 'اترك رساله صوتيه، شيك على البريد الصوتي', tip_ar: 'البريد الصوتي يسجل رسالتك', mistake:'Forgetting to leave your name in voicemail.'},
+{en:'Voicemail', ipa:'/ˈvɔɪsmeɪl/', ar: 'بريد صوتي', translit: 'ڤويسميل', example:{en:'Leave a voicemail.', ar: 'اترك رساله صوتيه.', translit: 'ليف ا ڤويسميل.'}, synonyms:'voice message, answering machine', antonyms:'', family:'voice, mail', collocations:'leave a voicemail, check voicemail', category:'Phone Calls', difficulty:'Intermediate', tip: 'Voicemail records your message.', synonyms_ar: 'بريد صوتي', antonyms_ar: '', family_ar: 'صوت، بريد', collocations_ar: 'اترك رساله صوتيه، شيك على البريد الصوتي', tip_ar: 'البريد الصوتي يسجل رسالتك', mistake:'Forgetting to leave your name in voicemail.'},
 {en:'Dial', ipa:'/ˈdaɪəl/', ar: 'يطلب (رقما)', translit: 'دايال', example:{en:'Dial the number.', ar: 'اطلب الرقم.', translit: 'دايال ذا نامبر.'}, synonyms:'call, ring', antonyms:'hang up', family:'dial, dialed', collocations:'dial a number, dial in', category:'Phone Calls', difficulty:'Intermediate', tip: 'To dial is to enter a number.', synonyms_ar: 'يطلب رقما', antonyms_ar: 'يغلق الخط', family_ar: 'يطلب، طلب', collocations_ar: 'اطلب رقم، اتصل', tip_ar: 'dial تعني تدخل رقم', mistake:'Saying "dial to" instead of "dial."'},
 {en:'Receptionist', ipa:'/rɪˈsɛpʃənɪst/', ar: 'موظف الاستقبال', translit: 'ريسيپشانيست', example:{en:'Ask the receptionist.', ar: 'اسال موظف الاستقبال.', translit: 'اسك ذا ريسپشنست.'}, synonyms:'front desk clerk', antonyms:'', family:'reception, receptionist', collocations:'the receptionist, call the receptionist', category:'Phone Calls', difficulty:'Intermediate', tip: 'The receptionist greets and directs callers.', synonyms_ar: 'موظف الاستقبال', antonyms_ar: '', family_ar: 'استقبال، موظف استقبال', collocations_ar: 'موظف الاستقبال، اتصل بموظف الاستقبال', tip_ar: 'موظف الاستقبال يرحب ويوجه المتصلين', mistake:'Pronouncing it "reception-ist" too fast.'},
 {en:'Scene', ipa:'/siːn/', ar: 'مشهد', translit: 'سين', example:{en:'That scene made me cry.', ar: 'ذاك المشهد ابكاني.', translit: 'ذات سين ميد مي كراي.'}, synonyms:'shot, sequence', antonyms:'', family:'scene, scenes', collocations:'film a scene, cut a scene', category:'Movie English', difficulty:'Advanced', tip: 'A scene is one part of a movie.', synonyms_ar: 'مشهد', antonyms_ar: '', family_ar: 'مشهد، مشاهد', collocations_ar: 'صور مشهد، قطع مشهد', tip_ar: 'المشهد جز واحد من الفيلم', mistake:'Spelling it "seen," which is the verb.'},
@@ -11071,7 +11071,7 @@ const LISTENING_TRACKS = [
   ]},
   {id:'taxi-ride', title:'Taxi Ride To The Hotel', lines:[
     {en:'Hi, could you take me to the Marriott hotel?', ar: 'هلا، ممكن توصلني فندق ماريوت؟', translit: 'هاي، كود يو تيك مي تو ذا ماريوت هوتيل؟'},
-    {en:'Of course. Traffic is a bit heavy, it should take twenty minutes.', ar: 'اكيد. الزحمه شويه، رح ناخذ عشرين دقيقه.', translit: 'اوف كورس. ترافيك از ا بت هيڤي، ات شود تيك توانتي مينتس.'},
+    {en:'Of course. Traffic is a bit heavy, it should take twenty minutes.', ar: 'اكيد. الزحمه شويه، رح ناخذ عشرين دقيقه.', translit: 'اوڤ كورس. ترافيك از ا بت هيڤي، ات شود تيك توانتي مينتس.'},
   ]},
   {id:'doctor-visit', title:'At The Doctor', lines:[
     {en:'Good morning, what brings you in today?', ar: 'صباح الخير، وش جابك اليوم؟', translit: 'قود مورننج، وات برنقز يو ان تودي؟'},
@@ -11652,7 +11652,7 @@ const LESSON_LIBRARY = {
     grammar:{title:'Could I / Can You', rule:'Requests at a hotel: Could I have an extra towel? Can you call a taxi?', saudi:'طلبات الفندق: Could I للاشيا، Can you للخدمات.', wrong:'I need towels now, bring them.', right:'Could I have some extra towels, please?', mistakes:['Commanding staff: "bring me..."','Forgetting "please" in every request.']},
     conversation:[
       {who:'You', en:'Could I have an extra pillow and a blanket?', ar: 'ممكن مخده اضافيه وغطا؟', translit: 'كود اي هاڤ وين اكسترا بيلو اند ا بلانكت؟'},
-      {who:'Receptionist', en:'Of course, I will send them right up.', ar: 'اكيد، بابعثهم لك الحين.', translit: 'اوف كورس، اي ويل سند ذيم رايت اب.'},
+      {who:'Receptionist', en:'Of course, I will send them right up.', ar: 'اكيد، بابعثهم لك الحين.', translit: 'اوڤ كورس، اي ويل سند ذيم رايت اب.'},
       {who:'You', en:'And can you call a taxi for 8 am tomorrow?', ar: 'وممكن تكلمون لي تكسي الساعه ثمان الصبح بكره؟', translit: 'اند كان يو كول ا تاكسي فور ايت اي ام تومورو؟'},
       {who:'Receptionist', en:'Sure, I will note it down. Anything else?', ar: 'اكيد، باسجله. فيه شي ثاني؟', translit: 'شور، اي ويل نوت ات داون. اني ثينج الس؟'},
     ],
@@ -11727,7 +11727,7 @@ const LESSON_LIBRARY = {
       {who:'You', en:'Excuse me, I am allergic to peanuts.', ar: 'لو سمحت، عندي حساسيه من الفول السوداني.', translit: 'اكسكوز مي، ايم الرجيك تو بينتس.'},
       {who:'Waiter', en:'Thank you for letting me know. This dish has no peanuts.', ar: 'شكرا انك خبرتني. ذا الطبق ما فيه فول سوداني.', translit: 'ثانك يو فور ليتنق مي نو. ذيس ديش هاز نو بينتس.'},
       {who:'You', en:'Great. Could you also check the sauce?', ar: 'ممتاز. وممكن تشيك على الصوص لسه؟', translit: 'قريت. كود يو اولسو تشيك ذا سوس؟'},
-      {who:'Waiter', en:'Of course, I will confirm with the kitchen.', ar: 'اكيد، باتاكد من المطبخ.', translit: 'اوف كورس، اي ويل كونفيرم وذ ذا كيتشن.'},
+      {who:'Waiter', en:'Of course, I will confirm with the kitchen.', ar: 'اكيد، باتاكد من المطبخ.', translit: 'اوڤ كورس، اي ويل كونفيرم وذ ذا كيتشن.'},
     ],
     quiz:[
       {qAr: 'تقول انك عندك حساسيه:', qEn:'You say you have an allergy:', options:['I am allergic to peanuts.','I have allergy peanuts.','Peanuts no me.'], correct:0},
@@ -11869,7 +11869,7 @@ const LESSON_LIBRARY = {
     grammar:{title:'Can I Try It On?', rule:'Ask to try clothes: Can I try this on? Where is the fitting room? What size is this?', saudi:'للتجربه: ممكن اجرب؟ وين غرفه القياس؟', wrong:'I want try this shirt.', right:'Can I try this on?', mistakes:['Saying "I want try" without "to": "I want to try."','Forgetting to ask the size in numbers, "medium" vs "M" is fine.']},
     conversation:[
       {who:'A', en:'Can I try this shirt on?', ar: 'ممكن اجرب ذا القميص؟', translit: 'كان اي تراي ذيس شيرت اون؟'},
-      {who:'B', en:'Of course, the fitting room is over there.', ar: 'اكيد، غرفه القياس هناك.', translit: 'اوف كورس، ذا فيتينج روم از اوڤر ذير.'},
+      {who:'B', en:'Of course, the fitting room is over there.', ar: 'اكيد، غرفه القياس هناك.', translit: 'اوڤ كورس، ذا فيتينج روم از اوڤر ذير.'},
       {who:'A', en:'Thanks. Do you have it in a medium?', ar: 'شكرا. عندك مقاس وسط؟', translit: 'ثانكس. دو يو هاڤ ات ان ا ميديم؟'},
       {who:'B', en:'Let me check the back, one moment.', ar: 'خلني اشوف بالمخزن، لحظه.', translit: 'ليت مي تشيك ذا باك، وان مومنت.'},
     ],
