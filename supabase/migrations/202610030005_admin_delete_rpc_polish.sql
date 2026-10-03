@@ -1,23 +1,15 @@
--- 202610030003: Admin delete/archive RPCs for all dashboard entities
+-- 202610030005: Polish admin delete RPCs
 --
--- Adds admin_delete_preview and admin_delete_entity RPCs.
--- Each entity type is handled by a fixed IF/ELSIF branch — no dynamic SQL,
--- no arbitrary table names from the client.
---
--- Safe to hard-delete (no FK blockers or CASCADE handles children):
---   groups, interventions, student_notes, learning_snapshots,
---   learning_timeline, plan_pricing, certificates
---
--- Archive/deactivate only (FK constraints prevent hard delete):
---   programs (set active=false), lessons (set active=false via existing toggle),
---   academies (set active=false), live_classes (set status='cancelled')
---
--- Both functions require settings.manage permission and audit every action.
+-- Found in review of 202610030003:
+-- 1. admin_delete_entity inserted an audit row and returned success even
+--    when the target row did not exist (0 rows affected) — the admin UI
+--    then toasted "Deleted" for a no-op. Now returns {error:'not_found'}
+--    and skips the audit insert when nothing was deleted/archived.
+-- 2. admin_delete_preview certificate branch had a dead placeholder
+--    (counted all attendance rows, result discarded) — removed.
+-- 3. Header comment of 202610030003 claimed an 'attendance' hard-delete
+--    branch that never existed — comment corrected there.
 
--- ============================================================
--- admin_delete_preview: returns entity display name, dependent counts,
---   and the allowed action: 'delete', 'archive', or 'blocked'
--- ============================================================
 CREATE OR REPLACE FUNCTION public.admin_delete_preview(p_entity text, p_id text)
 RETURNS jsonb
 LANGUAGE plpgsql
@@ -62,7 +54,6 @@ BEGIN
 
   ELSIF p_entity = 'certificate' THEN
     SELECT student_name || ' - ' || level INTO v_name FROM certificates WHERE id = p_id::uuid;
-    SELECT count(*) INTO v_count FROM attendance WHERE id IS NOT NULL; -- placeholder
     v_result := jsonb_build_object('name', v_name, 'action', 'delete', 'dependencies', '{}'::jsonb);
 
   ELSIF p_entity = 'live_class' THEN
@@ -101,9 +92,6 @@ BEGIN
 END;
 $$;
 
--- ============================================================
--- admin_delete_entity: performs the delete or archive action
--- ============================================================
 CREATE OR REPLACE FUNCTION public.admin_delete_entity(p_entity text, p_id text)
 RETURNS jsonb
 LANGUAGE plpgsql
@@ -122,36 +110,42 @@ BEGIN
     SELECT name INTO v_name FROM groups WHERE id = p_id::uuid;
     DELETE FROM groups WHERE id = p_id::uuid;
     GET DIAGNOSTICS v_count = ROW_COUNT;
+    IF v_count = 0 THEN RETURN jsonb_build_object('error', 'not_found'); END IF;
     INSERT INTO audit_log (actor_user_id, action, target_type, target_id, metadata)
     VALUES (auth.uid(), 'admin.delete', 'group', p_id, jsonb_build_object('name', v_name));
 
   ELSIF p_entity = 'intervention' THEN
     DELETE FROM interventions WHERE id = p_id::uuid;
     GET DIAGNOSTICS v_count = ROW_COUNT;
+    IF v_count = 0 THEN RETURN jsonb_build_object('error', 'not_found'); END IF;
     INSERT INTO audit_log (actor_user_id, action, target_type, target_id, metadata)
     VALUES (auth.uid(), 'admin.delete', 'intervention', p_id, jsonb_build_object());
 
   ELSIF p_entity = 'note' THEN
     DELETE FROM student_notes WHERE id = p_id::uuid;
     GET DIAGNOSTICS v_count = ROW_COUNT;
+    IF v_count = 0 THEN RETURN jsonb_build_object('error', 'not_found'); END IF;
     INSERT INTO audit_log (actor_user_id, action, target_type, target_id, metadata)
     VALUES (auth.uid(), 'admin.delete', 'note', p_id, jsonb_build_object());
 
   ELSIF p_entity = 'snapshot' THEN
     DELETE FROM learning_snapshots WHERE id = p_id::uuid;
     GET DIAGNOSTICS v_count = ROW_COUNT;
+    IF v_count = 0 THEN RETURN jsonb_build_object('error', 'not_found'); END IF;
     INSERT INTO audit_log (actor_user_id, action, target_type, target_id, metadata)
     VALUES (auth.uid(), 'admin.delete', 'snapshot', p_id, jsonb_build_object());
 
   ELSIF p_entity = 'timeline' THEN
     DELETE FROM learning_timeline WHERE id = p_id::uuid;
     GET DIAGNOSTICS v_count = ROW_COUNT;
+    IF v_count = 0 THEN RETURN jsonb_build_object('error', 'not_found'); END IF;
     INSERT INTO audit_log (actor_user_id, action, target_type, target_id, metadata)
     VALUES (auth.uid(), 'admin.delete', 'timeline', p_id, jsonb_build_object());
 
   ELSIF p_entity = 'pricing' THEN
     DELETE FROM plan_pricing WHERE id = p_id::uuid;
     GET DIAGNOSTICS v_count = ROW_COUNT;
+    IF v_count = 0 THEN RETURN jsonb_build_object('error', 'not_found'); END IF;
     INSERT INTO audit_log (actor_user_id, action, target_type, target_id, metadata)
     VALUES (auth.uid(), 'admin.delete', 'plan_pricing', p_id, jsonb_build_object());
 
@@ -159,6 +153,7 @@ BEGIN
     SELECT student_name INTO v_name FROM certificates WHERE id = p_id::uuid;
     DELETE FROM certificates WHERE id = p_id::uuid;
     GET DIAGNOSTICS v_count = ROW_COUNT;
+    IF v_count = 0 THEN RETURN jsonb_build_object('error', 'not_found'); END IF;
     INSERT INTO audit_log (actor_user_id, action, target_type, target_id, metadata)
     VALUES (auth.uid(), 'admin.delete', 'certificate', p_id, jsonb_build_object('name', v_name));
 
@@ -166,6 +161,7 @@ BEGIN
     SELECT topic INTO v_name FROM live_classes WHERE id = p_id::uuid;
     UPDATE live_classes SET status = 'cancelled' WHERE id = p_id::uuid;
     GET DIAGNOSTICS v_count = ROW_COUNT;
+    IF v_count = 0 THEN RETURN jsonb_build_object('error', 'not_found'); END IF;
     INSERT INTO audit_log (actor_user_id, action, target_type, target_id, metadata)
     VALUES (auth.uid(), 'admin.cancel', 'live_class', p_id, jsonb_build_object('name', v_name));
 
@@ -173,6 +169,7 @@ BEGIN
     SELECT name_en INTO v_name FROM programs WHERE id = p_id::uuid;
     UPDATE programs SET active = false WHERE id = p_id::uuid;
     GET DIAGNOSTICS v_count = ROW_COUNT;
+    IF v_count = 0 THEN RETURN jsonb_build_object('error', 'not_found'); END IF;
     INSERT INTO audit_log (actor_user_id, action, target_type, target_id, metadata)
     VALUES (auth.uid(), 'admin.archive', 'program', p_id, jsonb_build_object('name', v_name));
 
@@ -180,6 +177,7 @@ BEGIN
     SELECT name_en INTO v_name FROM academies WHERE id = p_id::uuid;
     UPDATE academies SET active = false WHERE id = p_id::uuid;
     GET DIAGNOSTICS v_count = ROW_COUNT;
+    IF v_count = 0 THEN RETURN jsonb_build_object('error', 'not_found'); END IF;
     INSERT INTO audit_log (actor_user_id, action, target_type, target_id, metadata)
     VALUES (auth.uid(), 'admin.archive', 'academy', p_id, jsonb_build_object('name', v_name));
 
@@ -187,6 +185,7 @@ BEGIN
     SELECT en INTO v_name FROM lessons WHERE id = p_id::uuid;
     UPDATE lessons SET active = false WHERE id = p_id::uuid;
     GET DIAGNOSTICS v_count = ROW_COUNT;
+    IF v_count = 0 THEN RETURN jsonb_build_object('error', 'not_found'); END IF;
     INSERT INTO audit_log (actor_user_id, action, target_type, target_id, metadata)
     VALUES (auth.uid(), 'admin.archive', 'lesson', p_id, jsonb_build_object('name', v_name));
 

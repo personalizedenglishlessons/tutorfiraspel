@@ -594,6 +594,13 @@ async function adminDelete(entity, id, onDone){
     closeModal(m);
     if(!r.ok){ toast((r.error && r.error.message) || t('errorGeneric'), true); return; }
     var res = r.data || {};
+    if(res.error){
+      toast(res.error === 'not_found'
+        ? (lang === 'ar' ? 'ما حصلنا العنصر — يمكن انحذف من قبل.' : 'Item not found — it may have already been deleted.')
+        : res.error, true);
+      if(typeof onDone === 'function') onDone();
+      return;
+    }
     var msg = res.action === 'archived'
       ? (lang === 'ar' ? 'تم الارشفه' : 'Archived')
       : (lang === 'ar' ? 'تم الحذف' : 'Deleted');
