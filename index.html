@@ -1991,9 +1991,16 @@ function applyIndexLang(lang){
   if(consentBtn) consentBtn.textContent = lang==='ar' ? 'تمام، فهمت' : 'Got it';
   // ensure sections flip dir properly
   document.querySelectorAll('#curriculum, #features, #stories, #pricing, #faq, .final-cta, footer, #personalPreview, .proof, #whatHappens, #learningLoop').forEach(function(sec){ sec.setAttribute('dir', lang==='ar'?'rtl':'ltr'); });
-  // flip dir on ALL elements with hardcoded dir="rtl" (section-heads, grids, lists, footers, arabic text)
+  // flip dir on ALL elements with hardcoded dir="rtl" (section-heads, grids, lists, footers)
   // except phrase card elements which always contain Arabic text
   document.querySelectorAll('[dir="rtl"]').forEach(function(el){
+    if(el.classList.contains('phrase-ar') || el.classList.contains('phrase-phon')) return;
+    el.setAttribute('dir', lang==='ar'?'rtl':'ltr');
+  });
+  // .arabic and .arabic-h have direction:rtl baked into CSS, so they need explicit dir="ltr"
+  // to trigger the CSS override at line 170. Without this, punctuation like ? renders on the wrong side.
+  // .eyebrow elements also need explicit dir for correct punctuation rendering.
+  document.querySelectorAll('.arabic, .arabic-h, .eyebrow').forEach(function(el){
     if(el.classList.contains('phrase-ar') || el.classList.contains('phrase-phon')) return;
     el.setAttribute('dir', lang==='ar'?'rtl':'ltr');
   });
