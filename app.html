@@ -51,7 +51,7 @@
   --translit-min:0.88rem; --translit-scale:1.05em;
 }
 html[data-theme="light"]{
-  --bg:#F3EEE2; --surface:#F7F3EB; --surface-alt:#EFE9DE; --card:#EFE9DE; --card-elevated:#F5F2EC;
+  --bg:#F3EEE2; --surface:#EFE9DE; --surface-alt:#EFE9DE; --card:#EFE9DE; --card-elevated:#EFE9DE;
   --border:#E5DFD2; --text:#17171B; --text-secondary:#4B463D; --text-muted:#6E6962;
   --gold:#B8821E; --gold-soft:#D4A534; --bronze:#8B6212; --emerald:#1D7A4E;
   --warning:#8B6C2F; --danger:#B8442E; --success:#1D7A4E; --error:#B8442E;
@@ -297,18 +297,18 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 @media(min-width:2560px){ :root{ --topbar-h:100px; --sidebar-w:360px; --context-w:380px; } }
 .topbar{ overflow:visible; }
 
-.user-menu-trigger{ display:flex; align-items:center; gap:10px; padding:5px 12px 5px 5px; border-radius:999px; border:1px solid var(--border); background:var(--card); }
+.user-menu-trigger{ display:flex; align-items:center; gap:10px; padding:5px 12px 5px 5px; border-radius:999px; border:1px solid var(--border); background:var(--card); flex-shrink:0; }
 .user-menu-trigger:hover{ border-color:var(--gold); }
+.user-meta{ text-align:left; line-height:1.25; white-space:nowrap; overflow:hidden; max-width:200px; }
 .avatar-circle{ width:32px; height:32px; border-radius:50%; background:linear-gradient(135deg,var(--gold-soft),var(--bronze)); color:#171412; display:flex; align-items:center; justify-content:center; font-family:'Fraunces',serif; font-weight:600; font-size:.85rem; flex-shrink:0; }
 @media(min-width:1920px){ .avatar-circle{ width:38px; height:38px; font-size:.95rem; } }
 @media(min-width:2560px){ .avatar-circle{ width:44px; height:44px; font-size:1.05rem; } }
-.user-meta{ text-align:left; line-height:1.25; }
 .user-meta b{ display:block; font-size:.8rem; font-weight:600; }
 .user-meta span{ font-size:.68rem; color:var(--text-muted); }
 #userLevelLabel{ display:block; }
-.user-meta .arabic{ font-size:.68rem !important; line-height:1.3 !important; }
+.user-meta .arabic{ font-size:inherit !important; line-height:1.3 !important; }
 body.ui-ar .user-meta{ text-align:right; }
-@media(min-width:1920px){ .user-meta b{ font-size:.9rem; } .user-meta span{ font-size:.76rem; } .user-meta .arabic{ font-size:.76rem !important; } }
+@media(min-width:1920px){ .user-meta b{ font-size:.9rem; } .user-meta span{ font-size:.76rem; } }
 @media(max-width:720px){ .user-meta{ display:none; } .pill-stat{ display:none; } }
 
 .dropdown{
@@ -1152,7 +1152,7 @@ html[data-theme="light"] body::before{ opacity:.018; }
   box-shadow: inset 0 1px 0 rgba(255,255,255,.03), 0 14px 34px -22px rgba(0,0,0,.55);
 }
 html[data-theme="light"] .card{
-  background:linear-gradient(180deg, #F5F2EC, #EFE9DE 50%, transparent 80%), var(--card);
+  background:linear-gradient(180deg, #EFE9DE, #EFE9DE 50%, transparent 80%), var(--card);
   box-shadow: 0 1px 2px rgba(30,25,15,.04), 0 4px 16px -8px rgba(30,25,15,.06);
 }
 html[data-theme="light"] .card-elevated{
