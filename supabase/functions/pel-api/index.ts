@@ -303,10 +303,10 @@ Deno.serve(async (req: Request) => {
         }
       }
       if (payload.order) {
-        url += `&order=${payload.order}`;
+        url += `&order=${encodeURIComponent(String(payload.order))}`;
       }
       if (payload.limit) {
-        url += `&limit=${payload.limit}`;
+        url += `&limit=${encodeURIComponent(String(payload.limit))}`;
       }
 
       const res = await fetch(url, { method: "GET", headers });
