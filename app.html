@@ -23,7 +23,7 @@
 <script src="lib/cert-qr.js?v=a43f19f9" defer></script>
 <script src="lib/cert-sheet.js?v=a1f37a19" defer></script>
 <script src="lib/pel_config.js?v=d66df0a3"></script>
-<script src="lib/pel_lesson_stage.js?v=1e089150"></script>
+<script src="lib/pel_lesson_stage.js?v=94df653a"></script>
 <script src="lib/pel_dashboard_life.js?v=6e677875"></script>
 <script src="lib/pel_curriculum_path.js?v=2a1761b7"></script>
 <style>
@@ -1541,7 +1541,7 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
 <div class="app-shell" id="appShell" style="display:none;">
 
   <!-- ================= MOBILE STUDY DOCK ================= -->
-  <nav class="dock" id="studyDock" aria-label="Quick navigation">
+  <nav class="dock" id="studyDock" aria-label="Quick navigation / التنقل السريع">
     <button type="button" class="dock-btn" data-view="home"><i data-lucide="home" width="21" height="21"></i><span>البدايه</span></button>
     <button type="button" class="dock-btn" data-view="review"><i data-lucide="rotate-ccw" width="21" height="21"></i><span>مراجعه</span></button>
     <button type="button" class="dock-btn" data-view="profile"><i data-lucide="user" width="21" height="21"></i><span>حسابي</span></button>
@@ -1553,11 +1553,11 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
     <div class="sidebar-head">
       <span class="sidebar-logo"><img class="pel-logo" src="brand/pel-wordmark.svg" alt="PEL"><img class="pel-logo pel-logo-light" src="brand/pel-wordmark-dark.svg" alt="PEL"></span>
       <span class="sidebar-name"><span class="arabic" style="display:block; font-size:.92em;">دروس انجليزي مخصصه</span><span style="display:block; font-size:.8em; color:var(--text-muted); margin-top:2px;">Personalized English Lessons</span></span>
-      <button type="button" class="sidebar-collapse-btn" id="collapseBtn" aria-label="Collapse sidebar">
+      <button type="button" class="sidebar-collapse-btn" id="collapseBtn" aria-label="Collapse sidebar / طوي القائمة">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
       </button>
     </div>
-    <nav class="sidebar-scroll" id="sidebarNav" aria-label="Primary"></nav>
+    <nav class="sidebar-scroll" id="sidebarNav" aria-label="Primary / الرئيسية"></nav>
     <div class="sidebar-foot">
       <div class="streak-mini">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z"/></svg>
@@ -1570,7 +1570,7 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
 
     <!-- ================= TOPBAR ================= -->
     <header class="topbar">
-      <button type="button" class="mobile-sidebar-btn" id="mobileSidebarBtn" aria-label="Open menu">
+      <button type="button" class="mobile-sidebar-btn" id="mobileSidebarBtn" aria-label="Open menu / فتح القائمة">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
       </button>
 
@@ -1587,14 +1587,14 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
         <div class="pill-stat hide-mid" title="نقاط الخبره، XP"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4z"/></svg> <b id="topXp">0</b> <span class="arabic">نقطه</span> XP</div>
         <div class="pill-stat hide-mid" title="سلسله الايام، Day streak"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z"/></svg> <b id="topStreak">0</b> <span class="arabic">يوم</span> streak</div>
 
-        <button type="button" class="lang-pill" id="topbarLangBtn" aria-label="Switch interface language">EN</button>
+        <button type="button" class="lang-pill" id="topbarLangBtn" aria-label="Switch interface language / تبديل لغة الواجهة">EN</button>
 
-        <button type="button" class="icon-btn" id="themeToggle" aria-label="Toggle theme">
+        <button type="button" class="icon-btn" id="themeToggle" aria-label="Toggle theme / تبديل المظهر">
           <svg id="themeIcon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3v2M12 19v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M3 12h2M19 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/><circle cx="12" cy="12" r="4.2"/></svg>
         </button>
 
         <div class="notif-wrap">
-          <button type="button" class="icon-btn" id="notifBtn" aria-label="Notifications">
+          <button type="button" class="icon-btn" id="notifBtn" aria-label="Notifications / الإشعارات">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 01-3.4 0"/></svg>
             <span class="notif-dot"></span>
           </button>
@@ -1604,7 +1604,7 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
         </div>
 
         <div class="context-toggle-btn">
-          <button type="button" class="icon-btn" id="contextToggleBtn" aria-label="Open study panel">
+          <button type="button" class="icon-btn" id="contextToggleBtn" aria-label="Open study panel / فتح لوحة الدراسة">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M15 4v16"/></svg>
           </button>
         </div>
@@ -1805,7 +1805,7 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
           <h4><span class="arabic">ملاحظات حديثه</span>، Recent Notes</h4>
           <div style="display:flex; gap:6px; margin-bottom:8px;">
             <input id="ctxNoteInput" dir="auto" placeholder="اكتب ملاحظه... / Write a note..." style="flex:1; min-width:0; background:var(--card-elevated); border:1px solid var(--border); border-radius:8px; padding:7px 10px; color:var(--text); font-size:.78rem;" aria-label="ملاحظه الدرس">
-            <button type="button" class="btn-ghost-sm" id="ctxNoteAdd" style="flex-shrink:0;" aria-label="Add note">+</button>
+            <button type="button" class="btn-ghost-sm" id="ctxNoteAdd" style="flex-shrink:0;" aria-label="Add note / إضافة ملاحظة">+</button>
           </div>
           <div id="ctxNotesList"></div>
         </div>
@@ -1820,7 +1820,7 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
           <div class="pomo-display">
             <div class="pomo-time" id="pomoTime">25:00</div>
             <div class="pomo-controls">
-              <button type="button" class="pomo-btn" id="pomoStart" aria-label="Start"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+              <button type="button" class="pomo-btn" id="pomoStart" aria-label="Start / بدء"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
               <button type="button" class="pomo-btn" id="pomoReset" aria-label="Reset"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 109-9 9.75 9.75 0 00-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg></button>
             </div>
             <div class="pomo-total" id="pomoTotal" style="font-size:.72rem; color:var(--text-muted); margin-top:6px;"></div>
@@ -9047,7 +9047,7 @@ const RP_SCRIPTS = {
       { key:'wrap', wrap: L('Enjoy your stay.', 'نتمنى لك اقامه مبسوطه.', 'انجوي يور ستي.') }
     ],
     faq: [
-      { match: /(checkout|تسليم)/, reply: L('Checkout is at noon, and you can leave your bags with us.', 'التسليم الظهر، وتقدر تترك شنطك عندنا.', 'تشيك اوت از ات نون، اند يو كان ليف يور باجز وذ اس.') },
+      { match: /(checkout|تسليم)/, reply: L('Checkout is at noon, and you can leave your bags with us.', 'التسليم الظهر، وتقدر تترك شنطك عندنا.', 'تشيك اوت از ات نون، اند يو كان ليڤ يور باجز وذ اس.') },
       { match: /(breakfast|فطور)/, reply: L('Breakfast is served from 7 to 10 AM.', 'الفطور من ٧ لـ ١٠ الصباح.', 'بريكفاست از سيرڤد فروم 7 تو 10 اي ام.') },
       { match: /(wifi|واي فاي)/, reply: L('The wifi password is on your room key card.', 'رمز الواي فاي على بطاقه غرفتك.', 'ذا واي فاي باسورد از اون يور روم كي كارد.') }
     ]
@@ -10502,7 +10502,7 @@ const VOCAB_BANK = [
 {en:'Quiet', ipa:'/ˈkwaɪət/', ar: 'هادي، صامت', translit: 'كوايت', example:{en:'Please be quiet.', ar: 'لو سمحت اهدا.', translit: 'بليز بي كوايت.'}, synonyms:'silent, calm', antonyms:'loud, noisy', family:'quiet, quietly', collocations:'keep quiet, quiet place', category:'Mosque Etiquette', difficulty:'Intermediate', tip:'"Quiet" is two syllables: qui-et.', synonyms_ar: 'هادي، صامت', antonyms_ar: 'صاخب', family_ar: 'هادي، بهدو', collocations_ar: 'خليك هادي، مكان هادي', tip_ar: 'quiet مقطعين: qui-et', mistake:'Spelling it "quite," which means "fairly."'},
 {en:'Caller', ipa:'/ˈkɔːlər/', ar: 'المتصل', translit: 'كولر', example:{en:'The caller hung up.', ar: 'اغلق المتصل الخط.', translit: 'ذا كولر هانق اپ.'}, synonyms:'caller, phoner', antonyms:'receiver', family:'call, caller', collocations:'unknown caller, frequent caller', category:'Phone Calls', difficulty:'Intermediate', tip: 'The caller is the one who phones.', synonyms_ar: 'المتصل', antonyms_ar: 'المستقبل', family_ar: 'يتصل، متصل', collocations_ar: 'متصل مجهول، متصل دايم', tip_ar: 'المتصل هو اللي يرفع السماعه', mistake:'Confusing caller with receiver.'},
 {en:'Hold', ipa:'/hoʊld/', ar: 'انتظار (على الخط)', translit: 'هولد', example:{en:'Please hold for a moment.', ar: 'ابق على الخط لحظه لو سمحت.', translit: 'پليز هولد فور ا مومنت.'}, synonyms:'wait, pause', antonyms:'hang up', family:'hold, holding', collocations:'on hold, put on hold', category:'Phone Calls', difficulty:'Intermediate', tip:'"Hold" means wait on the phone.', synonyms_ar: 'انتظار على الخط', antonyms_ar: 'يغلق الخط', family_ar: 'يمسك، انتظار', collocations_ar: 'على الانتظار، حط على الانتظار', tip_ar: 'hold يعني انتظر على التلفون', mistake:'Hanging up instead of holding.'},
-{en:'Voicemail', ipa:'/ˈvɔɪsmeɪl/', ar: 'بريد صوتي', translit: 'ڤويسميل', example:{en:'Leave a voicemail.', ar: 'اترك رساله صوتيه.', translit: 'ليف ا ڤويسميل.'}, synonyms:'voice message, answering machine', antonyms:'', family:'voice, mail', collocations:'leave a voicemail, check voicemail', category:'Phone Calls', difficulty:'Intermediate', tip: 'Voicemail records your message.', synonyms_ar: 'بريد صوتي', antonyms_ar: '', family_ar: 'صوت، بريد', collocations_ar: 'اترك رساله صوتيه، شيك على البريد الصوتي', tip_ar: 'البريد الصوتي يسجل رسالتك', mistake:'Forgetting to leave your name in voicemail.'},
+{en:'Voicemail', ipa:'/ˈvɔɪsmeɪl/', ar: 'بريد صوتي', translit: 'ڤويسميل', example:{en:'Leave a voicemail.', ar: 'اترك رساله صوتيه.', translit: 'ليڤ ا ڤويسميل.'}, synonyms:'voice message, answering machine', antonyms:'', family:'voice, mail', collocations:'leave a voicemail, check voicemail', category:'Phone Calls', difficulty:'Intermediate', tip: 'Voicemail records your message.', synonyms_ar: 'بريد صوتي', antonyms_ar: '', family_ar: 'صوت، بريد', collocations_ar: 'اترك رساله صوتيه، شيك على البريد الصوتي', tip_ar: 'البريد الصوتي يسجل رسالتك', mistake:'Forgetting to leave your name in voicemail.'},
 {en:'Dial', ipa:'/ˈdaɪəl/', ar: 'يطلب (رقما)', translit: 'دايال', example:{en:'Dial the number.', ar: 'اطلب الرقم.', translit: 'دايال ذا نامبر.'}, synonyms:'call, ring', antonyms:'hang up', family:'dial, dialed', collocations:'dial a number, dial in', category:'Phone Calls', difficulty:'Intermediate', tip: 'To dial is to enter a number.', synonyms_ar: 'يطلب رقما', antonyms_ar: 'يغلق الخط', family_ar: 'يطلب، طلب', collocations_ar: 'اطلب رقم، اتصل', tip_ar: 'dial تعني تدخل رقم', mistake:'Saying "dial to" instead of "dial."'},
 {en:'Receptionist', ipa:'/rɪˈsɛpʃənɪst/', ar: 'موظف الاستقبال', translit: 'ريسيپشانيست', example:{en:'Ask the receptionist.', ar: 'اسال موظف الاستقبال.', translit: 'اسك ذا ريسپشنست.'}, synonyms:'front desk clerk', antonyms:'', family:'reception, receptionist', collocations:'the receptionist, call the receptionist', category:'Phone Calls', difficulty:'Intermediate', tip: 'The receptionist greets and directs callers.', synonyms_ar: 'موظف الاستقبال', antonyms_ar: '', family_ar: 'استقبال، موظف استقبال', collocations_ar: 'موظف الاستقبال، اتصل بموظف الاستقبال', tip_ar: 'موظف الاستقبال يرحب ويوجه المتصلين', mistake:'Pronouncing it "reception-ist" too fast.'},
 {en:'Scene', ipa:'/siːn/', ar: 'مشهد', translit: 'سين', example:{en:'That scene made me cry.', ar: 'ذاك المشهد ابكاني.', translit: 'ذات سين ميد مي كراي.'}, synonyms:'shot, sequence', antonyms:'', family:'scene, scenes', collocations:'film a scene, cut a scene', category:'Movie English', difficulty:'Advanced', tip: 'A scene is one part of a movie.', synonyms_ar: 'مشهد', antonyms_ar: '', family_ar: 'مشهد، مشاهد', collocations_ar: 'صور مشهد، قطع مشهد', tip_ar: 'المشهد جز واحد من الفيلم', mistake:'Spelling it "seen," which is the verb.'},
@@ -11744,7 +11744,7 @@ const LESSON_LIBRARY = {
     conversation:[
       {who:'You', en:'Could we have the check, please?', ar: 'ممكن الحساب لو سمحت؟', translit: 'كود وي هاڤ ذا تشيك، بليز؟'},
       {who:'Waiter', en:'Sure, here you go. Take your time.', ar: 'اتفضل، خذ راحتك.', translit: 'شور، هير يو قو. تيك يور تايم.'},
-      {who:'You', en:'Is the tip included, or should I leave it?', ar: 'البقشيش داخل وللا اخليه؟', translit: 'از ذا تيب انكلودد، اور شود اي ليف ات؟'},
+      {who:'You', en:'Is the tip included, or should I leave it?', ar: 'البقشيش داخل وللا اخليه؟', translit: 'از ذا تيب انكلودد، اور شود اي ليڤ ات؟'},
       {who:'Waiter', en:'It is not included, but no pressure.', ar: 'مو داخل، بس ولا تزعل.', translit: 'ات از نات انكلودد، بات نو بريشر.'},
     ],
     quiz:[
