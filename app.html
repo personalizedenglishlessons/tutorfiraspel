@@ -23,7 +23,7 @@
 <script src="lib/cert-qr.js?v=a43f19f9" defer></script>
 <script src="lib/cert-sheet.js?v=a1f37a19" defer></script>
 <script src="lib/pel_config.js?v=a25efd62"></script>
-<script src="lib/pel_lesson_stage.js?v=94df653a"></script>
+<script src="lib/pel_lesson_stage.js?v=8e018a17"></script>
 <script src="lib/pel_dashboard_life.js?v=6e677875"></script>
 <script src="lib/pel_curriculum_path.js?v=2a1761b7"></script>
 <style>
@@ -51,17 +51,17 @@
   --translit-min:0.88rem; --translit-scale:1.05em;
 }
 html[data-theme="light"]{
-  --bg:#F5F5F7; --surface:#FFFFFF; --surface-alt:#F0F0F2; --card:#FFFFFF; --card-elevated:#FAFAFA;
-  --border:#D2D2D7; --text:#1D1D1F; --text-secondary:#6E6E73; --text-muted:#76767C;
+  --bg:#F5F2EC; --surface:#FAF8F4; --surface-alt:#EFE9DE; --card:#FAF8F4; --card-elevated:#FFFCF6;
+  --border:#E5DFD2; --text:#17171B; --text-secondary:#4B463D; --text-muted:#6E6962;
   --gold:#C8931C; --gold-soft:#E6C258; --bronze:#9A6E16; --emerald:#1D7A4E;
   --warning:#8B6C2F; --danger:#B8442E; --success:#1D7A4E; --error:#B8442E;
-  --text-faint:#94949A;
-  --pel-stem:#1D1D1F; --pel-gold:#C8931C;
-  --shadow-soft:0 1px 2px rgba(0,0,0,.04), 0 4px 16px -8px rgba(0,0,0,.06);
-  --shadow-lift:0 2px 6px rgba(0,0,0,.05), 0 12px 32px -12px rgba(0,0,0,.08);
+  --text-faint:#9A948A;
+  --pel-stem:#17171B; --pel-gold:#C8931C;
+  --shadow-soft:0 1px 2px rgba(30,25,15,.04), 0 4px 16px -8px rgba(30,25,15,.06);
+  --shadow-lift:0 2px 6px rgba(30,25,15,.05), 0 12px 32px -12px rgba(30,25,15,.08);
   --gold-glow:0 0 24px -8px rgba(200,147,28,.15);
-  --stage-bar-bg:rgba(245,245,247,.82);
-  --stage-bar-border:#D2D2D7;
+  --stage-bar-bg:rgba(245,242,236,.82);
+  --stage-bar-border:#E5DFD2;
 }
 *,*::before,*::after{box-sizing:border-box;}
 html{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; text-rendering:optimizeLegibility; font-optical-sizing:auto; font-size:17px; overflow-x:hidden; }
@@ -229,7 +229,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .dock{ display:none; }
 @media(max-width:980px){
   .dock{ display:flex; position:fixed; bottom:0; left:0; right:0; z-index:180; height:calc(58px + env(safe-area-inset-bottom)); padding-bottom:env(safe-area-inset-bottom); background:color-mix(in srgb, var(--surface) 90%, transparent); backdrop-filter:blur(18px) saturate(140%); -webkit-backdrop-filter:blur(18px) saturate(140%); border-top:1px solid var(--border); box-shadow:0 -10px 30px -12px rgba(0,0,0,.4); }
-  html[data-theme="light"] .dock{ box-shadow:0 -4px 20px -8px rgba(0,0,0,.08); }
+  html[data-theme="light"] .dock{ box-shadow:0 -4px 20px -8px rgba(30,25,15,.08); }
   .dock-btn{ flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; background:none; border:0; cursor:pointer; color:var(--text-muted); font-family:'Cairo','Tajawal',sans-serif; font-size:.6rem; padding:6px 2px; transition:color .2s ease; }
   .dock-btn svg{ width:21px; height:21px; }
   .dock-btn.active{ color:var(--gold); }
@@ -1110,10 +1110,10 @@ body{
 }
 html[data-theme="light"] body{
   background:
-    radial-gradient(1200px 800px at 12% -10%, rgba(0,0,0,.022), transparent 60%),
-    radial-gradient(900px 600px at 88% 8%, rgba(0,0,0,.015), transparent 55%),
+    radial-gradient(1200px 800px at 12% -10%, rgba(30,25,15,.022), transparent 60%),
+    radial-gradient(900px 600px at 88% 8%, rgba(30,25,15,.015), transparent 55%),
     radial-gradient(1000px 800px at 50% 120%, rgba(200,147,28,.018), transparent 65%),
-    #F5F5F7;
+    #F5F2EC;
 }
 
 /* Entitlement gate: full-screen takeover shown instead of the app shell
@@ -1146,15 +1146,15 @@ html[data-theme="light"] body::before{ opacity:.018; }
   box-shadow: inset 0 1px 0 rgba(255,255,255,.03), 0 14px 34px -22px rgba(0,0,0,.55);
 }
 html[data-theme="light"] .card{
-  background:linear-gradient(180deg, #FFFFFF, #FCFCFD 50%, transparent 80%), var(--card);
-  box-shadow: 0 1px 2px rgba(0,0,0,.04), 0 4px 16px -8px rgba(0,0,0,.06);
+  background:linear-gradient(180deg, #FFFCF6, #FAF8F4 50%, transparent 80%), var(--card);
+  box-shadow: 0 1px 2px rgba(30,25,15,.04), 0 4px 16px -8px rgba(30,25,15,.06);
 }
 html[data-theme="light"] .card-elevated{
-  background:linear-gradient(180deg, rgba(0,0,0,.012), transparent 40%), var(--card-elevated);
+  background:linear-gradient(180deg, rgba(30,25,15,.012), transparent 40%), var(--card-elevated);
 }
 html[data-theme="light"] .card.hoverable:hover{
   transform:translateY(-4px);
-  box-shadow: 0 2px 6px rgba(0,0,0,.06), 0 12px 32px -12px rgba(0,0,0,.1), 0 0 0 1px rgba(200,147,28,.12);
+  box-shadow: 0 2px 6px rgba(30,25,15,.06), 0 12px 32px -12px rgba(30,25,15,.1), 0 0 0 1px rgba(200,147,28,.12);
   border-color:rgba(200,147,28,.3);
 }
 
@@ -1194,8 +1194,8 @@ html[data-theme="light"] .btn-gold:hover{
   box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 0 32px -8px rgba(200,147,28,.3), 0 8px 24px -8px rgba(200,147,28,.45);
 }
 html[data-theme="light"] .btn-outline{
-  background:linear-gradient(180deg, rgba(0,0,0,.008), transparent 60%);
-  border-color:#D2D2D7;
+  background:linear-gradient(180deg, rgba(30,25,15,.008), transparent 60%);
+  border-color:var(--border);
 }
 html[data-theme="light"] .btn-outline:hover{
   border-color:rgba(200,147,28,.4);
@@ -1227,9 +1227,9 @@ html[data-theme="light"] .chip.gold{ background:linear-gradient(180deg, rgba(200
 }
 .tile-icon-sm{ width:38px; height:38px; border-radius:11px; }
 html[data-theme="light"] .tile-icon{
-  background:linear-gradient(135deg, #F5F5F7, #EFEFF2 60%, #EBEBEE);
+  background:linear-gradient(135deg, #FFFCF6, #F5F2EC 60%, #EFE9DE);
   color:var(--gold);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 2px 8px -2px rgba(0,0,0,.06);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 2px 8px -2px rgba(30,25,15,.06);
 }
 html[data-theme="light"] .tile-icon::after{
   background:linear-gradient(135deg, rgba(255,255,255,.6), transparent 46%);
@@ -1299,7 +1299,7 @@ html[data-theme="light"] #heroCard::before{
 }
 .lesson-cover-icon{ filter:drop-shadow(0 8px 16px rgba(0,0,0,.5)); }
 .lesson-cover > div{ position:relative; z-index:1; }
-html[data-theme="light"] .academy-card{ box-shadow:0 1px 2px rgba(0,0,0,.04), 0 6px 20px -10px rgba(0,0,0,.08); }
+html[data-theme="light"] .academy-card{ box-shadow:0 1px 2px rgba(30,25,15,.04), 0 6px 20px -10px rgba(30,25,15,.08); }
 html[data-theme="light"] .academy-card:hover{
   box-shadow:0 4px 12px rgba(0,0,0,.08);
 }
@@ -1369,7 +1369,7 @@ html[data-theme="light"] .article-cover{
   box-shadow: inset 0 1px 0 rgba(255,255,255,.5);
 }
 
-/* ---- Comprehensive gold→blue overrides for light mode ---- */
+/* ---- Comprehensive gold accent overrides for light mode ---- */
 html[data-theme="light"] .side-link.active{ background:linear-gradient(90deg, rgba(200,147,28,.1), transparent); }
 html[data-theme="light"] .side-badge{ color:#FFFFFF; box-shadow:0 2px 8px rgba(200,147,28,.3); }
 html[data-theme="light"] .avatar-circle{ color:#FFFFFF; }
@@ -1409,7 +1409,7 @@ html[data-theme="light"] .progress-fill{ box-shadow:0 0 10px rgba(200,147,28,.3)
 html[data-theme="light"] .ring-wrap .prog{ filter:drop-shadow(0 0 6px rgba(200,147,28,.25)); }
 html[data-theme="light"] .week-cell.studied{ background:rgba(200,147,28,.1); border-color:rgba(200,147,28,.3); color:var(--gold); }
 html[data-theme="light"] .week-cell.today{ border-color:var(--gold); box-shadow:0 0 0 1px rgba(200,147,28,.2); }
-html[data-theme="light"] .skill-bar-row:hover{ border-color:rgba(200,147,28,.3); box-shadow:0 8px 24px -12px rgba(0,0,0,.08); }
+html[data-theme="light"] .skill-bar-row:hover{ border-color:rgba(200,147,28,.3); box-shadow:0 8px 24px -12px rgba(30,25,15,.08); }
 
 /* ---- Light mode overrides for dashboard_life hardcoded gold ---- */
 html[data-theme="light"] #heroCard .pel-dash-orb{ background:radial-gradient(circle, rgba(200,147,28,.12), transparent 70%); }
@@ -1423,10 +1423,10 @@ html[data-theme="light"] .pel-dash-strip::-webkit-scrollbar-thumb:hover{ backgro
 html[data-theme="light"] .pel-dash-tool .td-ico{ background:linear-gradient(135deg, rgba(200,147,28,.12), rgba(200,147,28,.04)); }
 html[data-theme="light"] .pel-dash-burst{ border-color:rgba(200,147,28,.12); }
 html[data-theme="light"] .pel-dash-burst::before{ background:radial-gradient(120% 120% at 80% 0%, rgba(200,147,28,.05), transparent 60%); }
-html[data-theme="light"] #heroCard .pel-dash-aurora{ background:conic-gradient(from 0deg, rgba(200,147,28,0), rgba(200,147,28,.08), rgba(29,122,78,.04), rgba(74,159,255,.06), rgba(200,147,28,0)); }
+html[data-theme="light"] #heroCard .pel-dash-aurora{ background:conic-gradient(from 0deg, rgba(200,147,28,0), rgba(200,147,28,.08), rgba(29,122,78,.04), rgba(200,169,106,.06), rgba(200,147,28,0)); }
 html[data-theme="light"] #view-home.pel-dash-lessonify .chip.gold,
 html[data-theme="light"] #view-home.pel-dash-lessonify .tag-gold{ background:rgba(200,147,28,.08); border-color:rgba(200,147,28,.2); }
-html[data-theme="light"] #view-home.pel-dash-lessonify #heroCard::after{ background:conic-gradient(from 215deg, rgba(200,147,28,.3), rgba(29,122,78,.1), rgba(74,159,255,.25), rgba(200,147,28,.3)); }
+html[data-theme="light"] #view-home.pel-dash-lessonify #heroCard::after{ background:conic-gradient(from 215deg, rgba(200,147,28,.3), rgba(29,122,78,.1), rgba(200,169,106,.15), rgba(200,147,28,.3)); }
 html[data-theme="light"] #view-home.pel-dash-lessonify .card.hoverable .pel-dash-spot{ background:radial-gradient(220px circle at var(--mx,50%) var(--my,50%), rgba(200,147,28,.06), transparent 60%); }
 .topic-tile:hover, .persona-card:hover{ transform:translateY(-4px); }
 .quiz-option:hover{ border-color:rgba(200,169,106,.6); transform:translateY(-1px); }
@@ -9836,7 +9836,7 @@ function lightCorrection(text){
           (ar() ? 'اذا عندك اشتراك فعال، تواصل معنا اولا على واتساب بخصوص الاسترداد. متاكد؟' : 'If you have an active subscription, contact us on WhatsApp first about a refund. Are you sure?') +
         '</p>' +
         '<div style="display:flex;gap:10px;justify-content:flex-end;">' +
-          '<button type="button" id="delReqCancel" style="padding:10px 16px;border-radius:10px;border:1px solid var(--border,#33353f);background:transparent;color:var(--text,#e8e9ee);cursor:pointer;">' + (ar() ? 'الغاء' : 'Cancel') + '</button>' +
+          '<button type="button" id="delReqCancel" style="padding:10px 16px;border-radius:10px;border:1px solid var(--border,#33353f);background:transparent;color:var(--text,#4B463D);cursor:pointer;">' + (ar() ? 'الغاء' : 'Cancel') + '</button>' +
           '<button type="button" id="delReqConfirm" style="padding:10px 16px;border-radius:10px;border:none;background:#c0392b;color:#fff;cursor:pointer;font-weight:600;">' + (ar() ? 'نعم، ابغى الحذف' : 'Yes, delete my data') + '</button>' +
         '</div>' +
       '</div>';
@@ -17345,7 +17345,7 @@ function academyCardHTML(a){
   if(a.progress >= 100) badges.push('<span class="chip emerald"><span class="arabic">مكتمل</span>، Completed</span>');
   return `
     <div class="academy-card" data-academy="${a.id}">
-      <div class="academy-cover" style="background:linear-gradient(135deg, ${a.from||'#667eea'}, ${a.to||'#764ba2'});">
+      <div class="academy-cover" style="background:linear-gradient(135deg, ${a.from||'#C8A96A'}, ${a.to||'#A88345'});">
         <button type="button" class="academy-fav${fav?' active':''}" data-fav="${escapeHtml(a.id||'')}" aria-label="Favourite"><i data-lucide="heart" width="15" height="15" fill="${fav?'currentColor':'none'}"></i></button>
         <i class="cover-icon" data-lucide="${a.icon||'book-open'}" width="46" height="46" style="color:#fff;"></i>
         <div class="academy-badges">${badges.join('')}</div>
