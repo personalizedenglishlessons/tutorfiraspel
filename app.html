@@ -54,6 +54,7 @@ html[data-theme="light"]{
   --bg:#F3EEE2; --surface:#EFE9DE; --surface-alt:#EFE9DE; --card:#EFE9DE; --card-elevated:#EFE9DE;
   --border:#E5DFD2; --text:#17171B; --text-secondary:#4B463D; --text-muted:#6E6962;
   --gold:#B8821E; --gold-soft:#D4A534; --bronze:#8B6212; --emerald:#1D7A4E;
+  --gold-ink:#805A10;
   --warning:#8B6C2F; --danger:#B8442E; --success:#1D7A4E; --error:#B8442E;
   --text-faint:#9A948A;
   --pel-stem:#17171B; --pel-gold:#B8821E;
@@ -318,6 +319,7 @@ body.ui-ar .user-meta{ text-align:right; }
 }
 .dropdown.open{ opacity:1; pointer-events:all; transform:translateY(0); }
 .dropdown-item{ display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:10px; font-size:.84rem; color:var(--text-secondary); width:100%; text-align:left; }
+body.ui-ar .dropdown-item{ direction:rtl; text-align:right; }
 .dropdown-item:hover{ background:var(--card); color:var(--text); }
 .dropdown-item.danger:hover{ color:var(--danger); }
 .dropdown-sep{ height:1px; background:var(--border); margin:6px 4px; }
@@ -391,6 +393,10 @@ body.ui-ar .user-meta{ text-align:right; }
 
 .chip{ font-size:.68rem; padding:5px 12px; border-radius:999px; border:1px solid var(--border); color:var(--text-muted); }
 .chip.gold{ border-color:transparent; background:rgba(200,169,106,.14); color:var(--gold); font-weight:600; }
+html[data-theme="light"] .eyebrow,
+html[data-theme="light"] .chip.gold,
+html[data-theme="light"] .tile-icon{ color:var(--gold-ink); }
+html[data-theme="light"] .eyebrow::before{ background:var(--gold-ink); }
 .chip.emerald{ border-color:transparent; background:rgba(63,140,114,.16); color:var(--emerald); font-weight:600; }
 .chip.red{ border-color:transparent; background:rgba(196,111,86,.16); color:var(--danger); font-weight:700; }
 
@@ -644,7 +650,8 @@ body.ui-ar .user-meta{ text-align:right; }
 .academy-cover{ height:118px; position:relative; display:flex; align-items:flex-end; padding:14px; }
 .academy-cover .cover-icon{ position:absolute; top:14px; right:14px; opacity:.5; }
 .academy-fav{ position:absolute; top:12px; left:12px; width:32px; height:32px; border-radius:50%; background:rgba(14,14,16,.4); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:center; color:#fff; z-index:2; }
-.academy-fav.active{ color:var(--gold); }
+html[data-theme="light"] .academy-fav{ background:rgba(184,130,30,.15); color:var(--text-secondary); box-shadow:inset 0 1px 0 rgba(255,255,255,.4); }
+html[data-theme="light"] .academy-fav.active{ color:var(--gold); }
 .academy-badges{ position:absolute; bottom:10px; left:14px; display:flex; gap:6px; z-index:2; }
 .academy-body{ padding:16px 18px 18px; }
 .academy-title-ar{ font-family:'Cairo','Tajawal',sans-serif; direction:rtl; font-size:.8rem; color:var(--text-muted); margin-top:4px; overflow-wrap:break-word; word-break:break-word; }
@@ -1382,10 +1389,10 @@ html[data-theme="light"] .article-cover{
 
 /* ---- Comprehensive gold accent overrides for light mode ---- */
 html[data-theme="light"] .side-link.active{ background:linear-gradient(90deg, rgba(200,147,28,.1), transparent); }
-html[data-theme="light"] .side-badge{ color:#FFFFFF; box-shadow:0 2px 8px rgba(200,147,28,.3); }
+html[data-theme="light"] .side-badge{ color:#171412; box-shadow:0 2px 8px rgba(200,147,28,.3); }
 html[data-theme="light"] .avatar-circle{ color:#FFFFFF; }
 html[data-theme="light"] .card.hoverable:hover{ border-color:rgba(200,147,28,.3); }
-html[data-theme="light"] .btn-gold{ color:#FFFFFF; }
+html[data-theme="light"] .btn-gold{ color:#171412; }
 html[data-theme="light"] .btn-gold{
   background:linear-gradient(135deg, #C8931C 0%, #B8821E 50%, #9A6E16 100%);
   color:#FFFFFF;
@@ -1407,20 +1414,20 @@ html[data-theme="light"] .cert-top{ background:linear-gradient(135deg, rgba(200,
 html[data-theme="light"] .heatmap-cell[data-lvl="1"]{ background:rgba(200,147,28,.2); }
 html[data-theme="light"] .heatmap-cell[data-lvl="2"]{ background:rgba(200,147,28,.4); }
 html[data-theme="light"] .heatmap-cell[data-lvl="3"]{ background:rgba(200,147,28,.65); }
-html[data-theme="light"] .roadmap-node.done .roadmap-dot{ color:#FFFFFF; }
+html[data-theme="light"] .roadmap-node.done .roadmap-dot{ color:#171412; }
 html[data-theme="light"] .roadmap-node.current .roadmap-dot{ box-shadow:0 0 0 4px rgba(200,147,28,.15); }
 html[data-theme="light"] .switch input:checked + .switch-track::before{ background:var(--gold); }
 html[data-theme="light"] .mini-cal-day.studied{ background:rgba(200,147,28,.12); color:var(--gold); }
 html[data-theme="light"] .concept-step:hover{ border-color:rgba(200,147,28,.3); }
-html[data-theme="light"] .concept-num{ color:#FFFFFF; }
+html[data-theme="light"] .concept-num{ color:#171412; }
 html[data-theme="light"] .concept-ex{ background:rgba(200,147,28,.04); border-color:rgba(200,147,28,.12); }
 html[data-theme="light"] .lib-filter.active{ border-color:var(--gold); color:var(--gold); background:rgba(200,147,28,.06); }
 html[data-theme="light"] .academy-card:hover{ border-color:rgba(200,147,28,.3); }
 html[data-theme="light"] .ws-lesson-link.active{ background:rgba(200,147,28,.08); }
 html[data-theme="light"] .lesson-actions-row .toggled{ border-color:var(--gold); color:var(--gold); background:rgba(200,147,28,.06); }
 html[data-theme="light"] .topic-tile.active{ border-color:var(--gold); background:rgba(200,147,28,.04); }
-html[data-theme="light"] .persona-avatar{ color:#FFFFFF; }
-html[data-theme="light"] .chat-bubble.me{ color:#FFFFFF; }
+html[data-theme="light"] .persona-avatar{ color:#171412; }
+html[data-theme="light"] .chat-bubble.me{ color:#171412; }
 html[data-theme="light"] .feedback-block{ background:rgba(200,147,28,.04); border-color:rgba(200,147,28,.15); }
 html[data-theme="light"] .writing-free-card{ border-color:rgba(200,147,28,.3); }
 html[data-theme="light"] .bookmark-type-icon{ background:rgba(200,147,28,.1); }
@@ -10101,8 +10108,11 @@ function applyInterfaceLang(lang, opts){
   lsSet('pel_account_prefs', accountPrefs);
   // Re-render the visible dynamic view so generated copy follows the language.
   const active = document.querySelector('.view.active');
-  if(active && active.id && viewRenderers[active.id]){
-    try{ viewRenderers[active.id](); }catch(e){ console.warn('[PEL] view render failed for ' + active.id + ":", e.message||e); }
+  if(active && active.id){
+    var viewKey = active.id.replace(/^view-/, '');
+    if(viewRenderers[viewKey]){
+      try{ viewRenderers[viewKey](); }catch(e){ console.warn('[PEL] view render failed for ' + viewKey + ":", e.message||e); }
+    }
   }
   if(active && (active.id === 'home' || active.id === 'view-home')){
     try{ renderHomeForDirection(); }catch(e){console.warn('[PEL] renderHomeForDirection:',e.message||e);}
@@ -10278,8 +10288,10 @@ const locObserver = new MutationObserver(() => {
   if(locTimer) clearTimeout(locTimer);
   locTimer = setTimeout(() => {
     localizing = true;
+    locObserver.disconnect();
     try{ localizeChrome(document); }catch(e){console.warn('[PEL] localizeChrome:',e.message||e);}
     localizing = false;
+    if(document.body) locObserver.observe(document.body, {childList:true, subtree:true, characterData:true});
   }, 40);
 });
 if(document.body) locObserver.observe(document.body, {childList:true, subtree:true, characterData:true});
@@ -20907,7 +20919,7 @@ function renderCalendar(){
         <span class="arabic">اقل</span>، Less <span class="heatmap-cell" data-lvl="0" style="width:11px; height:11px; display:inline-block;"></span><span class="heatmap-cell" data-lvl="1" style="width:11px; height:11px; display:inline-block;"></span><span class="heatmap-cell" data-lvl="2" style="width:11px; height:11px; display:inline-block;"></span><span class="heatmap-cell" data-lvl="3" style="width:11px; height:11px; display:inline-block;"></span><span class="heatmap-cell" data-lvl="4" style="width:11px; height:11px; display:inline-block;"></span> <span class="arabic">اكثر</span>، More
       </div>
     </div>
-    <div class="grid" style="grid-template-columns:repeat(4,1fr);">
+    <div class="grid grid-4">
       <div class="stat-pill"><b>${studentStats.streak || 0}</b><span class="arabic" style="display:block;">السلسله الحاليه</span><span>Current streak</span></div>
       <div class="stat-pill"><b>${studentStats.longestStreak || 0}</b><span class="arabic" style="display:block;">اطول سلسله</span><span>Longest streak</span></div>
       <div class="stat-pill"><b>${Math.min(studentStats.streak,studentPrefs.weeklyGoalLessons||0)} / ${studentPrefs.weeklyGoalLessons||0}</b><span class="arabic" style="display:block;">الهدف الاسبوعي</span><span>Weekly goal</span></div>
@@ -22169,7 +22181,7 @@ if(window.lucide) lucide.createIcons();
     if(!d.welcome_seen){
       const hi = A ? 'اهلا وسهل بك في PEL' : 'Welcome to PEL';
       const body = A ? 'كل دروسك ومتابعتك ورصيدك يحفظ هنا. خذ اختبار المستوى عشان نبداك من النقطه المناسبه لك، وادخل حصص مباشره اونلوين وحضوريه برصيد الحصص. اضغط تم ورج نشوفك.' : 'All your lessons, progress and live-class credits live here. Take the level test so we start you at the right point, and book live online or in-person classes with your credits. Tap done and lets go.';
-      welcome='<div class="pel-welcome"><div class="pel-welcome-icon"><i data-lucide="sparkles" width="22" height="22"></i></div><div><h3>'+esc(hi)+'</h3><p>'+esc(body)+'</p></div><button type="button" class="btn-gold pel-welcome-btn" data-welcome>تم</button></div>';
+      welcome='<div class="pel-welcome"><div class="pel-welcome-icon"><i data-lucide="sparkles" width="22" height="22"></i></div><div><h3>'+esc(hi)+'</h3><p>'+esc(body)+'</p></div><button type="button" class="btn-gold pel-welcome-btn" data-welcome>'+(A?'تم':'Done')+'</button></div>';
     }
 
     const cards=services.map(s=>{
@@ -22302,7 +22314,7 @@ if(window.lucide) lucide.createIcons();
     const hi=A?'اهلا وسهل بك في PEL':'Welcome to PEL';
     const body=A?'كل دروسك ومتابعتك ورصيدك يحفظ هنا. خذ اختبار المستوى عشان نبداك من النقطه المناسبه، وادخل حصص مباشره اونلوين وحضوريه برصيد الحصص. اضغط تم ورج نشوفك.':'All your lessons, progress and live-class credits live here. Take the level test so we start you at the right point, and book live online or in-person classes with your credits. Tap done and lets go.';
     const el=document.createElement('div'); el.id='pelGlobalWelcome'; el.className='pel-welcome pel-global-welcome';
-    el.innerHTML='<div class="pel-welcome-icon"><i data-lucide="sparkles" width="22" height="22"></i></div><div><h3>'+esc(hi)+'</h3><p>'+esc(body)+'</p></div><button type="button" class="btn-gold pel-welcome-btn" data-welcome>تم</button>';
+    el.innerHTML='<div class="pel-welcome-icon"><i data-lucide="sparkles" width="22" height="22"></i></div><div><h3>'+esc(hi)+'</h3><p>'+esc(body)+'</p></div><button type="button" class="btn-gold pel-welcome-btn" data-welcome>'+(A?'تم':'Done')+'</button>';
     const home=document.getElementById('view-home');
     if(home){ home.insertBefore(el, home.firstChild); }
     else { const cc=document.querySelector('.content-cols'); if(cc) cc.insertBefore(el, cc.firstChild); else document.body.insertBefore(el, document.body.firstChild); }
