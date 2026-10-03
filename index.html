@@ -1160,7 +1160,7 @@ section{ padding-top:70px; padding-bottom:70px; }
     <div class="reveal is-visible">
        <span class="eyebrow hero-eyebrow" dir="ltr" style="justify-content:flex-start;"><span class="pel-tag">Personalized English Lessons</span></span>
       <h1 class="arabic-h" dir="rtl" style="margin-top:18px; font-size:clamp(2rem,4.5vw,3.2rem); line-height:1.2;">سنين تدرس، وما تقدر ترد</h1>
-      <p class="arabic hero-sub" dir="rtl" style="font-size:1rem; max-width:520px; margin-top:14px; line-height:1.8;">تتهرب من المكالمه، تنسخ الايميل وتترجمه، تطلب من غيرك يتكلم عنك. PEL يبدا معك من مواقف تصير لك، ويدربك مباشره. لين تصير انت اللي ترد، وتكتب، وتتكلم — بثقه.</p>
+      <p class="arabic hero-sub" dir="rtl" style="font-size:1rem; max-width:520px; margin-top:14px; line-height:1.8;">تتهرب من المكالمه، تنسخ الايميل وتترجمه، تطلب من غيرك يتكلم عنك. PEL يبدا معك من مواقف تصير لك، ويدربك مباشره. لين تصير انت اللي ترد، وتكتب، وتتكلم بثقه.</p>
       <div class="hero-cta-row" style="margin-top:26px; gap:12px; flex-wrap:wrap; align-items:center;">
         <button type="button" class="btn-gold magnetic" data-open-path id="heroPathCta" style="padding:14px 28px; font-size:.95rem;">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="2.5"/><circle cx="18" cy="5" r="2.5"/><path d="M8.5 19H15a3 3 0 0 0 3-3v-8.5M6 16.5V8a3 3 0 0 1 3-3h3.5"/></svg>
@@ -1178,7 +1178,7 @@ section{ padding-top:70px; padding-bottom:70px; }
       <div class="trust-row" dir="rtl" style="margin-top:18px; gap:10px 18px;">
         <div class="trust-item"><span class="dot"></span>تتدرب على محادثات قبل ما تصير</div>
         <div class="trust-item"><span class="dot"></span>تسمع كل كلمه وتكررها لين تثبت</div>
-        <div class="trust-item"><span class="dot"></span>اذا غلطت، نعلمك وين — فورا</div>
+        <div class="trust-item"><span class="dot"></span>اذا غلطت، نعلمك وين فورا</div>
         <div class="trust-item"><span class="dot"></span>تشوف تقدمك يوم بيوم</div>
       </div>
     </div>
@@ -1316,7 +1316,7 @@ section{ padding-top:70px; padding-bottom:70px; }
       nameEn:'Exam Prep', nameAr: 'التجهيز للاختبارات',
       termEn:'Advanced - STEP, TOEFL, IELTS', termAr: 'متقدم - STEP و TOEFL و IELTS',
       descEn:'Exam coming up and can\'t tell if you\'re ready? Drill on real questions with instant correction.', descAr: 'الامتحان قرب وما تقدر تقيّم نفسك؟ تدرب بأسئله حقيقيه وتصحيح فوري.',
-      featEn:['STEP, TOEFL, IELTS — all covered together','Questions in the exam format, practice before it','Writing corrected instantly, before you go','Audio pronunciation for the listening section'],
+      featEn:['STEP, TOEFL, IELTS, all covered together','Questions in the exam format, practice before it','Writing corrected instantly, before you go','Audio pronunciation for the listening section'],
       featAr:['ستب، توفل، وايلتس كلكم بجنب بعض','اسئله بنفس نظام الامتحان، تدرب قبله','تصحيح كتابتك فورا، قبل ما تروح','نطق مسموع عشان قسم الاستماع']
     } : {
       nameEn:'Start From 0', nameAr: 'ابد من الصفر',
@@ -1570,15 +1570,15 @@ function applyIndexLang(lang){
   var heroH1=document.querySelector('.hero h1.arabic-h');
   if(heroH1){ var h1ar = (window.PEL_SITE && PEL_SITE.heroHeadline && PEL_SITE.heroHeadline.ar) ? PEL_SITE.heroHeadline.ar : 'سنين تدرس، وما تقدر ترد'; var h1en = (window.PEL_SITE && PEL_SITE.heroHeadline && PEL_SITE.heroHeadline.en) ? PEL_SITE.heroHeadline.en : 'Years studying, and you still can\'t reply'; setLang(heroH1, h1ar, h1en); }
   var heroSub=document.querySelector('.hero .hero-sub');
-  if(heroSub){ var hsar = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.ar) ? PEL_SITE.heroSub.ar : 'تتهرب من المكالمه، تنسخ الايميل وتترجمه، تطلب من غيرك يتكلم عنك. PEL يبدا معك من مواقف تصير لك، ويدربك مباشره. لين تصير انت اللي ترد، وتكتب، وتتكلم — بثقه.'; var hsen = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.en) ? PEL_SITE.heroSub.en : 'You dodge calls, copy emails to translate them, ask others to speak for you. PEL starts with situations from your life, trains you live. Until you\'re the one who answers, writes, and speaks — with confidence.'; setLang(heroSub, hsar, hsen); }
+  if(heroSub){ var hsar = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.ar) ? PEL_SITE.heroSub.ar : 'تتهرب من المكالمه، تنسخ الايميل وتترجمه، تطلب من غيرك يتكلم عنك. PEL يبدا معك من مواقف تصير لك، ويدربك مباشره. لين تصير انت اللي ترد، وتكتب، وتتكلم بثقه.'; var hsen = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.en) ? PEL_SITE.heroSub.en : 'You dodge calls, copy emails to translate them, ask others to speak for you. PEL starts with situations from your life, trains you live. Until you\'re the one who answers, writes, and speaks with confidence.'; setLang(heroSub, hsar, hsen); }
   var pathHint=document.querySelector('.path-hint .arabic');
-  if(pathHint) setLang(pathHint, 'اختبر مستواك مجانا، وعرف وش يوقفك بالضبط', 'Find out what stops you — it\'s free');
+  if(pathHint) setLang(pathHint, 'اختبر مستواك مجانا، وعرف وش يوقفك بالضبط', 'Find out what stops you, it\'s free');
   var pathHintEn=document.querySelector('.path-hint-en');
   if(pathHintEn) pathHintEn.textContent = lang==='ar' ? '' : 'First lesson is free, try it before you pay anything';
   // trust items (bilingual)
   var trustItems=document.querySelectorAll('.trust-item');
-  var trustAr=['تتدرب على محادثات قبل ما تصير','تسمع كل كلمه وتكررها لين تثبت','اذا غلطت، نعلمك وين — فورا','تشوف تقدمك يوم بيوم'];
-  var trustEn=['Practice conversations before they happen','Hear every word, repeat it until it sticks','Make a mistake, find out where — instantly','See your progress day by day'];
+  var trustAr=['تتدرب على محادثات قبل ما تصير','تسمع كل كلمه وتكررها لين تثبت','اذا غلطت، نعلمك وين فورا','تشوف تقدمك يوم بيوم'];
+  var trustEn=['Practice conversations before they happen','Hear every word, repeat it until it sticks','Make a mistake, find out where, instantly','See your progress day by day'];
   trustItems.forEach(function(el,i){ if(trustAr[i]&&trustEn[i]){ el.innerHTML='<span class="dot"></span>'+(lang==='ar'?trustAr[i]:trustEn[i]); el.setAttribute('dir',lang==='ar'?'rtl':'ltr'); } });
 
   // hero social proof removed: fabricated statistics are not allowed on PEL
@@ -1754,7 +1754,7 @@ function applyIndexLang(lang){
   var faqH2=document.querySelector('#faq .section-head h2');
   if(faqH2) faqH2.textContent = lang==='ar' ? 'اسئله قبل التسجيل' : 'Questions before you sign up';
   var finalH2=document.querySelector('.final-cta h2');
-  if(finalH2) finalH2.textContent = lang==='ar' ? 'ابدا الحين، اول درس عليك' : 'Start now — your first lesson is free';
+  if(finalH2) finalH2.textContent = lang==='ar' ? 'ابدا الحين، اول درس عليك' : 'Start now, your first lesson is free';
   var finalP=document.querySelector('.final-cta p.arabic');
   if(finalP) finalP.textContent = lang==='ar' ? 'راسل استاذ فراس واتساب، نشغل حسابك وتبدا اول درس اليوم.' : 'Message Tutor Firas on WhatsApp, we set up your account and you start today.';
   // personalPreview
@@ -1856,20 +1856,20 @@ function applyIndexLang(lang){
   // (old lesson-card head references removed - replaced by feature tabs)
   // testimonials bilingual
   var testiAr=[
-    {name:'رهف العتيبي',role:'موظفه موارد بشريه الرياض',quote:'كل اجتماع مع اجانب كنت اسكت واخلي غيري يتكلم — حرام، وظيفتي تحتاج انجليزي. مع الاستاذ فراس صرت ارد واتكلم بثقه، وحتى مديري لاحظ الفرق'},
-    {name:'علي القحطاني',role:'طالب جامعاي الدمام',quote:'برزنتيشن بالانجليزي؟ كنت احفظ الكلام كله قبل ما اعرضه. الخوف كان يوقفني. الحين اتكلم من راسي، واذا نسيت جمله، ما اخاف — اكمل'},
+    {name:'رهف العتيبي',role:'موظفه موارد بشريه الرياض',quote:'كل اجتماع مع اجانب كنت اسكت واخلي غيري يتكلم. حرام، وظيفتي تحتاج انجليزي. مع الاستاذ فراس صرت ارد واتكلم بثقه، وحتى مديري لاحظ الفرق'},
+    {name:'علي القحطاني',role:'طالب جامعاي الدمام',quote:'برزنتيشن بالانجليزي؟ كنت احفظ الكلام كله قبل ما اعرضه. الخوف كان يوقفني. الحين اتكلم من راسي، واذا نسيت جمله، ما اخاف، اكمل'},
     {name:'لينا حسن',role:'صيدلانيه جده',quote:'شغلي صيدله كله بالانجليزي، بس كنت اتردد اذا احتجت اشرح شي لمريض بالتفصيل. كنت احس اني قادره بس الكلام ما يطلع. الحين كلامي صار اسلس وثقتي اكبر'},
-    {name:'يوسف عبدالسلام',role:'مطور برامج جده',quote:'اقرا انجليزي كويس، بس اذا دخل ميتنج — اسكت. احس نفسي افهم بس ما اقدر اقول. الحين اشارك عادي، واذا غلطت، بكمل. ما عاد اخاف'},
-    {name:'دانه العمري',role:'طالبه ثانوي جده',quote:'احب الانجليزي، بس اذا قالت الابله تكلمي قدام الفصل — اتوتر مره. وجهي يحمر وانا ما اقدر اطلع كلمه. الحين اجاوب بدون ما افكر كثير، وحسيت نفسي ارتحت'},
-    {name:'خالد الهاجري',role:'مدير مبيعات الرياض',quote:'اسافر كثير بحكم الشغل، ودايم احتاج اتكلم مع عملاء من برا. كنت افكر بكل جمله قبل اقولها — راسي يشتغل بس فمي يوقف. الحين الامور ماشيه طبيعي، اتكلم واثق'}
+    {name:'يوسف عبدالسلام',role:'مطور برامج جده',quote:'اقرا انجليزي كويس، بس اذا دخل ميتنج، اسكت. احس نفسي افهم بس ما اقدر اقول. الحين اشارك عادي، واذا غلطت، بكمل. ما عاد اخاف'},
+    {name:'دانه العمري',role:'طالبه ثانوي جده',quote:'احب الانجليزي، بس اذا قالت الابله تكلمي قدام الفصل، اتوتر مره. وجهي يحمر وانا ما اقدر اطلع كلمه. الحين اجاوب بدون ما افكر كثير، وحسيت نفسي ارتحت'},
+    {name:'خالد الهاجري',role:'مدير مبيعات الرياض',quote:'اسافر كثير بحكم الشغل، ودايم احتاج اتكلم مع عملاء من برا. كنت افكر بكل جمله قبل اقولها، راسي يشتغل بس فمي يوقف. الحين الامور ماشيه طبيعي، اتكلم واثق'}
   ];
   var testiEn=[
-    {name:'Rahaf Al-Otaibi',role:'HR Officer, Riyadh',quote:'Every meeting with foreigners, I\'d stay silent and let others talk. It\'s embarrassing — my job needs English. With Tutor Firas, I started responding with confidence. Even my manager noticed.'},
-    {name:'Ali Al-Qahtani',role:'University Student, Dammam',quote:'An English presentation? I\'d memorize the whole thing beforehand. Fear would freeze me. Now I speak from my head, and if I forget a sentence, I don\'t panic — I keep going.'},
+    {name:'Rahaf Al-Otaibi',role:'HR Officer, Riyadh',quote:'Every meeting with foreigners, I\'d stay silent and let others talk. It\'s embarrassing, my job needs English. With Tutor Firas, I started responding with confidence. Even my manager noticed.'},
+    {name:'Ali Al-Qahtani',role:'University Student, Dammam',quote:'An English presentation? I\'d memorize the whole thing beforehand. Fear would freeze me. Now I speak from my head, and if I forget a sentence, I don\'t panic, I keep going.'},
     {name:'Lina Hassan',role:'Pharmacist, Jeddah',quote:'My work as a pharmacist is all in English, but I\'d hesitate explaining things to patients in detail. I knew I could, but the words wouldn\'t come out. Now my speech is smoother and my confidence is higher.'},
-    {name:'Youssef Abdelsalam',role:'Software Developer, Jeddah',quote:'I read English well, but in meetings — I\'d go silent. I felt like I understood but couldn\'t speak. Now I participate normally, and if I make a mistake, I keep going. I\'m not afraid anymore.'},
-    {name:'Dana Al-Omari',role:'High School Student, Jeddah',quote:'I loved English, but when the teacher said speak in front of the class — I\'d freeze. My face would go red and I couldn\'t get a word out. Now I answer without overthinking. I feel relieved.'},
-    {name:'Khalid Al-Hajri',role:'Sales Manager, Riyadh',quote:'I travel a lot for work and always need to talk to clients abroad. I used to think about every sentence before saying it — my brain was working but my mouth would stop. Now things go naturally, I speak with confidence.'}
+    {name:'Youssef Abdelsalam',role:'Software Developer, Jeddah',quote:'I read English well, but in meetings, I\'d go silent. I felt like I understood but couldn\'t speak. Now I participate normally, and if I make a mistake, I keep going. I\'m not afraid anymore.'},
+    {name:'Dana Al-Omari',role:'High School Student, Jeddah',quote:'I loved English, but when the teacher said speak in front of the class, I\'d freeze. My face would go red and I couldn\'t get a word out. Now I answer without overthinking. I feel relieved.'},
+    {name:'Khalid Al-Hajri',role:'Sales Manager, Riyadh',quote:'I travel a lot for work and always need to talk to clients abroad. I used to think about every sentence before saying it, my brain was working but my mouth would stop. Now things go naturally, I speak with confidence.'}
   ];
   document.querySelectorAll('.testi-card').forEach(function(card,i){
     var data = lang==='ar'?testiAr[i]:testiEn[i];
@@ -1882,7 +1882,7 @@ function applyIndexLang(lang){
   var whH2=document.querySelector('#whatHappens h2');
   if(whH2) whH2.textContent = lang==='ar' ? 'من رساله واتساب لـ اول درس' : 'From WhatsApp message to first lesson';
   var whP=document.querySelector('#whatHappens .section-head p');
-  if(whP) whP.textContent = lang==='ar' ? 'ثلاث خطوات وانت داخل — ما فيه تعقيد' : 'Three steps and you\'re in — no complexity';
+  if(whP) whP.textContent = lang==='ar' ? 'ثلاث خطوات وانت داخل، ما فيه تعقيد' : 'Three steps and you\'re in, no complexity';
   var whCards=document.querySelectorAll('#whatHappens .card');
   var whAr=[
     {t:'نفعل حسابك',d:'ترسل لنا واتساب، ناكد الدفع ونفعل حسابك خلال دقايق، توصلك رساله دخول'},
@@ -2164,15 +2164,15 @@ window.addEventListener('storage', function(e){ if(e.key==='pel_account_prefs') 
 /* FAQ DATA - bilingual. DB copy (site_settings.faqs, editable in Admin >
    Site Settings) is canonical; this built-in list is the offline fallback. */
 const faqs = [
-  {qAr: 'لمين ذا البرنامج؟', aAr: 'لكل واحد وقف عند كلمه وحس انه يقدر بس ما يقدر: موظف، طالب، اي شخص يبي يتكلم بثقه. ما يهم مستواك، نبدا من وين ما انت.', qEn:'Who is this for?', aEn:'Anyone who\'s frozen at a word and felt like they could — but couldn\'t: workers, students, anyone who wants to speak with confidence. Your level doesn\'t matter, we start where you are.'},
+  {qAr: 'لمين ذا البرنامج؟', aAr: 'لكل واحد وقف عند كلمه وحس انه يقدر بس ما يقدر: موظف، طالب، اي شخص يبي يتكلم بثقه. ما يهم مستواك، نبدا من وين ما انت.', qEn:'Who is this for?', aEn:'Anyone who\'s frozen at a word and felt like they could, but couldn\'t: workers, students, anyone who wants to speak with confidence. Your level doesn\'t matter, we start where you are.'},
   {qAr: 'لازم اعرف انجليزي قبل؟', aAr: 'لا. لو ما تعرف ولا كلمه، نبدا من الحروف. تختبر مستواك مجانا، ونبني لك خطه على اساسه.', qEn:'Do I need to know English first?', aEn:'No. If you don\'t know a single word, we start from the alphabet. Take the free level test, and we build your plan from there.'},
   {qAr: 'المنهج امريكي فعلا؟', aAr: 'اي والله. كل درس وتسجيل ونطق مبني على اللهجه الامريكيه.', qEn:'Is it really American English?', aEn:'Yes. Every lesson, recording, and pronunciation is American English.'},
-  {qAr: 'الشرح بالعربي؟', aAr: 'اي والله. كل درس مشروح بالعربي — ما تضيع. والكلمات الجديده مكتوب نطقها بجانبها.', qEn:'How are lessons explained?', aEn:'Yes. Every lesson is explained in Arabic — you won\'t get lost. New words have their pronunciation written next to them.'},
-  {qAr: 'اقدر ادرس من الجوال؟', aAr: 'اكيد. جوالك يصير فصلك — تفتحه اي وقت وتكمل من وين ما وقفت.', qEn:'Can I study on my phone?', aEn:'Yes. Your phone becomes your classroom — open it anywhere, pick up where you left off.'},
+  {qAr: 'الشرح بالعربي؟', aAr: 'اي والله. كل درس مشروح بالعربي، تفهم كل شي. والكلمات الجديده مكتوب نطقها بجانبها.', qEn:'How are lessons explained?', aEn:'Yes. Every lesson is explained in Arabic, you understand everything. New words have their pronunciation written next to them.'},
+  {qAr: 'اقدر ادرس من الجوال؟', aAr: 'اكيد. جوالك يصير فصلك، تفتحه اي وقت وتكمل من وين ما وقفت.', qEn:'Can I study on my phone?', aEn:'Yes. Your phone becomes your classroom, open it anywhere, pick up where you left off.'},
   {qAr: 'كم مده الاشتراك؟', aAr: 'شهر، شهرين، او 3 اشهر. انت تختار. خلال هالفتره كل الدروس متاحه لك.', qEn:'How long is the subscription?', aEn:'One month, two months, or three months. You choose. All lessons are available to you during that time.'},
   {qAr: 'تقدرون تترجمون لي؟', aAr: 'اي والله. تترجم اي كلمه وانت تتعلم. واذا كتبت شي وغلطت، نشوف وين الغلط ونصححه فورا.', qEn:'Can you translate for me?', aEn:'Yes. Translate any word while you learn. And if you write something and make a mistake, we show you where and fix it instantly.'},
-  {qAr: 'اشوف تقدمي؟', aAr: 'اي والله. لوحتك تشوف وين وصلت — محادثه، استماع، مفردات — اسبوع باسبوع. تشوف الفرق بنفسك.', qEn:'Can I see my progress?', aEn:'Yes. Your dashboard shows where you are — speaking, listening, vocabulary — week by week. You see the difference yourself.'},
-  {qAr: 'كم سعر الاشتراك؟', aAr: 'مسارين: ابد من الصفر — شهر 650 ⃁، شهرين 800 ⃁، 3 اشهر 1300 ⃁ (افضل قيمه). التجهيز للاختبارات — شهر 1000 ⃁، شهرين 1550 ⃁، 3 اشهر 2350 ⃁ (افضل قيمه). الحصص المباشره مشموله في باقات مختاره. تدفع عبر واتساب ونشغل حسابك خلال دقايق. شوف الباقات بالتفصيل فوق.', qEn:'How much?', aEn:'Two paths: Start From Zero — 1 month 650 ⃁, 2 months 800 ⃁, 3 months 1300 ⃁ (best value). Exam Prep (STEP / TOEFL / IELTS) — 1 month 1000 ⃁, 2 months 1550 ⃁, 3 months 2350 ⃁ (best value). Live classes are included on select plans. Pay on WhatsApp, we set up your account in minutes. See the plans above for details.'},
+  {qAr: 'اشوف تقدمي؟', aAr: 'اي والله. لوحتك تشوف وين وصلت: محادثه، استماع، مفردات، اسبوع باسبوع. تشوف الفرق بنفسك.', qEn:'Can I see my progress?', aEn:'Yes. Your dashboard shows where you are: speaking, listening, vocabulary, week by week. You see the difference yourself.'},
+  {qAr: 'كم سعر الاشتراك؟', aAr: 'مسارين: ابد من الصفر: شهر 650 ⃁، شهرين 800 ⃁، 3 اشهر 1300 ⃁ (افضل قيمه). التجهيز للاختبارات: شهر 1000 ⃁، شهرين 1550 ⃁، 3 اشهر 2350 ⃁ (افضل قيمه). الحصص المباشره مشموله في باقات مختاره. تدفع عبر واتساب ونشغل حسابك خلال دقايق. شوف الباقات بالتفصيل فوق.', qEn:'How much?', aEn:'Two paths: Start From Zero: 1 month 650 ⃁, 2 months 800 ⃁, 3 months 1300 ⃁ (best value). Exam Prep (STEP / TOEFL / IELTS): 1 month 1000 ⃁, 2 months 1550 ⃁, 3 months 2350 ⃁ (best value). Live classes are included on select plans. Pay on WhatsApp, we set up your account in minutes. See the plans above for details.'},
   {qAr: 'الباقات فيها حصص مباشره؟', aAr: 'باقات مختاره فيها حصص مباشره. باقه الشهر لابد من الصفر ما فيها حصص، بس باقه الشهرين فيها حصه كل اسبوع وباقه 3 اشهر فيها حصتين. وباقات التجهيز للاختبارات فيها من حصه لـ 3 حصص بالاسبوع. الاستاذ فراس يحدد المواعيد. تبي اكثر؟ تشتري رصيد للحصص الشخصيه.', qEn:'Do plans include live classes?', aEn:'Select plans include live classes. The 1-month Start From Zero plan has no live classes, but 2 months includes 1/week and 3 months includes 2/week. Exam Prep plans include 1-3 classes per week. Tutor Firas sets the schedule. Want more? Buy extra credits for in-person lessons.'},
   {qAr: 'كيف اسجل؟', aAr: 'راسل استاذ فراس واتساب، نرسل لك تفاصيل الدفع ونشغل حسابك خلال دقايق.', qEn:'How do I sign up?', aEn:'Message Tutor Firas on WhatsApp, we send payment details and set up your account in minutes.'},
   {qAr: 'ايش يصير لما تخلص باقتي؟', aAr: 'تقدمك يبقى محفوظ، ما يضيع. بس يوقف الوصول للدروس. تجدد من لوحتك او تراسل استاذ فراس ونشغل لك باقه جديده.', qEn:'What happens when my plan ends?', aEn:'Your progress stays saved, it doesn\'t disappear. Lesson access pauses. Renew from your dashboard or message Tutor Firas for a new plan.'},
