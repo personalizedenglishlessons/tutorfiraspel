@@ -713,6 +713,7 @@ body.ui-ar .user-meta{ text-align:right; }
 .vv-search input::placeholder{ color:var(--text-faint); }
 .vv-cat-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:14px; margin-bottom:32px; }
 .vv-cat-card{ background:linear-gradient(180deg,rgba(255,255,255,.018),transparent 34%),var(--card); border:1px solid var(--border); border-radius:16px; padding:20px; cursor:pointer; display:flex; flex-direction:column; gap:10px; transition:.3s var(--ease); box-shadow:inset 0 1px 0 rgba(255,255,255,.03); }
+html[data-theme="light"] .vv-cat-card{ background:linear-gradient(180deg, #EFE9DE, #E8E0D0 34%), var(--card); }
 .vv-cat-card:hover{ border-color:var(--gold); transform:translateY(-3px); box-shadow:var(--shadow-soft); }
 .vv-cat-icon{ width:40px; height:40px; border-radius:13px; flex-shrink:0; background:linear-gradient(135deg,rgba(216,189,131,.36),rgba(168,131,69,.2) 60%,rgba(200,169,106,.12)); color:var(--gold-soft); display:flex; align-items:center; justify-content:center; }
 .vv-cat-icon [data-lucide]{ width:20px; height:20px; }
@@ -749,6 +750,7 @@ body.ui-ar .vv-stat .lbl{ letter-spacing:0; text-transform:none; font-family:'Ca
 .vv-card-inner.active{ opacity:1; pointer-events:auto; }
 .vv-card-inner.flipped{ transform:rotateY(180deg); }
 .vv-card-face{ position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; background:linear-gradient(180deg,rgba(255,255,255,.018),transparent 34%),var(--card); border:1px solid var(--border); border-radius:24px; padding:36px; display:flex; flex-direction:column; box-shadow:inset 0 1px 0 rgba(255,255,255,.03),0 24px 80px -24px rgba(0,0,0,.6); }
+html[data-theme="light"] .vv-card-face{ background:linear-gradient(180deg, #EFE9DE, #E8E0D0 34%), var(--card); box-shadow:inset 0 1px 0 rgba(255,255,255,.4), 0 8px 24px -8px rgba(30,25,15,.1); }
 .vv-card-back{ transform:rotateY(180deg); overflow-y:auto; scrollbar-width:none; -ms-overflow-style:none; }
 .vv-card-back::-webkit-scrollbar{ display:none; }
 @media(min-width:1900px){ 
@@ -1152,11 +1154,12 @@ html[data-theme="light"] body::before{ opacity:.018; }
   box-shadow: inset 0 1px 0 rgba(255,255,255,.03), 0 14px 34px -22px rgba(0,0,0,.55);
 }
 html[data-theme="light"] .card{
-  background:linear-gradient(180deg, #EFE9DE, #EFE9DE 50%, transparent 80%), var(--card);
-  box-shadow: 0 1px 2px rgba(30,25,15,.04), 0 4px 16px -8px rgba(30,25,15,.06);
+  background:linear-gradient(180deg, #EFE9DE, #E8E0D0 50%, transparent 80%), var(--card);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.4), 0 1px 2px rgba(30,25,15,.04), 0 4px 16px -8px rgba(30,25,15,.06);
 }
 html[data-theme="light"] .card-elevated{
-  background:linear-gradient(180deg, rgba(30,25,15,.012), transparent 40%), var(--card-elevated);
+  background:linear-gradient(180deg, #EFE9DE, #E8E0D0 40%, transparent 80%), var(--card-elevated);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.4), 0 1px 2px rgba(30,25,15,.04);
 }
 html[data-theme="light"] .card.hoverable:hover{
   transform:translateY(-4px);
@@ -1224,12 +1227,12 @@ html[data-theme="light"] .chip.gold{ background:linear-gradient(180deg, rgba(200
 }
 .tile-icon-sm{ width:38px; height:38px; border-radius:11px; }
 html[data-theme="light"] .tile-icon{
-  background:linear-gradient(135deg, #FFFCF6, #F5F2EC 60%, #EFE9DE);
+  background:linear-gradient(135deg, #EFE9DE, #E8E0D0 60%, #EFE9DE);
   color:var(--gold);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 2px 8px -2px rgba(30,25,15,.06);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 2px 8px -2px rgba(30,25,15,.06);
 }
 html[data-theme="light"] .tile-icon::after{
-  background:linear-gradient(135deg, rgba(255,255,255,.6), transparent 46%);
+  background:linear-gradient(135deg, rgba(255,255,255,.4), transparent 46%);
 }
 
 html[data-theme="light"] .side-link.active{
@@ -1268,7 +1271,7 @@ html[data-theme="light"] #heroCard{
     radial-gradient(70% 100% at 0% 110%, rgba(29,122,78,.03), transparent 55%),
     linear-gradient(165deg, rgba(0,0,0,.008), transparent 45%),
     var(--card-elevated);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.8), var(--shadow-lift);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.5), var(--shadow-lift);
 }
 html[data-theme="light"] #heroCard::before{
   background:linear-gradient(90deg, transparent, rgba(200,147,28,.5), rgba(184,154,92,.6), rgba(200,147,28,.5), transparent);
@@ -1300,7 +1303,12 @@ html[data-theme="light"] .academy-card{ box-shadow:0 1px 2px rgba(30,25,15,.04),
 html[data-theme="light"] .academy-card:hover{
   box-shadow:0 4px 12px rgba(0,0,0,.08);
 }
-html[data-theme="light"] .academy-fav{ background:rgba(255,255,255,.8); box-shadow:none; }
+html[data-theme="light"] .academy-fav{ background:rgba(184,130,30,.15); box-shadow:inset 0 1px 0 rgba(255,255,255,.4); }
+/* light mode: fix invisible white insets on cards */
+html[data-theme="light"] .vv-cat-card,
+html[data-theme="light"] .vv-card-face{ box-shadow:inset 0 1px 0 rgba(255,255,255,.4), 0 4px 16px -8px rgba(30,25,15,.08); }
+html[data-theme="light"] .vv-progress-bar{ background:rgba(184,130,30,.1); }
+html[data-theme="light"] .academy-fav.active{ background:rgba(184,130,30,.2); color:var(--gold); }
 .academy-cover::before{
   content:""; position:absolute; inset:0; pointer-events:none;
   background:
@@ -1327,7 +1335,6 @@ html[data-theme="light"] .academy-card:hover{
   background:rgba(10,10,12,.45);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.12);
 }
-html[data-theme="light"] .academy-fav{ background:rgba(255,255,255,.8); box-shadow:none; }
 
 /* Progress: fills and rings get a gentle glow so progress feels alive. */
 .progress-fill{ box-shadow:0 0 10px rgba(200,169,106,.45), 0 0 2px rgba(200,169,106,.6); }
