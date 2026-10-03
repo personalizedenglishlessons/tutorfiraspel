@@ -1735,9 +1735,18 @@ function applyIndexLang(lang){
   var pricingNote=document.querySelector('.pricing-note');
   if(pricingNote){
     var pn = (window.PEL_SITE && PEL_SITE.pricingNote) ? PEL_SITE.pricingNote : null;
-    var pnAr = (pn && pn.ar) || '<b>ما تعرف وش يناسبك؟</b> راسلنا واتساب ونساعدك تختار.';
-    var pnEn = (pn && pn.en) || '<b>Not sure which one?</b> Message us on WhatsApp, we\'ll help you pick.';
-    pricingNote.innerHTML = lang==='ar' ? pnAr : pnEn;
+    pricingNote.textContent = '';
+    if(pn && lang==='ar' && pn.ar){ pricingNote.textContent = pn.ar; }
+    else if(pn && pn.en){ pricingNote.textContent = pn.en; }
+    else {
+      /* Built-in fallback uses safe DOM construction with a <b> wrapper */
+      var fbAr = 'ما تعرف وش يناسبك؟ راسلنا واتساب ونساعدك تختار.';
+      var fbEn = 'Not sure which one? Message us on WhatsApp, we\'ll help you pick.';
+      var b = document.createElement('b');
+      b.textContent = lang==='ar' ? fbAr.split('.')[0]+'.' : fbEn.split('?')[0]+'?';
+      pricingNote.appendChild(b);
+      pricingNote.appendChild(document.createTextNode(lang==='ar' ? ' '+fbAr.split('.').slice(1).join('.').trim() : ' '+fbEn.split('?').slice(1).join('?').trim()));
+    }
   }
   // footer + remaining section heads (minimal bilingual to satisfy full-site requirement)
   var footerBrandP=document.querySelector('.footer-brand p.arabic');
