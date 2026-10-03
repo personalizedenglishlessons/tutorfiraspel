@@ -960,8 +960,22 @@ $('viewArea').innerHTML = pageHead(t('overview'), lang === 'ar' ? 'وش يصير
     return '<div class="bar-row"><div class="bar-label">' + esc(academyName(c.academy, lang)) + '</div><div class="bar-track"><div class="bar-fill" style="width:' + w + '%"></div></div><div class="bar-val">' + fmtN(c.count) + '</div></div>';
   }).join('') || '<div class="sub">' + esc(t('noData')) + '</div>';
 
+  var quickActions = [
+    {icon:'user-plus', label:lang==='ar'?'اضافه طالب':'Add Student', view:'students'},
+    {icon:'megaphone', label:lang==='ar'?'اعلان جديد':'New Announcement', view:'announcements'},
+    {icon:'calendar-plus', label:lang==='ar'?'حصه مباشره':'Live Class', view:'liveClasses'},
+    {icon:'award', label:lang==='ar'?'اصدار شهاده':'Issue Cert', view:'certificates'},
+    {icon:'settings', label:lang==='ar'?'اعدادات الموقع':'Site Settings', view:'settings'},
+    {icon:'heart-pulse', label:lang==='ar'?'صحه النظام':'System Health', view:'health'}
+  ];
+  var qaHtml = quickActions.map(function(qa){
+    return '<button class="btn btn-outline btn-sm" data-qa-go="' + qa.view + '" style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 10px;min-width:90px;"><i data-lucide="' + qa.icon + '" width="20" height="20"></i><span style="font-size:.72rem;text-align:center;">' + esc(qa.label) + '</span></button>';
+  }).join('');
+
   $('viewArea').innerHTML = pageHead(t('overview'), lang === 'ar' ? 'نظره عامه على المنصه.' : 'Platform overview.') +
     '<div class="kpi-grid">' + kpiHtml + '</div>' +
+    '<div class="section-title">' + esc(lang==='ar'?'اجراءات سريعه':'Quick Actions') + '</div>' +
+    '<div class="card" style="display:flex;flex-wrap:wrap;gap:10px;">' + qaHtml + '</div>' +
     '<div class="grid grid-2"><div>' +
     '<div class="section-title">' + esc(t('whatShouldIDo')) + '</div><div class="card"><div class="reason-list">' + actionHtml + '</div></div>' +
     '<div class="section-title">' + esc(t('attention')) + '</div><div class="card"><div class="reason-list">' + attentionHtml + '</div></div>' +
@@ -972,6 +986,9 @@ $('viewArea').innerHTML = pageHead(t('overview'), lang === 'ar' ? 'وش يصير
     '<div class="section-title">' + esc(t('recentCerts')) + '</div><div class="card"><div class="reason-list">' + certsHtml + '</div></div></div></div>';
   loadIcons();
   wireStudentLinks();
+  document.querySelectorAll('[data-qa-go]').forEach(function(btn){
+    btn.addEventListener('click', function(){ goTo(btn.getAttribute('data-qa-go')); });
+  });
 }
 
 /* ============================================================
