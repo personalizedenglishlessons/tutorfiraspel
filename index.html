@@ -1160,7 +1160,7 @@ section{ padding-top:70px; padding-bottom:70px; }
     <div class="reveal is-visible">
        <span class="eyebrow hero-eyebrow" dir="ltr" style="justify-content:flex-start;"><span class="pel-tag">Personalized English Lessons</span></span>
       <h1 class="arabic-h" dir="rtl" style="margin-top:18px; font-size:clamp(2rem,4.5vw,3.2rem); line-height:1.2;">سنين تدرس، وما تقدر ترد</h1>
-      <p class="arabic hero-sub" dir="rtl" style="font-size:1rem; max-width:520px; margin-top:14px; line-height:1.8;">تتهرب من المكالمه، تنسخ الايميل وتترجمه، تطلب من غيرك يتكلم عنك. PEL يبدا معك من مواقف تصير لك، ويدربك مباشره. لين تصير انت اللي ترد، وتكتب، وتتكلم.</p>
+      <p class="arabic hero-sub" dir="rtl" style="font-size:1rem; max-width:520px; margin-top:14px; line-height:1.8;">تتهرب من المكالمه، تنسخ الايميل وتترجمه، تطلب من غيرك يتكلم عنك. PEL يبدا معك من مواقف تصير لك، ويدربك مباشره. لين تصير انت اللي ترد، وتكتب، وتتكلم — بثقه.</p>
       <div class="hero-cta-row" style="margin-top:26px; gap:12px; flex-wrap:wrap; align-items:center;">
         <button type="button" class="btn-gold magnetic" data-open-path id="heroPathCta" style="padding:14px 28px; font-size:.95rem;">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="2.5"/><circle cx="18" cy="5" r="2.5"/><path d="M8.5 19H15a3 3 0 0 0 3-3v-8.5M6 16.5V8a3 3 0 0 1 3-3h3.5"/></svg>
@@ -1176,10 +1176,10 @@ section{ padding-top:70px; padding-bottom:70px; }
         <span class="arabic">اختبر مستواك مجانا، وعرف وش يوقفك بالضبط</span>
       </div>
       <div class="trust-row" dir="rtl" style="margin-top:18px; gap:10px 18px;">
-        <div class="trust-item"><span class="dot"></span>محادثه افتراضيه مع شخصيات حقيقيه</div>
-        <div class="trust-item"><span class="dot"></span>بنك كلمات ببطاقات تسمع نطقها</div>
-        <div class="trust-item"><span class="dot"></span>تصحيح كتابتك فورا</div>
-        <div class="trust-item"><span class="dot"></span>تتبع تقدمك يوم بيوم</div>
+        <div class="trust-item"><span class="dot"></span>تتدرب على محادثات قبل ما تصير</div>
+        <div class="trust-item"><span class="dot"></span>تسمع كل كلمه وتكررها لين تثبت</div>
+        <div class="trust-item"><span class="dot"></span>اذا غلطت، نعلمك وين — فورا</div>
+        <div class="trust-item"><span class="dot"></span>تشوف تقدمك يوم بيوم</div>
       </div>
     </div>
 
@@ -1570,15 +1570,15 @@ function applyIndexLang(lang){
   var heroH1=document.querySelector('.hero h1.arabic-h');
   if(heroH1){ var h1ar = (window.PEL_SITE && PEL_SITE.heroHeadline && PEL_SITE.heroHeadline.ar) ? PEL_SITE.heroHeadline.ar : 'سنين تدرس، وما تقدر ترد'; var h1en = (window.PEL_SITE && PEL_SITE.heroHeadline && PEL_SITE.heroHeadline.en) ? PEL_SITE.heroHeadline.en : 'Years studying, and you still can\'t reply'; setLang(heroH1, h1ar, h1en); }
   var heroSub=document.querySelector('.hero .hero-sub');
-  if(heroSub){ var hsar = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.ar) ? PEL_SITE.heroSub.ar : 'تتهرب من المكالمه، تنسخ الايميل وتترجمه، تطلب من غيرك يتكلم عنك. PEL يبدا معك من مواقف تصير لك، ويدربك مباشره. لين تصير انت اللي ترد، وتكتب، وتتكلم.'; var hsen = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.en) ? PEL_SITE.heroSub.en : 'You dodge calls, copy emails to translate them, ask others to speak for you. PEL starts with situations from your life, trains you live. Until you\'re the one who answers, writes, and speaks.'; setLang(heroSub, hsar, hsen); }
+  if(heroSub){ var hsar = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.ar) ? PEL_SITE.heroSub.ar : 'تتهرب من المكالمه، تنسخ الايميل وتترجمه، تطلب من غيرك يتكلم عنك. PEL يبدا معك من مواقف تصير لك، ويدربك مباشره. لين تصير انت اللي ترد، وتكتب، وتتكلم — بثقه.'; var hsen = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.en) ? PEL_SITE.heroSub.en : 'You dodge calls, copy emails to translate them, ask others to speak for you. PEL starts with situations from your life, trains you live. Until you\'re the one who answers, writes, and speaks — with confidence.'; setLang(heroSub, hsar, hsen); }
   var pathHint=document.querySelector('.path-hint .arabic');
   if(pathHint) setLang(pathHint, 'اختبر مستواك مجانا، وعرف وش يوقفك بالضبط', 'Find out what stops you — it\'s free');
   var pathHintEn=document.querySelector('.path-hint-en');
   if(pathHintEn) pathHintEn.textContent = lang==='ar' ? '' : 'First lesson is free, try it before you pay anything';
   // trust items (bilingual)
   var trustItems=document.querySelectorAll('.trust-item');
-  var trustAr=['محادثه افتراضيه مع شخصيات حقيقيه','بنك كلمات ببطاقات تسمع نطقها','تصحيح كتابتك فورا','تتبع تقدمك يوم بيوم'];
-  var trustEn=['Roleplay simulator with real characters','Vocab vault with audio flashcards','Instant writing correction','Track your progress day by day'];
+  var trustAr=['تتدرب على محادثات قبل ما تصير','تسمع كل كلمه وتكررها لين تثبت','اذا غلطت، نعلمك وين — فورا','تشوف تقدمك يوم بيوم'];
+  var trustEn=['Practice conversations before they happen','Hear every word, repeat it until it sticks','Make a mistake, find out where — instantly','See your progress day by day'];
   trustItems.forEach(function(el,i){ if(trustAr[i]&&trustEn[i]){ el.innerHTML='<span class="dot"></span>'+(lang==='ar'?trustAr[i]:trustEn[i]); el.setAttribute('dir',lang==='ar'?'rtl':'ltr'); } });
 
   // hero social proof removed: fabricated statistics are not allowed on PEL
