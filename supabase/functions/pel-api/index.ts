@@ -166,6 +166,8 @@ const ALLOWLIST: Record<string, { type: string; description: string }> = {
   "system_health": { type: "rpc", description: "System health" },
   "admin_cleanup_preview": { type: "rpc", description: "Preview storage cleanup counts" },
   "admin_cleanup_run": { type: "rpc", description: "Run storage cleanup" },
+  "admin_delete_preview": { type: "rpc", description: "Preview entity deletion" },
+  "admin_delete_entity": { type: "rpc", description: "Delete or archive entity" },
   "teacher_override": { type: "rpc", description: "Teacher override" },
   "verify_certificate": { type: "rpc", description: "Verify certificate" },
 

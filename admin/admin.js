@@ -550,6 +550,58 @@ async function audit(action, targetType, targetId, metadata){
 function hasPerm(p){ return me.perms.indexOf(p) !== -1; }
 function canTeacher(){ return me.role === 'teacher' || me.role === 'admin' || me.role === 'super_admin'; }
 
+/* Reusable delete/archive helper for any admin entity.
+   entity: 'group' | 'intervention' | 'note' | 'snapshot' | 'timeline' |
+           'pricing' | 'certificate' | 'live_class' | 'program' | 'academy' | 'lesson'
+   id:     the entity's UUID (as string)
+   onDone: callback to refresh the view after deletion */
+async function adminDelete(entity, id, onDone){
+  if(!entity || !id) return;
+  /* 1. Fetch preview (name + dependent counts + allowed action) */
+  var prev = await rpc('admin_delete_preview', { p_entity: entity, p_id: String(id) });
+  if(!prev.ok){ toast((prev.error && prev.error.message) || t('errorGeneric'), true); return; }
+  var info = prev.data || {};
+  if(info.error){ toast(info.error, true); return; }
+  var action = info.action || 'delete';
+  var name = info.name || id;
+  var warn = info.warning || false;
+  var deps = info.dependencies || {};
+  var depList = Object.keys(deps).map(function(k){
+    return deps[k] + ' ' + k;
+  }).join(', ');
+  var actionLabel = action === 'archive'
+    ? (lang === 'ar' ? 'ارشفه' : 'Archive')
+    : (lang === 'ar' ? 'حذف' : 'Delete');
+  var actionBtn = action === 'archive' ? 'btn-gold' : 'btn-danger';
+  /* 2. Confirmation modal */
+  var depHtml = warn && depList
+    ? '<div class="reason-item" style="margin-top:12px;border-color:var(--gold);"><span class="badge-dot gold" style="margin-top:5px;"></span><div style="flex:1;"><div style="font-weight:600;">' + esc(lang === 'ar' ? 'تحذير: هذا الكائن مرتبط بـ' : 'Warning: this has linked') + '</div><span class="why">' + esc(depList) + '</span></div></div>'
+    : '';
+  var m = modal(actionLabel + ': ' + (name || ''),
+    '<p style="margin:0 0 8px;">' + esc(lang === 'ar'
+      ? (action === 'archive' ? 'هذا راح يتم ارشفته. ' : 'هذا راح ينحذف نهائيا. ')
+      : (action === 'archive' ? 'This will be archived. ' : 'This will be permanently deleted. ')) +
+      esc(lang === 'ar' ? 'متاكد؟' : 'Are you sure?') + '</p>' +
+    depHtml +
+    '<div class="btn-row" style="margin-top:16px;"><button class="btn ' + actionBtn + ' btn-sm" id="admDelConfirm">' + esc(actionLabel) + '</button><button class="btn btn-ghost btn-sm" data-close>' + esc(t('cancel')) + '</button></div>'
+  );
+  var dc = m.querySelector('[data-close]');
+  if(dc) dc.addEventListener('click', function(){ closeModal(m); });
+  var cf = $('admDelConfirm');
+  if(cf) cf.addEventListener('click', async function(){
+    cf.disabled = true; cf.textContent = '...';
+    var r = await rpc('admin_delete_entity', { p_entity: entity, p_id: String(id) });
+    closeModal(m);
+    if(!r.ok){ toast((r.error && r.error.message) || t('errorGeneric'), true); return; }
+    var res = r.data || {};
+    var msg = res.action === 'archived'
+      ? (lang === 'ar' ? 'تم الارشفه' : 'Archived')
+      : (lang === 'ar' ? 'تم الحذف' : 'Deleted');
+    toast(msg);
+    if(typeof onDone === 'function') onDone();
+  });
+}
+
 /* Level display names - friendly English/Arabic names instead of CEFR codes.
    Internal codes (A0..C2) stay in the DB and as option VALUES only. */
 var LVL_NAMES = {
@@ -2012,7 +2064,8 @@ async function groups(){
       '</div>' +
       '<div class="btn-row" style="margin-top:14px;">' +
       '<button class="btn btn-outline btn-sm" data-open-group="' + g.id + '">' + esc(t('openGroup')) + '</button>' +
-      (hasPerm('groups.manage') ? '<button class="btn btn-ghost btn-sm" data-edit-group="' + g.id + '">' + esc(t('edit')) + '</button>' : '') +
+      (hasPerm('groups.manage') ? '<button class="btn btn-ghost btn-sm" data-edit-group="' + g.id + '">' + esc(t('edit')) + '</button>' +
+      '<button class="btn btn-danger btn-sm" data-del-group="' + g.id + '">' + esc(lang==='ar'?'حذف':'Delete') + '</button>' : '') +
       '</div></div>';
   }).join('') || emptyBlock(t('noData'));
 
@@ -2025,6 +2078,9 @@ async function groups(){
   if(nb) nb.addEventListener('click', function(){ groupForm(null); });
   document.querySelectorAll('[data-open-group]').forEach(function(el){
     el.addEventListener('click', function(){ goTo('groupDetail', el.getAttribute('data-open-group')); });
+  });
+  document.querySelectorAll('[data-del-group]').forEach(function(el){
+    el.addEventListener('click', function(){ adminDelete('group', el.getAttribute('data-del-group'), function(){ groupsView(); }); });
   });
   document.querySelectorAll('[data-edit-group]').forEach(function(el){
     el.addEventListener('click', function(){
@@ -2297,6 +2353,7 @@ function academyCard(a){
         '<button class="btn btn-outline btn-sm" data-lesson-edit="' + esc(l.id) + '" data-ac="' + esc(a.id) + '">' + esc(t('edit')) + '</button>' +
         '<button class="btn btn-ghost btn-sm" data-lesson-toggle="' + esc(l.id) + '">' + (l.active ? esc(t('hide')) : esc(t('show'))) + '</button>' +
         '<button class="btn btn-ghost btn-sm" data-lesson-unlink-ac="' + esc(a.id) + '" data-lid="' + esc(l.id) + '" style="color:#c0392b;">' + esc(t('unlink')) + '</button>' +
+        (hasPerm('settings.manage') ? '<button class="btn btn-danger btn-sm" data-del-lesson="' + esc(l.id) + '">' + esc(lang==='ar'?'ارشفه':'Archive') + '</button>' : '') +
         '</span>' : '') +
       '</div>';
   }).join('');
@@ -2338,6 +2395,9 @@ document.addEventListener('click', async function(ev){
     if(!confirm(t('confirmUnlink'))) return;
     var r3 = await rpc('admin_lesson_unlink', { p_academy_id: b.getAttribute('data-lesson-unlink-ac'), p_lesson_id: b.getAttribute('data-lid') });
     if(r3.ok){ toast(t('curriculumUpdated')); courses(); } else toast(rpcErrMsg(r3), true);
+  } else if(b.hasAttribute('data-del-lesson')){
+    adminDelete('lesson', b.getAttribute('data-del-lesson'), function(){ courses(); });
+    return;
   } else if(b.hasAttribute('data-ac-edit')){
     academyForm(b.getAttribute('data-ac-edit'));
   } else if(b.hasAttribute('data-ac-addlesson')){
@@ -2445,12 +2505,17 @@ async function interventions(){
       '<div style="font-weight:600; margin-top:3px;">' + esc(lang === 'ar' ? i.title_ar : i.title_en) + '</div>' +
       '<span class="why">' + chip(esc(i.type), 'bronze') + ' ' + s + ' · ' + fmtDate(i.created_at) + '</span>' +
       (i.reason_en ? '<span class="why">' + esc(lang === 'ar' ? i.reason_ar : i.reason_en) + '</span>' : '') +
-      '</div></div>';
+      '</div>' +
+      (hasPerm('settings.manage') ? '<button class="btn btn-danger btn-sm" data-del-intervention="' + i.id + '">' + esc(lang==='ar'?'حذف':'Delete') + '</button>' : '') +
+      '</div>';
   }).join('') || emptyBlock(t('noInterventions'));
   $('viewArea').innerHTML = pageHead(t('interventions'), lang === 'ar' ? 'تدخلات الاستاذين والاداره' : 'Teacher and admin interventions') +
     '<div class="card"><div class="reason-list">' + html + '</div></div>';
   loadIcons();
   wireStudentLinks();
+  document.querySelectorAll('[data-del-intervention]').forEach(function(el){
+    el.addEventListener('click', function(){ adminDelete('intervention', el.getAttribute('data-del-intervention'), function(){ interventions(); }); });
+  });
 }
 
 /* ============================================================
@@ -2600,6 +2665,7 @@ async function programs(){
         (x.price ? '<span>· ' + esc(x.price) + '</span>' : '') +
       '</div>' +
       (x.description ? '<div class="sub" style="margin-top:10px;">' + esc(x.description) + '</div>' : '') +
+      (hasPerm('settings.manage') ? '<div class="btn-row" style="margin-top:12px;"><button class="btn btn-outline btn-sm" data-del-program="' + x.id + '">' + esc(lang==='ar'?'ارشفه':'Archive') + '</button></div>' : '') +
       '</div>';
   }).join('') || emptyBlock(t('noData'));
 
@@ -2619,6 +2685,9 @@ async function programs(){
   wireStudentLinks();
   var pb = $('newProgBtn');
   if(pb) pb.addEventListener('click', function(){ programForm(); });
+  document.querySelectorAll('[data-del-program]').forEach(function(el){
+    el.addEventListener('click', function(){ adminDelete('program', el.getAttribute('data-del-program'), function(){ programs(); }); });
+  });
 }
 function programForm(){
   var s = modal(t('newProgram'), '' +
@@ -2919,6 +2988,7 @@ async function certificates(){
 statusChip(x.status) +
       (x.user_id ? '<a class="row-link" data-open-student="' + x.user_id + '" style="font-size:.72rem;">' + esc(t('student')) + '</a>' : '') +
       (x.status === 'issued' && hasPerm('certificates.revoke') ? '<button class="btn btn-danger btn-sm" data-revoke="' + esc(x.cert_id) + '">' + esc(t('revoke')) + '</button>' : '') +
+      (hasPerm('settings.manage') ? '<button class="btn btn-outline btn-sm" data-del-cert="' + esc(x.id) + '">' + esc(lang==='ar'?'حذف':'Delete') + '</button>' : '') +
       '<button class="btn btn-outline btn-sm" data-print-cert="' + esc(x.cert_id) + '">' + esc(t('print')) + '</button>' +
       '</div>';
   }).join('') || emptyBlock(t('noCertificates'));
@@ -2936,6 +3006,9 @@ statusChip(x.status) +
   if(vb) vb.addEventListener('click', verifyCertModal);
 document.querySelectorAll('[data-revoke]').forEach(function(b){
     b.addEventListener('click', function(){ revokeCert(b.getAttribute('data-revoke')); });
+  });
+  document.querySelectorAll('[data-del-cert]').forEach(function(b){
+    b.addEventListener('click', function(){ adminDelete('certificate', b.getAttribute('data-del-cert'), function(){ certificates(); }); });
   });
   document.querySelectorAll('[data-print-cert]').forEach(function(b){
     b.addEventListener('click', function(){
@@ -4005,7 +4078,8 @@ function lcRender(){
           '<input class="input" data-lc-note="'+esc(r.id)+'" style="flex:1;min-width:160px;" placeholder="'+esc(A?'ملاحظه القرار (اختياري)':'Decision note (optional)')+'">'+
           '<button class="btn btn-gold btn-sm" data-lc-decide="'+esc(r.id)+'|1">'+esc(A?'قبول':'Approve')+'</button>'+
           '<button class="btn btn-outline btn-sm" data-lc-decide="'+esc(r.id)+'|0">'+esc(A?'رفض':'Decline')+'</button>'+
-        '</div>' : '')+
+          '<button class="btn btn-danger btn-sm" data-del-class="'+esc(r.id)+'">'+esc(A?'حذف':'Delete')+'</button>'+
+        '</div>' : '<div style="display:flex;gap:8px;margin-top:12px;"><button class="btn btn-danger btn-sm" data-del-class="'+esc(r.id)+'">'+esc(A?'حذف':'Delete')+'</button></div>')+
     '</div>';
   }).join('') : '<div class="card" style="padding:24px;">'+emptyBlock(A?'ما فيه طلبات حاليا':'No requests right now')+'</div>';
 
@@ -4050,6 +4124,7 @@ function lcWire(){
     toast(lang==='ar'?(approve?'تم قبول الطلب':'تم رفض الطلب')+(approve?'':' - تم ارجاع الرصيد'):(approve?'Request approved':'Request declined - credit refunded'));
     await lcLoad();
   }); });
+  host.querySelectorAll('[data-del-class]').forEach(function(b){ b.addEventListener('click', function(){ adminDelete('live_class', b.getAttribute('data-del-class'), function(){ lcLoad(); }); }); });
   host.querySelectorAll('[data-lc-city-toggle]').forEach(function(b){ b.addEventListener('click', async function(){
     var id = b.getAttribute('data-lc-city-toggle');
     var on = b.getAttribute('data-on') === '1';
