@@ -2992,7 +2992,7 @@ async function questionsView(){
       return '<tr>'+
         '<td style="padding:8px;vertical-align:top;"><b>'+esc(q.code)+'</b><br><span class="why">'+esc(q.skill_type||'')+'</span></td>'+
         '<td style="padding:8px;vertical-align:top;">'+esc(tierLbl(q.tier))+'<br><span class="chip gold" style="font-size:.7rem">'+esc(q.level)+'</span> <span class="chip" style="font-size:.7rem">D'+esc(q.difficulty_rating)+'</span></td>'+
-        '<td style="padding:8px;vertical-align:top;max-width:360px;">'+esc(q.question_en)+'<br><span class="arabic why">'+esc(q.question_ar||'')+'</span><br><span class="why">✓ '+esc(correctTxt)+'</span></td>'+
+        '<td style="padding:8px;vertical-align:top;max-width:360px;">'+esc(q.question_en)+'<br><span class="arabic why">'+esc(q.question_ar||'')+'</span><br><span class="why"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> '+esc(correctTxt)+'</span></td>'+
         '<td style="padding:8px;vertical-align:top;">'+(q.active!==false?'<span class="chip emerald" style="font-size:.7rem">'+esc(lang==='ar'?'متاح':'Active')+'</span>':'<span class="chip muted" style="font-size:.7rem">'+esc(lang==='ar'?'متوقف':'Off')+'</span>')+'</td>'+
         '<td style="padding:8px;vertical-align:top;white-space:nowrap;">'+
           '<button class="btn btn-ghost btn-sm" data-aq-edit="'+esc(q.id)+'">'+esc(t('edit'))+'</button> '+
@@ -3708,7 +3708,7 @@ function createAnnouncementForm(){
   function renderPicked(){
     var ids = Object.keys(picked);
     $('anPicked').innerHTML = ids.map(function(id){
-      return '<span class="chip gold">' + esc(picked[id]) + ' <b data-x="' + id + '" style="cursor:pointer; margin-left:6px;">×</b></span>';
+      return '<span class="chip gold">' + esc(picked[id]) + ' <b data-x="' + id + '" style="cursor:pointer; margin-left:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></b></span>';
     }).join('') || '<span class="chip muted">0</span>';
     document.querySelectorAll('[data-x]').forEach(function(b){
       b.addEventListener('click', function(){ delete picked[b.getAttribute('data-x')]; renderPicked(); });

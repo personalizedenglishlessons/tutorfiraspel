@@ -3427,11 +3427,11 @@ let notesStore = defaultNotesStore();
 function renderCtxLists(){
   const vEl = document.getElementById('ctxVocabList');
   vEl.innerHTML = vocabStore.length
-    ? vocabStore.map((v,i) => `<div class="mini-list-item"><div class="ml-en">${escapeHtml(v.en||'')}</div>${v.translit ? `<div class="ml-tr">${escapeHtml(v.translit)}</div>` : ''}<div class="ml-ar">${escapeHtml(v.ar||'')}</div><button type="button" class="mini-remove-btn" data-rm-vocab="${i}" aria-label="Remove">×</button></div>`).join('')
+    ? vocabStore.map((v,i) => `<div class="mini-list-item"><div class="ml-en">${escapeHtml(v.en||'')}</div>${v.translit ? `<div class="ml-tr">${escapeHtml(v.translit)}</div>` : ''}<div class="ml-ar">${escapeHtml(v.ar||'')}</div><button type="button" class="mini-remove-btn" data-rm-vocab="${i}" aria-label="Remove"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>`).join('')
     : '<div class="mini-list-item" style="color:var(--text-muted);"><span class="arabic" style="display:block;">ما حفظت كلمات لسه</span><span style="display:block;">No saved words yet</span></div>';
   const nEl = document.getElementById('ctxNotesList');
   nEl.innerHTML = notesStore.length
-    ? notesStore.map((n,i) => `<div class="mini-list-item"><div class="ml-note">${escapeHtml(n.text)}</div><button type="button" class="mini-remove-btn" data-rm-note="${i}" aria-label="Remove">×</button></div>`).join('')
+    ? notesStore.map((n,i) => `<div class="mini-list-item"><div class="ml-note">${escapeHtml(n.text)}</div><button type="button" class="mini-remove-btn" data-rm-note="${i}" aria-label="Remove"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>`).join('')
     : '<div class="mini-list-item" style="color:var(--text-muted);"><span class="arabic" style="display:block;">ما فيه ملاحظات لسه</span><span style="display:block;">No notes yet</span></div>';
 }
 document.getElementById('ctxVocabList').addEventListener('click', e => {
@@ -16359,7 +16359,7 @@ window.pelReviewWriting = async function(text, el, opts){
   const shown = found.slice(0, opts.maxIssues || 3);
   const issuesHtml = shown.length ? shown.map(r => `
       <div class="fb-issue">
-        <div class="fb-pair">${r.example?`<span class="fb-wrong">${escapeHtml('✗ ' + r.example)}</span>`:''}${r.fixedExample?`<span class="fb-right">${escapeHtml('✓ ' + r.fixedExample)}</span>`:''}</div>
+        <div class="fb-pair">${r.example?`<span class="fb-wrong"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg> ${escapeHtml(r.example)}</span>`:''}${r.fixedExample?`<span class="fb-right"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> ${escapeHtml(r.fixedExample)}</span>`:''}</div>
         <p class="arabic fb-ar">${escapeHtml(r.ar||'')}</p>
         <p class="fb-en">${escapeHtml(r.en||'')}</p>
       </div>`).join('') : '';
@@ -17335,7 +17335,7 @@ function openDailyQuiz(){
   let modal = document.getElementById('dailyQuizModal');
   if(!modal){
     modal = document.createElement('div'); modal.className = 'modal-overlay'; modal.id = 'dailyQuizModal';
-    modal.innerHTML = `<div class="modal-box" style="max-width:560px; position:relative;"><button type="button" class="modal-close" id="closeDailyQuizModal">✕</button><div id="dailyQuizBody"></div></div>`;
+    modal.innerHTML = `<div class="modal-box" style="max-width:560px; position:relative;"><button type="button" class="modal-close" id="closeDailyQuizModal"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button><div id="dailyQuizBody"></div></div>`;
     document.body.appendChild(modal);
     modal.addEventListener('click', e => { if(e.target === modal) modal.classList.remove('open'); });
     document.getElementById('closeDailyQuizModal').addEventListener('click', () => modal.classList.remove('open'));
@@ -17438,7 +17438,7 @@ function pelPathHTML(){
     const title = ar ? (L.title_ar || L.title_en) : (L.title_en || L.title_ar);
     const ck = L.kind === 'checkpoint';
     const ic = L.state === 'completed'
-      ? '✓'
+      ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>'
       : L.state === 'available'
       ? '<i data-lucide="star" width="22" height="22"></i>'
       : '<i data-lucide="lock" width="17" height="17"></i>';
@@ -18130,8 +18130,8 @@ function renderLessonReader(container, academy, lesson){
       // Wrong vs Right
       if(lesson.grammar.wrong && lesson.grammar.right){
         html += '<div class="mistake-box">';
-        html += '<div class="wrong" style="display:flex;align-items:center;justify-content:space-between;gap:8px;"><span dir="ltr">✕ ' + highlightImportant(escapeHtml(lesson.grammar.wrong||''), terms) + '</span><button type="button" class="icon-btn speak-btn" data-speak="' + escapeHtml(lesson.grammar.wrong||'') + '" aria-label="Listen" style="flex-shrink:0;width:24px;height:24px;"><i data-lucide="volume-2" width="12" height="12"></i></button></div>';
-        html += '<div class="right" style="display:flex;align-items:center;justify-content:space-between;gap:8px;"><span dir="ltr">✓ ' + highlightImportant(escapeHtml(lesson.grammar.right||''), terms) + '</span><button type="button" class="icon-btn speak-btn" data-speak="' + escapeHtml(lesson.grammar.right||'') + '" aria-label="Listen" style="flex-shrink:0;width:24px;height:24px;"><i data-lucide="volume-2" width="12" height="12"></i></button></div>';
+        html += '<div class="wrong" style="display:flex;align-items:center;justify-content:space-between;gap:8px;"><span dir="ltr"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg> ' + highlightImportant(escapeHtml(lesson.grammar.wrong||''), terms) + '</span><button type="button" class="icon-btn speak-btn" data-speak="' + escapeHtml(lesson.grammar.wrong||'') + '" aria-label="Listen" style="flex-shrink:0;width:24px;height:24px;"><i data-lucide="volume-2" width="12" height="12"></i></button></div>';
+        html += '<div class="right" style="display:flex;align-items:center;justify-content:space-between;gap:8px;"><span dir="ltr"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> ' + highlightImportant(escapeHtml(lesson.grammar.right||''), terms) + '</span><button type="button" class="icon-btn speak-btn" data-speak="' + escapeHtml(lesson.grammar.right||'') + '" aria-label="Listen" style="flex-shrink:0;width:24px;height:24px;"><i data-lucide="volume-2" width="12" height="12"></i></button></div>';
         html += '</div>';
       }
       html += '</div>';
@@ -18161,7 +18161,7 @@ function renderLessonReader(container, academy, lesson){
       <p class="lesson-section-sub"><span class="arabic" style="display:block;">وش بتسمع، وش تقول، ووش تسوي لو ما فهمت. ذا الموقف يجهزك لسؤالف حقيقيه.</span><span dir="ltr">What you will hear, what to say, and what to do if it goes wrong. This prepares you for the real conversation.</span></p>
       ${lesson.situation.hear ? `<div class="situation-block"><div class="situation-label"><i data-lucide="ear" width="14" height="14"></i> <span class="arabic">بتسمع</span>، <span dir="ltr">You will hear</span></div>${lesson.situation.hear.map(h => `<div class="situation-line"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:6px;"><div style="flex:1;"><div class="situation-ar">${escapeHtml(h.ar||'')}</div><div class="situation-en" dir="ltr">${h.translit ? '<span class="situation-translit">' + escapeHtml(h.translit) + '</span>، ' : ''}${escapeHtml(h.en||'')}</div></div><button type="button" class="icon-btn speak-btn" data-speak="${escapeHtml(h.en||'')}" aria-label="Listen" style="flex-shrink:0;width:26px;height:26px;"><i data-lucide="volume-2" width="12" height="12"></i></button></div></div>`).join('')}</div>` : ''}
       ${lesson.situation.say ? `<div class="situation-block"><div class="situation-label"><span class="arabic">تقدر تقول</span>، <span dir="ltr">You can say</span></div>${lesson.situation.say.map(h => `<div class="situation-line"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:6px;"><div style="flex:1;"><div class="situation-ar">${escapeHtml(h.ar||'')}</div><div class="situation-en" dir="ltr">${h.translit ? '<span class="situation-translit">' + escapeHtml(h.translit) + '</span>، ' : ''}${escapeHtml(h.en||'')}</div></div><button type="button" class="icon-btn speak-btn" data-speak="${escapeHtml(h.en||'')}" aria-label="Listen" style="flex-shrink:0;width:26px;height:26px;"><i data-lucide="volume-2" width="12" height="12"></i></button></div></div>`).join('')}</div>` : ''}
-      ${lesson.situation.recover ? `<div class="situation-block"><div class="situation-label">🆘 <span class="arabic">لو ما فهمت</span>، <span dir="ltr">If you do not understand</span></div>${lesson.situation.recover.map(h => `<div class="situation-line"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:6px;"><div style="flex:1;"><div class="situation-ar">${escapeHtml(h.ar||'')}</div><div class="situation-en" dir="ltr">${h.translit ? '<span class="situation-translit">' + escapeHtml(h.translit) + '</span>، ' : ''}${escapeHtml(h.en||'')}</div></div><button type="button" class="icon-btn speak-btn" data-speak="${escapeHtml(h.en||'')}" aria-label="Listen" style="flex-shrink:0;width:26px;height:26px;"><i data-lucide="volume-2" width="12" height="12"></i></button></div></div>`).join('')}</div>` : ''}
+      ${lesson.situation.recover ? `<div class="situation-block"><div class="situation-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m4.93 19.07 4.24-4.24"/></svg> <span class="arabic">لو ما فهمت</span>، <span dir="ltr">If you do not understand</span></div>${lesson.situation.recover.map(h => `<div class="situation-line"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:6px;"><div style="flex:1;"><div class="situation-ar">${escapeHtml(h.ar||'')}</div><div class="situation-en" dir="ltr">${h.translit ? '<span class="situation-translit">' + escapeHtml(h.translit) + '</span>، ' : ''}${escapeHtml(h.en||'')}</div></div><button type="button" class="icon-btn speak-btn" data-speak="${escapeHtml(h.en||'')}" aria-label="Listen" style="flex-shrink:0;width:26px;height:26px;"><i data-lucide="volume-2" width="12" height="12"></i></button></div></div>`).join('')}</div>` : ''}
     </div>` : ''}
 
     ${lesson.exercises && lesson.exercises.length ? `
@@ -18190,7 +18190,7 @@ function renderLessonReader(container, academy, lesson){
     <div class="lesson-actions-row">
       <button type="button" class="btn-outline${bookmarked?' toggled':''}" id="lessonBookmarkBtn"><i data-lucide="bookmark" width="15" height="15"></i> ${bookmarked?'<span class="arabic">محفوظ</span>، <span dir="ltr">Bookmarked</span>':'<span class="arabic">حفظ</span>، <span dir="ltr">Bookmark</span>'}</button>
       <button type="button" class="btn-outline${favLesson?' toggled':''}" id="lessonFavBtn"><i data-lucide="heart" width="15" height="15"></i> ${favLesson?'<span class="arabic">مفضل</span>، <span dir="ltr">Favourited</span>':'<span class="arabic">تفضيل</span>، <span dir="ltr">Favourite</span>'}</button>
-      <button type="button" class="btn-gold" id="lessonCompleteBtn">${done?'<span class="arabic">مكتمل</span> ✓':'<span class="arabic">اكمل الدرس</span>، <span dir="ltr">Mark Complete</span>'}</button>
+      <button type="button" class="btn-gold" id="lessonCompleteBtn">${done?'<span class="arabic">مكتمل</span> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>':'<span class="arabic">اكمل الدرس</span>، <span dir="ltr">Mark Complete</span>'}</button>
     </div>
     ${done && nextItem ? `
     <div class="lesson-section" style="background:rgba(63,140,114,.08); border:1px solid rgba(63,140,114,.3); border-radius:16px; padding:20px; margin-top:22px;">
@@ -18228,7 +18228,7 @@ function renderLessonReader(container, academy, lesson){
   });
   document.getElementById('lessonCompleteBtn').addEventListener('click', function(){
     markLessonComplete(academy.id, wsState.lessonId);
-    this.innerHTML = '<span class="arabic">مكتمل</span> ✓';
+    this.innerHTML = '<span class="arabic">مكتمل</span> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>';
     renderWorkspace();
   });
   const lessonNextBtn = container.querySelector('#lessonNextBtn, #lessonNextBtn2');
@@ -18544,7 +18544,7 @@ function renderVocabulary(){
           </div>
           <div class="vv-divider"></div>
           <div class="vv-tip">${escapeHtml(vvSaudiClean(v.tip_ar||v.tip||''))}</div>
-          <button type="button" class="vv-bookmark-btn${bm?' saved':''}" data-word="${escapeHtml(wordKey)}" data-en="${escapeHtml(v.en||'')}" data-ar="${escapeHtml(v.ar||'')}">${bm?'★ '+(arMode?'محفوظه':'Bookmarked'):'☆ '+(arMode?'احفظها':'Save Word')}</button>
+          <button type="button" class="vv-bookmark-btn${bm?' saved':''}" data-word="${escapeHtml(wordKey)}" data-en="${escapeHtml(v.en||'')}" data-ar="${escapeHtml(v.ar||'')}">${bm?'<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> '+(arMode?'محفوظه':'Bookmarked'):'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> '+(arMode?'احفظها':'Save Word')}</button>
         </div>
       </div>`;
     return wrap;
@@ -18706,8 +18706,8 @@ function renderGrammar(){
       <p style="margin-top:10px; font-size:.86rem; color:var(--text-secondary); line-height:1.65;" dir="ltr">${g.rule}</p>
       <p class="arabic" style="margin-top:10px; font-size:.88rem; color:var(--text-muted);">${g.saudi}</p>
       <div class="mistake-box">
-        <div class="wrong" dir="ltr">✕ ${g.wrong}</div>
-        <div class="right" dir="ltr">✓ ${g.right}</div>
+        <div class="wrong" dir="ltr"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg> ${g.wrong}</div>
+        <div class="right" dir="ltr"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> ${g.right}</div>
       </div>
       <div style="margin-top:14px;">
         ${g.mistakes.map(m => `<p style="font-size:.78rem; color:var(--text-muted); margin-top:6px;">• ${m}</p>`).join('')}
@@ -18738,8 +18738,8 @@ function renderGrammar(){
             <div style="border-top:1px solid var(--border); padding-top:14px;">
               <h4 style="font-size:.92rem;" dir="ltr">${escapeHtml(pat.titleEn||'')}</h4>
               <div class="mistake-box" style="margin-top:10px;">
-                <div class="wrong" dir="ltr">✕ ${escapeHtml(pat.wrong||'')}</div>
-                <div class="right" dir="ltr">✓ ${escapeHtml(pat.correct||'')}</div>
+                <div class="wrong" dir="ltr"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg> ${escapeHtml(pat.wrong||'')}</div>
+                <div class="right" dir="ltr"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> ${escapeHtml(pat.correct||'')}</div>
               </div>
               <p class="arabic" style="margin-top:10px; font-size:.82rem; color:var(--text-muted); line-height:1.6;">${escapeHtml(pat.whyAr||'')}</p>
               <p class="arabic" style="margin-top:6px; font-size:.8rem; color:var(--gold-soft); line-height:1.6;">${escapeHtml(pat.ruleAr||'')}</p>
@@ -18859,7 +18859,7 @@ function renderPronDrill(card, drill){
     const st = sc===undefined?'pending':(sc>=passAt?'done':'skip');
     const bg = st==='done'?'#437A22':st==='skip'?'#6b6873':'#343744';
     const col = st==='done'?'#fff':'#9B98A2';
-    const txt = sc===undefined?(i+1):(sc>=passAt?'✓':'·');
+    const txt = sc===undefined?(i+1):(sc>=passAt?'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>':'·');
     return `<span style="display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:${bg};color:${col};font-size:.7rem;font-weight:700;">${txt}</span>`;
   }).join('');
   function render(){
@@ -19235,7 +19235,7 @@ function renderListening(){
     let modal = document.getElementById('listeningModal');
     if(!modal){
       modal = document.createElement('div'); modal.className='modal-overlay'; modal.id='listeningModal';
-      modal.innerHTML = `<div class="modal-box" style="max-width:600px; position:relative;"><button type="button" class="modal-close" id="closeListeningModal">✕</button><div id="listeningModalBody"></div></div>`;
+      modal.innerHTML = `<div class="modal-box" style="max-width:600px; position:relative;"><button type="button" class="modal-close" id="closeListeningModal"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button><div id="listeningModalBody"></div></div>`;
       document.body.appendChild(modal);
       modal.addEventListener('click', e => { if(e.target===modal){ modal.classList.remove('open'); if('speechSynthesis' in window) speechSynthesis.cancel(); } });
       document.getElementById('closeListeningModal').addEventListener('click', () => { modal.classList.remove('open'); if('speechSynthesis' in window) speechSynthesis.cancel(); });
@@ -19299,7 +19299,7 @@ function renderReading(){
     let modal = document.getElementById('readingModal');
     if(!modal){
       modal = document.createElement('div'); modal.className='modal-overlay'; modal.id='readingModal';
-      modal.innerHTML = `<div class="modal-box" style="max-width:600px; position:relative;"><button type="button" class="modal-close" id="closeReadingModal">✕</button><div id="readingModalBody"></div></div>`;
+      modal.innerHTML = `<div class="modal-box" style="max-width:600px; position:relative;"><button type="button" class="modal-close" id="closeReadingModal"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button><div id="readingModalBody"></div></div>`;
       document.body.appendChild(modal);
       modal.addEventListener('click', e => { if(e.target===modal){ modal.classList.remove('open'); if(modal._timer) clearInterval(modal._timer); } });
       document.getElementById('closeReadingModal').addEventListener('click', () => { modal.classList.remove('open'); if(modal._timer) clearInterval(modal._timer); });
@@ -19407,7 +19407,7 @@ function renderWriting(){
     found.forEach(r => { if(r.category && !learned.some(l => l.category === r.category)) learned.push(r); });
     const issuesHtml = found.length ? found.map(r => `
       <div class="fb-issue">
-        <div class="fb-pair"><span class="fb-wrong" dir="ltr">${escapeHtml('✗ ' + r.example)}</span>${r.fixedExample ? `<span class="fb-right" dir="ltr">${escapeHtml('✓ ' + r.fixedExample)}</span>` : ''}</div>
+        <div class="fb-pair"><span class="fb-wrong" dir="ltr"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg> ${escapeHtml(r.example)}</span>${r.fixedExample ? `<span class="fb-right" dir="ltr"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> ${escapeHtml(r.fixedExample)}</span>` : ''}</div>
         <p class="arabic fb-ar">${escapeHtml(r.ar)}</p>
         <p class="fb-en">${escapeHtml(r.en)}</p>
         ${(r.whyAr || r.why_ar || r.whyEn || r.why_en) ? `<p class="fb-why">${(r.whyAr || r.why_ar) ? `<span class="arabic">السبب:</span> ${escapeHtml(r.whyAr || r.why_ar)}<br>` : ''}${escapeHtml(r.whyEn || r.why_en || '')}</p>` : ''}
@@ -19618,7 +19618,7 @@ function renderReview(){
         <div class="card" style="max-width:640px; margin:0 auto 12px; padding:28px;">
           <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
             <span class="chip" style="font-size:.68rem;"><span class="arabic">${idx+1} من ${due.length}</span>، ${idx+1} of ${due.length}</span>
-            <button type="button" class="icon-btn" id="reviewRemoveBtn" title="Remove from queue" aria-label="Remove">×</button>
+            <button type="button" class="icon-btn" id="reviewRemoveBtn" title="Remove from queue" aria-label="Remove"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
           </div>
           <div style="text-align:center; padding:26px 0 10px;">
             <div style="font-size:1.6rem; font-family:'Fraunces',serif;">${escapeHtml(item.en)}</div>
@@ -19674,7 +19674,7 @@ function renderReview(){
       <div class="eyebrow" style="margin:26px 0 12px;"><span class="arabic">اغلط تتكرر عندك</span>، Repeated mistakes</div>
       <div class="card" style="border-color:rgba(210,92,92,.35);">
         <p style="font-size:.84rem; color:var(--text-secondary); margin-bottom:14px;"><span class="arabic">هذي الاغلاط رجعت معاك اكثر من مره بكتابتك. ركز عليها بالدرس الجاي.</span>These mistakes have shown up in your writing more than once. Focus on them in your next lessons.</p>
-        ${missEntries.map(k => `<div class="mini-list-item"><div class="ml-en">${escapeHtml((LEARN_CATEGORIES[k]||{}).en || k)}</div><div class="ml-ar"><span class="arabic">${escapeHtml((LEARN_CATEGORIES[k]||{}).ar || k)}</span></div><span class="chip" style="color:var(--danger); border-color:rgba(210,92,92,.4);">× ${misses[k]}</span></div>`).join('')}
+        ${missEntries.map(k => `<div class="mini-list-item"><div class="ml-en">${escapeHtml((LEARN_CATEGORIES[k]||{}).en || k)}</div><div class="ml-ar"><span class="arabic">${escapeHtml((LEARN_CATEGORIES[k]||{}).ar || k)}</span></div><span class="chip" style="color:var(--danger); border-color:rgba(210,92,92,.4);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg> ${misses[k]}</span></div>`).join('')}
         <button type="button" class="btn-outline" id="reviewMistakesGoWriting" style="margin-top:14px;"><span class="arabic">اطلع على ورشه الكتابه</span>، Open Writing Workshop</button>
       </div>`;
     document.getElementById('reviewMistakesGoWriting').addEventListener('click', () => goToView('writing'));
@@ -19951,7 +19951,7 @@ function renderActivePath(){
   const done = st.stage_progress ? st.stage_progress.done : 0;
   const pct = total ? Math.round(done / total * 100) : 0;
   const iconFor = s => s === 'completed'
-    ? '<span style="width:26px;height:26px;border-radius:50%;background:var(--gold);color:#171412;display:inline-flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0;">✓</span>'
+    ? '<span style="width:26px;height:26px;border-radius:50%;background:var(--gold);color:#171412;display:inline-flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>'
     : s === 'available'
     ? '<span style="width:26px;height:26px;border-radius:50%;border:2px solid var(--gold);color:var(--gold);display:inline-flex;align-items:center;justify-content:center;font-size:.75rem;flex-shrink:0;box-shadow:0 0 0 4px rgba(200,169,106,.12);">●</span>'
     : '<i data-lucide="lock" width="14" height="14" style="color:var(--text-muted);flex-shrink:0;"></i>';
@@ -20861,7 +20861,7 @@ async function openCertVerify(cert){
     modal.className = 'modal-overlay';
     modal.id = 'certVerifyModal';
     modal.innerHTML = `<div class="modal-box" style="max-width:520px; position:relative;">
-      <button type="button" class="modal-close" id="closeCertVerifyModal">✕</button>
+      <button type="button" class="modal-close" id="closeCertVerifyModal"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
       <div id="certVerifyBody"></div>
     </div>`;
     document.body.appendChild(modal);
