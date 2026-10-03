@@ -2276,12 +2276,12 @@ function authGateError(){
 /* Per-user localStorage keys that mirror Supabase student_data. Cleared on
    logout / sign-out so one student's history can never bleed into another
    account on the same device when the remote table isn't available. */
-function clearUserLocalKeys(){
+function clearUserLocalKeys(uidOverride){
   // Clear legacy (unscoped) keys
   ['pel_study_days','pel_completion_dates','pel_notif_prefs','pel_cert_codes','pel_review_queue','pel_writing_misses','pel_review_days','pel_grammar_endpoint','pel_plan','pel_plan_draft','pel_plan_snapshot','pel_stage_pos'].forEach(k => { try{ localStorage.removeItem(k); }catch(e){} });
   // Clear user-scoped keys (pel_*_u_<userId>) for the CURRENT user only
   try{
-    const uid = currentUser ? currentUser.id : null;
+    const uid = uidOverride || (currentUser ? currentUser.id : null);
     if(uid){
       Object.keys(localStorage).forEach(k => {
         if(k.indexOf('pel_') === 0 && k.indexOf('_u_' + uid) !== -1) localStorage.removeItem(k);
@@ -2941,8 +2941,10 @@ document.getElementById('logoutBtn').addEventListener('click', async () => {
     window.PEL_COOKIE_AUTH = false;
   }
   // Legacy: sign out via Supabase JS client
+  // Capture uid before signOut() — auth callback may clear currentUser
+  const logoutUid = currentUser ? currentUser.id : null;
   if(c){ try{ PEL_ACTIVITY.touch('logout'); }catch(e){} try{ await c.auth.signOut(); }catch(e){ console.warn('[PEL] auth signOut failed:', e.message||e); } }
-  clearUserLocalKeys();
+  clearUserLocalKeys(logoutUid);
   window._pelCredits = 0;
   window._pelOverviewCache = null;
   window._pelOverviewTs = 0;

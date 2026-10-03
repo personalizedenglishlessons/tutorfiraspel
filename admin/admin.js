@@ -470,7 +470,7 @@ function statusChip(status){
               issued:'green', revoked:'red', reissued:'gold', draft:'muted',
               present:'green', absent:'red', late:'warn', excused:'bronze',
               scheduled:'bronze', completed:'green', cancelled:'red', rescheduled:'warn',
-              open:'warn', in_progress:'gold', resolved:'green', cancelled:'muted' };
+              open:'warn', in_progress:'gold', resolved:'green' };
   var cls = map[status] || 'muted';
   var label = (I[status] || {en:status, ar:status});
   var text = lang === 'ar' ? (label.ar || label.en) : label.en;
@@ -3983,6 +3983,7 @@ async function settingsView(){
         }
         if(delEl){
           delEl.textContent = fmtN(info.deletable||0);
+          delEl.dataset.count = String(info.deletable||0);
           delEl.style.display = info.deletable > 0 ? '' : 'none';
           delEl.className = 'chip ' + (info.deletable > 0 ? 'red' : 'green');
         }
@@ -4001,7 +4002,7 @@ async function settingsView(){
     // Build confirmation modal
     var selected = cleanupTargets.filter(function(tg){
       var delEl = $('cl-del-'+tg.key);
-      return delEl && parseInt(delEl.textContent||'0',10) > 0;
+      return delEl && Number(delEl.dataset.count||'0') > 0;
     });
     if(!selected.length){ toast(lang==='ar'?'ما فيه بيانات قديمه للحذف':'No old data to clean'); return; }
     var listHtml = selected.map(function(tg){
