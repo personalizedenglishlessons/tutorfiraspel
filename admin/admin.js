@@ -1088,7 +1088,7 @@ function loadDelReqs(){
     var reqs = Array.isArray(r.data) ? r.data : [];
     if(!reqs.length){ host.innerHTML = ''; return; }
     var items = reqs.map(function(q){
-      return '<div class="reason-item" style="border-color:var(--danger,#c0392b);">' +
+      return '<div class="reason-item" style="border-color:var(--danger);">' +
         '<span class="badge-dot red" style="margin-top:5px;"></span>' +
         '<div style="flex:1;"><div style="font-weight:600;">' + esc(q.name || q.email || q.user_id) +
           (q.email && q.name ? ' <span class="why">(' + esc(q.email) + ')</span>' : '') + '</div>' +
@@ -1098,7 +1098,7 @@ function loadDelReqs(){
           '<button class="btn btn-ghost btn-sm" data-dismiss-req="' + esc(q.id) + '">' + esc(lang==='ar'?'تجاهل':'Dismiss') + '</button>' +
         '</div></div>';
     }).join('');
-    host.innerHTML = '<div class="card" style="margin-bottom:14px; border-color:var(--danger,#c0392b);">' +
+    host.innerHTML = '<div class="card" style="margin-bottom:14px; border-color:var(--danger);">' +
       '<div style="font-weight:600; margin-bottom:8px;">' + esc(lang==='ar'?'طلبات حذف حسابات معلقه':'Pending account deletion requests') + ' (' + reqs.length + ')</div>' +
       '<div class="reason-list">' + items + '</div>' +
       '<p class="why" style="margin-top:10px;">' + esc(lang==='ar'?'قبل الحذف: راجع اشتراك الطالب وحاله الاسترداد — الحذف يمسح سجل الاشتراك كامل.':'Before deleting: check the student\'s subscription and refund status — deletion erases the full subscription history.') + '</p></div>';
@@ -1421,7 +1421,7 @@ var tabs = [
           (ledger.length ? ledger.map(function(l){
             var d = l.delta>=0?'+'+l.delta:l.delta;
             return '<div class="reason-item"><div style="flex:1;">'+esc(l.reason||'-')+'<div class="why">'+esc(fmtDate(l.created_at))+'</div></div>' +
-              '<b style="color:'+(l.delta>=0?'var(--success)':'var(--danger,#c0392b)')+';">'+esc(d)+'</b>' +
+              '<b style="color:'+(l.delta>=0?'var(--success)':'var(--danger)')+';">'+esc(d)+'</b>' +
               '<span class="chip muted">'+esc(lang==='ar'?'الرصيد':'bal')+' '+esc(l.balance_after)+'</span></div>';
           }).join('') : emptyBlock(lang==='ar'?'لا فيه عمليات لسه':'No transactions yet')) +
         '</div>';
@@ -1456,7 +1456,7 @@ var tabs = [
             if(chips){ var lastChip = chips.querySelector('.chip.green'); if(lastChip) lastChip.textContent = (b.live_class_credits||0)+' '+(lang==='ar'?'رصيد حصص':'class credits'); }
             // Update ledger
             var led = $('credLedger');
-            if(led){ led.innerHTML = ledger.length ? ledger.map(function(l){ var d=l.delta>=0?'+'+l.delta:l.delta; return '<div class="reason-item"><div style="flex:1;">'+esc(l.reason||'-')+'<div class="why">'+esc(fmtDate(l.created_at))+'</div></div><b style="color:'+(l.delta>=0?'var(--success)':'var(--danger,#c0392b)')+';">'+esc(d)+'</b><span class="chip muted">'+esc(lang==='ar'?'الرصيد':'bal')+' '+esc(l.balance_after)+'</span></div>'; }).join('') : emptyBlock(lang==='ar'?'لا فيه عمليات لسه':'No transactions yet'); }
+            if(led){ led.innerHTML = ledger.length ? ledger.map(function(l){ var d=l.delta>=0?'+'+l.delta:l.delta; return '<div class="reason-item"><div style="flex:1;">'+esc(l.reason||'-')+'<div class="why">'+esc(fmtDate(l.created_at))+'</div></div><b style="color:'+(l.delta>=0?'var(--success)':'var(--danger)')+';">'+esc(d)+'</b><span class="chip muted">'+esc(lang==='ar'?'الرصيد':'bal')+' '+esc(l.balance_after)+'</span></div>'; }).join('') : emptyBlock(lang==='ar'?'لا فيه عمليات لسه':'No transactions yet'); }
             deltaInput.value = '';
             reasonInput.value = '';
           }catch(e){ toast(lang==='ar'?'غلط غير متوقع':'Unexpected error', true); }

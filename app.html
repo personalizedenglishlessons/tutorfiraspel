@@ -1007,7 +1007,7 @@ body.ui-ar .vv-collection-card .col-desc{ font-family:'Cairo','Tajawal',sans-ser
 .fb-issue{ padding:12px 0; border-top:1px solid var(--border); }
 .fb-issue:first-child{ border-top:none; padding-top:0; }
 .fb-pair{ display:flex; flex-direction:column; gap:4px; margin-bottom:8px; }
-.fb-wrong{ color:#e07a5f; font-size:.88rem; text-decoration:line-through; text-decoration-color:rgba(224,122,95,.5); }
+.fb-wrong{ color:var(--error); font-size:.88rem; text-decoration:line-through; text-decoration-color:rgba(210,92,92,.5); }
 .fb-right{ color:var(--emerald); font-size:.88rem; }
 .fb-ar{ font-size:.86rem; color:var(--text); line-height:1.7; }
 .fb-en{ font-size:.8rem; color:var(--text-secondary); line-height:1.6; }
@@ -1797,7 +1797,7 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
                 <span class="arabic" style="display:block; margin-bottom:4px;">بياناتك ملكك. تقدر تطلب في اي وقت نسخه من بياناتك، تصحيحها، او حذف حسابك وكل بياناتك نهائيا. اطلع على <a href="legal.html" target="_blank" rel="noopener" style="color:var(--gold);">سياسه الخصوصيه الكامله</a>.</span>
                 Your data belongs to you. At any time you can request a copy of your data, corrections, or permanent deletion of your account and all your data. See the full <a href="legal.html" target="_blank" rel="noopener" style="color:var(--gold);">privacy policy</a>.
               </p>
-              <button type="button" class="btn-outline" id="delReqBtn" style="margin-top:14px; border-color:#c0392b; color:#e74c3c;"><span class="arabic">حذف حسابي وبياناتي</span>، Delete my account &amp; data</button>
+              <button type="button" class="btn-outline" id="delReqBtn" style="margin-top:14px; border-color:var(--error); color:var(--error);"><span class="arabic">حذف حسابي وبياناتي</span>، Delete my account &amp; data</button>
             </div>
             <div class="card">
               <h3 style="font-size:1.05rem;">Account <span class="arabic" style="font-size:.85em; font-weight:400;">· الحساب</span></h3>
@@ -2754,7 +2754,7 @@ function showAnnouncementsModal(){
     document.body.classList.add('ready');
     const el = document.createElement('div');
     el.id = 'bootError';
-    el.style.cssText = 'position:fixed; inset:auto 16px 16px 16px; z-index:10000; background:#2b1d1d; color:#f3e3e3; border:1px solid rgba(196,111,86,.5); border-radius:14px; padding:14px 18px; font-size:.85rem; line-height:1.6; max-width:720px; margin:0 auto;';
+    el.style.cssText = 'position:fixed; inset:auto 16px 16px 16px; z-index:10000; background:var(--card-elevated); color:var(--text); border:1px solid rgba(210,92,92,.5); border-radius:14px; padding:14px 18px; font-size:.85rem; line-height:1.6; max-width:720px; margin:0 auto;';
     el.innerHTML = '<b>صار خلل بسيط وانت تفتح الاكاديميه.</b><br>' +
       '<span style="opacity:.85;">' + String(err && (err.message || err.reason || err)).replace(/[<>]/g,'').slice(0,300) + '</span><br>' +
       '<button type="button" onclick="location.reload()" style="margin-top:8px; cursor:pointer;">جرب مره ثانيه</button>';
@@ -9879,7 +9879,7 @@ function lightCorrection(text){
         '</p>' +
         '<div style="display:flex;gap:10px;justify-content:flex-end;">' +
           '<button type="button" id="delReqCancel" style="padding:10px 16px;border-radius:10px;border:1px solid var(--border,#33353f);background:transparent;color:var(--text,#4B463D);cursor:pointer;">' + (ar() ? 'الغاء' : 'Cancel') + '</button>' +
-          '<button type="button" id="delReqConfirm" style="padding:10px 16px;border-radius:10px;border:none;background:#c0392b;color:#fff;cursor:pointer;font-weight:600;">' + (ar() ? 'نعم، ابغى الحذف' : 'Yes, delete my data') + '</button>' +
+          '<button type="button" id="delReqConfirm" style="padding:10px 16px;border-radius:10px;border:none;background:var(--error);color:#fff;cursor:pointer;font-weight:600;">' + (ar() ? 'نعم، ابغى الحذف' : 'Yes, delete my data') + '</button>' +
         '</div>' +
       '</div>';
     document.body.appendChild(ov);
@@ -10067,7 +10067,7 @@ function notifPrefs(){ return lsGetUser('pel_notif_prefs', {daily:true, streak:t
   if(!inp) return;
   inp.value = grammarEndpoint();
   const setStatus = (ok, label) => {
-    if(dot) dot.style.background = ok === null ? 'var(--text-muted)' : (ok ? '#2ecc71' : '#e74c3c');
+    if(dot) dot.style.background = ok === null ? 'var(--text-muted)' : (ok ? 'var(--success)' : 'var(--error)');
     if(txt) txt.innerHTML = label;
   };
   let saveT;
@@ -16374,7 +16374,7 @@ window.pelReviewWriting = async function(text, el, opts){
   // the situation, with a natural model reply. Free, offline, unlimited.
   const cf = (opts.botLine && typeof window.pelConversationFit==='function') ? window.pelConversationFit(text, opts.botLine) : null;
   const convHtml = cf ? `<div class="fb-section"><h5 class="fb-section-title"><span class="arabic">ملاحظه المحادثه</span>، Conversation fit</h5><p class="arabic fb-ar" style="color:var(--gold-soft);">${escapeHtml(cf.ar)}</p><p class="fb-en">${escapeHtml(cf.en)}</p><div class="fb-fixed" style="margin-top:6px;"><b>${escapeHtml(cf.model.en)}</b> <span class="arabic" style="opacity:.8;">- ${escapeHtml(cf.model.ar)}</span></div></div>` : '';
-  const freeNote = '<span class="chip" style="background:rgba(67,122,34,.12);color:#7BBF45;border:1px solid rgba(67,122,34,.3);font-size:.68rem;"><span class="arabic">مراجعه محليه مجانيه</span> · Free local feedback</span>';
+  const freeNote = '<span class="chip" style="background:rgba(66,163,106,.12);color:var(--success);border:1px solid rgba(66,163,106,.3);font-size:.68rem;"><span class="arabic">مراجعه محليه مجانيه</span> · Free local feedback</span>';
   el.innerHTML = `<div class="feedback-block">
       <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
         <span style="font-size:1.1rem;font-weight:700;color:var(--gold);">${cleanScore}%</span>
@@ -17769,7 +17769,7 @@ const CEFR_PATH_STYLE = `
 .cefr-skill-node{flex-shrink:0;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(200,169,106,.16);color:var(--gold);border:1px solid rgba(200,169,106,.35);cursor:pointer;transition:transform .15s,background .2s;}
 .cefr-skill-node:hover:not(:disabled){transform:scale(1.06);background:rgba(200,169,106,.28);}
 .cefr-skill-node:disabled{cursor:not-allowed;opacity:.5;}
-.cefr-skill.complete .cefr-skill-node{background:rgba(76,175,80,.18);color:#4caf50;border-color:rgba(76,175,80,.4);}
+.cefr-skill.complete .cefr-skill-node{background:rgba(66,163,106,.18);color:var(--success);border-color:rgba(66,163,106,.4);}
 .cefr-skill.locked .cefr-skill-node{background:var(--card-elevated);color:var(--text-muted);border-color:var(--border);}
 .cefr-skill-body{flex:1;min-width:0;padding-top:3px;}
 .cefr-skill-title{font-size:.84rem;font-weight:600;line-height:1.2;margin-bottom:6px;}
@@ -17777,7 +17777,7 @@ const CEFR_PATH_STYLE = `
 .cefr-chip{display:inline-flex;align-items:center;gap:5px;background:var(--card-elevated);border:1px solid var(--border);border-radius:8px;padding:5px 9px;cursor:pointer;font-size:.76rem;color:var(--text);transition:border-color .2s,background .2s;}
 .cefr-chip:hover:not(.locked){border-color:rgba(200,169,106,.5);}
 .cefr-chip.locked{opacity:.5;cursor:not-allowed;}
-.cefr-chip.done{border-color:rgba(76,175,80,.4);color:#4caf50;}
+.cefr-chip.done{border-color:rgba(66,163,106,.4);color:var(--success);}
 .cefr-chip.done::before{content:"✓";font-weight:700;}
 @media(max-width:560px){.cefr-node{width:52px;height:52px;font-size:1.05rem;}.cefr-units{grid-template-columns:1fr;}}
 `;
@@ -22130,7 +22130,7 @@ if(window.lucide) lucide.createIcons();
 .pel-req-note{font-size:.78rem;color:var(--text-secondary);margin-top:4px;font-style:italic}
 .pel-req-st{font-size:.74rem;font-weight:700;padding:4px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.03em;white-space:nowrap}
 .pel-req-st.pending{background:rgba(200,169,106,.16);color:var(--gold)}
-.pel-req-st.approved{background:rgba(76,175,80,.16);color:#4caf50}
+.pel-req-st.approved{background:rgba(66,163,106,.16);color:var(--success)}
 .pel-req-st.declined{background:rgba(244,67,54,.14);color:#f44336}
 .pel-req-st.cancelled{background:rgba(128,128,128,.16);color:var(--text-muted)}
 .pel-empty{color:var(--text-muted);font-size:.86rem;padding:18px 0;text-align:center}
