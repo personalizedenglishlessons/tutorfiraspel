@@ -22,7 +22,7 @@
 <script src="lib/pel-settings.js?v=8e8a2796" defer></script>
 <script src="lib/cert-qr.js?v=a43f19f9" defer></script>
 <script src="lib/cert-sheet.js?v=a1f37a19" defer></script>
-<script src="lib/pel_config.js?v=d66df0a3"></script>
+<script src="lib/pel_config.js?v=a25efd62"></script>
 <script src="lib/pel_lesson_stage.js?v=94df653a"></script>
 <script src="lib/pel_dashboard_life.js?v=6e677875"></script>
 <script src="lib/pel_curriculum_path.js?v=2a1761b7"></script>
@@ -2405,7 +2405,7 @@ function renderAccessGate(){
       plans.map(p => '<div class="card" style="padding:22px 18px; text-align:center;' + (p.featured ? ' border-color:rgba(200,169,106,.55); box-shadow:0 8px 24px -12px rgba(200,169,106,.35);' : '') + '">' +
         ((ar ? p.badgeAr : (p.badgeEn || p.badgeAr)) ? '<span class="chip gold" style="margin:0 auto 10px;">' + escapeHtml(ar ? p.badgeAr : (p.badgeEn || p.badgeAr)) + '</span>' : '') +
         '<div style="font-weight:700; font-size:.95rem;">' + escapeHtml(ar ? p.nameAr : p.nameEn) + '</div>' +
-        '<div style="margin-top:8px; font-size:1.4rem; font-weight:800; color:var(--gold);">' + p.price + ' <span style="font-size:.85rem; font-weight:600;">' + escapeHtml(ar ? PEL_PLANS.currencyAr : PEL_PLANS.currency) + '</span></div>' +
+        '<div style="margin-top:8px; font-size:1.4rem; font-weight:800; color:var(--gold);">' + p.price + ' <span style="font-size:.85rem; font-weight:600;">' + (window.PEL_RIYAL ? PEL_RIYAL() : escapeHtml(ar ? PEL_PLANS.currencyAr : PEL_PLANS.currency)) + '</span></div>' +
         '<div style="font-size:.78rem; color:var(--text-secondary); margin-top:6px; line-height:1.7; min-height:36px;">' + escapeHtml(ar ? p.liveNoteAr : p.liveNoteEn) + '</div>' +
         '<a class="btn-gold" href="' + PEL_PLANS.waLink(p) + '" target="_blank" rel="noopener" style="margin-top:14px; display:block; text-align:center; font-size:.88rem; justify-content:center;">' + (ar ? 'كلمنا واتساب' : 'Contact on WhatsApp') + '</a>' +
         '</div>').join('') +

@@ -3455,7 +3455,7 @@ async function plansView(){
       '<div class="s360-meta" style="margin-top:10px; color:var(--text-muted); font-size:.76rem;">' +
         '<span>' + fmtN(x.duration_days || (x.duration_months * 30)) + ' ' + esc(t('durationDays')) + '</span>' +
         '<span>· ' + fmtN(x.weekly_live_sessions || 0) + ' ' + esc(t('weeklyLive')) + '</span>' +
-        (x.price ? '<span>· ' + esc(x.price) + ' ' + esc(x.currency || 'SAR') + '</span>' : '') +
+        (x.price ? '<span>· ' + esc(x.price) + ' ' + (window.PEL_RIYAL ? PEL_RIYAL() : esc(x.currency || 'SAR')) + '</span>' : '') +
       '</div>' +
       (x.description ? '<div class="sub" style="margin-top:10px;">' + esc(x.description) + '</div>' : '') +
       '</div>';
@@ -4009,7 +4009,7 @@ async function renderTabPlan(d){
   } else {
     var planName = lang === 'ar' ? (plan.name_ar || plan.name_en) : plan.name_en;
     statusLine = '<div class="s360-meta" style="margin-top:0;">' + planStatusChip(ps.status) + chip(esc(planName), 'gold') +
-      (plan.price ? chip(esc(plan.price + ' ' + (plan.currency || 'SAR')), '') : '') + '</div>' +
+      (plan.price ? chip(esc(plan.price) + ' ' + (window.PEL_RIYAL ? PEL_RIYAL() : esc(plan.currency || 'SAR')), '') : '') + '</div>' +
       '<div class="s360-meta" style="margin-top:10px; color:var(--text-muted); font-size:.78rem;">' +
         (ps.start_date ? '<span>' + esc(t('startDate')) + ': ' + fmtDate(ps.start_date) + '</span>' : '') +
         (ps.end_date ? '<span>· ' + esc(t('endDate')) + ': ' + fmtDate(ps.end_date) + '</span>' : '') +
