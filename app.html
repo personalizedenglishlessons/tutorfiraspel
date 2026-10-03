@@ -2279,12 +2279,15 @@ function authGateError(){
 function clearUserLocalKeys(){
   // Clear legacy (unscoped) keys
   ['pel_study_days','pel_completion_dates','pel_notif_prefs','pel_cert_codes','pel_review_queue','pel_writing_misses','pel_review_days','pel_grammar_endpoint','pel_plan','pel_plan_draft','pel_plan_snapshot','pel_stage_pos'].forEach(k => { try{ localStorage.removeItem(k); }catch(e){} });
-  // Clear user-scoped keys (pel_*_u_<userId>) for ALL users on this device
+  // Clear user-scoped keys (pel_*_u_<userId>) for the CURRENT user only
   try{
-    Object.keys(localStorage).forEach(k => {
-      if(k.indexOf('pel_') === 0 && k.indexOf('_u_') !== -1) localStorage.removeItem(k);
-      if(k.indexOf('pel_cert_codes_') === 0) localStorage.removeItem(k);
-    });
+    const uid = currentUser ? currentUser.id : null;
+    if(uid){
+      Object.keys(localStorage).forEach(k => {
+        if(k.indexOf('pel_') === 0 && k.indexOf('_u_' + uid) !== -1) localStorage.removeItem(k);
+        if(k === 'pel_cert_codes_' + uid) localStorage.removeItem(k);
+      });
+    }
   }catch(e){}
 }
 
@@ -2606,6 +2609,8 @@ async function renderHomeIntel(){
       }));
       const allBtn = document.getElementById('annAllBtn');
       if(allBtn) allBtn.addEventListener('click', showAnnouncementsModal);
+    } else {
+      annEl.innerHTML = '<span class="eyebrow" style="margin:0 0 10px;">' + (ar ? 'اعلانات الاكاديميه' : 'Announcements') + '</span><div style="font-size:.8rem; color:var(--text-muted);">' + (ar ? 'ما تقدر تحميل الاعلانات الحين.' : 'Could not load announcements right now.') + '</div>';
     }
     if(cls && cls.data && !cls.error){
       const next = cls.data.next || [];
@@ -2620,6 +2625,8 @@ async function renderHomeIntel(){
         rows = '<div style="font-size:.8rem; color:var(--text-muted);">' + (ar ? 'ما فيه حصص جايه الحين.' : 'No upcoming live classes.') + '</div>';
       }
       clsEl.innerHTML = '<span class="eyebrow" style="margin:0 0 10px;">' + (ar ? 'حصصك المباشره' : 'Your Live Classes') + '</span><div>' + rows + '</div>';
+    } else {
+      clsEl.innerHTML = '<span class="eyebrow" style="margin:0 0 10px;">' + (ar ? 'حصصك المباشره' : 'Your Live Classes') + '</span><div style="font-size:.8rem; color:var(--text-muted);">' + (ar ? 'ما تقدر تحميل الحصص الحين.' : 'Could not load live classes right now.') + '</div>';
     }
   }catch(e){
     /* Show error state instead of leaving "Loading..." forever */
@@ -2648,7 +2655,7 @@ function showRenewal(){
       (p.badgeAr ? '<span class="chip gold" style="margin-bottom:8px;">' + escapeHtml(p.badgeAr) + '</span>' : '') +
       '<div style="font-weight:700; font-size:1.05rem;">' + escapeHtml(ar ? p.nameAr : p.nameEn) + '</div>' +
       '<div style="font-size:.78rem; color:var(--text-muted); margin-top:4px;">' + escapeHtml(ar ? p.termAr : p.termEn) + '</div>' +
-      '<div style="margin-top:14px; font-size:1.6rem; font-weight:700; color:var(--gold);">' + p.price + ' <span style="font-size:.9rem;">' + escapeHtml(PEL_PLANS.currencyAr) + '</span></div>' +
+      '<div style="margin-top:14px; font-size:1.6rem; font-weight:700; color:var(--gold);">' + p.price + ' <span style="font-size:.9rem;">' + escapeHtml(ar ? PEL_PLANS.currencyAr : PEL_PLANS.currency) + '</span></div>' +
       '<div style="font-size:.78rem; color:var(--text-secondary); margin-top:6px;">' + escapeHtml(ar ? p.liveNoteAr : p.liveNoteEn) + '</div>' +
       '<a class="btn-gold" href="' + PEL_PLANS.waLink(p) + '" target="_blank" rel="noopener" style="margin-top:16px; display:block; text-align:center;">' + (ar ? 'كلمنا واتساب وجدد' : 'Renew via WhatsApp') + '</a>' +
       '</div>';
@@ -14984,7 +14991,7 @@ function awardXp(amount){
         // Consume a freeze: keep the current streak value.
         setStreakFreezes(freezes - 1);
         freezeUsed = true;
-        try{ if(typeof toast==='function') toast(L('Streak freeze used! Your streak is preserved.','تم استخدام تجميد السلسله! سلسلتك محفوظه.'), 'info'); }catch(e){}
+        try{ if(typeof toast==='function') toast((accountPrefs.lang==='ar'?'تم استخدام تجميد السلسله! سلسلتك محفوظه.':'Streak freeze used! Your streak is preserved.'), 'info'); }catch(e){}
       } else {
         studentStats.streak = 1;
       }
@@ -14999,7 +15006,7 @@ function awardXp(amount){
       var curFreezes = getStreakFreezes();
       if(curFreezes < 2){
         setStreakFreezes(curFreezes + 1);
-        try{ if(typeof toast==='function') toast(L('You earned a streak freeze!','حصلت على تجميد سلسله!'), 'success'); }catch(e){}
+        try{ if(typeof toast==='function') toast((accountPrefs.lang==='ar'?'حصلت على تجميد سلسله!':'You earned a streak freeze!'), 'success'); }catch(e){}
       }
     }
     studentStats.longestStreak = Math.max(studentStats.longestStreak, studentStats.streak);
@@ -15012,6 +15019,8 @@ function awardXp(amount){
   saveStudentStats();
   const topXp = document.getElementById('topXp');
   if(topXp) topXp.textContent = studentStats.xp.toLocaleString();
+  const topStreakEl = document.getElementById('topStreak');
+  if(topStreakEl) topStreakEl.textContent = studentStats.streak || 0;
   const streakTxt = document.getElementById('sidebarStreakTxt');
   if(streakTxt) streakTxt.innerHTML = `<span class="arabic">سلسله ${studentStats.streak || 0} يوم</span>، ${studentStats.streak || 0} day streak`;
   // Refresh the dashboard's weekly card + hero rings so "You studied X days
@@ -18222,13 +18231,15 @@ function renderLessonReader(container, academy, lesson){
       else goToView('home');
     });
   }
-  const progressFill = document.getElementById('lessonProgressFill');
-  window.addEventListener('scroll', function onLessonScroll(){
-    if(!document.getElementById('lessonProgressFill')){ window.removeEventListener('scroll', onLessonScroll); return; }
+  if(window._pelLessonScrollHandler){ window.removeEventListener('scroll', window._pelLessonScrollHandler); }
+  window._pelLessonScrollHandler = function onLessonScroll(){
+    const pf = document.getElementById('lessonProgressFill');
+    if(!pf){ window.removeEventListener('scroll', window._pelLessonScrollHandler); return; }
     const h = document.documentElement;
     const p = h.scrollTop / (h.scrollHeight - h.clientHeight || 1) * 100;
-    progressFill.style.width = Math.min(100, Math.max(0,p)) + '%';
-  });
+    pf.style.width = Math.min(100, Math.max(0,p)) + '%';
+  };
+  window.addEventListener('scroll', window._pelLessonScrollHandler);
   if(window.lucide) lucide.createIcons();
 }
 
