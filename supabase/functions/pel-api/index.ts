@@ -164,6 +164,8 @@ const ALLOWLIST: Record<string, { type: string; description: string }> = {
   "accept_recommendation": { type: "rpc", description: "Accept recommendation" },
   "store_recommendation": { type: "rpc", description: "Store recommendation" },
   "system_health": { type: "rpc", description: "System health" },
+  "admin_cleanup_preview": { type: "rpc", description: "Preview storage cleanup counts" },
+  "admin_cleanup_run": { type: "rpc", description: "Run storage cleanup" },
   "teacher_override": { type: "rpc", description: "Teacher override" },
   "verify_certificate": { type: "rpc", description: "Verify certificate" },
 

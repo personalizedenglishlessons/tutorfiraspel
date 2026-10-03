@@ -3160,27 +3160,27 @@ async function health(){
       var res = await fetch(sbUrl + '/rest/v1/site_settings?select=key&limit=1', {
         headers: { apikey: sbKey, Authorization: 'Bearer ' + sbKey }
       });
-      clientChecks.push({ label: lang === 'ar' ? 'Supabase REST متاح' : 'Supabase REST reachable', code: res.ok ? 'ok' : 'http_' + res.status, ok: res.ok });
+      clientChecks.push({ label: lang === 'ar' ? 'اتصال قاعده البيانات (Supabase)' : 'Database connection (Supabase)', code: res.ok ? 'ok' : 'http_' + res.status, ok: res.ok });
     }catch(e){
-      clientChecks.push({ label: 'Supabase REST reachable', code: String(e.message||e).slice(0,80), ok: false });
+      clientChecks.push({ label: lang === 'ar' ? 'اتصال قاعده البيانات (Supabase)' : 'Database connection (Supabase)', code: String(e.message||e).slice(0,80), ok: false });
     }
   } else {
-    clientChecks.push({ label: lang === 'ar' ? 'Supabase REST متاح' : 'Supabase REST reachable', code: 'no_config', ok: false });
+    clientChecks.push({ label: lang === 'ar' ? 'اتصال قاعده البيانات (Supabase)' : 'Database connection (Supabase)', code: 'no_config', ok: false });
   }
 
-  // 2. Edge Function (pel-api) reachable
+  // 2. Serverless API (pel-api) reachable
   if(sbUrl){
     try{
       var efRes = await fetch(sbUrl + '/functions/v1/pel-api', { method: 'OPTIONS' });
-      clientChecks.push({ label: lang === 'ar' ? 'Edge Function متاح' : 'Edge Function reachable', code: efRes.ok || efRes.status === 204 ? 'ok' : 'http_' + efRes.status, ok: efRes.ok || efRes.status === 204 });
+      clientChecks.push({ label: lang === 'ar' ? 'خادم التطبيقات (API)' : 'App server (API)', code: efRes.ok || efRes.status === 204 ? 'ok' : 'http_' + efRes.status, ok: efRes.ok || efRes.status === 204 });
     }catch(e){
-      clientChecks.push({ label: 'Edge Function reachable', code: String(e.message||e).slice(0,80), ok: false });
+      clientChecks.push({ label: lang === 'ar' ? 'خادم التطبيقات (API)' : 'App server (API)', code: String(e.message||e).slice(0,80), ok: false });
     }
   }
 
-  // 3. Session active
+  // 3. Admin login session
   var sessionOk = !!(me.id && me.email);
-  clientChecks.push({ label: lang === 'ar' ? 'الجلسه فعاله' : 'Session active', code: sessionOk ? 'ok' : 'no_session', ok: sessionOk });
+  clientChecks.push({ label: lang === 'ar' ? 'تسجيل دخول الادمن' : 'Admin login session', code: sessionOk ? 'ok' : 'no_session', ok: sessionOk });
 
   var allChecks = clientChecks.concat(dbChecks.map(function(c){
     return { label: c.label, code: c.code, ok: (c.count || 0) === 0, count: c.count };
@@ -3723,6 +3723,113 @@ async function settingsView(){
     audit('settings.update', 'site_settings', 'site_settings', { banner_active: rows[0].value.active, plan_6m_available: rows[3].value, faq_count: faqOut.length });
     toast(lang === 'ar' ? 'تم النشر - يظهر للزوار الحين' : 'Published - live for visitors now');
     btn.disabled = false;
+  });
+
+  /* ---- Maintenance / Storage Cleanup section ---- */
+  var cleanupTargets = [
+    {key:'auth_attempts', ar:'محاولات الدخول', en:'Auth attempts', minDays:3},
+    {key:'student_activity_events', ar:'احداث النشاط', en:'Activity events', minDays:14},
+    {key:'audit_log', ar:'سجل التدقيق', en:'Audit log', minDays:90},
+    {key:'student_presence', ar:'تتبع الحضور', en:'Presence tracking', minDays:7},
+    {key:'learning_snapshots', ar:'لقطات التعلم', en:'Learning snapshots', minDays:180},
+    {key:'learning_timeline', ar:'الخط الزمني', en:'Timeline', minDays:180},
+    {key:'announcement_recipients', ar:'استلامات الاعلانات', en:'Announcement receipts', minDays:30}
+  ];
+  var cleanupHtml = cleanupTargets.map(function(tg){
+    return '<div class="reason-item"><span class="badge-dot muted" style="margin-top:5px;"></span>' +
+      '<div style="flex:1;"><div style="font-weight:600;">' + esc(lang==='ar'?tg.ar:tg.en) +
+      ' <span class="chip muted" style="font-size:.68em;">' + esc(lang==='ar'?'حد ادنى '+tg.minDays+' ايام':'min '+tg.minDays+' days') + '</span></div>' +
+      '<span class="why" id="cl-'+tg.key+'">' + esc(lang==='ar'?'يحمل...':'Loading...') + '</span></div>' +
+      '<span class="chip bronze" id="cl-del-'+tg.key+'" style="display:none;">0</span></div>';
+  }).join('');
+
+  // Append maintenance card after the FAQ card
+  var settingsCards = $('viewArea').querySelectorAll('.card');
+  var lastCard = settingsCards[settingsCards.length - 1];
+  if(lastCard){
+    var maintCard = document.createElement('div');
+    maintCard.className = 'card';
+    maintCard.style.maxWidth = '760px';
+    maintCard.style.marginTop = '16px';
+    maintCard.innerHTML =
+      '<div class="s360-meta" style="margin-top:0;"><span class="chip bronze">' + esc(lang==='ar'?'صيانه وتنظيف':'Maintenance & Cleanup') + '</span></div>' +
+      '<p style="margin:10px 0 0; font-size:.76rem; color:var(--text-muted); line-height:1.7;">' +
+        esc(lang==='ar'
+          ? 'نظف البيانات القديمه لتحرير مساحه التخزين. كل هدف له حد ادنى للاحتفاظ.'
+          : 'Clean up old data to free up storage. Each target has a minimum retention window.') +
+      '</p>' +
+      '<div class="reason-list" style="margin-top:12px;">' + cleanupHtml + '</div>' +
+      '<div class="btn-row" style="margin-top:16px;">' +
+        '<button class="btn btn-outline btn-sm" id="clPreview">' + esc(lang==='ar'?'معاينه':'Preview') + '</button>' +
+        '<button class="btn btn-gold btn-sm" id="clRun" disabled>' + esc(lang==='ar'?'تنفيذ التنظيف':'Run Cleanup') + '</button>' +
+      '</div>';
+    lastCard.parentNode.insertBefore(maintCard, lastCard.nextSibling);
+  }
+
+  // Preview cleanup counts
+  function loadCleanupPreview(){
+    cleanupTargets.forEach(function(tg){
+      var el = $('cl-'+tg.key); if(el) el.textContent = lang==='ar'?'يحمل...':'Loading...';
+    });
+    rpc('admin_cleanup_preview', { p_targets: null }).then(function(r){
+      if(!r.ok) return;
+      var data = r.data || {};
+      cleanupTargets.forEach(function(tg){
+        var info = data[tg.key];
+        if(!info) return;
+        var el = $('cl-'+tg.key);
+        var delEl = $('cl-del-'+tg.key);
+        if(el){
+          el.textContent = (lang==='ar'?'المجموع: ':'Total: ') + fmtN(info.total||0) +
+            (info.deletable > 0 ? ' (' + fmtN(info.deletable) + ' ' + (lang==='ar'?'قابل للحذف':'deletable') + ')' : '');
+        }
+        if(delEl){
+          delEl.textContent = fmtN(info.deletable||0);
+          delEl.style.display = info.deletable > 0 ? '' : 'none';
+          delEl.className = 'chip ' + (info.deletable > 0 ? 'red' : 'green');
+        }
+      });
+      var runBtn = $('clRun');
+      if(runBtn) runBtn.disabled = false;
+    });
+  }
+
+  var pvBtn = $('clPreview');
+  if(pvBtn) pvBtn.addEventListener('click', loadCleanupPreview);
+  loadCleanupPreview();
+
+  var runBtn = $('clRun');
+  if(runBtn) runBtn.addEventListener('click', async function(){
+    // Build confirmation modal
+    var selected = cleanupTargets.filter(function(tg){
+      var delEl = $('cl-del-'+tg.key);
+      return delEl && parseInt(delEl.textContent.replace(/[^0-9]/g,''),10) > 0;
+    });
+    if(!selected.length){ toast(lang==='ar'?'ما فيه بيانات قديمه للحذف':'No old data to clean'); return; }
+    var listHtml = selected.map(function(tg){
+      var delEl = $('cl-del-'+tg.key);
+      var cnt = delEl ? delEl.textContent : '0';
+      return '<div class="reason-item"><span class="badge-dot red" style="margin-top:5px;"></span><div style="flex:1;"><div style="font-weight:600;">' + esc(lang==='ar'?tg.ar:tg.en) + '</div><span class="why">' + esc(lang==='ar'?'سيتم حذف ':'Will delete ') + cnt + ' ' + esc(lang==='ar'?'صف':'rows') + '</span></div></div>';
+    }).join('');
+    var m = modal(lang==='ar'?'تاكيد التنظيف':'Confirm Cleanup',
+      '<p style="margin:0 0 14px;">' + esc(lang==='ar'?'هذا البيانات راح تنحذف نهائيا. متاكد؟':'This data will be permanently deleted. Are you sure?') + '</p>' +
+      '<div class="reason-list">' + listHtml + '</div>' +
+      '<div class="btn-row" style="margin-top:16px;"><button class="btn btn-danger btn-sm" id="clConfirm">' + esc(lang==='ar'?'نعم احذف':'Yes delete') + '</button><button class="btn btn-ghost btn-sm" data-close>' + esc(t('cancel')) + '</button></div>'
+    );
+    var dc = m.querySelector('[data-close]');
+    if(dc) dc.addEventListener('click', function(){ closeModal(m); });
+    var cf = $('clConfirm');
+    if(cf) cf.addEventListener('click', async function(){
+      cf.disabled = true; cf.textContent = '...';
+      var keys = selected.map(function(tg){ return tg.key; });
+      var r = await rpc('admin_cleanup_run', { p_targets: keys });
+      closeModal(m);
+      if(!r.ok){ toast((r.error && r.error.message) || t('errorGeneric'), true); return; }
+      var deleted = (r.data && r.data.deleted) || {};
+      var totalDel = Object.keys(deleted).reduce(function(s,k){ return s + (deleted[k]||0); }, 0);
+      toast(lang==='ar' ? 'تم حذف '+totalDel+' صف' : 'Deleted '+totalDel+' rows');
+      loadCleanupPreview();
+    });
   });
 }
 
