@@ -1767,6 +1767,11 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
             </div>
             <div class="card">
               <h3 style="font-size:1.05rem;">Privacy <span class="arabic" style="font-size:.85em; font-weight:400;">· الخصوصيه</span></h3>
+              <p style="margin-top:8px; font-size:.84rem; color:var(--text-muted); line-height:1.7;">
+                <span class="arabic" style="display:block; margin-bottom:4px;">بياناتك ملكك. تقدر تطلب في اي وقت نسخه من بياناتك، تصحيحها، او حذف حسابك وكل بياناتك نهائيا. اطلع على <a href="legal.html" target="_blank" rel="noopener" style="color:var(--gold);">سياسه الخصوصيه الكامله</a>.</span>
+                Your data belongs to you. At any time you can request a copy of your data, corrections, or permanent deletion of your account and all your data. See the full <a href="legal.html" target="_blank" rel="noopener" style="color:var(--gold);">privacy policy</a>.
+              </p>
+              <button type="button" class="btn-outline" id="delReqBtn" style="margin-top:14px; border-color:#c0392b; color:#e74c3c;"><span class="arabic">حذف حسابي وبياناتي</span>، Delete my account &amp; data</button>
             </div>
             <div class="card">
               <h3 style="font-size:1.05rem;">Account <span class="arabic" style="font-size:.85em; font-weight:400;">· الحساب</span></h3>
@@ -9810,6 +9815,57 @@ function lightCorrection(text){
   bind('zoomInBtn', () => applyZoom(getZoom() + ZOOM_STEP));
   bind('zoomOutBtn', () => applyZoom(getZoom() - ZOOM_STEP));
   bind('zoomResetBtn', () => applyZoom(1));
+})();
+
+/* ---- Account deletion request (PDPL data-subject right) ---- */
+(function(){
+  const btn = document.getElementById('delReqBtn');
+  if(!btn) return;
+  const ar = () => document.documentElement.lang === 'ar';
+  btn.addEventListener('click', async () => {
+    // Bilingual confirmation modal (no native confirm())
+    const ov = document.createElement('div');
+    ov.style.cssText = 'position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;padding:18px;';
+    ov.innerHTML =
+      '<div role="dialog" aria-modal="true" style="max-width:440px;width:100%;background:var(--card,#1e2028);border:1px solid var(--border,#33353f);border-radius:16px;padding:22px;">' +
+        '<h3 style="margin:0 0 10px;font-size:1.05rem;">' + (ar() ? 'حذف حسابي وبياناتي' : 'Delete my account &amp; data') + '</h3>' +
+        '<p style="margin:0 0 8px;font-size:.86rem;line-height:1.7;color:var(--text-secondary,#9a9da8);">' +
+          (ar()
+            ? 'طلبك راح يوصل اداره الاكاديميه، وبنحذف حسابك وكل بياناتك (تقدمك، دروسك، ملاحظاتك، اشتراكك) نهائيا خلال 30 يوم كحد اقصى. شهاداتك المكتمله تبقى قابله للتحقق. ذا الاجر ما يرجع اليك بعد التنفيذ.'
+            : 'Your request goes to the academy administration; your account and all your data (progress, lessons, notes, subscription) will be permanently deleted within 30 days at the latest. Completed certificates remain verifiable. This cannot be undone once carried out.') +
+        '</p>' +
+        '<p style="margin:0 0 16px;font-size:.86rem;line-height:1.7;color:var(--text-secondary,#9a9da8);">' +
+          (ar() ? 'اذا عندك اشتراك فعال، تواصل معنا اولا على واتساب بخصوص الاسترداد. متاكد؟' : 'If you have an active subscription, contact us on WhatsApp first about a refund. Are you sure?') +
+        '</p>' +
+        '<div style="display:flex;gap:10px;justify-content:flex-end;">' +
+          '<button type="button" id="delReqCancel" style="padding:10px 16px;border-radius:10px;border:1px solid var(--border,#33353f);background:transparent;color:var(--text,#e8e9ee);cursor:pointer;">' + (ar() ? 'الغاء' : 'Cancel') + '</button>' +
+          '<button type="button" id="delReqConfirm" style="padding:10px 16px;border-radius:10px;border:none;background:#c0392b;color:#fff;cursor:pointer;font-weight:600;">' + (ar() ? 'نعم، ابغى الحذف' : 'Yes, delete my data') + '</button>' +
+        '</div>' +
+      '</div>';
+    document.body.appendChild(ov);
+    ov.querySelector('#delReqCancel').addEventListener('click', () => ov.remove());
+    ov.addEventListener('click', (e) => { if(e.target === ov) ov.remove(); });
+    ov.querySelector('#delReqConfirm').addEventListener('click', async () => {
+      const cf = ov.querySelector('#delReqConfirm');
+      cf.disabled = true; cf.textContent = '...';
+      try{
+        const { data, error } = await pelRpc('student_request_deletion');
+        ov.remove();
+        if(error){
+          toast(ar() ? 'صار خطأ — جرب مره ثانيه او راسلنا على واتساب.' : 'Something went wrong — try again or message us on WhatsApp.');
+          return;
+        }
+        if(data && data.already_pending){
+          toast(ar() ? 'عندك طلب حذف مفتوح اصلا — نشتغل عليه.' : 'You already have an open deletion request — we are on it.');
+        } else {
+          toast(ar() ? 'وصلنا طلبك. بنحذف حسابك وبياناتك خلال 30 يوم كحد اقصى، وبنتواصل معك للتاكيد.' : 'Request received. Your account and data will be deleted within 30 days at the latest; we will contact you to confirm.');
+        }
+      }catch(e){
+        ov.remove();
+        toast(ar() ? 'صار خطأ — جرب مره ثانيه او راسلنا على واتساب.' : 'Something went wrong — try again or message us on WhatsApp.');
+      }
+    });
+  });
 })();
 
 /* ---- Quick Translate (now in Settings, not a floating FAB) ---- */

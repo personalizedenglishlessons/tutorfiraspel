@@ -1035,6 +1035,7 @@ function students(){
       '<div style="flex:1"></div>' +
       '<div class="field">' + sortSel(st.sort) + '</div>' +
     '</div>' +
+    '<div id="stDelReqs"></div>' +
     '<div id="stTable"></div>';
   loadStPrograms(st);
   loadStTeachers(st);
@@ -1044,7 +1045,56 @@ function students(){
   $('stReset').addEventListener('click', function(){ st.search=''; st.filters = defaultStudentFilters(); st.page = 0; st.sort='last_active:desc'; students(); });
   var stCreate = $('stCreate');
   if(stCreate) stCreate.addEventListener('click', openCreateStudent);
+  loadDelReqs();
   loadStudents(st);
+}
+
+/* Pending account-deletion requests (PDPL): students submit from app
+   settings; admin actions them via admin_student_delete (certificates
+   stay verifiable) or dismisses the request. */
+function loadDelReqs(){
+  if(!hasPerm('students.manage')) return;
+  rpc('admin_deletion_requests').then(function(r){
+    var host = $('stDelReqs');
+    if(!host || !r.ok) return;
+    var reqs = Array.isArray(r.data) ? r.data : [];
+    if(!reqs.length){ host.innerHTML = ''; return; }
+    var items = reqs.map(function(q){
+      return '<div class="reason-item" style="border-color:var(--danger,#c0392b);">' +
+        '<span class="badge-dot red" style="margin-top:5px;"></span>' +
+        '<div style="flex:1;"><div style="font-weight:600;">' + esc(q.name || q.email || q.user_id) +
+          (q.email && q.name ? ' <span class="why">(' + esc(q.email) + ')</span>' : '') + '</div>' +
+        '<span class="why">' + (lang==='ar'?'طلب حذف الحساب والبيانات في ':'Account & data deletion requested ') + fmtDate(q.requested_at) + '</span></div>' +
+        '<div class="btn-row" style="margin:0;">' +
+          '<button class="btn btn-danger btn-sm" data-del-req-user="' + esc(q.user_id) + '">' + esc(lang==='ar'?'حذف نهائي':'Delete now') + '</button>' +
+          '<button class="btn btn-ghost btn-sm" data-dismiss-req="' + esc(q.id) + '">' + esc(lang==='ar'?'تجاهل':'Dismiss') + '</button>' +
+        '</div></div>';
+    }).join('');
+    host.innerHTML = '<div class="card" style="margin-bottom:14px; border-color:var(--danger,#c0392b);">' +
+      '<div style="font-weight:600; margin-bottom:8px;">' + esc(lang==='ar'?'طلبات حذف حسابات معلقه':'Pending account deletion requests') + ' (' + reqs.length + ')</div>' +
+      '<div class="reason-list">' + items + '</div></div>';
+    host.querySelectorAll('[data-del-req-user]').forEach(function(b){
+      b.addEventListener('click', function(){
+        var uid = b.getAttribute('data-del-req-user');
+        if(!confirm(lang === 'ar' ? 'بنحذف حساب الطالب وكل بياناته نهائيا (تبقى الشهادات بس). متابعه؟' : 'This permanently deletes the student account and ALL their history (certificates are kept). Continue?')) return;
+        rpc('admin_student_delete', { p_user_id: uid }).then(function(rr){
+          if(!rr.ok){ toast((rr.error && rr.error.message) || t('permissionDenied'), true); return; }
+          toast(lang==='ar'?'حذفنا الطالب. تبقت شهاداته للتحقق.':'Student deleted. Certificates remain verifiable.');
+          loadDelReqs();
+          loadStudents(viewState.students || (viewState.students = { page:0, sort:'last_active:desc', search:'', filters:defaultStudentFilters() }));
+        });
+      });
+    });
+    host.querySelectorAll('[data-dismiss-req]').forEach(function(b){
+      b.addEventListener('click', function(){
+        rpc('admin_deletion_dismiss', { p_request_id: b.getAttribute('data-dismiss-req') }).then(function(rr){
+          if(!rr.ok || (rr.data && rr.data.error)){ toast((rr.data && rr.data.error) || t('errorGeneric'), true); return; }
+          toast(lang==='ar'?'تجاهلنا الطلب.':'Request dismissed.');
+          loadDelReqs();
+        });
+      });
+    });
+  });
 }
 
 function openCreateStudent(){
