@@ -9851,7 +9851,7 @@ function lightCorrection(text){
       try{
         const { data, error } = await pelRpc('student_request_deletion');
         ov.remove();
-        if(error){
+        if(error || (data && data.error)){
           toast(ar() ? 'صار خطأ — جرب مره ثانيه او راسلنا على واتساب.' : 'Something went wrong — try again or message us on WhatsApp.');
           return;
         }

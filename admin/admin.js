@@ -897,14 +897,16 @@ var views = { overview, students, student, teachers, groups, groupDetail, course
    ============================================================ */
 async function overview(){
 $('viewArea').innerHTML = pageHead(t('overview'), lang === 'ar' ? 'وش يصير الحين؟ مين يحتاج انتباه؟' : 'What is happening? Who needs attention?') + loadingBlock();
-  var [r, pov] = await Promise.all([ rpc('admin_overview'), rpc('admin_plans_overview') ]);
+  var [r, pov, dr] = await Promise.all([ rpc('admin_overview'), rpc('admin_plans_overview'), hasPerm('students.manage') ? rpc('admin_deletion_requests') : Promise.resolve({ok:false}) ]);
   if(!r.ok){ $('viewArea').innerHTML = errBlock(rpcErrMsg(r)); return; }
   var d = r.data;
   var pv = pov.ok ? (pov.data || {}) : {};
+  var delReqs = (dr.ok && Array.isArray(dr.data)) ? dr.data : [];
   var tt = d.totals || {};
 
   /* "What should I do?" - from real conditions */
   var actions = [];
+  if(delReqs.length > 0) actions.push({ warn:true, icon:'alert-triangle', txt: (lang === 'ar' ? (delReqs.length + ' طلب حذف حساب — لازم يتنفذ خلال 30 يوم (صفحة الطلاب)') : (delReqs.length + ' account deletion request(s) — must be actioned within 30 days (Students page)') ) });
   if((tt.expiring || 0) > 0) actions.push({ warn:true, icon:'hourglass', txt: (lang === 'ar' ? (tt.expiring + ' برنامج ينتهي خلال ١٤ يوم - جدد او كلم الطالب') : (tt.expiring + ' program(s) end within 14 days - renew or reach out') ) });
   if(actions.length === 0){
     if((d.attention || []).length > 0) actions.push({ txt: lang === 'ar' ? (d.attention.length + ' طالب يحتاج انتباه') : (d.attention.length + ' students need attention') });
@@ -1072,7 +1074,8 @@ function loadDelReqs(){
     }).join('');
     host.innerHTML = '<div class="card" style="margin-bottom:14px; border-color:var(--danger,#c0392b);">' +
       '<div style="font-weight:600; margin-bottom:8px;">' + esc(lang==='ar'?'طلبات حذف حسابات معلقه':'Pending account deletion requests') + ' (' + reqs.length + ')</div>' +
-      '<div class="reason-list">' + items + '</div></div>';
+      '<div class="reason-list">' + items + '</div>' +
+      '<p class="why" style="margin-top:10px;">' + esc(lang==='ar'?'قبل الحذف: راجع اشتراك الطالب وحاله الاسترداد — الحذف يمسح سجل الاشتراك كامل.':'Before deleting: check the student\'s subscription and refund status — deletion erases the full subscription history.') + '</p></div>';
     host.querySelectorAll('[data-del-req-user]').forEach(function(b){
       b.addEventListener('click', function(){
         var uid = b.getAttribute('data-del-req-user');
