@@ -193,7 +193,7 @@ textarea.input{ resize:vertical; }
 .search-wrap svg{ position:absolute; inset-inline-start:11px; top:50%; transform:translateY(-50%); color:var(--text-muted); }
 
 /* ----- tables ----- */
-.table-wrap{ background:var(--surface); border:1px solid var(--border); border-radius:16px; overflow:hidden; }
+.table-wrap{ background:var(--surface); border:1px solid var(--border); border-radius:16px; overflow-x:auto; }
 table.tbl{ width:100%; border-collapse:collapse; font-size:.82rem; }
 .tbl th{ text-align:start; padding:11px 14px; font-size:.66rem; letter-spacing:.08em; text-transform:uppercase; color:var(--text-muted); border-bottom:1px solid var(--border); background:var(--card); white-space:nowrap; }
 .tbl td{ padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:middle; }

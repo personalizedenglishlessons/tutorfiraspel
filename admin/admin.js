@@ -71,6 +71,7 @@ var I = {
   'openStudent':{en:'Open student', ar: 'فتح الطالب'},
   'noResults':{en:'No students match these filters.', ar: 'لا فيه طلاب مطابقين.'},
   'new':{en:'New', ar: 'جديد'}, 'active':{en:'Active', ar: 'نشط'}, 'stalled':{en:'Stalled', ar: 'متوقف'}, 'inactive':{en:'Inactive', ar: 'غير نشط'}, 'suspended':{en:'Suspended', ar: 'موقوف'},
+  'paused':{en:'Paused', ar: 'موقوف مؤقتا'}, 'archived':{en:'Archived', ar: 'مؤرشف'},
   'issued':{en:'Issued', ar: 'مصدره'}, 'revoked':{en:'Revoked', ar: 'ملغاه'}, 'reissued':{en:'Reissued', ar: 'اعيد اصدارها'}, 'draft':{en:'Draft', ar: 'مسوده'},
   'present':{en:'Present', ar: 'حاضر'}, 'absent':{en:'Absent', ar: 'غايب'}, 'late':{en:'Late', ar: 'متاخر'}, 'excused':{en:'Excused', ar: 'بعذر'},
   'scheduled':{en:'Scheduled', ar: 'محدد'}, 'completed':{en:'Completed', ar: 'مكتمل'}, 'cancelled':{en:'Cancelled', ar: 'ملغي'}, 'rescheduled':{en:'Rescheduled', ar: 'اعيدت جدولته'},
@@ -2032,6 +2033,7 @@ async function saveSnapshot(){
 async function reload360(){
   var r = await rpc('admin_student_360', { p_user_id: current360Uid });
   if(r.ok){ current360 = r.data; render360(); }
+  else { toast(lang==='ar'?'فشل تحديث بيانات الطالب':'Failed to reload student data', true); }
 }
 async function revokeCert(certId){
   var s = modal(t('revoke'), '<div class="field"><label>' + esc(t('revokeReason')) + '</label><textarea class="input" id="revReason" rows="3"></textarea></div>' +
@@ -3712,6 +3714,9 @@ function createAnnouncementForm(){
   });
   $('anSave').addEventListener('click', async function(){
     var aud = $('anAud').value;
+    var titleVal = $('anTitle').value.trim();
+    var msgVal = $('anMsg').value.trim();
+    if(!titleVal || !msgVal){ toast(lang==='ar'?'العنوان والرساله مطلوبين':'Title and message are required', true); return; }
     if(aud === 'selected' && !Object.keys(picked).length){ toast(t('required'), true); return; }
     var btn = $('anSave'); btn.disabled = true;
     var sched = $('anSched').value ? new Date($('anSched').value).toISOString() : null;
