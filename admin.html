@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://lewoochehpiycocvfwtz.supabase.co https://api.supabase.co wss://lewoochehpiycocvfwtz.supabase.co; base-uri 'self'; form-action 'self'; object-src 'none';">
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#0E0E10">
+<meta name="theme-color" id="themeColorMeta" content="#0E0E10">
 <title>PEL Admin</title>
 <script>(function(){try{var t=localStorage.getItem('pel-theme')||'dark';document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 <link rel="icon" type="image/svg+xml" href="brand/pel-favicon.svg">
@@ -14,7 +14,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;500;700&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
 <script src="vendor/lucide.min.js" integrity="sha384-e4/0BB/wmBhpxvLLrbTidvaESiwxgHfoSGUoRd2s9Ho7YmgxiMftfoo51J/Ojyph" crossorigin="anonymous" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.50.0/dist/umd/supabase.js" integrity="sha384-K0oxqktRvaThvYgGL4G+OK2Ih6VS6Uyu7j3+7WJgp/uWM0Yv6Xi4YEiw0BB+mPfi" crossorigin="anonymous" defer></script>
-<script src="lib/pel-personalization.js?v=f0285e0e"></script>
+<script src="lib/pel-personalization.js?v=7e0463a1"></script>
 <script src="lib/pel-plans.js?v=b7ef7805"></script>
 <script src="lib/cert-qr.js?v=a43f19f9"></script>
 <script src="lib/cert-sheet.js?v=a1f37a19"></script>
@@ -68,8 +68,8 @@
 <div id="toastStack"></div>
 
 <script src="lib/pel_config.js?v=a25efd62"></script>
-<script src="admin/admin.js?v=9b90c390"></script>
-<script>(function(){var b=document.getElementById('themeToggle');if(!b)return;b.addEventListener('click',function(){var h=document.documentElement;var n=(h.getAttribute('data-theme')==='light')?'dark':'light';h.setAttribute('data-theme',n);try{localStorage.setItem('pel-theme',n);}catch(e){}});})();</script>
+<script src="admin/admin.js?v=bd547bf4"></script>
+<script>(function(){var b=document.getElementById('themeToggle');if(!b)return;b.addEventListener('click',function(){var h=document.documentElement;var n=(h.getAttribute('data-theme')==='light')?'dark':'light';h.setAttribute('data-theme',n);try{localStorage.setItem('pel-theme',n);}catch(e){}var m=document.getElementById('themeColorMeta');if(m)m.setAttribute('content',n==='light'?'#F3EEE2':'#0E0E10');});})();</script>
 <script data-pplx-inline-edit>
 (function () {
   if (window === window.top) return;
