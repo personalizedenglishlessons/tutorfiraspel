@@ -468,7 +468,7 @@ function statusChip(status){
   return '<span class="chip ' + cls + '"><span class="badge-dot ' + cls + '"></span>' + esc(text) + '</span>';
 }
 function chip(text, cls){
-  return '<span class="chip ' + (cls||'') + '">' + esc(text) + '</span>';
+  return '<span class="chip ' + (cls||'') + '">' + text + '</span>';
 }
 function arNum(n){
   if(lang !== 'ar') return String(n);
@@ -1043,7 +1043,9 @@ function students(){
   loadStTeachers(st);
   loadStGroups(st);
   $('stSearch').addEventListener('keydown', function(e){ if(e.key === 'Enter'){ st.search = this.value.trim(); st.page = 0; loadStudents(st); } });
-  $('stApply').addEventListener('click', function(){ st.search = $('stSearch').value.trim(); st.filters.status = $('stStatus').value; st.filters.level = $('stLevel').value; st.filters.cert_status = $('stCert').value; st.filters.needs_attention = $('stAttention').checked; st.filters.entitlement = $('stEnt') ? $('stEnt').value : ''; st.filters.program_id = $('stProgram') ? $('stProgram').value : ''; st.filters.teacher_id = $('stTeacher') ? $('stTeacher').value : ''; st.filters.group_id = $('stGroup') ? $('stGroup').value : ''; st.page = 0; loadStudents(st); });
+  $('stApply').addEventListener('click', function(){ st.search = $('stSearch').value.trim(); st.filters.status = $('stStatus').value; st.filters.level = $('stLevel').value; st.filters.cert_status = $('stCert').value; st.filters.needs_attention = $('stAttention').checked; st.filters.entitlement = $('stEnt') ? $('stEnt').value : ''; st.filters.program_id = $('stProgram') ? $('stProgram').value : ''; st.filters.teacher_id = $('stTeacher') ? $('stTeacher').value : ''; st.filters.group_id = $('stGroup') ? $('stGroup').value : ''; st.sort = $('stSort') ? $('stSort').value : st.sort; st.page = 0; loadStudents(st); });
+  var stSortEl = $('stSort');
+  if(stSortEl) stSortEl.addEventListener('change', function(){ st.sort = this.value; st.page = 0; loadStudents(st); });
   $('stReset').addEventListener('click', function(){ st.search=''; st.filters = defaultStudentFilters(); st.page = 0; st.sort='last_active:desc'; students(); });
   var stCreate = $('stCreate');
   if(stCreate) stCreate.addEventListener('click', openCreateStudent);
@@ -1891,7 +1893,7 @@ function renderTabTimeline(p, st, kv, d){
 function renderTabNotes(d){
   var list = (d.notes || []).map(function(n){
     return '<div class="reason-item"><span class="badge-dot muted" style="margin-top:5px;"></span>' +
-      '<div><div>' + esc(n.body) + '</div><span class="why">' + chip(n.category, 'bronze') + ' ' + esc(n.author_name || '-') + ' · ' + fmtDate(n.created_at) + '</span></div></div>';
+      '<div><div>' + esc(n.body) + '</div><span class="why">' + chip(esc(n.category), 'bronze') + ' ' + esc(n.author_name || '-') + ' · ' + fmtDate(n.created_at) + '</span></div></div>';
   }).join('') || '<div class="sub">' + esc(t('noNotes')) + '</div>';
 
   var form = '';
@@ -1940,7 +1942,8 @@ async function acceptRec(){
 async function dismissRec(){
   var rec = computeNextRec(currentPlan(), current360.state, current360.kv);
   if(!rec.rec){ return; }
-  var { ok } = await rpc('store_recommendation', { p_user_id: current360Uid, p_academy_id: rec.rec.academyId, p_lesson_id: rec.rec.lessonId, p_reason_en: rec.rec.whyEn, p_reason_ar: rec.rec.whyAr, p_status: 'dismissed' });
+  var { ok, data } = await rpc('store_recommendation', { p_user_id: current360Uid, p_academy_id: rec.rec.academyId, p_lesson_id: rec.rec.lessonId, p_reason_en: rec.rec.whyEn, p_reason_ar: rec.rec.whyAr, p_status: 'dismissed' });
+  if(!ok){ toast(rpcErrMsg(data), true); return; }
   await audit('recommendation.dismiss', 'student', current360Uid, {});
   toast(t('saved'));
   reload360();
@@ -2162,7 +2165,7 @@ async function groups(){
     el.addEventListener('click', function(){ goTo('groupDetail', el.getAttribute('data-open-group')); });
   });
   document.querySelectorAll('[data-del-group]').forEach(function(el){
-    el.addEventListener('click', function(){ adminDelete('group', el.getAttribute('data-del-group'), function(){ groupsView(); }); });
+    el.addEventListener('click', function(){ adminDelete('group', el.getAttribute('data-del-group'), function(){ groups(); }); });
   });
   document.querySelectorAll('[data-edit-group]').forEach(function(el){
     el.addEventListener('click', function(){
@@ -2213,7 +2216,11 @@ function groupForm(existing){
     var rpcPayload = {
       id: isEdit ? existing.id : '',
       name: payload.name, teacher_id: payload.teacher_id || '',
-      status: payload.status, description: payload.description || ''
+      status: payload.status, description: payload.description || '',
+      course_id: payload.course_id || '',
+      level: payload.level || '',
+      capacity: payload.capacity || 8,
+      schedule: payload.schedule || ''
     };
     var { data, error } = await legacyRpc('admin_save_group', { p_payload: rpcPayload });
     if(error || (data && data.ok === false)){ toast(t('permissionDenied'), true); return; }
@@ -2818,6 +2825,10 @@ async function billingView(){
     pelTableSelect('plan_pricing', '*', { order: 'tier,duration_months' }),
     pelTableSelect('site_settings', 'key,value', { in: { key: ['hero_headline_ar','hero_headline_en','hero_sub_ar','hero_sub_en','pricing_note_ar','pricing_note_en','faqs'] } })
   ]);
+  if(pp.error || ss.error){
+    viewArea.innerHTML = errBlock(lang==='ar'?'فشل تحميل بيانات التسعير':'Failed to load pricing data');
+    return;
+  }
   var rows = pp.data || [];
   var kv = {}; (ss.data||[]).forEach(function(r){ kv[r.key] = r.value; });
 
@@ -3203,13 +3214,14 @@ function openCertIssueModal(uid){
       if(!r.ok){ return; }
       results.innerHTML = (r.data || []).map(function(st){
         return '<div class="reason-item" style="margin-top:6px;"><div style="flex:1;"><div style="font-weight:600;">' + esc(st.full_name) + '</div><span class="why">' + esc(st.email || '') + '</span></div>' +
-          '<button class="btn btn-gold btn-sm" data-pick="' + st.id + '">' + esc(t('select')) + '</button></div>';
+          '<button class="btn btn-gold btn-sm" data-pick="' + esc(st.id) + '" data-name="' + esc(st.full_name) + '">' + esc(t('select')) + '</button></div>';
       }).join('') || '';
       results.querySelectorAll('[data-pick]').forEach(function(b){
         b.addEventListener('click', function(){
           picked = b.getAttribute('data-pick');
-          input.value = b.closest('.reason-item').querySelector('div').textContent.trim();
-          nameInput.value = b.closest('.reason-item').querySelector('div').textContent.trim();
+          var studentName = b.getAttribute('data-name') || '';
+          input.value = studentName;
+          nameInput.value = studentName;
           results.innerHTML = '';
         });
       });
@@ -3958,7 +3970,7 @@ async function settingsView(){
     // Build confirmation modal
     var selected = cleanupTargets.filter(function(tg){
       var delEl = $('cl-del-'+tg.key);
-      return delEl && parseInt(delEl.textContent.replace(/[^0-9]/g,''),10) > 0;
+      return delEl && parseInt(delEl.getAttribute('data-count')||'0',10) > 0;
     });
     if(!selected.length){ toast(lang==='ar'?'ما فيه بيانات قديمه للحذف':'No old data to clean'); return; }
     var listHtml = selected.map(function(tg){
