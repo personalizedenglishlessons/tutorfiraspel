@@ -103,3 +103,18 @@ cannot obtain one (non-national). All Tier 1 items done:
   migration file in one call (CREATE OR REPLACE FUNCTION bodies with
   embedded semicolons are fine).
 - Do NOT write the Supabase access token into files/commits/logs.
+
+## Phase 3 — Saudi Riyal symbol + FAQ price fix (5a7f2b9)
+
+- New official SAMA riyal symbol (U+20C1, Unicode 17.0) everywhere
+  prices render as HTML: PEL_RIYAL() helper in pel_config.js (inline
+  SVG, currentColor — the Unicode glyph is tofu in most fonts);
+  official SAMA SVG saved at brand/riyal-symbol.svg.
+- Live DB FAQ (site_settings.faqs) had STALE prices (500/870/950,
+  1300/2200) — updated to current 650/800/1300 + 1000/1550/2350 with
+  the U+20C1 char; renderFaqs() converts that char to the SVG
+  (escape-first, so admin-edited DB text stays XSS-safe).
+- Plain-text contexts (WhatsApp texts, <option>s, placeholders) keep
+  'SAR'/'ريال' — SVG can't render there.
+- Future FAQ edits from Admin: type the ⃁ character (U+20C1) and it
+  renders as the symbol on the site.
