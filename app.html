@@ -2606,14 +2606,13 @@ async function renderHomeIntel(){
   const c = client();
   const annEl = document.getElementById('homeAnnouncements');
   const clsEl = document.getElementById('homeLiveClasses');
-  const ar = accountPrefs.lang === 'ar';
   if(!c || !annEl || !clsEl) return;
   // Cache: don't re-fetch announcements/classes if fetched < 60s ago
   var cacheAge = Date.now() - _pelHomeIntelTs;
   if(cacheAge < 60000) return;
   _pelHomeIntelTs = Date.now();
-  annEl.innerHTML = '<span class="eyebrow" style="margin:0 0 10px;">' + (ar ? 'اعلانات الاكاديميه' : 'Announcements') + '</span><div id="annBody"><div style="font-size:.8rem; color:var(--text-muted);">' + (ar ? 'لحظات…' : 'Loading…') + '</div></div>';
-  clsEl.innerHTML = '<span class="eyebrow" style="margin:0 0 10px;">' + (ar ? 'حصصك المباشره' : 'Your Live Classes') + '</span><div id="clsBody"><div style="font-size:.8rem; color:var(--text-muted);">' + (ar ? 'لحظات…' : 'Loading…') + '</div></div>';
+  annEl.innerHTML = '<span class="eyebrow" style="margin:0 0 10px;">' + '<span class="arabic">اعلانات الاكاديميه</span>Announcements' + '</span><div id="annBody"><div style="font-size:.8rem; color:var(--text-muted);">' + '<span class="arabic">لحظات…</span>Loading…' + '</div></div>';
+  clsEl.innerHTML = '<span class="eyebrow" style="margin:0 0 10px;">' + '<span class="arabic">حصصك المباشره</span>Your Live Classes' + '</span><div id="clsBody"><div style="font-size:.8rem; color:var(--text-muted);">' + '<span class="arabic">لحظات…</span>Loading…' + '</div></div>';
   try{
     // Fetch announcements and classes independently so a failure in one
     // doesn't block the other from rendering (previously a single try block
@@ -2629,18 +2628,18 @@ async function renderHomeIntel(){
       const items = ann.data.items || [];
       annCache = { unread, items };
       renderNotifications();
-      const head = '<div style="display:flex; justify-content:space-between; align-items:center;"><span class="eyebrow" style="margin:0 0 10px;">' + (ar ? 'اعلانات الاكاديميه' : 'Announcements') + '</span>' + (unread ? '<span class="chip gold">' + unread + ' ' + (ar ? 'جديد' : 'new') + '</span>' : '') + '</div>';
+      const head = '<div style="display:flex; justify-content:space-between; align-items:center;"><span class="eyebrow" style="margin:0 0 10px;">' + '<span class="arabic">اعلانات الاكاديميه</span>Announcements' + '</span>' + (unread ? '<span class="chip gold">' + unread + ' ' + '<span class="arabic">جديد</span>new' + '</span>' : '') + '</div>';
       let body;
       if(items.length){
         body = items.slice(0,3).map(a => {
           return '<div class="reason-item" style="cursor:pointer;" data-ann="' + a.id + '"' + (a.link ? ' data-ann-link="' + escapeHtml(a.link) + '"' : '') + '>' +
             '<span class="badge-dot ' + (a.read ? 'muted' : 'gold') + '" style="margin-top:5px;"></span>' +
-            '<div style="flex:1;"><div style="font-weight:600;">' + escapeHtml(saudiifyAr(a.title)) + (a.priority === 'important' ? ' <span class="chip red">!</span>' : '') + (a.link ? ' <span class="chip">' + (ar ? 'رابط ↗' : 'link ↗') + '</span>' : '') + '</div>' +
+            '<div style="flex:1;"><div style="font-weight:600;">' + escapeHtml(saudiifyAr(a.title)) + (a.priority === 'important' ? ' <span class="chip red">!</span>' : '') + (a.link ? ' <span class="chip">' + '<span class="arabic">رابط</span>link ↗' + '</span>' : '') + '</div>' +
             '<span class="why">' + escapeHtml(saudiifyAr(a.message)) + '</span></div></div>';
         }).join('') +
-        '<div style="margin-top:10px;"><button type="button" class="btn-ghost-sm" id="annAllBtn">' + (ar ? 'شوف الكل' : 'View all') + '</button></div>';
+        '<div style="margin-top:10px;"><button type="button" class="btn-ghost-sm" id="annAllBtn">' + '<span class="arabic">شوف الكل</span>View all' + '</button></div>';
       } else {
-        body = '<div style="font-size:.8rem; color:var(--text-muted);">' + (ar ? 'ما فيه اعلانات الحين.' : 'No announcements right now.') + '</div>';
+        body = '<div style="font-size:.8rem; color:var(--text-muted);">' + '<span class="arabic">ما فيه اعلانات الحين.</span>No announcements right now.' + '</div>';
       }
       annEl.innerHTML = head + '<div>' + body + '</div>';
       annEl.querySelectorAll('[data-ann]').forEach(b => b.addEventListener('click', () => {
@@ -2651,7 +2650,7 @@ async function renderHomeIntel(){
       const allBtn = document.getElementById('annAllBtn');
       if(allBtn) allBtn.addEventListener('click', showAnnouncementsModal);
     } else {
-      annEl.innerHTML = '<span class="eyebrow" style="margin:0 0 10px;">' + (ar ? 'اعلانات الاكاديميه' : 'Announcements') + '</span><div style="font-size:.8rem; color:var(--text-muted);">' + (ar ? 'ما تقدر تحميل الاعلانات الحين.' : 'Could not load announcements right now.') + '</div>';
+      annEl.innerHTML = '<span class="eyebrow" style="margin:0 0 10px;">' + '<span class="arabic">اعلانات الاكاديميه</span>Announcements' + '</span><div style="font-size:.8rem; color:var(--text-muted);">' + '<span class="arabic">ما تقدر تحميل الاعلانات الحين.</span>Could not load announcements right now.' + '</div>';
     }
     if(cls && cls.data && !cls.error){
       const next = cls.data.next || [];
@@ -2663,17 +2662,17 @@ async function renderHomeIntel(){
             '<span class="why">' + escapeHtml(x.date) + (x.time ? ' ' + escapeHtml(x.time) : '') + '</span></div></div>';
         }).join('');
       } else {
-        rows = '<div style="font-size:.8rem; color:var(--text-muted);">' + (ar ? 'ما فيه حصص جايه الحين.' : 'No upcoming live classes.') + '</div>';
+        rows = '<div style="font-size:.8rem; color:var(--text-muted);">' + '<span class="arabic">ما فيه حصص جايه الحين.</span>No upcoming live classes.' + '</div>';
       }
-      clsEl.innerHTML = '<span class="eyebrow" style="margin:0 0 10px;">' + (ar ? 'حصصك المباشره' : 'Your Live Classes') + '</span><div>' + rows + '</div>';
+      clsEl.innerHTML = '<span class="eyebrow" style="margin:0 0 10px;">' + '<span class="arabic">حصصك المباشره</span>Your Live Classes' + '</span><div>' + rows + '</div>';
     } else {
-      clsEl.innerHTML = '<span class="eyebrow" style="margin:0 0 10px;">' + (ar ? 'حصصك المباشره' : 'Your Live Classes') + '</span><div style="font-size:.8rem; color:var(--text-muted);">' + (ar ? 'ما تقدر تحميل الحصص الحين.' : 'Could not load live classes right now.') + '</div>';
+      clsEl.innerHTML = '<span class="eyebrow" style="margin:0 0 10px;">' + '<span class="arabic">حصصك المباشره</span>Your Live Classes' + '</span><div style="font-size:.8rem; color:var(--text-muted);">' + '<span class="arabic">ما تقدر تحميل الحصص الحين.</span>Could not load live classes right now.' + '</div>';
     }
   }catch(e){
     /* Show error state instead of leaving "Loading..." forever */
-    var errMsg = (ar ? 'صار خلل بسيط، حاول مره ثانيه.' : 'Something went wrong, try refreshing.');
-    if(annEl) annEl.innerHTML = '<span class="eyebrow" style="margin:0 0 10px;">' + (ar ? 'اعلانات الاكاديميه' : 'Announcements') + '</span><div style="font-size:.8rem; color:var(--text-muted);">' + errMsg + '</div>';
-    if(clsEl) clsEl.innerHTML = '<span class="eyebrow" style="margin:0 0 10px;">' + (ar ? 'حصصك المباشره' : 'Your Live Classes') + '</span><div style="font-size:.8rem; color:var(--text-muted);">' + errMsg + '</div>';
+    var errMsg = '<span class="arabic">صار خلل بسيط، حاول مره ثانيه.</span>Something went wrong, try refreshing.';
+    if(annEl) annEl.innerHTML = '<span class="eyebrow" style="margin:0 0 10px;">' + '<span class="arabic">اعلانات الاكاديميه</span>Announcements' + '</span><div style="font-size:.8rem; color:var(--text-muted);">' + errMsg + '</div>';
+    if(clsEl) clsEl.innerHTML = '<span class="eyebrow" style="margin:0 0 10px;">' + '<span class="arabic">حصصك المباشره</span>Your Live Classes' + '</span><div style="font-size:.8rem; color:var(--text-muted);">' + errMsg + '</div>';
   }
 }
 
