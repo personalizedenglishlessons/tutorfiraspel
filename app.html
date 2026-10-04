@@ -3452,7 +3452,12 @@ function renderPalette(query){
   `).join('');
   if(window.lucide) lucide.createIcons();
 }
-function openPalette(){ paletteOverlay.classList.add('open'); paletteInput.value=''; renderPalette(''); setTimeout(()=>paletteInput.focus(),50); }
+function openPalette(){
+  /* Close mobile sidebar so the palette isn't behind it */
+  sidebarEl.classList.remove('mobile-open');
+  var ov = document.getElementById('sidebarOverlay'); if(ov) ov.classList.remove('show');
+  paletteOverlay.classList.add('open'); paletteInput.value=''; renderPalette(''); setTimeout(()=>paletteInput.focus(),50);
+}
 function closePalette(){ paletteOverlay.classList.remove('open'); }
 document.getElementById('searchTrigger').addEventListener('click', openPalette);
 paletteInput.addEventListener('input', () => renderPalette(paletteInput.value));
