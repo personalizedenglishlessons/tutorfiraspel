@@ -19165,234 +19165,197 @@ viewRenderers.pronunciation = renderPronunciation;
    choose, build, say, summary. */
 const SCENARIO_TRAINER = {
   'waiter': {
-    situation: {en: 'You are at a restaurant. The waiter greets you and asks about your table.', ar: 'انت بالمطعم. النادل يحياك ويسالك عن طاولتك.'},
-    teacherLine: {en: 'Good evening, welcome. Table for how many?', ar: 'مسا الخير وحياكم، طاوله كم شخص؟', translit: 'قود ايڤنينج، ويلكم. تيبل فور هاو مني؟'},
-    choices: [
-      {en: 'Table for two, please.', ar: 'طاوله لشخصين لو سمحت.', correct: true, why: 'In English we say "Table for X" not "I want table". Adding "please" is natural and polite.'},
-      {en: 'I want table for two.', ar: 'ابي طاوله لشخصين.', correct: false, why: 'Missing the article "a" and sounds abrupt. English speakers say "Table for two, please" — short and polite.'},
-      {en: 'How much is the food?', ar: 'كم الاكل؟', correct: false, why: 'You skipped the waiter\'s question. Answer first, then ask your own questions.'},
+    intro: {en: 'Imagine you are at a restaurant. The waiter comes to your table. What do you say?', ar: 'تخيل انك بالمطعم. النادل يجي لطاولتك. وش تقول؟'},
+    teacherLine: {en: 'Good evening. Table for how many?', ar: 'مسا الخير. طاوله كم شخص؟', translit: 'قود ایڤنینق. تیبل فور هاو منی؟'},
+    wrong: {en: 'I want table', ar: 'ابي طاوله', why: 'مباشر وبدون please. و"I want" تبان وقحه.'},
+    right: {en: 'Table for two, please.', ar: 'طاوله لشخصين لو سمحت.', translit: 'تیبل فور تو، بلیز.'},
+    teach: [
+      {ar: 'في المطعم نقول: Table for + العدد.', en: 'At a restaurant, say "Table for [number]".'},
+      {ar: 'نضيف please دايما عشان نكون مهذبين.', en: 'Always add "please" to be polite.'},
     ],
-    modelAnswer: {en: 'Table for two, please.', ar: 'طاوله لشخصين لو سمحت.', translit: 'تيبل فور تو، بليز.'},
-    wordBank: ['Table','for','two','please','I','want','how','many','food','much'],
-    takeaway: [{en: 'Table for [number], please', ar: 'طاوله لـ[رقم]، لو سمحت'}],
+    words: ['Table','for','two','please'],
   },
   'receptionist': {
-    situation: {en: 'You arrive at a hotel. The receptionist asks if you have a reservation.', ar: 'وصلت للفندق. موظف الاستقبال يسالك اذا عندك حجز.'},
-    teacherLine: {en: 'Welcome, do you have a reservation with us?', ar: 'حياكم، عندكم حجز معانا؟', translit: 'ويلكم، دو يو هاڤ ا ريزرڤيشن وذ اس؟'},
-    choices: [
-      {en: 'Yes, I have a reservation under [your name].', ar: 'ايوه، عندي حجز باسم [اسمك].', correct: true, why: 'Complete and natural. "Under [name]" is the standard hotel phrase.'},
-      {en: 'Yes I have.', ar: 'ايوه عندي.', correct: false, why: 'Too short — the receptionist needs your name to find the booking. Say "under [your name]".'},
-      {en: 'I want a room.', ar: 'ابي غرفه.', correct: false, why: 'The receptionist asked about a reservation, not a new booking. Answer their question first.'},
+    intro: {en: 'Imagine you arrive at a hotel. The receptionist greets you. How do you check in?', ar: 'تخيل انك وصلت للفندق. الموظف يحياك. كيف تسجل دخول؟'},
+    teacherLine: {en: 'Good afternoon, welcome. How can I help you?', ar: 'مسا الخير، حياكم. كيف اقدر اساعدك؟', translit: 'قود افترنون، ویلكم. هاو كان اي هیلب یو؟'},
+    wrong: {en: 'Give me room', ar: 'اعطني غرفه', why: 'وقح ومباشر. ما نقول give me في الفنادق.'},
+    right: {en: 'I have a reservation, my name is...', ar: 'عندي حجز باسم...', translit: 'ای هاڤ ا ریزرویشن، می نیم ایز...'},
+    teach: [
+      {ar: 'I have a reservation = عندي حجز. هذا الاسلوب الطبيعي للتسجيل.', en: '"I have a reservation" is the natural way to check in.'},
+      {ar: 'my name is = اسمي. نكمل بالاسم.', en: '"my name is" — then say your name.'},
     ],
-    modelAnswer: {en: 'Yes, I have a reservation under Alqarni.', ar: 'ايوه، عندي حجز باسم القرني.', translit: 'يس، اي هاڤ ا ريزرڤيشن اندر القرضني.'},
-    wordBank: ['Yes','I','have','a','reservation','under','want','room','booking','my'],
-    takeaway: [{en: 'I have a reservation under [name]', ar: 'عندي حجز باسم [اسم]'}],
+    words: ['I','have','a','reservation','my','name','is'],
   },
   'airport-officer': {
-    situation: {en: 'You are at airport security. The officer asks for your documents.', ar: 'انت بامن المطار. الموظف يطلب اوراقك.'},
-    teacherLine: {en: 'Passport and boarding pass, please.', ar: 'الجواز وبطاقه الصعود لو سمحت.', translit: 'باسبورت اند بوردنج باس، بليز.'},
-    choices: [
-      {en: 'Here you go.', ar: 'تفضل.', correct: true, why: 'Short, natural, and polite. The standard way to hand something over in English.'},
-      {en: 'Why do you need it?', ar: 'ليش تبيه؟', correct: false, why: 'This sounds defensive. At security, just hand over the documents politely.'},
-      {en: 'I do not have passport.', ar: 'ما عندي جواز.', correct: false, why: 'Missing "a" before "passport". If you truly don\'t have it, say "I don\'t have my passport with me".'},
+    intro: {en: 'Imagine you are at the airport. The officer asks for your passport. How do you hand it over?', ar: 'تخيل انك بالمطار. الموظف يطلب جوازك. كيف تعطيه؟'},
+    teacherLine: {en: 'Good morning. Can I see your passport, please?', ar: 'صباح الخير. ممكن اشوف جوازك لو سمحت؟', translit: 'قود مورنینق. كان اي سی یور پاسپورت، بلیز؟'},
+    wrong: {en: 'Why?', ar: 'ليش؟', why: 'سؤال الموظف بهالطريقه يبان وقح. اعطه الجواز وبتصرف.'},
+    right: {en: 'Here you go.', ar: 'تفضل.', translit: 'هیر یو قو.'},
+    teach: [
+      {ar: 'Here you go = تفضل. الطريقه الطبيعيه لتقديم شي بالانجليزي.', en: '"Here you go" = here it is. The natural way to hand something over.'},
     ],
-    modelAnswer: {en: 'Here you go.', ar: 'تفضل.', translit: 'هير يو قو.'},
-    wordBank: ['Here','you','go','Why','do','need','I','have','passport','not'],
-    takeaway: [{en: 'Here you go', ar: 'تفضل'}, {en: 'I don\'t have my [item] with me', ar: 'ما معي [الشي]'}],
+    words: ['Here','you','go'],
   },
   'taxi-driver': {
-    situation: {en: 'You get into a taxi. The driver asks where you are going.', ar: 'ركبت التاكسي. السائق يسالك وين رايح.'},
-    teacherLine: {en: 'Where are you headed today?', ar: 'وين وجهتك اليوم؟', translit: 'وير ار يو هيدد تودي؟'},
-    choices: [
-      {en: 'I am going to the Marriott hotel.', ar: 'انا رايح فندق ماريوت.', correct: true, why: 'Clear and complete. "I am going to [place]" is the natural way to state your destination.'},
-      {en: 'Marriott.', ar: 'ماريوت.', correct: false, why: 'Too short — add "I am going to" so the driver understands you clearly.'},
-      {en: 'I go Marriott.', ar: 'انا اروح ماريوت.', correct: false, why: 'Wrong tense. Use "I am going to" for a plan or destination, not "I go".'},
+    intro: {en: 'Imagine you get in a taxi. The driver asks where you are going. What do you say?', ar: 'تخيل انك ركبت بالتاكسي. السواق يسالك وين رايح. وش تقول؟'},
+    teacherLine: {en: 'Where are you going?', ar: 'وين رايح؟', translit: 'ویر آر یو قوینق؟'},
+    wrong: {en: 'Airport', ar: 'المطار', why: 'كلمه وحده. قصير جدا - قول جمله كامله.'},
+    right: {en: 'I am going to the airport, please.', ar: 'انا رايح للمطار لو سمحت.', translit: 'ای آم قوینق تو ذا ایرپورت، بلیز.'},
+    teach: [
+      {ar: 'I am going to + المكان = انا رايح لـ.', en: '"I am going to" + place = I am heading to.'},
+      {ar: 'نضيف please دايما مع السواق.', en: 'Always add "please" with the driver.'},
     ],
-    modelAnswer: {en: 'I am going to the Marriott hotel.', ar: 'انا رايح فندق ماريوت.', translit: 'اي ام قوونق تو ذا ماريوت هوتيل.'},
-    wordBank: ['I','am','going','to','the','Marriott','hotel','go','Marriott','today'],
-    takeaway: [{en: 'I am going to [place]', ar: 'انا رايح [مكان]'}],
+    words: ['I','am','going','to','the','airport','please'],
   },
   'doctor': {
-    situation: {en: 'You are at the clinic. The doctor asks about your symptoms.', ar: 'انت بالعياده. الدكتور يسالك عن الاعراض.'},
-    teacherLine: {en: 'What symptoms have you been having?', ar: 'وش الاعراض اللي عندك؟', translit: 'وات سيمبتومز هاڤ يو بين هاڤينق؟'},
-    choices: [
-      {en: 'I have had a sore throat since yesterday.', ar: 'عندي التهاب بالحلق من امس.', correct: true, why: 'Uses present perfect ("have had") for a symptom that started in the past and continues. Adding "since yesterday" gives the doctor useful detail.'},
-      {en: 'My throat is pain.', ar: 'حلقي موجوع.', correct: false, why: 'Should be "My throat hurts" or "I have a sore throat". "Is pain" is not natural English.'},
-      {en: 'I am sick.', ar: 'انا مريض.', correct: false, why: 'Too vague — tell the doctor what specifically hurts. "I have a sore throat" is much more helpful.'},
+    intro: {en: 'Imagine you are at the doctor. They ask what is wrong. How do you explain?', ar: 'تخيل انك عند الدكتور. يسالك وش مشكلتك. كيف تشرح؟'},
+    teacherLine: {en: 'Good morning. What seems to be the problem?', ar: 'صباح الخير. وش المشكله؟', translit: 'قود مورنینق. وات سیمز تو بی ذا پرابلیم؟'},
+    wrong: {en: 'I am sick', ar: 'انا مريض', why: 'عام جدا. قول وش بالضبط: صداع، حمى، الخ.'},
+    right: {en: 'I have a headache.', ar: 'عندي صداع.', translit: 'ای هاڤ ا هیدآچ.'},
+    teach: [
+      {ar: 'I have a + العرض = عندي كذا. الطريقه الطبيعيه لوصف المشكله.', en: '"I have a [symptom]" — the natural way to describe what is wrong.'},
     ],
-    modelAnswer: {en: 'I have had a sore throat since yesterday.', ar: 'عندي التهاب بالحلق من امس.', translit: 'اي هاڤ هاد ا سور ثروت سينس يستردي.'},
-    wordBank: ['I','have','had','a','sore','throat','since','yesterday','my','is','pain','sick'],
-    takeaway: [{en: 'I have had a [symptom] since [time]', ar: 'عندي [عرض] من [وقت]'}],
+    words: ['I','have','a','headache'],
   },
   'cashier': {
-    situation: {en: 'You are at the checkout. The cashier asks if you found everything.', ar: 'انت بالكاشير. الكاشير يسالك اذا لقيت كل اللي تبيه.'},
-    teacherLine: {en: 'Did you find everything you needed?', ar: 'لقيت كل اللي تبيه؟', translit: 'ديد يو فايند اڤري ثينق يو نيدد؟'},
-    choices: [
-      {en: 'Yes, I did, thank you.', ar: 'ايوه، حصلت، شكرا.', correct: true, why: 'Short, polite, and natural. "Yes, I did" answers the past-tense question correctly.'},
-      {en: 'Yes I find everything.', ar: 'ايوه حصلت كل شي.', correct: false, why: 'Wrong tense — the cashier asked "Did you find" (past), so answer "Yes, I did".'},
-      {en: 'No, I could not find rice.', ar: 'لا، ما حصلت رز.', correct: false, why: 'This is actually fine if true! But the natural form is "No, I couldn\'t find rice" — use "couldn\'t" not "could not".'},
+    intro: {en: 'Imagine you are at a store. The cashier asks if you want a bag. What do you say?', ar: 'تخيل انك بالمحل. الكاشير يسالك اذا تبي كيس. وش تقول؟'},
+    teacherLine: {en: 'Would you like a bag?', ar: 'تبي كيس؟', translit: 'وود یو لایک ا باق؟'},
+    wrong: {en: 'Give me one', ar: 'اعطني واحد', why: 'وقح. قول Yes, please بدل ذا.'},
+    right: {en: 'Yes, please.', ar: 'اي، لو سمحت.', translit: 'یس، بلیز.'},
+    teach: [
+      {ar: 'Yes, please = اي، لو سمحت. الطريقه المهذبه لقبول عرض.', en: '"Yes, please" — the polite way to accept an offer.'},
     ],
-    modelAnswer: {en: 'Yes, I did, thank you.', ar: 'ايوه، حصلت، شكرا.', translit: 'يس، اي ديد، ثانك يو.'},
-    wordBank: ['Yes','I','did','thank','you','find','everything','could','not','No'],
-    takeaway: [{en: 'Yes, I did, thank you', ar: 'ايوه، حصلت، شكرا'}],
+    words: ['Yes','please'],
   },
   'manager': {
-    situation: {en: 'You are in a meeting with your manager. They want to review your progress.', ar: 'انت باجتماع مع مديرك. يبي يراجع تقدمك.'},
-    teacherLine: {en: 'Let\'s go over your progress this month.', ar: 'خلنا نراجع تقدمك ذا الشهر.', translit: 'ليتس قو اوڤر يور بروقرس ذيس مانث.'},
-    choices: [
-      {en: 'Sure, I have completed three projects and started two more.', ar: 'اكيد، خلصت ثلاث مشاريع وبدات اثنين ثانيين.', correct: true, why: 'Professional and specific. Use numbers to show real progress.'},
-      {en: 'I work hard.', ar: 'انا اشغل زين.', correct: false, why: 'Too vague — your manager wants specifics. Mention what you actually completed.'},
-      {en: 'I do not know.', ar: 'ما ادري.', correct: false, why: 'Never say this in a progress review. Prepare beforehand and list what you achieved.'},
+    intro: {en: 'Imagine you are in a meeting. Your manager asks your opinion. How do you respond?', ar: 'تخيل انك باجتماع. مديرك يسالك عن رايك. كيف ترد؟'},
+    teacherLine: {en: 'What do you think about this idea?', ar: 'وش رايك بالفكره؟', translit: 'ووت دو یو ثینک ابوت ذس ایڈییا؟'},
+    wrong: {en: 'Good', ar: 'حلو', why: 'قصير جدا للاجتماع. قول جمله كامله.'},
+    right: {en: 'I think it is a good idea.', ar: 'اعتقد انها فكره حلوه.', translit: 'ای ثینک ات از ا قود ایڈییا.'},
+    teach: [
+      {ar: 'I think = اعتقد. الطريقه الطبيعيه للتعبير عن رايك.', en: '"I think" — the natural way to share your opinion.'},
     ],
-    modelAnswer: {en: 'I have completed three projects this month.', ar: 'خلصت ثلاث مشاريع ذا الشهر.', translit: 'اي هاڤ كمبليتد ثري براجكتس ذيس مانث.'},
-    wordBank: ['I','have','completed','three','projects','this','month','work','hard','do','not','know'],
-    takeaway: [{en: 'I have completed [number] [things] this month', ar: 'خلصت [رقم] [اشياء] ذا الشهر'}],
+    words: ['I','think','it','is','a','good','idea'],
   },
   'teacher': {
-    situation: {en: 'You are in class. The teacher asks if you have questions.', ar: 'انت بالصف. الاستاذ يسالك اذا عندك اساله.'},
-    teacherLine: {en: 'Do you have any questions about today\'s lesson?', ar: 'عندك اساله على درس اليوم؟', translit: 'دو يو هاڤ اني كويستشنز اباوت تودييز لسن؟'},
-    choices: [
-      {en: 'Yes, could you explain that again, please?', ar: 'ايوه، ممكن تشرح ذا مره ثانيه لو سمحت؟', correct: true, why: 'Polite and clear. "Could you explain that again" is the standard classroom question.'},
-      {en: 'I do not understand.', ar: 'ما فهمت.', correct: false, why: 'Too vague — tell the teacher what specifically you didn\'t understand. "Could you explain [topic] again" is much better.'},
-      {en: 'No questions.', ar: 'ما عندي اساله.', correct: false, why: 'Only say this if you truly understood. Asking questions shows you are engaged.'},
+    intro: {en: 'Imagine you are talking to your teacher after class. They ask if you understood. What do you say?', ar: 'تخيل انك تتكلم مع معلمك بعد الحصه. يسالك اذا فهمت. وش تقول؟'},
+    teacherLine: {en: 'Did you understand the lesson?', ar: 'فهمت الدرس؟', translit: 'دید یو اندرستاند ذا لیسن؟'},
+    wrong: {en: 'Yes', ar: 'اي', why: 'قصير جدا. شكر معلمك وافهمه اكثر.'},
+    right: {en: 'Yes, I understood. Thank you.', ar: 'اي، فهمت. شكرا.', translit: 'یس، ای اندرستود. ثانك یو.'},
+    teach: [
+      {ar: 'Yes, I understood = اي، فهمت. واضحه ومحترمه.', en: '"Yes, I understood" — clear and respectful.'},
+      {ar: 'نضيف Thank you دايما للمعلم.', en: 'Always add "Thank you" to your teacher.'},
     ],
-    modelAnswer: {en: 'Could you explain that again, please?', ar: 'ممكن تشرح ذا مره ثانيه لو سمحت؟', translit: 'كود يو اكسبلين ذات اقاين، بليز.'},
-    wordBank: ['Could','you','explain','that','again','please','I','do','not','understand','No'],
-    takeaway: [{en: 'Could you explain [topic] again, please?', ar: 'ممكن تشرح [موضوع] مره ثانيه لو سمحت؟'}],
+    words: ['Yes','I','understood','Thank','you'],
   },
   'friend': {
-    situation: {en: 'You bump into a friend you have not seen in a while.', ar: 'قابلت صديق ما شفته من زمان.'},
-    teacherLine: {en: 'Hey, long time no see, how have you been?', ar: 'هلا والله، من زمان، اخبارك؟', translit: 'هاي، لونق تايم نو سي، هاو هاڤ يو بين؟'},
-    choices: [
-      {en: 'I have been good, thanks! How about you?', ar: 'تمام، شكرا! وانت كيفك؟', correct: true, why: 'Natural and warm. "How about you?" returns the question — this is how English conversations work.'},
-      {en: 'Fine.', ar: 'تمام.', correct: false, why: 'Too short and cold. Add "thanks" and ask "how about you?" to keep the conversation going.'},
-      {en: 'I am very busy with work.', ar: 'مشغول بالشغل.', correct: false, why: 'Not wrong, but it ends the conversation. Better to add "How about you?" to show interest in your friend.'},
+    intro: {en: 'Imagine you run into a friend. They ask how you are doing. How do you respond?', ar: 'تخيل انك قابلت صديق. يسالك كيف حالك. كيف ترد؟'},
+    teacherLine: {en: 'Hey, how are you doing?', ar: 'هلا، كيف حالك؟', translit: 'هی، هاو آر یو دوینق؟'},
+    wrong: {en: 'Fine', ar: 'تمام', why: 'قصير جدا. اسال عنه بعد.'},
+    right: {en: 'I am doing well, thank you. How about you?', ar: 'تمام، شكرا. وانت؟', translit: 'ای آم دوینق ویل، ثانك یو. هاو ابوت یو؟'},
+    teach: [
+      {ar: 'I am doing well = تمام. مهذبه وطبيعيه.', en: '"I am doing well" — polite and natural.'},
+      {ar: 'How about you? = وانت؟ اسال دايما.', en: '"How about you?" — always ask back.'},
     ],
-    modelAnswer: {en: 'I have been good, thanks! How about you?', ar: 'تمام، شكرا! وانت كيفك؟', translit: 'اي هاڤ بين قود، ثانکس! هاو اباوت يو؟'},
-    wordBank: ['I','have','been','good','thanks','How','about','you','Fine','busy','work'],
-    takeaway: [{en: 'How about you?', ar: 'وانت كيفك؟'}],
+    words: ['I','am','doing','well','thank','you','How','about','you'],
   },
   'customer': {
-    situation: {en: 'You work in a store. A customer asks for help finding something.', ar: 'تشغل بمحل. عميل يطلب مساعده يلاقي شي.'},
-    teacherLine: {en: 'Excuse me, can you help me find something?', ar: 'لو سمحت، تقدر تساعدني الاقي شي؟', translit: 'اكسکوز مي، كان يو هيلب مي فايند سمثنق؟'},
-    choices: [
-      {en: 'Of course, what are you looking for?', ar: 'اكيد، وش تبي؟', correct: true, why: 'Professional and helpful. "What are you looking for" is the standard retail question.'},
-      {en: 'It is over there.', ar: 'هناك.', correct: false, why: 'You don\'t know what they want yet. Ask "What are you looking for?" first.'},
-      {en: 'I do not know where it is.', ar: 'ما ادري وينه.', correct: false, why: 'Even if you don\'t know, say "Let me find out for you" — never leave a customer hanging.'},
+    intro: {en: 'Imagine someone asks if a seat is free. How do you say it is available?', ar: 'تخيل واحد يسالك اذا الكرسي فاضي. كيف تقول انه متاح؟'},
+    teacherLine: {en: 'Excuse me, is this seat taken?', ar: 'لو سمحت، هذا الكرسي محجوز؟', translit: 'اسکیوز می، از ذس سیٹ تیکن؟'},
+    wrong: {en: 'No', ar: 'لا', why: 'قصير جدا. قول No, go ahead.'},
+    right: {en: 'No, go ahead.', ar: 'لا، تفضل.', translit: 'نو، قو آهید.'},
+    teach: [
+      {ar: 'No, go ahead = لا، تفضل. الطريقه الطبيعيه.', en: '"No, go ahead" — the natural way to say something is available.'},
     ],
-    modelAnswer: {en: 'What are you looking for?', ar: 'وش تبي؟', translit: 'وات ار يو لوکنق فور؟'},
-    wordBank: ['What','are','you','looking','for','It','is','over','there','I','do','not','know'],
-    takeaway: [{en: 'What are you looking for?', ar: 'وش تبي؟'}],
+    words: ['No','go','ahead'],
   },
   'receptionist-clinic': {
-    situation: {en: 'You arrive at a clinic. The receptionist asks about your appointment.', ar: 'وصلت للعياده. موظف الاستقبال يسالك عن موعدك.'},
-    teacherLine: {en: 'Do you have an appointment today?', ar: 'عندك موعد اليوم؟', translit: 'دو يو هاڤ ان ابوينتمنت تودي؟'},
-    choices: [
-      {en: 'Yes, I have an appointment at two o\'clock.', ar: 'ايوه، عندي موعد الساعه ثنتين.', correct: true, why: 'Clear and complete. Always state the time so the receptionist can find your booking.'},
-      {en: 'Yes.', ar: 'ايوه.', correct: false, why: 'Too short — add the time. "I have an appointment at [time]" helps the receptionist find you faster.'},
-      {en: 'I want to see the doctor.', ar: 'ابي اشوف الدكتور.', correct: false, why: 'The receptionist asked about an appointment. If you don\'t have one, say "I don\'t have an appointment, is the doctor available?"'},
+    intro: {en: 'Imagine you arrive at a clinic. The receptionist asks for your name. What do you say?', ar: 'تخيل انك وصلت لعياده. الموظفه تطلب اسمك. وش تقول؟'},
+    teacherLine: {en: 'Good morning. Can I have your name, please?', ar: 'صباح الخير. ممكن اسمك لو سمحت؟', translit: 'قود مورنینق. كان اي هاڤ یور نیم، بلیز؟'},
+    wrong: {en: 'Why do you need it?', ar: 'ليش تبيه؟', why: 'وقح. اعط اسمك بكل بساطه.'},
+    right: {en: 'My name is...', ar: 'اسمي...', translit: 'می نیم ایز...'},
+    teach: [
+      {ar: 'My name is = اسمي. بسيطه ومهذبه.', en: '"My name is" — simple and polite.'},
     ],
-    modelAnswer: {en: 'I have an appointment at two o\'clock.', ar: 'عندي موعد الساعه ثنتين.', translit: 'اي هاڤ ان ابوينتمنت ات تو اوکلک.'},
-    wordBank: ['I','have','an','appointment','at','two','o\'clock','Yes','want','see','doctor'],
-    takeaway: [{en: 'I have an appointment at [time]', ar: 'عندي موعد الساعه [وقت]'}],
+    words: ['My','name','is'],
   },
   'neighbour': {
-    situation: {en: 'You are moving into a new place. A neighbour greets you.', ar: 'بتنتقل لبيت جديد. جار يحياك.'},
-    teacherLine: {en: 'Good morning, moving in today?', ar: 'صباح الخير، بتنتقلون اليوم؟', translit: 'قود مورننج، موینج ان تودی؟'},
-    choices: [
-      {en: 'Yes, we just arrived. Nice to meet you!', ar: 'ايوه، وصلنا الحين. تشرفنا!', correct: true, why: 'Friendly and introduces yourself. "Nice to meet you" is the standard greeting for new neighbours.'},
-      {en: 'Yes.', ar: 'ايوه.', correct: false, why: 'Too short — introduce yourself. "Nice to meet you" starts the neighbour relationship on the right foot.'},
-      {en: 'It is none of your business.', ar: 'ما يخصك.', correct: false, why: 'Very rude. Neighbours are being friendly — respond warmly.'},
+    intro: {en: 'Imagine you see your neighbour after a long time. They greet you. How do you respond?', ar: 'تخيل انك شفت جارك من زمان. يحياك. كيف ترد؟'},
+    teacherLine: {en: 'Hi, how are you? I have not seen you in a while.', ar: 'هلا، كيف حالك؟ من زمان ما شفتك.', translit: 'هی، هاو آر یو؟ آی هاو نت سن یو این ا وایل.'},
+    wrong: {en: 'I am fine', ar: 'تمام', why: 'قصير. اشرح وين كنت واسال عنه.'},
+    right: {en: 'I have been busy with work. How are you?', ar: 'كنت مشغول بالشغل. كيف حالك؟', translit: 'ای هاو بین بیزی ویتھ ورك. هاو آر یو؟'},
+    teach: [
+      {ar: 'I have been busy with = كنت مشغول بـ. الطريقه الطبيعيه.', en: '"I have been busy with" — the natural way to explain your absence.'},
+      {ar: 'نسال عنه: How are you? دايما.', en: 'Always ask back: "How are you?".'},
     ],
-    modelAnswer: {en: 'Yes, we just arrived. Nice to meet you!', ar: 'ايوه، وصلنا الحين. تشرفنا!', translit: 'یس، وی جاست اریفد. نایس تو مییت یو!'},
-    wordBank: ['Yes','we','just','arrived','Nice','to','meet','you','It','is','none','business'],
-    takeaway: [{en: 'Nice to meet you!', ar: 'تشرفنا!'}],
+    words: ['I','have','been','busy','with','work','How','are','you'],
   },
   'bank-teller': {
-    situation: {en: 'You are at the bank. The teller asks how they can help.', ar: 'انت بالبنك. الصراف يسال كيف يقدر يساعدك.'},
-    teacherLine: {en: 'Good morning, how can I help you today?', ar: 'صباح الخير، كيف اقدر اساعدك اليوم؟', translit: 'قود مورننج، هاو كان اي هیلب یو تودی؟'},
-    choices: [
-      {en: 'I would like to deposit a check, please.', ar: 'ابي اودع شيك لو سمحت.', correct: true, why: 'Polite and specific. "I would like to" is more formal and natural than "I want".'},
-      {en: 'I need money.', ar: 'ابي فلوس.', correct: false, why: 'Too vague and sounds odd. Say what you actually need: "I would like to deposit/withdraw".'},
-      {en: 'Give me cash.', ar: 'اعطني فلوس.', correct: false, why: 'Impolite. Bank staff are professionals — use "I would like to" and add "please".'},
+    intro: {en: 'Imagine you are at the bank. The teller asks how they can help. What do you say?', ar: 'تخيل انك بالبنك. الموظف يسالك كيف يقدر يساعدك. وش تقول؟'},
+    teacherLine: {en: 'Good afternoon. How can I help you today?', ar: 'مسا الخير. كيف اقدر اساعدك اليوم؟', translit: 'قود افترنون. هاو كان اي هیلب یو تودی؟'},
+    wrong: {en: 'Give me cash', ar: 'اعطني كاش', why: 'وقح. في البنك نستخدم I would like to.'},
+    right: {en: 'I would like to withdraw some money.', ar: 'حاب اسحب فلوس.', translit: 'ای ود لایک تو ودرو سام مانی.'},
+    teach: [
+      {ar: 'I would like to = ابي/حاب. مهذب ومحترم.', en: '"I would like to" — polite and respectful.'},
+      {ar: 'withdraw = سحب. الفعل اللي نستخدمه بالبنك.', en: '"withdraw" — the verb used at banks.'},
     ],
-    modelAnswer: {en: 'I would like to deposit a check, please.', ar: 'ابي اودع شيك لو سمحت.', translit: 'ای ود لایک تو دیپوزیت ا چیک، بلیز.'},
-    wordBank: ['I','would','like','to','deposit','a','check','please','need','money','give','cash'],
-    takeaway: [{en: 'I would like to [action], please', ar: 'ابي [فعل] لو سمحت'}],
+    words: ['I','would','like','to','withdraw','some','money'],
   },
   'flight-attendant': {
-    situation: {en: 'You are on a plane. The flight attendant offers you a drink.', ar: 'انت بالطياره. المضيف يعرض عليك شراب.'},
-    teacherLine: {en: 'Welcome aboard. Would you like something to drink?', ar: 'اهلا بكم على متن الرحله. تبي شي تشربه؟', translit: 'ویلکم ابرد. ود یو لایک اسمثنق تو درینک؟'},
-    choices: [
-      {en: 'Yes, I would like a water, please.', ar: 'ايوه، ابي ماي لو سمحت.', correct: true, why: 'Polite and specific. "I would like [drink], please" is the natural way to order on a plane.'},
-      {en: 'Water.', ar: 'ماي.', correct: false, why: 'Too short — add "please" and "I would like" to be polite.'},
-      {en: 'I am not thirsty.', ar: 'ما عطشان.', correct: false, why: 'Not wrong if true, but a simple "No, thank you" is more natural in English.'},
+    intro: {en: 'Imagine you are on a plane. The attendant asks what you want to drink. What do you say?', ar: 'تخيل انك بالطياره. المضيف يسالك وش تبي تشرب. وش تقول؟'},
+    teacherLine: {en: 'What would you like to drink?', ar: 'وش تبي تشرب؟', translit: 'ووت وود یو لایک تو درینك؟'},
+    wrong: {en: 'Water', ar: 'ماء', why: 'كلمه وحده. قول جمله كامله.'},
+    right: {en: 'I would like a water, please.', ar: 'ابي ماء لو سمحت.', translit: 'ای وود لایک ا واتر، بلیز.'},
+    teach: [
+      {ar: 'I would like a + الشي + please. النمط الكامل.', en: '"I would like a [item], please" — the complete pattern.'},
     ],
-    modelAnswer: {en: 'I would like a water, please.', ar: 'ابي ماي لو سمحت.', translit: 'ای ود لایک ا ووتر، بلیز.'},
-    wordBank: ['I','would','like','a','water','please','Water','not','thirsty','No','thank','you'],
-    takeaway: [{en: 'I would like a [drink], please', ar: 'ابي [شراب] لو سمحت'}],
+    words: ['I','would','like','a','water','please'],
   },
   'coworker': {
-    situation: {en: 'A coworker invites you to lunch.', ar: 'زميل بالشغل يدعوك للغدا.'},
-    teacherLine: {en: 'Hey, do you want to grab lunch together?', ar: 'هلا، تبغى نتعشى مع بعض؟', translit: 'های، دو یو وانت تو قراب لانش توقذر؟'},
-    choices: [
-      {en: 'Sure, that sounds great! Where do you want to go?', ar: 'اكيد، فكره حلوه! وين تبي تروح؟', correct: true, why: 'Enthusiastic and keeps the conversation going by asking a follow-up question.'},
-      {en: 'Okay.', ar: 'اوكي.', correct: false, why: 'Too flat — show some enthusiasm. "That sounds great" makes your coworker feel welcome.'},
-      {en: 'I brought my lunch today.', ar: 'جايب غدا معاي اليوم.', correct: false, why: 'Not wrong, but add "Maybe next time!" to keep the social connection.'},
+    intro: {en: 'Imagine a coworker asks about your weekend. How do you respond?', ar: 'تخيل زميلك يسالك عن ويكاندك. كيف ترد؟'},
+    teacherLine: {en: 'Hey, how was your weekend?', ar: 'هلا، كيف كان ويكاندك؟', translit: 'هی، هاو واز یور ویکاند؟'},
+    wrong: {en: 'Boring', ar: 'ممل', why: 'سلبي جدا. قول شي ايجابي واسال عنه.'},
+    right: {en: 'It was great, thank you. How was yours?', ar: 'كان حلو، شكرا. وانت؟', translit: 'ایت واز قریت، ثانك یو. هاو واز یورز؟'},
+    teach: [
+      {ar: 'It was great = كان حلو. ايجابي ومهذب.', en: '"It was great" — positive and polite.'},
+      {ar: 'How was yours? = وانت؟ اسال دايما.', en: '"How was yours?" — always ask back.'},
     ],
-    modelAnswer: {en: 'That sounds great! Where do you want to go?', ar: 'فكره حلوه! وين تبي تروح؟', translit: 'ذات ساونقز قرت! ویر دو یو وانت تو قو؟'},
-    wordBank: ['That','sounds','great','Where','do','you','want','to','go','Okay','I','brought','lunch'],
-    takeaway: [{en: 'That sounds great!', ar: 'فكره حلوه!'}, {en: 'Where do you want to go?', ar: 'وين تبي تروح؟'}],
+    words: ['It','was','great','thank','you','How','was','yours'],
   },
   'job-interviewer': {
-    situation: {en: 'You are in a job interview. The interviewer asks you to introduce yourself.', ar: 'انت بمقابله شغل. المقابل يطلب منك تعريف بنفسك.'},
-    teacherLine: {en: 'Thanks for coming in. Tell me about yourself.', ar: 'شكرا لحضورك. عرفني بنفسك.', translit: 'ثانکس فور کمنق ان. تیل می اباوت یورسلف.'},
-    choices: [
-      {en: 'I have three years of experience in customer service, and I enjoy helping people.', ar: 'عندي ثلاث سنوات خبره في خدمه العملا، واحب اساعد الناس.', correct: true, why: 'Professional and positive. Start with experience, then add something personal about what you enjoy.'},
-      {en: 'My name is Ahmed and I am from Saudi Arabia.', ar: 'اسمي احمد وانا من السعوديه.', correct: false, why: 'The interviewer already knows your name. Focus on your experience and skills instead.'},
-      {en: 'I need a job.', ar: 'ابي شغل.', correct: false, why: 'Never say this in an interview. Focus on what you bring to the company, not what you need.'},
+    intro: {en: 'Imagine you are in a job interview. They ask you to introduce yourself. How do you do it?', ar: 'تخيل انك بمقابله عمل. يطلبون منك تعرف بنفسك. كيف؟'},
+    teacherLine: {en: 'Good morning. Can you tell me a little about yourself?', ar: 'صباح الخير. ممكن تحكي عن نفسك شوي؟', translit: 'قود مورنینق. كان یو تیل می ا لیٹل ابوت یورسیف؟'},
+    wrong: {en: 'I need a job', ar: 'ابي شغل', why: 'ابدا ما تقول كذا بمقابله. عرف بنفسك باحتراف.'},
+    right: {en: 'My name is... and I work as a...', ar: 'اسمي... وانا اشتغل...', translit: 'می نیم ایز... اند آی وورک از ا...'},
+    teach: [
+      {ar: 'My name is + الاسم. نبدأ بالاسم.', en: 'Start with "My name is" + your name.'},
+      {ar: 'I work as a + الوظيفه. نكمل بالمهنه.', en: 'Then "I work as a" + your profession.'},
     ],
-    modelAnswer: {en: 'I have three years of experience in customer service.', ar: 'عندي ثلاث سنوات خبره في خدمه العملا.', translit: 'ای هاڤ ثری ییرز اوڤ اکسپیرینس ان کستمر سیرفس.'},
-    wordBank: ['I','have','three','years','of','experience','in','customer','service','My','name','need','job'],
-    takeaway: [{en: 'I have [number] years of experience in [field]', ar: 'عندي [رقم] سنوات خبره في [مجال]'}],
+    words: ['My','name','is','and','I','work','as','a'],
   },
   'police-officer': {
-    situation: {en: 'A police officer asks to see your ID.', ar: 'شرطي يطلب يشوف هويتك.'},
-    teacherLine: {en: 'Good evening, can I see your ID, please?', ar: 'مسا الخير، ممكن اشوف الهويه لو سمحت؟', translit: 'قود ایڤنینج، كان ای سی یور ای دی، بلیز؟'},
-    choices: [
-      {en: 'Sure, here is my ID.', ar: 'تفضل، ذا هويتي.', correct: true, why: 'Calm and cooperative. "Sure" shows you are willing, and "here is my ID" is clear and direct.'},
-      {en: 'Why? What did I do?', ar: 'ليش؟ وش سويت؟', correct: false, why: 'Defensive and confrontational. Stay calm and cooperate — you can ask questions after complying.'},
-      {en: 'I do not have it.', ar: 'ما عندي.', correct: false, why: 'If true, say "I don\'t have it with me, it is at home" — be specific and polite.'},
+    intro: {en: 'Imagine a police officer asks if you live nearby. How do you answer?', ar: 'تخيل شرطي يسالك اذا انت ساكن هنا. كيف ترد؟'},
+    teacherLine: {en: 'Excuse me, do you live around here?', ar: 'لو سمحت، انت ساكن هنا؟', translit: 'اسکیوز می، دو یو لیڤ ارواند هیر؟'},
+    wrong: {en: 'Why are you asking?', ar: 'ليش تسال؟', why: 'مو وقح. جاوب باحترام.'},
+    right: {en: 'Yes, I live nearby.', ar: 'اي، ساكن قريب.', translit: 'یس، آی لیڤ نیربای.'},
+    teach: [
+      {ar: 'I live nearby = ساكن قريب. مهذب وواضح.', en: '"I live nearby" — polite and clear.'},
     ],
-    modelAnswer: {en: 'Sure, here is my ID.', ar: 'تفضل، ذا هويتي.', translit: 'شور، هیر از می ای دی.'},
-    wordBank: ['Sure','here','is','my','ID','Why','What','did','I','do','not','have'],
-    takeaway: [{en: 'Sure, here is my [item]', ar: 'تفضل، ذا [الشي] تبعي'}],
+    words: ['Yes','I','live','nearby'],
   },
   'tour-guide': {
-    situation: {en: 'You join a tour. The guide announces the start time.', ar: 'انضممت لجوله. المرشد يعلن وقت البدايه.'},
-    teacherLine: {en: 'Welcome everyone. We start the tour in ten minutes.', ar: 'حياكم الكل. نبدا الجوله لسه عشر دقايق.', translit: 'ویلکم اوری ون. وی ستارت ذا تور ان تن مینتس.'},
-    choices: [
-      {en: 'Great, where does the tour start?', ar: 'حلو، وين تبدا الجوله؟', correct: true, why: 'Positive and asks a useful follow-up question. "Where does [it] start?" gets you the meeting point.'},
-      {en: 'Ten minutes is too long.', ar: 'عشر دقايق وايد.', correct: false, why: 'Impatient and rude. Tours run on a schedule — use the time to get ready.'},
-      {en: 'Okay.', ar: 'اوكي.', correct: false, why: 'Too short — ask "Where does the tour start?" so you know where to be.'},
+    intro: {en: 'Imagine you are on a tour. The guide asks if you are enjoying it. How do you respond?', ar: 'تخيل انك بجوله. المرشد يسالك اذا تستمتع. كيف ترد؟'},
+    teacherLine: {en: 'Are you enjoying the tour so far?', ar: 'متمتع بالجوله لحد الحين؟', translit: 'آر یو انجویینق ذا تور سو فار؟'},
+    wrong: {en: 'I am tired', ar: 'انا تعبان', why: 'مو مهذب للمرشد. قول شي ايجابي.'},
+    right: {en: 'Yes, it is very interesting.', ar: 'اي، ممتعه كثير.', translit: 'یس، ات از ویری انتریستینق.'},
+    teach: [
+      {ar: 'It is very interesting = ممتعه كثير. ايجابي ومهذب.', en: '"It is very interesting" — positive and polite.'},
     ],
-    modelAnswer: {en: 'Where does the tour start?', ar: 'وين تبدا الجوله؟', translit: 'ویر داز ذا تور ستارت؟'},
-    wordBank: ['Where','does','the','tour','start','Great','Ten','minutes','long','Okay'],
-    takeaway: [{en: 'Where does [it] start?', ar: 'وين تبدا [الشي]؟'}],
+    words: ['Yes','it','is','very','interesting'],
   },
 };
-const DEFAULT_SCENARIO = {
-  situation: {en: 'Practice this conversation scenario.', ar: 'تدرب على سيناريو المحادثه ذا.'},
-  teacherLine: {en: 'Hello, how can I help you today?', ar: 'هلا، كيف اقدر اساعدك اليوم؟', translit: 'هلو، هاو كان اي هیلب یو تودی؟'},
-  choices: [
-    {en: 'I would like some help, please.', ar: 'ابي مساعده لو سمحت.', correct: true, why: 'Polite and clear. "I would like" is more natural than "I want".'},
-    {en: 'Help me.', ar: 'ساعدني.', correct: false, why: 'Too direct — add "please" and use "I would like" for a polite request.'},
-    {en: 'Nothing.', ar: 'ما ابغى شي.', correct: false, why: 'If you don\'t need help, say "No, thank you" instead.'},
-  ],
-  modelAnswer: {en: 'I would like some help, please.', ar: 'ابي مساعده لو سمحت.', translit: 'ای ود لایک سام هیلب، بلیز.'},
-  wordBank: ['I','would','like','some','help','please','Help','me','Nothing','No','thank','you'],
-  takeaway: [{en: 'I would like [thing], please', ar: 'ابي [شي] لو سمحت'}],
-};
+
+const DEFAULT_SCENARIO = SCENARIO_TRAINER['waiter'];
 
 function renderSpeaking(){
   const el = document.getElementById('view-speaking');
@@ -19400,8 +19363,8 @@ function renderSpeaking(){
   el.innerHTML = `
     <div class="page-head">
       <span class="eyebrow"><span class="arabic" style="font-size:.95em;">استوديو المحادثه</span>، Speaking Studio</span>
-      <h1><span class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">تدرب على محادثات حقيقيه.</span><span dir="ltr">Practice real conversations.</span></h1>
-      <p><span class="arabic" style="display:block; margin-bottom:4px;">اختر شخصيه، وابدا التدريب: الموقف، اسمع، اختار، ابني، انطق. كل خطوه تعلمك شي جديد.</span><span dir="ltr">Pick a persona, then train step by step: situation, listen, choose, build, say. Every step teaches something new.</span></p>
+      <h1><span class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">تعلم تتكلم صح، خطوه بخطوه.</span><span dir="ltr">Learn to speak correctly, step by step.</span></h1>
+      <p><span class="arabic" style="display:block; margin-bottom:4px;">تخيل انك بالموقف. نعلمك وش تقول، ونفهمك ليه، وتدرب عليه.</span><span dir="ltr">Imagine the situation. We teach you what to say, explain why, and you practice it.</span></p>
     </div>
     <div class="grid grid-4" id="personaGrid" style="margin-bottom:28px;"></div>
     <div class="card" id="roleplayCard" style="display:none;"></div>`;
@@ -19421,90 +19384,123 @@ function renderSpeaking(){
     rc.style.display = 'block';
     const sc = SCENARIO_TRAINER[persona.id] || DEFAULT_SCENARIO;
     const A = accountPrefs.lang === 'ar';
-    let step = 0, chosen = null, placed = [];
+    let step = 0, placed = [];
 
     function render(){
-      const steps = ['situation','listen','choose','build','say','done'];
-      const labels = A
-        ? ['الموقف','اسمع','اختار','ابني','انطق','خلاصه']
-        : ['Situation','Listen','Choose','Build','Say','Summary'];
-      const dots = labels.map((l,i) => `<span class="pel-step-dot${i===step?' active':''}${i<step?' done':''}">${i+1}</span>`).join('');
-      const stepLabel = labels[step];
+      const lesson = sc;
+      const stepLabel = A ? `الدرس ${step+1} من 5` : `Lesson ${step+1} of 5`;
 
       const head = `
         <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
           <div class="persona-avatar" style="margin:0;"><i data-lucide="${persona.icon}" width="20" height="20"></i></div>
           <div style="flex:1;"><h3 style="font-size:1.05rem;" dir="ltr">${persona.title}</h3>
-            <span style="font-size:.76rem; color:var(--text-muted);">${stepLabel} · ${step+1}/${steps.length}</span></div>
-        </div>
-        <div class="pel-step-bar" style="display:flex; gap:6px; margin-bottom:20px;">${dots}</div>`;
+            <span style="font-size:.76rem; color:var(--text-muted);">${stepLabel}</span></div>
+          <button type="button" class="btn-ghost" id="rpClose" style="font-size:.82rem; padding:6px 12px;">✕</button>
+        </div>`;
 
       if(step === 0){
+        // STEP 1: Situation + Listen
         rc.innerHTML = head + `
-          <div class="card-elevated" style="padding:24px; border-radius:16px;">
-            <div style="font-size:.72rem; color:var(--gold); text-transform:uppercase; letter-spacing:.08em; margin-bottom:10px;"><span class="arabic">الموقف</span>، The Situation</div>
-            <p class="arabic" style="font-size:1.05rem; line-height:1.8; margin-bottom:16px;">${escapeHtml(sc.situation.ar)}</p>
-            <p dir="ltr" style="font-size:.92rem; color:var(--text-secondary); line-height:1.6;">${escapeHtml(sc.situation.en)}</p>
+          <div class="card-elevated" style="padding:24px; border-radius:16px; margin-bottom:16px;">
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:14px;">
+              <span style="width:28px; height:28px; border-radius:50%; background:var(--gold-soft); color:#171412; display:flex; align-items:center; justify-content:center; font-size:.8rem; font-weight:700; flex-shrink:0;">1</span>
+              <span class="arabic" style="font-size:.82rem; font-weight:700; color:var(--gold);">تخيل الموقف</span>
+            </div>
+            <p class="arabic" style="font-size:1.05rem; line-height:1.9; margin-bottom:10px;">${escapeHtml(lesson.intro.ar)}</p>
+            <p dir="ltr" style="font-size:.88rem; color:var(--text-secondary); line-height:1.6;">${escapeHtml(lesson.intro.en)}</p>
           </div>
-          <button type="button" class="btn-gold" id="stepNext" style="margin-top:18px; width:100%;">${A?'ابدا التدريب':'Start Training'} →</button>`;
+          <div class="card-elevated" style="padding:24px; border-radius:16px; margin-bottom:16px; text-align:center; border:1px solid rgba(66,163,106,.2);">
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:16px; justify-content:center;">
+              <span style="width:28px; height:28px; border-radius:50%; background:rgba(66,163,106,.15); color:var(--success); display:flex; align-items:center; justify-content:center; font-size:.8rem; font-weight:700; flex-shrink:0;">🔊</span>
+              <span class="arabic" style="font-size:.82rem; font-weight:700; color:var(--success);">اسمع السؤال</span>
+            </div>
+            <button type="button" class="btn-outline" id="playLine" style="width:56px; height:56px; border-radius:50%; margin:0 auto 16px; display:flex; align-items:center; justify-content:center;"><i data-lucide="volume-2" width="24" height="24"></i></button>
+            <p dir="ltr" style="font-size:1.1rem; line-height:1.6; margin-bottom:8px;">${escapeHtml(lesson.teacherLine.en)}</p>
+            <p class="arabic" style="font-size:1rem; color:var(--text-secondary); margin-bottom:6px;">${escapeHtml(lesson.teacherLine.ar)}</p>
+            <p class="arabic" style="font-size:.82rem; color:var(--gold-soft);">${escapeHtml(lesson.teacherLine.translit)}</p>
+          </div>
+          <button type="button" class="btn-gold" id="stepNext" style="margin-top:8px; width:100%;">${A?'التالي':'Continue'} →</button>`;
+        document.getElementById('playLine').addEventListener('click', () => speak(lesson.teacherLine.en));
+        speak(lesson.teacherLine.en);
       }
       else if(step === 1){
+        // STEP 2: Common mistake
         rc.innerHTML = head + `
-          <div class="card-elevated" style="padding:24px; border-radius:16px; text-align:center;">
-            <div style="font-size:.72rem; color:var(--gold); text-transform:uppercase; letter-spacing:.08em; margin-bottom:16px;"><span class="arabic">اسمع للسؤال</span>، Listen to the question</div>
-            <button type="button" class="btn-outline" id="playLine" style="width:56px; height:56px; border-radius:50%; margin:0 auto 16px; display:flex; align-items:center; justify-content:center;"><i data-lucide="volume-2" width="24" height="24"></i></button>
-            <p dir="ltr" style="font-size:1.1rem; line-height:1.6; margin-bottom:8px;">${escapeHtml(sc.teacherLine.en)}</p>
-            <p class="arabic" style="font-size:1rem; color:var(--text-secondary); margin-bottom:6px;">${escapeHtml(sc.teacherLine.ar)}</p>
-            <p class="arabic" style="font-size:.82rem; color:var(--gold-soft);">${escapeHtml(sc.teacherLine.translit)}</p>
+          <div class="card-elevated" style="padding:24px; border-radius:16px; margin-bottom:16px; border:1px solid rgba(210,92,92,.25);">
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:14px;">
+              <span style="width:28px; height:28px; border-radius:50%; background:rgba(210,92,92,.15); color:var(--danger); display:flex; align-items:center; justify-content:center; font-size:.8rem; font-weight:700; flex-shrink:0;">2</span>
+              <span class="arabic" style="font-size:.82rem; font-weight:700; color:var(--danger);">الغلط الشايع</span>
+            </div>
+            <div style="display:flex; gap:12px; align-items:flex-start; margin-bottom:14px;">
+              <span style="color:var(--danger); font-size:1.2rem; flex-shrink:0; padding-top:2px;">✗</span>
+              <div>
+                <p dir="ltr" style="font-size:1rem; font-weight:600; text-decoration:line-through; color:var(--danger); margin-bottom:4px;">${escapeHtml(lesson.wrong.en)}</p>
+                <p class="arabic" style="font-size:.88rem; color:var(--text-secondary); margin-bottom:8px;">${escapeHtml(lesson.wrong.ar)}</p>
+              </div>
+            </div>
+            <div style="padding:12px 14px; border-radius:10px; background:rgba(200,169,106,.08); border:1px solid rgba(200,169,106,.2);">
+              <span class="arabic" style="font-size:.82rem; font-weight:700; color:var(--gold);">لليش غلط؟ </span>
+              <span class="arabic" style="font-size:.82rem; color:var(--text-secondary); line-height:1.7;">${escapeHtml(lesson.wrong.why)}</span>
+            </div>
           </div>
-          <button type="button" class="btn-gold" id="stepNext" style="margin-top:18px; width:100%;">${A?'اختار ردك':'Choose your reply'} →</button>`;
-        document.getElementById('playLine').addEventListener('click', () => speak(sc.teacherLine.en));
-        speak(sc.teacherLine.en);
+          <button type="button" class="btn-gold" id="stepNext" style="width:100%;">${A?'التالي':'Continue'} →</button>`;
       }
       else if(step === 2){
+        // STEP 3: Teacher explains + correct version
         rc.innerHTML = head + `
-          <div class="card-elevated" style="padding:24px; border-radius:16px;">
-            <div style="font-size:.72rem; color:var(--gold); text-transform:uppercase; letter-spacing:.08em; margin-bottom:16px;"><span class="arabic">اختار افضل رد</span>، Choose the best reply</div>
-            ${sc.choices.map((c,i) => `
-              <button type="button" class="quiz-option" data-choice="${i}" style="display:block; width:100%; text-align:start; margin-bottom:10px; padding:14px 16px; border-radius:12px; border:1px solid var(--border); background:var(--card); color:var(--text); cursor:pointer; font-size:.92rem;">
-                <span dir="ltr">${escapeHtml(c.en)}</span>
-                <span class="arabic" style="display:block; font-size:.82rem; color:var(--text-muted); margin-top:4px;">${escapeHtml(c.ar)}</span>
-              </button>`).join('')}
-            <div id="choiceFb" style="margin-top:12px;"></div>
-          </div>`;
-        rc.querySelectorAll('[data-choice]').forEach(btn => {
-          btn.addEventListener('click', () => {
-            const idx = +btn.dataset.choice;
-            const c = sc.choices[idx];
-            chosen = c;
-            rc.querySelectorAll('[data-choice]').forEach(b => { b.disabled = true; b.style.opacity = '.6'; });
-            btn.style.opacity = '1';
-            btn.style.borderColor = c.correct ? 'var(--success)' : 'var(--danger)';
-            btn.style.background = c.correct ? 'rgba(66,163,106,.08)' : 'rgba(210,92,92,.08)';
-            const fb = document.getElementById('choiceFb');
-            fb.innerHTML = `<div style="padding:14px 16px; border-radius:12px; background:${c.correct?'rgba(66,163,106,.08)':'rgba(200,169,106,.08)'}; border:1px solid ${c.correct?'rgba(66,163,106,.3)':'rgba(200,169,106,.3)'};">
-              <p style="font-weight:700; color:${c.correct?'var(--success)':'var(--gold)'}; margin-bottom:6px;">${c.correct?(A?'✓ صحيح!':'✓ Correct!'):(A?'✗ مو الزين':'✗ Not quite')}</p>
-              <p class="arabic" style="font-size:.84rem; line-height:1.6; color:var(--text-secondary);">${escapeHtml(c.why)}</p>
+          <div class="card-elevated" style="padding:24px; border-radius:16px; margin-bottom:16px; border:1px solid rgba(66,163,106,.2);">
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:16px;">
+              <span style="width:28px; height:28px; border-radius:50%; background:rgba(66,163,106,.15); color:var(--success); display:flex; align-items:center; justify-content:center; font-size:.8rem; font-weight:700; flex-shrink:0;">3</span>
+              <span class="arabic" style="font-size:.82rem; font-weight:700; color:var(--success);">تعال نعلمك الصح</span>
             </div>
-            <button type="button" class="btn-gold" id="stepNext" style="margin-top:14px; width:100%;">${A?'التالي':'Continue'} →</button>`;
-            if(c.correct) confettiBurst();
-          });
-        });
+            ${lesson.teach.map((t,i) => `
+              <div style="display:flex; gap:10px; align-items:flex-start; margin-bottom:14px;">
+                <span style="color:var(--gold); font-weight:700; flex-shrink:0; font-size:.9rem;">${i+1}.</span>
+                <div>
+                  <p class="arabic" style="font-size:.9rem; line-height:1.8; margin-bottom:4px;">${escapeHtml(t.ar)}</p>
+                  <p dir="ltr" style="font-size:.8rem; color:var(--text-muted); line-height:1.5;">${escapeHtml(t.en)}</p>
+                </div>
+              </div>`).join('')}
+          </div>
+          <div class="card-elevated" style="padding:24px; border-radius:16px; margin-bottom:16px; border:1px solid rgba(66,163,106,.3); background:rgba(66,163,106,.04);">
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:14px;">
+              <span style="width:28px; height:28px; border-radius:50%; background:rgba(66,163,106,.15); color:var(--success); display:flex; align-items:center; justify-content:center; font-size:.8rem; font-weight:700; flex-shrink:0;">4</span>
+              <span class="arabic" style="font-size:.82rem; font-weight:700; color:var(--success);">الجواب الصحيح</span>
+            </div>
+            <div style="display:flex; gap:12px; align-items:flex-start; margin-bottom:10px;">
+              <span style="color:var(--success); font-size:1.2rem; flex-shrink:0; padding-top:2px;">✓</span>
+              <div>
+                <p dir="ltr" style="font-size:1.1rem; font-weight:600; color:var(--success); margin-bottom:6px;">${escapeHtml(lesson.right.en)}</p>
+                <p class="arabic" style="font-size:.92rem; color:var(--text-secondary); margin-bottom:4px;">${escapeHtml(lesson.right.ar)}</p>
+                <p class="arabic" style="font-size:.8rem; color:var(--gold-soft);">${escapeHtml(lesson.right.translit)}</p>
+              </div>
+            </div>
+            <button type="button" class="btn-outline" id="playRight" style="font-size:.82rem; margin-top:8px;">🔊 ${A?'استمع':'Listen'}</button>
+          </div>
+          <button type="button" class="btn-gold" id="stepNext" style="width:100%;">${A?'التالي':'Continue'} →</button>`;
+        document.getElementById('playRight').addEventListener('click', () => speak(lesson.right.en));
       }
       else if(step === 3){
-        const bank = shuffle(sc.wordBank.slice());
+        // STEP 4: Build it yourself
+        const bank = shuffle(lesson.words.slice());
+        placed = [];
         rc.innerHTML = head + `
-          <div class="card-elevated" style="padding:24px; border-radius:16px;">
-            <div style="font-size:.72rem; color:var(--gold); text-transform:uppercase; letter-spacing:.08em; margin-bottom:16px;"><span class="arabic">ابني الجواب</span>، Build the answer</div>
-            <p class="arabic" style="font-size:.9rem; color:var(--text-muted); margin-bottom:12px;">${A?'اضغط الكلمات تحت عشان تبني جوابك':'Tap words below to build your answer'}</p>
+          <div class="card-elevated" style="padding:24px; border-radius:16px; margin-bottom:16px;">
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:14px;">
+              <span style="width:28px; height:28px; border-radius:50%; background:var(--gold); color:#171412; display:flex; align-items:center; justify-content:center; font-size:.8rem; font-weight:700; flex-shrink:0;">5</span>
+              <span class="arabic" style="font-size:.82rem; font-weight:700; color:var(--gold);">${A?'ابني الجواب بنفسك':'Build the answer'}</span>
+            </div>
+            <p class="arabic" style="font-size:.84rem; color:var(--text-muted); margin-bottom:12px;">${A?'اضغط الكلمات تحت بترتيب الجواب الصح':'Tap the words below in the correct order'}</p>
             <div id="buildDrop" style="min-height:48px; padding:12px; border:1px dashed var(--border); border-radius:12px; margin-bottom:14px; display:flex; flex-wrap:wrap; gap:8px; align-items:center;"></div>
             <div id="buildBank" style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px;">${bank.map((w,i) => `<button class="pel-token" data-w="${i}">${escapeHtml(w)}</button>`).join('')}</div>
-            <button type="button" class="btn-outline" id="buildClear" style="font-size:.82rem;">${A?'مسح':'Clear'}</button>
+            <div style="display:flex; gap:8px;">
+              <button type="button" class="btn-outline" id="buildClear" style="font-size:.82rem; flex:1;">${A?'مسح':'Clear'}</button>
+              <button type="button" class="btn-gold" id="buildCheck" style="flex:2;">${A?'تحقق':'Check'}</button>
+            </div>
             <div id="buildFb" style="margin-top:12px;"></div>
           </div>`;
         const drop = document.getElementById('buildDrop');
         const bankEl = document.getElementById('buildBank');
-        placed = [];
         function renderDrop(){
           drop.innerHTML = placed.length ? placed.map((t,i) => `<button class="pel-token" data-pi="${i}" style="background:var(--gold-soft); color:#171412;">${escapeHtml(t)}</button>`).join('') : `<span style="color:var(--text-muted); font-size:.82rem;">${A?'الكلمات تظهر هنا':'Words appear here'}</span>`;
           drop.querySelectorAll('[data-pi]').forEach(b => b.onclick = () => { const idx=+b.dataset.pi; const tok=placed[idx]; placed.splice(idx,1); renderDrop(); addBack(tok); });
@@ -19519,47 +19515,42 @@ function renderSpeaking(){
           document.getElementById('buildFb').innerHTML = '';
         };
         renderDrop();
-        const checkBtn = document.createElement('button');
-        checkBtn.className = 'btn-gold';
-        checkBtn.style.cssText = 'margin-top:14px; width:100%;';
-        checkBtn.textContent = A?'تحقق':'Check';
-        checkBtn.onclick = () => {
+        document.getElementById('buildCheck').onclick = () => {
           const built = placed.join(' ').toLowerCase().trim();
-          const target = sc.modelAnswer.en.toLowerCase().replace(/[^a-z\s']/g,'').trim();
-          const ok = built === target || tokensContain(built, sc.modelAnswer.en.split(' ')[0]) && placed.length >= 3;
+          const target = lesson.right.en.toLowerCase().replace(/[^a-z\s']/g,'').trim();
+          const ok = built === target;
           const fb = document.getElementById('buildFb');
-          if(ok || placed.length >= sc.modelAnswer.en.split(' ').length - 1){
-            fb.innerHTML = `<div style="padding:14px; border-radius:12px; background:rgba(66,163,106,.08); border:1px solid rgba(66,163,106,.3);">
-              <p style="font-weight:700; color:var(--success); margin-bottom:6px;">${A?'✓ ممتاز!':'✓ Great job!'}</p>
-              <p dir="ltr" style="font-size:.92rem; margin-bottom:4px;">${escapeHtml(sc.modelAnswer.en)}</p>
-              <p class="arabic" style="font-size:.84rem; color:var(--text-secondary);">${escapeHtml(sc.modelAnswer.ar)}</p>
-              <p class="arabic" style="font-size:.76rem; color:var(--gold-soft); margin-top:4px;">${escapeHtml(sc.modelAnswer.translit)}</p>
+          if(ok){
+            fb.innerHTML = `<div style="padding:16px; border-radius:12px; background:rgba(66,163,106,.08); border:1px solid rgba(66,163,106,.3);">
+              <p style="font-weight:700; color:var(--success); margin-bottom:6px;">✓ ${A?'صحيح! ممتاز':'Correct! Great job'}</p>
             </div>
-            <button type="button" class="btn-gold" id="stepNext" style="margin-top:14px; width:100%;">${A?'انطقها':'Say it'} →</button>`;
+            <button type="button" class="btn-gold" id="stepNext" style="margin-top:12px; width:100%;">${A?'انطقها':'Say it'} →</button>`;
             confettiBurst();
           } else {
             fb.innerHTML = `<div style="padding:14px; border-radius:12px; background:rgba(200,169,106,.08); border:1px solid rgba(200,169,106,.3);">
-              <p style="font-weight:700; color:var(--gold); margin-bottom:6px;">${A?'قريب! حاول مره ثانيه':'Close! Try again'}</p>
-              <p class="arabic" style="font-size:.84rem; color:var(--text-secondary);">${A?'رتب الكلمات صح':'Arrange the words correctly'}</p>
+              <p style="font-weight:700; color:var(--gold); margin-bottom:4px;">${A?'قريب! شوف الجواب الصح فوق وحاول مره ثانيه':'Close! Look at the correct answer above and try again'}</p>
             </div>`;
           }
         };
-        rc.querySelector('.card-elevated').appendChild(checkBtn);
       }
       else if(step === 4){
+        // STEP 5: Say it (pronunciation practice)
         rc.innerHTML = head + `
-          <div class="card-elevated" style="padding:24px; border-radius:16px; text-align:center;">
-            <div style="font-size:.72rem; color:var(--gold); text-transform:uppercase; letter-spacing:.08em; margin-bottom:16px;"><span class="arabic">انطق الجواب</span>، Say the answer</div>
-            <p dir="ltr" style="font-size:1.05rem; line-height:1.6; margin-bottom:6px;">${escapeHtml(sc.modelAnswer.en)}</p>
-            <p class="arabic" style="font-size:.88rem; color:var(--text-secondary); margin-bottom:4px;">${escapeHtml(sc.modelAnswer.ar)}</p>
-            <p class="arabic" style="font-size:.76rem; color:var(--gold-soft); margin-bottom:18px;">${escapeHtml(sc.modelAnswer.translit)}</p>
+          <div class="card-elevated" style="padding:24px; border-radius:16px; margin-bottom:16px; text-align:center;">
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:16px; justify-content:center;">
+              <span style="width:28px; height:28px; border-radius:50%; background:var(--gold); color:#171412; display:flex; align-items:center; justify-content:center; font-size:.8rem; font-weight:700; flex-shrink:0;">6</span>
+              <span class="arabic" style="font-size:.82rem; font-weight:700; color:var(--gold);">انطق الجواب</span>
+            </div>
+            <p dir="ltr" style="font-size:1.1rem; line-height:1.6; margin-bottom:6px;">${escapeHtml(lesson.right.en)}</p>
+            <p class="arabic" style="font-size:.88rem; color:var(--text-secondary); margin-bottom:4px;">${escapeHtml(lesson.right.ar)}</p>
+            <p class="arabic" style="font-size:.76rem; color:var(--gold-soft); margin-bottom:18px;">${escapeHtml(lesson.right.translit)}</p>
             <button type="button" class="btn-outline" id="playModel" style="width:48px; height:48px; border-radius:50%; margin:0 auto 12px; display:flex; align-items:center; justify-content:center;"><i data-lucide="volume-2" width="20" height="20"></i></button>
             <button type="button" class="mic-record-btn" id="sayMic" style="margin:0 auto 14px; display:flex;" aria-label="Speak"><i data-lucide="mic" width="20" height="20"></i></button>
             <div id="sayFb" style="margin-top:12px;"></div>
           </div>
-          <button type="button" class="btn-outline" id="stepNext" style="margin-top:14px; width:100%;">${A?'تخطي':'Skip'} →</button>
+          <button type="button" class="btn-outline" id="stepSkip" style="margin-top:8px; width:100%;">${A?'تخطي':'Skip'} →</button>
           <button type="button" class="btn-gold" id="stepDone" style="margin-top:8px; width:100%;">${A?'الخلاصه':'Summary'} →</button>`;
-        document.getElementById('playModel').addEventListener('click', () => speak(sc.modelAnswer.en));
+        document.getElementById('playModel').addEventListener('click', () => speak(lesson.right.en));
         const micBtn = document.getElementById('sayMic');
         const sayFb = document.getElementById('sayFb');
         if(micBtn){
@@ -19581,38 +19572,36 @@ function renderSpeaking(){
                 <p dir="ltr" style="font-size:.82rem;">${A?'سمعت':'Heard'}: "${escapeHtml(heard)}" (${pct}%)</p>
               </div>`;
               if(ok) confettiBurst();
-            }, sc.modelAnswer.en, micBtn);
+            }, lesson.right.en, micBtn);
           });
         }
-        document.getElementById('stepNext').addEventListener('click', () => { step = 5; render(); });
+        document.getElementById('stepSkip').addEventListener('click', () => { step = 5; render(); });
         document.getElementById('stepDone').addEventListener('click', () => { step = 5; render(); });
         if(window.lucide) lucide.createIcons();
         return;
       }
       else if(step === 5){
+        // Summary
         rc.innerHTML = head + `
           <div class="card-elevated" style="padding:24px; border-radius:16px; text-align:center;">
             <div style="width:48px; height:48px; border-radius:50%; background:rgba(66,163,106,.12); display:flex; align-items:center; justify-content:center; margin:0 auto 16px;"><i data-lucide="check" width="24" height="24" style="color:var(--success);"></i></div>
             <h3 style="font-size:1.1rem; margin-bottom:8px;"><span class="arabic">خلصت التدريب</span>، Training complete</h3>
-            <p class="arabic" style="font-size:.88rem; color:var(--text-muted); margin-bottom:18px;">${A?'تعلمت جمله مفيده اليوم':'You learned a useful phrase today'}</p>
+            <p class="arabic" style="font-size:.88rem; color:var(--text-muted); margin-bottom:18px;">${A?'تعلمت جواب مفيده اليوم':'You learned a useful phrase today'}</p>
             <div style="padding:16px; border-radius:12px; background:var(--card); border:1px solid var(--border); margin-bottom:18px;">
               <p style="font-size:.72rem; color:var(--gold); text-transform:uppercase; letter-spacing:.08em; margin-bottom:8px;"><span class="arabic">جمله اليوم</span>، Phrase of the day</p>
-              ${sc.takeaway.map(t => `<p dir="ltr" style="font-size:1rem; font-weight:600; margin-bottom:4px;">${escapeHtml(t.en)}</p><p class="arabic" style="font-size:.88rem; color:var(--text-secondary); margin-bottom:8px;">${escapeHtml(t.ar)}</p>`).join('')}
+              <p dir="ltr" style="font-size:1rem; font-weight:600; margin-bottom:4px;">${escapeHtml(lesson.right.en)}</p>
+              <p class="arabic" style="font-size:.88rem; color:var(--text-secondary);">${escapeHtml(lesson.right.ar)}</p>
             </div>
             <button type="button" class="btn-outline" id="playTakeaway" style="width:100%; margin-bottom:10px;">${A?'استمع للجمله':'Listen to the phrase'}</button>
             <button type="button" class="btn-gold" id="restartScenario" style="width:100%; margin-bottom:8px;">${A?'تدريب ثاني':'Try another scenario'}</button>
             <button type="button" class="btn-ghost" id="backToPersonas" style="width:100%;">${A?'رج للاشخاص':'Back to personas'}</button>
           </div>`;
-        document.getElementById('playTakeaway').addEventListener('click', () => speak(sc.takeaway[0].en));
-        document.getElementById('restartScenario').addEventListener('click', () => { step = 0; chosen = null; render(); });
+        document.getElementById('playTakeaway').addEventListener('click', () => speak(lesson.right.en));
+        document.getElementById('restartScenario').addEventListener('click', () => { step = 0; render(); });
         document.getElementById('backToPersonas').addEventListener('click', () => { rc.style.display = 'none'; rc.innerHTML = ''; });
-        // Enqueue the takeaway phrase for Smart Review
-        sc.takeaway.forEach(t => {
-          if(typeof enqueueForReview === 'function') enqueueForReview({en: t.en, ar: t.ar}, 'Speaking Studio');
-        });
+        if(typeof enqueueForReview === 'function') enqueueForReview({en: lesson.right.en, ar: lesson.right.ar}, 'Speaking Studio');
       }
 
-      // Wire up step navigation (except step 4 which has its own nav)
       const nextBtn = document.getElementById('stepNext');
       if(nextBtn && step !== 4){
         nextBtn.addEventListener('click', () => { step++; render(); });
@@ -19622,9 +19611,9 @@ function renderSpeaking(){
       rc.scrollIntoView({behavior:'smooth', block:'start'});
     }
 
+    document.getElementById('rpClose')?.addEventListener('click', () => { rc.style.display = 'none'; rc.innerHTML = ''; });
     render();
   }
-}
 viewRenderers.speaking = renderSpeaking;
 
 /* ============================================================
@@ -19755,8 +19744,8 @@ function renderWriting(){
   el.innerHTML = `
     <div class="page-head">
       <span class="eyebrow"><span class="arabic" style="font-size:.95em;">ورشه الكتابه</span>، Writing Workshop</span>
-      <h1><span class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">ابني جمل صحيحه، خطوه بخطوه.</span><span dir="ltr">Build correct sentences, step by step.</span></h1>
-      <p><span class="arabic" style="display:block; margin-bottom:4px;">اختر موضوع، ورتب الكلمات لبناء جمله صحيحه. كل جمله فيها المعنى بالعربي ونصيحه قواعد.</span><span dir="ltr">Pick a topic, then arrange words to build correct sentences. Each sentence includes the Arabic meaning and a grammar tip.</span></p>
+      <h1><span class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">تعلم تكتب صح، خطوه بخطوه.</span><span dir="ltr">Learn to write correctly, step by step.</span></h1>
+      <p><span class="arabic" style="display:block; margin-bottom:4px;">تخيل انك تبي ترسل رساله. نجلس معك، نعلمك كيف تكتبها صح، ونفهمك ليه.</span><span dir="ltr">Imagine you want to send a message. We sit with you, teach you how to write it correctly, and explain why.</span></p>
     </div>
     <div class="grid grid-2" id="writingPromptGrid" style="margin-bottom:28px;"></div>
     <div class="card" id="writingEditorCard" style="display:none;"></div>`;
@@ -19771,84 +19760,231 @@ function renderWriting(){
     const card = e.target.closest('[data-prompt]'); if(!card) return;
     openEditor(WRITING_PROMPTS.find(p => p.id === card.dataset.prompt));
   });
-  // Handoff from the pronunciation drill "writing prompt" button: if a
-  // pending prompt id was set, open that editor automatically on render.
   if(window.PEL_PENDING_PROMPT){
     const pid = window.PEL_PENDING_PROMPT; window.PEL_PENDING_PROMPT = null;
     const p = WRITING_PROMPTS.find(x => x.id === pid);
     if(p) setTimeout(() => openEditor(p), 0);
   }
-  // Sentence Builder: instead of free-text writing, students tap word chips
-  // to build correct sentences. Each topic has guided sentences with
-  // Arabic meaning, English target, and a grammar tip.
-  const SENTENCE_BANKS = {
-    'email-colleague': [
-      {ar: 'ابي اطمن انك استلمت الايميل.', en: 'I want to make sure you received the email.', tip: 'Use "make sure" + past tense for confirmation.'},
-      {ar: 'ممكن ترسل لي التقرير بكرة؟', en: 'Could you send me the report tomorrow?', tip: '"Could you" is more polite than "can you".'},
-      {ar: 'شكرا على المساعده.', en: 'Thank you for your help.', tip: 'Simple and polite — always end work emails with thanks.'},
+
+  /* Each lesson: teacher walks the student through the situation, shows
+     a common mistake, explains why it's wrong, then teaches the correct
+     version with word-by-word building + pronunciation. */
+  const WRITING_LESSONS = {
+    'thank-you-note': [
+      {
+        intro: {ar: 'تخيل انك خلصت فتره تدريب عند شركة، وتبغى تشكر المدير. كيف تكتبها؟', en: 'Imagine you finished a training period at a company, and you want to thank your manager. How do you write it?'},
+        wrong: {en: 'Hello thank you', ar: 'هلا شكرا عليك', why: 'الكلمات مبعثره، بدون ترتيب. "thank you" لحالها ما تكفي، و"عليك" غلط - القصد "لك".'},
+        right: {en: 'Dear Mr. Alqarni, thank you for your support during my training.', ar: 'عزيزي الاستاذ القرني، شكرا على دعمك خلال فتره تدريبي.', translit: 'ديير مستر القرضني، ثانك يو فور يور سبورت دورنق ماي تريننق.'},
+        teach: [
+          {ar: 'نبدأ بـ Dear + الاسم. هذا تحيه رسميه في الايميلات.', en: 'Start with "Dear [name]" — this is a formal email greeting.'},
+          {ar: 'بعدها شكر مباشر: thank you for + الشي اللي تسويه عليه.', en: 'Then a direct thanks: "thank you for" + what you are thanking them for.'},
+          {ar: 'نختم بذكر الفتره: during my training.', en: 'End with the period: "during my training".'},
+        ],
+        words: ['Dear','Mr.','Alqarni,','thank','you','for','your','support','during','my','training.'],
+      },
+      {
+        intro: {ar: 'تبي تشكر معلمك على كل اللي علمك. كيف؟', en: 'You want to thank your teacher for everything they taught you. How?'},
+        wrong: {en: 'Thank you learn me', ar: 'شكرا تتعلم مني', why: '"learn me" غلط - نقول taught me (علمتني) ماضي. و"شكرا" لحالها ضعيفه.'},
+        right: {en: 'Thank you for everything you taught me.', ar: 'شكرا على كل اللي علمتني.', translit: 'ثانك يو فور اڤريثينق يو توت مي.'},
+        teach: [
+          {ar: '"everything you taught me" - كل اللي علمتني. taught ماضي من teach.', en: '"everything you taught me" — taught is past tense of teach.'},
+          {ar: 'نستخدم for + الشي اللي نشكر عليه.', en: 'Use "for" + what you are thanking them for.'},
+        ],
+        words: ['Thank','you','for','everything','you','taught','me.'],
+      },
     ],
-    'meeting-schedule': [
-      {ar: 'عندنا اجتماع بكرة الساعه ثنتين.', en: 'We have a meeting tomorrow at two.', tip: 'Use "at" for specific times.'},
-      {ar: 'ممكن تاجل الاجتماع؟', en: 'Could we postpone the meeting?', tip: '"Postpone" means to move to a later time.'},
-      {ar: 'انا ماراح اقدر احضر.', en: 'I will not be able to attend.', tip: '"Will not be able to" is the formal way to decline.'},
+    'email-colleague': [
+      {
+        intro: {ar: 'تبي تطمن زميلك انه استلم وثيقه. كيف تكتبها بطريقه مهذبه؟', en: 'You want to reassure a colleague that you received a document. How do you write it politely?'},
+        wrong: {en: 'I got it', ar: 'جبتها', why: 'قصير جدا وغير رسمي. في الشغل نكتب جمل كامله.'},
+        right: {en: 'I received the document, thank you for sending it.', ar: 'استلمت الوثيقه، شكرا على ارسالها.', translit: 'اي ريسيڤد ذا دوكيومنت، ثانك يو فور سندينق ات.'},
+        teach: [
+          {ar: 'في الشغل نقول received مش got.', en: 'In work contexts, say "received" not "got".'},
+          {ar: 'نضيف thank you + for + الفعل ing.', en: 'Add "thank you for" + verb-ing.'},
+        ],
+        words: ['I','received','the','document,','thank','you','for','sending','it.'],
+      },
+      {
+        intro: {ar: 'تبي تطلب من زميلك يرسل تقرير بكرة. كيف تطلب بأدب؟', en: 'You want to ask a colleague to send a report tomorrow. How do you ask politely?'},
+        wrong: {en: 'Send me report', ar: 'ابعت لي تقرير', why: 'امر مباشر بدون please او could you. يبان وقح.'},
+        right: {en: 'Could you send me the report by tomorrow, please?', ar: 'ممكن ترسل لي التقرير بكرة لو سمحت؟', translit: 'كود يو سند مي ذا ريبورت باي تومورو، بليز؟'},
+        teach: [
+          {ar: 'Could you + الفعل = طلب مهذب. احلى من can you.', en: '"Could you" + verb = polite request. Better than "can you".'},
+          {ar: 'by tomorrow = بحلول بكرة. نستخدم by للمواعيد.', en: '"by tomorrow" = by that deadline. Use "by" for deadlines.'},
+          {ar: 'نختم بـ please دايما في الطلبات.', en: 'Always end requests with "please".'},
+        ],
+        words: ['Could','you','send','me','the','report','by','tomorrow,','please?'],
+      },
     ],
     'apologize-mistake': [
-      {ar: 'انا اسف على الغلط.', en: 'I am sorry for the mistake.', tip: 'Use "for" after "sorry" when mentioning the specific thing.'},
-      {ar: 'ما قصدت اسوي كذا.', en: 'I did not mean to do that.', tip: '"Mean to" shows intention — it was not on purpose.'},
-      {ar: 'راح اصلحه الحين.', en: 'I will fix it right away.', tip: '"Right away" means immediately.'},
+      {
+        intro: {ar: 'غلطت في شغل عند الشركة، وتبغى تعتذر. كيف تكتب اعتذار صادق؟', en: 'You made a mistake at work, and you want to apologize. How do you write a sincere apology?'},
+        wrong: {en: 'Sorry for mistake', ar: 'اسف للغلط', why: 'قصير جدا. في الشغل نكتب اعتذار واضح ونوضح وش نسوي.'},
+        right: {en: 'I am sorry for the mistake. I will fix it right away.', ar: 'انا اسف على الغلط. راح اصلحه الحين.', translit: 'اي ام سوري فور ذا مستيك. اي ويل فيكس ات رايت اواي.'},
+        teach: [
+          {ar: 'I am sorry for + الشي. واضحه وصادقه.', en: '"I am sorry for" + the thing. Clear and sincere.'},
+          {ar: 'بعدها قول وش تسوي: I will fix it right away.', en: 'Then say what you will do: "I will fix it right away".'},
+          {ar: 'right away = الحين، فورا.', en: '"right away" = immediately, now.'},
+        ],
+        words: ['I','am','sorry','for','the','mistake.','I','will','fix','it','right','away.'],
+      },
     ],
     'request-time-off': [
-      {ar: 'ابي اجازه يوم الخميس.', en: 'I would like to take Thursday off.', tip: '"Take [day] off" is the natural phrase for time off.'},
-      {ar: 'عندي موعد عند الدكتور.', en: 'I have a doctor appointment.', tip: 'In English we say "doctor appointment" not "doctor meeting".'},
-      {ar: 'راح اكون متواجد يوم الجمعه.', en: 'I will be back on Friday.', tip: 'Use "on" for specific days of the week.'},
+      {
+        intro: {ar: 'تبغى تطلب اجازه يوم الخميس. كيف تكتب الطلب؟', en: 'You want to request Thursday off. How do you write the request?'},
+        wrong: {en: 'I want Thursday off', ar: 'ابي الخميس اجازه', why: 'مباشر جدا. في الشغل نستخدم would like to + take + day off.'},
+        right: {en: 'I would like to take Thursday off, if that is possible.', ar: 'حاب اخذ يوم الخميس اجازه، لو ممكن.', translit: 'اي ود لايك تو تيك ثورسدي اوف، ايف ذات از بوسيبل.'},
+        teach: [
+          {ar: 'would like to = ابي/حاب - مهذب ومحترم.', en: '"would like to" = I want — polite and respectful.'},
+          {ar: 'take + اليوم + off = اخذ اليوم اجازه.', en: '"take [day] off" = to have that day off.'},
+          {ar: 'if that is possible = لو ممكن - تضيف لين وذوق.', en: '"if that is possible" = adds politeness and consideration.'},
+        ],
+        words: ['I','would','like','to','take','Thursday','off,','if','that','is','possible.'],
+      },
+    ],
+    'meeting-schedule': [
+      {
+        intro: {ar: 'تبي تخبر فريقك ان فيه اجتماع بكرة الساعه ثنتين. كيف؟', en: 'You want to tell your team there is a meeting tomorrow at 2 PM. How?'},
+        wrong: {en: 'Meeting tomorrow 2', ar: 'اجتماع بكرة ٢', why: 'مبهم - وين ومتى بالضبط؟ نكتب جمله كامله.'},
+        right: {en: 'We have a meeting tomorrow at two in the conference room.', ar: 'عندنا اجتماع بكرة الساعه ثنتين بغرفه الاجتماعات.', translit: 'وي هاڤ ا ميتنق تومورو ات تو ان ذا كونفرانس روم.'},
+        teach: [
+          {ar: 'We have a meeting = عندنا اجتماع.', en: '"We have a meeting" — the standard way to announce a meeting.'},
+          {ar: 'at + الوقت = الساعه كذا. نستخدم at للاوقات.', en: '"at" + time. Use "at" for specific times.'},
+          {ar: 'in the conference room = بغرفه الاجتماعات. نستخدم in للاماكن.', en: '"in the conference room" — use "in" for rooms/places.'},
+        ],
+        words: ['We','have','a','meeting','tomorrow','at','two','in','the','conference','room.'],
+      },
     ],
     'business-idea': [
-      {ar: 'عندي فكره لمشروع جديد.', en: 'I have an idea for a new project.', tip: 'Use "for" to connect the idea to what it is for.'},
-      {ar: 'اعتقد انها فكره حلوه.', en: 'I think it is a good idea.', tip: 'Simple and direct — good for meetings.'},
-      {ar: 'ممكن نناقشها اكثر؟', en: 'Could we discuss it more?', tip: '"Discuss" means to talk about something in detail.'},
-    ],
-    'thank-you-note': [
-      {ar: 'شكرا على فرصه العمل معاكم.', en: 'Thank you for the opportunity to work with you.', tip: '"Opportunity" is a formal word for a chance.'},
-      {ar: 'تعلمنا منكم كثير.', en: 'I learned a lot from you.', tip: 'Past tense "learned" for completed experience.'},
-      {ar: 'ممكن تمدح انهياركم لو سمحت؟', en: 'Could you write a recommendation, please?', tip: 'A "recommendation" is a formal reference letter.'},
+      {
+        intro: {ar: 'عندك فكره لمشروع، وتبغى تقدمها للمدير. كيف تكتبها بطريقه مهنيه؟', en: 'You have a project idea, and you want to present it to your manager. How do you write it professionally?'},
+        wrong: {en: 'I have idea', ar: 'عندي فكره', why: 'ناقصه a قبل idea. والجمله قصيره جدا.'},
+        right: {en: 'I have an idea for a new project. Could we discuss it?', ar: 'عندي فكره لمشروع جديد. ممكن نناقشها؟', translit: 'اي هاڤ ان ايديا فور ا نيو براجكت. كود وي ديسكاس ات؟'},
+        teach: [
+          {ar: 'an idea (مش a idea) لان idea تبدا بحرف متحرك.', en: '"an idea" (not "a idea") because idea starts with a vowel sound.'},
+          {ar: 'for a new project = لمشروع جديد.', en: '"for a new project" — connects the idea to its purpose.'},
+          {ar: 'Could we discuss it? = ممكن نناقشها؟ طلب مهذب.', en: '"Could we discuss it?" — polite way to suggest a meeting.'},
+        ],
+        words: ['I','have','an','idea','for','a','new','project.','Could','we','discuss','it?'],
+      },
     ],
     'confirm-appointment': [
-      {ar: 'حاب ااكد موعد بكرة.', en: 'I would like to confirm my appointment tomorrow.', tip: '"Confirm" means to make sure something will happen.'},
-      {ar: 'وصلني تذكير.', en: 'I received a reminder.', tip: 'Use past tense "received" for something that already happened.'},
-      {ar: 'شكرا على التذكير.', en: 'Thank you for the reminder.', tip: 'Always thank people for reminders — it shows respect.'},
+      {
+        intro: {ar: 'عندك موعد بكرة، وتبغى تتاكد. كيف تكتب تاكيد للموعد؟', en: 'You have an appointment tomorrow, and you want to confirm it. How do you write a confirmation?'},
+        wrong: {en: 'I come tomorrow', ar: 'انا اجي بكرة', why: 'غلط - قصدك تأكد الموعد، مو تقول انك بتجي. نستخدم confirm.'},
+        right: {en: 'I would like to confirm my appointment for tomorrow.', ar: 'حاب ااكد موعد بكرة.', translit: 'اي ود لايك تو كونفيرم ماي ابوينتمنت فور تومورو.'},
+        teach: [
+          {ar: 'confirm = تاكد. هذا الفعل نستخدمه للتاكيد.', en: '"confirm" = to make sure. This is the verb for confirmations.'},
+          {ar: 'for + اليوم = ليوم كذا.', en: '"for" + the day.'},
+        ],
+        words: ['I','would','like','to','confirm','my','appointment','for','tomorrow.'],
+      },
     ],
   };
+
   function openEditor(prompt){
     const card = document.getElementById('writingEditorCard');
     card.style.display = 'block';
     const A = accountPrefs.lang === 'ar';
-    const sentences = SENTENCE_BANKS[prompt.id] || [
-      {ar: 'هذي جمله للتدريب.', en: 'This is a practice sentence.', tip: 'Practice makes perfect!'},
-    ];
-    let current = 0, placed = [];
+    const lessons = WRITING_LESSONS[prompt.id] || [WRITING_LESSONS['thank-you-note'][0]];
+    let step = 0, placed = [];
 
-    function renderSentence(){
-      const s = sentences[current];
-      const words = s.en.split(' ');
-      const bank = shuffle(words.slice());
+    function render(){
+      const lesson = lessons[step];
+      if(!lesson) return;
+      const words = lesson.words.slice();
+      const bank = shuffle(words);
       placed = [];
+      const stepLabel = A ? `الدرس ${step+1} من ${lessons.length}` : `Lesson ${step+1} of ${lessons.length}`;
+
       card.innerHTML = `
         <div style="display:flex; align-items:center; gap:8px; margin-bottom:16px;">
           <button type="button" class="btn-ghost" id="wsBackBtn" style="font-size:.82rem; padding:6px 12px;">← ${A?'رج':'Back'}</button>
           <h3 style="font-size:1.1rem; flex:1;" dir="ltr">${prompt.title}</h3>
-          <span class="chip gold" style="font-size:.72rem;">${current+1}/${sentences.length}</span>
+          <span class="chip gold" style="font-size:.72rem;">${stepLabel}</span>
         </div>
-        <div class="card-elevated" style="padding:24px; border-radius:16px;">
-          <div style="font-size:.72rem; color:var(--gold); text-transform:uppercase; letter-spacing:.08em; margin-bottom:12px;"><span class="arabic">المعنى بالعربي</span>، Meaning</div>
-          <p class="arabic" style="font-size:1.1rem; line-height:1.8; margin-bottom:20px;">${escapeHtml(s.ar)}</p>
-          <div style="font-size:.72rem; color:var(--gold); text-transform:uppercase; letter-spacing:.08em; margin-bottom:10px;"><span class="arabic">ابني الجمله</span>، Build the sentence</div>
+
+        <!-- STEP 1: Situation -->
+        <div class="card-elevated" style="padding:24px; border-radius:16px; margin-bottom:16px;">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:14px;">
+            <span style="width:28px; height:28px; border-radius:50%; background:var(--gold-soft); color:#171412; display:flex; align-items:center; justify-content:center; font-size:.8rem; font-weight:700; flex-shrink:0;">1</span>
+            <span class="arabic" style="font-size:.82rem; font-weight:700; color:var(--gold);">تخيل الموقف</span>
+          </div>
+          <p class="arabic" style="font-size:1.05rem; line-height:1.9; margin-bottom:10px;">${escapeHtml(lesson.intro.ar)}</p>
+          <p dir="ltr" style="font-size:.88rem; color:var(--text-secondary); line-height:1.6;">${escapeHtml(lesson.intro.en)}</p>
+        </div>
+
+        <!-- STEP 2: Common mistake -->
+        <div class="card-elevated" style="padding:24px; border-radius:16px; margin-bottom:16px; border:1px solid rgba(210,92,92,.25);">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:14px;">
+            <span style="width:28px; height:28px; border-radius:50%; background:rgba(210,92,92,.15); color:var(--danger); display:flex; align-items:center; justify-content:center; font-size:.8rem; font-weight:700; flex-shrink:0;">2</span>
+            <span class="arabic" style="font-size:.82rem; font-weight:700; color:var(--danger);">الغلط الشايع</span>
+          </div>
+          <div style="display:flex; gap:12px; align-items:flex-start; margin-bottom:14px;">
+            <span style="color:var(--danger); font-size:1.2rem; flex-shrink:0; padding-top:2px;">✗</span>
+            <div>
+              <p dir="ltr" style="font-size:1rem; font-weight:600; text-decoration:line-through; color:var(--danger); margin-bottom:4px;">${escapeHtml(lesson.wrong.en)}</p>
+              <p class="arabic" style="font-size:.88rem; color:var(--text-secondary); margin-bottom:8px;">${escapeHtml(lesson.wrong.ar)}</p>
+            </div>
+          </div>
+          <div style="padding:12px 14px; border-radius:10px; background:rgba(200,169,106,.08); border:1px solid rgba(200,169,106,.2);">
+            <span class="arabic" style="font-size:.82rem; font-weight:700; color:var(--gold);">لليش غلط؟ </span>
+            <span class="arabic" style="font-size:.82rem; color:var(--text-secondary); line-height:1.7;">${escapeHtml(lesson.wrong.why)}</span>
+          </div>
+        </div>
+
+        <!-- STEP 3: Teacher explains -->
+        <div class="card-elevated" style="padding:24px; border-radius:16px; margin-bottom:16px; border:1px solid rgba(66,163,106,.2);">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:16px;">
+            <span style="width:28px; height:28px; border-radius:50%; background:rgba(66,163,106,.15); color:var(--success); display:flex; align-items:center; justify-content:center; font-size:.8rem; font-weight:700; flex-shrink:0;">3</span>
+            <span class="arabic" style="font-size:.82rem; font-weight:700; color:var(--success);">تعال نعلمك الصح</span>
+          </div>
+          ${lesson.teach.map((t,i) => `
+            <div style="display:flex; gap:10px; align-items:flex-start; margin-bottom:14px;">
+              <span style="color:var(--gold); font-weight:700; flex-shrink:0; font-size:.9rem;">${i+1}.</span>
+              <div>
+                <p class="arabic" style="font-size:.9rem; line-height:1.8; margin-bottom:4px;">${escapeHtml(t.ar)}</p>
+                <p dir="ltr" style="font-size:.8rem; color:var(--text-muted); line-height:1.5;">${escapeHtml(t.en)}</p>
+              </div>
+            </div>`).join('')}
+        </div>
+
+        <!-- STEP 4: The correct version -->
+        <div class="card-elevated" style="padding:24px; border-radius:16px; margin-bottom:16px; border:1px solid rgba(66,163,106,.3); background:rgba(66,163,106,.04);">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:14px;">
+            <span style="width:28px; height:28px; border-radius:50%; background:rgba(66,163,106,.15); color:var(--success); display:flex; align-items:center; justify-content:center; font-size:.8rem; font-weight:700; flex-shrink:0;">4</span>
+            <span class="arabic" style="font-size:.82rem; font-weight:700; color:var(--success);">الجمله الصحيحه</span>
+          </div>
+          <div style="display:flex; gap:12px; align-items:flex-start; margin-bottom:10px;">
+            <span style="color:var(--success); font-size:1.2rem; flex-shrink:0; padding-top:2px;">✓</span>
+            <div>
+              <p dir="ltr" style="font-size:1.1rem; font-weight:600; color:var(--success); margin-bottom:6px;">${escapeHtml(lesson.right.en)}</p>
+              <p class="arabic" style="font-size:.92rem; color:var(--text-secondary); margin-bottom:4px;">${escapeHtml(lesson.right.ar)}</p>
+              <p class="arabic" style="font-size:.8rem; color:var(--gold-soft);">${escapeHtml(lesson.right.translit)}</p>
+            </div>
+          </div>
+          <button type="button" class="btn-outline" id="playRight" style="font-size:.82rem; margin-top:8px;">🔊 ${A?'استمع':'Listen'}</button>
+        </div>
+
+        <!-- STEP 5: Build it yourself -->
+        <div class="card-elevated" style="padding:24px; border-radius:16px; margin-bottom:16px;">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:14px;">
+            <span style="width:28px; height:28px; border-radius:50%; background:var(--gold); color:#171412; display:flex; align-items:center; justify-content:center; font-size:.8rem; font-weight:700; flex-shrink:0;">5</span>
+            <span class="arabic" style="font-size:.82rem; font-weight:700; color:var(--gold);">${A?'ابني الجمله بنفسك':'Build it yourself'}</span>
+          </div>
+          <p class="arabic" style="font-size:.84rem; color:var(--text-muted); margin-bottom:12px;">${A?'اضغط الكلمات تحت بترتيب الجمله الصح':'Tap the words below in the correct order'}</p>
           <div id="sbDrop" style="min-height:48px; padding:12px; border:1px dashed var(--border); border-radius:12px; margin-bottom:14px; display:flex; flex-wrap:wrap; gap:8px; align-items:center;"></div>
           <div id="sbBank" style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px;">${bank.map((w,i) => `<button class="pel-token" data-w="${i}">${escapeHtml(w)}</button>`).join('')}</div>
-          <button type="button" class="btn-outline" id="sbClear" style="font-size:.82rem;">${A?'مسح':'Clear'}</button>
+          <div style="display:flex; gap:8px;">
+            <button type="button" class="btn-outline" id="sbClear" style="font-size:.82rem; flex:1;">${A?'مسح':'Clear'}</button>
+            <button type="button" class="btn-gold" id="sbCheck" style="flex:2;">${A?'تحقق':'Check'}</button>
+          </div>
           <div id="sbFb" style="margin-top:12px;"></div>
         </div>`;
+
       const drop = document.getElementById('sbDrop');
       const bankEl = document.getElementById('sbBank');
+
       function renderDrop(){
         drop.innerHTML = placed.length ? placed.map((t,i) => `<button class="pel-token" data-pi="${i}" style="background:var(--gold-soft); color:#171412;">${escapeHtml(t)}</button>`).join('') : `<span style="color:var(--text-muted); font-size:.82rem;">${A?'الكلمات تظهر هنا':'Words appear here'}</span>`;
         drop.querySelectorAll('[data-pi]').forEach(b => b.onclick = () => { const idx=+b.dataset.pi; const tok=placed[idx]; placed.splice(idx,1); renderDrop(); addBack(tok); });
@@ -19863,47 +19999,42 @@ function renderWriting(){
         document.getElementById('sbFb').innerHTML = '';
       };
       renderDrop();
-      const checkBtn = document.createElement('button');
-      checkBtn.className = 'btn-gold';
-      checkBtn.style.cssText = 'margin-top:14px; width:100%;';
-      checkBtn.textContent = A?'تحقق':'Check';
-      checkBtn.onclick = () => {
+
+      document.getElementById('playRight').onclick = () => speak(lesson.right.en);
+      document.getElementById('sbCheck').onclick = () => {
         const built = placed.join(' ');
-        const ok = built.toLowerCase().trim() === s.en.toLowerCase().trim();
+        const ok = built.toLowerCase().trim() === lesson.right.en.toLowerCase().trim();
         const fb = document.getElementById('sbFb');
         if(ok){
           fb.innerHTML = `<div style="padding:16px; border-radius:12px; background:rgba(66,163,106,.08); border:1px solid rgba(66,163,106,.3);">
             <p style="font-weight:700; color:var(--success); margin-bottom:6px;">✓ ${A?'صحيح! ممتاز':'Correct! Great job'}</p>
-            <p dir="ltr" style="font-size:.92rem; margin-bottom:4px;">${escapeHtml(s.en)}</p>
-            <p class="arabic" style="font-size:.82rem; color:var(--gold); margin-top:8px;">💡 ${escapeHtml(s.tip)}</p>
           </div>`;
-          if(current < sentences.length - 1){
-            fb.innerHTML += `<button type="button" class="btn-gold" id="sbNext" style="margin-top:12px; width:100%;">${A?'الجمله التاليه':'Next sentence'} →</button>`;
-            document.getElementById('sbNext').onclick = () => { current++; renderSentence(); };
+          if(step < lessons.length - 1){
+            fb.innerHTML += `<button type="button" class="btn-gold" id="sbNext" style="margin-top:12px; width:100%;">${A?'الدرس التالي':'Next lesson'} →</button>`;
+            document.getElementById('sbNext').onclick = () => { step++; render(); };
           } else {
-            fb.innerHTML += `<button type="button" class="btn-outline" id="sbRestart" style="margin-top:12px; width:100%;">${A?'ابدا من اول':'Start over'}</button>`;
-            document.getElementById('sbRestart').onclick = () => { current = 0; renderSentence(); };
+            fb.innerHTML += `<div style="padding:14px; border-radius:12px; background:rgba(200,169,106,.06); border:1px solid rgba(200,169,106,.2); margin-top:12px;">
+              <p class="arabic" style="font-size:.9rem; text-align:center; color:var(--gold); font-weight:600;">خلصت كل الدروس. تعلمت كيف تكتب صح!</p>
+              <p dir="ltr" style="font-size:.82rem; text-align:center; color:var(--text-muted);">All lessons complete. You learned to write correctly!</p>
+            </div>
+            <button type="button" class="btn-outline" id="sbRestart" style="margin-top:12px; width:100%;">${A?'ابدا من اول':'Start over'}</button>
+            <button type="button" class="btn-ghost" id="sbClose" style="margin-top:8px; width:100%;">${A?'رج للمواضيع':'Back to topics'}</button>`;
+            document.getElementById('sbRestart').onclick = () => { step = 0; render(); };
+            document.getElementById('sbClose').onclick = () => { card.style.display = 'none'; card.innerHTML = ''; };
           }
           confettiBurst();
         } else {
           fb.innerHTML = `<div style="padding:14px; border-radius:12px; background:rgba(200,169,106,.08); border:1px solid rgba(200,169,106,.3);">
-            <p style="font-weight:700; color:var(--gold); margin-bottom:4px;">${A?'قريب! حاول مره ثانيه':'Close! Try again'}</p>
-            <p class="arabic" style="font-size:.82rem; color:var(--text-secondary);">${A?'رتب الكلمات بالترتيب الصح':'Arrange the words in the correct order'}</p>
+            <p style="font-weight:700; color:var(--gold); margin-bottom:4px;">${A?'قريب! شوف الجمله الصح فوق وحاول مره ثانيه':'Close! Look at the correct sentence above and try again'}</p>
           </div>`;
         }
       };
-      card.querySelector('.card-elevated').appendChild(checkBtn);
-      // Listen to the model answer
-      const listenBtn = document.createElement('button');
-      listenBtn.className = 'btn-outline';
-      listenBtn.style.cssText = 'margin-top:8px; width:100%; font-size:.82rem;';
-      listenBtn.innerHTML = A?'استمع للجمله':'Listen to the sentence';
-      listenBtn.onclick = () => speak(s.en);
-      card.querySelector('.card-elevated').appendChild(listenBtn);
+
       if(window.lucide) lucide.createIcons();
     }
+
     document.getElementById('wsBackBtn').onclick = () => { card.style.display = 'none'; card.innerHTML = ''; };
-    renderSentence();
+    render();
   }
 }
 viewRenderers.writing = renderWriting;
