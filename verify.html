@@ -306,10 +306,32 @@ function applyVerifyLang(lang){
   const prefs = readAcctPrefs();
   prefs.lang = lang;
   try{ localStorage.setItem('pel_account_prefs', JSON.stringify(prefs)); }catch(e){}
+  if(window.__pelVerifyLast){ renderVerifyFacts(window.__pelVerifyLast.row, window.__pelVerifyLast.code); }
 }
 const verifyLangBtn = document.getElementById('verifyLangBtn');
 if(verifyLangBtn) verifyLangBtn.addEventListener('click', () => applyVerifyLang(document.documentElement.lang === 'ar' ? 'en' : 'ar'));
 applyVerifyLang(readAcctPrefs().lang === 'ar' ? 'ar' : 'en');
+
+/* Verified-certificate fact card: localized (Arabic/English) labels and
+   date locale. Re-rendered on interface language toggle when a result is
+   already on screen (hook at the end of applyVerifyLang). */
+window.__pelVerifyLast = null;
+function renderVerifyFacts(row, clean){
+  const vCard = document.getElementById('okVerifyCard');
+  if(!vCard || !row) return;
+  const ar = document.documentElement.lang === 'ar';
+  const eV = function(s){ return String(s==null?'':s).replace(/[&<>"]/g, function(c){ return {'&':'&','<':'<','>':'>','"':'"'}[c]; }); };
+  const fmtIssue = function(d){ if(!d) return ''; try{ var x=new Date(d); if(isNaN(x)) return String(d); return x.toLocaleDateString(ar ? 'ar-SA' : 'en-US',{day:'numeric',month:'long',year:'numeric'}); }catch(e){ return String(d); } };
+  const lblStyle = ar ? 'font-size:.78rem;font-weight:700;color:var(--gold-soft);' : 'font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-soft);';
+  const fact = function(labelAr, labelEn, val){ return val ? '<div><div style="'+lblStyle+'">'+(ar?labelAr:labelEn)+'</div><div style="font-size:1rem;font-weight:600;margin-top:3px;">'+eV(val)+'</div></div>' : ''; };
+  vCard.innerHTML =
+    fact('الطالب', 'Student', row.student_name) +
+    fact('الاكاديميه', 'Academy', row.academy_en + (row.academy_ar ? ' · ' + row.academy_ar : '')) +
+    fact('المستوى', 'Level', row.level || '') +
+    fact('تاريخ الاصدار', 'Issued', fmtIssue(row.issue_date || row.completed_at)) +
+    fact('رقم الشهاده', 'Certificate ID', row.cert_id) +
+    fact('الرمز', 'Code', clean);
+}
 
 /* ==========================================================================
    SUPABASE CONFIGURATION (public anon key, read-only lookup via RPC)
@@ -354,19 +376,8 @@ async function lookup(code){
     // Verification card leads: the key facts front-and-center, so a QR
     // scanner sees a clear "genuine" card instead of a full certificate
     // reproduction. The full certificate is rendered below, collapsed.
-    const eV = function(s){ return String(s==null?'':s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); };
-    const fmtIssue = function(d){ if(!d) return ''; try{ var x=new Date(d); if(isNaN(x)) return String(d); return x.toLocaleDateString('en-US',{day:'numeric',month:'long',year: 'numeric'}); }catch(e){ return String(d); } };
-    const fact = function(label, val){ return val ? '<div><div style="font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-soft);">'+label+'</div><div style="font-size:1rem;font-weight:600;margin-top:3px;">'+eV(val)+'</div></div>' : ''; };
-    const vCard = document.getElementById('okVerifyCard');
-    if(vCard){
-      vCard.innerHTML =
-        fact('Student', row.student_name) +
-        fact('Academy', row.academy_en + (row.academy_ar ? ' · ' + row.academy_ar : '')) +
-        fact('Level', row.level || '') +
-        fact('Issued', fmtIssue(row.issue_date || row.completed_at)) +
-        fact('Certificate ID', row.cert_id) +
-        fact('Code', clean);
-    }
+    window.__pelVerifyLast = { row: row, code: clean };
+    renderVerifyFacts(row, clean);
     wrap.innerHTML = PEL_CERT_SHEET({
       name: row.student_name,
       academyEn: row.academy_en,
