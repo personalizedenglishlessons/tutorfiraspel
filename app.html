@@ -1668,7 +1668,7 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
         </button>
 
         <div class="notif-wrap">
-          <button type="button" class="icon-btn" id="notifBtn" aria-label="Notifications / الإشعارات">
+          <button type="button" class="icon-btn" id="notifBtn" aria-label="Notifications / الاشعارات">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 01-3.4 0"/></svg>
             <span class="notif-dot"></span>
           </button>
@@ -1884,7 +1884,7 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
           <h4><span class="arabic">ملاحظات حديثه</span>، Recent Notes</h4>
           <div style="display:flex; gap:6px; margin-bottom:8px;">
             <input id="ctxNoteInput" dir="auto" placeholder="اكتب ملاحظه... / Write a note..." style="flex:1; min-width:0; background:var(--card-elevated); border:1px solid var(--border); border-radius:8px; padding:7px 10px; color:var(--text); font-size:.78rem;" aria-label="ملاحظه الدرس">
-            <button type="button" class="btn-ghost-sm" id="ctxNoteAdd" style="flex-shrink:0;" aria-label="Add note / إضافة ملاحظة">+</button>
+            <button type="button" class="btn-ghost-sm" id="ctxNoteAdd" style="flex-shrink:0;" aria-label="Add note / اضافة ملاحظة">+</button>
           </div>
           <div id="ctxNotesList"></div>
         </div>
@@ -9970,7 +9970,7 @@ function lightCorrection(text){
         const { data, error } = await pelRpc('student_request_deletion');
         ov.remove();
         if(error || (data && data.error)){
-          toast(ar() ? 'صار خطأ — جرب مره ثانيه او راسلنا على واتساب.' : 'Something went wrong — try again or message us on WhatsApp.');
+          toast(ar() ? 'صار خطا — جرب مره ثانيه او راسلنا على واتساب.' : 'Something went wrong — try again or message us on WhatsApp.');
           return;
         }
         if(data && data.already_pending){
@@ -9980,7 +9980,7 @@ function lightCorrection(text){
         }
       }catch(e){
         ov.remove();
-        toast(ar() ? 'صار خطأ — جرب مره ثانيه او راسلنا على واتساب.' : 'Something went wrong — try again or message us on WhatsApp.');
+        toast(ar() ? 'صار خطا — جرب مره ثانيه او راسلنا على واتساب.' : 'Something went wrong — try again or message us on WhatsApp.');
       }
     });
   });
@@ -10046,7 +10046,7 @@ function renderMiniCal(){
     const key = pelDateKey(d);
     const cell = document.createElement('div');
     cell.className = 'mini-cal-day' + (studyDays.indexOf(key)!==-1 ? ' studied' : '') + (i===0 ? ' today' : '');
-    cell.innerHTML = `<span class="mc-dow">${(document.documentElement.lang==='ar'?['أحد','اثن','ثلا','أرب','خمي','جمع','سبت']:['S','M','T','W','T','F','S'])[d.getDay()]}</span><span class="mc-date">${d.getDate()}</span>`;
+    cell.innerHTML = `<span class="mc-dow">${(document.documentElement.lang==='ar'?['احد','اثن','ثلا','ارب','خمي','جمع','سبت']:['S','M','T','W','T','F','S'])[d.getDay()]}</span><span class="mc-date">${d.getDate()}</span>`;
     miniCal.appendChild(cell);
   }
 }
@@ -10558,7 +10558,7 @@ const VOCAB_BANK = [
   {en:'Refund', ipa:'/ˈriːfʌnd/', ar: 'استرجاع المبلغ', translit: 'ريفاند', example:{en:'I would like a refund for this item.', ar: 'ابي استرجاع المبلغ لذلك الغرض.', translit: 'اي ود لايك ا ريفاند فور ذيس ايتام.'}, synonyms:'Reimbursement', antonyms:'Charge', family:'refunded, refunding', collocations:'request a refund, full refund', category:'Shopping English', difficulty:'Intermediate', tip:'Noun stress is on the first syllable, verb stress moves to the second: "please REfund me" vs "a REfund."', synonyms_ar: 'استرجاع المبلغ', antonyms_ar: 'رسوم', family_ar: 'مسترجع، يسترجع', collocations_ar: 'اطلب استرجاع، استرجاع كامل', tip_ar: 'الاسم تشديد على اول جز، الفعل تشديد على ثاني جز', mistake:'Asking "give me back money" instead of "I would like a refund."'},
   {en:'Layover', ipa:'/ˈleɪˌoʊvər/', ar: 'توقف بين رحلتين', translit: 'لايوڤر', example:{en:'We have a two hour layover in Dubai.', ar: 'عندنا توقف ساعتين في دبي.', translit: 'وي هاڤ ا تو اور لاي اوڤر ان دبي.'}, synonyms:'Stopover', antonyms:'Direct flight', family:'-', collocations:'short layover, long layover', category:'Airport English', difficulty:'Intermediate', tip: 'Very common word at check-in counters.', synonyms_ar: 'توقف بين رحلتين', antonyms_ar: 'رحله مباشره', family_ar: '-', collocations_ar: 'توقف قصير، توقف طويل', tip_ar: 'كلمه شايعه عند كاونتر تسجيل الدخول', mistake:'Using "stop" alone instead of "layover" or "stopover."'},
   {en:'Complimentary', ipa:'/ˌkɑːmplɪˈmɛntəri/', ar: 'مجاني، مقدم كهديه', translit: 'كومپلامينتيري', example:{en:'Breakfast is complimentary at this hotel.', ar: 'الفطور مجاني في ذا الفندق.', translit: 'بريكفاست از كامبلمنتري ات ذيس هوتيل.'}, synonyms:'Free, gratis', antonyms:'Paid', family:'compliment, complimented', collocations:'complimentary breakfast, complimentary wifi', category:'Hotel English', difficulty:'Advanced', tip:'Do not confuse with "complementary" (matching), spelled with an e.', synonyms_ar: 'مجاني، هديه', antonyms_ar: 'مدفوع', family_ar: 'مجامله', collocations_ar: 'فطور مجاني، واي فاي مجاني', tip_ar: 'لا تخلط بينها وبين complementary اللي معناها متكامل', mistake:'Saying "free" is fine casually, but hotels prefer "complimentary."'},
-  {en:'Colleague', ipa:'/ˈkɑːliːɡ/', ar: 'زميل بالشغل', translit: 'كوليق', example:{en:'My colleague will join the meeting.', ar: 'زميلي بينضم للاجتماع.', translit: 'ماي كولييج ويل جوين ذا ميتنج.'}, synonyms:'Coworker', antonyms:'-', family:'-', collocations:'close colleague, former colleague', category:'Workplace Communication', difficulty:'Intermediate', tip:'More professional than "coworker."', synonyms_ar: 'زميل عمل', antonyms_ar: 'منافس', family_ar: 'زميل، زملاء', collocations_ar: 'زميل مقرب، زميل عمل', tip_ar: 'الزميل هو احد تشتغل معه', mistake:'Pronouncing the "gue" ending, it is silent: "co-LEEG."'},
+  {en:'Colleague', ipa:'/ˈkɑːliːɡ/', ar: 'زميل بالشغل', translit: 'كوليق', example:{en:'My colleague will join the meeting.', ar: 'زميلي بينضم لللاجتماع.', translit: 'ماي كولييج ويل جوين ذا ميتنج.'}, synonyms:'Coworker', antonyms:'-', family:'-', collocations:'close colleague, former colleague', category:'Workplace Communication', difficulty:'Intermediate', tip:'More professional than "coworker."', synonyms_ar: 'زميل عمل', antonyms_ar: 'منافس', family_ar: 'زميل، زملاء', collocations_ar: 'زميل مقرب، زميل عمل', tip_ar: 'الزميل هو احد تشتغل معه', mistake:'Pronouncing the "gue" ending, it is silent: "co-LEEG."'},
   {en:'Punctual', ipa:'/ˈpʌŋktʃuəl/', ar: 'يلتزم بالمواعيد', translit: 'پانجكتشوال', example:{en:'He is always punctual for meetings.', ar: 'دايم يلتزم بالوقت في الاجتماعات.', translit: 'هي از اولويز پنكتشول فور ميتنجز.'}, synonyms:'On time, prompt', antonyms:'Late, tardy', family:'punctuality', collocations:'punctual arrival', category:'Business English', difficulty:'Advanced', tip: 'Highly valued in American workplace culture.', synonyms_ar: 'دقيق بالوقت، ملتزم', antonyms_ar: 'متاخر', family_ar: 'دقه', collocations_ar: 'وصول دقيق', tip_ar: 'مهمه مره في ثقافه الشغل الامريكيه', mistake:'Saying "on the time" instead of "on time" or "punctual."'},
   {en:'Boarding Pass', ipa:'/ˈbɔːrdɪŋ ˌpæs/', ar: 'بطاقه الصعود', translit: 'بوردينج باس', example:{en:'Here is my boarding pass and passport.', ar: 'هذي بطاقه الصعود والجواز.', translit: 'هير از ماي بوردنج باس اند باسبورت.'}, synonyms:'Ticket', antonyms:'-', family:'board, boarding', collocations:'boarding pass, boarding gate', category:'Airport English', difficulty:'Beginner', tip: 'You show it twice, at check-in and again at the gate.', synonyms_ar: 'تذكره صعود', antonyms_ar: '-', family_ar: 'يصعد، صعود', collocations_ar: 'تذكره الصعود، بوابه الصعود', tip_ar: 'تعرضها مرتين، عند تسجيل الدخول وعند البوابه', mistake:'Saying "boarding card" is understood, but Americans say "boarding pass."'},
   {en:'Gate', ipa:'/ɡeɪt/', ar: 'بوابه الصعود', translit: 'قيت', example:{en:'Your flight leaves from gate fifteen.', ar: 'رحلتك تطلع من بوابه خمسه عشر.', translit: 'يور فلايت ليفز فروم قيت فيفتين.'}, synonyms:'Exit, doorway', antonyms:'-', family:'-', collocations:'boarding gate, gate number', category:'Airport English', difficulty:'Beginner', tip: 'Follow the screens after security, the gate can change.', synonyms_ar: 'بوابه', antonyms_ar: '-', family_ar: '-', collocations_ar: 'بوابه الصعود، رقم البوابه', tip_ar: 'تابع الشاشات لسه الامن، البوابه ممكن تتغير', mistake:'Using "door" instead of "gate" at the airport.'},
@@ -10640,7 +10640,7 @@ const VOCAB_BANK = [
 {en:'Revise', ipa:'/rɪˈvaɪz/', ar: 'يراجع ويعدل', translit: 'ريفايز', example:{en:'Revise your draft for clarity.', ar: 'راجع مسودتك لتكون اوضح.', translit: 'ريفايز يور درافت فور كليريتي.'}, synonyms:'edit, rewrite', antonyms:'keep, leave', family:'revise, revision', collocations:'revise for, revise a draft', category:'Writing Workshop', difficulty:'Advanced', tip: 'Revise for ideas, then edit for grammar.', synonyms_ar: 'يراجع ويعدل', antonyms_ar: 'يبقي', family_ar: 'يراجع، مراجعه', collocations_ar: 'راجع من اجل، راجع مسوده', tip_ar: 'راجع للافكار بعدين عدل للقواعد', mistake:'Revising and editing at the same time.'},
 {en:'Paragraph', ipa:'/ˈpærəɡræf/', ar: 'فقره', translit: 'باراقراف', example:{en:'Each paragraph needs one main idea.', ar: 'كل فقره تحتاج فكره رييسيه واحده.', translit: 'اتش باراجراف نيدز وان مين ايديا.'}, synonyms:'section, stanza', antonyms:'', family:'paragraph', collocations:'opening paragraph, topic sentence', category:'Writing Workshop', difficulty:'Advanced', tip: 'Start a paragraph with its main idea.', synonyms_ar: 'فقره', antonyms_ar: '', family_ar: 'فقره', collocations_ar: 'فقره افتتاحيه، جمله موضوع', tip_ar: 'ابدا الفقره بفكرتها الرييسيه', mistake:'Putting several ideas in one paragraph.'},
 {en:'Espresso', ipa:'/ɛˈsprɛsoʊ/', ar: 'اسپريسو، قهوه مركزه', translit: 'اسپريسو', example:{en:'I\'ll have an espresso, please.', ar: 'ابي اسبريسو لو سمحت.', translit: 'ايل هاڤ ان اسبريسو، بليز.'}, synonyms:'short black', antonyms:'', family:'espresso', collocations:'double espresso, espresso shot', category:'Coffee Shop English', difficulty:'Beginner', tip: 'Espresso is the base for many drinks.', synonyms_ar: 'اسبريسو', antonyms_ar: '', family_ar: 'اسبريسو', collocations_ar: 'اسبريسو مضاعف، شوت اسبريسو', tip_ar: 'الاسبريسو اساس لكثير مشروبات', mistake:'Pronouncing it as "expresso."'},
-{en:'Latte', ipa:'/ˈlɑːteɪ/', ar: 'لاتيه، قهوه بالحليب', translit: 'لاتيه', example:{en:'A latte has more milk than coffee.', ar: 'اللاتيه فيه حليب اكثر من القهوه.', translit: 'ا لاتيه هاز مور ميلك ذان كوفي.'}, synonyms:'cafe latte', antonyms:'', family:'latte', collocations:'order a latte, iced latte', category:'Coffee Shop English', difficulty:'Beginner', tip: 'Stress the second part: la-TAY.', synonyms_ar: 'لاتيه', antonyms_ar: '', family_ar: 'لاتيه', collocations_ar: 'اطلب لاتيه، لاتيه مثلج', tip_ar: 'شد على الجزء الثاني: la-TAY', mistake:'Saying "lat-ee" instead of "la-TAY."'},
+{en:'Latte', ipa:'/ˈlɑːteɪ/', ar: 'لاتيه، قهوه بالحليب', translit: 'لاتيه', example:{en:'A latte has more milk than coffee.', ar: 'الاتيه فيه حليب اكثر من القهوه.', translit: 'ا لاتيه هاز مور ميلك ذان كوفي.'}, synonyms:'cafe latte', antonyms:'', family:'latte', collocations:'order a latte, iced latte', category:'Coffee Shop English', difficulty:'Beginner', tip: 'Stress the second part: la-TAY.', synonyms_ar: 'لاتيه', antonyms_ar: '', family_ar: 'لاتيه', collocations_ar: 'اطلب لاتيه، لاتيه مثلج', tip_ar: 'شد على الجزء الثاني: la-TAY', mistake:'Saying "lat-ee" instead of "la-TAY."'},
 {en:'Barista', ipa:'/bəˈriːstə/', ar: 'باريستا، صانع القهوه', translit: 'باريستا', example:{en:'The barista made a nice latte art.', ar: 'الباريستا صمم رسمه لاتيه حلوه.', translit: 'ذا باريستا ميد ا نايس لاتيه ارت.'}, synonyms:'coffee maker', antonyms:'', family:'barista', collocations:'ask the barista, skilled barista', category:'Coffee Shop English', difficulty:'Beginner', tip: 'A barista prepares and serves coffee.', synonyms_ar: 'باريستا', antonyms_ar: '', family_ar: 'باريستا', collocations_ar: 'اسال الباريستا، باريستا محترف', tip_ar: 'الباريستا يجهز ويقدم القهوه', mistake:'Pronouncing it "bar-ista" with wrong stress.'},
 {en:'To Go', ipa:'/tu ɡoʊ/', ar: 'للسفري، يوخذ معاك', translit: 'تو قو', example:{en:'Coffee to go, please.', ar: 'قهوه للسفري لو سمحت.', translit: 'كوفي تو قو، پليز.'}, synonyms:'takeaway, takeout', antonyms:'for here, dine in', family:'go', collocations:'to go order, for here or to go', category:'Coffee Shop English', difficulty:'Beginner', tip:'"To go" means take it with you.', synonyms_ar: 'للسفري', antonyms_ar: 'للحضور', family_ar: 'يروح', collocations_ar: 'طلب سفري، هنا ولا سفري', tip_ar: 'to go يعني خذها معاك', mistake:'Saying "to go away" instead of "to go."'},
 {en:'Decaf', ipa:'/ˈdiːkæf/', ar: 'قهوه منزوعه الكافيين', translit: 'ديكاف', example:{en:'I\'ll have decaf, please.', ar: 'ابي قهوه منزوعه الكافيين لو سمحت.', translit: 'ايل هاڤ ديكاف، بليز.'}, synonyms:'caffeine-free', antonyms:'regular, caffeinated', family:'decaf, decaffeinated', collocations:'order decaf, decaf coffee', category:'Coffee Shop English', difficulty:'Beginner', tip: 'Decaf is short for decaffeinated.', synonyms_ar: 'قهوه منزوع الكافيين', antonyms_ar: 'عادي', family_ar: 'منزوع الكافيين', collocations_ar: 'اطلب ديكاف، قهوه ديكاف', tip_ar: 'decaf اختصار ل decaffeinated', mistake:'Thinking decaf has zero caffeine; it has a little.'},
@@ -10665,7 +10665,7 @@ const VOCAB_BANK = [
 {en:'Binge', ipa:'/bɪndʒ/', ar: 'يشاهد حلقات متتاليه', translit: 'بينج', example:{en:'We binged the whole season.', ar: 'شاهدنا الموسم كاملا دفعه واحده.', translit: 'وي بينجد ذا هول سيزن.'}, synonyms:'binge-watch, devour', antonyms:'pace out', family:'binge, binged', collocations:'binge watch, binge on', category:'TV Series English', difficulty:'Advanced', tip: 'To binge is to watch many at once.', synonyms_ar: 'يشاهد حلقات متتاليه', antonyms_ar: 'يوزع', family_ar: ' binge, binge', collocations_ar: 'شاهد متتالي، انهمك بـ', tip_ar: 'binge تعني تشاهد كثير دفعه وحده', mistake:'Saying "binge on it" when you mean "binge-watch."'},
 {en:'Streaming', ipa:'/ˈstriːmɪŋ/', ar: 'بث، مشاهده عبر الانترنت', translit: 'ستريمينج', example:{en:'Is the show streaming?', ar: 'هل المسلسل متاح للمشاهده؟', translit: 'از ذا شو ستريمينج؟'}, synonyms:'online viewing', antonyms:'download, broadcast', family:'stream, streamed', collocations:'streaming service, live streaming', category:'TV Series English', difficulty:'Advanced', tip: 'Streaming means watching online, live.', synonyms_ar: 'بث، مشاهده اونلوين', antonyms_ar: 'تنزيل', family_ar: 'يبث، بث', collocations_ar: 'خدمه بث، بث مباشر', tip_ar: 'streaming يعني تشاهد اونلوين', mistake:'Confusing streaming with downloading.'},
 {en:'Lyrics', ipa:'/ˈlɪrɪks/', ar: 'كلمات اغنيه', translit: 'ليريكس', example:{en:'I love the lyrics.', ar: 'احب كلمات الاغنيه.', translit: 'اي لاف ذا ليريكس.'}, synonyms:'words, lines', antonyms:'melody, tune', family:'lyric, lyrical', collocations:'write lyrics, sing the lyrics', category:'Music English', difficulty:'Intermediate', tip: 'Lyrics are the words of a song.', synonyms_ar: 'كلمات اغنيه', antonyms_ar: 'لحن', family_ar: 'كلمات، غنايي', collocations_ar: 'اكتب كلمات، غني الكلمات', tip_ar: 'الكلمات هي كلام الاغنيه', mistake:'Calling them "the words" instead of "lyrics."'},
-{en:'Chorus', ipa:'/ˈkɔːrəs/', ar: 'المقطع المتكرر، اللازمه', translit: 'كورس', example:{en:'Sing the chorus with me.', ar: 'غن المقطع المتكرر معاي.', translit: 'سينج ذا كورس ويذ مي.'}, synonyms:'refrain, hook', antonyms:'verse', family:'chorus, choruses', collocations:'sing the chorus, catchy chorus', category:'Music English', difficulty:'Intermediate', tip: 'The chorus repeats throughout a song.', synonyms_ar: 'المقطع المتكرر', antonyms_ar: 'مقطع', family_ar: 'كورس، كورسات', collocations_ar: 'غني المقطع المتكرر، مقطع متكرر حلو', tip_ar: 'المقطع المتكرر يتكرر طول الاغنيه', mistake:'Confusing chorus with verse.'},
+{en:'Chorus', ipa:'/ˈkɔːrəs/', ar: 'المقطع المتكرر، الازمه', translit: 'كورس', example:{en:'Sing the chorus with me.', ar: 'غن المقطع المتكرر معاي.', translit: 'سينج ذا كورس ويذ مي.'}, synonyms:'refrain, hook', antonyms:'verse', family:'chorus, choruses', collocations:'sing the chorus, catchy chorus', category:'Music English', difficulty:'Intermediate', tip: 'The chorus repeats throughout a song.', synonyms_ar: 'المقطع المتكرر', antonyms_ar: 'مقطع', family_ar: 'كورس، كورسات', collocations_ar: 'غني المقطع المتكرر، مقطع متكرر حلو', tip_ar: 'المقطع المتكرر يتكرر طول الاغنيه', mistake:'Confusing chorus with verse.'},
 {en:'Verse', ipa:'/vɜːrs/', ar: 'المقطع (في الاغنيه)', translit: 'فرس', example:{en:'The first verse is slow.', ar: 'المقطع الاول بطي.', translit: 'ذا فيرست فرس از سلوه.'}, synonyms:'stanza, section', antonyms:'chorus', family:'verse, versed', collocations:'first verse, write a verse', category:'Music English', difficulty:'Intermediate', tip: 'A verse tells the story between choruses.', synonyms_ar: 'المقطع', antonyms_ar: 'كورس', family_ar: 'مقطع، متمكن', collocations_ar: 'اول مقطع، اكتب مقطع', tip_ar: 'المقطع يحكي القصه بين الكورسات', mistake:'Mixing up verse and chorus.'},
 {en:'Melody', ipa:'/ˈmɛlədi/', ar: 'لحن', translit: 'ميلودي', example:{en:'The melody is catchy.', ar: 'اللحن ممتع.', translit: 'ذا ميلودي از كاتشي.'}, synonyms:'tune, air', antonyms:'noise, dissonance', family:'melody, melodic', collocations:'hum a melody, simple melody', category:'Music English', difficulty:'Intermediate', tip: 'A melody is the main tune of a song.', synonyms_ar: 'لحن', antonyms_ar: 'ضجيج', family_ar: 'لحن، لحني', collocations_ar: 'دندن لحن، لحن بسيط', tip_ar: 'اللحن هو نغمه الاغنيه الرييسيه', mistake:'Calling it "the music" instead of "the melody."'},
 {en:'Beat', ipa:'/biːt/', ar: 'ايقاع، نبض', translit: 'بيت', example:{en:'Tap your foot to the beat.', ar: 'نقر بقدمك مع الايقاع.', translit: 'تاب يور فوت تو ذا بيت.'}, synonyms:'rhythm, pulse', antonyms:'silence', family:'beat, beats', collocations:'keep the beat, strong beat', category:'Music English', difficulty:'Intermediate', tip: 'The beat is the steady pulse of a song.', synonyms_ar: 'ايقاع، نبض', antonyms_ar: 'صمت', family_ar: 'نبض، نبضات', collocations_ar: 'حافظ على الايقاع، ايقاع قوي', tip_ar: 'الايقاع هو النبض المنتظم للاغنيه', mistake:'Confusing beat with melody.'},
@@ -11158,8 +11158,8 @@ const GRAMMAR_TOPICS = [
   {id:'prepositions-time', title:'Prepositions of Time: In, On, At', rule:'Use "in" for months and years, "on" for days and dates, "at" for exact times.', saudi:'in للشهور والسنين، on للايام والتواريخ، at للوقت بالضبط زي الساعه.', wrong:'I will call you in Monday at 3pm... on 3pm.', right:'I will call you on Monday at 3pm.', mistakes:['Saying "in Monday" instead of "on Monday."', "Saying \"on 5 o'clock\" instead of \"at 5 o'clock.\""]},
   {id:'comparatives', title:'Comparatives and Superlatives', rule:'Add "-er" for short adjectives and "more" for longer ones. Use "-est" or "most" for superlatives.', saudi:'للصفات القصيره نزيد er، وللصفات الطويله نستخدم more قبلها.', wrong:'This hotel is more good than that one.', right:'This hotel is better than that one.', mistakes:['Saying "more good" instead of "better."','Doubling comparison: "more better" or "most best."']},
   {id:'question-formation', title:'Question Formation', rule:'Most questions need an auxiliary verb (do, does, did, is, are) before the subject.', saudi:'الاساله الانجليزيه تحتاج كلمه مساعده قبل الشخص، وذا مختلف عن ترتيب الجمله العربيه.', wrong:'You like coffee?', right:'Do you like coffee?', mistakes:['Forgetting the auxiliary verb "do/does" in questions.','Using statement word order with a question mark only.']},
-  {id:'present-simple', title:'Present Simple', rule:'Use present simple for habits, routines, and facts. Add -s to the verb with he, she, it.', saudi:'الحاضر البسيط للاشيا اللي تسويها باستمرار ولفعلايق ثابته. مع he/she/it يضاف s للفعل.', wrong:'He work every day.', right:'He works every day.', mistakes:['Forgetting the -s with he/she/it.','Using present simple for something happening right now: "I work now" instead of "I am working now."']},
-  {id:'past-simple', title:'Past Simple', rule:'Use past simple for finished actions with a clear past time. Regular verbs end in -ed, irregular verbs change form.', saudi:'الماضي البسيط للاشيا اللي خلصت ووقتها محدد. الافعال العاديه تزيد ed والافعال الشاذه تتغير.', wrong:'I didn\'t went to work yesterday.', right:'I didn\'t go to work yesterday.', mistakes:['Using the past form after "didn\'t": "I didn\'t went."','Saying "I am agree" instead of "I agree" in past discussions.']},
+  {id:'present-simple', title:'Present Simple', rule:'Use present simple for habits, routines, and facts. Add -s to the verb with he, she, it.', saudi:'الحاضر البسيط للاشياء اللي تسويها باستمرار ولفعلايق ثابته. مع he/she/it يضاف s للفعل.', wrong:'He work every day.', right:'He works every day.', mistakes:['Forgetting the -s with he/she/it.','Using present simple for something happening right now: "I work now" instead of "I am working now."']},
+  {id:'past-simple', title:'Past Simple', rule:'Use past simple for finished actions with a clear past time. Regular verbs end in -ed, irregular verbs change form.', saudi:'الماضي البسيط للاشياء اللي خلصت ووقتها محدد. الافعال العاديه تزيد ed والافعال الشاذه تتغير.', wrong:'I didn\'t went to work yesterday.', right:'I didn\'t go to work yesterday.', mistakes:['Using the past form after "didn\'t": "I didn\'t went."','Saying "I am agree" instead of "I agree" in past discussions.']},
   {id:'future-plans', title:'Future: Will vs Going To', rule:'Use "going to" for plans and intentions you already decided, "will" for decisions made at the moment of speaking and promises.', saudi:'going to للخطط اللي قررتها من قبل، و will للقرار اللي تاخذه لحظتها او لوعد.', wrong:'I will travel to Jeddah next week, I bought the tickets.', right:'I am going to travel to Jeddah next week, I bought the tickets.', mistakes:['Using "will" for a plan you already made, where "going to" fits better.','Saying "I will going to" by mixing both forms.']},
   {id:'prepositions-place', title:'Prepositions of Place: In, On, At', rule:'Use "at" for a specific point, "on" for a surface, "in" for an enclosed space.', saudi:'at لنقطه محدده (عند الباب)، on لسطح (فوق الطاوله)، in لمكان مغلق (داخل السياره).', wrong:'I am waiting on the bus stop.', right:'I am waiting at the bus stop.', mistakes:['Using "on" for locations that take "at" (bus stop, the door).','Using "in" for streets: "I live in King Street" instead of "on King Street."']},
   {id:'countable-uncountable', title:'Countable and Uncountable Nouns', rule:'Countable nouns have plurals and use a/an and many. Uncountable nouns (water, advice, money) have no plural and use much.', saudi:'الاسماء المعدوده لها جمع، وغير المعدوده مثل الماي والنصايح والفلوس ما لها جمع.', wrong:'I need an advice from you.', right:'I need some advice from you.', mistakes:['Saying "an advice" or "advices", advice is uncountable.','Saying "informations" instead of "information."']},
@@ -11262,6 +11262,10 @@ const SPEAKING_PERSONAS = [
   {id:'job-interviewer', title:'Job Interviewer', icon:'user-check', opener:{en:'Thanks for coming in. Tell me about yourself.', ar: 'شكرا لحضورك. عرفني بنفسك.', translit: 'ثانكس فور كمنق ان. تيل مي اباوت يورسلف.'}},
   {id:'police-officer', title:'Police Officer', icon:'shield', opener:{en:'Good evening, can I see your ID, please?', ar: 'مسا الخير، ممكن اشوف الهويه لو سمحت؟', translit: 'قود ايڤنينج، كان اي سي يور اي دي، بليز؟'}},
   {id:'tour-guide', title:'Tour Guide', icon:'map', opener:{en:'Welcome everyone. We start the tour in ten minutes.', ar: 'حياكم الكل. نبدا الجوله لسه عشر دقايق.', translit: 'ويلكم اڤري ون. وي ستارت ذا تور ان تن مينتس.'}},
+    {id:'coffee-barista', title:'Coffee Barista', icon:'coffee', opener:{en:'Hi, what can I get for you today?', ar: 'هلا، وش اقدر اجيب لك اليوم؟', translit: 'های، وات كان ای قیت فور یو تودی؟'}},
+  {id:'gym-trainer', title:'Gym Trainer', icon:'dumbbell', opener:{en:'What is your fitness goal?', ar: 'وش هدفك بالتدريب؟', translit: 'وات از یور فیتنس قول؟'}},
+  {id:'store-return', title:'Store Return Desk', icon:'package', opener:{en:'Hi, how can I help you today?', ar: 'هلا، كيف اقدر اساعدك اليوم؟', translit: 'های، هاو كان ای هیلب یو تودی؟'}},
+  {id:'phone-call', title:'Office Phone Call', icon:'phone', opener:{en:'Hello, may I speak with Mr. Ahmed?', ar: 'هلا، ممكن اكلم الاستاذ احمد؟', translit: 'هیلو، می ای اسپیک وذ مستر احمد؟'}},
 ];
 
 /* ---- listening lounge tracks ---- */
@@ -11696,7 +11700,7 @@ const LESSON_LIBRARY = {
     title:'Asking for Favors', ar: 'تطلب خدمه', translit: 'اسكنق فور فيڤرز',
     duration:'8 min', difficulty:'Intermediate',
     vocab:[VOCAB_BANK[38], VOCAB_BANK[10]],
-    grammar:{title:'Could You / Would You Mind', rule:'"Could you...?" is polite, "Would you mind...?" is very polite and takes the -ing form.', saudi:'Could you للطلب المهذب، و Would you mind مع -ing اكثر تأدب.', wrong:'Give me the report now.', right:'Could you send me the report when you have a moment?', mistakes:['Commanding instead of asking: "Give me..."','Saying "Would you mind to help?" instead of "Would you mind helping?"']},
+    grammar:{title:'Could You / Would You Mind', rule:'"Could you...?" is polite, "Would you mind...?" is very polite and takes the -ing form.', saudi:'Could you للطلب المهذب، و Would you mind مع -ing اكثر تادب.', wrong:'Give me the report now.', right:'Could you send me the report when you have a moment?', mistakes:['Commanding instead of asking: "Give me..."','Saying "Would you mind to help?" instead of "Would you mind helping?"']},
     conversation:[
       {who:'A', en:'Hey, could you do me a favor?', ar: 'هلا، تقدر تسوي لي خدمه؟', translit: 'هاي، كود يو دو مي ا فيڤر؟'},
       {who:'B', en:'Sure, what do you need?', ar: 'اكيد، وش تحتاج؟', translit: 'شور، وات دو يو نيد؟'},
@@ -11858,7 +11862,7 @@ const LESSON_LIBRARY = {
     title:'Hotel Requests', ar: 'طلباتك بالفندق', translit: 'هوتيل ريكويستس',
     duration:'8 min', difficulty:'Beginner',
     vocab:[VOCAB_BANK[8], VOCAB_BANK[24]],
-    grammar:{title:'Could I / Can You', rule:'Requests at a hotel: Could I have an extra towel? Can you call a taxi?', saudi:'طلبات الفندق: Could I للاشيا، Can you للخدمات.', wrong:'I need towels now, bring them.', right:'Could I have some extra towels, please?', mistakes:['Commanding staff: "bring me..."','Forgetting "please" in every request.']},
+    grammar:{title:'Could I / Can You', rule:'Requests at a hotel: Could I have an extra towel? Can you call a taxi?', saudi:'طلبات الفندق: Could I للاشياء، Can you للخدمات.', wrong:'I need towels now, bring them.', right:'Could I have some extra towels, please?', mistakes:['Commanding staff: "bring me..."','Forgetting "please" in every request.']},
     conversation:[
       {who:'You', en:'Could I have an extra pillow and a blanket?', ar: 'ممكن مخده اضافيه وغطا؟', translit: 'كود اي هاڤ وين اكسترا بيلو اند ا بلانكت؟'},
       {who:'Receptionist', en:'Of course, I will send them right up.', ar: 'اكيد، بابعثهم لك الحين.', translit: 'اوڤ كورس، اي ويل سند ذيم رايت اب.'},
@@ -12586,7 +12590,7 @@ const LESSON_LIBRARY = {
       {who:'A', en:'The bathroom door says out of order.', ar: 'باب الحمام مكتوب عليه عطلان.', translit: 'ذا باثروم دور سيز اوت اوڤ اوردر.'},
       {who:'B', en:'So it is broken, we need another one.', ar: 'يعني معطل، نحتاج واحد ثاني.', translit: 'سو ات از بروكن، وي نيد اناذر وان.'},
       {who:'A', en:'There is one on the second floor.', ar: 'فيه واحد بالدور الثاني.', translit: 'ذير از وان اون ذا سكند فلور.'},
-      {who:'B', en:'Great, and remember the sign: employees only.', ar: 'حلو، وتذكر اللافته: للموظفين بس.', translit: 'قريت، اند ريممبر ذا سوين: امبلوييز اونلي.'},
+      {who:'B', en:'Great, and remember the sign: employees only.', ar: 'حلو، وتذكر الاافته: للموظفين بس.', translit: 'قريت، اند ريممبر ذا سوين: امبلوييز اونلي.'},
     ],
     quiz:[
       {qAr:'"Out of order" معناها:', qEn:'"Out of order" means:', options:['عطلان','مفتوح','جديد'], correct:0},
@@ -12599,7 +12603,7 @@ const LESSON_LIBRARY = {
     title:'Polite Email Writing', ar: 'كتابه ايميل مهذب', translit: 'رايتنق ايميل بولايت',
     duration:'9 min', difficulty:'Advanced',
     vocab:[VOCAB_BANK[4], VOCAB_BANK[38]],
-    grammar:{title:'Could You Please', rule:'Politeness in writing comes from modals: Could you please...? Would it be possible to...?', saudi:'التأدب بالكتابه من الافعال المساعده: ممكن لو سمحت؟', wrong:'Send the file.', right:'Could you please send the file?', mistakes:['Writing demands in short imperatives.','Forgetting the subject line.']},
+    grammar:{title:'Could You Please', rule:'Politeness in writing comes from modals: Could you please...? Would it be possible to...?', saudi:'التادب بالكتابه من الافعال المساعده: ممكن لو سمحت؟', wrong:'Send the file.', right:'Could you please send the file?', mistakes:['Writing demands in short imperatives.','Forgetting the subject line.']},
     conversation:[
       {who:'A', en:'Subject: Quick question about the report', ar: 'الموضوع: سؤال سريع عن التقرير', translit: 'سابجكت: كويك كويستشن اباوت ذا ريبورت'},
       {who:'B', en:'Dear Omar, could you please send the updated report?', ar: 'عزيزي عمر، ممكن ترسل التقرير المحدث؟', translit: 'دير عمر، كود يو بليز سند ذا ابديتد ريبورت؟'},
@@ -12712,7 +12716,7 @@ const LESSON_LIBRARY = {
       {who:'A', en:'What kind of music are you into?', ar: 'وش نوع الموسيقى اللي تحبه؟', translit: 'وات كويند اوڤ ميوزك ار يو ان تو؟'},
       {who:'B', en:'I enjoy listening to Arabic pop and some English rock.', ar: 'احس اسمع بوب عربي وشويه روك انجليزي.', translit: 'اي انجوي ليشننق تو عربي بوب اند سم انجلش راك.'},
       {who:'A', en:'Nice. Do you go to concerts?', ar: 'حلو. تروح حفلات؟', translit: 'نايس. دو يو قو تو كونسرتس؟'},
-      {who:'B', en:'Sometimes, I love the live atmosphere.', ar: 'احيانا، احب اجوا اللايف.', translit: 'سامتايمز، اي لوف ذا لايف اتموسفير.'},
+      {who:'B', en:'Sometimes, I love the live atmosphere.', ar: 'احيانا، احب اجوا الايف.', translit: 'سامتايمز، اي لوف ذا لايف اتموسفير.'},
     ],
     quiz:[
       {qAr: 'الصيغه الصح:', qEn:'The correct sentence is:', options:['I enjoy listening to music.','I enjoy listen music.','I enjoy to listen music.'], correct:0},
@@ -13185,7 +13189,7 @@ const LESSON_LIBRARY = {
       {who:'A', ar: 'الزحمه اليوم والله.', translit: 'alzahma alyoum wallah', en:'It is really crowded today.'},
       {who:'B', ar: 'ايه، لسه العصر دايم كذا.', translit: 'ay, baad alasr dayim katha', en:'Yeah, after Asr it is always like this.'},
       {who:'A', ar: 'وش تنصحني اجرب؟', translit: 'wesh tansahni ajarb?', en:'What do you recommend I try?'},
-      {who:'B', ar: 'جرب اللاتيه بالهيل، لذيذ.', translit: 'jarb allatteh bilhail, ladheedh', en:'Try the cardamom latte, it is delicious.'},
+      {who:'B', ar: 'جرب الاتيه بالهيل، لذيذ.', translit: 'jarb allatteh bilhail, ladheedh', en:'Try the cardamom latte, it is delicious.'},
     ],
     quiz:[
       {qAr: 'وش تقول للي ياخذ مشروبه؟', qEn:'What do you say to someone getting their drink?', options:['بالعافيه / Enjoy','وين؟ / Where?','لا / No'], correct:0},
@@ -16904,7 +16908,7 @@ const CORRECT_RULES = [
   { re:/\bmany money\b/gi, fix:'a lot of money', category:'word-choice',
     ar:'"money" غير معدوده، فنقول "a lot of money" مو "many money".',
     en:'Money is uncountable: say "a lot of money", not "many money".',
-    why_ar: 'many للاشيا المعدوده، اما الفلوس فنستخدم much او a lot of.',
+    why_ar: 'many للاشياء المعدوده، اما الفلوس فنستخدم much او a lot of.',
     why_en:'"Many" is for countable nouns; money takes "much" or "a lot of".',
     learn:{ ar: 'He has a lot of money.', en:'much / a lot of + uncountable.' } },
   { re:/\bevery days\b/gi, fix:'every day', category:'agreement',
@@ -19165,9 +19169,9 @@ viewRenderers.pronunciation = renderPronunciation;
    choose, build, say, summary. */
 const SCENARIO_TRAINER = {
   'waiter': {
-    intro: {en: 'Imagine you are at a restaurant. The waiter comes to your table. What do you say?', ar: 'تخيل انك بالمطعم. النادل يجي لطاولتك. وش تقول؟'},
+    intro: {en: 'Picture this: you walk into a restaurant. The waiter comes to your table. What do you say?', ar: 'تصور معي: انت دخلت مطعم. الجرسون جا عند طاولتك. وش تقول؟'},
     teacherLine: {en: 'Good evening. Table for how many?', ar: 'مسا الخير. طاوله كم شخص؟', translit: 'قود ایڤنینق. تیبل فور هاو منی؟'},
-    wrong: {en: 'I want table', ar: 'ابي طاوله', why: 'مباشر وبدون please. و"I want" تبان وقحه.'},
+    wrong: {en: 'I want table', ar: 'ابي طاوله', why: 'مباشر وبدون please. و I want تبان وقحه.'},
     right: {en: 'Table for two, please.', ar: 'طاوله لشخصين لو سمحت.', translit: 'تیبل فور تو، بلیز.'},
     teach: [
       {ar: 'في المطعم نقول: Table for + العدد.', en: 'At a restaurant, say "Table for [number]".'},
@@ -19176,18 +19180,18 @@ const SCENARIO_TRAINER = {
     words: ['Table','for','two','please'],
   },
   'receptionist': {
-    intro: {en: 'Imagine you arrive at a hotel. The receptionist greets you. How do you check in?', ar: 'تخيل انك وصلت للفندق. الموظف يحياك. كيف تسجل دخول؟'},
+    intro: {en: 'Picture this: you arrive at a hotel. The receptionist greets you. How do you check in?', ar: 'تصور معي: انت وصلت الفندق. الموظف حياك. كيف تسجل دخول؟'},
     teacherLine: {en: 'Good afternoon, welcome. How can I help you?', ar: 'مسا الخير، حياكم. كيف اقدر اساعدك؟', translit: 'قود افترنون، ویلكم. هاو كان اي هیلب یو؟'},
     wrong: {en: 'Give me room', ar: 'اعطني غرفه', why: 'وقح ومباشر. ما نقول give me في الفنادق.'},
     right: {en: 'I have a reservation, my name is...', ar: 'عندي حجز باسم...', translit: 'ای هاڤ ا ریزرویشن، می نیم ایز...'},
     teach: [
       {ar: 'I have a reservation = عندي حجز. هذا الاسلوب الطبيعي للتسجيل.', en: '"I have a reservation" is the natural way to check in.'},
-      {ar: 'my name is = اسمي. نكمل بالاسم.', en: '"my name is" — then say your name.'},
+      {ar: 'my name is = اسمي. نكمل بالاسم.', en: '"my name is" then say your name.'},
     ],
     words: ['I','have','a','reservation','my','name','is'],
   },
   'airport-officer': {
-    intro: {en: 'Imagine you are at the airport. The officer asks for your passport. How do you hand it over?', ar: 'تخيل انك بالمطار. الموظف يطلب جوازك. كيف تعطيه؟'},
+    intro: {en: 'Picture this: you are at the airport. The officer asks for your passport. How do you hand it over?', ar: 'تصور معي: انت بالمطار. الموظف يطلب جوازك. كيف تعطيه؟'},
     teacherLine: {en: 'Good morning. Can I see your passport, please?', ar: 'صباح الخير. ممكن اشوف جوازك لو سمحت؟', translit: 'قود مورنینق. كان اي سی یور پاسپورت، بلیز؟'},
     wrong: {en: 'Why?', ar: 'ليش؟', why: 'سؤال الموظف بهالطريقه يبان وقح. اعطه الجواز وبتصرف.'},
     right: {en: 'Here you go.', ar: 'تفضل.', translit: 'هیر یو قو.'},
@@ -19197,10 +19201,10 @@ const SCENARIO_TRAINER = {
     words: ['Here','you','go'],
   },
   'taxi-driver': {
-    intro: {en: 'Imagine you get in a taxi. The driver asks where you are going. What do you say?', ar: 'تخيل انك ركبت بالتاكسي. السواق يسالك وين رايح. وش تقول؟'},
-    teacherLine: {en: 'Where are you going?', ar: 'وين رايح؟', translit: 'ویر آر یو قوینق؟'},
-    wrong: {en: 'Airport', ar: 'المطار', why: 'كلمه وحده. قصير جدا - قول جمله كامله.'},
-    right: {en: 'I am going to the airport, please.', ar: 'انا رايح للمطار لو سمحت.', translit: 'ای آم قوینق تو ذا ایرپورت، بلیز.'},
+    intro: {en: 'Picture this: you get in a taxi. The driver asks where you are going. What do you say?', ar: 'تصور معي: انت ركبت تاكسي. السواق يسالك وين رايح. وش تقول؟'},
+    teacherLine: {en: 'Where are you going?', ar: 'وين رايح؟', translit: 'ویر ار یو قوینق؟'},
+    wrong: {en: 'Airport', ar: 'المطار', why: 'كلمه وحده. قصير جدا. قول جمله كامله.'},
+    right: {en: 'I am going to the airport, please.', ar: 'انا رايح للمطار لو سمحت.', translit: 'ای ام قوینق تو ذا ایرپورت، بلیز.'},
     teach: [
       {ar: 'I am going to + المكان = انا رايح لـ.', en: '"I am going to" + place = I am heading to.'},
       {ar: 'نضيف please دايما مع السواق.', en: 'Always add "please" with the driver.'},
@@ -19208,150 +19212,194 @@ const SCENARIO_TRAINER = {
     words: ['I','am','going','to','the','airport','please'],
   },
   'doctor': {
-    intro: {en: 'Imagine you are at the doctor. They ask what is wrong. How do you explain?', ar: 'تخيل انك عند الدكتور. يسالك وش مشكلتك. كيف تشرح؟'},
+    intro: {en: 'Picture this: you are at the doctor. They ask what is wrong. How do you explain?', ar: 'تصور معي: انت عند الدكتور. يسالك وش مشكلتك. كيف تشرح؟'},
     teacherLine: {en: 'Good morning. What seems to be the problem?', ar: 'صباح الخير. وش المشكله؟', translit: 'قود مورنینق. وات سیمز تو بی ذا پرابلیم؟'},
     wrong: {en: 'I am sick', ar: 'انا مريض', why: 'عام جدا. قول وش بالضبط: صداع، حمى، الخ.'},
-    right: {en: 'I have a headache.', ar: 'عندي صداع.', translit: 'ای هاڤ ا هیدآچ.'},
+    right: {en: 'I have a headache.', ar: 'عندي صداع.', translit: 'ای هاڤ ا هیداچ.'},
     teach: [
-      {ar: 'I have a + العرض = عندي كذا. الطريقه الطبيعيه لوصف المشكله.', en: '"I have a [symptom]" — the natural way to describe what is wrong.'},
+      {ar: 'I have a + العرض = عندي كذا. الطريقه الطبيعيه لوصف المشكله.', en: '"I have a [symptom]" is the natural way to describe what is wrong.'},
     ],
     words: ['I','have','a','headache'],
   },
   'cashier': {
-    intro: {en: 'Imagine you are at a store. The cashier asks if you want a bag. What do you say?', ar: 'تخيل انك بالمحل. الكاشير يسالك اذا تبي كيس. وش تقول؟'},
+    intro: {en: 'Picture this: you are at a store. The cashier asks if you want a bag. What do you say?', ar: 'تصور معي: انت بالمحل. الكاشير يسالك اذا تبي كيس. وش تقول؟'},
     teacherLine: {en: 'Would you like a bag?', ar: 'تبي كيس؟', translit: 'وود یو لایک ا باق؟'},
     wrong: {en: 'Give me one', ar: 'اعطني واحد', why: 'وقح. قول Yes, please بدل ذا.'},
     right: {en: 'Yes, please.', ar: 'اي، لو سمحت.', translit: 'یس، بلیز.'},
     teach: [
-      {ar: 'Yes, please = اي، لو سمحت. الطريقه المهذبه لقبول عرض.', en: '"Yes, please" — the polite way to accept an offer.'},
+      {ar: 'Yes, please = اي، لو سمحت. الطريقه المهذبه لقبول عرض.', en: '"Yes, please" is the polite way to accept an offer.'},
     ],
     words: ['Yes','please'],
   },
   'manager': {
-    intro: {en: 'Imagine you are in a meeting. Your manager asks your opinion. How do you respond?', ar: 'تخيل انك باجتماع. مديرك يسالك عن رايك. كيف ترد؟'},
+    intro: {en: 'Picture this: you are in a meeting. Your manager asks your opinion. How do you respond?', ar: 'تصور معي: انت باجتماع. مديرك يسالك عن رايك. كيف ترد؟'},
     teacherLine: {en: 'What do you think about this idea?', ar: 'وش رايك بالفكره؟', translit: 'ووت دو یو ثینک ابوت ذس ایڈییا؟'},
-    wrong: {en: 'Good', ar: 'حلو', why: 'قصير جدا للاجتماع. قول جمله كامله.'},
+    wrong: {en: 'Good', ar: 'حلو', why: 'قصير جدا لللاجتماع. قول جمله كامله.'},
     right: {en: 'I think it is a good idea.', ar: 'اعتقد انها فكره حلوه.', translit: 'ای ثینک ات از ا قود ایڈییا.'},
     teach: [
-      {ar: 'I think = اعتقد. الطريقه الطبيعيه للتعبير عن رايك.', en: '"I think" — the natural way to share your opinion.'},
+      {ar: 'I think = اعتقد. الطريقه الطبيعيه للتعبير عن رايك.', en: '"I think" is the natural way to share your opinion.'},
     ],
     words: ['I','think','it','is','a','good','idea'],
   },
   'teacher': {
-    intro: {en: 'Imagine you are talking to your teacher after class. They ask if you understood. What do you say?', ar: 'تخيل انك تتكلم مع معلمك بعد الحصه. يسالك اذا فهمت. وش تقول؟'},
+    intro: {en: 'Picture this: you are talking to your teacher after class. They ask if you understood. What do you say?', ar: 'تصور معي: انت تتكلم مع معلمك بعد الحصه. يسالك اذا فهمت. وش تقول؟'},
     teacherLine: {en: 'Did you understand the lesson?', ar: 'فهمت الدرس؟', translit: 'دید یو اندرستاند ذا لیسن؟'},
     wrong: {en: 'Yes', ar: 'اي', why: 'قصير جدا. شكر معلمك وافهمه اكثر.'},
     right: {en: 'Yes, I understood. Thank you.', ar: 'اي، فهمت. شكرا.', translit: 'یس، ای اندرستود. ثانك یو.'},
     teach: [
-      {ar: 'Yes, I understood = اي، فهمت. واضحه ومحترمه.', en: '"Yes, I understood" — clear and respectful.'},
+      {ar: 'Yes, I understood = اي، فهمت. واضحه ومحترمه.', en: '"Yes, I understood" is clear and respectful.'},
       {ar: 'نضيف Thank you دايما للمعلم.', en: 'Always add "Thank you" to your teacher.'},
     ],
     words: ['Yes','I','understood','Thank','you'],
   },
   'friend': {
-    intro: {en: 'Imagine you run into a friend. They ask how you are doing. How do you respond?', ar: 'تخيل انك قابلت صديق. يسالك كيف حالك. كيف ترد؟'},
-    teacherLine: {en: 'Hey, how are you doing?', ar: 'هلا، كيف حالك؟', translit: 'هی، هاو آر یو دوینق؟'},
+    intro: {en: 'Picture this: you run into a friend. They ask how you are doing. How do you respond?', ar: 'تصور معي: انت قابلت صديق. يسالك كيف حالك. كيف ترد؟'},
+    teacherLine: {en: 'Hey, how are you doing?', ar: 'هلا، كيف حالك؟', translit: 'هی، هاو ار یو دوینق؟'},
     wrong: {en: 'Fine', ar: 'تمام', why: 'قصير جدا. اسال عنه بعد.'},
-    right: {en: 'I am doing well, thank you. How about you?', ar: 'تمام، شكرا. وانت؟', translit: 'ای آم دوینق ویل، ثانك یو. هاو ابوت یو؟'},
+    right: {en: 'I am doing well, thank you. How about you?', ar: 'تمام، شكرا. وانت؟', translit: 'ای ام دوینق ویل، ثانك یو. هاو ابوت یو؟'},
     teach: [
-      {ar: 'I am doing well = تمام. مهذبه وطبيعيه.', en: '"I am doing well" — polite and natural.'},
-      {ar: 'How about you? = وانت؟ اسال دايما.', en: '"How about you?" — always ask back.'},
+      {ar: 'I am doing well = تمام. مهذبه وطبيعيه.', en: '"I am doing well" is polite and natural.'},
+      {ar: 'How about you? = وانت؟ اسال دايما.', en: '"How about you?" always ask back.'},
     ],
     words: ['I','am','doing','well','thank','you','How','about','you'],
   },
   'customer': {
-    intro: {en: 'Imagine someone asks if a seat is free. How do you say it is available?', ar: 'تخيل واحد يسالك اذا الكرسي فاضي. كيف تقول انه متاح؟'},
+    intro: {en: 'Picture this: someone asks if a seat is free. How do you say it is available?', ar: 'تصور معي: واحد يسالك اذا الكرسي فاضي. كيف تقول انه متاح؟'},
     teacherLine: {en: 'Excuse me, is this seat taken?', ar: 'لو سمحت، هذا الكرسي محجوز؟', translit: 'اسکیوز می، از ذس سیٹ تیکن؟'},
     wrong: {en: 'No', ar: 'لا', why: 'قصير جدا. قول No, go ahead.'},
-    right: {en: 'No, go ahead.', ar: 'لا، تفضل.', translit: 'نو، قو آهید.'},
+    right: {en: 'No, go ahead.', ar: 'لا، تفضل.', translit: 'نو، قو اهید.'},
     teach: [
-      {ar: 'No, go ahead = لا، تفضل. الطريقه الطبيعيه.', en: '"No, go ahead" — the natural way to say something is available.'},
+      {ar: 'No, go ahead = لا، تفضل. الطريقه الطبيعيه.', en: '"No, go ahead" is the natural way to say something is available.'},
     ],
     words: ['No','go','ahead'],
   },
   'receptionist-clinic': {
-    intro: {en: 'Imagine you arrive at a clinic. The receptionist asks for your name. What do you say?', ar: 'تخيل انك وصلت لعياده. الموظفه تطلب اسمك. وش تقول؟'},
+    intro: {en: 'Picture this: you arrive at a clinic. The receptionist asks for your name. What do you say?', ar: 'تصور معي: انت وصلت عياده. الموظفه تطلب اسمك. وش تقول؟'},
     teacherLine: {en: 'Good morning. Can I have your name, please?', ar: 'صباح الخير. ممكن اسمك لو سمحت؟', translit: 'قود مورنینق. كان اي هاڤ یور نیم، بلیز؟'},
     wrong: {en: 'Why do you need it?', ar: 'ليش تبيه؟', why: 'وقح. اعط اسمك بكل بساطه.'},
     right: {en: 'My name is...', ar: 'اسمي...', translit: 'می نیم ایز...'},
     teach: [
-      {ar: 'My name is = اسمي. بسيطه ومهذبه.', en: '"My name is" — simple and polite.'},
+      {ar: 'My name is = اسمي. بسيطه ومهذبه.', en: '"My name is" is simple and polite.'},
     ],
     words: ['My','name','is'],
   },
   'neighbour': {
-    intro: {en: 'Imagine you see your neighbour after a long time. They greet you. How do you respond?', ar: 'تخيل انك شفت جارك من زمان. يحياك. كيف ترد؟'},
-    teacherLine: {en: 'Hi, how are you? I have not seen you in a while.', ar: 'هلا، كيف حالك؟ من زمان ما شفتك.', translit: 'هی، هاو آر یو؟ آی هاو نت سن یو این ا وایل.'},
+    intro: {en: 'Picture this: you see your neighbour after a long time. They greet you. How do you respond?', ar: 'تصور معي: انت شفت جارك من زمان. يحياك. كيف ترد؟'},
+    teacherLine: {en: 'Hi, how are you? I have not seen you in a while.', ar: 'هلا، كيف حالك؟ من زمان ما شفتك.', translit: 'هی، هاو ار یو؟ ای هاو نت سن یو این ا وایل.'},
     wrong: {en: 'I am fine', ar: 'تمام', why: 'قصير. اشرح وين كنت واسال عنه.'},
-    right: {en: 'I have been busy with work. How are you?', ar: 'كنت مشغول بالشغل. كيف حالك؟', translit: 'ای هاو بین بیزی ویتھ ورك. هاو آر یو؟'},
+    right: {en: 'I have been busy with work. How are you?', ar: 'كنت مشغول بالشغل. كيف حالك؟', translit: 'ای هاو بین بیزی ویتھ ورك. هاو ار یو؟'},
     teach: [
-      {ar: 'I have been busy with = كنت مشغول بـ. الطريقه الطبيعيه.', en: '"I have been busy with" — the natural way to explain your absence.'},
+      {ar: 'I have been busy with = كنت مشغول بـ. الطريقه الطبيعيه.', en: '"I have been busy with" is the natural way to explain your absence.'},
       {ar: 'نسال عنه: How are you? دايما.', en: 'Always ask back: "How are you?".'},
     ],
     words: ['I','have','been','busy','with','work','How','are','you'],
   },
   'bank-teller': {
-    intro: {en: 'Imagine you are at the bank. The teller asks how they can help. What do you say?', ar: 'تخيل انك بالبنك. الموظف يسالك كيف يقدر يساعدك. وش تقول؟'},
+    intro: {en: 'Picture this: you are at the bank. The teller asks how they can help. What do you say?', ar: 'تصور معي: انت بالبنك. الموظف يسالك كيف يقدر يساعدك. وش تقول؟'},
     teacherLine: {en: 'Good afternoon. How can I help you today?', ar: 'مسا الخير. كيف اقدر اساعدك اليوم؟', translit: 'قود افترنون. هاو كان اي هیلب یو تودی؟'},
     wrong: {en: 'Give me cash', ar: 'اعطني كاش', why: 'وقح. في البنك نستخدم I would like to.'},
     right: {en: 'I would like to withdraw some money.', ar: 'حاب اسحب فلوس.', translit: 'ای ود لایک تو ودرو سام مانی.'},
     teach: [
-      {ar: 'I would like to = ابي/حاب. مهذب ومحترم.', en: '"I would like to" — polite and respectful.'},
-      {ar: 'withdraw = سحب. الفعل اللي نستخدمه بالبنك.', en: '"withdraw" — the verb used at banks.'},
+      {ar: 'I would like to = ابي/حاب. مهذب ومحترم.', en: '"I would like to" is polite and respectful.'},
+      {ar: 'withdraw = سحب. الفعل اللي نستخدمه بالبنك.', en: '"withdraw" is the verb used at banks.'},
     ],
     words: ['I','would','like','to','withdraw','some','money'],
   },
   'flight-attendant': {
-    intro: {en: 'Imagine you are on a plane. The attendant asks what you want to drink. What do you say?', ar: 'تخيل انك بالطياره. المضيف يسالك وش تبي تشرب. وش تقول؟'},
-    teacherLine: {en: 'What would you like to drink?', ar: 'وش تبي تشرب؟', translit: 'ووت وود یو لایک تو درینك؟'},
+    intro: {en: 'Picture this: you are on a plane. The attendant asks what you want to drink. What do you say?', ar: 'تصور معي: انت بالطياره. المضيف يسالك وش تبي تشرب. وش تقول؟'},
+    teacherLine: {en: 'What would you like to drink?', ar: 'وش تبي تشرب؟', translit: 'ووت وود یو لایک تو درینک؟'},
     wrong: {en: 'Water', ar: 'ماء', why: 'كلمه وحده. قول جمله كامله.'},
     right: {en: 'I would like a water, please.', ar: 'ابي ماء لو سمحت.', translit: 'ای وود لایک ا واتر، بلیز.'},
     teach: [
-      {ar: 'I would like a + الشي + please. النمط الكامل.', en: '"I would like a [item], please" — the complete pattern.'},
+      {ar: 'I would like a + الشي + please. النمط الكامل.', en: '"I would like a [item], please" is the complete pattern.'},
     ],
     words: ['I','would','like','a','water','please'],
   },
   'coworker': {
-    intro: {en: 'Imagine a coworker asks about your weekend. How do you respond?', ar: 'تخيل زميلك يسالك عن ويكاندك. كيف ترد؟'},
+    intro: {en: 'Picture this: a coworker asks about your weekend. How do you respond?', ar: 'تصور معي: زميلك يسالك عن ويكاندك. كيف ترد؟'},
     teacherLine: {en: 'Hey, how was your weekend?', ar: 'هلا، كيف كان ويكاندك؟', translit: 'هی، هاو واز یور ویکاند؟'},
     wrong: {en: 'Boring', ar: 'ممل', why: 'سلبي جدا. قول شي ايجابي واسال عنه.'},
     right: {en: 'It was great, thank you. How was yours?', ar: 'كان حلو، شكرا. وانت؟', translit: 'ایت واز قریت، ثانك یو. هاو واز یورز؟'},
     teach: [
-      {ar: 'It was great = كان حلو. ايجابي ومهذب.', en: '"It was great" — positive and polite.'},
-      {ar: 'How was yours? = وانت؟ اسال دايما.', en: '"How was yours?" — always ask back.'},
+      {ar: 'It was great = كان حلو. ايجابي ومهذب.', en: '"It was great" is positive and polite.'},
+      {ar: 'How was yours? = وانت؟ اسال دايما.', en: '"How was yours?" always ask back.'},
     ],
     words: ['It','was','great','thank','you','How','was','yours'],
   },
   'job-interviewer': {
-    intro: {en: 'Imagine you are in a job interview. They ask you to introduce yourself. How do you do it?', ar: 'تخيل انك بمقابله عمل. يطلبون منك تعرف بنفسك. كيف؟'},
+    intro: {en: 'Picture this: you are in a job interview. They ask you to introduce yourself. How do you do it?', ar: 'تصور معي: انت بمقابله عمل. يطلبون منك تعرف بنفسك. كيف؟'},
     teacherLine: {en: 'Good morning. Can you tell me a little about yourself?', ar: 'صباح الخير. ممكن تحكي عن نفسك شوي؟', translit: 'قود مورنینق. كان یو تیل می ا لیٹل ابوت یورسیف؟'},
     wrong: {en: 'I need a job', ar: 'ابي شغل', why: 'ابدا ما تقول كذا بمقابله. عرف بنفسك باحتراف.'},
-    right: {en: 'My name is... and I work as a...', ar: 'اسمي... وانا اشتغل...', translit: 'می نیم ایز... اند آی وورک از ا...'},
+    right: {en: 'My name is... and I work as a...', ar: 'اسمي... وانا اشتغل...', translit: 'می نیم ایز... اند ای وورک از ا...'},
     teach: [
-      {ar: 'My name is + الاسم. نبدأ بالاسم.', en: 'Start with "My name is" + your name.'},
+      {ar: 'My name is + الاسم. نبدا بالاسم.', en: 'Start with "My name is" + your name.'},
       {ar: 'I work as a + الوظيفه. نكمل بالمهنه.', en: 'Then "I work as a" + your profession.'},
     ],
     words: ['My','name','is','and','I','work','as','a'],
   },
   'police-officer': {
-    intro: {en: 'Imagine a police officer asks if you live nearby. How do you answer?', ar: 'تخيل شرطي يسالك اذا انت ساكن هنا. كيف ترد؟'},
+    intro: {en: 'Picture this: a police officer asks if you live nearby. How do you answer?', ar: 'تصور معي: شرطي يسالك اذا انت ساكن هنا. كيف ترد؟'},
     teacherLine: {en: 'Excuse me, do you live around here?', ar: 'لو سمحت، انت ساكن هنا؟', translit: 'اسکیوز می، دو یو لیڤ ارواند هیر؟'},
     wrong: {en: 'Why are you asking?', ar: 'ليش تسال؟', why: 'مو وقح. جاوب باحترام.'},
-    right: {en: 'Yes, I live nearby.', ar: 'اي، ساكن قريب.', translit: 'یس، آی لیڤ نیربای.'},
+    right: {en: 'Yes, I live nearby.', ar: 'اي، ساكن قريب.', translit: 'یس، ای لیڤ نیربای.'},
     teach: [
-      {ar: 'I live nearby = ساكن قريب. مهذب وواضح.', en: '"I live nearby" — polite and clear.'},
+      {ar: 'I live nearby = ساكن قريب. مهذب وواضح.', en: '"I live nearby" is polite and clear.'},
     ],
     words: ['Yes','I','live','nearby'],
   },
   'tour-guide': {
-    intro: {en: 'Imagine you are on a tour. The guide asks if you are enjoying it. How do you respond?', ar: 'تخيل انك بجوله. المرشد يسالك اذا تستمتع. كيف ترد؟'},
-    teacherLine: {en: 'Are you enjoying the tour so far?', ar: 'متمتع بالجوله لحد الحين؟', translit: 'آر یو انجویینق ذا تور سو فار؟'},
+    intro: {en: 'Picture this: you are on a tour. The guide asks if you are enjoying it. How do you respond?', ar: 'تصور معي: انت بجوله. المرشد يسالك اذا تستمتع. كيف ترد؟'},
+    teacherLine: {en: 'Are you enjoying the tour so far?', ar: 'متمتع بالجوله لحد الحين؟', translit: 'ار یو انجویینق ذا تور سو فار؟'},
     wrong: {en: 'I am tired', ar: 'انا تعبان', why: 'مو مهذب للمرشد. قول شي ايجابي.'},
     right: {en: 'Yes, it is very interesting.', ar: 'اي، ممتعه كثير.', translit: 'یس، ات از ویری انتریستینق.'},
     teach: [
-      {ar: 'It is very interesting = ممتعه كثير. ايجابي ومهذب.', en: '"It is very interesting" — positive and polite.'},
+      {ar: 'It is very interesting = ممتعه كثير. ايجابي ومهذب.', en: '"It is very interesting" is positive and polite.'},
     ],
     words: ['Yes','it','is','very','interesting'],
+  },
+  'coffee-barista': {
+    intro: {en: 'Picture this: you are at a coffee shop. The barista asks what you want. What do you say?', ar: 'تصور معي: انت بمقهى. الباريستا يسالك وش تبي. وش تقول؟'},
+    teacherLine: {en: 'Hi, what can I get for you?', ar: 'هلا، وش اقدر اجيب لك؟', translit: 'های، وات كان اي قیت فور یو؟'},
+    wrong: {en: 'Coffee', ar: 'قهوه', why: 'كلمه وحده. قول وش تبي بالضبط وحجمه.'},
+    right: {en: 'I would like a medium latte, please.', ar: 'ابي لاتيه وسط لو سمحت.', translit: 'ای وود لایک ا میڈیم لاتیه، بلیز.'},
+    teach: [
+      {ar: 'I would like a + الحجم + النوع. النمط الكامل للطلب.', en: '"I would like a [size] [type]" is the complete order pattern.'},
+      {ar: 'نذكر الحجم: small، medium، large.', en: 'Mention the size: small, medium, or large.'},
+    ],
+    words: ['I','would','like','a','medium','latte','please'],
+  },
+  'gym-trainer': {
+    intro: {en: 'Picture this: you are at the gym. The trainer asks about your fitness goal. How do you answer?', ar: 'تصور معي: انت بالجيم. المدرب يسالك عن هدفك. كيف ترد؟'},
+    teacherLine: {en: 'Hey, what is your fitness goal?', ar: 'هلا، وش هدفك بالتدريب؟', translit: 'های، وات از یور فیتنس قول؟'},
+    wrong: {en: 'I want to be strong', ar: 'ابي اصير قوي', why: 'عام جدا. حدد وش تبي بالضبط.'},
+    right: {en: 'I want to build muscle and lose weight.', ar: 'ابي ابني عضلات وانقص وزني.', translit: 'ای وانت تو بیلد مسل اند لوز ویت.'},
+    teach: [
+      {ar: 'build muscle = ابني عضلات. هدف واضح.', en: '"build muscle" is a clear goal.'},
+      {ar: 'lose weight = انقص وزني. هدف ثاني شائع.', en: '"lose weight" is another common goal.'},
+    ],
+    words: ['I','want','to','build','muscle','and','lose','weight'],
+  },
+  'store-return': {
+    intro: {en: 'Picture this: you bought a shirt but it is too small. You go back to return it. What do you say?', ar: 'تصور معي: اشتريت قميص بس صغير عليك. رجعت للمحل ترجعه. وش تقول؟'},
+    teacherLine: {en: 'Hi, how can I help you today?', ar: 'هلا، كيف اقدر اساعدك اليوم؟', translit: 'های، هاو كان اي هیلب یو تودی؟'},
+    wrong: {en: 'This is small', ar: 'ذا صغير', why: 'قصير جدا. قول I would like to return.'},
+    right: {en: 'I would like to return this shirt, it is too small.', ar: 'حاب ارجع ذا القميص، صغير علي.', translit: 'ای وود لایک تو ریتيرن ذیس شیرت، ات از تو سمول.'},
+    teach: [
+      {ar: 'I would like to return = حاب ارجع. مهذب وواضح.', en: '"I would like to return" is polite and clear.'},
+      {ar: 'نذكر السبب: it is too small / it does not fit.', en: 'Give the reason: "it is too small" or "it does not fit".'},
+    ],
+    words: ['I','would','like','to','return','this','shirt','it','is','too','small'],
+  },
+  'phone-call': {
+    intro: {en: 'Picture this: the phone rings at work. You pick up. What do you say?', ar: 'تصور معي: التلفون رن بالشغل. رفعت السماعه. وش تقول؟'},
+    teacherLine: {en: 'Hello, this is John calling. May I speak with Mr. Ahmed?', ar: 'هلا، هذا جون يتصل. ممكن اكلم الاستاذ احمد؟', translit: 'هیلو، ذیس از جون کالینق. می ای اسپیک وذ مستر احمد؟'},
+    wrong: {en: 'Who are you?', ar: 'من انت؟', why: 'وقح. قول One moment, please.'},
+    right: {en: 'One moment, please. I will check if he is available.', ar: 'لحظه لو سمحت. بتحقق اذا هو متاح.', translit: 'وان مومنت، بلیز. ای ویل چیک اف هی از اویلبل.'},
+    teach: [
+      {ar: 'One moment, please = لحظه لو سمحت. مهذبه.', en: '"One moment, please" is polite.'},
+      {ar: 'I will check = بتحقق. طبيعيه بالشغل.', en: '"I will check" is natural at work.'},
+    ],
+    words: ['One','moment','please','I','will','check','if','he','is','available'],
   },
 };
 
@@ -19779,7 +19827,7 @@ function renderWriting(){
         wrong: {en: 'Hello thank you', ar: 'هلا شكرا عليك', why: 'الكلمات مبعثره، بدون ترتيب. "thank you" لحالها ما تكفي، و"عليك" غلط - القصد "لك".'},
         right: {en: 'Dear Mr. Alqarni, thank you for your support during my training.', ar: 'عزيزي الاستاذ القرني، شكرا على دعمك خلال فتره تدريبي.', translit: 'ديير مستر القرضني، ثانك يو فور يور سبورت دورنق ماي تريننق.'},
         teach: [
-          {ar: 'نبدأ بـ Dear + الاسم. هذا تحيه رسميه في الايميلات.', en: 'Start with "Dear [name]" — this is a formal email greeting.'},
+          {ar: 'نبدا بـ Dear + الاسم. هذا تحيه رسميه في الايميلات.', en: 'Start with "Dear [name]" — this is a formal email greeting.'},
           {ar: 'بعدها شكر مباشر: thank you for + الشي اللي تسويه عليه.', en: 'Then a direct thanks: "thank you for" + what you are thanking them for.'},
           {ar: 'نختم بذكر الفتره: during my training.', en: 'End with the period: "during my training".'},
         ],
@@ -19808,7 +19856,7 @@ function renderWriting(){
         words: ['I','received','the','document,','thank','you','for','sending','it.'],
       },
       {
-        intro: {ar: 'تبي تطلب من زميلك يرسل تقرير بكرة. كيف تطلب بأدب؟', en: 'You want to ask a colleague to send a report tomorrow. How do you ask politely?'},
+        intro: {ar: 'تبي تطلب من زميلك يرسل تقرير بكرة. كيف تطلب بادب؟', en: 'You want to ask a colleague to send a report tomorrow. How do you ask politely?'},
         wrong: {en: 'Send me report', ar: 'ابعت لي تقرير', why: 'امر مباشر بدون please او could you. يبان وقح.'},
         right: {en: 'Could you send me the report by tomorrow, please?', ar: 'ممكن ترسل لي التقرير بكرة لو سمحت؟', translit: 'كود يو سند مي ذا ريبورت باي تومورو، بليز؟'},
         teach: [
@@ -19874,7 +19922,7 @@ function renderWriting(){
     'confirm-appointment': [
       {
         intro: {ar: 'عندك موعد بكرة، وتبغى تتاكد. كيف تكتب تاكيد للموعد؟', en: 'You have an appointment tomorrow, and you want to confirm it. How do you write a confirmation?'},
-        wrong: {en: 'I come tomorrow', ar: 'انا اجي بكرة', why: 'غلط - قصدك تأكد الموعد، مو تقول انك بتجي. نستخدم confirm.'},
+        wrong: {en: 'I come tomorrow', ar: 'انا اجي بكرة', why: 'غلط - قصدك تاكد الموعد، مو تقول انك بتجي. نستخدم confirm.'},
         right: {en: 'I would like to confirm my appointment for tomorrow.', ar: 'حاب ااكد موعد بكرة.', translit: 'اي ود لايك تو كونفيرم ماي ابوينتمنت فور تومورو.'},
         teach: [
           {ar: 'confirm = تاكد. هذا الفعل نستخدمه للتاكيد.', en: '"confirm" = to make sure. This is the verb for confirmations.'},
@@ -21131,7 +21179,7 @@ function renderAchievements(){
     <div class="page-head">
       <span class="eyebrow"><span class="arabic" style="font-size:.95em;">الانجازات</span>، Achievements</span>
       <h1><span class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">حصلت على ${earnedCount} من ${ACHIEVEMENTS.length}.</span>${earnedCount} of ${ACHIEVEMENTS.length} earned.</h1>
-      <p><span class="arabic" style="display:block; margin-bottom:4px;">تقدير للاستمراريه والاتقان، لا للحيل.</span>Recognition for consistency and mastery, not gimmicks.</p>
+      <p><span class="arabic" style="display:block; margin-bottom:4px;">تقدير لللاستمراريه والاتقان، لا للحيل.</span>Recognition for consistency and mastery, not gimmicks.</p>
     </div>
     <div class="grid grid-4" id="achievementsGrid"></div>`;
   document.getElementById('achievementsGrid').innerHTML = ACHIEVEMENTS.map(a => `
@@ -22025,7 +22073,7 @@ function renderWeekCard(){
       ar = `وتيرتك احسن من الاسبوع الماضي (+${w.weekCount - w.lastWeekCount} ${w.weekCount - w.lastWeekCount === 1 ? 'يوم' : 'ايام'}).`;
       en = `You are ahead of last week\'s pace (+${w.weekCount - w.lastWeekCount} day${w.weekCount - w.lastWeekCount === 1 ? '' : 's'}).`;
     }else if(w.weekCount === 0 && w.lastWeekCount === 0){
-      ar = 'ابدا سلسلتك بدرس اليوم. الاستمراريه تصنع الفرق.';
+      ar = 'ابدا سلسلتك بدرس اليوم. اللاستمراريه تصنع الفرق.';
       en = 'Start your streak with a lesson today. Consistency is what moves your level.';
     }else if(w.speakGap != null && w.speakGap >= 3){
       ar = `ما تدربت على المحادثه من ${w.speakGap} ${w.speakGap === 1 ? 'يوم' : 'ايام'}.`;
@@ -22037,7 +22085,7 @@ function renderWeekCard(){
         ar = `يومك الاكثر التزاما: ${DASH_DAYS_AR[bi]}.`;
         en = `Your most consistent study day is ${best}.`;
       }else{
-        ar = 'داوم على الوتيره، والاستمراريه ترفع مستواك.';
+        ar = 'داوم على الوتيره، واللاستمراريه ترفع مستواك.';
         en = 'Keep the rhythm, consistency is what raises your level.';
       }
     }
