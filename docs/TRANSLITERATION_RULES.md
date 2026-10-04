@@ -3,6 +3,15 @@
 **Rule:** All English-to-Arabic transliteration in this app MUST use Arabic
 codepoints only. No Persian (Farsi) or Urdu letters anywhere.
 
+**This is an American English curriculum.** All transliterations must
+follow American pronunciation, never British. For example:
+- schedule → سكيدج-ول (American "sked-jool", NOT British "shed-yool")
+- either → اذر (American "ee-ther", NOT British "eye-ther")
+- neither → نيذر (American "nee-ther", NOT British "nye-ther")
+- mobile → موبال (American "moh-bul", NOT British "moh-bile")
+- privacy → برايڤاسي (American "pry-vuh-see", NOT British "priv-uh-see")
+- garage → قيروج (American "guh-rahzh", NOT British "garr-idge")
+
 ## Arabic letter mapping for English sounds
 
 | English sound | Arabic letter | Example        | Transliteration |
@@ -98,7 +107,7 @@ codepoints only. No Persian (Farsi) or Urdu letters anywhere.
    - sentence → سن-تنس
    - support → سب-اورت
    - project → بروج-يكت
-   - schedule → شيد-اول
+   - schedule → سكيدج-ول (American pronunciation)
    - hospital → هاسبي-تال
    - interview → انتر-ڤيو
    - describe → ديس-كرايب
