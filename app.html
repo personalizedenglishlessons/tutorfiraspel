@@ -11262,15 +11262,15 @@ const SPEAKING_PERSONAS = [
   {id:'job-interviewer', title:'Job Interviewer', icon:'user-check', opener:{en:'Thanks for coming in. Tell me about yourself.', ar: 'شكرا لحضورك. عرفني بنفسك.', translit: 'ثانكس فور كمنق ان. تيل مي اباوت يورسلف.'}},
   {id:'police-officer', title:'Police Officer', icon:'shield', opener:{en:'Good evening, can I see your ID, please?', ar: 'مسا الخير، ممكن اشوف الهويه لو سمحت؟', translit: 'قود ايڤنينج، كان اي سي يور اي دي، بليز؟'}},
   {id:'tour-guide', title:'Tour Guide', icon:'map', opener:{en:'Welcome everyone. We start the tour in ten minutes.', ar: 'حياكم الكل. نبدا الجوله لسه عشر دقايق.', translit: 'ويلكم اڤري ون. وي ستارت ذا تور ان تن مينتس.'}},
-    {id:'coffee-barista', title:'Coffee Barista', icon:'coffee', opener:{en:'Hi, what can I get for you today?', ar: 'هلا، وش اقدر اجيب لك اليوم؟', translit: 'های، وات كان ای قیت فور یو تودی؟'}},
-  {id:'gym-trainer', title:'Gym Trainer', icon:'dumbbell', opener:{en:'What is your fitness goal?', ar: 'وش هدفك بالتدريب؟', translit: 'وات از یور فیتنس قول؟'}},
-  {id:'store-return', title:'Store Return Desk', icon:'package', opener:{en:'Hi, how can I help you today?', ar: 'هلا، كيف اقدر اساعدك اليوم؟', translit: 'های، هاو كان ای هیلب یو تودی؟'}},
-  {id:'phone-call', title:'Office Phone Call', icon:'phone', opener:{en:'Hello, may I speak with Mr. Ahmed?', ar: 'هلا، ممكن اكلم الاستاذ احمد؟', translit: 'هیلو، می ای اسپیک وذ مستر احمد؟'}},
-  {id:'nervous-restart', title:'Mind Went Blank', icon:'refresh-cw', opener:{en:'So, what do you think about the new project schedule?', ar: 'وش رايك بجدول المشروع الجديد؟', translit: 'سو، وات دو یو ثینک ابآوت ذا نیو پروجکت شیدول؟'}},
-  {id:'nervous-slow-down', title:'Talking Too Fast', icon:'gauge', opener:{en:'Can you explain what happened next?', ar: 'تقدر تشرح وش صار بعدين؟', translit: 'کن یو ایکسپلین وات هپند نکست؟'}},
-  {id:'nervous-lost-word', title:'Lost the Word', icon:'search', opener:{en:'What did you think of the presentation?', ar: 'وش رايك بالعرض؟', translit: 'وات دید یو ثینک اف ذا پریزنتیشن؟'}},
-  {id:'nervous-admit-nervous', title:'Shaking Hands', icon:'hand', opener:{en:'Are you ready to present?', ar: 'انت جاهز تقدم؟', translit: 'ار یو ریدی تو پریزنت؟'}},
-  {id:'nervous-redirect', title:'Lost the Point', icon:'navigation', opener:{en:'So, what was your main point?', ar: 'وش كانت نقطتك الاساسيه؟', translit: 'سو، وات واز یور مین پوینت؟'}},
+    {id:'coffee-barista', title:'Coffee Barista', icon:'coffee', opener:{en:'Hi, what can I get for you today?', ar: 'هلا، وش اقدر اجيب لك اليوم؟', translit: 'هاي، وات كان اي قيت فور يو تودي؟'}},
+  {id:'gym-trainer', title:'Gym Trainer', icon:'dumbbell', opener:{en:'What is your fitness goal?', ar: 'وش هدفك بالتدريب؟', translit: 'وات از يور فيتنس قول؟'}},
+  {id:'store-return', title:'Store Return Desk', icon:'package', opener:{en:'Hi, how can I help you today?', ar: 'هلا، كيف اقدر اساعدك اليوم؟', translit: 'هاي، هاو كان اي هيلب يو تودي؟'}},
+  {id:'phone-call', title:'Office Phone Call', icon:'phone', opener:{en:'Hello, may I speak with Mr. Ahmed?', ar: 'هلا، ممكن اكلم الاستاذ احمد؟', translit: 'هيلو، مي اي اسپيك وذ مستر احمد؟'}},
+  {id:'nervous-restart', title:'Mind Went Blank', icon:'refresh-cw', opener:{en:'So, what do you think about the new project schedule?', ar: 'وش رايك بجدول المشروع الجديد؟', translit: 'سو، وات دو يو ثينك ابآوت ذا نيو پروجكت شيدول؟'}},
+  {id:'nervous-slow-down', title:'Talking Too Fast', icon:'gauge', opener:{en:'Can you explain what happened next?', ar: 'تقدر تشرح وش صار بعدين؟', translit: 'كن يو ايكسپلين وات هپند نكست؟'}},
+  {id:'nervous-lost-word', title:'Lost the Word', icon:'search', opener:{en:'What did you think of the presentation?', ar: 'وش رايك بالعرض؟', translit: 'وات ديد يو ثينك اف ذا پريزنتيشن؟'}},
+  {id:'nervous-admit-nervous', title:'Shaking Hands', icon:'hand', opener:{en:'Are you ready to present?', ar: 'انت جاهز تقدم؟', translit: 'ار يو ريدي تو پريزنت؟'}},
+  {id:'nervous-redirect', title:'Lost the Point', icon:'navigation', opener:{en:'So, what was your main point?', ar: 'وش كانت نقطتك الاساسيه؟', translit: 'سو، وات واز يور مين پوينت؟'}},
 ];
 
 /* ---- listening lounge tracks ---- */
@@ -19175,9 +19175,9 @@ viewRenderers.pronunciation = renderPronunciation;
 const SCENARIO_TRAINER = {
   'waiter': {
     intro: {en: 'Imagine: you walk into a restaurant. The waiter comes to your table. What do you say?', ar: 'تخيل: انت دخلت مطعم. الجرسون جا عند طاولتك. وش تقول؟'},
-    teacherLine: {en: 'Good evening. Table for how many?', ar: 'مسا الخير. طاوله كم شخص؟', translit: 'قود ایڤنینق. تیبل فور هاو منی؟'},
+    teacherLine: {en: 'Good evening. Table for how many?', ar: 'مسا الخير. طاوله كم شخص؟', translit: 'قود ايڤنينق. تيبل فور هاو مني؟'},
     wrong: {en: 'I want table', ar: 'ابي طاوله', why: 'مباشر وبدون please. و I want تبان وقحه.'},
-    right: {en: 'Table for two, please.', ar: 'طاوله لشخصين لو سمحت.', translit: 'تیبل فور تو، بلیز.'},
+    right: {en: 'Table for two, please.', ar: 'طاوله لشخصين لو سمحت.', translit: 'تيبل فور تو، بليز.'},
     teach: [
       {ar: 'في المطعم نقول: Table for + العدد.', en: 'At a restaurant, say "Table for [number]".'},
       {ar: 'نضيف please دايما عشان نكون مهذبين.', en: 'Always add "please" to be polite.'},
@@ -19186,9 +19186,9 @@ const SCENARIO_TRAINER = {
   },
   'receptionist': {
     intro: {en: 'Imagine: you arrive at a hotel. The receptionist greets you. How do you check in?', ar: 'تخيل: انت وصلت الفندق. الموظف حياك. كيف تسجل دخول؟'},
-    teacherLine: {en: 'Good afternoon, welcome. How can I help you?', ar: 'مسا الخير، حياكم. كيف اقدر اساعدك؟', translit: 'قود افترنون، ویلكم. هاو كان اي هیلب یو؟'},
+    teacherLine: {en: 'Good afternoon, welcome. How can I help you?', ar: 'مسا الخير، حياكم. كيف اقدر اساعدك؟', translit: 'قود افترنون، ويلكم. هاو كان اي هيلب يو؟'},
     wrong: {en: 'Give me room', ar: 'اعطني غرفه', why: 'وقح ومباشر. ما نقول give me في الفنادق.'},
-    right: {en: 'I have a reservation, my name is...', ar: 'عندي حجز باسم...', translit: 'ای هاڤ ا ریزرویشن، می نیم ایز...'},
+    right: {en: 'I have a reservation, my name is...', ar: 'عندي حجز باسم...', translit: 'اي هاڤ ا ريزرويشن، مي نيم ايز...'},
     teach: [
       {ar: 'I have a reservation = عندي حجز. هذا الاسلوب الطبيعي للتسجيل.', en: '"I have a reservation" is the natural way to check in.'},
       {ar: 'my name is = اسمي. نكمل بالاسم.', en: '"my name is" then say your name.'},
@@ -19197,9 +19197,9 @@ const SCENARIO_TRAINER = {
   },
   'airport-officer': {
     intro: {en: 'Imagine: you are at the airport. The officer asks for your passport. How do you hand it over?', ar: 'تخيل: انت بالمطار. الموظف يطلب جوازك. كيف تعطيه؟'},
-    teacherLine: {en: 'Good morning. Can I see your passport, please?', ar: 'صباح الخير. ممكن اشوف جوازك لو سمحت؟', translit: 'قود مورنینق. كان اي سی یور پاسپورت، بلیز؟'},
+    teacherLine: {en: 'Good morning. Can I see your passport, please?', ar: 'صباح الخير. ممكن اشوف جوازك لو سمحت؟', translit: 'قود مورنينق. كان اي سي يور پاسپورت، بليز؟'},
     wrong: {en: 'Why?', ar: 'ليش؟', why: 'سؤال الموظف بهالطريقه يبان وقح. اعطه الجواز وبتصرف.'},
-    right: {en: 'Here you go.', ar: 'تفضل.', translit: 'هیر یو قو.'},
+    right: {en: 'Here you go.', ar: 'تفضل.', translit: 'هير يو قو.'},
     teach: [
       {ar: 'Here you go = تفضل. الطريقه الطبيعيه لتقديم شي بالانجليزي.', en: '"Here you go" = here it is. The natural way to hand something over.'},
     ],
@@ -19207,9 +19207,9 @@ const SCENARIO_TRAINER = {
   },
   'taxi-driver': {
     intro: {en: 'Imagine: you get in a taxi. The driver asks where you are going. What do you say?', ar: 'تخيل: انت ركبت تاكسي. السواق يسالك وين رايح. وش تقول؟'},
-    teacherLine: {en: 'Where are you going?', ar: 'وين رايح؟', translit: 'ویر ار یو قوینق؟'},
+    teacherLine: {en: 'Where are you going?', ar: 'وين رايح؟', translit: 'وير ار يو قوينق؟'},
     wrong: {en: 'Airport', ar: 'المطار', why: 'كلمه وحده. قصير جدا. قول جمله كامله.'},
-    right: {en: 'I am going to the airport, please.', ar: 'انا رايح للمطار لو سمحت.', translit: 'ای ام قوینق تو ذا ایرپورت، بلیز.'},
+    right: {en: 'I am going to the airport, please.', ar: 'انا رايح للمطار لو سمحت.', translit: 'اي ام قوينق تو ذا ايرپورت، بليز.'},
     teach: [
       {ar: 'I am going to + المكان = انا رايح لـ.', en: '"I am going to" + place = I am heading to.'},
       {ar: 'نضيف please دايما مع السواق.', en: 'Always add "please" with the driver.'},
@@ -19218,9 +19218,9 @@ const SCENARIO_TRAINER = {
   },
   'doctor': {
     intro: {en: 'Imagine: you are at the doctor. They ask what is wrong. How do you explain?', ar: 'تخيل: انت عند الدكتور. يسالك وش مشكلتك. كيف تشرح؟'},
-    teacherLine: {en: 'Good morning. What seems to be the problem?', ar: 'صباح الخير. وش المشكله؟', translit: 'قود مورنینق. وات سیمز تو بی ذا پرابلیم؟'},
+    teacherLine: {en: 'Good morning. What seems to be the problem?', ar: 'صباح الخير. وش المشكله؟', translit: 'قود مورنينق. وات سيمز تو بي ذا پرابليم؟'},
     wrong: {en: 'I am sick', ar: 'انا مريض', why: 'عام جدا. قول وش بالضبط: صداع، حمى، الخ.'},
-    right: {en: 'I have a headache.', ar: 'عندي صداع.', translit: 'ای هاڤ ا هیداچ.'},
+    right: {en: 'I have a headache.', ar: 'عندي صداع.', translit: 'اي هاڤ ا هيداچ.'},
     teach: [
       {ar: 'I have a + العرض = عندي كذا. الطريقه الطبيعيه لوصف المشكله.', en: '"I have a [symptom]" is the natural way to describe what is wrong.'},
     ],
@@ -19228,9 +19228,9 @@ const SCENARIO_TRAINER = {
   },
   'cashier': {
     intro: {en: 'Imagine: you are at a store. The cashier asks if you want a bag. What do you say?', ar: 'تخيل: انت بالمحل. الكاشير يسالك اذا تبي كيس. وش تقول؟'},
-    teacherLine: {en: 'Would you like a bag?', ar: 'تبي كيس؟', translit: 'وود یو لایک ا باق؟'},
+    teacherLine: {en: 'Would you like a bag?', ar: 'تبي كيس؟', translit: 'وود يو لايك ا باق؟'},
     wrong: {en: 'Give me one', ar: 'اعطني واحد', why: 'وقح. قول Yes, please بدل ذا.'},
-    right: {en: 'Yes, please.', ar: 'اي، لو سمحت.', translit: 'یس، بلیز.'},
+    right: {en: 'Yes, please.', ar: 'اي، لو سمحت.', translit: 'يس، بليز.'},
     teach: [
       {ar: 'Yes, please = اي، لو سمحت. الطريقه المهذبه لقبول عرض.', en: '"Yes, please" is the polite way to accept an offer.'},
     ],
@@ -19238,9 +19238,9 @@ const SCENARIO_TRAINER = {
   },
   'manager': {
     intro: {en: 'Imagine: you are in a meeting. Your manager asks your opinion. How do you respond?', ar: 'تخيل: انت باجتماع. مديرك يسالك عن رايك. كيف ترد؟'},
-    teacherLine: {en: 'What do you think about this idea?', ar: 'وش رايك بالفكره؟', translit: 'ووت دو یو ثینک ابوت ذس ایڈییا؟'},
+    teacherLine: {en: 'What do you think about this idea?', ar: 'وش رايك بالفكره؟', translit: 'ووت دو يو ثينك ابوت ذس ايڈييا؟'},
     wrong: {en: 'Good', ar: 'حلو', why: 'قصير جدا لللاجتماع. قول جمله كامله.'},
-    right: {en: 'I think it is a good idea.', ar: 'اعتقد انها فكره حلوه.', translit: 'ای ثینک ات از ا قود ایڈییا.'},
+    right: {en: 'I think it is a good idea.', ar: 'اعتقد انها فكره حلوه.', translit: 'اي ثينك ات از ا قود ايڈييا.'},
     teach: [
       {ar: 'I think = اعتقد. الطريقه الطبيعيه للتعبير عن رايك.', en: '"I think" is the natural way to share your opinion.'},
     ],
@@ -19248,9 +19248,9 @@ const SCENARIO_TRAINER = {
   },
   'teacher': {
     intro: {en: 'Imagine: you are talking to your teacher after class. They ask if you understood. What do you say?', ar: 'تخيل: انت تتكلم مع معلمك بعد الحصه. يسالك اذا فهمت. وش تقول؟'},
-    teacherLine: {en: 'Did you understand the lesson?', ar: 'فهمت الدرس؟', translit: 'دید یو اندرستاند ذا لیسن؟'},
+    teacherLine: {en: 'Did you understand the lesson?', ar: 'فهمت الدرس؟', translit: 'ديد يو اندرستاند ذا ليسن؟'},
     wrong: {en: 'Yes', ar: 'اي', why: 'قصير جدا. شكر معلمك وافهمه اكثر.'},
-    right: {en: 'Yes, I understood. Thank you.', ar: 'اي، فهمت. شكرا.', translit: 'یس، ای اندرستود. ثانك یو.'},
+    right: {en: 'Yes, I understood. Thank you.', ar: 'اي، فهمت. شكرا.', translit: 'يس، اي اندرستود. ثانك يو.'},
     teach: [
       {ar: 'Yes, I understood = اي، فهمت. واضحه ومحترمه.', en: '"Yes, I understood" is clear and respectful.'},
       {ar: 'نضيف Thank you دايما للمعلم.', en: 'Always add "Thank you" to your teacher.'},
@@ -19259,9 +19259,9 @@ const SCENARIO_TRAINER = {
   },
   'friend': {
     intro: {en: 'Imagine: you run into a friend. They ask how you are doing. How do you respond?', ar: 'تخيل: انت قابلت صديق. يسالك كيف حالك. كيف ترد؟'},
-    teacherLine: {en: 'Hey, how are you doing?', ar: 'هلا، كيف حالك؟', translit: 'هی، هاو ار یو دوینق؟'},
+    teacherLine: {en: 'Hey, how are you doing?', ar: 'هلا، كيف حالك؟', translit: 'هي، هاو ار يو دوينق؟'},
     wrong: {en: 'Fine', ar: 'تمام', why: 'قصير جدا. اسال عنه بعد.'},
-    right: {en: 'I am doing well, thank you. How about you?', ar: 'تمام، شكرا. وانت؟', translit: 'ای ام دوینق ویل، ثانك یو. هاو ابوت یو؟'},
+    right: {en: 'I am doing well, thank you. How about you?', ar: 'تمام، شكرا. وانت؟', translit: 'اي ام دوينق ويل، ثانك يو. هاو ابوت يو؟'},
     teach: [
       {ar: 'I am doing well = تمام. مهذبه وطبيعيه.', en: '"I am doing well" is polite and natural.'},
       {ar: 'How about you? = وانت؟ اسال دايما.', en: '"How about you?" always ask back.'},
@@ -19270,9 +19270,9 @@ const SCENARIO_TRAINER = {
   },
   'customer': {
     intro: {en: 'Imagine: someone asks if a seat is free. How do you say it is available?', ar: 'تخيل: واحد يسالك اذا الكرسي فاضي. كيف تقول انه متاح؟'},
-    teacherLine: {en: 'Excuse me, is this seat taken?', ar: 'لو سمحت، هذا الكرسي محجوز؟', translit: 'اسکیوز می، از ذس سیٹ تیکن؟'},
+    teacherLine: {en: 'Excuse me, is this seat taken?', ar: 'لو سمحت، هذا الكرسي محجوز؟', translit: 'اسكيوز مي، از ذس سيت تيكن؟'},
     wrong: {en: 'No', ar: 'لا', why: 'قصير جدا. قول No, go ahead.'},
-    right: {en: 'No, go ahead.', ar: 'لا، تفضل.', translit: 'نو، قو اهید.'},
+    right: {en: 'No, go ahead.', ar: 'لا، تفضل.', translit: 'نو، قو اهيد.'},
     teach: [
       {ar: 'No, go ahead = لا، تفضل. الطريقه الطبيعيه.', en: '"No, go ahead" is the natural way to say something is available.'},
     ],
@@ -19280,9 +19280,9 @@ const SCENARIO_TRAINER = {
   },
   'receptionist-clinic': {
     intro: {en: 'Imagine: you arrive at a clinic. The receptionist asks for your name. What do you say?', ar: 'تخيل: انت وصلت عياده. الموظفه تطلب اسمك. وش تقول؟'},
-    teacherLine: {en: 'Good morning. Can I have your name, please?', ar: 'صباح الخير. ممكن اسمك لو سمحت؟', translit: 'قود مورنینق. كان اي هاڤ یور نیم، بلیز؟'},
+    teacherLine: {en: 'Good morning. Can I have your name, please?', ar: 'صباح الخير. ممكن اسمك لو سمحت؟', translit: 'قود مورنينق. كان اي هاڤ يور نيم، بليز؟'},
     wrong: {en: 'Why do you need it?', ar: 'ليش تبيه؟', why: 'وقح. اعط اسمك بكل بساطه.'},
-    right: {en: 'My name is...', ar: 'اسمي...', translit: 'می نیم ایز...'},
+    right: {en: 'My name is...', ar: 'اسمي...', translit: 'مي نيم ايز...'},
     teach: [
       {ar: 'My name is = اسمي. بسيطه ومهذبه.', en: '"My name is" is simple and polite.'},
     ],
@@ -19290,9 +19290,9 @@ const SCENARIO_TRAINER = {
   },
   'neighbour': {
     intro: {en: 'Imagine: you see your neighbour after a long time. They greet you. How do you respond?', ar: 'تخيل: انت شفت جارك من زمان. يحياك. كيف ترد؟'},
-    teacherLine: {en: 'Hi, how are you? I have not seen you in a while.', ar: 'هلا، كيف حالك؟ من زمان ما شفتك.', translit: 'هی، هاو ار یو؟ ای هاو نت سن یو این ا وایل.'},
+    teacherLine: {en: 'Hi, how are you? I have not seen you in a while.', ar: 'هلا، كيف حالك؟ من زمان ما شفتك.', translit: 'هي، هاو ار يو؟ اي هاو نت سن يو اين ا وايل.'},
     wrong: {en: 'I am fine', ar: 'تمام', why: 'قصير. اشرح وين كنت واسال عنه.'},
-    right: {en: 'I have been busy with work. How are you?', ar: 'كنت مشغول بالشغل. كيف حالك؟', translit: 'ای هاو بین بیزی ویتھ ورك. هاو ار یو؟'},
+    right: {en: 'I have been busy with work. How are you?', ar: 'كنت مشغول بالشغل. كيف حالك؟', translit: 'اي هاو بين بيزي ويتھ ورك. هاو ار يو؟'},
     teach: [
       {ar: 'I have been busy with = كنت مشغول بـ. الطريقه الطبيعيه.', en: '"I have been busy with" is the natural way to explain your absence.'},
       {ar: 'نسال عنه: How are you? دايما.', en: 'Always ask back: "How are you?".'},
@@ -19301,9 +19301,9 @@ const SCENARIO_TRAINER = {
   },
   'bank-teller': {
     intro: {en: 'Imagine: you are at the bank. The teller asks how they can help. What do you say?', ar: 'تخيل: انت بالبنك. الموظف يسالك كيف يقدر يساعدك. وش تقول؟'},
-    teacherLine: {en: 'Good afternoon. How can I help you today?', ar: 'مسا الخير. كيف اقدر اساعدك اليوم؟', translit: 'قود افترنون. هاو كان اي هیلب یو تودی؟'},
+    teacherLine: {en: 'Good afternoon. How can I help you today?', ar: 'مسا الخير. كيف اقدر اساعدك اليوم؟', translit: 'قود افترنون. هاو كان اي هيلب يو تودي؟'},
     wrong: {en: 'Give me cash', ar: 'اعطني كاش', why: 'وقح. في البنك نستخدم I would like to.'},
-    right: {en: 'I would like to withdraw some money.', ar: 'حاب اسحب فلوس.', translit: 'ای ود لایک تو ودرو سام مانی.'},
+    right: {en: 'I would like to withdraw some money.', ar: 'حاب اسحب فلوس.', translit: 'اي ود لايك تو ودرو سام ماني.'},
     teach: [
       {ar: 'I would like to = ابي/حاب. مهذب ومحترم.', en: '"I would like to" is polite and respectful.'},
       {ar: 'withdraw = سحب. الفعل اللي نستخدمه بالبنك.', en: '"withdraw" is the verb used at banks.'},
@@ -19312,9 +19312,9 @@ const SCENARIO_TRAINER = {
   },
   'flight-attendant': {
     intro: {en: 'Imagine: you are on a plane. The attendant asks what you want to drink. What do you say?', ar: 'تخيل: انت بالطياره. المضيف يسالك وش تبي تشرب. وش تقول؟'},
-    teacherLine: {en: 'What would you like to drink?', ar: 'وش تبي تشرب؟', translit: 'ووت وود یو لایک تو درینک؟'},
+    teacherLine: {en: 'What would you like to drink?', ar: 'وش تبي تشرب؟', translit: 'ووت وود يو لايك تو درينك؟'},
     wrong: {en: 'Water', ar: 'ماء', why: 'كلمه وحده. قول جمله كامله.'},
-    right: {en: 'I would like a water, please.', ar: 'ابي ماء لو سمحت.', translit: 'ای وود لایک ا واتر، بلیز.'},
+    right: {en: 'I would like a water, please.', ar: 'ابي ماء لو سمحت.', translit: 'اي وود لايك ا واتر، بليز.'},
     teach: [
       {ar: 'I would like a + الشي + please. النمط الكامل.', en: '"I would like a [item], please" is the complete pattern.'},
     ],
@@ -19322,9 +19322,9 @@ const SCENARIO_TRAINER = {
   },
   'coworker': {
     intro: {en: 'Imagine: a coworker asks about your weekend. How do you respond?', ar: 'تخيل: زميلك يسالك عن ويكاندك. كيف ترد؟'},
-    teacherLine: {en: 'Hey, how was your weekend?', ar: 'هلا، كيف كان ويكاندك؟', translit: 'هی، هاو واز یور ویکاند؟'},
+    teacherLine: {en: 'Hey, how was your weekend?', ar: 'هلا، كيف كان ويكاندك؟', translit: 'هي، هاو واز يور ويكاند؟'},
     wrong: {en: 'Boring', ar: 'ممل', why: 'سلبي جدا. قول شي ايجابي واسال عنه.'},
-    right: {en: 'It was great, thank you. How was yours?', ar: 'كان حلو، شكرا. وانت؟', translit: 'ایت واز قریت، ثانك یو. هاو واز یورز؟'},
+    right: {en: 'It was great, thank you. How was yours?', ar: 'كان حلو، شكرا. وانت؟', translit: 'ايت واز قريت، ثانك يو. هاو واز يورز؟'},
     teach: [
       {ar: 'It was great = كان حلو. ايجابي ومهذب.', en: '"It was great" is positive and polite.'},
       {ar: 'How was yours? = وانت؟ اسال دايما.', en: '"How was yours?" always ask back.'},
@@ -19333,9 +19333,9 @@ const SCENARIO_TRAINER = {
   },
   'job-interviewer': {
     intro: {en: 'Imagine: you are in a job interview. They ask you to introduce yourself. How do you do it?', ar: 'تخيل: انت بمقابله عمل. يطلبون منك تعرف بنفسك. كيف؟'},
-    teacherLine: {en: 'Good morning. Can you tell me a little about yourself?', ar: 'صباح الخير. ممكن تحكي عن نفسك شوي؟', translit: 'قود مورنینق. كان یو تیل می ا لیٹل ابوت یورسیف؟'},
+    teacherLine: {en: 'Good morning. Can you tell me a little about yourself?', ar: 'صباح الخير. ممكن تحكي عن نفسك شوي؟', translit: 'قود مورنينق. كان يو تيل مي ا ليتل ابوت يورسيف؟'},
     wrong: {en: 'I need a job', ar: 'ابي شغل', why: 'ابدا ما تقول كذا بمقابله. عرف بنفسك باحتراف.'},
-    right: {en: 'My name is... and I work as a...', ar: 'اسمي... وانا اشتغل...', translit: 'می نیم ایز... اند ای وورک از ا...'},
+    right: {en: 'My name is... and I work as a...', ar: 'اسمي... وانا اشتغل...', translit: 'مي نيم ايز... اند اي وورك از ا...'},
     teach: [
       {ar: 'My name is + الاسم. نبدا بالاسم.', en: 'Start with "My name is" + your name.'},
       {ar: 'I work as a + الوظيفه. نكمل بالمهنه.', en: 'Then "I work as a" + your profession.'},
@@ -19344,9 +19344,9 @@ const SCENARIO_TRAINER = {
   },
   'police-officer': {
     intro: {en: 'Imagine: a police officer asks if you live nearby. How do you answer?', ar: 'تخيل: شرطي يسالك اذا انت ساكن هنا. كيف ترد؟'},
-    teacherLine: {en: 'Excuse me, do you live around here?', ar: 'لو سمحت، انت ساكن هنا؟', translit: 'اسکیوز می، دو یو لیڤ ارواند هیر؟'},
+    teacherLine: {en: 'Excuse me, do you live around here?', ar: 'لو سمحت، انت ساكن هنا؟', translit: 'اسكيوز مي، دو يو ليڤ ارواند هير؟'},
     wrong: {en: 'Why are you asking?', ar: 'ليش تسال؟', why: 'مو وقح. جاوب باحترام.'},
-    right: {en: 'Yes, I live nearby.', ar: 'اي، ساكن قريب.', translit: 'یس، ای لیڤ نیربای.'},
+    right: {en: 'Yes, I live nearby.', ar: 'اي، ساكن قريب.', translit: 'يس، اي ليڤ نيرباي.'},
     teach: [
       {ar: 'I live nearby = ساكن قريب. مهذب وواضح.', en: '"I live nearby" is polite and clear.'},
     ],
@@ -19354,9 +19354,9 @@ const SCENARIO_TRAINER = {
   },
   'tour-guide': {
     intro: {en: 'Imagine: you are on a tour. The guide asks if you are enjoying it. How do you respond?', ar: 'تخيل: انت بجوله. المرشد يسالك اذا تستمتع. كيف ترد؟'},
-    teacherLine: {en: 'Are you enjoying the tour so far?', ar: 'متمتع بالجوله لحد الحين؟', translit: 'ار یو انجویینق ذا تور سو فار؟'},
+    teacherLine: {en: 'Are you enjoying the tour so far?', ar: 'متمتع بالجوله لحد الحين؟', translit: 'ار يو انجويينق ذا تور سو فار؟'},
     wrong: {en: 'I am tired', ar: 'انا تعبان', why: 'مو مهذب للمرشد. قول شي ايجابي.'},
-    right: {en: 'Yes, it is very interesting.', ar: 'اي، ممتعه كثير.', translit: 'یس، ات از ویری انتریستینق.'},
+    right: {en: 'Yes, it is very interesting.', ar: 'اي، ممتعه كثير.', translit: 'يس، ات از ويري انتريستينق.'},
     teach: [
       {ar: 'It is very interesting = ممتعه كثير. ايجابي ومهذب.', en: '"It is very interesting" is positive and polite.'},
     ],
@@ -19364,9 +19364,9 @@ const SCENARIO_TRAINER = {
   },
   'coffee-barista': {
     intro: {en: 'Imagine: you are at a coffee shop. The barista asks what you want. What do you say?', ar: 'تخيل: انت بمقهى. الباريستا يسالك وش تبي. وش تقول؟'},
-    teacherLine: {en: 'Hi, what can I get for you?', ar: 'هلا، وش اقدر اجيب لك؟', translit: 'های، وات كان اي قیت فور یو؟'},
+    teacherLine: {en: 'Hi, what can I get for you?', ar: 'هلا، وش اقدر اجيب لك؟', translit: 'هاي، وات كان اي قيت فور يو؟'},
     wrong: {en: 'Coffee', ar: 'قهوه', why: 'كلمه وحده. قول وش تبي بالضبط وحجمه.'},
-    right: {en: 'I would like a medium latte, please.', ar: 'ابي لاتيه وسط لو سمحت.', translit: 'ای وود لایک ا میڈیم لاتیه، بلیز.'},
+    right: {en: 'I would like a medium latte, please.', ar: 'ابي لاتيه وسط لو سمحت.', translit: 'اي وود لايك ا ميڈيم لاتيه، بليز.'},
     teach: [
       {ar: 'I would like a + الحجم + النوع. النمط الكامل للطلب.', en: '"I would like a [size] [type]" is the complete order pattern.'},
       {ar: 'نذكر الحجم: small، medium، large.', en: 'Mention the size: small, medium, or large.'},
@@ -19375,9 +19375,9 @@ const SCENARIO_TRAINER = {
   },
   'gym-trainer': {
     intro: {en: 'Imagine: you are at the gym. The trainer asks about your fitness goal. How do you answer?', ar: 'تخيل: انت بالجيم. المدرب يسالك عن هدفك. كيف ترد؟'},
-    teacherLine: {en: 'Hey, what is your fitness goal?', ar: 'هلا، وش هدفك بالتدريب؟', translit: 'های، وات از یور فیتنس قول؟'},
+    teacherLine: {en: 'Hey, what is your fitness goal?', ar: 'هلا، وش هدفك بالتدريب؟', translit: 'هاي، وات از يور فيتنس قول؟'},
     wrong: {en: 'I want to be strong', ar: 'ابي اصير قوي', why: 'عام جدا. حدد وش تبي بالضبط.'},
-    right: {en: 'I want to build muscle and lose weight.', ar: 'ابي ابني عضلات وانقص وزني.', translit: 'ای وانت تو بیلد مسل اند لوز ویت.'},
+    right: {en: 'I want to build muscle and lose weight.', ar: 'ابي ابني عضلات وانقص وزني.', translit: 'اي وانت تو بيلد مسل اند لوز ويت.'},
     teach: [
       {ar: 'build muscle = ابني عضلات. هدف واضح.', en: '"build muscle" is a clear goal.'},
       {ar: 'lose weight = انقص وزني. هدف ثاني شائع.', en: '"lose weight" is another common goal.'},
@@ -19386,9 +19386,9 @@ const SCENARIO_TRAINER = {
   },
   'store-return': {
     intro: {en: 'Imagine: you bought a shirt but it is too small. You go back to return it. What do you say?', ar: 'تخيل: اشتريت قميص بس صغير عليك. رجعت للمحل ترجعه. وش تقول؟'},
-    teacherLine: {en: 'Hi, how can I help you today?', ar: 'هلا، كيف اقدر اساعدك اليوم؟', translit: 'های، هاو كان اي هیلب یو تودی؟'},
+    teacherLine: {en: 'Hi, how can I help you today?', ar: 'هلا، كيف اقدر اساعدك اليوم؟', translit: 'هاي، هاو كان اي هيلب يو تودي؟'},
     wrong: {en: 'This is small', ar: 'ذا صغير', why: 'قصير جدا. قول I would like to return.'},
-    right: {en: 'I would like to return this shirt, it is too small.', ar: 'حاب ارجع ذا القميص، صغير علي.', translit: 'ای وود لایک تو ریتيرن ذیس شیرت، ات از تو سمول.'},
+    right: {en: 'I would like to return this shirt, it is too small.', ar: 'حاب ارجع ذا القميص، صغير علي.', translit: 'اي وود لايك تو ريتيرن ذيس شيرت، ات از تو سمول.'},
     teach: [
       {ar: 'I would like to return = حاب ارجع. مهذب وواضح.', en: '"I would like to return" is polite and clear.'},
       {ar: 'نذكر السبب: it is too small / it does not fit.', en: 'Give the reason: "it is too small" or "it does not fit".'},
@@ -19397,9 +19397,9 @@ const SCENARIO_TRAINER = {
   },
   'phone-call': {
     intro: {en: 'Imagine: the phone rings at work. You pick up. What do you say?', ar: 'تخيل: التلفون رن بالشغل. رفعت السماعه. وش تقول؟'},
-    teacherLine: {en: 'Hello, this is John calling. May I speak with Mr. Ahmed?', ar: 'هلا، هذا جون يتصل. ممكن اكلم الاستاذ احمد؟', translit: 'هیلو، ذیس از جون کالینق. می ای اسپیک وذ مستر احمد؟'},
+    teacherLine: {en: 'Hello, this is John calling. May I speak with Mr. Ahmed?', ar: 'هلا، هذا جون يتصل. ممكن اكلم الاستاذ احمد؟', translit: 'هيلو، ذيس از جون كالينق. مي اي اسپيك وذ مستر احمد؟'},
     wrong: {en: 'Who are you?', ar: 'من انت؟', why: 'وقح. قول One moment, please.'},
-    right: {en: 'One moment, please. I will check if he is available.', ar: 'لحظه لو سمحت. بتحقق اذا هو متاح.', translit: 'وان مومنت، بلیز. ای ویل چیک اف هی از اویلبل.'},
+    right: {en: 'One moment, please. I will check if he is available.', ar: 'لحظه لو سمحت. بتحقق اذا هو متاح.', translit: 'وان مومنت، بليز. اي ويل چيك اف هي از اويلبل.'},
     teach: [
       {ar: 'One moment, please = لحظه لو سمحت. مهذبه.', en: '"One moment, please" is polite.'},
       {ar: 'I will check = بتحقق. طبيعيه بالشغل.', en: '"I will check" is natural at work.'},
@@ -19408,9 +19408,9 @@ const SCENARIO_TRAINER = {
   },
   'nervous-restart': {
     intro: {en: 'Imagine: you are mid-sentence and your mind goes blank. You freeze. How do you recover and start again?', ar: 'تخيل: انت تكلمت وفجاه نسيت وش كنت بقول. تجمدت. كيف ترجع نفسك وتكمل؟'},
-    teacherLine: {en: 'So, what do you think about the new project schedule?', ar: 'وش رايك بجدول المشروع الجديد؟', translit: 'سو، وات دو یو ثینک ابآوت ذا نیو پروجکت شیدول؟'},
+    teacherLine: {en: 'So, what do you think about the new project schedule?', ar: 'وش رايك بجدول المشروع الجديد؟', translit: 'سو، وات دو يو ثينك ابآوت ذا نيو پروجكت شيدول؟'},
     wrong: {en: 'uh... nothing... forget it', ar: 'اه... ولا شي... نسيت', why: 'تسحب نفسك من المحادثه. الناس ما تتوقع منك كلام كامل، بس تتوقع منك تكمل.'},
-    right: {en: 'Let me start again. What I mean is...', ar: 'خلني ابدا من جديد. قصدي...', translit: 'لت می استارت اگین. وات ای مین از...'},
+    right: {en: 'Let me start again. What I mean is...', ar: 'خلني ابدا من جديد. قصدي...', translit: 'لت مي استارت اگين. وات اي مين از...'},
     teach: [
       {ar: 'Let me start again = خلني ابدا من جديد. جملة انقاذ جاهزه لما تتلعثم.', en: '"Let me start again" is a rescue phrase for when you stumble.'},
       {ar: 'What I mean is = قصدي. تعيد فيها فكرتك بوضوح.', en: '"What I mean is" lets you restate your point clearly.'},
@@ -19419,9 +19419,9 @@ const SCENARIO_TRAINER = {
   },
   'nervous-slow-down': {
     intro: {en: 'Imagine: you are talking fast and the words come out wrong. You stumble over your own sentence. How do you fix it?', ar: 'تخيل: انت تتكلم بسرعه والكلمات تطلع غلط. تلعثمت بجملتك. كيف تصلحها؟'},
-    teacherLine: {en: 'Can you explain what happened next?', ar: 'تقدر تشرح وش صار بعدين؟', translit: 'کن یو ایکسپلین وات هپند نکست؟'},
+    teacherLine: {en: 'Can you explain what happened next?', ar: 'تقدر تشرح وش صار بعدين؟', translit: 'كن يو ايكسپلين وات هپند نكست؟'},
     wrong: {en: 'ehh I cannot say it correctly', ar: 'اه ما اقدر اقولها صح', why: 'تخلي نفسك قدام الشخص. قول الجمله الصح وكمّل.'},
-    right: {en: 'Sorry, let me say that more slowly.', ar: 'لو سمحت، خلني اقولها ابطئ.', translit: 'سوری، لت می سی ذات مور سلولی.'},
+    right: {en: 'Sorry, let me say that more slowly.', ar: 'لو سمحت، خلني اقولها ابطئ.', translit: 'سوري، لت مي سي ذات مور سلولي.'},
     teach: [
       {ar: 'Sorry, let me say that more slowly = لو سمحت، خلني اقولها ابطئ. توقف، تنفس، تعيد.', en: '"Sorry, let me say that more slowly" stops, breathes, and restarts.'},
       {ar: 'ما في عيب تبطئ. الوضوح احلى من السرعه.', en: 'Slowing down is not weakness. Clarity beats speed.'},
@@ -19430,9 +19430,9 @@ const SCENARIO_TRAINER = {
   },
   'nervous-lost-word': {
     intro: {en: 'Imagine: you know the word in Arabic but it will not come in English. You are stuck mid-sentence. How do you buy time?', ar: 'تخيل: تعرف الكلمه بالعربي بس ما تجي بالانجليزي. عالقت بجملتك. كيف تشتري وقت؟'},
-    teacherLine: {en: 'What did you think of the presentation?', ar: 'وش رايك بالعرض؟', translit: 'وات دید یو ثینک اف ذا پریزنتیشن؟'},
+    teacherLine: {en: 'What did you think of the presentation?', ar: 'وش رايك بالعرض؟', translit: 'وات ديد يو ثينك اف ذا پريزنتيشن؟'},
     wrong: {en: 'it was... the thing... you know', ar: 'كان... الشي... تعرف', why: 'تترك الشخص يخمن. قول الجمله كامله ولو ببطء.'},
-    right: {en: 'Give me one second, I am looking for the right word.', ar: 'اعطني ثانيه، ادور على الكلمه الصح.', translit: 'گیو می وان سکند، ام لوکینق فور ذا رایت ورد.'},
+    right: {en: 'Give me one second, I am looking for the right word.', ar: 'اعطني ثانيه، ادور على الكلمه الصح.', translit: 'گيو مي وان سكند، ام لوك-ينق فور ذا رايت ورد.'},
     teach: [
       {ar: 'Give me one second = اعطني ثانيه. تشتري وقت بدون ما تبدو ضايع.', en: '"Give me one second" buys time without looking lost.'},
       {ar: 'I am looking for the right word = ادور على الكلمه الصح. طبيعيه ومحترمه.', en: '"I am looking for the right word" is natural and respectful.'},
@@ -19441,9 +19441,9 @@ const SCENARIO_TRAINER = {
   },
   'nervous-admit-nervous': {
     intro: {en: 'Imagine: your hands are shaking before a presentation. You feel the nerves in your voice. How do you acknowledge it and keep going?', ar: 'تخيل: ايدك ترتجف قبل عرض. تحس التوتر بصوتك. كيف تعترف فيه وتكمل؟'},
-    teacherLine: {en: 'Are you ready to present?', ar: 'انت جاهز تقدم؟', translit: 'ار یو ریدی تو پریزنت؟'},
+    teacherLine: {en: 'Are you ready to present?', ar: 'انت جاهز تقدم؟', translit: 'ار يو ريدي تو پريزنت؟'},
     wrong: {en: 'Yes I am fine', ar: 'ايوه انا تمام', why: 'تخفي توترك وده يزيد. الاعتراف به يخليك اهدى.'},
-    right: {en: 'I am a little nervous, but let me do my best.', ar: 'انا شوي متوتر، بس خلني اعطي اللي عندي.', translit: 'ای ام ا لیٹل نوروس، بت لت می دو می بست.'},
+    right: {en: 'I am a little nervous, but let me do my best.', ar: 'انا شوي متوتر، بس خلني اعطي اللي عندي.', translit: 'اي ام ا ليتل نر-وس، بت لت مي دو مي بست.'},
     teach: [
       {ar: 'I am a little nervous = انا شوي متوتر. صدق وقوه، ما حد بياخذ عليك.', en: '"I am a little nervous" is honest and disarming. Nobody judges you.'},
       {ar: 'let me do my best = خلني اعطي اللي عندي. تكمل بثقه.', en: '"let me do my best" moves you forward with confidence.'},
@@ -19452,9 +19452,9 @@ const SCENARIO_TRAINER = {
   },
   'nervous-redirect': {
     intro: {en: 'Imagine: you went off-topic and lost your point. The listener looks confused. How do you steer back?', ar: 'تخيل: طلعت عن الموضوع وضعت نقطتك. اللي قدامك محتار. كيف ترجع للموضوع؟'},
-    teacherLine: {en: 'So, what was your main point?', ar: 'وش كانت نقطتك الاساسيه؟', translit: 'سو، وات واز یور مین پوینت؟'},
+    teacherLine: {en: 'So, what was your main point?', ar: 'وش كانت نقطتك الاساسيه؟', translit: 'سو، وات واز يور مين پوينت؟'},
     wrong: {en: 'I do not know anymore', ar: 'ما عاد اعرف', why: 'تسلم المحادثه. عندك نقطه، بس ضعت. رجع لها.'},
-    right: {en: 'I lost my train of thought. The main point is...', ar: 'ضيعت سياق كلامي. النقطه الاساسيه...', translit: 'ای لاست می ترین اف ثات. ذا مین پوینت از...'},
+    right: {en: 'I lost my train of thought. The main point is...', ar: 'ضيعت سياق كلامي. النقطه الاساسيه...', translit: 'اي لاست مي ترين اف ثات. ذا مين پوينت از...'},
     teach: [
       {ar: 'I lost my train of thought = ضيعت سياق كلامي. جملة انقاذ محترمه.', en: '"I lost my train of thought" is a graceful rescue.'},
       {ar: 'The main point is = النقطه الاساسيه. ترجع المستمع لنقطتك.', en: '"The main point is" redirects the listener back to your idea.'},
