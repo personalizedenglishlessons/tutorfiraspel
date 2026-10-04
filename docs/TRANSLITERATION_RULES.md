@@ -68,6 +68,48 @@ codepoints only. No Persian (Farsi) or Urdu letters anywhere.
    - please → بليز
    - people → بيبال
 
+6. **Pronunciation hyphens** — use hyphens to show syllable breaks in
+   tricky words where the pronunciation is not obvious from the fused
+   Arabic spelling. This is mandatory for:
+
+   ### -ing words (the ending is a separate syllable)
+   - looking → لوك-ينق
+   - going → قو-ينق
+   - doing → دو-ينق
+   - speaking → سبيك-ينق
+   - morning → مور-نينق
+   - evening → ايڤ-نينق
+   - training → ترين-ينق
+
+   ### -tion/-sion words
+   - presentation → بريزن-تيشن
+   - reservation → ريزر-ڤيشن
+   - appointment → اب-وينت-منت
+   - pronunciation → برونانسي-يشان
+
+   ### Words with unclear syllable breaks
+   - understand → اندر-ستاند
+   - yourself → يور-سلف
+   - available → اڤيل-بل
+   - comfortable → كمفور-تبل
+   - important → امبور-تنت
+   - different → ديف-رنت
+   - second → سك-ند
+   - sentence → سن-تنس
+   - support → سب-ورت
+   - project → بروج-كت
+   - schedule → شيد-ول
+   - hospital → هاسبي-تال
+   - interview → انتر-ڤيو
+   - describe → ديس-كرايب
+   - explain → اكس-بلين
+   - nervous → نر-وس
+
+   ### Do NOT hyphenate:
+   - Short single-syllable words (cat, dog, book)
+   - Words where the Arabic spelling already makes the pronunciation clear
+   - Every multi-syllable word — only add hyphens where ambiguity exists
+
 ## Verification
 
 Run this command to check for banned codepoints:
