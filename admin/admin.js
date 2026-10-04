@@ -1266,7 +1266,7 @@ async function loadStudents(st){
     var onlineBadge = s.is_online ? '<span class="chip green" style="font-size:.62rem;padding:1px 6px;">' + esc(lang==='ar'?'متصل':'Online') + '</span>' : '<span class="chip muted" style="font-size:.62rem;padding:1px 6px;">' + esc(lang==='ar'?'غير متصل':'Offline') + '</span>';
     var seenTxt = s.is_online ? esc(lang==='ar'?'الحين':'now') : esc(relTime(s.last_seen || s.last_active));
     var seenTitle = s.last_seen ? ' title="' + esc(fmtDate(s.last_seen)) + '"' : '';
-    var loginTxt = s.last_login ? '<div style="font-size:.68rem;color:var(--text-muted);">↑ ' + esc(lang==='ar'?'دخول':'login') + ' ' + esc(relTime(s.last_login)) + '</div>' : '';
+    var loginTxt = s.last_login ? '<div style="font-size:.68rem;color:var(--text-muted);display:flex;align-items:center;gap:3px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg> ' + esc(lang==='ar'?'دخول':'login') + ' ' + esc(relTime(s.last_login)) + '</div>' : '';
     return '<tr>' +
       '<td><a class="row-link" data-open-student="' + s.id + '">' + esc(s.full_name) + '</a>' + (s.email ? '<div style="font-size:.68rem; color:var(--text-muted);">' + esc(s.email) + '</div>' : '') + '</td>' +
       '<td>' + statusChip(s.status || 'new') + '</td>' +
@@ -1368,7 +1368,7 @@ function render360(){
       presBadge +
       statusChip(p.status || 'new') + chip(esc(lvlName(p.level || (prof && prof.estimatedStartingLevel) || 'A1')), 'gold') +
       (p.role ? chip(esc(lang === 'ar' ? ((I[p.role+'Of']||{}).ar||p.role) : p.role), 'bronze') : '') +
-      ((prog && prof && prof.targetLevel) ? chip(esc(lvlName(prof.estimatedStartingLevel || 'A1')) + ' → ' + esc(lvlName(prof.targetLevel)), '') : '') +
+      ((prog && prof && prof.targetLevel) ? chip(esc(lvlName(prof.estimatedStartingLevel || 'A1')) + ' <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg> ' + esc(lvlName(prof.targetLevel)), '') : '') +
       (p.program_name ? chip(esc(p.program_name), 'green') : '') +
       '<span class="chip muted">' + esc(relTime(st.updated_at || p.created_at)) + '</span>' +
     '</div>' +
@@ -2127,7 +2127,7 @@ function renderPreview(){
     '<div class="sub" style="letter-spacing:.08em; text-transform:uppercase;">' + esc(t('student360')) + '</div>' +
     '<h3 style="margin-top:6px;">' + esc(p.full_name || '-') + '</h3>' +
     '<div class="s360-meta" style="margin-top:8px;">' +
-      chip(esc(lvlName((plan && plan.profile && plan.profile.estimatedStartingLevel) || 'A1')), 'gold') + ' → ' +
+      chip(esc(lvlName((plan && plan.profile && plan.profile.estimatedStartingLevel) || 'A1')), 'gold') + ' <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg> ' +
       chip(esc(lvlName((plan && plan.profile && plan.profile.targetLevel) || '-')), '') +
       (rec.rec && rec.rec.minutes ? chip(esc(t('est').replace('%d', arNum(rec.rec.minutes))), 'bronze') : '') +
     '</div></div>' +
@@ -2491,8 +2491,8 @@ function academyCard(a){
       (l.active ? '' : ' ' + chip(esc(t('hidden')), 'red')) +
       (canManage ?
         '<span style="display:flex; gap:4px; flex-wrap:wrap;">' +
-        '<button class="btn btn-ghost btn-sm" data-move="up" data-ac="' + esc(a.id) + '" data-lid="' + esc(l.id) + '" title="' + esc(t('moveUp')) + '">↑</button>' +
-        '<button class="btn btn-ghost btn-sm" data-move="down" data-ac="' + esc(a.id) + '" data-lid="' + esc(l.id) + '" title="' + esc(t('moveDown')) + '">↓</button>' +
+        '<button class="btn btn-ghost btn-sm" data-move="up" data-ac="' + esc(a.id) + '" data-lid="' + esc(l.id) + '" title="' + esc(t('moveUp')) + '"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg></button>' +
+        '<button class="btn btn-ghost btn-sm" data-move="down" data-ac="' + esc(a.id) + '" data-lid="' + esc(l.id) + '" title="' + esc(t('moveDown')) + '"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></button>' +
         '<button class="btn btn-outline btn-sm" data-lesson-edit="' + esc(l.id) + '" data-ac="' + esc(a.id) + '">' + esc(t('edit')) + '</button>' +
         '<button class="btn btn-ghost btn-sm" data-lesson-toggle="' + esc(l.id) + '">' + (l.active ? esc(t('hide')) : esc(t('show'))) + '</button>' +
         '<button class="btn btn-ghost btn-sm" data-lesson-unlink-ac="' + esc(a.id) + '" data-lid="' + esc(l.id) + '" style="color:#c0392b;">' + esc(t('unlink')) + '</button>' +
@@ -2814,7 +2814,7 @@ async function programs(){
   var subRows = subs.map(function(s){
     return '<div class="reason-item"><div style="flex:1;"><a class="row-link" data-open-student="' + s.user_id + '">' + esc(s.student_name) + '</a>' +
       '<div style="font-weight:600; margin-top:3px;">' + esc(lang === 'ar' ? s.program_ar : s.program_en) + '</div>' +
-      '<span class="why">' + fmtDate(s.start_date) + ' → ' + fmtDate(s.end_date) + ' · ' + fmtN(s.sessions_used) + '/' + fmtN(s.included) + ' ' + esc(t('sessionsIncluded')) + '</span></div>' +
+      '<span class="why">' + fmtDate(s.start_date) + ' <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg> ' + fmtDate(s.end_date) + ' · ' + fmtN(s.sessions_used) + '/' + fmtN(s.included) + ' ' + esc(t('sessionsIncluded')) + '</span></div>' +
       statusChip(s.status) + '</div>';
   }).join('') || emptyBlock(t('noSubscriptions'));
 
@@ -4113,7 +4113,7 @@ async function renderTabPlan(d){
   var history = (x.history || []).map(function(h){
     var act = lang === 'ar' ? ({assigned:'اسندت', extended:'مددت', suspended:'اوقفت', reactivated:'اعيد تفعيلها', renewed:'جددت', changed:'غيرت'}[h.action] || h.action) : h.action;
     return '<div class="reason-item"><span class="badge-dot gold" style="margin-top:5px;"></span><div><div>' + esc(act) + ' - ' + esc(lang === 'ar' ? h.plan_ar : h.plan) + '</div>' +
-      '<span class="why">' + (h.old_end_date ? fmtDate(h.old_end_date) + ' → ' : '') + fmtDate(h.new_end_date) + (h.reason ? ' · ' + esc(h.reason) : '') + ' · ' + relTime(h.created_at) + '</span></div></div>';
+      '<span class="why">' + (h.old_end_date ? fmtDate(h.old_end_date) + ' <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg> ' : '') + fmtDate(h.new_end_date) + (h.reason ? ' · ' + esc(h.reason) : '') + ' · ' + relTime(h.created_at) + '</span></div></div>';
   }).join('') || '<div class="sub">' + esc(t('noData')) + '</div>';
 
   var classes = x.classes || {};

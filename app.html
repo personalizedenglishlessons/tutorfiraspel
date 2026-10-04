@@ -23,7 +23,7 @@
 <script src="lib/cert-qr.js?v=a43f19f9" defer></script>
 <script src="lib/cert-sheet.js?v=a1f37a19" defer></script>
 <script src="lib/pel_config.js?v=7d1f4a36"></script>
-<script src="lib/pel_lesson_stage.js?v=4efd787c"></script>
+<script src="lib/pel_lesson_stage.js?v=4537c25c"></script>
 <script src="lib/pel_dashboard_life.js?v=7c109b0c"></script>
 <script src="lib/pel_curriculum_path.js?v=8e1e4345"></script>
 <style>
@@ -2645,7 +2645,7 @@ async function renderHomeIntel(){
         body = items.slice(0,3).map(a => {
           return '<div class="reason-item" style="cursor:pointer;" data-ann="' + a.id + '"' + (a.link ? ' data-ann-link="' + escapeHtml(a.link) + '"' : '') + '>' +
             '<span class="badge-dot ' + (a.read ? 'muted' : 'gold') + '" style="margin-top:5px;"></span>' +
-            '<div style="flex:1;"><div style="font-weight:600;">' + escapeHtml(saudiifyAr(a.title)) + (a.priority === 'important' ? ' <span class="chip red">!</span>' : '') + (a.link ? ' <span class="chip">' + '<span class="arabic">رابط</span>link ↗' + '</span>' : '') + '</div>' +
+            '<div style="flex:1;"><div style="font-weight:600;">' + escapeHtml(saudiifyAr(a.title)) + (a.priority === 'important' ? ' <span class="chip red">!</span>' : '') + (a.link ? ' <span class="chip">' + '<span class="arabic">رابط</span> <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>' + '</span>' : '') + '</div>' +
             '<span class="why">' + escapeHtml(saudiifyAr(a.message)) + '</span></div></div>';
         }).join('') +
         '<div style="margin-top:10px;"><button type="button" class="btn-ghost-sm" id="annAllBtn">' + '<span class="arabic">شوف الكل</span>View all' + '</button></div>';
@@ -2737,7 +2737,7 @@ function showAnnouncementsModal(){
       return '<div class="card" style="margin-bottom:12px; cursor:pointer;' + (a.read ? '' : 'border-color:rgba(200,169,106,.5);') + '" data-ann-modal-id="' + a.id + '">' +
         '<div style="display:flex; justify-content:space-between; gap:10px; align-items:flex-start;"><b>' + escapeHtml(saudiifyAr(a.title)) + '</b>' + (a.read ? '' : '<span class="chip gold">' + (ar ? 'جديد' : 'New') + '</span>') + '</div>' +
         '<div style="font-size:.85rem; color:var(--text-secondary); margin-top:6px;">' + escapeHtml(saudiifyAr(a.message)) + '</div>' +
-        (a.link && /^https?:\/\//i.test(a.link) ? '<a class="btn-ghost-sm" href="' + escapeHtml(a.link) + '" target="_blank" rel="noopener" style="margin-top:10px; display:inline-block;">' + (ar ? 'افتح الرابط ↗' : 'Open link ↗') + '</a>' : '') +
+        (a.link && /^https?:\/\//i.test(a.link) ? '<a class="btn-ghost-sm" href="' + escapeHtml(a.link) + '" target="_blank" rel="noopener" style="margin-top:10px; display:inline-flex; align-items:center; gap:4px;">' + (ar ? 'افتح الرابط' : 'Open link') + ' <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>' : '') +
         '<div style="font-size:.72rem; color:var(--text-muted); margin-top:8px;">' + (a.created_at ? new Date(a.created_at).toLocaleDateString() : '') + '</div>' +
         '</div>';
     }).join('') || '<div style="font-size:.85rem; color:var(--text-muted);">' + (ar ? 'ما فيه اعلانات الحين.' : 'No announcements.') + '</div>';
@@ -14890,11 +14890,11 @@ function renderDbPractice(container, exercises){
       if(reveal && x.type !== 'translate'){
         const rv = document.createElement('div');
         rv.style.cssText = 'margin-top:8px; font-size:.8rem; color:' + (ok ? 'var(--success)' : 'var(--gold-soft)') + ';';
-        rv.textContent = (ok ? '' : '→ ') + reveal;
+        rv.innerHTML = (ok ? '' : '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg> ') + reveal;
         answerEl.parentNode.insertBefore(rv, checkBtn || null);
       } else if(x.type === 'translate'){
         const rv = card.querySelector('.dbx-reveal');
-        if(rv){ rv.style.display = 'block'; rv.className = 'dbx-reveal arabic'; rv.textContent = '→ ' + reveal; }
+        if(rv){ rv.style.display = 'block'; rv.className = 'dbx-reveal arabic'; rv.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg> ' + reveal; }
       }
     });
     card.querySelectorAll('.dbx-pick').forEach(btn => btn.addEventListener('click', () => {
@@ -18998,7 +18998,7 @@ function renderPronDrill(card, drill){
           <div style="display:flex;gap:6px;">${lvlDots()}</div>
         </div>
         <div style="display:flex;align-items:center;gap:8px;margin-top:10px;font-size:.78rem;">
-          ${drill.levels.map((l,i)=>`<span style="padding:3px 9px;border-radius:999px;background:${i===levelIndex?'var(--gold)':'var(--card-elevated)'};color:${i===levelIndex?'#17171B':'var(--text-muted)'};font-weight:600;">${i+1}. ${l.title}</span>`).join('<span style="color:var(--text-muted)">→</span>')}
+          ${drill.levels.map((l,i)=>`<span style="padding:3px 9px;border-radius:999px;background:${i===levelIndex?'var(--gold)':'var(--card-elevated)'};color:${i===levelIndex?'#17171B':'var(--text-muted)'};font-weight:600;">${i+1}. ${l.title}</span>`).join('<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;color:var(--text-muted)"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>')}
         </div>
         <p style="margin-top:10px;font-size:.84rem;color:var(--text-muted);"><span class="arabic">المستوى ${levelIndex+1} (${lvlLabel(lv)}) - انطق الهدف، اذا صحت تنتقل للتالي. الهدف ${targetIndex+1} من ${lv.targets.length}.</span> Level ${levelIndex+1} (${lv.title}); say the target to advance. Target ${targetIndex+1} of ${lv.targets.length}.</p>
         <div style="text-align:center;padding:22px 12px;border:1px solid var(--border);border-radius:14px;margin-top:14px;">
@@ -19024,7 +19024,7 @@ function renderPronDrill(card, drill){
             fb.innerHTML = `<span class="arabic">صح! سمعت</span> \"${escapeHtml(heard)}\" (${score}%)${tip}`;
             setTimeout(advance, 950);
           } else {
-            fb.innerHTML = `<span style="color:var(--gold);">●</span> <span class="arabic">سمعت</span> \"${escapeHtml(heard)}\" (${score}%). <span class="arabic">الصح</span> \"<b>${escapeHtml(tgt.en)}</b>\"<span class="arabic">. حاول مره ثانيه او تخطى.</span>${tip}
+            fb.innerHTML = `<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="none" style="color:var(--gold);vertical-align:middle"><circle cx="12" cy="12" r="5"/></svg> <span class="arabic">سمعت</span> \"${escapeHtml(heard)}\" (${score}%). <span class="arabic">الصح</span> \"<b>${escapeHtml(tgt.en)}</b>\"<span class="arabic">. حاول مره ثانيه او تخطى.</span>${tip}
               <div style="margin-top:10px;display:flex;gap:8px;justify-content:flex-end;"><button type="button" class="btn-gold" id="drill-retry"><span class="arabic">اعد</span></button><button type="button" class="btn-ghost" id="drill-skip"><span class="arabic">تخطى</span></button></div>`;
             document.getElementById('drill-retry').onclick = () => { fb.style.display='none'; card.querySelector('[data-drec]').click(); };
             document.getElementById('drill-skip').onclick = () => { targetScores[targetIndex] = 0; advance(); };
@@ -19091,7 +19091,7 @@ function renderPronunciation(){
     <div class="card" id="pronDrillCard" style="margin-top:24px;">
       <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;">
         <div><h3 style="font-size:1.1rem;"><span class="arabic">تدريب النطق المتدرج</span>، Leveled Pronunciation Drill</h3>
-        <p style="font-size:.8rem;color:var(--text-muted);margin-top:4px;"><span class="arabic">كلمه ← كلمه ← جمله، مع درجه تراكميه عبر الباقات. مجاني تمام داخل المتصفح.</span> Word → phrase → sentence, with a cumulative score across packs. Fully free, in-browser.</p></div>
+        <p style="font-size:.8rem;color:var(--text-muted);margin-top:4px;"><span class="arabic">كلمه <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;display:inline-block"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> كلمه <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;display:inline-block"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> جمله، مع درجه تراكميه عبر الباقات. مجاني تمام داخل المتصفح.</span> Word <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;display:inline-block"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg> phrase <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;display:inline-block"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg> sentence, with a cumulative score across packs. Fully free, in-browser.</p></div>
         <span class="chip" id="pronCumChip" style="background:rgba(200,169,106,.14);color:var(--gold);border:1px solid rgba(200,169,106,.3);font-size:.74rem;"><span class="arabic">المجموع التراكمي</span>: <span id="pronCumVal">-</span></span>
         <select id="pronDrillSelect" style="background:var(--card-elevated);color:var(--text);border:1px solid var(--border);border-radius:10px;padding:8px 12px;font-size:.85rem;"></select>
       </div>
@@ -19141,9 +19141,9 @@ function renderPronunciation(){
         if(score >= 75){
           fb.innerHTML = `<span class="arabic">ممتاز! نطقك واضح</span>, سمعت: "${escapeHtml(heard)}" <span class="arabic">(${score}% تقريبي)</span>${tipHtml}`;
         } else if(score >= 40){
-          fb.innerHTML = `<span style="color:var(--gold);">●</span> <span class="arabic">قريب! سمعت</span>: "${escapeHtml(heard)}" <span class="arabic">(${score}% تقريبي), الصح هو</span> "<b>${escapeHtml(target)}</b>"، <span class="arabic">جرب مره ثانيه بهدو</span>${tipHtml}`;
+          fb.innerHTML = `<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="none" style="color:var(--gold);vertical-align:middle"><circle cx="12" cy="12" r="5"/></svg> <span class="arabic">قريب! سمعت</span>: "${escapeHtml(heard)}" <span class="arabic">(${score}% تقريبي), الصح هو</span> "<b>${escapeHtml(target)}</b>"، <span class="arabic">جرب مره ثانيه بهدو</span>${tipHtml}`;
         } else {
-          fb.innerHTML = `<span style="color:var(--gold);">↻</span> <span class="arabic">سمعت</span>: "${escapeHtml(heard)}" <span class="arabic">(${score}% تقريبي), ما تطابقت مع</span> "<b>${escapeHtml(target)}</b>"، <span class="arabic">اضغط زر السماع لتسمع النطق الصح وحاول مره ثانيه</span>${tipHtml}`;
+          fb.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--gold);vertical-align:middle"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> <span class="arabic">سمعت</span>: "${escapeHtml(heard)}" <span class="arabic">(${score}% تقريبي), ما تطابقت مع</span> "<b>${escapeHtml(target)}</b>"، <span class="arabic">اضغط زر السماع لتسمع النطق الصح وحاول مره ثانيه</span>${tipHtml}`;
         }
       }, target, this);
     }));
@@ -19511,15 +19511,15 @@ function renderSpeaking(){
         rc.innerHTML = head + `
           <div class="card-elevated" style="padding:24px; border-radius:16px; margin-bottom:16px;">
             <div style="display:flex; align-items:center; gap:8px; margin-bottom:14px;">
-              <span style="width:28px; height:28px; border-radius:50%; background:var(--gold-soft); color:#171412; display:flex; align-items:center; justify-content:center; font-size:.8rem; font-weight:700; flex-shrink:0;">1</span>
+              <span style="width:28px; height:28px; border-radius:50%; background:var(--card-elevated); color:var(--text-secondary); display:flex; align-items:center; justify-content:center; font-size:.8rem; font-weight:700; flex-shrink:0;">1</span>
               <span class="arabic" style="font-size:.82rem; font-weight:700; color:var(--text-secondary);">تخيل الموقف</span>
             </div>
             <p class="arabic" style="font-size:1.05rem; line-height:1.9; margin-bottom:10px;">${escapeHtml(lesson.intro.ar)}</p>
             <p dir="ltr" style="font-size:.88rem; color:var(--text-secondary); line-height:1.6;">${escapeHtml(lesson.intro.en)}</p>
           </div>
-          <div class="card-elevated" style="padding:24px; border-radius:16px; margin-bottom:16px; text-align:center; border:1px solid rgba(66,163,106,.2);">
+          <div class="card-elevated" style="padding:24px; border-radius:16px; margin-bottom:16px; text-align:center;">
             <div style="display:flex; align-items:center; gap:8px; margin-bottom:16px; justify-content:center;">
-              <span style="width:28px; height:28px; border-radius:50%; background:rgba(66,163,106,.15); color:var(--success); display:flex; align-items:center; justify-content:center; flex-shrink:0;"><i data-lucide="volume-2" width="16" height="16"></i></span>
+              <span style="width:28px; height:28px; border-radius:50%; background:var(--card-elevated); color:var(--text-secondary); display:flex; align-items:center; justify-content:center; flex-shrink:0;"><i data-lucide="volume-2" width="16" height="16"></i></span>
               <span class="arabic" style="font-size:.82rem; font-weight:700; color:var(--text-secondary);">اسمع السؤال</span>
             </div>
             <button type="button" class="btn-outline" id="playLine" style="width:56px; height:56px; border-radius:50%; margin:0 auto 16px; display:flex; align-items:center; justify-content:center;"><i data-lucide="volume-2" width="24" height="24"></i></button>
@@ -19556,9 +19556,9 @@ function renderSpeaking(){
       else if(step === 2){
         // STEP 3: Teacher explains + correct version
         rc.innerHTML = head + `
-          <div class="card-elevated" style="padding:24px; border-radius:16px; margin-bottom:16px; border:1px solid rgba(66,163,106,.2);">
+          <div class="card-elevated" style="padding:24px; border-radius:16px; margin-bottom:16px;">
             <div style="display:flex; align-items:center; gap:8px; margin-bottom:16px;">
-              <span style="width:28px; height:28px; border-radius:50%; background:rgba(66,163,106,.15); color:var(--success); display:flex; align-items:center; justify-content:center; font-size:.8rem; font-weight:700; flex-shrink:0;">3</span>
+              <span style="width:28px; height:28px; border-radius:50%; background:var(--card-elevated); color:var(--text-secondary); display:flex; align-items:center; justify-content:center; font-size:.8rem; font-weight:700; flex-shrink:0;">3</span>
               <span class="arabic" style="font-size:.82rem; font-weight:700; color:var(--text-secondary);">تعال نعلمك الصح</span>
             </div>
             ${lesson.teach.map((t,i) => `
@@ -19595,7 +19595,7 @@ function renderSpeaking(){
         rc.innerHTML = head + `
           <div class="card-elevated" style="padding:24px; border-radius:16px; margin-bottom:16px;">
             <div style="display:flex; align-items:center; gap:8px; margin-bottom:14px;">
-              <span style="width:28px; height:28px; border-radius:50%; background:var(--gold); color:#171412; display:flex; align-items:center; justify-content:center; font-size:.8rem; font-weight:700; flex-shrink:0;">5</span>
+              <span style="width:28px; height:28px; border-radius:50%; background:var(--card-elevated); color:var(--text-secondary); display:flex; align-items:center; justify-content:center; font-size:.8rem; font-weight:700; flex-shrink:0;">5</span>
               <span class="arabic" style="font-size:.82rem; font-weight:700; color:var(--text-secondary);">${A?'ابني الجمله بنفسك':'Build the sentence'}</span>
             </div>
             <p class="arabic" style="font-size:.84rem; color:var(--text-muted); margin-bottom:12px;">${A?'اضغط الكلمات تحت بترتيب الجمله الصح':'Tap the words below in the correct order'}</p>
@@ -19647,8 +19647,8 @@ function renderSpeaking(){
         rc.innerHTML = head + `
           <div class="card-elevated" style="padding:24px; border-radius:16px; margin-bottom:16px; text-align:center;">
             <div style="display:flex; align-items:center; gap:8px; margin-bottom:16px; justify-content:center;">
-              <span style="width:28px; height:28px; border-radius:50%; background:var(--gold); color:#171412; display:flex; align-items:center; justify-content:center; font-size:.8rem; font-weight:700; flex-shrink:0;">6</span>
-              <span class="arabic" style="font-size:.82rem; font-weight:700; color:var(--gold);">انطق الجمله</span>
+              <span style="width:28px; height:28px; border-radius:50%; background:var(--card-elevated); color:var(--text-secondary); display:flex; align-items:center; justify-content:center; font-size:.8rem; font-weight:700; flex-shrink:0;">6</span>
+              <span class="arabic" style="font-size:.82rem; font-weight:700; color:var(--text-secondary);">انطق الجمله</span>
             </div>
             <p dir="ltr" style="font-size:1.1rem; line-height:1.6; margin-bottom:6px;">${escapeHtml(lesson.right.en)}</p>
             <p class="arabic" style="font-size:.88rem; color:var(--text-secondary); margin-bottom:4px;">${escapeHtml(lesson.right.ar)}</p>
@@ -20018,7 +20018,7 @@ function renderWriting(){
         <!-- STEP 1: Situation -->
         <div class="card-elevated" style="padding:24px; border-radius:16px; margin-bottom:16px;">
           <div style="display:flex; align-items:center; gap:8px; margin-bottom:14px;">
-            <span style="width:28px; height:28px; border-radius:50%; background:var(--gold-soft); color:#171412; display:flex; align-items:center; justify-content:center; font-size:.8rem; font-weight:700; flex-shrink:0;">1</span>
+            <span style="width:28px; height:28px; border-radius:50%; background:var(--card-elevated); color:var(--text-secondary); display:flex; align-items:center; justify-content:center; font-size:.8rem; font-weight:700; flex-shrink:0;">1</span>
             <span class="arabic" style="font-size:.82rem; font-weight:700; color:var(--text-secondary);">تخيل الموقف</span>
           </div>
           <p class="arabic" style="font-size:1.05rem; line-height:1.9; margin-bottom:10px;">${escapeHtml(lesson.intro.ar)}</p>
@@ -20045,9 +20045,9 @@ function renderWriting(){
         </div>
 
         <!-- STEP 3: Teacher explains -->
-        <div class="card-elevated" style="padding:24px; border-radius:16px; margin-bottom:16px; border:1px solid rgba(66,163,106,.2);">
+        <div class="card-elevated" style="padding:24px; border-radius:16px; margin-bottom:16px;">
           <div style="display:flex; align-items:center; gap:8px; margin-bottom:16px;">
-            <span style="width:28px; height:28px; border-radius:50%; background:rgba(66,163,106,.15); color:var(--success); display:flex; align-items:center; justify-content:center; font-size:.8rem; font-weight:700; flex-shrink:0;">3</span>
+            <span style="width:28px; height:28px; border-radius:50%; background:var(--card-elevated); color:var(--text-secondary); display:flex; align-items:center; justify-content:center; font-size:.8rem; font-weight:700; flex-shrink:0;">3</span>
             <span class="arabic" style="font-size:.82rem; font-weight:700; color:var(--text-secondary);">تعال نعلمك الصح</span>
           </div>
           ${lesson.teach.map((t,i) => `
@@ -20080,7 +20080,7 @@ function renderWriting(){
         <!-- STEP 5: Build it yourself -->
         <div class="card-elevated" style="padding:24px; border-radius:16px; margin-bottom:16px;">
           <div style="display:flex; align-items:center; gap:8px; margin-bottom:14px;">
-            <span style="width:28px; height:28px; border-radius:50%; background:var(--gold); color:#171412; display:flex; align-items:center; justify-content:center; font-size:.8rem; font-weight:700; flex-shrink:0;">5</span>
+            <span style="width:28px; height:28px; border-radius:50%; background:var(--card-elevated); color:var(--text-secondary); display:flex; align-items:center; justify-content:center; font-size:.8rem; font-weight:700; flex-shrink:0;">5</span>
             <span class="arabic" style="font-size:.82rem; font-weight:700; color:var(--text-secondary);">${A?'ابني الجمله بنفسك':'Build it yourself'}</span>
           </div>
           <p class="arabic" style="font-size:.84rem; color:var(--text-muted); margin-bottom:12px;">${A?'اضغط الكلمات تحت بترتيب الجمله الصح':'Tap the words below in the correct order'}</p>
@@ -20624,7 +20624,7 @@ function renderActivePath(){
   const iconFor = s => s === 'completed'
     ? '<span style="width:26px;height:26px;border-radius:50%;background:var(--gold);color:#171412;display:inline-flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>'
     : s === 'available'
-    ? '<span style="width:26px;height:26px;border-radius:50%;border:2px solid var(--gold);color:var(--gold);display:inline-flex;align-items:center;justify-content:center;font-size:.75rem;flex-shrink:0;box-shadow:0 0 0 4px rgba(200,169,106,.12);">●</span>'
+    ? '<span style="width:26px;height:26px;border-radius:50%;border:2px solid var(--gold);color:var(--gold);display:inline-flex;align-items:center;justify-content:center;font-size:.75rem;flex-shrink:0;box-shadow:0 0 0 4px rgba(200,169,106,.12);"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="5"/></svg></span>'
     : '<i data-lucide="lock" width="14" height="14" style="color:var(--text-muted);flex-shrink:0;"></i>';
   // Also show the saved-lesson if the server marks it "locked" but the student
   // has a saved position for it (pel_stage_pos). Without this the path list
@@ -20990,7 +20990,7 @@ function renderNotifications(){
   // Academy announcements first - these come from the admin panel.
   const anns = (annCache.items || []).slice(0,4);
   const annHtml = anns.map(a => {
-    return `<div class="notif-item" data-nann="${a.id}" style="cursor:pointer;"><b style="display:block;">${escapeHtml(a.title)}${a.read ? '' : ' <span class="chip gold" style="font-size:.68em;">' + (accountPrefs.lang === 'ar' ? 'جديد' : 'new') + '</span>'}</b><span style="display:block; margin-top:2px;">${escapeHtml(a.message)}</span>${a.link ? `<span style="display:block; margin-top:4px; color:var(--gold); font-size:.75em;">${accountPrefs.lang === 'ar' ? 'فتح الرابط ↗' : 'Open link ↗'}</span>` : ''}</div>`;
+    return `<div class="notif-item" data-nann="${a.id}" style="cursor:pointer;"><b style="display:block;">${escapeHtml(a.title)}${a.read ? '' : ' <span class="chip gold" style="font-size:.68em;">' + (accountPrefs.lang === 'ar' ? 'جديد' : 'new') + '</span>'}</b><span style="display:block; margin-top:2px;">${escapeHtml(a.message)}</span>${a.link ? `<span style="display:block; margin-top:4px; color:var(--gold); font-size:.75em;">${accountPrefs.lang === 'ar' ? 'فتح الرابط' : 'Open link'} <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></span>` : ''}</div>`;
   }).join('');
   list.innerHTML = annHtml + (items.length || anns.length
     ? items.map(n => `<div class="notif-item"><b class="arabic" style="display:block;">${escapeHtml(n.ar||'')}</b><span style="display:block; margin-top:2px;">${escapeHtml(n.en||'')}</span></div>`).join('')
@@ -21887,7 +21887,7 @@ function renderPlanView(){
   const doneN = e.totalLessons - un.remainingLessons;
 
   const chips = [
-    `<span class="chip gold">${escapeHtml(startLvl.en)} → ${escapeHtml(goalLvl.en)}</span>`,
+    `<span class="chip gold">${escapeHtml(startLvl.en)} <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg> ${escapeHtml(goalLvl.en)}</span>`,
     `<span class="chip">${e.dailyMinutes || 0} <span class="arabic">دقيقه/يوم</span>، ${e.weeklyFrequency}/7</span>`,
     `<span class="chip">${doneN}/${e.totalLessons || 0} <span class="arabic">دروس</span>، lessons</span>`,
     `<span class="chip">${un.remainingLessons || 0} <span class="arabic">متبقي</span>، left</span>`,
@@ -21947,7 +21947,7 @@ function renderPlanView(){
     <div class="page-head">
       <span class="eyebrow"><span class="arabic" style="font-size:.95em;">خطتي</span>، My Plan</span>
       <h1><span class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">مسارك مبني على اجوبتك ونتيجتك.</span>Your route, built from your answers.</h1>
-      <p><span class="arabic" style="display:block; margin-bottom:4px;">${escapeHtml(startLvl.ar)} ← ${escapeHtml(goalLvl.ar)}</span>${escapeHtml(startLvl.en)} → ${escapeHtml(goalLvl.en)}</p>
+      <p><span class="arabic" style="display:block; margin-bottom:4px;">${escapeHtml(startLvl.ar)} <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;display:inline-block"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> ${escapeHtml(goalLvl.ar)}</span>${escapeHtml(startLvl.en)} <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;display:inline-block"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg> ${escapeHtml(goalLvl.en)}</p>
     </div>
     <div style="margin-bottom:22px;">${chips}</div>
     <div class="grid grid-2">
