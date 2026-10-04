@@ -3465,7 +3465,14 @@ paletteInput.addEventListener('input', () => renderPalette(paletteInput.value));
 paletteOverlay.addEventListener('click', e => { if(e.target === paletteOverlay) closePalette(); });
 document.addEventListener('keydown', e => {
   if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k'){ e.preventDefault(); openPalette(); }
-  if(e.key === 'Escape') closePalette();
+  if(e.key === 'Escape'){
+    closePalette();
+    // Close any open modal overlays (daily quiz, reading, listening, etc.)
+    document.querySelectorAll('.modal-overlay.open, .modal-scrim').forEach(m => {
+      if(m.classList.contains('modal-overlay')) m.classList.remove('open');
+      else if(m.id !== 'accessGate') m.remove();
+    });
+  }
 });
 paletteResults.addEventListener('click', e => {
   const item = e.target.closest('.palette-item');
