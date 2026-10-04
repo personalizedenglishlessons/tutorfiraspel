@@ -3141,6 +3141,7 @@ const navGroups = [
   { label:{en:'Start', ar: 'ابدا'}, items:[
     {id:'home', en:'Learning Home', ar: 'البدايه', icon:'home'},
     {id:'resume', en:'Continue Learning', ar: 'كمل تعلمك', icon:'play-circle'},
+    {id:'search', en:'Search', ar: 'بحث', icon:'search'},
   ]},
   /* Levels/CEFR path removed from student navigation: the learning engine
      routes students through the right academies automatically. Showing locked
@@ -3243,7 +3244,10 @@ function goToView(id){
 }
 sidebarNav.addEventListener('click', e => {
   const link = e.target.closest('.side-link');
-  if(link) goToView(link.dataset.view);
+  if(link){
+    if(link.dataset.view === 'search'){ openPalette(); return; }
+    goToView(link.dataset.view);
+  }
 });
 document.addEventListener('click', e => {
   const btn = e.target.closest('[data-view]');
