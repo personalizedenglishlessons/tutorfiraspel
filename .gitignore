@@ -6,3 +6,5 @@ supabase/.temp/
 __pycache__/
 *.pyc
 server.log
+*.log
+qa-*.png
