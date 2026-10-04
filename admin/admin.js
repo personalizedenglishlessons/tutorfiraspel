@@ -2074,7 +2074,7 @@ async function saveSnapshot(){
   var route = currentPlan() && currentPlan().route;
   var level = currentPlan() && currentPlan().profile && currentPlan().profile.estimatedStartingLevel;
   var scores = {};
-  var specs = ['speaking-studio','listening-lounge','grammar-academy','vocabulary-vault','american-accent-lab','writing-workshop'];
+  var specs = (window.PEL_CURRICULUM && Array.isArray(PEL_CURRICULUM.academies)) ? PEL_CURRICULUM.academies.map(function(a){ return a.id; }) : ['speaking-studio','listening-lounge','grammar-academy','vocabulary-vault','american-accent-lab','writing-workshop'];
   specs.forEach(function(a){ scores[a] = academyProgress(a, completed); });
   var { data, error } = await legacyRpc('admin_add_learning_snapshot', { p_payload: {
     user_id: current360Uid, snapshot_date: new Date().toISOString().slice(0,10),
@@ -3118,35 +3118,39 @@ async function questionsView(){
 /* ============================================================
    17. CERTIFICATES DIRECTORY (Phase 34)
    ============================================================ */
-async function certificates(){
-  $('viewArea').innerHTML = pageHead(t('certificates'), lang === 'ar' ? 'الشهادات والتحقق' : 'Certificates and verification') + loadingBlock();
-  var r = await pelTableSelect('certificates', 'id,cert_id,code,student_name,academy_en,academy_ar,level,program_name,completed_at,created_at,status,revoke_reason,user_id,verification_count', { order: 'created_at.desc', limit: 200 });
-  if(r.error){ $('viewArea').innerHTML = errBlock(rpcErrMsg(r)); return; }
-  var rows = r.data || [];
-  var html = rows.map(function(x){
-    return '<div class="reason-item"><span class="badge-dot ' + (x.status === 'issued' ? 'green' : x.status === 'revoked' ? 'red' : 'gold') + '" style="margin-top:5px;"></span>' +
-      '<div style="flex:1;"><div style="font-weight:600;">' + esc(x.student_name) + ' - ' + esc(x.academy_en) + '</div>' +
-      '<span class="why">' + esc(x.cert_id) + ' · ' + fmtDate(x.created_at) + (x.level ? ' · ' + esc(x.level) : '') + (x.revoke_reason ? ' · ' + esc(x.revoke_reason) : '') + '</span></div>' +
+var certPage = 0;
+var certPageSize = 200;
+var certAllRows = [];
+function renderCertRow(x){
+  return '<div class="reason-item"><span class="badge-dot ' + (x.status === 'issued' ? 'green' : x.status === 'revoked' ? 'red' : 'gold') + '" style="margin-top:5px;"></span>' +
+    '<div style="flex:1;"><div style="font-weight:600;">' + esc(x.student_name) + ' - ' + esc(x.academy_en) + '</div>' +
+    '<span class="why">' + esc(x.cert_id) + ' · ' + fmtDate(x.created_at) + (x.level ? ' · ' + esc(x.level) : '') + (x.revoke_reason ? ' · ' + esc(x.revoke_reason) : '') + '</span></div>' +
 statusChip(x.status) +
-      (x.user_id ? '<a class="row-link" data-open-student="' + x.user_id + '" style="font-size:.72rem;">' + esc(t('student')) + '</a>' : '') +
-      ((x.status === 'issued' || x.status === 'reissued') && hasPerm('certificates.revoke') ? '<button class="btn btn-danger btn-sm" data-revoke="' + esc(x.cert_id) + '">' + esc(t('revoke')) + '</button>' : '') +
-      (hasPerm('settings.manage') ? '<button class="btn btn-outline btn-sm" data-del-cert="' + esc(x.id) + '">' + esc(lang==='ar'?'حذف':'Delete') + '</button>' : '') +
-      '<button class="btn btn-outline btn-sm" data-print-cert="' + esc(x.cert_id) + '">' + esc(t('print')) + '</button>' +
-      '</div>';
-  }).join('') || emptyBlock(t('noCertificates'));
-
+    (x.user_id ? '<a class="row-link" data-open-student="' + x.user_id + '" style="font-size:.72rem;">' + esc(t('student')) + '</a>' : '') +
+    ((x.status === 'issued' || x.status === 'reissued') && hasPerm('certificates.revoke') ? '<button class="btn btn-danger btn-sm" data-revoke="' + esc(x.cert_id) + '">' + esc(t('revoke')) + '</button>' : '') +
+    (hasPerm('settings.manage') ? '<button class="btn btn-outline btn-sm" data-del-cert="' + esc(x.id) + '">' + esc(lang==='ar'?'حذف':'Delete') + '</button>' : '') +
+    '<button class="btn btn-outline btn-sm" data-print-cert="' + esc(x.cert_id) + '">' + esc(t('print')) + '</button>' +
+    '</div>';
+}
+function renderCertsView(){
+  var html = certAllRows.map(renderCertRow).join('') || emptyBlock(t('noCertificates'));
+  var hasMore = certAllRows.length > 0 && certAllRows.length % certPageSize === 0;
   $('viewArea').innerHTML = pageHead(t('certificates'), lang === 'ar' ? 'اصدار والتحقق من الشهادات' : 'Issue and verify certificates') +
     '<div class="btn-row" style="margin-bottom:16px;">' +
     (hasPerm('certificates.issue') ? '<button class="btn btn-gold btn-sm" id="issueManualBtn">' + esc(t('issueCert')) + '</button>' : '') +
     '<button class="btn btn-outline btn-sm" id="verifyBtn">' + esc(t('verifyCode')) + '</button></div>' +
-    '<div class="card"><div class="reason-list">' + html + '</div></div>';
+    '<div class="card"><div class="reason-list" id="certList">' + html + '</div>' +
+    (hasMore ? '<div style="text-align:center; padding:16px;"><button class="btn btn-outline btn-sm" id="certLoadMore">' + esc(lang==='ar'?'تحميل المزيد':'Load More') + '</button></div>' : '') +
+    '</div>';
   loadIcons();
   wireStudentLinks();
   var ib = $('issueManualBtn');
   if(ib) ib.addEventListener('click', function(){ openCertIssueModal(null); });
   var vb = $('verifyBtn');
   if(vb) vb.addEventListener('click', verifyCertModal);
-document.querySelectorAll('[data-revoke]').forEach(function(b){
+  var lmb = $('certLoadMore');
+  if(lmb) lmb.addEventListener('click', function(){ certPage++; loadCertPage(); });
+  document.querySelectorAll('[data-revoke]').forEach(function(b){
     b.addEventListener('click', function(){ revokeCert(b.getAttribute('data-revoke')); });
   });
   document.querySelectorAll('[data-del-cert]').forEach(function(b){
@@ -3155,10 +3159,22 @@ document.querySelectorAll('[data-revoke]').forEach(function(b){
   document.querySelectorAll('[data-print-cert]').forEach(function(b){
     b.addEventListener('click', function(){
       var id = b.getAttribute('data-print-cert');
-      var row = rows.filter(function(x){ return x.cert_id === id; })[0];
+      var row = certAllRows.filter(function(x){ return x.cert_id === id; })[0];
       if(row) printCert(row);
     });
   });
+}
+async function loadCertPage(){
+  var r = await pelTableSelect('certificates', 'id,cert_id,code,student_name,academy_en,academy_ar,level,program_name,completed_at,created_at,status,revoke_reason,user_id,verification_count', { order: 'created_at.desc', limit: certPageSize, offset: certPage * certPageSize });
+  if(r.error){ $('viewArea').innerHTML = errBlock(rpcErrMsg(r)); return; }
+  var rows = r.data || [];
+  if(certPage === 0) certAllRows = rows; else certAllRows = certAllRows.concat(rows);
+  renderCertsView();
+}
+async function certificates(){
+  certPage = 0;
+  $('viewArea').innerHTML = pageHead(t('certificates'), lang === 'ar' ? 'الشهادات والتحقق' : 'Certificates and verification') + loadingBlock();
+  await loadCertPage();
 }
 function printCert(x){
   if(typeof PEL_CERT_SHEET === 'undefined'){
