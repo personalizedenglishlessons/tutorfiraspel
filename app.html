@@ -1560,6 +1560,10 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
   #heroCard > div:last-child svg{ width:84px; height:84px; }
   #heroCard > div:last-child > div{ width:84px; height:84px; }
   #heroCard > div:last-child b{ font-size:1.3rem; }
+  /* label must scale with the 84px ring too — at .64rem it spanned the full
+     inner diameter and pressed against the ring curve on phones.
+     !important because the label carries an inline font-size. */
+  #heroCard > div:last-child span{ font-size:.5rem !important; line-height:1.25 !important; }
   #heroCard .chip{ font-size:.7rem; padding:4px 8px; }
   .ring-wrap{ width:84px; height:84px; }
   .ring-wrap.small{ width:58px; height:58px; }
