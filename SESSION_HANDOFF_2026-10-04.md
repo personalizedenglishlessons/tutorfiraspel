@@ -74,3 +74,55 @@ All commits pushed to `main`. Tests: 65/65 pass. Syntax checks: all clean.
   migration files in one call
 - All 86 repo migrations recorded in tracker (tools/check_migrations.py)
 - GitHub Pages deploys from main branch automatically
+
+---
+
+## Session addendum (2026-10-04, evening push)
+
+### Commits (all deployed + verified live)
+- 7e2ade8 — bump lib cache-bust versions (dashboard_life + admin.js): phones
+  were serving the cached pre-fix study-tools strip. RULE: whenever a lib file
+  changes, bump its ?v= hash in the HTML that loads it.
+- 715445a — renderHomeIntel static labels (announcements/live classes) now
+  bilingual .arabic+EN pairs handled by localizeChrome (survive runtime
+  language toggle).
+- 2dc188d — lesson-flow audit fixes (5):
+  1. openLesson stage wrapper is now async + enforces route isolation and
+     lesson locks BEFORE Stage.open (deep links could bypass).
+  2. SRS cache pel_srs_v1 → per-user key pel_srs_v1_u_<uid> with one-time
+     legacy migration (adopt only when the user has no server rows);
+     pel_srs_v1 added to clearUserLocalKeys legacy list.
+  3. pel-assessment.js: phase guard so a late async question load can't
+     renderIntro() over an active gate/question (ST.phase intro/gate/test).
+  4. Daily lesson pairing: daily-lesson.js BANK entries now carry their real
+     academy (validated against ACADEMY_LESSONS, 1200-day simulation);
+     'calling-customer-service' (in no academy) replaced by 'booking-table';
+     app.html featuredLesson() fallback picks from the academy's real list
+     (fixes both directions; AR fallback could never match before).
+  5. Stage.close() skips saveStageSession() when state.done (was recreating
+     the cleared pel_stage_pos after completion, local + server).
+- 62465e8 — the lock guard keeps resume semantics: allow lessons the
+  effective state marks 'available' (home continue card) and saved
+  mid-lesson positions; block all other locked lessons.
+- fe24990 — REDUCE MOTION VISIBILITY BUG: body.pel-life-off killed the
+  .pel-dash-rise entrance animation without forcing its end state, leaving
+  Word Burst + intel cards at opacity:0 forever (OS setting or in-app
+  toggle). Now forces opacity:1/transform:none. This was the "word burst
+  card disappeared after settings" report.
+- 416f863 — curriculum tool buttons stacked Arabic letters vertically on
+  phones (flex:1 basis 0%). Now flex:1 1 auto + tighter padding; labels on
+  one line, verified at 390px.
+
+### Verified live (cloud browser, logged in as testmail1, 390px)
+- Stage opens from home continue card; lesson content renders; locked
+  deep-link attempts toast and do not open the stage.
+- Curriculum view tool row: 9 buttons, single-line labels.
+- Quiet mode (pel-life-off): burst/tools/intel cards stay opacity 1.
+
+### Still known / not fixed this pass
+- Bilingual BUG-PATTERN to remember: render-time language ternaries go
+  stale after runtime language toggle — prefer bilingual pairs + localize.
+- viewRenderers has no 'home' entry and goToView skips renderers for
+  home/settings/workspace on purpose (home is decorated, not re-rendered).
+- The ~330-line data-pplx-inline-edit harness blocks in all 5 HTML pages
+  remain (deliberately untouched).
