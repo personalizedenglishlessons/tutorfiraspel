@@ -19429,7 +19429,7 @@ function renderSpeaking(){
           <div class="card-elevated" style="padding:24px; border-radius:16px; margin-bottom:16px; border:1px solid rgba(210,92,92,.25);">
             <div style="display:flex; align-items:center; gap:8px; margin-bottom:14px;">
               <span style="width:28px; height:28px; border-radius:50%; background:rgba(210,92,92,.15); color:var(--danger); display:flex; align-items:center; justify-content:center; font-size:.8rem; font-weight:700; flex-shrink:0;">2</span>
-              <span class="arabic" style="font-size:.82rem; font-weight:700; color:var(--danger);">الغلط الشايع</span>
+              <span class="arabic" style="font-size:.82rem; font-weight:700; color:var(--danger);">محاوله فيها غلط</span>
             </div>
             <div style="display:flex; gap:12px; align-items:flex-start; margin-bottom:14px;">
               <span style="color:var(--danger); flex-shrink:0; padding-top:2px; display:flex; align-items:center;"><i data-lucide="x" width="20" height="20"></i></span>
@@ -19465,7 +19465,7 @@ function renderSpeaking(){
           <div class="card-elevated" style="padding:24px; border-radius:16px; margin-bottom:16px; border:1px solid rgba(66,163,106,.3); background:rgba(66,163,106,.04);">
             <div style="display:flex; align-items:center; gap:8px; margin-bottom:14px;">
               <span style="width:28px; height:28px; border-radius:50%; background:rgba(66,163,106,.15); color:var(--success); display:flex; align-items:center; justify-content:center; font-size:.8rem; font-weight:700; flex-shrink:0;">4</span>
-              <span class="arabic" style="font-size:.82rem; font-weight:700; color:var(--success);">الجواب الصحيح</span>
+              <span class="arabic" style="font-size:.82rem; font-weight:700; color:var(--success);">الجمله الصحيحه</span>
             </div>
             <div style="display:flex; gap:12px; align-items:flex-start; margin-bottom:10px;">
               <span style="color:var(--success); flex-shrink:0; padding-top:2px; display:flex; align-items:center;"><i data-lucide="check" width="20" height="20"></i></span>
@@ -19488,9 +19488,9 @@ function renderSpeaking(){
           <div class="card-elevated" style="padding:24px; border-radius:16px; margin-bottom:16px;">
             <div style="display:flex; align-items:center; gap:8px; margin-bottom:14px;">
               <span style="width:28px; height:28px; border-radius:50%; background:var(--gold); color:#171412; display:flex; align-items:center; justify-content:center; font-size:.8rem; font-weight:700; flex-shrink:0;">5</span>
-              <span class="arabic" style="font-size:.82rem; font-weight:700; color:var(--gold);">${A?'ابني الجواب بنفسك':'Build the answer'}</span>
+              <span class="arabic" style="font-size:.82rem; font-weight:700; color:var(--gold);">${A?'ابني الجمله بنفسك':'Build the sentence'}</span>
             </div>
-            <p class="arabic" style="font-size:.84rem; color:var(--text-muted); margin-bottom:12px;">${A?'اضغط الكلمات تحت بترتيب الجواب الصح':'Tap the words below in the correct order'}</p>
+            <p class="arabic" style="font-size:.84rem; color:var(--text-muted); margin-bottom:12px;">${A?'اضغط الكلمات تحت بترتيب الجمله الصح':'Tap the words below in the correct order'}</p>
             <div id="buildDrop" style="min-height:48px; padding:12px; border:1px dashed var(--border); border-radius:12px; margin-bottom:14px; display:flex; flex-wrap:wrap; gap:8px; align-items:center;"></div>
             <div id="buildBank" style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px;">${bank.map((w,i) => `<button class="pel-token" data-w="${i}">${escapeHtml(w)}</button>`).join('')}</div>
             <div style="display:flex; gap:8px;">
@@ -19540,7 +19540,7 @@ function renderSpeaking(){
           <div class="card-elevated" style="padding:24px; border-radius:16px; margin-bottom:16px; text-align:center;">
             <div style="display:flex; align-items:center; gap:8px; margin-bottom:16px; justify-content:center;">
               <span style="width:28px; height:28px; border-radius:50%; background:var(--gold); color:#171412; display:flex; align-items:center; justify-content:center; font-size:.8rem; font-weight:700; flex-shrink:0;">6</span>
-              <span class="arabic" style="font-size:.82rem; font-weight:700; color:var(--gold);">انطق الجواب</span>
+              <span class="arabic" style="font-size:.82rem; font-weight:700; color:var(--gold);">انطق الجمله</span>
             </div>
             <p dir="ltr" style="font-size:1.1rem; line-height:1.6; margin-bottom:6px;">${escapeHtml(lesson.right.en)}</p>
             <p class="arabic" style="font-size:.88rem; color:var(--text-secondary); margin-bottom:4px;">${escapeHtml(lesson.right.ar)}</p>
