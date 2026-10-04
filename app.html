@@ -10194,6 +10194,7 @@ function applyInterfaceLang(lang, opts){
   }
   if(active && (active.id === 'home' || active.id === 'view-home')){
     try{ renderHomeForDirection(); }catch(e){console.warn('[PEL] renderHomeForDirection:',e.message||e);}
+    try{ renderSubBanner(); }catch(e){console.warn('[PEL] renderSubBanner:',e.message||e);}
     try{ renderHomeIntel(); }catch(e){console.warn('[PEL] renderHomeIntel:',e.message||e);}
     try{ renderNotifications(); }catch(e){console.warn('[PEL] renderNotifications:',e.message||e);}
   }
@@ -18704,7 +18705,7 @@ function renderVocabulary(){
       enqueueForReview(bankWord || {en, ar}, 'Vocabulary Vault');
     }
     persistStudentState();
-    btn.textContent = saved ? '★ '+(arMode?'محفوظه':'Bookmarked') : '☆ '+(arMode?'احفظها':'Save Word');
+    btn.innerHTML = saved ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> '+(arMode?'محفوظه':'Bookmarked') : '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> '+(arMode?'احفظها':'Save Word');
     btn.classList.toggle('saved', saved);
     renderCtxLists();
   }
