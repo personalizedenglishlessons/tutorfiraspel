@@ -3224,6 +3224,7 @@ function goToView(id){
   PEL_ACTIVITY.touch('page_view', { page: id });
   if(id === 'lessonOfDay'){ const f = featuredLesson(); openLesson(f.academy, f.lesson); return; }
   if(id === 'resume'){ const n = nextLesson(); if(n) openLesson(n.academy, n.lesson); else goToView('home'); return; }
+  if(id === 'search'){ openPalette(); return; }
   if(id === 'dailyQuiz'){ openDailyQuiz(); return; }
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.querySelectorAll('.side-link').forEach(l => l.classList.remove('active'));
