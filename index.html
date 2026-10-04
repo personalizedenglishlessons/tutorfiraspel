@@ -36,7 +36,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;500;700&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
-<script src="lib/daily-lesson.js?v=2b71d40a" defer></script>
 <script src="lib/pel-personalization.js?v=f0285e0e" defer></script>
 <script src="lib/onboard.js?v=23eb7c4d" defer></script>
 <script src="lib/pel-assessment.js?v=1f01a69c" defer></script>
@@ -528,43 +527,6 @@ section{ position:relative; padding:130px 0; }
 .section-head h2{ font-size:clamp(2rem,3.4vw,2.9rem); margin-top:18px; }
 .section-head p{ margin-top:18px; color:var(--text-secondary); font-size:1.02rem; line-height:1.55; }
 .section-head.center{ margin-left:auto; margin-right:auto; text-align:center; }
-
-/* ===== lesson of the day strip (live from the platform) ===== */
-.daily-strip{ padding:0; background:transparent; border-bottom:1px solid var(--border); }
-.daily-strip-inner{
-  display:flex; align-items:center; gap:22px;
-  padding-top:28px; padding-bottom:28px;
-  border:1px solid var(--border); border-bottom:none;
-  border-radius:20px 20px 0 0;
-  background:linear-gradient(120deg, color-mix(in srgb, var(--card) 85%, transparent), color-mix(in srgb, var(--card-elevated) 55%, transparent));
-}
-@media(max-width:760px){
-  .daily-strip-inner{ flex-direction:column; align-items:flex-start; gap:16px; }
-}
-.daily-strip-mark{
-  width:52px; height:52px; border-radius:16px; flex-shrink:0;
-  background:linear-gradient(135deg, var(--gold-soft), var(--bronze));
-  color:#171412; display:flex; align-items:center; justify-content:center;
-  box-shadow:var(--gold-glow);
-}
-.daily-strip-mark svg{ width:24px; height:24px; }
-.daily-strip-body{ flex:1; min-width:0; }
-.daily-strip-title{
-  margin-top:8px; font-family:'Fraunces',serif; font-size:clamp(1.15rem, 2.4vw, 1.5rem);
-  color:var(--text); font-weight:500; line-height:1.25;
-}
-.daily-strip-title .arabic{ color:var(--text); font-size:1.05em; }
-.daily-strip-sub{
-  margin-top:6px; font-size:.82rem; color:var(--text-muted);
-  display:flex; align-items:center; gap:8px; flex-wrap:wrap;
-}
-.daily-strip-sub .pill{
-  font-size:.72rem; padding:4px 12px; border-radius:var(--ring-radius);
-  border:1px solid var(--border); color:var(--text-secondary);
-}
-.daily-strip-sub .pill.gold{ border-color:rgba(200,169,106,0.5); color:var(--gold); }
-.daily-strip-cta{ flex-shrink:0; }
-@media(max-width:480px){ .daily-strip-cta{ width:100%; justify-content:center; } }
 
 /* ===== social proof ===== */
 .proof{ background:var(--surface); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
@@ -1231,24 +1193,6 @@ section{ padding-top:70px; padding-bottom:70px; }
   </div>
 </section>
 
-<!-- LESSON OF THE DAY STRIP -->
-<section class="daily-strip"><div class="container">
-  <div class="daily-strip-inner reveal">
-    <div class="daily-strip-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.5 5L19 9.5 13.5 11 12 16l-1.5-5L5 9.5 10.5 8 12 3z"/><path d="M5 3v4M19 17v4M3 5h4M17 19h4"/></svg></div>
-    <div class="daily-strip-body">
-      <div class="daily-strip-sub"><span class="pill gold"><span class="t-ar">درس اليوم</span><span class="t-en">Lesson of the Day</span></span></div>
-      <div class="daily-strip-title" id="dailyStripTitle"></div>
-      <div class="daily-strip-sub"><span class="pill" id="dailyStripAcademy"></span></div>
-    </div>
-    <div class="daily-strip-cta">
-      <a href="app.html" class="btn-gold magnetic" data-magnetic style="padding:12px 24px; font-size:.9rem;">
-        <span class="t-ar">ابدا الدرس</span><span class="t-en">Start Lesson</span>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-      </a>
-    </div>
-  </div>
-</div></section>
-
 <!-- PERSONALIZED PLAN PREVIEW -->
 <section id="personalPreview" style="padding:80px 0; background:var(--surface); border-top:1px solid var(--border);">
   <div class="container">
@@ -1628,13 +1572,6 @@ function applyIndexLang(lang){
   // hero social proof removed: fabricated statistics are not allowed on PEL
   var heroWa=document.querySelector('#heroWaBtn span');
   if(heroWa) heroWa.textContent = lang==='ar' ? 'راسل استاذ فراس' : 'Message Tutor Firas';
-  // daily strip CTA
-  var dailyCta=document.getElementById('dailyStripCta');
-  if(dailyCta){
-    var span=dailyCta.querySelector('span');
-    if(span) span.textContent = lang==='ar' ? 'افتح الدرس في المنصه' : 'Open in app';
-    else dailyCta.textContent = lang==='ar' ? 'افتح الدرس في المنصه' : 'Open in app';
-  }
   // feature tabs (replaces floating mini cards)
   // (old feature tab labels removed - replaced by 3D carousel)
   // extra catch for stray Arabic UI still showing in English (personalPreview badge etc.)
@@ -1884,17 +1821,6 @@ function applyIndexLang(lang){
     if(sec){
       var ch2=sec.querySelector('h2'); if(ch2) ch2.textContent = lang==='ar' ? 'مسارات متعدده، وخطه واحده مبنيه على مقاسك.' : 'Multiple paths, one plan built for you.';
       var cp=sec.querySelector('p.arabic'); if(cp) cp.textContent = lang==='ar' ? 'التفاصيل الكامله تفتح لسه التسجيل. هذي لمحه بسيطه عن الاتجاه العام.' : 'Full details unlock after enrollment. This is a brief overview.';
-    }
-  }
-  // daily strip
-  var dailyTitle=document.getElementById('dailyStripTitle');
-  if(dailyTitle){
-    var isEn = lang==='en';
-    // keep bilingual as is, but ensure CTA is bilingual
-    var cta=document.getElementById('dailyStripCta');
-    if(cta){
-      var span=cta.querySelector('span');
-      if(span) span.textContent = lang==='ar' ? 'افتح الدرس في المنصه' : 'Open in app';
     }
   }
   // (old lesson-card head references removed - replaced by feature tabs)
@@ -2147,25 +2073,6 @@ new MutationObserver(muts => {
   for(const m of muts){ for(const n of m.addedNodes){ if(n.nodeType===1) watchReveals(n); } }
 }).observe(document.body, {childList:true, subtree:true});
 
-/* LESSON OF THE DAY - live from the shared platform data (daily-lesson.js) */
-function renderDailyLesson(){
-  if(!window.PEL_DAILY) return;
-  let pick;
-  try{ pick = PEL_DAILY.featured(); }catch(e){ return; }
-  if(!pick || !pick.lesson || !pick.academy) return;
-  var ar = (function(){ try{ var p=JSON.parse(localStorage.getItem('pel_account_prefs')||'null'); return p&&p.lang==='ar'; }catch(e){ return document.documentElement.lang!=='en'; } })();
-  const lsTitle = document.getElementById('dailyStripTitle');
-  const lsAcademy = document.getElementById('dailyStripAcademy');
-  const lesson = pick.lesson, ac = pick.academy;
-  if(lsTitle) lsTitle.innerHTML = ar ? '<span class="arabic">' + lesson.ar + '</span>' : lesson.en;
-  if(lsAcademy) lsAcademy.textContent = ar ? ac.ar : ac.en;
-}
-renderDailyLesson();
-// daily-lesson.js is deferred, so if it hasn't arrived yet (it runs after
-// the inline script during parsing), render again once the page has loaded.
-window.addEventListener('load', renderDailyLesson);
-window.addEventListener('pel-lang-changed', renderDailyLesson);
-window.addEventListener('storage', function(e){ if(e.key==='pel_account_prefs') renderDailyLesson(); });
 
 /* PHRASE ROTATION - auto-rotating real-world English phrases */
 (function(){
