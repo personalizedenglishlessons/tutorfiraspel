@@ -3462,6 +3462,13 @@ function openPalette(){
 function closePalette(){ paletteOverlay.classList.remove('open'); }
 document.getElementById('searchTrigger').addEventListener('click', openPalette);
 paletteInput.addEventListener('input', () => renderPalette(paletteInput.value));
+paletteInput.addEventListener('keydown', e => {
+  if(e.key === 'Enter'){
+    e.preventDefault();
+    const first = paletteResults.querySelector('.palette-item');
+    if(first) first.click();
+  }
+});
 paletteOverlay.addEventListener('click', e => { if(e.target === paletteOverlay) closePalette(); });
 document.addEventListener('keydown', e => {
   if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k'){ e.preventDefault(); openPalette(); }
