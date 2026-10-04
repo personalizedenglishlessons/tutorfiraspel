@@ -79,7 +79,7 @@ codepoints only. No Persian (Farsi) or Urdu letters anywhere.
    - speaking → سبيك-ينق
    - morning → مور-نينق
    - evening → ايڤ-نينق
-   - training → ترين-ينق
+   - training → تري-نينق
 
    ### -tion/-sion words
    - presentation → بريزن-تيشن
@@ -90,20 +90,23 @@ codepoints only. No Persian (Farsi) or Urdu letters anywhere.
    ### Words with unclear syllable breaks
    - understand → اندر-ستاند
    - yourself → يور-سلف
-   - available → اڤيل-بل
-   - comfortable → كمفور-تبل
-   - important → امبور-تنت
+   - available → اڤيل-ابل
+   - comfortable → كمفور-تابل
+   - important → امبور-تانت
    - different → ديف-رنت
-   - second → سك-ند
+   - second → سيك-اند
    - sentence → سن-تنس
-   - support → سب-ورت
-   - project → بروج-كت
-   - schedule → شيد-ول
+   - support → سب-اورت
+   - project → بروج-يكت
+   - schedule → شيد-اول
    - hospital → هاسبي-تال
    - interview → انتر-ڤيو
    - describe → ديس-كرايب
    - explain → اكس-بلين
    - nervous → نر-وس
+   - passport → باس-بورت
+   - export → اكس-بورت
+   - transport → ترانس-بورت
 
    ### Do NOT hyphenate:
    - Short single-syllable words (cat, dog, book)
