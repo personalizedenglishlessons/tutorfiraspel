@@ -10094,6 +10094,7 @@ function loadVoices(){
   if(!('speechSynthesis' in window)) return;
   const voices = window.speechSynthesis.getVoices().filter(v => v.lang.startsWith('en'));
   const sel = document.getElementById('voiceSelect');
+  if(!sel) return;
   sel.innerHTML = voices.length
     ? voices.map((v,i) => `<option value="${i}">${v.name} (${v.lang})</option>`).join('')
     : `<option>American English (default)</option>`;
@@ -17445,8 +17446,11 @@ function openDailyQuiz(){
     modal.classList.add('open');
     return;
   }
-  const picked = questions.filter((q,i) => (i + dayIdx) % Math.max(1, Math.ceil(questions.length / 5)) < 5 ? true : false);
-  const chosen = (picked.length >= 3 ? picked : questions).slice(0, 5);
+  // Rotate questions daily: offset the starting point by dayIdx so a
+  // different set of 5 questions appears each day.
+  const _offset = dayIdx % Math.max(1, questions.length);
+  const rotated = questions.slice(_offset).concat(questions.slice(0, _offset));
+  const chosen = rotated.slice(0, 5);
   body.innerHTML = `
     <div style="display:flex; align-items:center; gap:10px; margin-bottom:6px;">
       <span class="chip gold"><span class="arabic">اختبار اليوم</span>، Daily Quiz</span>
