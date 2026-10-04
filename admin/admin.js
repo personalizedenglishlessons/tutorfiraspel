@@ -1214,7 +1214,6 @@ function sortSel(current){
 async function loadStPrograms(st){
   var w = $('stProgramWrap'); if(!w) return;
   try{
-    var c = client();
     var r = await pelTableSelect('programs', 'id,name_en,name_ar', { order: 'name_en' });
     var o = '<option value="">' + esc(t('all')) + '</option>' + (r.data || []).map(function(p){
       return '<option value="' + p.id + '">' + esc(lang === 'ar' ? (p.name_ar || p.name_en) : p.name_en) + '</option>';
@@ -1236,7 +1235,6 @@ async function loadStTeachers(st){
 async function loadStGroups(st){
   var w = $('stGroupWrap'); if(!w) return;
   try{
-    var c = client();
     var r = await pelTableSelect('groups', 'id,name', { eq: { status: 'active' }, order: 'name' });
     var o = '<option value="">' + esc(t('all')) + '</option>' + (r.data || []).map(function(g){
       return '<option value="' + g.id + '">' + esc(g.name) + '</option>';
@@ -2040,7 +2038,6 @@ async function saveIntervention(){
   var reasonEn = $('invReasonEn').value.trim();
   var reasonAr = $('invReasonAr').value.trim();
   if(!titleEn){ toast(t('required'), true); return; }
-  var c = client();
   var { data, error } = await legacyRpc('admin_add_intervention', { p_payload: {
     user_id: current360Uid, type: type, title_en: titleEn, title_ar: titleAr || titleEn,
     reason_en: reasonEn, reason_ar: reasonAr, assignee_role: me.role
@@ -2053,7 +2050,6 @@ async function saveIntervention(){
 async function saveNote(){
   var body = $('noteBody').value.trim();
   if(!body){ toast(t('required'), true); return; }
-  var c = client();
   var { data, error } = await legacyRpc('admin_add_student_note', { p_user_id: current360Uid, p_body: body, p_category: 'note' });
   if(error || (data && data.ok === false)){ toast((error && (error.message || String(error))) || (data && data.error && data.error.message) || t('permissionDenied'), true); return; }
   await audit('student.note', 'student', current360Uid, {});
@@ -2061,7 +2057,6 @@ async function saveNote(){
   reload360();
 }
 async function saveProfile(){
-  var c = client();
   var { data, error } = await legacyRpc('admin_upsert_student_profile', { p_payload: {
     user_id: current360Uid,
     phone: $('prPhone').value.trim(), whatsapp: $('prWhatsapp').value.trim(),
@@ -2081,7 +2076,6 @@ async function saveSnapshot(){
   var scores = {};
   var specs = ['speaking-studio','listening-lounge','grammar-academy','vocabulary-vault','american-accent-lab','writing-workshop'];
   specs.forEach(function(a){ scores[a] = academyProgress(a, completed); });
-  var c = client();
   var { data, error } = await legacyRpc('admin_add_learning_snapshot', { p_payload: {
     user_id: current360Uid, snapshot_date: new Date().toISOString().slice(0,10),
     level: level, skill_scores: scores, xp: st.xp || 0, completed_lessons: completed.length
@@ -2275,7 +2269,6 @@ function groupForm(existing){
       teacher_id: $('grTeacher').value || null
     };
     if(!payload.name){ toast(t('required'), true); return; }
-    var c = client();
     var rpcPayload = {
       id: isEdit ? existing.id : '',
       name: payload.name, teacher_id: payload.teacher_id || '',
@@ -2415,7 +2408,6 @@ function assignTeacherModal(groupId){
   })();
   $('atSave').addEventListener('click', async function(){
     var val = $('atSel').value;
-    var c = client();
     var { data, error } = await legacyRpc('admin_set_group_teacher', { p_group_id: groupId, p_teacher_id: val || null });
     if(error || (data && data.ok === false)){ toast(t('permissionDenied'), true); return; }
     await audit('group.teacher', 'group', groupId, { teacher_id: val });
@@ -2436,7 +2428,6 @@ var _cur = { academies: [], lessons: {}, links: {} };
 async function courses(){
   var canManage = hasPerm('curriculum.manage');
   $('viewArea').innerHTML = pageHead(t('courses'), t('lessonsManagerSub')) + loadingBlock();
-  var c = client();
   var res = await Promise.all([
     pelTableSelect('academies', '*', { order: 'sort_order,id' }),
     pelTableSelect('lessons', '*'),
@@ -2738,7 +2729,6 @@ function classForm(groupsArr){
       duration_minutes: Math.max(1, parseInt($('clDur').value, 10) || 60),
       course_id: $('clCourse').value.trim() || null
     };
-    var c = client();
     var { data, error } = await legacyRpc('admin_create_live_class', { p_payload: payload });
     if(error || (data && data.ok === false)){ toast(t('permissionDenied'), true); return; }
     var newId = (data && data.data && data.data.id) || '';
@@ -2863,7 +2853,6 @@ function programForm(){
       description: $('pgDesc').value.trim() || null
     };
     if(!payload.code || !payload.name_en){ toast(t('required'), true); return; }
-    var c = client();
     var { data, error } = await legacyRpc('admin_create_program', { p_payload: payload });
     if(error || (data && data.ok === false)){ toast(t('permissionDenied'), true); return; }
     var newId = (data && data.data && data.data.id) || '';
@@ -2883,7 +2872,6 @@ function programForm(){
 async function billingView(){
   $('viewArea').innerHTML = pageHead(lang==='ar'?'الاسعار وصفحه البدايه':'Billing & Index',
     lang==='ar'?'عدل اسعار الباقات ونص الصفحه البدايه - التغييرات توصل لـ /index فورا':'Edit plan prices and index copy - changes reach /index immediately') + loadingBlock();
-  var c = client();
   var [pp, ss] = await Promise.all([
     pelTableSelect('plan_pricing', '*', { order: 'tier,duration_months' }),
     pelTableSelect('site_settings', 'key,value', { in: { key: ['hero_headline_ar','hero_headline_en','hero_sub_ar','hero_sub_en','pricing_note_ar','pricing_note_en','faqs'] } })
@@ -3013,7 +3001,6 @@ async function questionsView(){
   var title = lang==='ar'?'بنك الاختبار':'Assessment Questions';
   var sub = lang==='ar'?'تعديل بنك الاختبار - التغييرات توصل للطلاب فورا':'Edit the adaptive placement-test questions - changes reach students immediately';
   $('viewArea').innerHTML = pageHead(title, sub) + loadingBlock();
-  var c = client();
   var ROWS = [];
   await loadList();
 
@@ -3133,7 +3120,6 @@ async function questionsView(){
    ============================================================ */
 async function certificates(){
   $('viewArea').innerHTML = pageHead(t('certificates'), lang === 'ar' ? 'الشهادات والتحقق' : 'Certificates and verification') + loadingBlock();
-  var c = client();
   var r = await pelTableSelect('certificates', 'id,cert_id,code,student_name,academy_en,academy_ar,level,program_name,completed_at,created_at,status,revoke_reason,user_id,verification_count', { order: 'created_at.desc', limit: 200 });
   if(r.error){ $('viewArea').innerHTML = errBlock(rpcErrMsg(r)); return; }
   var rows = r.data || [];
@@ -3572,7 +3558,6 @@ async function plansView(){
    plan type (tier) + CEFR level, assigned together. Replaces the old
    scattered buttons (s360PlanSave tier/level-only + p360Assign program-only). */
 async function openAssignPlanModal(uid, onDone, curTier, curLevel){
-  var c = client();
   var pr = await pelTableSelect('programs', '*', { order: 'sort_order,created_at' });
   var catalog = pr.data || [];
   if(!catalog.length){ toast(t('noData'), true); return; }
