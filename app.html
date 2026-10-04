@@ -379,6 +379,10 @@ body.ui-ar .dropdown-item{ direction:rtl; text-align:right; }
   .context-panel.open{ transform:translateX(0); }
   .context-toggle-btn{ display:flex; }
 }
+@media(max-width:1280px){
+  body.ui-ar .context-panel{ right:auto; left:0; transform:translateX(-100%); }
+  body.ui-ar .context-panel.open{ transform:translateX(0); }
+}
 
 /* ============================================================
    SHARED COMPONENTS

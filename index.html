@@ -1230,7 +1230,24 @@ section{ padding-top:70px; padding-bottom:70px; }
     </div>
   </div>
 </section>
-<style>#personalPreview .pp-chip{ padding:12px 16px; border-radius:14px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.06); font-size:.9rem; transition:border-color .3s; cursor:default; } #personalPreview .pp-chip:hover{ border-color:rgba(200,169,106,.3); } @media(max-width:860px){ #personalPreview .reveal.pp-grid{ grid-template-columns:1fr !important; max-width:440px !important; margin:0 auto !important; } } html[data-theme="light"] #personalPreview .pp-chip{ background:rgba(184,130,30,.06); border-color:rgba(184,130,30,.15); } html[data-theme="light"] #personalPreview .pp-say, html[data-theme="light"] #personalPreview .pp-build{ background:var(--card); border:1px solid var(--border); }</style>
+
+<!-- LESSON OF THE DAY STRIP -->
+<section class="daily-strip"><div class="container">
+  <div class="daily-strip-inner reveal">
+    <div class="daily-strip-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.5 5L19 9.5 13.5 11 12 16l-1.5-5L5 9.5 10.5 8 12 3z"/><path d="M5 3v4M19 17v4M3 5h4M17 19h4"/></svg></div>
+    <div class="daily-strip-body">
+      <div class="daily-strip-sub"><span class="pill gold"><span class="t-ar">درس اليوم</span><span class="t-en">Lesson of the Day</span></span></div>
+      <div class="daily-strip-title" id="dailyStripTitle"></div>
+      <div class="daily-strip-sub"><span class="pill" id="dailyStripAcademy"></span></div>
+    </div>
+    <div class="daily-strip-cta">
+      <a href="app.html" class="btn-gold magnetic" data-magnetic style="padding:12px 24px; font-size:.9rem;">
+        <span class="t-ar">ابدا الدرس</span><span class="t-en">Start Lesson</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</div></section>
 
 <!-- PERSONALIZED PLAN PREVIEW -->
 <section id="personalPreview" style="padding:80px 0; background:var(--surface); border-top:1px solid var(--border);">
@@ -2137,10 +2154,10 @@ function renderDailyLesson(){
   try{ pick = PEL_DAILY.featured(); }catch(e){ return; }
   if(!pick || !pick.lesson || !pick.academy) return;
   var ar = (function(){ try{ var p=JSON.parse(localStorage.getItem('pel_account_prefs')||'null'); return p&&p.lang==='ar'; }catch(e){ return document.documentElement.lang!=='en'; } })();
-  const lsTitle = null; // removed - 3D carousel replaces lesson tab
-  const lsAcademy = null; // removed
+  const lsTitle = document.getElementById('dailyStripTitle');
+  const lsAcademy = document.getElementById('dailyStripAcademy');
   const lesson = pick.lesson, ac = pick.academy;
-  if(lsTitle) lsTitle.textContent = ar ? lesson.ar : lesson.en;
+  if(lsTitle) lsTitle.innerHTML = ar ? '<span class="arabic">' + lesson.ar + '</span>' : lesson.en;
   if(lsAcademy) lsAcademy.textContent = ar ? ac.ar : ac.en;
 }
 renderDailyLesson();

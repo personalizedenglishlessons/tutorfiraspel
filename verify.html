@@ -87,6 +87,13 @@ html[data-theme="light"] .pel-logo-light{ display:inline-block; }
 .card .sub{ margin-top:10px; font-size:.9rem; color:var(--text-muted); line-height:1.55; }
 .card .sub.ar{ margin-top:4px; color:var(--text-secondary); }
 
+/* mobile: stack certificate facts in a single column */
+@media(max-width:480px){
+  #okVerifyCard{ grid-template-columns:1fr !important; gap:8px !important; }
+  #okVerifyCard > div > div:last-child{ min-width:0; overflow-wrap:anywhere; word-break:break-word; }
+  .card{ padding:28px 20px; }
+}
+
 /* states */
 .state{ display:none; }
 .state.show{ display:block; }
