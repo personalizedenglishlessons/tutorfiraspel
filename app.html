@@ -160,6 +160,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 @media(max-width:640px){ .sidebar-head{ padding:16px 18px; } }
 .sidebar-logo{ display:flex; align-items:center; flex-shrink:0; }
 .sidebar-logo img{ height:24px; width:auto; }
+/* square brand mark — swaps in for the wide wordmark inside the 68px tablet rail */
+.sidebar-logo-mark{ display:none; height:26px; width:26px; border-radius:7px; }
 .pel-logo{ display:inline-block; vertical-align:middle; }
 .pel-logo-light{ display:none; }
 .sidebar-name{ font-family:'Fraunces',serif; font-size:.95rem; white-space:normal; overflow:visible; line-height:1.35; opacity:1; transition:opacity .2s ease; }
@@ -220,12 +222,26 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .side-label .ar{ font-family:'Cairo','Tajawal',sans-serif; direction:rtl; font-size:.68rem; color:var(--text-muted); font-weight:700; letter-spacing:.02em; overflow-wrap:break-word; word-break:break-word; }
 .side-label .en{ font-size:.58rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:.12em; margin-top:1px; }
 
-/* tablet icon rail (portrait tablets / small landscape) */
+/* tablet icon rail (portrait tablets / small landscape).
+   EVERYTHING textual in the sidebar must be adapted here, not just the nav
+   labels: the head collapses to a square mark + small collapse button stacked
+   vertically, and the streak foot becomes a compact flame + number badge.
+   Without this, the wordmark (80px) overflows the 68px rail and the streak
+   sentence wraps one Arabic character per line. */
 @media(max-width:1180px) and (min-width:981px){
-  .sidebar{ width:68px; }
+  .sidebar{ width:68px; overflow-x:hidden; }
+  .sidebar-head{ flex-direction:column; gap:8px; padding:14px 8px 10px; }
   .sidebar-head .sidebar-name{ display:none; }
+  .sidebar-logo .pel-logo, .sidebar-logo .pel-logo-light{ display:none; }
+  .sidebar-logo-mark{ display:block; }
+  .sidebar-collapse-btn{ width:30px; height:30px; margin:0; }
+  .sidebar-scroll{ padding:12px 0 10px; }
   .side-link{ justify-content:center; padding:11px 0; }
   .side-text-wrap, .side-label{ display:none; }
+  .sidebar-foot{ display:flex; justify-content:center; padding:10px 0 14px; }
+  .streak-mini{ flex-direction:column; gap:2px; width:44px; height:48px; padding:0; justify-content:center; }
+  .streak-mini .txt{ display:none; }
+  .streak-mini .streak-num{ display:block; }
 }
 
 /* mobile bottom study dock */
@@ -271,7 +287,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 @media(max-width:640px){ .search-trigger{ padding:8px 12px; font-size:.8rem; } }
 .search-trigger:hover{ border-color:var(--gold); }
 .search-trigger .arabic{ font-size:inherit !important; line-height:1.3 !important; }
-.search-trigger > span{ line-height:1.3; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.search-trigger > svg{ flex-shrink:0; }
+.search-trigger > span{ line-height:1.3; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; min-width:0; }
 .search-trigger .kbd{ margin-left:auto; font-size:.66rem; padding:2px 7px; border-radius:6px; border:1px solid var(--border); color:var(--text-muted); flex-shrink:0; }
 .topbar-spacer{ flex:1; }
 .topbar-actions{ display:flex; align-items:center; gap:10px; }
@@ -1052,6 +1069,11 @@ body.ui-ar .lib-filter{ direction:rtl; }
 body.ui-ar .sidebar{ border-right:none; border-left:1px solid var(--border); }
 body.ui-ar .sidebar.collapsed{ border-left:none; }
 body.ui-ar .sidebar-collapse-btn{ margin-left:0; margin-right:auto; }
+/* tablet icon rail: the collapse button sits centered under the brand mark,
+   so the RTL margin push above must not apply there */
+@media(max-width:1180px) and (min-width:981px){
+  body.ui-ar .sidebar-collapse-btn{ margin:0; }
+}
 body.ui-ar .side-link.active{ background:linear-gradient(270deg, rgba(200,169,106,.14), transparent); }
 body.ui-ar .side-link.active::before{ left:auto; right:0; }
 html[data-theme="light"] body.ui-ar .side-link.active::before{ box-shadow:0 0 8px rgba(200,147,28,.5); }
@@ -1580,7 +1602,7 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
   <!-- ================= SIDEBAR ================= -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-head">
-      <span class="sidebar-logo"><img class="pel-logo" src="brand/pel-wordmark.svg" alt="PEL"><img class="pel-logo pel-logo-light" src="brand/pel-wordmark-dark.svg" alt="PEL"></span>
+      <span class="sidebar-logo"><img class="pel-logo" src="brand/pel-wordmark.svg" alt="PEL"><img class="pel-logo pel-logo-light" src="brand/pel-wordmark-dark.svg" alt="PEL"><img class="sidebar-logo-mark" src="brand/pel-favicon.svg" alt="PEL"></span>
       <span class="sidebar-name"><span class="arabic" style="display:block; font-size:.92em;">دروس انجليزي مخصصه</span><span style="display:block; font-size:.8em; color:var(--text-muted); margin-top:2px;">Personalized English Lessons</span></span>
       <button type="button" class="sidebar-collapse-btn" id="collapseBtn" aria-label="Collapse sidebar / طوي القائمة">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
@@ -1591,6 +1613,7 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
       <div class="streak-mini">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z"/></svg>
         <span class="txt" id="sidebarStreakTxt"><span class="arabic">سلسله ٠ يوم</span>، 0 day streak</span>
+        <b class="streak-num" id="sidebarStreakNum">0</b>
       </div>
     </div>
   </aside>
@@ -1996,6 +2019,8 @@ function applyStudentStateRow(row){
   if(topXp) topXp.textContent = studentStats.xp.toLocaleString();
   const streakTxt = document.getElementById('sidebarStreakTxt');
   if(streakTxt) streakTxt.innerHTML = `<span class="arabic">سلسله ${studentStats.streak || 0} يوم</span>، ${studentStats.streak || 0} day streak`;
+  const streakNum = document.getElementById('sidebarStreakNum');
+  if(streakNum) streakNum.textContent = studentStats.streak || 0;
 }
 function clearStudentState(){
   // Wipes every in-memory trace of the previous session's student data.
@@ -3132,6 +3157,9 @@ navGroups.forEach(group => {
     const a = document.createElement('button');
     a.className = 'side-link';
     a.dataset.view = item.id;
+    /* Rail mode (981-1180px) hides the text, so expose it on hover + to screen readers */
+    a.title = `${item.ar||''}${item.ar&&item.en?' / ':''}${item.en||''}`;
+    a.setAttribute('aria-label', `${item.ar||item.en||''}${item.ar&&item.en?' / ':''}${item.en||item.ar||''}`);
     // All sidebar items are always visible — no progressive reveal gating
     a.innerHTML = `<span class="side-icon"><i data-lucide="${item.icon||'circle'}" width="18" height="18"></i></span><span class="side-text-wrap"><span class="ar">${escapeHtml(item.ar||'')}</span><span class="en">${escapeHtml(item.en||'')}</span></span>`;
     sidebarNav.appendChild(a);
@@ -15038,6 +15066,8 @@ function awardXp(amount){
   if(topStreakEl) topStreakEl.textContent = studentStats.streak || 0;
   const streakTxt = document.getElementById('sidebarStreakTxt');
   if(streakTxt) streakTxt.innerHTML = `<span class="arabic">سلسله ${studentStats.streak || 0} يوم</span>، ${studentStats.streak || 0} day streak`;
+  const streakNum = document.getElementById('sidebarStreakNum');
+  if(streakNum) streakNum.textContent = studentStats.streak || 0;
   // Refresh the dashboard's weekly card + hero rings so "You studied X days
   // this week" and the streak flame update the instant a lesson is finished -
   // not only on the next dashboard visit.
