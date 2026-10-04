@@ -19282,6 +19282,10 @@ function renderSpeaking(){
       document.getElementById('roleplayTypedInput').value = '';
       respondToStudent(val);
     });
+    // Enter to send (Shift+Enter for newline on desktop, but input is single-line)
+    document.getElementById('roleplayTypedInput').addEventListener('keydown', e => {
+      if(e.key === 'Enter'){ e.preventDefault(); document.getElementById('roleplaySend').click(); }
+    });
     document.getElementById('roleplayMic').addEventListener('click', function(){
       recordAndScore((heard, score, errorCode) => {
         if(heard){ addBubble('me', heard); respondToStudent(heard); }
