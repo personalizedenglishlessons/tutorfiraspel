@@ -21771,8 +21771,29 @@ function renderDashboardIntel(){
           if(_academy){
             const _meta = academyLessonList(_academy).find(l => l.id === lessonId);
             if(_meta && _meta.locked){
-              toast('<span class="arabic">ذا الدرس مقفل، اكمل الدروس اللي فاته اول شي</span>، This lesson is locked. Complete previous lessons first.');
-              return;
+              /* Stage resume semantics: the effective state may mark this
+                 lesson 'available' (the home continue card opens exactly
+                 that lesson), and a saved mid-lesson position always
+                 resumes even while the server still marks it locked.
+                 Block every other locked lesson. */
+              let _serverAvail = false;
+              try{
+                const _st = window.PEL_EFFECTIVE_STATE;
+                const _sv = (_st && Array.isArray(_st.lessons)) ? _st.lessons.find(x => x.id === lessonId) : null;
+                _serverAvail = !!(_sv && _sv.state === 'available');
+              }catch(e){}
+              let _resume = false;
+              try{
+                const _raw = localStorage.getItem('pel_stage_pos');
+                if(_raw && _raw !== '[object Object]' && _raw !== 'null'){
+                  const _p = JSON.parse(_raw);
+                  _resume = !!(_p && _p.a === academyId && _p.l === lessonId);
+                }
+              }catch(e){}
+              if(!_serverAvail && !_resume){
+                toast('<span class="arabic">ذا الدرس مقفل، اكمل الدروس اللي فاته اول شي</span>، This lesson is locked. Complete previous lessons first.');
+                return;
+              }
             }
           }
         }
