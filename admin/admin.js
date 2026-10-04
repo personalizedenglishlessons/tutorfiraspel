@@ -477,6 +477,8 @@ function statusChip(status){
   return '<span class="chip ' + cls + '"><span class="badge-dot ' + cls + '"></span>' + esc(text) + '</span>';
 }
 function chip(text, cls){
+  /* Callers MUST pre-escape untrusted text with esc() — this function
+     concatenates raw to allow rich chips (icons, compound labels). */
   return '<span class="chip ' + (cls||'') + '">' + text + '</span>';
 }
 function arNum(n){
