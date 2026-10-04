@@ -923,37 +923,73 @@ async function overview(){
 $('viewArea').innerHTML = pageHead(t('overview'), lang === 'ar' ? 'وش يصير الحين؟ مين يحتاج انتباه؟' : 'What is happening? Who needs attention?') + loadingBlock();
   var [r, pov, dr] = await Promise.all([ rpc('admin_overview'), rpc('admin_plans_overview'), hasPerm('students.manage') ? rpc('admin_deletion_requests') : Promise.resolve({ok:false}) ]);
   if(!r.ok){ $('viewArea').innerHTML = errBlock(rpcErrMsg(r)); return; }
-  var d = r.data;
+  var d = r.data || {};
+  /* PostgREST normally returns the overview JSON object directly. Normalize
+     the occasional wrapped/string response too, then only render numeric
+     metric values so a placeholder glyph can never reach a KPI card. */
+  if(Array.isArray(d)) d = d[0] || {};
+  if(typeof d === 'string'){
+    try{ d = JSON.parse(d); }catch(e){ d = {}; }
+  }
   var pv = pov.ok ? (pov.data || {}) : {};
   var delReqs = (dr.ok && Array.isArray(dr.data)) ? dr.data : [];
   var tt = d.totals || {};
+  if(typeof tt === 'string'){
+    try{ tt = JSON.parse(tt); }catch(e){ tt = {}; }
+  }
+  function overviewMetric(keys){
+    var sources = [tt, d];
+    for(var si = 0; si < sources.length; si++){
+      for(var ki = 0; ki < keys.length; ki++){
+        var value = sources[si] && sources[si][keys[ki]];
+        if(value === null || value === undefined || value === '') continue;
+        var numberValue = Number(value);
+        if(Number.isFinite(numberValue)) return numberValue;
+      }
+    }
+    return 0;
+  }
+  var metrics = {
+    students: overviewMetric(['students', 'student_count']),
+    online: overviewMetric(['online', 'online_count']),
+    active: overviewMetric(['active', 'active_students']),
+    new_30: overviewMetric(['new_30', 'new_students_30']),
+    stalled: overviewMetric(['stalled', 'stalled_students']),
+    avg_progress: overviewMetric(['avg_progress', 'average_progress']),
+    certificates: overviewMetric(['certificates', 'certs', 'certificates_count']),
+    certificates_30: overviewMetric(['certificates_30', 'certs_30', 'certificates_last_30']),
+    teachers: overviewMetric(['teachers', 'teacher_count', 'teachers_count']),
+    groups: overviewMetric(['groups', 'active_groups', 'groups_count']),
+    upcoming_classes: overviewMetric(['upcoming_classes', 'upcoming_lessons', 'upcoming']),
+    expiring: overviewMetric(['expiring', 'expiring_programs'])
+  };
 
   /* "What should I do?" - from real conditions */
   var actions = [];
   if(delReqs.length > 0) actions.push({ warn:true, icon:'alert-triangle', txt: (lang === 'ar' ? (delReqs.length + ' طلب حذف حساب — لازم يتنفذ خلال 30 يوم (صفحة الطلاب)') : (delReqs.length + ' account deletion request(s) — must be actioned within 30 days (Students page)') ) });
-  if((tt.expiring || 0) > 0) actions.push({ warn:true, icon:'hourglass', txt: (lang === 'ar' ? (tt.expiring + ' برنامج ينتهي خلال ١٤ يوم - جدد او كلم الطالب') : (tt.expiring + ' program(s) end within 14 days - renew or reach out') ) });
+  if(metrics.expiring > 0) actions.push({ warn:true, icon:'hourglass', txt: (lang === 'ar' ? (metrics.expiring + ' برنامج ينتهي خلال ١٤ يوم - جدد او كلم الطالب') : (metrics.expiring + ' program(s) end within 14 days - renew or reach out') ) });
   if(actions.length === 0){
     if((d.attention || []).length > 0) actions.push({ txt: lang === 'ar' ? (d.attention.length + ' طالب يحتاج انتباه') : (d.attention.length + ' students need attention') });
     if((d.upcoming_classes || []).length > 0) actions.push({ txt: lang === 'ar' ? (d.upcoming_classes.length + ' دروس مباشره قادمه - سجل الحضور بعدها') : (d.upcoming_classes.length + ' upcoming live classes') });
-    if((tt.certificates_30 || 0) > 0) actions.push({ txt: lang === 'ar' ? (tt.certificates_30 + ' شهاده صدرت ذا الشهر') : (tt.certificates_30 + ' certificates issued this month') });
-    if((tt.stalled || 0) > 0) actions.push({ txt: lang === 'ar' ? (tt.stalled + ' طالب متوقف - افتح ملفاتهم وشوف السبب') : (tt.stalled + ' stalled students - open their profiles') });
+    if(metrics.certificates_30 > 0) actions.push({ txt: lang === 'ar' ? (metrics.certificates_30 + ' شهاده صدرت ذا الشهر') : (metrics.certificates_30 + ' certificates issued this month') });
+    if(metrics.stalled > 0) actions.push({ txt: lang === 'ar' ? (metrics.stalled + ' طالب متوقف - افتح ملفاتهم وشوف السبب') : (metrics.stalled + ' stalled students - open their profiles') });
   }
   var actionHtml = actions.length ? actions.map(function(a){
     return '<div class="reason-item"><span class="badge-dot ' + (a.warn ? 'warn' : 'gold') + '" style="margin-top:6px;"></span><div><div>' + esc(a.txt) + '</div></div></div>';
   }).join('') : '<div class="sub">' + esc(t('noData')) + '</div>';
 
   var kpi = [
-    { label:t('studentsTotal'), v:fmtN(tt.students), cls:'accent' },
-    { label:t('onlineNow'), v:fmtN(tt.online), cls: tt.online > 0 ? 'green' : '' },
-    { label:t('activeStudents'), v:fmtN(tt.active), cls:'' },
-    { label:t('newStudents'), v:fmtN(tt.new_30), cls:'green' },
-    { label:t('stalledStudents'), v:fmtN(tt.stalled), cls: tt.stalled > 0 ? 'danger' : '' },
-    { label:t('avgProgress'), v:fmtN(tt.avg_progress), cls:'' },
-    { label:t('certsIssued'), v:fmtN(tt.certificates), sub: '+' + fmtN(tt.certificates_30) + ' (30d)', cls:'' },
-    { label:t('teachersCount'), v:fmtN(tt.teachers), cls:'' },
-    { label:t('groupsCount'), v:fmtN(tt.groups), cls:'' },
-{ label:t('upcomingClasses'), v:fmtN(tt.upcoming_classes), cls: tt.upcoming_classes ? 'warn' : '' },
-    { label:t('expiringPrograms'), v:fmtN(tt.expiring), cls: tt.expiring ? 'warn' : '' },
+    { label:t('studentsTotal'), v:fmtN(metrics.students), cls:'accent' },
+    { label:t('onlineNow'), v:fmtN(metrics.online), cls: metrics.online > 0 ? 'green' : '' },
+    { label:t('activeStudents'), v:fmtN(metrics.active), cls:'' },
+    { label:t('newStudents'), v:fmtN(metrics.new_30), cls:'green' },
+    { label:t('stalledStudents'), v:fmtN(metrics.stalled), cls: metrics.stalled > 0 ? 'danger' : '' },
+    { label:t('avgProgress'), v:fmtN(metrics.avg_progress), cls:'' },
+    { label:t('certsIssued'), v:fmtN(metrics.certificates), sub: lang === 'ar' ? fmtN(metrics.certificates_30) + ' شهاده خلال آخر ٣٠ يوم' : fmtN(metrics.certificates_30) + ' issued in last 30d', cls:'' },
+    { label:t('teachersCount'), v:fmtN(metrics.teachers), cls:'' },
+    { label:t('groupsCount'), v:fmtN(metrics.groups), cls:'' },
+    { label:t('upcomingClasses'), v:fmtN(metrics.upcoming_classes), cls: metrics.upcoming_classes ? 'warn' : '' },
+    { label:t('expiringPrograms'), v:fmtN(metrics.expiring), cls: metrics.expiring ? 'warn' : '' },
     { label:t('activePlans'), v:fmtN(pv.active_count), cls:'' },
     { label:t('expiringSoon'), v:fmtN(pv.expiring_soon_count), cls: pv.expiring_soon_count ? 'warn' : '' },
     { label:t('expiredPlans'), v:fmtN(pv.expired_count), cls: pv.expired_count ? 'danger' : '' },
@@ -1232,16 +1268,16 @@ async function loadStudents(st){
     var seenTitle = s.last_seen ? ' title="' + esc(fmtDate(s.last_seen)) + '"' : '';
     var loginTxt = s.last_login ? '<div style="font-size:.68rem;color:var(--text-muted);">↑ ' + esc(lang==='ar'?'دخول':'login') + ' ' + esc(relTime(s.last_login)) + '</div>' : '';
     return '<tr>' +
-      '<td><span class="mobile-label">' + esc(t('name')) + '</span><a class="row-link" data-open-student="' + s.id + '">' + esc(s.full_name) + '</a>' + (s.email ? '<div style="font-size:.68rem; color:var(--text-muted);">' + esc(s.email) + '</div>' : '') + '</td>' +
-      '<td><span class="mobile-label">' + esc(t('status')) + '</span>' + statusChip(s.status || 'new') + '</td>' +
-      '<td><span class="mobile-label">' + esc(t('level')) + '</span>' + chip(esc(lvlName(s.level || 'A1')), 'gold') + '</td>' +
-      '<td class="num"><span class="mobile-label">XP</span>' + fmtN(s.xp) + '</td>' +
-      '<td class="num"><span class="mobile-label">' + esc(t('streak')) + '</span>' + fmtN(s.streak) + 'd</td>' +
-      '<td class="num"><span class="mobile-label">' + esc(t('progress')) + '</span>' + fmtN(s.completed_lessons) + '</td>' +
-      '<td><span class="mobile-label">' + esc(t('lastActive')) + '</span>' + onlineBadge + ' <span style="font-size:.74rem;"' + seenTitle + '>' + seenTxt + '</span>' + loginTxt + '</td>' +
-      '<td><span class="mobile-label">' + esc(t('program')) + '</span>' + (s.program_name ? '<div style="font-weight:600;">' + esc(s.program_name) + '</div>' : '-') + (s.plan_status ? '<div style="margin-top:4px;">' + planStatusChip(s.plan_status) + (s.plan_days_left != null && ['active','expiring'].indexOf(s.plan_status) !== -1 ? ' <span style="font-size:.68rem; color:var(--text-muted);">' + esc(t('daysLeft').replace('%d', arNum(s.plan_days_left))) + '</span>' : '') + '</div>' : '<div style="margin-top:4px;"><span class="chip muted">' + esc(lang==='ar'?'ما فيه باقه':'No plan') + '</span></div>') + '</td>' +
-      '<td><span class="mobile-label">' + esc(t('certs')) + '</span>' + fmtN(s.cert_count) + '</td>' +
-      '<td><span class="mobile-label">' + esc(t('attention')) + '</span>' + attention + '</td>' +
+      '<td><a class="row-link" data-open-student="' + s.id + '">' + esc(s.full_name) + '</a>' + (s.email ? '<div style="font-size:.68rem; color:var(--text-muted);">' + esc(s.email) + '</div>' : '') + '</td>' +
+      '<td>' + statusChip(s.status || 'new') + '</td>' +
+      '<td>' + chip(esc(lvlName(s.level || 'A1')), 'gold') + '</td>' +
+      '<td class="num">' + fmtN(s.xp) + '</td>' +
+      '<td class="num">' + fmtN(s.streak) + 'd</td>' +
+      '<td class="num">' + fmtN(s.completed_lessons) + '</td>' +
+      '<td>' + onlineBadge + ' <span style="font-size:.74rem;"' + seenTitle + '>' + seenTxt + '</span>' + loginTxt + '</td>' +
+      '<td>' + (s.program_name ? '<div style="font-weight:600;">' + esc(s.program_name) + '</div>' : '-') + (s.plan_status ? '<div style="margin-top:4px;">' + planStatusChip(s.plan_status) + (s.plan_days_left != null && ['active','expiring'].indexOf(s.plan_status) !== -1 ? ' <span style="font-size:.68rem; color:var(--text-muted);">' + esc(t('daysLeft').replace('%d', arNum(s.plan_days_left))) + '</span>' : '') + '</div>' : '<div style="margin-top:4px;"><span class="chip muted">' + esc(lang==='ar'?'ما فيه باقه':'No plan') + '</span></div>') + '</td>' +
+      '<td>' + fmtN(s.cert_count) + '</td>' +
+      '<td>' + attention + '</td>' +
       '</tr>';
   }).join('');
 

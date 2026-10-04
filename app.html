@@ -149,11 +149,11 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .sidebar{
   width:var(--sidebar-w); flex-shrink:0; background:color-mix(in srgb, var(--surface) 92%, transparent);
   backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
-  border-right:1px solid var(--border);
+  border-inline-end:1px solid var(--border);
   position:sticky; top:0; height:100vh; height:100dvh; display:flex; flex-direction:column; z-index:200;
   transition:width var(--dur) var(--ease), transform var(--dur) var(--ease);
 }
-.sidebar.collapsed{ width:0; overflow:hidden; border-right:none; }
+.sidebar.collapsed{ width:0; overflow:hidden; border-inline-end:none; }
 .sidebar-head{ display:flex; align-items:center; gap:12px; padding:24px 22px; border-bottom:1px solid var(--border); }
 @media(min-width:1920px){ .sidebar-head{ padding:28px 28px; } }
 @media(min-width:2560px){ .sidebar-head{ padding:36px 36px; } .sidebar-logo img{ height:32px; } }
@@ -165,7 +165,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .sidebar-name{ font-family:'Fraunces',serif; font-size:.95rem; white-space:normal; overflow:visible; line-height:1.35; opacity:1; transition:opacity .2s ease; }
 /* sidebar collapsed → fully hidden (width:0, overflow:hidden) */
 .sidebar-collapse-btn{
-  margin-left:auto; width:40px; height:40px; border-radius:9px; border:1px solid var(--border); color:var(--text-muted);
+  margin-inline-start:auto; width:40px; height:40px; border-radius:9px; border:1px solid var(--border); color:var(--text-muted);
   display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:.25s ease;
 }
 .sidebar-collapse-btn:hover{ border-color:var(--gold); color:var(--gold); }
@@ -189,11 +189,11 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .side-link:hover .side-icon{ color:var(--gold); }
 .side-link.active{ background:linear-gradient(90deg, rgba(200,169,106,.14), transparent); color:var(--text); }
 .side-link.active .side-icon{ color:var(--gold); }
-.side-link.active::before{ content:""; position:absolute; left:0; top:8px; bottom:8px; width:3px; border-radius:3px; background:var(--gold); }
-.side-badge{ position:absolute; top:7px; right:8px; min-width:19px; height:19px; border-radius:10px; background:var(--gold); color:#17171B; font-size:.62rem; font-weight:800; display:flex; align-items:center; justify-content:center; padding:0 6px; box-shadow:0 2px 8px rgba(0,0,0,.35); }
+.side-link.active::before{ content:""; position:absolute; inset-inline-start:0; top:8px; bottom:8px; width:3px; border-radius:3px; background:var(--gold); }
+.side-badge{ position:absolute; top:7px; inset-inline-end:8px; min-width:19px; height:19px; border-radius:10px; background:var(--gold); color:#17171B; font-size:.62rem; font-weight:800; display:flex; align-items:center; justify-content:center; padding:0 6px; box-shadow:0 2px 8px rgba(0,0,0,.35); }
 
 .side-text-wrap{ display:flex; flex-direction:column; transition:opacity .2s ease; overflow:hidden; }
-.side-text-wrap .ar{ font-family:'Cairo','Tajawal',sans-serif; direction:rtl; text-align:left; line-height:1.3; overflow-wrap:break-word; word-break:break-word; }
+.side-text-wrap .ar{ font-family:'Cairo','Tajawal',sans-serif; direction:rtl; text-align:start; line-height:1.3; overflow-wrap:break-word; word-break:break-word; }
 .side-text-wrap .en{ font-size:.68rem; color:var(--text-muted); line-height:1.3; margin-top:1px; }
 
 
@@ -207,7 +207,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 
 .sidebar-overlay{ display:none; }
 @media(max-width:980px){
-  .sidebar{ position:fixed; left:0; transform:translateX(-100%); box-shadow:var(--shadow-lift); }
+  .sidebar{ position:fixed; inset-inline-start:0; transform:translateX(100%); box-shadow:var(--shadow-lift); }
   .sidebar.mobile-open{ transform:translateX(0); }
   /* collapsed sidebar stays at width:0 on mobile too */
   .sidebar-overlay{ display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:190; backdrop-filter:blur(2px); -webkit-backdrop-filter:blur(2px); }
@@ -749,7 +749,7 @@ body.ui-ar .vv-stat .lbl{ letter-spacing:0; text-transform:none; font-family:'Ca
 .vv-ctrl-btn.active{ background:rgba(200,169,106,.12); border-color:var(--gold); color:var(--gold); }
 .vv-ctrl-btn [data-lucide]{ width:18px; height:18px; }
 
-.vv-progress-bar{ height:3px; background:rgba(255,255,255,.05); border-radius:3px; margin-bottom:24px; overflow:hidden; }
+.vv-progress-bar{ height:3px; background:var(--border); border-radius:3px; margin-bottom:24px; overflow:hidden; }
 .vv-progress-fill{ height:100%; background:var(--gold); transition:width .6s var(--ease); }
 
 .vv-card-scene{ perspective:1400px; margin-bottom:24px; position:relative; min-height:480px; height:calc(100vh - 340px); max-height:720px; }
@@ -1314,7 +1314,7 @@ html[data-theme="light"] .academy-fav{ background:rgba(184,130,30,.15); box-shad
 /* light mode: fix invisible white insets on cards */
 html[data-theme="light"] .vv-cat-card,
 html[data-theme="light"] .vv-card-face{ box-shadow:inset 0 1px 0 rgba(255,255,255,.4), 0 4px 16px -8px rgba(30,25,15,.08); }
-html[data-theme="light"] .vv-progress-bar{ background:rgba(184,130,30,.1); }
+html[data-theme="light"] .vv-progress-bar{ background:var(--border); }
 html[data-theme="light"] .academy-fav.active{ background:rgba(184,130,30,.2); color:var(--gold); }
 .academy-cover::before{
   content:""; position:absolute; inset:0; pointer-events:none;
@@ -1892,7 +1892,10 @@ function applyTheme(t){
   document.getElementById('darkChoiceBtn') && document.getElementById('darkChoiceBtn').classList.toggle('btn-gold', t==='dark');
   document.getElementById('lightChoiceBtn') && document.getElementById('lightChoiceBtn').classList.toggle('btn-gold', t==='light');
 }
-const initialTheme = localStorage.getItem('pel_app_theme') || localStorage.getItem('pel-theme') || 'dark';
+let initialTheme = 'dark';
+try{
+  initialTheme = localStorage.getItem('pel_app_theme') || localStorage.getItem('pel-theme') || 'dark';
+}catch(e){}
 applyTheme(initialTheme);
 document.getElementById('themeToggle').addEventListener('click', () => {
   applyTheme(root.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
@@ -9976,7 +9979,7 @@ renderMiniCal();
 
 /* pomodoro timer - studied minutes sync to the student's DB account
    (student_prefs.timer) so totals follow the learner across devices. */
-let pomoSeconds = 25*60, pomoRunning = false, pomoInterval = null, pomoStudied = 0;
+let pomoSeconds = 25*60, pomoRunning = false, pomoInterval = null, pomoStudied = 0, pomoCreditedSeconds = 0;
 function renderPomo(){
   const m = String(Math.floor(pomoSeconds/60)).padStart(2,'0');
   const s = String(pomoSeconds%60).padStart(2,'0');
@@ -10012,14 +10015,19 @@ document.getElementById('pomoStart').addEventListener('click', function(){
     pomoInterval = setInterval(() => {
       pomoSeconds--;
       pomoStudied++;
-      if(pomoStudied % 60 === 0){ syncStudyMinutes(1); renderPomo(); }
+      const completeMinutes = Math.floor((pomoStudied - pomoCreditedSeconds) / 60);
+      if(completeMinutes > 0){
+        syncStudyMinutes(completeMinutes);
+        pomoCreditedSeconds += completeMinutes * 60;
+        renderPomo();
+      }
       if(pomoSeconds <= 0){ clearInterval(pomoInterval); pomoRunning=false; pomoSeconds=0; toast('<span class="arabic">انتهت جلسه الدراسه. احسنت</span>، Study session complete. Well done.'); confettiBurst(); }
       renderPomo();
     }, 1000);
   } else { clearInterval(pomoInterval); }
 });
 document.getElementById('pomoReset').addEventListener('click', () => { clearInterval(pomoInterval); pomoRunning=false; pomoSeconds=25*60;
-  if(pomoStudied % 60 > 0) syncStudyMinutes(1); pomoStudied = 0; renderPomo();
+  pomoStudied = 0; pomoCreditedSeconds = 0; renderPomo();
   document.getElementById('pomoStart').innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>'; });
 renderPomo();
 
@@ -17981,7 +17989,7 @@ function showWordCard(v, anchor){
   const r = anchor.getBoundingClientRect();
   card.style.display = 'block';
   card.style.top = Math.min(window.scrollY + window.innerHeight - 240, r.bottom + 8 + window.scrollY) + 'px';
-  card.style.insetInlineStart = Math.max(12, Math.min(window.scrollX + window.innerWidth - 320, r.left + window.scrollX)) + 'px';
+  card.style.left = Math.max(12, Math.min(window.scrollX + window.innerWidth - 320, r.left + window.scrollX)) + 'px';
   if(window.lucide) lucide.createIcons();
   document.getElementById('pwcSay').onclick = () => { speak(v.en); };
   document.getElementById('pwcX').onclick = () => { card.style.display='none'; };
@@ -18226,10 +18234,19 @@ function renderLessonReader(container, academy, lesson){
     toggleBookmark('favlesson', key, lesson.title, academy.en);
     this.classList.toggle('toggled'); this.innerHTML = `<i data-lucide="heart" width="15" height="15"></i> ${isBookmarked('favlesson',key)?'<span class="arabic">مفضل</span>، Favourited':'<span class="arabic">تفضيل</span>، Favourite'}`; lucide.createIcons();
   });
-  document.getElementById('lessonCompleteBtn').addEventListener('click', function(){
-    markLessonComplete(academy.id, wsState.lessonId);
-    this.innerHTML = '<span class="arabic">مكتمل</span> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>';
-    renderWorkspace();
+  document.getElementById('lessonCompleteBtn').addEventListener('click', async function(){
+    this.disabled = true;
+    this.setAttribute('aria-busy', 'true');
+    this.innerHTML = '<span class="arabic">جاري الحفظ...</span>، <span dir="ltr">Saving...</span>';
+    let completion = null;
+    try{ completion = await markLessonComplete(academy.id, wsState.lessonId); }catch(e){}
+    this.removeAttribute('aria-busy');
+    if(completion !== null){
+      renderWorkspace();
+      return;
+    }
+    this.disabled = false;
+    this.innerHTML = '<span class="arabic">تعذر الحفظ، حاول مره ثانيه</span>، <span dir="ltr">Could not save. Try again.</span>';
   });
   const lessonNextBtn = container.querySelector('#lessonNextBtn, #lessonNextBtn2');
   if(lessonNextBtn){
@@ -22231,7 +22248,7 @@ if(window.lucide) lucide.createIcons();
         '<div class="pel-row"><label class="pel-field"><span>'+(esc(A?'مدينتك':'Your city'))+'</span><input id="pelCity" type="text" dir="auto" placeholder="'+esc(A?'اكتب مدينتك':'Type your city')+'" aria-label="المدينه"></label></div>'+
         '<label class="pel-field"><span>'+(esc(A?'اوقات مناسبه لك *':'Preferred times *'))+'</span><input id="pelTimes" type="text" dir="auto" required placeholder="'+esc(A?'مثال: المسا، نهايه الاسبوع':'e.g. evenings, weekends')+'" aria-label="الوقت المتاح"></label>'+
         '<label class="pel-field"><span>'+(esc(A?'ملاحظات':'Notes'))+'</span><textarea id="pelNotes" rows="2" dir="auto" placeholder="'+esc(A?'اي شي تبي الاستاذ يعرفه':'Anything you want the teacher to know')+'"></textarea></label>'+
-        '<div class="pel-form-foot"><span id="pelCost"></span><button type="button" class="btn-gold" id="pelSubmit" disabled title="هذا الدرس مقفل" aria-label="هذا الدرس مقفل">'+esc(A?'اطلب الحصه':'Request class')+'</button></div>'+
+        '<div class="pel-form-foot"><span id="pelCost"></span><button type="button" class="btn-gold" id="pelSubmit" disabled>'+esc(A?'اطلب الحصه':'Request class')+'</button></div>'+
         '<p class="pel-form-hint" id="pelHint"></p>'+
       '</div>'+
       '<div class="pel-req-card"><h3>'+(esc(A?'طلباتك':'Your requests'))+'</h3><div class="pel-req-list">'+reqRows+'</div></div>'+
@@ -22265,6 +22282,8 @@ if(window.lucide) lucide.createIcons();
       else if(inp && !hasCity){ hint.textContent = A ? 'اكتب مدينتك للحصه الحضوريه.' : 'Type your city for in-person classes.'; }
       else if(inp){ hint.textContent = A ? 'الحصه الحضوريه متوفره في النماص بس.' : 'In-person classes are available in Al Namas only.'; }
       else { hint.textContent=''; }
+      if(btn.disabled) btn.setAttribute('aria-label', (A ? 'اطلب الحصه: ' : 'Request class: ') + hint.textContent);
+      else btn.removeAttribute('aria-label');
     }
     sel && sel.addEventListener('change', refresh);
     times && times.addEventListener('input', refresh);
@@ -22343,7 +22362,10 @@ if(window.lucide) lucide.createIcons();
     const el=document.getElementById('pelGlobalWelcome'); if(el) el.remove();
   }
 
+  let mounted = false;
   function mount(){
+    if(mounted) return;
+    mounted = true;
     pelStyle();
     ensureShell();
     pelGlobalWelcome();
