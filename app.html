@@ -16,14 +16,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;500;700&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
 <script src="vendor/lucide.min.js" integrity="sha384-e4/0BB/wmBhpxvLLrbTidvaESiwxgHfoSGUoRd2s9Ho7YmgxiMftfoo51J/Ojyph" crossorigin="anonymous" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.50.0/dist/umd/supabase.js" integrity="sha384-K0oxqktRvaThvYgGL4G+OK2Ih6VS6Uyu7j3+7WJgp/uWM0Yv6Xi4YEiw0BB+mPfi" crossorigin="anonymous" defer></script>
-<script src="lib/daily-lesson.js?v=de75b95f" defer></script>
+<script src="lib/daily-lesson.js?v=2b71d40a" defer></script>
 <script src="lib/pel-personalization.js?v=7e0463a1" defer></script>
 <script src="lib/pel-plans.js?v=b7ef7805" defer></script>
 <script src="lib/pel-settings.js?v=8e8a2796" defer></script>
 <script src="lib/cert-qr.js?v=a43f19f9" defer></script>
 <script src="lib/cert-sheet.js?v=a1f37a19" defer></script>
 <script src="lib/pel_config.js?v=a25efd62"></script>
-<script src="lib/pel_lesson_stage.js?v=2299945b"></script>
+<script src="lib/pel_lesson_stage.js?v=4efd787c"></script>
 <script src="lib/pel_dashboard_life.js?v=061253c7"></script>
 <script src="lib/pel_curriculum_path.js?v=2a1761b7"></script>
 <style>
@@ -2319,7 +2319,7 @@ function authGateError(){
    account on the same device when the remote table isn't available. */
 function clearUserLocalKeys(uidOverride){
   // Clear legacy (unscoped) keys
-  ['pel_study_days','pel_completion_dates','pel_notif_prefs','pel_cert_codes','pel_review_queue','pel_writing_misses','pel_review_days','pel_grammar_endpoint','pel_plan','pel_plan_draft','pel_plan_snapshot','pel_stage_pos'].forEach(k => { try{ localStorage.removeItem(k); }catch(e){} });
+  ['pel_study_days','pel_completion_dates','pel_notif_prefs','pel_cert_codes','pel_review_queue','pel_writing_misses','pel_review_days','pel_grammar_endpoint','pel_plan','pel_plan_draft','pel_plan_snapshot','pel_stage_pos','pel_srs_v1'].forEach(k => { try{ localStorage.removeItem(k); }catch(e){} });
   // Clear user-scoped keys (pel_*_u_<userId>) for the CURRENT user only
   try{
     const uid = uidOverride || (currentUser ? currentUser.id : null);
@@ -10479,9 +10479,18 @@ function featuredLesson(){
   const _d = new Date(); const dayIdx = parseInt(new Intl.DateTimeFormat('en-CA', {timeZone:'Asia/Riyadh'}).format(_d).replace(/-/g,'')) % 100000;
   const pool = directionAcademies();
   const academy = pool[dayIdx % pool.length];
-  const ai = pool.indexOf(academy);
-  const lesson = LESSON_TITLE_BANK[(ai + (dayIdx % 6)) % LESSON_TITLE_BANK.length];
-  return {academy: academy.id, lesson: lesson.id, en: lesson.en, ar: lesson.ar};
+  // Pick the lesson from the chosen academy's real lesson list. The old math
+  // paired the academy with an unrelated title-bank entry, which opened a
+  // lesson the academy never contained (broken for both directions; the
+  // Arabic academies never contained any title-bank id at all).
+  let ids = (typeof ACADEMY_LESSONS !== 'undefined' && ACADEMY_LESSONS[academy.id]) ? ACADEMY_LESSONS[academy.id].slice() : [];
+  if(!ids.length && typeof academyLessonList === 'function'){
+    try{ ids = academyLessonList(academy).map(l => l.id); }catch(e){}
+  }
+  if(!ids.length) ids = ['meeting-someone-new'];
+  const lessonId = ids[(dayIdx % 6) % ids.length] || ids[0];
+  const m = (typeof lessonMeta === 'function') ? (lessonMeta(lessonId) || {}) : {};
+  return {academy: academy.id, lesson: lessonId, en: m.en || lessonId.replace(/-/g,' '), ar: m.ar || '', review: false};
 }
 function directionAcademies(){
   // The academy list for the learner's direction: Arabic academies
@@ -21749,9 +21758,24 @@ function renderDashboardIntel(){
     window.PEL_BEGINNER_PHASES = __pelStageApi.PEL_BEGINNER_PHASES;
     window.PEL_BEGINNER_LESSONS = __pelStageApi.PEL_BEGINNER;
     const _origOpenLesson = openLesson;
-    openLesson = function (academyId, lessonId) {
+    openLesson = async function (academyId, lessonId) {
       try {
         if (typeof subBlocked === 'function' && subBlocked()) { return _origOpenLesson(academyId, lessonId); }
+        /* Same gates as the workspace reader. Without them here, a deep link
+           or UI call could open locked lessons and off-route academies
+           through the focused stage while the original guards only ran on
+           the fallback path. */
+        if (typeof ensureRouteAllows === 'function' && !(await ensureRouteAllows(academyId))) return;
+        if (typeof resolveAcademyById === 'function' && typeof academyLessonList === 'function'){
+          const _academy = resolveAcademyById(academyId);
+          if(_academy){
+            const _meta = academyLessonList(_academy).find(l => l.id === lessonId);
+            if(_meta && _meta.locked){
+              toast('<span class="arabic">ذا الدرس مقفل، اكمل الدروس اللي فاته اول شي</span>، This lesson is locked. Complete previous lessons first.');
+              return;
+            }
+          }
+        }
         const ok = Stage.open(academyId, lessonId);
         if (ok) return;
       } catch (e) { /* fall through to original */ }
