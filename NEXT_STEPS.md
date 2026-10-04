@@ -12,32 +12,32 @@ User asked to SCAN EVERYTHING. Full sweep of repo + DB, fresh dumps.
 - admin.js 'تاكيد اخوير' -> 'تاكيد اخير'
 - seed_flagship generator 'ويش از' -> 'ويتش از' synced
 - tools/batch_vocab_data.py synced to fixed vocab translits
-- PERSIAN CODEPOINTS normalized repo-wide (ک U+06A9 -> ك, ی U+06CC
-  -> ي): 26 spots in app.html roleplay translits (پرکتیس/کمنق/کچ/
-  سکستي/کيلوميترز/اميرجنسی/پریفر...) + docs. These render fine but
+- PERSIAN CODEPOINTS normalized repo-wide (ك U+06A9 -> ك, ي U+06CC
+  -> ي): 26 spots in app.html roleplay translits (بركتيس/كمنق/كتش/
+  سكستي/كيلوميترز/اميرجنسي/بريفر...) + docs. These render fine but
   silently break any search/replace that uses Arabic codepoints.
 
 ### DB fixes (live, verified zero residual)
 - Round-5 families that had NOT stuck/were missed: ييستردي -> يسترداي,
-  يوشوي -> يوجوالي, الويز/اولويك -> اولويز, ام بروف -> ام پروڤ,
+  يوشوي -> يوجوالي, الويز/اولويك -> اولويز, ام بروف -> ام بروڤ,
   كاجاوال -> كاجوال
 - allergy الرجي -> اليرجي (2 lesson_items rows)
 - جزء hamza: 'بالجز الثاني' -> 'بالجزء', 'هالجز' -> 'هالجزء'
 - كوستشن -> كويستشن (3 lesson_items + 6 exercises)
-- luggage rows 'لقج'/'لاقيج' -> 'لاگيج' (PHON_DICT standard);
-  exercises لاگیدج -> لاگيج normalized
-- opinion 'ابينيون' -> 'اپينيان' (PHON_DICT)
+- luggage rows 'لقج'/'لاقيج' -> 'لاقيج' (PHON_DICT standard);
+  exercises لاقيدج -> لاقيج normalized
+- opinion 'ابينيون' -> 'ابينيان' (PHON_DICT)
 - 'اكتف فرس باسيف' -> 'اكتف ڤرس باسيف' (vs was rendered فرس!)
 - 'اي اقر' -> 'اي اقري' (PHON_DICT agree=اقري)
-- above 'اباوف' -> 'اباڤ', Pick up 'بك اب' -> 'پيك اب' (2 exercise
+- above 'اباوف' -> 'اباڤ', Pick up 'بك اب' -> 'بيك اب' (2 exercise
   rows + option), missing ___ blank restored in ex#2274 tr
 - Farsi codepoints normalized in 4 lesson_items rows
 
 ### Verified clean (no action)
 - Empty translits (99): all Takeaway/grammar-explanation items, by design
 - Vault VOCAB_BANK: 168 entries, no same-category duplicates,
-  colleague كوليگ/كولييج cross-category inconsistency known-good
-- پال endings (sample سامپال, simple سيمپال, example اقزامپال):
+  colleague كوليق/كولييج cross-category inconsistency known-good
+- بال endings (sample سامبال, simple سيمبال, example اقزامبال):
   systematic PHON_DICT house style, not corruption — DO NOT "fix"
 - ex→اقز convention (exact اقزاكت, exam اقزام): PHON_DICT systematic,
   Saudi ق=g reading makes it accurate — both اقزام/اكزام readable
@@ -48,7 +48,7 @@ User asked to SCAN EVERYTHING. Full sweep of repo + DB, fresh dumps.
 Live app.html: zero Farsi codepoints, question/headlines fixes live.
 
 CAUTION: when writing Arabic replacement strings by hand, double-check
-ي vs ی — round 8 introduced then caught a Farsi-yeh typo in پيك اب
+ي vs ي — round 8 introduced then caught a Farsi-yeh typo in بيك اب
 while fixing بك اب.
 
 # NEXT STEPS - pick up here
@@ -106,10 +106,10 @@ intentional romanized-Arabic dialect course (correct by design).
 - refund ريفَند -> ريفاند; item was garbage ابنحذف -> ايتام (2 spots)
 - "five Bucks" was translit فايڤ دولارز (dollars!) -> فايڤ باكس
 - colleagues كوليجز -> كولييجز; once وانست -> وانس;
-  practice پراكسيس ("praxis") -> پراكتس (Persian vs Arabic ك caused
+  practice براكسيس ("praxis") -> براكتس (Persian vs Arabic ك caused
   the first fix attempt to miss — re-check with both codepoints)
 ### Fixed (DB)
-- lesson_items: پراكسيس، وانست، فويند، ابنحذف families
+- lesson_items: براكسيس، وانست، فويند، ابنحذف families
 - this=ذس standardized to ذيس across lesson_items (50 rows),
   lesson_exercises (22), lib/pel_lesson_stage.js (28) — app standard
   is ذيس (46 uses in app.html, 0 ذس)
@@ -132,20 +132,20 @@ Arabic fields) plus 4 PHON_DICT entries in app.html.
 ### Big catches
 - "Build:" translit was بلد / بلد ات / بيرلت ("country"!) in ~110
   exercises -> بيلد (PHON_DICT standard)
-- luggage لاجيدج -> لاگيدج; although ولذو (+ ex#1136 ولذو ات رينيد ->
+- luggage لاجيدج -> لاقيدج; although ولذو (+ ex#1136 ولذو ات رينيد ->
   اولذو ايت ريند, and its why_ar said الثو -> اولذو)
 - always الويز / اولويك -> اولويز (x4); usually يوشوي -> يوجوالي
 - office وفيس -> اوفيس; PHON_DICT entries upgraded: office وفيس->اوفيس,
-  yesterday ييستردي->يسترداي, conclusion كانكلوجان->كنكلوژن,
+  yesterday ييستردي->يسترداي, conclusion كانكلوجان->كنكلوزن,
   usually يوجاوالي->يوجوالي (standards now match words table)
-- pick/picked/picks بك/بكت/بكس -> پيك/پيكت/پيكس; improve ام بروف -> امپروڤ
+- pick/picked/picks بك/بكت/بكس -> بيك/بيكت/بيكس; improve ام بروف -> امبروڤ
   (also in accept array); want وانتي -> وانت (x2); which ويش/وتش -> ويتش
-- passage پاساق -> باساج (x4); exam اقزام -> اكزام; ex#2322 asks اكسك ->
+- passage باساق -> باساج (x4); exam اقزام -> اكزام; ex#2322 asks اكسك ->
   اسكس; this ذس -> ذيس (x8); makes ميكس is CORRECT (PHON_DICT) - kept
 - ex#2365 hint 'ف اللي تربط' -> 'الكلمه اللي تربط'
 - examples in lesson_items (separate pass): usually يوشوي, always الويز,
   although الثو/ولثو, explains اسبليينز -> اكسبلينز, pick up بك اب ->
-  پيك اب, office اوفس -> اوفيس, inversion adds اديز -> ادز, and
+  بيك اب, office اوفس -> اوفيس, inversion adds اديز -> ادز, and
   "He study" was translit اي (I) -> هي (he)
 
 # NEXT STEPS - pick up here
@@ -163,7 +163,7 @@ plus the DB words.translit (183 rows) and lesson_items.translit
 - flight فايت (= "fight"!) → فلايت
 - although الثو / ولثو → اولذو (words table too)
 - "at 7" ات سيون → ات سيڤن
-- pick up بيك اب / بك اب → پيك اب
+- pick up بيك اب / بك اب → بيك اب
 
 ### Real errors fixed (source, pushed)
 - roleplay "Do you know why I stopped you?" translit ستد → ستوبد (app.html ×2)
@@ -192,8 +192,8 @@ families. Tests 65/65, audit CLEAN.
 - line family: دد لوين/ديدلوين/هيدلوين/ذا لوين/يرلوين → لاين (deadline,
   headline, "the line is bad", airline) — app + PHON_DICT + stage + DB
 - allergy: الرجي(ز) → اليرجي(ز) (vault, 3 L() calls, tv-vocab, DB exercises)
-- punctual: بنكتشول → پنكتشول (vault, tv-vocab, DB lesson_items ×6, exercises ×2)
-- carried كابي→كاريد, married ميبي→ميريد, soft بتت→سوفت, luggage لازينج→لاگيج,
+- punctual: بنكتشول → بنكتشول (vault, tv-vocab, DB lesson_items ×6, exercises ×2)
+- carried كابي→كاريد, married ميبي→ميريد, soft بتت→سوفت, luggage لازينج→لاقيج,
   icon ايصير→ايكون, connection كانيكشان→كونيكشن, collocation كولاكيشان→كولوكيشن,
   corrections كيريكشانز→كوريكشنز, pragmatics برابستيكس→براغماتيكس,
   proficiency بروفينسي→بروفيشَنسي, mexico ميكساكو→مكسيكو, echo يكو→ايكو,
@@ -203,8 +203,8 @@ families. Tests 65/65, audit CLEAN.
   authors وثيرز→اوثرز, blind بلويند→بلايند, carolina كيرالوينا→كارولاينا,
   away اوي→اواي, damages داماجاز→داميجز, educational يجاكيشانال→ايديوكيشنل,
   motorcycle موتيرسايكال→موتورسايكل, accent اكسينت→اكسنت, hundred هاندرِد
-- vault translit fixes: pronunciation برنانسييهيشن→پرنانسييهيشِن, hospital
-  هاسپيطل (Persian ي) → هاسبيتل (app/tv-vocab/stage), stress-example سيصير
+- vault translit fixes: pronunciation برنانسييهيشن→برنانسييهيشِن, hospital
+  هاسبيطل (Persian ي) → هاسبيتل (app/tv-vocab/stage), stress-example سيصير
   ("second"!) → سيكند, famous فيمس→فايمس, help هلب→هيلب, symptoms سمبتمز→سيمبتومز
 - phrasal: الفريزل فيربز → الفرايزل فيربز (app/daily-lesson/pel-personalization/
   DB academies), fluency فلوينسي→فلونسي, vocabulary vault فوكابيولري فولت→ڤوكابيولري ڤولت
@@ -339,7 +339,7 @@ academies, assessment_questions → **DB is CLEAN; all corruption was source-onl
 ### Family 3: truncations + translit garbles
 - index.html: 'وتصح كتابتك' → وتصحيح; 'تشوف تصحك فورا' → تشوف تصحيحك فورا
 - app.html translit dict: environments انڤايربسنتس → انڤايرنمنتس;
-  environmental انڤايرانمينتال → انڤايرنمنتال; episode يپاسود → يپيسود;
+  environmental انڤايرانمينتال → انڤايرنمنتال; episode يباسود → يبيسود;
   club لاب/لابز → كلاب/كلابز (restored — لاب collided with lab)
 - app.html the-with-generic whyAr: 'وفيه وفا' (nonsense) → 'وفيه ال'
 
@@ -350,7 +350,7 @@ academies, assessment_questions → **DB is CLEAN; all corruption was source-onl
 
 ### audit_corruption.py extended (24 → 28 patterns + DB SQL)
 New patterns: ومثلن/فمثلن, فرصه مبسوطه/فرصه سعيده, انڤايربسنتس/انڤايرانمينتال/
-يپاسود, وتصح/تصحك. Run `python3 tools/audit_corruption.py` before every push.
+يباسود, وتصح/تصحك. Run `python3 tools/audit_corruption.py` before every push.
 
 ### Verified
 - node --check admin.js + pel-assessment.js: OK
@@ -423,7 +423,7 @@ from the tracker (only after verifying the SQL is already live).
    placeholder -> new estDaily key.
 4. 360 header 'C2 → C2' chip showed target twice -> now
    estimatedStartingLevel → targetLevel ('A1 → C2').
-5. Billing track chip 'المسار -' for assessed_track='step' -> added ستيپ label.
+5. Billing track chip 'المسار -' for assessed_track='step' -> added ستيب label.
 
 ### NEW corruption families found + fixed (this commit, source only — DB verified clean)
 Recovered originals from 57f466b^ by signature-anchored line diffing
@@ -435,7 +435,7 @@ Recovered originals from 57f466b^ by signature-anchored line diffing
   يمكنيم→قديم, بيمكنمك→بقدمك, لويمكن→لوقد, يمكنّيش→قدّيش, + more
 - **ك dropped**: لام→كلام, لاسيك→كلاسيك, لاسروم→كلاسروم, لاودي→كلاودي,
   كتشن→كيتشن, كلو→كيلو, ويكند→ويكيند, كالوفورنيا→كالافورنيا,
-  انسايلاپيديا→انسايكلاپيديا, كولد→كولد (Persian kaf)
+  انسايلابيديا→انسايكلابيديا, كولد→كولد (Persian kaf)
 - **كيف→عشان leftovers**: 39 line-verified restores (كيف الدوام/النوم/تنطق...)
   عشانك greeting kept (house style). عشبسستري→كيماستري, عشبسكال→كيماكال
 - **ا→وا before احد/احداث**: واحداث→احداث, الواحداث→الاحداث ( weekdays
@@ -503,7 +503,7 @@ recommendations title now resolves from the DB catalog (was generic 'درس').
 
 ### Deliberately NOT changed (house style / later legit simplifications)
 عشانك؟ greeting, بعدين/بعدها/الجاه/ومثلن/صح/اغلط dialect forms,
-پ for P in translits, الانجليزي (old pre-corruption commit itself had
+ب for P in translits, الانجليزي (old pre-corruption commit itself had
 الحينجليزي garbage — current is the fixed version).
 
 ### Verification
@@ -538,7 +538,7 @@ that corrupted 500+ words: ki-sounds became عشان (اكيد→اعشاند, �
 payloads (وشنو→وش, يختر→يخلص).
 
 ### Deliberately kept (house style, NOT corruption)
-پ for P in translits, ة→ه, no hamza, عشانك as "how are you" greeting, زين,
+ب for P in translits, ة→ه, no hamza, عشانك as "how are you" greeting, زين,
 مررره, تخالين (you think), كاونسالينج/مودالينج translits.
 
 ### Addendum (2026-09-26 session 2): Saudi-standards-only sweep
@@ -1053,7 +1053,7 @@ fresh databases (preview branches, `supabase db reset`).
    - film, next, clothes, asked, text, stop, stand, story, price, print,
      parking, happy, open, happen, apple, place, play, put, spend, sport, spring
    - Covers research-identified trap words: consonant clusters, /p/ vs /b/
-   - Fixed duplicates (paper, please) and print hint (was using ب instead of پ)
+   - Fixed duplicates (paper, please) and print hint (was using ب instead of ب)
 
 4. **Enhanced connectionNoteFor (commit `15fdb67`)** — 3 new grammar rules:
    - Adjective before noun (Arabic interference: noun-adjective → adjective-noun)
