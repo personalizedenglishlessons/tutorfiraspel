@@ -2325,7 +2325,7 @@ function clearUserLocalKeys(uidOverride){
   // Clear legacy (unscoped) keys
   ['pel_study_days','pel_completion_dates','pel_notif_prefs','pel_cert_codes','pel_review_queue','pel_writing_misses','pel_review_days','pel_grammar_endpoint','pel_plan','pel_plan_draft','pel_plan_snapshot','pel_stage_pos','pel_srs_v1'].forEach(k => { try{ localStorage.removeItem(k); }catch(e){} });
   // Clear lesson note drafts (not user-scoped, keyed by lesson)
-  try{ Object.keys(localStorage).filter(k => k.indexOf('pel_note_draft_') === 0).forEach(k => localStorage.removeItem(k)); }catch(e){}
+  try{ Object.keys(localStorage).filter(k => k.indexOf('pel_note_draft_') === 0 || k.indexOf('pel_writing_draft_') === 0).forEach(k => localStorage.removeItem(k)); }catch(e){}
   // Clear user-scoped keys (pel_*_u_<userId>) for the CURRENT user only
   try{
     const uid = uidOverride || (currentUser ? currentUser.id : null);
@@ -19449,6 +19449,12 @@ function renderWriting(){
         <button type="button" class="btn-gold" id="reviewWritingBtn"><span class="arabic">اطلب المراجعه</span>، Get Feedback</button>
       </div>
       <div id="writingFeedback"></div>`;
+    /* Restore draft from localStorage (survives reloads/crashes) */
+    const _draftKey = 'pel_writing_draft_' + (prompt.title||'default').replace(/\s+/g,'_').slice(0,60);
+    try{ const d = localStorage.getItem(_draftKey); if(d) document.getElementById('writingArea').value = d; }catch(e){}
+    document.getElementById('writingArea').addEventListener('input', function(){
+      try{ localStorage.setItem(_draftKey, this.value); }catch(e){}
+    });
     document.getElementById('reviewWritingBtn').addEventListener('click', () => {
       const text = document.getElementById('writingArea').value.trim();
       if(!text){ toast('<span class="arabic">اكتب شييا اول شي بعدين اطلب المراجعه</span>، Write something first, then ask for a review.'); return; }
