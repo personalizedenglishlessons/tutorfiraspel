@@ -883,7 +883,7 @@ function renderSidebar(){
   $('adminAvatar').textContent = me.name.charAt(0).toUpperCase();
   $('adminName').textContent = me.name;
   var roleLbl = (I[me.role + 'Of'] || {en:me.role, ar:me.role});
-  $('adminRole').textContent = lang === 'ar' ? (roleLbl.ar || me.role) : me.role;
+  $('adminRole').textContent = lang === 'ar' ? (roleLbl.ar || me.role) : (roleLbl.en || me.role);
   loadIcons();
 }
 var viewPerms = {
@@ -2527,7 +2527,7 @@ function academyCard(a){
 
 /* Wire the manager's buttons after each render */
 document.addEventListener('click', async function(ev){
-  var b = ev.target.closest ? ev.target.closest('[data-move],[data-lesson-edit],[data-lesson-toggle],[data-lesson-unlink-ac],[data-ac-edit],[data-ac-addlesson],[data-ac-toggle]') : null;
+  var b = ev.target.closest ? ev.target.closest('[data-move],[data-lesson-edit],[data-lesson-toggle],[data-lesson-unlink-ac],[data-del-lesson],[data-ac-edit],[data-ac-addlesson],[data-ac-toggle]') : null;
   if(!b || !hasPerm('curriculum.manage')) return;
   ev.preventDefault();
   ev.stopPropagation();

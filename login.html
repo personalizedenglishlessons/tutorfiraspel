@@ -534,7 +534,7 @@ html[data-theme="light"] .cursor-ring{ border-color:rgba(184,130,30,.5); }
 <div class="cursor-dot" id="cursorDot"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
-<a href="app.html" class="back-home"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> <span class="label">العودة للمنصة</span></a>
+<a href="index.html" class="back-home"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> <span class="label">العودة للمنصة</span></a>
 <button type="button" class="lang-pill" id="loginLangBtn" aria-label="Switch interface language">EN</button>
 <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v2M12 19v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M3 12h2M19 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/><circle cx="12" cy="12" r="4.2"/></svg>
@@ -711,7 +711,9 @@ document.querySelectorAll('.dash-preview').forEach(card => {
 /* ============ THEME ============ */
 const root = document.documentElement;
 const themeToggle = document.getElementById('themeToggle');
-root.setAttribute('data-theme', localStorage.getItem('pel-theme') || 'dark');
+let savedLoginTheme = 'dark';
+try { savedLoginTheme = localStorage.getItem('pel-theme') || 'dark'; } catch (e) {}
+root.setAttribute('data-theme', savedLoginTheme);
 themeToggle.addEventListener('click', () => {
   const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
   root.setAttribute('data-theme', next);

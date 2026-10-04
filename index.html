@@ -1536,7 +1536,8 @@ section{ padding-top:70px; padding-bottom:70px; }
 /* THEME */
 const root = document.documentElement;
 const themeToggle = document.getElementById('themeToggle');
-const savedTheme = localStorage.getItem('pel-theme') || 'dark';
+let savedTheme = 'dark';
+try { savedTheme = localStorage.getItem('pel-theme') || 'dark'; } catch (e) {}
 root.setAttribute('data-theme', savedTheme);
 themeToggle.addEventListener('click', () => {
   const current = root.getAttribute('data-theme');
