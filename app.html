@@ -24,7 +24,7 @@
 <script src="lib/cert-sheet.js?v=a1f37a19" defer></script>
 <script src="lib/pel_config.js?v=7d1f4a36"></script>
 <script src="lib/pel_lesson_stage.js?v=4537c25c"></script>
-<script src="lib/pel_dashboard_life.js?v=7c109b0c"></script>
+<script src="lib/pel_dashboard_life.js?v=c41f9d2e"></script>
 <script src="lib/pel_curriculum_path.js?v=8e1e4345"></script>
 <style>
 /* ============================================================
@@ -22422,6 +22422,7 @@ function renderDashboardIntel(){
     window.PEL_DASH_LIFE = window.PEL_DASH_LIFE_FACTORY({
       viewRenderers: viewRenderers,
       escapeHtml: escapeHtml, goToView: goToView, localizeChrome: localizeChrome, toast: toast,
+      speak: (typeof speak === 'function') ? speak : null,
       accountPrefs: function(){ return accountPrefs; },
       completedLessons: function(){ return completedLessons; },
       vocabStore: function(){ return vocabStore; },
