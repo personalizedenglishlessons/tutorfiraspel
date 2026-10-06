@@ -23,7 +23,7 @@
 <script src="lib/cert-qr.js?v=a43f19f9" defer></script>
 <script src="lib/cert-sheet.js?v=a1f37a19" defer></script>
 <script src="lib/pel_config.js?v=7d1f4a36"></script>
-<script src="lib/pel_lesson_stage.js?v=4537c25c"></script>
+<script src="lib/pel_lesson_stage.js?v=a7baf3a9"></script>
 <script src="lib/pel_dashboard_life.js?v=c41f9d2e"></script>
 <script src="lib/pel_curriculum_path.js?v=8e1e4345"></script>
 <style>
@@ -14814,6 +14814,27 @@ function renderDbPractice(container, exercises){
         <button type="button" class="btn-outline dbx-check"><span class="arabic">تحقق</span>، Check</button>
         <div class="dbx-reveal" style="display:none; font-size:.82rem; color:var(--gold-soft); margin-top:8px;"></div>`, p.source);
     }
+    if(x.type === 'say'){
+      // Pronunciation practice: student says the word/sentence, gets scored.
+      // Payload: { target, meaning, translit, tip_ar, contrast_ar }
+      const p = x.payload || {};
+      const target = p.target || '';
+      const contrast = p.contrast_ar || '';
+      const tip = p.tip_ar || '';
+      return head('<span class="arabic">انطق الكلمه</span>، Say it', `
+        <div style="text-align:center; padding:8px 0 6px;">
+          <div style="font-size:1.6rem; font-family:'Fraunces',serif; font-weight:600; letter-spacing:.02em;">${esc(target)}</div>
+          ${p.translit ? `<div class="arabic" style="font-size:.88rem; color:var(--gold-soft); margin-top:4px;">${esc(p.translit)}</div>` : ''}
+          ${p.meaning ? `<div class="arabic" style="font-size:.82rem; color:var(--text-muted); margin-top:2px;">${esc(p.meaning)}</div>` : ''}
+        </div>
+        ${tip ? `<div class="arabic" style="font-size:.8rem; background:rgba(63,140,114,.1); border:1px solid rgba(63,140,114,.25); border-radius:10px; padding:8px 12px; margin:8px 0; color:var(--text-secondary);">💡 ${esc(tip)}</div>` : ''}
+        ${contrast ? `<div class="arabic" style="font-size:.78rem; color:var(--danger); margin-bottom:6px;">⚠ ${esc(contrast)}</div>` : ''}
+        <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+          <button type="button" class="mic-record-btn dbx-say-btn dbx-say-main" data-say="${escapeHtml(target)}" style="width:52px; height:52px; border-radius:50%;" aria-label="Say it" type="button"><i data-lucide="mic" width="22" height="22"></i></button>
+          <div class="dbx-say-fb" style="font-size:.82rem; color:var(--gold-soft); flex:1; min-width:140px;"></div>
+        </div>
+        <button type="button" class="btn-outline dbx-say-skip" style="margin-top:10px; font-size:.8rem;"><span class="arabic">التالي</span>، Next</button>`, target);
+    }
     return '';
   }).join('');
 
@@ -14899,6 +14920,18 @@ function renderDbPractice(container, exercises){
         if(rv){ rv.style.display = 'block'; rv.className = 'dbx-reveal arabic'; rv.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg> ' + reveal; }
       }
     });
+    // Say exercises: the "Next" button marks the exercise as done (pronunciation
+    // is scored by the mic button above; this just lets the student move on).
+    const saySkip = card.querySelector('.dbx-say-skip');
+    if(saySkip){
+      saySkip.addEventListener('click', () => {
+        if(answerEl.dataset.done === '1') return;
+        answerEl.dataset.done = '1';
+        mark(true); // pronunciation practice always counts as participation
+        saySkip.disabled = true;
+        saySkip.innerHTML = '<span class="arabic">تم</span>، Done';
+      });
+    }
     card.querySelectorAll('.dbx-pick').forEach(btn => btn.addEventListener('click', () => {
       if(card.querySelector('.dbx-answer') && card.querySelector('.dbx-answer').dataset.done === '1') return;
       const ok = btn.dataset.ok === 'right';
