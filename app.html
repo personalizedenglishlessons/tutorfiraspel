@@ -10424,10 +10424,11 @@ const LESSON_TITLE_BANK = [
 ];
 
 const ACADEMIES = [
-  /* ------- A0 Absolute Beginner track (content lives in the DB: five
-     academies, 43 active lessons - they were mapped in ACADEMY_CEFR but
+  /* ------- A0 Absolute Beginner track (content lives in the DB: six
+     academies, 63 active lessons - they were mapped in ACADEMY_CEFR but
      never listed here, so the Levels view showed 'Content for this level
      is coming' for A0. Metadata mirrors public.academies.) ------- */
+  {id:'a0-home-words', en:'Home Words', ar: 'كلمات البيت', translit: 'هوم وردز', cat:'Foundations', icon:'home', from:'#3F8C72', to:'#276b53', difficulty:'Beginner', duration:'4h', lessons:20},
   {id:'a0-sentence-building', en:'Sentence Building', ar: 'بناء الجمل', translit: 'سن-تنس بيلدنج', cat:'Foundations', icon:'blocks', from:'#C8A96A', to:'#A88345', difficulty:'Beginner', duration:'2h', lessons:8},
   {id:'a0-question-words', en:'Question Words', ar: 'كلمات السؤال', translit: 'كويستشن وردز', cat:'Foundations', icon:'message-circle-question', from:'#D9B87C', to:'#B08D57', difficulty:'Beginner', duration:'2h', lessons:8},
   {id:'a0-spelling-sounds', en:'Spelling and Sounds', ar: 'الاملا والاصوات', translit: 'سبيلنج اند ساوندز', cat:'Foundations', icon:'spell-check', from:'#CBB27E', to:'#9C7C46', difficulty:'Beginner', duration:'3h', lessons:10},
@@ -14506,6 +14507,7 @@ const ACADEMY_LESSONS = {
   'saudi-travel': ['sa-travel-booking','sa-travel-airport','sa-travel-hotel','sa-travel-directions','sa-travel-lost','sa-travel-flight-delay'],
   'saudi-mosque-etiquette': ['sa-mosque-greeting','sa-mosque-wudu','sa-mosque-time','sa-mosque-after-prayer','sa-mosque-eid','sa-mosque-ramadan'],
   'saudi-phone-calls': ['sa-phone-answer','sa-phone-wrong-number','sa-phone-message','sa-phone-callback','sa-phone-busy','sa-phone-end'],
+  'a0-home-words': ['a0hw-01-yes-no','a0hw-02-i-you-me','a0hw-03-my-mine','a0hw-04-he-she-him','a0hw-05-they-them','a0hw-06-this-these-those','a0hw-07-in-on-under','a0hw-08-on-off','a0hw-09-here-there','a0hw-10-up-down','a0hw-11-inside-outside','a0hw-12-left-right','a0hw-13-the','a0hw-14-come-go-bring','a0hw-15-pick-drop-carry','a0hw-16-good-bad-fast-slow','a0hw-17-er-ed','a0hw-18-if-will','a0hw-19-like','a0hw-19-cola-time'],
   'a0-sentence-building': ['i-am-sentences','you-are-sentences','he-she-is-sentences','we-they-are-sentences','be-negative','be-questions','be-contractions','checkpoint-be'],
   'a0-question-words': ['a0qw-when','a0qw-where','a0qw-who-how','a0qw-why','qw-what-where','qw-who-when','qw-how-why','qw-checkpoint'],
   'a0-spelling-sounds': ['a0ss-alphabet','a0ss-vowels','a0ss-sh-ch','a0ss-th-sound','a0ss-silent-letters','spell-cvc-at','spell-cvc-ig-og','spell-digraph-th','spell-silent-e','spell-plurals'],
@@ -17725,7 +17727,7 @@ const CEFR_LEVELS = [
   { id:'C2', en:'English Pro',      ar: 'انجليزي محترف',     color:'#343744', descEn:'Near-native fluency across every domain.', descAr: 'طلاقه شبه اصليه في كل المجالات.' },
 ];
 const ACADEMY_CEFR = {
-  'a0-sentence-building':'A0','a0-question-words':'A0','a0-spelling-sounds':'A0','a0-error-clinic':'A0','a0-social-english':'A0',
+  'a0-home-words':'A0','a0-sentence-building':'A0','a0-question-words':'A0','a0-spelling-sounds':'A0','a0-error-clinic':'A0','a0-social-english':'A0',
   'english-foundations':'A1',
   'everyday-english':'A2','airport-english':'A2','restaurant-english':'A2','coffee-shop-english':'A2',
   'hotel-english':'A2','shopping-english':'A2','driving-english':'A2',
