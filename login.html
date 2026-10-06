@@ -798,6 +798,7 @@ function applyLoginLang(lang){
   dpSubTexts.forEach(function(el, i){ if(sT[i]) el.textContent = sT[i]; });
   dpBadgeTexts.forEach(function(el, i){ if(bt[i]) el.textContent = bt[i]; });
   syncRememberCheckbox();
+  refreshFormMessages();
 }
 const loginLangBtn = document.getElementById('loginLangBtn');
 if(loginLangBtn) loginLangBtn.addEventListener('click', () => applyLoginLang(root.lang === 'ar' ? 'en' : 'ar'));
@@ -877,15 +878,28 @@ function showSuccess(idPrefix){
   document.getElementById(idPrefix + 'Spinner').classList.remove('show');
   document.getElementById(idPrefix + 'Check').classList.add('show');
 }
+var PEL_LAST_MSG = null;
 function showMessage(idPrefix, text, type){
   const el = document.getElementById(idPrefix + 'Message');
   el.innerHTML = text;
   el.className = 'form-message show ' + type;
 }
-/* Bilingual message markup: shows only the current interface language, not both. */
+/* Bilingual message markup: shows only the current interface language, not both.
+   Also stores the ar/en pair in PEL_LAST_MSG so applyLoginLang can re-render
+   when the user switches interface language. */
 function msgArEn(ar, en){
+  PEL_LAST_MSG = {ar: ar, en: en};
   var isAr = document.documentElement.lang === 'ar';
   return '<span dir="' + (isAr ? 'rtl' : 'ltr') + '">' + (isAr ? ar : en) + '</span>';
+}
+/* Re-render any visible form message in the new interface language. */
+function refreshFormMessages(){
+  if(!PEL_LAST_MSG) return;
+  var isAr = document.documentElement.lang === 'ar';
+  var text = isAr ? PEL_LAST_MSG.ar : PEL_LAST_MSG.en;
+  document.querySelectorAll('.form-message.show').forEach(function(el){
+    el.innerHTML = '<span dir="' + (isAr ? 'rtl' : 'ltr') + '">' + text + '</span>';
+  });
 }
 
 /* ==========================================================================
@@ -1079,7 +1093,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
 
 })();
 </script>
-<script src="lib/pel-settings.js?v=9a2c3f02"></script>
+<script src="lib/pel-settings.js?v=9a2c3f03"></script>
 <script>
 /* Maintenance notice - admin-controlled via site_settings.maintenance_mode.
    Display-only: students can still sign in; the strip just sets expectations. */
