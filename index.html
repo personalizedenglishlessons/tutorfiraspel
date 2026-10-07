@@ -1148,7 +1148,7 @@ section{ padding-top:70px; padding-bottom:70px; }
     <div class="reveal is-visible">
        <span class="eyebrow hero-eyebrow" dir="ltr" style="justify-content:flex-start;"><span class="pel-tag">Personalized English Lessons</span></span>
       <h1 class="arabic-h" dir="rtl" style="margin-top:18px; font-size:clamp(2rem,4.5vw,3.2rem); line-height:1.2;">سنين تدرس انجليزي، وما تقدر ترد</h1>
-      <p class="arabic hero-sub" dir="rtl" style="font-size:1rem; max-width:520px; margin-top:14px; line-height:1.8;">تتهرب من المكالمه، تنسخ الايميل وتترجمه، وتطلب من غيرك يتكلم عنك. المشكله مو ذكائك ولا حماسك، المشكله انك ما تدربت على مواقفك الحقيقيه. PEL يبني لك طريق واضح من اول كلمه ويدربك عليه يوميا، لين تصير انت اللي ترد، وتكتب، وتتكلم بثقه.</p>
+      <p class="arabic hero-sub" dir="rtl" style="font-size:1rem; max-width:520px; margin-top:14px; line-height:1.8;">المكالمه ترن وانت تتهرب منها، الايميل تنسخه وتترجمه، واذا صار لازم تتكلم، تجيب واحد يتكلم عنك. انت مو ناقص ذكاء ولا حماس، انت بس ما احد دربك على مواقفك. PEL ياخذك من اول كلمه، ويقعدك على طريق واضح، وتدريب يومي لين تصير انت اللي ترد، وتكتب، وتتكلم بثقه.</p>
       <div class="hero-cta-row" style="margin-top:26px; gap:12px; flex-wrap:wrap; align-items:center;">
         <button type="button" class="btn-gold magnetic" data-open-path id="heroPathCta" style="padding:14px 28px; font-size:.95rem;">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="2.5"/><circle cx="18" cy="5" r="2.5"/><path d="M8.5 19H15a3 3 0 0 0 3-3v-8.5M6 16.5V8a3 3 0 0 1 3-3h3.5"/></svg>
@@ -1166,7 +1166,7 @@ section{ padding-top:70px; padding-bottom:70px; }
       <div class="trust-row" dir="rtl" style="margin-top:18px; gap:10px 18px;">
         <div class="trust-item"><span class="dot"></span>تتدرب على مواقفك الحقيقيه قبل ما تصير</div>
         <div class="trust-item"><span class="dot"></span>كل درس قصير: تسمع، تنطق، وتثبت</div>
-        <div class="trust-item"><span class="dot"></span>اذا غلطت، التصحيح يجيك فوري مع السبب</div>
+        <div class="trust-item"><span class="dot"></span>تغلط؟ نعلمك وين وبالسبب، فورا</div>
         <div class="trust-item"><span class="dot"></span>تشوف تقدمك يوم بيوم</div>
       </div>
     </div>
@@ -1410,7 +1410,7 @@ section{ padding-top:70px; padding-bottom:70px; }
   <div class="container reveal" dir="rtl">
     <span class="eyebrow" style="justify-content:center;">جاهز؟</span>
     <h2 class="arabic-h" style="margin-top:20px;">ابدا الحين</h2>
-    <p class="arabic">راسل استاذ فراس واتساب، نحدد بدايتك ونشغل حسابك، وتبدا اول درس اليوم.</p>
+    <p class="arabic">راسل استاذ فراس واتساب، نحدد وينك ونشغل حسابك، وتبدا اول درس اليوم.</p>
     <div class="final-cta-buttons">
       <button type="button" class="btn-gold magnetic" data-open-path id="finalPathCta">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="2.5"/><circle cx="18" cy="5" r="2.5"/><path d="M8.5 19H15a3 3 0 0 0 3-3v-8.5M6 16.5V8a3 3 0 0 1 3-3h3.5"/></svg>
@@ -1558,15 +1558,15 @@ function applyIndexLang(lang){
   var heroH1=document.querySelector('.hero h1.arabic-h');
   if(heroH1){ var h1ar = (window.PEL_SITE && PEL_SITE.heroHeadline && PEL_SITE.heroHeadline.ar) ? PEL_SITE.heroHeadline.ar : 'سنين تدرس انجليزي، وما تقدر ترد'; var h1en = (window.PEL_SITE && PEL_SITE.heroHeadline && PEL_SITE.heroHeadline.en) ? PEL_SITE.heroHeadline.en : 'Years of English, and you still can\'t reply'; setLang(heroH1, h1ar, h1en); }
   var heroSub=document.querySelector('.hero .hero-sub');
-  if(heroSub){ var hsar = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.ar) ? PEL_SITE.heroSub.ar : 'تتهرب من المكالمه، تنسخ الايميل وتترجمه، وتطلب من غيرك يتكلم عنك. المشكله مو ذكائك ولا حماسك، المشكله انك ما تدربت على مواقفك الحقيقيه. PEL يبني لك طريق واضح من اول كلمه ويدربك عليه يوميا، لين تصير انت اللي ترد، وتكتب، وتتكلم بثقه.'; var hsen = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.en) ? PEL_SITE.heroSub.en : 'You dodge calls, copy emails to translate them, ask others to speak for you. The problem is not your intelligence, it is that you never trained on your real situations. PEL builds you a clear path from your first word and trains you on it daily, until you\'re the one who answers, writes, and speaks with confidence.'; setLang(heroSub, hsar, hsen); }
+  if(heroSub){ var hsar = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.ar) ? PEL_SITE.heroSub.ar : 'المكالمه ترن وانت تتهرب منها، الايميل تنسخه وتترجمه، واذا صار لازم تتكلم، تجيب واحد يتكلم عنك. انت مو ناقص ذكاء ولا حماس، انت بس ما احد دربك على مواقفك. PEL ياخذك من اول كلمه، ويقعدك على طريق واضح، وتدريب يومي لين تصير انت اللي ترد، وتكتب، وتتكلم بثقه.'; var hsen = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.en) ? PEL_SITE.heroSub.en : 'The phone rings and you dodge it. You copy emails to translate them. And when you really have to speak, you bring someone to speak for you. You are not short on brains or motivation, nobody ever trained you on your situations. PEL takes you from your first word, sits you on a clear path, and trains you daily until you\'re the one who answers, writes, and speaks with confidence.'; setLang(heroSub, hsar, hsen); }
   var pathHint=document.querySelector('.path-hint .arabic');
   if(pathHint) setLang(pathHint, 'اختبر مستواك مجانا، وشوف وش يوقفك بالضبط', 'Find out what stops you, it\'s free');
   var pathHintEn=document.querySelector('.path-hint-en');
   if(pathHintEn) pathHintEn.textContent = lang==='ar' ? '' : 'See your level and what stops you, free';
   // trust items (bilingual)
   var trustItems=document.querySelectorAll('.trust-item');
-  var trustAr=['تتدرب على مواقفك الحقيقيه قبل ما تصير','كل درس قصير: تسمع، تنطق، وتثبت','اذا غلطت، التصحيح يجيك فوري مع السبب','تشوف تقدمك يوم بيوم'];
-  var trustEn=['Practice your real situations before they happen','Short lessons: hear it, say it, make it stick','Make a mistake, get the fix and the reason instantly','See your progress day by day'];
+  var trustAr=['تتدرب على مواقفك الحقيقيه قبل ما تصير','كل درس قصير: تسمع، تنطق، وتثبت','تغلط؟ نعلمك وين وبالسبب، فورا','تشوف تقدمك يوم بيوم'];
+  var trustEn=['Practice your real situations before they happen','Short lessons: hear it, say it, make it stick','Slip up? We show you where and why, instantly','See your progress day by day'];
   trustItems.forEach(function(el,i){ if(trustAr[i]&&trustEn[i]){ el.innerHTML='<span class="dot"></span>'+(lang==='ar'?trustAr[i]:trustEn[i]); el.setAttribute('dir',lang==='ar'?'rtl':'ltr'); } });
 
   // hero social proof removed: fabricated statistics are not allowed on PEL
