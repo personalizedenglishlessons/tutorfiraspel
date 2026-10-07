@@ -18956,15 +18956,20 @@ const CEFR_LEVELS = [
   { id:'C1', en:'English High',     ar: 'انجليزي عالي',      color:'#A88345', descEn:'Business, writing, idioms and media English.', descAr: 'الاعمال والكتابه والتعاب-ير وانجليزي الاعلام.' },
   { id:'C2', en:'English Pro',      ar: 'انجليزي محترف',     color:'#343744', descEn:'Near-native fluency across every domain.', descAr: 'طلاقه شبه اصليه في كل المجالات.' },
 ];
-const ACADEMY_CEFR = {const ACADEMY_CEFR = {
+const ACADEMY_CEFR = {
   'a0-home-words':'A0','a0-sentence-building':'A0','a0-question-words':'A0','a0-spelling-sounds':'A0','a0-error-clinic':'A0','a0-social-english':'A0',
-  'english-foundations':'A1','saudi-greetings':'A1',
+  'english-foundations':'A0','saudi-greetings':'A0',
+  'a1-core-words':'A1','a1-present-simple':'A1','a1-daily-verbs':'A1','a1-can-requests':'A1','a1-place-time':'A1','a1-possession':'A1','a1-time-numbers':'A1','a1-vocab-context':'A1',
+  'a2-past-simple':'A2','a2-future-plans':'A2','a2-complete-course':'A2',
   'everyday-english':'A2','airport-english':'A2','restaurant-english':'A2','coffee-shop-english':'A2','hotel-english':'A2','shopping-english':'A2','driving-english':'A2','travel-english':'A2','saudi-daily-life':'A2','saudi-coffee-shop':'A2','saudi-family':'A2','saudi-travel':'A2',
+  'b1-connectors-opinions':'B1','b1-complete-course':'B1',
   'american-conversations':'B1','speaking-studio':'B1','music-english':'B1','saudi-conversations':'B1','vocabulary-vault':'B1','grammar-academy':'B1','hospital-english':'B1',
+  'b2-professional-comm':'B2','b2-complete-course':'B2',
   'american-accent-lab':'B2','listening-lounge':'B2','reading-corner':'B2','emergency-english':'B2','saudi-at-work':'B2','saudi-hospital':'B2','saudi-phone-calls':'B2','saudi-mosque-etiquette':'B2',
+  'c1-advanced-english':'C1',
   'writing-workshop':'C1','business-english':'C1','workplace-communication':'C1','job-interview-academy':'C1','american-slang':'C1','idioms-library':'C1','phrasal-verbs-lab':'C1','movie-english':'C1','tv-series-english':'C1',
-  'english-mastery':'C2','fluency-journey':'C2',
-};
+  'c2-near-native':'C2','english-mastery':'C2','fluency-journey':'C2',
+  'step-exam-prep':'STEP',
 };
 function cefrFromDifficulty(d){
   if(d==='Beginner') return 'A1';
