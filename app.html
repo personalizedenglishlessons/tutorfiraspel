@@ -25,7 +25,7 @@
 <script src="lib/pel_config.js?v=5c9ee888"></script>
 <script src="lib/pel_lesson_stage.js?v=dd86f3ac"></script>
 <script src="lib/pel_dashboard_life.js?v=412efe80"></script>
-<script src="lib/pel_curriculum_path.js?v=d4c5f37b"></script>
+<script src="lib/pel_curriculum_path.js?v=4f44ec39"></script>
 <style>
 /* ============================================================
    DESIGN SYSTEM TOKENS, shared with index.html / login.html
@@ -18836,7 +18836,7 @@ function wirePelPath(root){
         const c = client(); if(!c) return;
         const r = await pelRpc('student_switch_academy', { p_academy_id: id });
         if(!r.error && r.data && r.data.ok){
-          if(r.data.state && r.data.state.stage) window.PEL_EFFECTIVE_STATE = r.data.state;
+          if(r.data.state && r.data.state.stage) window.PEL_EFFECTIVE_STATE = r.data.state; try{ document.dispatchEvent(new CustomEvent('pel-state-updated')); }catch(e){}
           renderLibrary();
         }
       }catch(e){}
@@ -21694,6 +21694,7 @@ async function renderControlCenter(){
   try{ const { data } = await pelRpc('student_effective_state'); st = data; }catch(e){}
   if(!st || st.ok === false || !st.stage){ host.innerHTML = ''; return; }
   window.PEL_EFFECTIVE_STATE = st;
+  try{ document.dispatchEvent(new CustomEvent('pel-state-updated')); }catch(e){}
   try{ syncFeatureGates(); }catch(e){console.warn('[PEL] syncFeatureGates:',e.message||e);}
   try{ if(document.getElementById('continueLearningBody')) renderContinueLearning(); }catch(e){console.warn('[PEL] renderContinueLearning:',e.message||e);}
   /* New student: pull them straight into lesson one of their chosen path. */
