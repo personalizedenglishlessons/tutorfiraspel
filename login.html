@@ -149,11 +149,11 @@ body.ui-ar .field label, body.ui-ar .remember{ direction:rtl; }
 body.ui-ar .brand-copy, body.ui-ar .brand-arabic{ text-align:right; }
 body.ui-ar .brand-copy{ font-family:'Tajawal','Cairo',sans-serif; direction:rtl; }
 body.ui-ar .brand-heading{ font-family:'Tajawal','Cairo',sans-serif; }
-/* brand-heading-ar is an Arabic-only greeting — hide it in English mode */
+/* brand-heading-ar is an Arabic-only greeting, hide it in English mode */
 body.ui-en .brand-heading-ar{ display:none; }
-/* brand-arabic is an Arabic-only subtitle — show in Arabic, hide in English */
+/* brand-arabic is an Arabic-only subtitle, show in Arabic, hide in English */
 body.ui-en .brand-arabic{ display:none; }
-/* Arabic is a connected script — letter-spacing breaks letter connections,
+/* Arabic is a connected script, letter-spacing breaks letter connections,
    and text-transform:uppercase has no effect on Arabic but can garble it on
    some mobile browsers. Also apply Arabic fonts to all UI text. */
 body.ui-ar .panel-label,
@@ -770,7 +770,7 @@ function applyLoginLang(lang){
       el.setAttribute('dir', ar ? 'rtl' : 'ltr');
     }
   });
-  // Access guide card — features + subscription info
+  // Access guide card, features + subscription info
   var dpTag = document.querySelector('.dp-tag');
   var dpStreakText = document.querySelector('.dp-streak-text');
   var dpFeatureTitles = document.querySelectorAll('.dp-feature-title');
@@ -995,14 +995,14 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
   }
 
   /* Try cookie-based auth first, fall back to rate-limited-login.
-     Cookie auth is gated behind a test flag for safety — normal users
+     Cookie auth is gated behind a test flag for safety, normal users
      use the legacy login path until cookie auth is browser-tested.
 
      CRITICAL: After pelAuth('login') returns a user, we must verify the
      cookies were actually stored by calling pelAuth('session'). If the
      browser blocks third-party cookies (Safari ITP, Firefox private mode),
      the login Edge Function succeeds server-side but the Set-Cookie headers
-     are silently dropped — the user object is in the response body, but no
+     are silently dropped, the user object is in the response body, but no
      session cookies exist for subsequent pelApi calls. Without this
      verification, the user would be stuck: cookie auth thinks it succeeded,
      but no data can be fetched, and the legacy login path is skipped. */
@@ -1017,15 +1017,15 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
         if(verify && verify.user){
           cookieLoginOk = true;
         } else {
-          // Cookies not stored — third-party cookies likely blocked.
+          // Cookies not stored, third-party cookies likely blocked.
           // Fall through to legacy login so the user isn't stuck.
-          console.warn('[PEL] Cookie login succeeded but session verification failed — third-party cookies may be blocked. Falling back to legacy auth.');
+          console.warn('[PEL] Cookie login succeeded but session verification failed, third-party cookies may be blocked. Falling back to legacy auth.');
         }
       } else if(sess && sess.error){
         // Cookie auth failed with a specific error
         if(sess.error === 'network_error'){
-          // Network error — don't block the user, fall through to legacy
-          console.warn('[PEL] Cookie auth network error — falling back to legacy login.');
+          // Network error, don't block the user, fall through to legacy
+          console.warn('[PEL] Cookie auth network error, falling back to legacy login.');
         } else {
           // Auth-specific errors (bad credentials, rate limit) should be shown
           setLoading('login', false);

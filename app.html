@@ -23,8 +23,8 @@
 <script src="lib/cert-qr.js?v=a43f19f9" defer></script>
 <script src="lib/cert-sheet.js?v=a1f37a19" defer></script>
 <script src="lib/pel_config.js?v=5c9ee888"></script>
-<script src="lib/pel_lesson_stage.js?v=dde1f214"></script>
-<script src="lib/pel_dashboard_life.js?v=f8237980"></script>
+<script src="lib/pel_lesson_stage.js?v=84dd5846"></script>
+<script src="lib/pel_dashboard_life.js?v=412efe80"></script>
 <script src="lib/pel_curriculum_path.js?v=d4c5f37b"></script>
 <style>
 /* ============================================================
@@ -89,7 +89,7 @@ ul{list-style:none; margin:0; padding:0;}
 ::selection{ background:var(--gold); color:#0E0E10; }
 html[data-theme="light"] ::selection{ background:rgba(200,147,28,.2); color:var(--text); }
   .arabic, [dir="rtl"]{ font-family:'Cairo','Tajawal',sans-serif; direction:rtl; line-height:1.95; letter-spacing:0; font-weight:400; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; unicode-bidi:isolate; overflow-wrap:break-word; word-break:break-word; }
-  /* Arabic is a connected script — letter-spacing breaks letter connections,
+  /* Arabic is a connected script, letter-spacing breaks letter connections,
      and text-transform:uppercase can garble Arabic on some mobile browsers.
      Disable both on any element that renders Arabic text in RTL mode. */
   [dir="rtl"] .eyebrow,
@@ -160,7 +160,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 @media(max-width:640px){ .sidebar-head{ padding:16px 18px; } }
 .sidebar-logo{ display:flex; align-items:center; flex-shrink:0; }
 .sidebar-logo img{ height:24px; width:auto; }
-/* square brand mark — swaps in for the wide wordmark inside the 68px tablet rail */
+/* square brand mark, swaps in for the wide wordmark inside the 68px tablet rail */
 .sidebar-logo-mark{ display:none; height:26px; width:26px; border-radius:7px; }
 .pel-logo{ display:inline-block; vertical-align:middle; }
 .pel-logo-light{ display:none; }
@@ -205,7 +205,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 @media(max-width:640px){ .sidebar-foot{ padding:12px 16px; } }
 .streak-mini{ display:flex; align-items:center; gap:10px; font-size:.78rem; color:var(--text-muted); }
 .streak-mini b{ color:var(--gold); }
-/* compact count — shown ONLY inside the tablet icon rail (see rail media query) */
+/* compact count, shown ONLY inside the tablet icon rail (see rail media query) */
 .streak-mini .streak-num{ display:none; }
 
 
@@ -522,7 +522,7 @@ html[data-theme="light"] .eyebrow::before{ background:var(--gold-ink); }
 /* ============================================================
    PART 3, QUICK TRANSLATE FLOATING BUTTON + POPUP
    ============================================================ */
-/* (Quick Translate FAB removed — now lives in Settings) */
+/* (Quick Translate FAB removed, now lives in Settings) */
 
 /* ============================================================
    PART 3, ACHIEVEMENTS
@@ -1104,7 +1104,7 @@ body.ui-ar .user-menu-wrap .dropdown{ left:auto; right:0; }
 body.ui-ar .notif-wrap .dropdown{ left:auto; right:0; }
 body.ui-ar #toastStack{ right:auto; left:26px; }
 body.ui-ar .modal-close{ right:auto; left:22px; }
-/* (Quick Translate FAB removed — now in Settings) */
+/* (Quick Translate FAB removed, now in Settings) */
 body.ui-ar .qt-popup{ right:auto; left:26px; }
 body.ui-ar .cert-seal{ right:auto; left:22px; }
 body.ui-ar .academy-fav{ left:auto; right:12px; }
@@ -1119,7 +1119,7 @@ body.ui-ar .fb-why{ border-left:none; border-right:2px solid rgba(200,147,28,.3)
   body.ui-ar .sidebar.mobile-open{ transform:translateX(0); }
   body.ui-ar .context-panel{ right:auto; left:0; transform:translateX(-100%); }
   body.ui-ar .context-panel.open{ transform:translateX(0); }
-  /* (Quick Translate FAB removed — now in Settings) */
+  /* (Quick Translate FAB removed, now in Settings) */
   body.ui-ar .qt-popup{ left:12px; right:12px; }
 }
 /* Light-mode RTL: mirror the active-link gradient and hero glow direction */
@@ -1448,7 +1448,7 @@ html[data-theme="light"] .btn-outline:hover{ border-color:rgba(200,147,28,.4); b
 html[data-theme="light"] .btn-ghost:hover{ color:var(--gold); border-color:rgba(200,147,28,.3); }
 html[data-theme="light"] .chip.gold{ background:linear-gradient(180deg, rgba(200,147,28,.1), rgba(200,147,28,.05)); }
 html[data-theme="light"] .toast.gold{ border-color:rgba(200,147,28,.4); }
-/* (Quick Translate FAB removed — now in Settings) */
+/* (Quick Translate FAB removed, now in Settings) */
 html[data-theme="light"] .badge-icon-wrap{ background:radial-gradient(circle, rgba(200,147,28,.15), rgba(200,147,28,.04)); border-color:rgba(200,147,28,.25); }
 html[data-theme="light"] .cert-top{ background:linear-gradient(135deg, rgba(200,147,28,.08), transparent 70%); }
 html[data-theme="light"] .heatmap-cell[data-lvl="1"]{ background:rgba(200,147,28,.2); }
@@ -1569,7 +1569,7 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
   #heroCard > div:last-child svg{ width:84px; height:84px; }
   #heroCard > div:last-child > div{ width:84px; height:84px; }
   #heroCard > div:last-child b{ font-size:1.3rem; }
-  /* label must scale with the 84px ring too — at .64rem it spanned the full
+  /* label must scale with the 84px ring too, at .64rem it spanned the full
      inner diameter and pressed against the ring curve on phones.
      !important because the label carries an inline font-size. */
   #heroCard > div:last-child span{ font-size:.5rem !important; line-height:1.25 !important; }
@@ -2260,7 +2260,7 @@ async function revealApp(user){
   // Mirror the spaced-repetition schedule from/to pel_srs_state (cross-device
   // continuity). AWAIT with a 5-second timeout so the review queue uses
   // fresh server data by the time the user opens a lesson. If sync fails
-  // (offline, RLS error), local cache is used — local-first play still works.
+  // (offline, RLS error), local cache is used, local-first play still works.
   // Research: SRS state was previously fire-and-forget, meaning the review
   // queue could use stale localStorage data if the user cleared browser data
   // or switched devices. This await ensures server-authoritative SRS state
@@ -2828,7 +2828,7 @@ window.addEventListener('load', async () => {
   }
   try{
     // Try cookie-based session first (pel-auth Edge Function)
-    // Only if test flag is enabled — normal users use legacy path
+    // Only if test flag is enabled, normal users use legacy path
     var cookieUser = null;
     var enableCookieAuth = (localStorage.getItem('pel_cookie_test') === '1') || (new URLSearchParams(window.location.search).get('cookie_auth') === '1');
     if(enableCookieAuth && typeof window.pelAuth === 'function'){
@@ -2992,7 +2992,7 @@ document.getElementById('logoutBtn').addEventListener('click', async () => {
     window.PEL_COOKIE_AUTH = false;
   }
   // Legacy: sign out via Supabase JS client
-  // Capture uid before signOut() — auth callback may clear currentUser
+  // Capture uid before signOut(), auth callback may clear currentUser
   const logoutUid = currentUser ? currentUser.id : null;
   if(c){ try{ PEL_ACTIVITY.touch('logout'); }catch(e){} try{ await c.auth.signOut(); }catch(e){ console.warn('[PEL] auth signOut failed:', e.message||e); } }
   clearUserLocalKeys(logoutUid);
@@ -3079,7 +3079,7 @@ function toast(msg, icon){
   path.setAttribute('d','M4 12l6 6L20 6'); svg.appendChild(path);
   const span = document.createElement('span');
   // Safely handle both plain text and HTML strings (e.g. '<span class="arabic">...</span>، ...')
-  // Parse in a detached element (never in DOM) and extract textContent — XSS-safe.
+  // Parse in a detached element (never in DOM) and extract textContent, XSS-safe.
   if(typeof msg === 'string' && msg.indexOf('<') !== -1){
     const tmp = document.createElement('div');
     tmp.innerHTML = msg;
@@ -3184,7 +3184,7 @@ navGroups.forEach(group => {
     /* Rail mode (981-1180px) hides the text, so expose it on hover + to screen readers */
     a.title = `${item.ar||''}${item.ar&&item.en?' / ':''}${item.en||''}`;
     a.setAttribute('aria-label', `${item.ar||item.en||''}${item.ar&&item.en?' / ':''}${item.en||item.ar||''}`);
-    // All sidebar items are always visible — no progressive reveal gating
+    // All sidebar items are always visible, no progressive reveal gating
     a.innerHTML = `<span class="side-icon"><i data-lucide="${item.icon||'circle'}" width="18" height="18"></i></span><span class="side-text-wrap"><span class="ar">${escapeHtml(item.ar||'')}</span><span class="en">${escapeHtml(item.en||'')}</span></span>`;
     sidebarNav.appendChild(a);
   });
@@ -9970,17 +9970,17 @@ function lightCorrection(text){
         const { data, error } = await pelRpc('student_request_deletion');
         ov.remove();
         if(error || (data && data.error)){
-          toast(ar() ? 'صار خطا — جرب مره ثانيه او راسلنا على واتساب.' : 'Something went wrong — try again or message us on WhatsApp.');
+          toast(ar() ? 'صار خطا، جرب مره ثانيه او راسلنا على واتساب.' : 'Something went wrong, try again or message us on WhatsApp.');
           return;
         }
         if(data && data.already_pending){
-          toast(ar() ? 'عندك طلب حذف مفتوح اصلا — نشتغل عليه.' : 'You already have an open deletion request — we are on it.');
+          toast(ar() ? 'عندك طلب حذف مفتوح اصلا، نشتغل عليه.' : 'You already have an open deletion request, we are on it.');
         } else {
           toast(ar() ? 'وصلنا طلبك. بنحذف حسابك وبياناتك خلال 30 يوم كحد اقصى، وبنتواصل معك للتاكيد.' : 'Request received. Your account and data will be deleted within 30 days at the latest; we will contact you to confirm.');
         }
       }catch(e){
         ov.remove();
-        toast(ar() ? 'صار خطا — جرب مره ثانيه او راسلنا على واتساب.' : 'Something went wrong — try again or message us on WhatsApp.');
+        toast(ar() ? 'صار خطا، جرب مره ثانيه او راسلنا على واتساب.' : 'Something went wrong, try again or message us on WhatsApp.');
       }
     });
   });
@@ -10182,7 +10182,7 @@ function notifPrefs(){ return lsGetUser('pel_notif_prefs', {daily:true, streak:t
 /* accountPrefs holds the learner's own preferences: interface language
    (lang) and what they are learning (direction). Both are persisted via
    lsSet so they sync to Supabase and follow the student across devices. */
-/* Corrupt/partial storage must never brick the app boot — fall back to defaults. */
+/* Corrupt/partial storage must never brick the app boot, fall back to defaults. */
 let accountPrefs;
 try{ accountPrefs = JSON.parse(localStorage.getItem('pel_account_prefs') || 'null') || {lang:'ar', direction:'en'}; }
 catch(e){ accountPrefs = {lang:'ar', direction:'en'}; }
@@ -10786,7 +10786,7 @@ const VOCAB_BANK = [
 
 /* ---- grammar academy topics ---- */
 /* ============================================================
-   MISTAKE COACH — interactive error patterns for Arabic speakers
+   MISTAKE COACH, interactive error patterns for Arabic speakers
    Categorized by error type, each pattern has wrong/correct examples,
    the dialect explanation, quick rule, and practice questions.
    Research-backed: Al-Hattami 2010, Ahmad 2011, Al-Seghayer 2014.
@@ -10877,7 +10877,7 @@ window.SAUDI_MISTAKE_COACH = [
         wrong: 'We returned to home.',
         correct: 'We returned home.',
         whyAr: 'بالعربي نقول رجعنا للبيت. بس home لوحدها كافيه، ما نضيف to قبلها مع return.',
-        ruleAr: 'return home / go home / come home — بدون to قبل home.',
+        ruleAr: 'return home / go home / come home، بدون to قبل home.',
         practice: [
           {q:'I want to go ___ home.', options:['to','—','at','in'], correct:1},
           {q:'She returned ___ home late.', options:['to','—','at','in'], correct:1},
@@ -11094,7 +11094,7 @@ window.SAUDI_MISTAKE_COACH = [
         wrong: '(translating literally) I am under',
         correct: 'Im down for that. = موافق / يلا',
         whyAr: 'مو معناها انا تحت! معناها انا موافق وجاهز.',
-        ruleAr: 'Im down (for) = موافق. مثال: Wanna grab food? — Im down!',
+        ruleAr: 'Im down (for) = موافق. مثال: Wanna grab food?, Im down!',
         practice: [
           {q:'Someone says: Wanna grab coffee? What does Im down mean?', options:['I am busy','I agree / sure','I am sad','I am leaving'], correct:1},
         ]
@@ -11116,7 +11116,7 @@ window.SAUDI_MISTAKE_COACH = [
         wrong: '(translating literally) I will walk past',
         correct: 'Ill pass. = لا، بخليها / ما ابي',
         whyAr: 'مو معناها بمر! معناها ما ابي او ما راح اسويها.',
-        ruleAr: 'Ill pass = ما ابي / لا. مثال: Want to try? — Ill pass.',
+        ruleAr: 'Ill pass = ما ابي / لا. مثال: Want to try?, Ill pass.',
         practice: [
           {q:'Someone offers you something you dont want. You say:', options:['Ill pass','Ill walk','Ill past','Ill go'], correct:0},
         ]
@@ -11127,7 +11127,7 @@ window.SAUDI_MISTAKE_COACH = [
         wrong: '(translating literally) No thinking',
         correct: 'No worries. = عادي / ولا يهمك',
         whyAr: 'معناها ما فيها مشكله، عادي. تستخدمها لو اعتذر احد او تبي تهدى الوضع.',
-        ruleAr: 'No worries = عادي / ما فيه مشكله. مثال: Sorry Im late! — No worries.',
+        ruleAr: 'No worries = عادي / ما فيه مشكله. مثال: Sorry Im late!, No worries.',
         practice: [
           {q:'Someone says Sorry Im late. A natural reply:', options:['No worries','No thinking','No problems','Both A and C'], correct:3},
         ]
@@ -11149,7 +11149,7 @@ window.SAUDI_MISTAKE_COACH = [
         wrong: '(translating literally) Fracture your leg',
         correct: 'Break a leg! = بالتوفيق! / يلا!',
         whyAr: 'مو معناها كسر رجل! معناها بالتوفيق قبل عرض او امتحان.',
-        ruleAr: 'Break a leg! = بالتوفيق. مثال: Before the presentation — Break a leg!',
+        ruleAr: 'Break a leg! = بالتوفيق. مثال: Before the presentation, Break a leg!',
         practice: [
           {q:'Your friend is about to present. You say:', options:['Break a leg','Break your leg','Good break','Dont break'], correct:0},
         ]
@@ -15872,7 +15872,7 @@ function academyLessonList(academy){
    sentences become the example conversation, patterns/notes become a
    notes section, choose-exercises feed the mini quiz and every other
    exercise type lands in the interactive Practice section. */
-/* Safe JSON parse helper — falls back to defaultValue on failure. */
+/* Safe JSON parse helper, falls back to defaultValue on failure. */
 function safeParse(str, defaultValue){ try{ return JSON.parse(str); }catch(e){ return defaultValue; } }
 
 function dbToLesson(dbl, academy){
@@ -16057,7 +16057,7 @@ function renderDbPractice(container, exercises){
           if(heard === null){ fb.innerHTML = '<span class="arabic">' + (micErrorMessage(err)||'') + '</span>'; return; }
           const pf = (typeof pronFeedback === 'function') ? pronFeedback(heard, tgt) : null;
           const tip = (pf && pf.tipAr) ? ' <span class="arabic" style="color:var(--gold);">'+pf.tipAr+'</span>' : '';
-          // Encouragement messages based on score — reduces speaking anxiety
+          // Encouragement messages based on score, reduces speaking anxiety
           // Research: 100% of  EFL learners report speaking anxiety
           // Ref: https://www.e-iji.net/dosyalar/iji_2026_3_19.pdf
           let enc = '';
@@ -16260,7 +16260,7 @@ function markLessonComplete(academyId, lessonId, stats){
           }
           window.PEL_EFFECTIVE_STATE = data;
           document.dispatchEvent(new CustomEvent('pel-progress-updated', { detail:data }));
-          // Server confirmed — now grant rewards
+          // Server confirmed, now grant rewards
           const compDates = lsGetUser('pel_completion_dates', {});
           compDates[key] = pelDateKey();
           lsSetUser('pel_completion_dates', compDates);
@@ -16286,7 +16286,7 @@ function markLessonComplete(academyId, lessonId, stats){
       return rpcPromise;
     }
   }catch(e){}
-  // Offline fallback (no client or no user) — grant rewards locally
+  // Offline fallback (no client or no user), grant rewards locally
   const compDates = lsGetUser('pel_completion_dates', {});
   compDates[key] = pelDateKey();
   lsSetUser('pel_completion_dates', compDates);
@@ -16324,10 +16324,10 @@ function awardXp(amount){
     const twoDaysAgo = pelDateKey(new Date(Date.now() - 2*86400000));
     var freezeUsed = false;
     if(studentStats.lastStudyDate === yesterday){
-      // Consecutive day — increment streak.
+      // Consecutive day, increment streak.
       studentStats.streak = studentStats.streak + 1;
     } else if(studentStats.lastStudyDate === twoDaysAgo){
-      // Missed exactly 1 day — check if we have a freeze available.
+      // Missed exactly 1 day, check if we have a freeze available.
       var freezes = getStreakFreezes();
       if(freezes > 0 && studentStats.streak >= 3){
         // Consume a freeze: keep the current streak value.
@@ -16338,7 +16338,7 @@ function awardXp(amount){
         studentStats.streak = 1;
       }
     } else {
-      // Missed 2+ days — reset streak entirely.
+      // Missed 2+ days, reset streak entirely.
       studentStats.streak = 1;
     }
     // Award a freeze every 3 days of study (capped at 2).
@@ -16636,7 +16636,7 @@ function recordAndScore(onDone, targetText, btn, _retryCount){
   if(btn) btn.classList.add('recording');
 
   // Use a SpeechGrammarList to bias recognition toward the target word/phrase.
-  // This dramatically improves accuracy for accented speech — the browser knows
+  // This dramatically improves accuracy for accented speech, the browser knows
   // what word the student is trying to say and matches against it, instead of
   // trying to freely transcribe any English audio (which fails badly with accents).
   // We also add common phonetic spellings Arabic speakers produce.
@@ -16664,7 +16664,7 @@ function recordAndScore(onDone, targetText, btn, _retryCount){
     }catch(ge){ /* grammar list not supported, continue without it */ }
   }
 
-  // Track the best interim result so far — if the recognizer fires onresult
+  // Track the best interim result so far, if the recognizer fires onresult
   // with a final result, we use that; but if it times out or ends without a
   // final result, we fall back to the best interim we saw.
   var bestInterim = { heard: '', score: -1 };
@@ -16705,7 +16705,7 @@ function recordAndScore(onDone, targetText, btn, _retryCount){
         return;
       }
     }
-    // Interim result — keep listening, don't stop yet
+    // Interim result, keep listening, don't stop yet
   };
   rec.onerror = (e) => {
     if(activeRec !== rec) return;
@@ -16716,7 +16716,7 @@ function recordAndScore(onDone, targetText, btn, _retryCount){
       onDone(bestInterim.heard, bestInterim.score);
       return;
     }
-    // "network" and "no-speech" are transient — auto-retry up to 2 times
+    // "network" and "no-speech" are transient, auto-retry up to 2 times
     // so the student doesn't have to press the button again
     if((code === 'network' || code === 'no-speech') && _retryCount < 2){
       setTimeout(() => recordAndScore(onDone, targetText, btn, _retryCount + 1), 800);
@@ -16988,7 +16988,7 @@ function loadCompromise(){
 function posTokens(nlpImpl, text){
   const out = [];
   try{
-    // Use sentences() to preserve sentence boundaries — the tense-marker rule
+    // Use sentences() to preserve sentence boundaries, the tense-marker rule
     // must not match a past-time word in the NEXT sentence.
     const arr = nlpImpl(text).terms().out('offsets');
     // Build a set of term texts that are the last term in their sentence,
@@ -17197,7 +17197,7 @@ const LOCAL_RULES = [
     ar:'مع I/we/you/they ما نضيف s للفعل: "I go" مو "I goes".',
     en:'With I/we/you/they don\'t add "s" to the verb: "I go", not "I goes".',
     whyAr: 'الفعل مع I/we/you/they يبقى على شكله الاساسي بدون s.',
-    whyEn:'The verb stays in its base form after I/we/you/they — no "s" added.',
+    whyEn:'The verb stays in its base form after I/we/you/they, no "s" added.',
     learn:{ ar: 'I go، We like، They work.', en:'I go, We like, They work.' },
     find(tokens, i, nlpImpl){
       const a = tokens[i], b = tokens[i+1];
@@ -17207,7 +17207,7 @@ const LOCAL_RULES = [
       if(!(b.tags.includes('PresentTense') || b.tags.includes('Infinitive'))) return null;
       if(['am','is','are','was','were','have','has','had','do','does','did','can','could','will','would','should','may','might','must'].includes(b.normal)) return null;
       // Only fire if the verb is the third-person singular form (PresentTense)
-      // and the infinitive (base form) is different — meaning it has an -s.
+      // and the infinitive (base form) is different, meaning it has an -s.
       const conj = conjugateVerb(nlpImpl, b.normal);
       if(!conj.Infinitive || conj.Infinitive === b.normal) return null;
       if(!conj.PresentTense || conj.PresentTense !== b.normal) return null;
@@ -17254,7 +17254,7 @@ const LOCAL_RULES = [
         if(k > i+1) break;
       }
       if(markerIdx === -1) return null;
-      // Don't match across sentence boundaries — a past-time word in the
+      // Don't match across sentence boundaries, a past-time word in the
       // next sentence (e.g. "English. Yesterday I eat") must not trigger
       // a tense fix for a verb in the previous sentence.
       for(let k = i+1; k <= markerIdx; k++){
@@ -18997,7 +18997,7 @@ function cefrShortLabel(code, isAr){ return cefrDisplayName(code, isAr); }
    inside lessons and on the dashboard strip. All tools are unlocked
    for all students regardless of CEFR level or lessons completed.
    The minLevel fields are kept for reference only and are NOT used
-   for gating — guidedToolsForLevel() returns all tools.
+   for gating, guidedToolsForLevel() returns all tools.
    ============================================================ */
 const GUIDED_TOOL_RULES = {
   pronunciation: { minLevel:'A0', icon:'mic',          ar: 'النطق',       en:'Pronunciation', why:'تدرب على نطق كلمات الدرس' },
@@ -19170,7 +19170,7 @@ function renderCefrPath(){
         const firstOpen = sk.lessons.find(l => !l.locked) || sk.lessons[0];
         const chipsHtml = sk.lessons.map(l => {
           let done=false; try{ done=completedLessons.has(ac.id+'::'+l.id); }catch(e){}
-          return `<button type="button" class="cefr-chip ${l.locked?'locked':''} ${done?'done':''}" data-academy="${ac.id}" data-lesson="${l.id}" aria-label="${esc(l.en||l.id)}${done?' — '+L('completed','مكتمل'):''}" ${l.locked?'disabled':''}><span class="cefr-lesson-en">${esc(l.en||l.id)}</span></button>`;
+          return `<button type="button" class="cefr-chip ${l.locked?'locked':''} ${done?'done':''}" data-academy="${ac.id}" data-lesson="${l.id}" aria-label="${esc(l.en||l.id)}${done?' · '+L('completed','مكتمل'):''}" ${l.locked?'disabled':''}><span class="cefr-lesson-en">${esc(l.en||l.id)}</span></button>`;
         }).join('');
         return `<div class="cefr-skill ${status}"><button type="button" class="cefr-skill-node" data-academy="${ac.id}" data-lesson="${firstOpen?firstOpen.id:''}" aria-label="${status==='complete'?L('Review lesson','راجع الدرس'):status==='locked'?L('Locked','مغلق'):L('Start lesson','ابدا الدرس')}" ${status==='locked'?'disabled':''}><i data-lucide="${status==='complete'?'crown':status==='locked'?'lock':'play'}" width="15" height="15"></i></button><div class="cefr-skill-body"><div class="cefr-skill-title">${esc(skillTitle(sk))}</div><div class="cefr-skill-chips">${chipsHtml}</div></div></div>`;
       }).join('');
@@ -19706,7 +19706,7 @@ function renderVocabulary(){
   // --- Curated Collections ---
   const VV_COLLECTIONS = [
     {id:'everyday', icon:'sun', en:'Everyday Words', ar: 'كلمات يوميه', desc_en:'Common words for daily life', desc_ar: 'كلمات تستخدمها كل يوم', filter: v => v.difficulty==='Beginner'},
-    {id:'beginners', icon:'graduation-cap', en:'Essential for Beginners', ar: 'اساسيات للمبتديين', desc_en:'Start here — the most useful words', desc_ar: 'ابدا من هنا — انفع الكلمات', filter: v => v.difficulty==='Beginner' || v.difficulty==='Intermediate'},
+    {id:'beginners', icon:'graduation-cap', en:'Essential for Beginners', ar: 'اساسيات للمبتديين', desc_en:'Start here, the most useful words', desc_ar: 'ابدا من هنا، انفع الكلمات', filter: v => v.difficulty==='Beginner' || v.difficulty==='Intermediate'},
     {id:'advanced', icon:'zap', en:'Advanced Vocabulary', ar: 'كلمات متقدمه', desc_en:'Challenge yourself with harder words', desc_ar: 'تحدى نفسك بكلمات اصعب', filter: v => v.difficulty==='Advanced'},
     {id:'all', icon:'library', en:'All Words', ar: 'كل الكلمات', desc_en:'Browse the full vocabulary bank', desc_ar: 'شوف كل الكلمات', filter: () => true},
   ];
@@ -19758,7 +19758,7 @@ function renderVocabulary(){
       .filter(([cat]) => cat.toLowerCase().includes(q) || wordCats.has(cat))
       .sort((a,b) => b[1] - a[1]);
     // word result chips (only when searching)
-    const wordChips = (q && matchedWords.length) ? `<div class="vv-word-results" style="margin:0 0 16px;"><div style="font-size:.78rem;color:var(--text-muted);margin:0 0 8px;">${arMode? matchedWords.length+' كلمه مطابقه — اضغط للدراسه' : matchedWords.length+' matching word'+(matchedWords.length>1?'s':'')+' — tap to study'}</div><div style="display:flex;flex-wrap:wrap;gap:8px;">${matchedWords.slice(0,24).map(v => `<button type="button" class="vv-word-chip" data-en="${escapeHtml(v.en)}" style="padding:7px 14px;border-radius:999px;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer;font-size:.85rem;"><b>${escapeHtml(v.en)}</b> — <span class="arabic">${escapeHtml(v.ar)}</span></button>`).join('')}</div></div>` : '';
+    const wordChips = (q && matchedWords.length) ? `<div class="vv-word-results" style="margin:0 0 16px;"><div style="font-size:.78rem;color:var(--text-muted);margin:0 0 8px;">${arMode? matchedWords.length+' كلمه مطابقه، اضغط للدراسه' : matchedWords.length+' matching word'+(matchedWords.length>1?'s':'')+', tap to study'}</div><div style="display:flex;flex-wrap:wrap;gap:8px;">${matchedWords.slice(0,24).map(v => `<button type="button" class="vv-word-chip" data-en="${escapeHtml(v.en)}" style="padding:7px 14px;border-radius:999px;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer;font-size:.85rem;"><b>${escapeHtml(v.en)}</b> · <span class="arabic">${escapeHtml(v.ar)}</span></button>`).join('')}</div></div>` : '';
     catGridEl.innerHTML = wordChips + entries.map(([cat,count]) => {
       const icon = VV_CAT_ICONS[cat] || 'book-open';
       const catName = arMode ? (VV_CAT_AR[cat] || cat) : cat;
@@ -19826,7 +19826,7 @@ function renderVocabulary(){
     const wordKey = 'vocab-' + v.en.toLowerCase().replace(/\s+/g,'-');
     const bm = isBookmarked('vocab', wordKey);
     const diff = v.difficulty || '';
-    //  Arabic cleaner — normalizes hamzas, removes diacritics, simplifies formal terms
+    //  Arabic cleaner, normalizes hamzas, removes diacritics, simplifies formal terms
     function vvSaudiClean(s){
       if(!s) return '';
       return String(s)
@@ -20403,7 +20403,7 @@ viewRenderers.pronunciation = renderPronunciation;
    SPEAKING STUDIO, Scenario Trainer
    ============================================================ */
 /* Scenario Trainer data: each persona has a structured, teachable scenario.
-   No free chat — students learn through guided steps: situation, listen,
+   No free chat, students learn through guided steps: situation, listen,
    choose, build, say, summary. */
 const SCENARIO_TRAINER = {
   'waiter': {
@@ -21121,7 +21121,7 @@ function renderWriting(){
         wrong: {en: 'Hello thank you', ar: 'هلا شكرا عليك', why: 'الكلمات مبعثره، بدون ترتيب. "thank you" لحالها ما تكفي، و"عليك" غلط - القصد "لك".'},
         right: {en: 'Dear Mr. Alqarni, thank you for your support during my training.', ar: 'عزيزي الاستاذ القرني، شكرا على دعمك خلال فتره تدريبي.', translit: 'ديير مستر القرضني، ثانك يو فور يور سب-اورت دورنق ماي تريننق.'},
         teach: [
-          {ar: 'نبدا بـ Dear + الاسم. هذا تحيه رسميه في الايميلات.', en: 'Start with "Dear [name]" — this is a formal email greeting.'},
+          {ar: 'نبدا بـ Dear + الاسم. هذا تحيه رسميه في الايميلات.', en: 'Start with "Dear [name]", this is a formal email greeting.'},
           {ar: 'بعدها شكر مباشر: thank you for + الشي اللي تسويه عليه.', en: 'Then a direct thanks: "thank you for" + what you are thanking them for.'},
           {ar: 'نختم بذكر الفتره: during my training.', en: 'End with the period: "during my training".'},
         ],
@@ -21132,7 +21132,7 @@ function renderWriting(){
         wrong: {en: 'Thank you learn me', ar: 'شكرا تتعلم مني', why: '"learn me" غلط - نقول taught me (علمتني) ماضي. و"شكرا" لحالها ضعيفه.'},
         right: {en: 'Thank you for everything you taught me.', ar: 'شكرا على كل اللي علمتني.', translit: 'ثانك يو فور اڤريثينق يو توت مي.'},
         teach: [
-          {ar: '"everything you taught me" - كل اللي علمتني. taught ماضي من teach.', en: '"everything you taught me" — taught is past tense of teach.'},
+          {ar: '"everything you taught me" - كل اللي علمتني. taught ماضي من teach.', en: '"everything you taught me", taught is past tense of teach.'},
           {ar: 'نستخدم for + الشي اللي نشكر عليه.', en: 'Use "for" + what you are thanking them for.'},
         ],
         words: ['Thank','you','for','everything','you','taught','me.'],
@@ -21180,7 +21180,7 @@ function renderWriting(){
         wrong: {en: 'I want Thursday off', ar: 'ابي الخميس اجازه', why: 'مباشر جدا. في الشغل نستخدم would like to + take + day off.'},
         right: {en: 'I would like to take Thursday off, if that is possible.', ar: 'حاب اخذ يوم الخميس اجازه، لو ممكن.', translit: 'اي ود لايك تو تيك ثورسدي اوف، ايف ذات از بوسيبل.'},
         teach: [
-          {ar: 'would like to = ابي/حاب - مهذب ومحترم.', en: '"would like to" = I want — polite and respectful.'},
+          {ar: 'would like to = ابي/حاب - مهذب ومحترم.', en: '"would like to" = I want, polite and respectful.'},
           {ar: 'take + اليوم + off = اخذ اليوم اجازه.', en: '"take [day] off" = to have that day off.'},
           {ar: 'if that is possible = لو ممكن - تضيف لين وذوق.', en: '"if that is possible" = adds politeness and consideration.'},
         ],
@@ -21193,9 +21193,9 @@ function renderWriting(){
         wrong: {en: 'Meeting tomorrow 2', ar: 'اجتماع بكرة ٢', why: 'مبهم - وين ومتى بالضبط؟ نكتب جمله كامله.'},
         right: {en: 'We have a meeting tomorrow at two in the conference room.', ar: 'عندنا اجتماع بكرة الساعه ثنتين بغرفه الاجتماعات.', translit: 'وي هاڤ ا ميتنق تومورو ات تو ان ذا كونفرانس روم.'},
         teach: [
-          {ar: 'We have a meeting = عندنا اجتماع.', en: '"We have a meeting" — the standard way to announce a meeting.'},
+          {ar: 'We have a meeting = عندنا اجتماع.', en: '"We have a meeting", the standard way to announce a meeting.'},
           {ar: 'at + الوقت = الساعه كذا. نستخدم at للاوقات.', en: '"at" + time. Use "at" for specific times.'},
-          {ar: 'in the conference room = بغرفه الاجتماعات. نستخدم in للاماكن.', en: '"in the conference room" — use "in" for rooms/places.'},
+          {ar: 'in the conference room = بغرفه الاجتماعات. نستخدم in للاماكن.', en: '"in the conference room", use "in" for rooms/places.'},
         ],
         words: ['We','have','a','meeting','tomorrow','at','two','in','the','conference','room.'],
       },
@@ -21207,8 +21207,8 @@ function renderWriting(){
         right: {en: 'I have an idea for a new project. Could we discuss it?', ar: 'عندي فكره لمشروع جديد. ممكن نناقشها؟', translit: 'اي هاڤ ان ايديا فور ا نيو براجكت. كود وي ديسكاس ات؟'},
         teach: [
           {ar: 'an idea (مش a idea) لان idea تبدا بحرف متحرك.', en: '"an idea" (not "a idea") because idea starts with a vowel sound.'},
-          {ar: 'for a new project = لمشروع جديد.', en: '"for a new project" — connects the idea to its purpose.'},
-          {ar: 'Could we discuss it? = ممكن نناقشها؟ طلب مهذب.', en: '"Could we discuss it?" — polite way to suggest a meeting.'},
+          {ar: 'for a new project = لمشروع جديد.', en: '"for a new project", connects the idea to its purpose.'},
+          {ar: 'Could we discuss it? = ممكن نناقشها؟ طلب مهذب.', en: '"Could we discuss it?", polite way to suggest a meeting.'},
         ],
         words: ['I','have','an','idea','for','a','new','project.','Could','we','discuss','it?'],
       },
@@ -21710,7 +21710,7 @@ async function renderControlCenter(){
   // Check if the student has a saved mid-lesson position (pel_stage_pos).
   // If the saved lesson is available in the current stage, prefer it over
   // the first available lesson so the hero card always shows the lesson the
-  // student was actually working on — not a different one.
+  // student was actually working on, not a different one.
   let savedPos = null;
   try {
     const raw = localStorage.getItem('pel_stage_pos');
@@ -21723,7 +21723,7 @@ async function renderControlCenter(){
   // First available lesson from server state
   const firstAvail = lessons.find(x => x.state === 'available') || null;
   // If the student has a saved position (pel_stage_pos) for a lesson in this
-  // stage, show THAT lesson — not the server's first-available. The student
+  // stage, show THAT lesson, not the server's first-available. The student
   // was actively working on it; even if the server marks it "locked" (e.g.
   // completed_lessons was reset), they should resume where they left off.
   let L = firstAvail;
@@ -22392,7 +22392,7 @@ function renderProfile(){
   document.getElementById('weeklyGoalNum').textContent = studentPrefs.weeklyGoalLessons;
   document.getElementById('monthlyGoalNum').textContent = studentPrefs.monthlyGoalLessons;
   document.getElementById('editGoalBtn').addEventListener('click', () => {
-    // In-app bilingual goal editor (was a native prompt() — felt broken on mobile
+    // In-app bilingual goal editor (was a native prompt(), felt broken on mobile
     // and did not match the app's design).
     const stale = document.getElementById('pelGoalModal');
     if(stale) stale.remove();
@@ -22402,7 +22402,7 @@ function renderProfile(){
     ov.innerHTML = `
       <div dir="auto" style="background:var(--card,#1c1b19);border:1px solid var(--border,#393836);border-radius:16px;max-width:420px;width:100%;padding:22px;box-shadow:0 24px 60px rgba(0,0,0,.45);">
         <h3 style="margin:0;font-size:1.05rem;"><span class="arabic" style="display:block;">حدث هدفك التعليمي</span><span dir="ltr" style="display:block;font-size:.86rem;color:var(--text-muted,#797876);">Update your learning goal</span></h3>
-        <input id="pelGoalInput" type="text" dir="auto" maxlength="140" aria-label="Learning goal" value="${escapeHtml(studentPrefs.goal||'')}" placeholder="مثال: اتواصل بثقه بالشغل — e.g. Speak confidently at work" style="width:100%;margin-top:12px;padding:11px 13px;border-radius:10px;border:1px solid var(--border,#393836);background:var(--bg,#141312);color:var(--text,#eee);font-size:.95rem;font-family:inherit;" />
+        <input id="pelGoalInput" type="text" dir="auto" maxlength="140" aria-label="Learning goal" value="${escapeHtml(studentPrefs.goal||'')}" placeholder="مثال: اتواصل بثقه بالشغل، e.g. Speak confidently at work" style="width:100%;margin-top:12px;padding:11px 13px;border-radius:10px;border:1px solid var(--border,#393836);background:var(--bg,#141312);color:var(--text,#eee);font-size:.95rem;font-family:inherit;" />
         <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:16px;">
           <button type="button" id="pelGoalCancel" class="btn-outline"><span class="arabic">الغاء</span>، <span dir="ltr">Cancel</span></button>
           <button type="button" id="pelGoalSave" class="btn-gold"><span class="arabic">حفظ</span>، <span dir="ltr">Save</span></button>
@@ -23567,7 +23567,7 @@ function renderDashboardIntel(){
       activityTouch: function(evt, opts){ try{ PEL_ACTIVITY.touch(evt, opts); }catch(e){} },
       accountPrefs: function(){ return accountPrefs; },
       openLesson: openLesson,
-      //  Mistake Coach data — common  learner mistakes woven into
+      //  Mistake Coach data, common  learner mistakes woven into
       // the lesson flow. Patterns are matched to lesson content automatically.
       saudiMistakeCoach: function(){ return window.SAUDI_MISTAKE_COACH || []; },
       // Guided tool rules: which tools are unlocked at the student's CEFR level
@@ -23646,7 +23646,7 @@ function renderDashboardIntel(){
      Was inline near the top of this script; now injected here so every dep
      it needs is already declared at this point in the file. */
   /* Global bridge so separate script blocks (e.g. live classes widget)
-     can register view renderers — viewRenderers is IIFE-scoped here. */
+     can register view renderers, viewRenderers is IIFE-scoped here. */
   window.__pelRegisterViewRenderer = function(id, fn){
     try{ viewRenderers[id] = fn; return true; }catch(e){ return false; }
   };
@@ -24298,7 +24298,7 @@ if(window.lucide) lucide.createIcons();
     // Register as a proper viewRenderer so goToView calls it directly
     // (instead of relying on MutationObserver which causes a blank flash).
     // viewRenderers is scoped inside the main app IIFE, so register via the
-    // global bridge it exposes — the old bare `typeof viewRenderers` guard
+    // global bridge it exposes, the old bare `typeof viewRenderers` guard
     // could never see it and silently skipped registration.
     if(typeof window.__pelRegisterViewRenderer === 'function'){
       window.__pelRegisterViewRenderer('liveClasses', function(){ loadOverview().then(render); });

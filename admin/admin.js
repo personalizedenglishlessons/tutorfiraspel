@@ -477,7 +477,7 @@ function statusChip(status){
   return '<span class="chip ' + cls + '"><span class="badge-dot ' + cls + '"></span>' + esc(text) + '</span>';
 }
 function chip(text, cls){
-  /* Callers MUST pre-escape untrusted text with esc() — this function
+  /* Callers MUST pre-escape untrusted text with esc(), this function
      concatenates raw to allow rich chips (icons, compound labels). */
   return '<span class="chip ' + (cls||'') + '">' + text + '</span>';
 }
@@ -607,9 +607,9 @@ async function adminDelete(entity, id, onDone){
     var res = r.data || {};
     if(res.error){
       var errMsg = res.error === 'not_found'
-        ? (lang === 'ar' ? 'ما حصلنا العنصر — يمكن انحذف من قبل.' : 'Item not found — it may have already been deleted.')
+        ? (lang === 'ar' ? 'ما حصلنا العنصر، يمكن انحذف من قبل.' : 'Item not found, it may have already been deleted.')
         : res.error === 'live_classes_exist'
-        ? (lang === 'ar' ? 'مربوط بحصص مباشره (' + (res.count || '') + ') — الغِ الحصص او غير المجموعه فيها قبل الحذف.' : 'This group has ' + (res.count || '?') + ' live class(es) attached — cancel or reassign them first.')
+        ? (lang === 'ar' ? 'مربوط بحصص مباشره (' + (res.count || '') + ')، الغِ الحصص او غير المجموعه فيها قبل الحذف.' : 'This group has ' + (res.count || '?') + ' live class(es) attached, cancel or reassign them first.')
         : res.error === 'fk_blocked'
         ? (lang === 'ar' ? 'عناصر مرتبطه تمنع الحذف.' : 'Linked records prevent deletion.')
         : res.error;
@@ -683,7 +683,7 @@ function skillScoresAll(completed){
   var done = {};
   (completed || []).forEach(function(k){ done[k] = 1; });
   /* Prefer the full DB catalog (54 academies incl. the granular stage
-     academies — a1-present-simple, step-exam-prep... — where the student's
+     academies, a1-present-simple, step-exam-prep..., where the student's
      completed lessons actually live). The static ACADEMY_META mirror (30
      academies) misses them entirely. */
   var acList = (window.PEL_ENGINE && PEL_ENGINE.curriculumAcademies && PEL_ENGINE.curriculumAcademies().length)
@@ -968,7 +968,7 @@ $('viewArea').innerHTML = pageHead(t('overview'), lang === 'ar' ? 'وش يصير
 
   /* "What should I do?" - from real conditions */
   var actions = [];
-  if(delReqs.length > 0) actions.push({ warn:true, icon:'alert-triangle', txt: (lang === 'ar' ? (delReqs.length + ' طلب حذف حساب — لازم يتنفذ خلال 30 يوم (صفحة الطلاب)') : (delReqs.length + ' account deletion request(s) — must be actioned within 30 days (Students page)') ) });
+  if(delReqs.length > 0) actions.push({ warn:true, icon:'alert-triangle', txt: (lang === 'ar' ? (delReqs.length + ' طلب حذف حساب، لازم يتنفذ خلال 30 يوم (صفحة الطلاب)') : (delReqs.length + ' account deletion request(s), must be actioned within 30 days (Students page)') ) });
   if(metrics.expiring > 0) actions.push({ warn:true, icon:'hourglass', txt: (lang === 'ar' ? (metrics.expiring + ' برنامج ينتهي خلال ١٤ يوم - جدد او كلم الطالب') : (metrics.expiring + ' program(s) end within 14 days - renew or reach out') ) });
   if(actions.length === 0){
     if((d.attention || []).length > 0) actions.push({ txt: lang === 'ar' ? (d.attention.length + ' طالب يحتاج انتباه') : (d.attention.length + ' students need attention') });
@@ -1139,7 +1139,7 @@ function loadDelReqs(){
     host.innerHTML = '<div class="card" style="margin-bottom:14px; border-color:var(--danger);">' +
       '<div style="font-weight:600; margin-bottom:8px;">' + esc(lang==='ar'?'طلبات حذف حسابات معلقه':'Pending account deletion requests') + ' (' + reqs.length + ')</div>' +
       '<div class="reason-list">' + items + '</div>' +
-      '<p class="why" style="margin-top:10px;">' + esc(lang==='ar'?'قبل الحذف: راجع اشتراك الطالب وحاله الاسترداد — الحذف يمسح سجل الاشتراك كامل.':'Before deleting: check the student\'s subscription and refund status — deletion erases the full subscription history.') + '</p></div>';
+      '<p class="why" style="margin-top:10px;">' + esc(lang==='ar'?'قبل الحذف: راجع اشتراك الطالب وحاله الاسترداد، الحذف يمسح سجل الاشتراك كامل.':'Before deleting: check the student\'s subscription and refund status, deletion erases the full subscription history.') + '</p></div>';
     host.querySelectorAll('[data-del-req-user]').forEach(function(b){
       b.addEventListener('click', function(){
         var uid = b.getAttribute('data-del-req-user');
