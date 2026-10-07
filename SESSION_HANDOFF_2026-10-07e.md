@@ -105,3 +105,19 @@ text "الكبير H والصغير h · اسمه ايتش" rendered THREE times
 - Verified live in both AR and EN after Pages deploy.
 - TODO for owner: register PEL LLC in Florida; have a US lawyer review
   the documents once registered.
+
+## Addendum 2: de-Firas / de-Saudi sweep
+
+- index.html: "منصه تعليميه من الاستاذ فراس" / "a learning platform by
+  Tutor Firas" → "منصه تعليميه من PEL LLC" / "a learning platform by
+  PEL LLC" (hero social proof, footer, JS lang switcher).
+- legal.html: removed ALL Saudi Arabia jurisdiction references —
+  PDPL transfer framing, SDAIA complaint authority, "Saudi dialect"
+  → generic: international transfer disclosure for visitors from
+  anywhere, complaints to "your local data protection authority",
+  "Arabic-dialect support". Tutor Firas stays ONLY as a tutor hired
+  by the company (owner's instruction), never as the maker.
+- Internal code identifiers (saudiifyAr, saudi-* academy IDs) left
+  as-is: invisible to users, renaming risks DB breakage.
+- NOTE for owner: the WhatsApp number (+966) and SAR pricing still
+  tie the business to Saudi Arabia practically — business decision.
