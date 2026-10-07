@@ -344,10 +344,10 @@ nav.primary-nav a:hover::after{ width:100%; }
   position:fixed; inset:0; z-index:999;
   background:var(--bg);
   display:flex; flex-direction:column; justify-content:center; align-items:center; gap:28px;
-  opacity:0; pointer-events:none; transform:translateY(-12px);
-  transition:opacity .4s var(--ease), transform .4s var(--ease);
+  opacity:0; visibility:hidden; pointer-events:none; transform:translateY(-12px);
+  transition:opacity .4s var(--ease), visibility .4s var(--ease), transform .4s var(--ease);
 }
-.mobile-menu.open{ opacity:1; pointer-events:all; transform:translateY(0); }
+.mobile-menu.open{ opacity:1; visibility:visible; pointer-events:all; transform:translateY(0); }
 .mobile-menu .mobile-nav-link{ font-family:'Tajawal','Fraunces',serif; font-weight:700; font-size:1.5rem; }
 .mobile-menu .mobile-menu-actions{ display:flex; flex-direction:column; align-items:stretch; gap:14px; width:min(280px,80vw); margin-top:10px; }
 .mobile-menu .mobile-menu-actions .btn-outline,
@@ -1666,6 +1666,11 @@ function applyIndexLang(lang){
         var span2=el.querySelector('.login-text');
         if(span2) span2.textContent = lang==='ar' ? 'دخول الطلاب' : 'Student Login';
         else if(!el.querySelector('span')) el.textContent = lang==='ar' ? 'دخول الطلاب' : 'Student Login';
+      }
+    }
+    if(txt==='استكشف المنصه' || txt==='Explore the platform'){
+      if(el.classList.contains('btn-outline') || el.closest('.hero-cta-row')){
+        el.textContent = lang==='ar' ? 'استكشف المنصه' : 'Explore the platform';
       }
     }
     // catch-all for stray “ابني مسار تعلمي” / “اعرف بدايتي” outside data-open-path
