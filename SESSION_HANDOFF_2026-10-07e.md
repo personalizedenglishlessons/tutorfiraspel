@@ -87,3 +87,21 @@ text "الكبير H والصغير h · اسمه ايتش" rendered THREE times
   partially-matched board as wrong when checking early (by design, but
   could nudge until at least one pair is matched — currently nudges only
   at zero matches)
+
+## Addendum: legal page rewrite (commit `8427686`)
+
+- `legal.html` rebuilt with Replo-style structure (privacy 14 sections,
+  terms 24 sections), bilingual AR/EN kept, same design.
+- Company identity everywhere: **PEL LLC, based in Florida, USA** (worded
+  "based in" — the LLC is NOT yet registered; owner will register it).
+  Tutor Firas is a tutor hired by the company; contact via PEL LLC
+  (WhatsApp +966 55 717 8070 / personalizedenglishlessons@proton.me).
+- Liability shield: AS IS disclaimer, liability capped at fees paid in
+  the preceding 6 months, indemnification, binding AAA arbitration +
+  class-action waiver (seat: Miami, FL), Florida governing law,
+  sanctions/laws-compliance clause, valid-government-request policy,
+  GDPR-style local rights acknowledged in the privacy policy.
+- Refunds simplified: case-by-case over WhatsApp (price tables removed).
+- Verified live in both AR and EN after Pages deploy.
+- TODO for owner: register PEL LLC in Florida; have a US lawyer review
+  the documents once registered.
