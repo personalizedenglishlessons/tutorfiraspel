@@ -21,7 +21,7 @@ text "الكبير H والصغير h · اسمه ايتش" rendered THREE times
    `s.checked` was already true, so a stale Check button (after a DOM
    re-render, e.g. student-state reload) could never re-arm Continue.
 
-## Commits shipped (2 commits to main)
+## Commits shipped (3 fix commits + docs, all to main)
 
 ### `770f51a` — fix: Check button nudge loop — no reveal without selection, idempotent re-check
 - `mark()`: when already checked AND correct, re-arms متابعة instead of
@@ -31,17 +31,24 @@ text "الكبير H والصغير h · اسمه ايتش" rendered THREE times
   calls `mark(ctx, undefined)` and returns BEFORE the reveal — nudge only,
   no answer leak, no duplicate explanation. Re-clicking Check after
   answering re-arms Continue instead of re-revealing.
-- Bumped `pel_lesson_stage.js?v=` to `13e4cb2c` in app.html.
+- Bumped `pel_lesson_stage.js?v=` in app.html.
 
-### `d37c75d` — fix: Check with no answer now nudges instead of counting wrong + revealing
-- Same guard applied to all 14 remaining Check handlers (`match`,
+### `ab5109d` — fix: Check with no answer now nudges instead of counting wrong + revealing
+- Same guard applied to 14 Check handlers (`match`,
   `arrange_words`, `fill_blank`, `spell`, `translate`,
   `conversation_response`, `complete_dialogue`, `grammar_correction`,
   `listening_dictation`, `guided_production`, `db_order`, `db_spell`,
   `db_translate`, `db_correct`): clicking Check with nothing selected/built
   used to mark the activity WRONG and reveal the correct answer. Now it
   shows the pick-an-answer nudge and waits.
-- Bumped `pel_lesson_stage.js?v=` to `37fcb05c` in app.html.
+- (`d37c75d` is the same change re-committed with the final cache-buster
+  value `37fcb05c` after a failed push — treat `ab5109d` as the real one.)
+
+### final guard sweep — mistake_coach, intonation, writing_practice, scenario_roleplay
+- Same no-answer nudge guard added to the last 4 Check handlers.
+  `minimal_pairs` already had its own mic-attempt guard (left as-is).
+- With this, EVERY Check handler in `pel_lesson_stage.js` nudges on
+  empty input instead of counting wrong / revealing.
 
 ## Verification (live, logged in as the student)
 
