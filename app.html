@@ -1585,11 +1585,12 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
   .palette-results{ max-height:calc(76vh - 70px); }
   #accessGate{ padding:16px; }
   #accessGate .gate-card{ padding:0 4px; }
-  .dash-stats-bar{ gap:10px !important; padding:12px 14px !important; overflow-x:auto; flex-wrap:nowrap !important; -webkit-overflow-scrolling:touch; }
-  .dash-stats-bar > div{ flex-shrink:0; }
+  .dash-stats-bar{ gap:10px !important; padding:12px 14px !important; overflow-x:visible; flex-wrap:wrap !important; }
+  .dash-stats-bar > div{ flex:1 1 40%; }
   .dash-stats-bar .arabic{ font-size:.7rem; }
   .dash-stats-bar b{ font-size:.85rem; }
   .dash-stats-bar > div > div > span{ font-size:.7rem !important; }
+  #ccStartBtn{ flex-wrap:wrap; justify-content:center; text-align:center; }
   .qt-popup{ bottom:140px; right:12px; left:12px; width:auto; }
 }
 
