@@ -20,21 +20,44 @@
 // No generic SQL proxy — only explicitly allowlisted operations.
 
 const SUPABASE_URL = "https://lewoochehpiycocvfwtz.supabase.co";
-const ALLOWED_ORIGIN = "https://personalizedenglishlessons.github.io";
+
+// CORS: multiple allowlisted origins (GitHub Pages + Cloudflare Workers).
+// Echoes Origin back when on allowlist, else falls back to first allowlisted.
+const ALLOWED_ORIGINS = [
+  "https://personalizedenglishlessons.github.io",
+  "https://pel.personalizedenglishlessons.workers.dev",
+];
+function allowedOrigin(req: Request): string {
+  const o = req.headers.get("origin") || "";
+  return ALLOWED_ORIGINS.includes(o) ? o : ALLOWED_ORIGINS[0];
+}
+
 const ACCESS_COOKIE = "sb-access-token";
 const CSRF_COOKIE = "pel-csrf";
 
-const CORS = {
-  "Access-Control-Allow-Origin": ALLOWED_ORIGIN,
-  "Access-Control-Allow-Headers": "content-type, x-pel-csrf",
-  "Access-Control-Allow-Methods": "POST, OPTIONS",
-  "Access-Control-Allow-Credentials": "true",
-};
+function corsHeaders(req: Request): Record<string, string> {
+  return {
+    "Access-Control-Allow-Origin": allowedOrigin(req),
+    "Access-Control-Allow-Headers": "content-type, x-pel-csrf",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Credentials": "true",
+  };
+}
 
-function json(body: unknown, status = 200) {
+function json(body: unknown, status = 200, req?: Request) {
+  // If req is omitted, fall back to the first allowlisted origin (GitHub
+  // Pages) so the header is always present. Callers inside Deno.serve
+  // should pass `req` so we can echo the actual caller origin.
+  const origin = req ? allowedOrigin(req) : ALLOWED_ORIGINS[0];
   return new Response(JSON.stringify(body), {
     status,
-    headers: { "content-type": "application/json", ...CORS },
+    headers: {
+      "content-type": "application/json",
+      "Access-Control-Allow-Origin": origin,
+      "Access-Control-Allow-Headers": "content-type, x-pel-csrf",
+      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Allow-Credentials": "true",
+    },
   });
 }
 
@@ -224,13 +247,15 @@ const TABLE_CONFIG: Record<string, { table: string; columns?: string; conflict?:
 };
 
 Deno.serve(async (req: Request) => {
-  if (req.method === "OPTIONS") return new Response("ok", { headers: CORS });
-  if (req.method !== "POST") return json({ ok: false, error: "method_not_allowed" }, 405);
+  if (req.method === "OPTIONS") {
+    return new Response("ok", { headers: corsHeaders(req) });
+  }
+  if (req.method !== "POST") return json({ ok: false, error: "method_not_allowed" }, 405, req);
 
   // Origin check
   const origin = req.headers.get("origin") || "";
-  if (origin && origin !== ALLOWED_ORIGIN) {
-    return json({ ok: false, error: "origin_not_allowed" }, 403);
+  if (origin && !ALLOWED_ORIGINS.includes(origin)) {
+    return json({ ok: false, error: "origin_not_allowed" }, 403, req);
   }
 
   // CSRF check (double-submit)

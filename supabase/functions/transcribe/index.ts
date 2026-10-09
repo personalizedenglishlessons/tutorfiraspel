@@ -19,22 +19,40 @@
 
 const OPENAI_KEY = Deno.env.get("OPENAI_API_KEY") || "";
 
-const cors = {
-  "Access-Control-Allow-Origin": "https://personalizedenglishlessons.github.io",
-  "Access-Control-Allow-Headers": "authorization, content-type, apikey",
-  "Access-Control-Allow-Methods": "POST, OPTIONS",
-};
+// CORS: echo Origin back when on the allowlist (github.io Pages +
+// Cloudflare Workers domain both valid).
+const ALLOWED_ORIGINS = [
+  "https://personalizedenglishlessons.github.io",
+  "https://pel.personalizedenglishlessons.workers.dev",
+];
+function allowedOrigin(req: Request): string {
+  const o = req.headers.get("origin") || "";
+  return ALLOWED_ORIGINS.includes(o) ? o : ALLOWED_ORIGINS[0];
+}
 
-function json(body: unknown, status: number): Response {
+function cors(req: Request) {
+  return {
+    "Access-Control-Allow-Origin": allowedOrigin(req),
+    "Access-Control-Allow-Headers": "authorization, content-type, apikey",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+  };
+}
+
+function json(body: unknown, status: number, req?: Request): Response {
   return new Response(JSON.stringify(body), {
     status,
-    headers: { "content-type": "application/json", ...cors },
+    headers: {
+      "content-type": "application/json",
+      // Fall back to first allowlisted origin when req is omitted so
+      // the CORS header is always present.
+      ...(req ? cors(req) : { "Access-Control-Allow-Origin": ALLOWED_ORIGINS[0] }),
+    },
   });
 }
 
 Deno.serve(async (req: Request) => {
-  if (req.method === "OPTIONS") return new Response("ok", { headers: cors });
-  if (req.method !== "POST") return json({ error: "method_not_allowed" }, 405);
+  if (req.method === "OPTIONS") return new Response("ok", { headers: cors(req) });
+  if (req.method !== "POST") return json({ error: "method_not_allowed" }, 405, req);
 
   if (!OPENAI_KEY) return json({ error: "transcription_not_configured", message: "OPENAI_API_KEY not set" }, 503);
 

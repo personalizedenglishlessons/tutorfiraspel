@@ -14,29 +14,44 @@
 //
 // Security:
 //   - Tokens never exposed to JavaScript
-//   - CORS restricted to GitHub Pages origin
+//   - CORS restricted to allowlisted origins (GitHub Pages + Cloudflare Workers)
 //   - CSRF: mutations require x-pel-csrf header matching pel-csrf cookie
 //   - Login rate-limited via existing check_auth_rate_limit RPC
 
 const SUPABASE_URL = "https://lewoochehpiycocvfwtz.supabase.co";
 const ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxld29vY2hlaHBpeWNvY3Zmd3R6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwNzQ3MzcsImV4cCI6MjA5OTY1MDczN30.sIWK6jwX7PW70fH0yPUuhOb25N1lBw2-Cvb3dtwDb9Y";
-const ALLOWED_ORIGIN = "https://personalizedenglishlessons.github.io";
+
+// CORS: multiple allowlisted origins. Echoes Origin back when on allowlist,
+// else falls back to first allowlisted origin (never reflects arbitrary).
+const ALLOWED_ORIGINS = [
+  "https://personalizedenglishlessons.github.io",
+  "https://pel.personalizedenglishlessons.workers.dev",
+];
+function allowedOrigin(req: Request): string {
+  const o = req.headers.get("origin") || "";
+  return ALLOWED_ORIGINS.includes(o) ? o : ALLOWED_ORIGINS[0];
+}
+
 const ACCESS_COOKIE = "sb-access-token";
 const REFRESH_COOKIE = "sb-refresh-token";
 const CSRF_COOKIE = "pel-csrf";
 const MAX_ATTEMPTS = 5;
 
-const CORS = {
-  "Access-Control-Allow-Origin": ALLOWED_ORIGIN,
-  "Access-Control-Allow-Headers": "content-type, x-pel-csrf",
-  "Access-Control-Allow-Methods": "POST, OPTIONS",
-  "Access-Control-Allow-Credentials": "true",
-};
+function corsHeaders(req: Request): Record<string, string> {
+  return {
+    "Access-Control-Allow-Origin": allowedOrigin(req),
+    "Access-Control-Allow-Headers": "content-type, x-pel-csrf",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Credentials": "true",
+  };
+}
+
+let CURRENT_REQ: Request | null = null;
 
 function json(body: unknown, status = 200, cookies: string[] = []) {
   const headers = new Headers();
   headers.set("content-type", "application/json");
-  headers.set("Access-Control-Allow-Origin", ALLOWED_ORIGIN);
+  headers.set("Access-Control-Allow-Origin", CURRENT_REQ ? allowedOrigin(CURRENT_REQ) : ALLOWED_ORIGINS[0]);
   headers.set("Access-Control-Allow-Headers", "content-type, x-pel-csrf");
   headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
   headers.set("Access-Control-Allow-Credentials", "true");
@@ -112,12 +127,15 @@ function parseJwt(token: string): { sub: string; email: string; exp: number } | 
 }
 
 Deno.serve(async (req: Request) => {
-  if (req.method === "OPTIONS") return new Response("ok", { headers: CORS });
+  CURRENT_REQ = req;
+  if (req.method === "OPTIONS") {
+    return new Response("ok", { headers: corsHeaders(req) });
+  }
   if (req.method !== "POST") return json({ error: "method_not_allowed" }, 405);
 
   // Origin check
   const origin = req.headers.get("origin") || "";
-  if (origin && origin !== ALLOWED_ORIGIN) {
+  if (origin && !ALLOWED_ORIGINS.includes(origin)) {
     return json({ error: "origin_not_allowed" }, 403);
   }
 
