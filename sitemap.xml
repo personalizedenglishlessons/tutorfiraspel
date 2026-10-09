@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://personalizedenglishlessons.github.io/tutorfiraspel/</loc>
+    <loc>https://pel.personalizedenglishlessons.workers.dev/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://personalizedenglishlessons.github.io/tutorfiraspel/login.html</loc>
+    <loc>https://pel.personalizedenglishlessons.workers.dev/login.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://personalizedenglishlessons.github.io/tutorfiraspel/verify.html</loc>
+    <loc>https://pel.personalizedenglishlessons.workers.dev/verify.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://personalizedenglishlessons.github.io/tutorfiraspel/legal.html</loc>
+    <loc>https://pel.personalizedenglishlessons.workers.dev/legal.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>

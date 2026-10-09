@@ -3192,7 +3192,7 @@ function printCert(x){
     certId: x.cert_id || '',
     code: x.code || ''
   };
-  certData.verifyUrl = certData.code ? 'https://personalizedenglishlessons.github.io/tutorfiraspel/verify.html?code=' + encodeURIComponent(certData.code) : null;
+  certData.verifyUrl = certData.code ? 'https://pel.personalizedenglishlessons.workers.dev/verify.html?code=' + encodeURIComponent(certData.code) : null;
   var payload = JSON.stringify(certData).replace(/<\//g, '<\\/');
   var html = '<!doctype html><html><head><meta charset="utf-8"><title>' + esc(x.cert_id || 'PEL Certificate') + '</title>' +
     '<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;500;700&display=swap" rel="stylesheet">' +

@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin.html
 Disallow: /tv-vocab-test.html
 
-Sitemap: https://personalizedenglishlessons.github.io/tutorfiraspel/sitemap.xml
+Sitemap: https://pel.personalizedenglishlessons.workers.dev/sitemap.xml
