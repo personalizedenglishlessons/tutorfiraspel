@@ -1214,7 +1214,9 @@ function sortSel(current){
 async function loadStPrograms(st){
   var w = $('stProgramWrap'); if(!w) return;
   try{
-    var r = await pelTableSelect('programs', 'id,name_en,name_ar', { eq: { active: true }, order: 'name_en' });
+    /* Keep ALL programs here (including retired) — the filter is for
+       FINDING students on old plans too, not just assigning new ones. */
+    var r = await pelTableSelect('programs', 'id,name_en,name_ar', { order: 'name_en' });
     var o = '<option value="">' + esc(t('all')) + '</option>' + (r.data || []).map(function(p){
       return '<option value="' + p.id + '">' + esc(lang === 'ar' ? (p.name_ar || p.name_en) : p.name_en) + '</option>';
     }).join('');
