@@ -48,8 +48,10 @@ tutorfiraspel/
 │   ├── schema-notes.md     DB schema & how the app connects
 │   ├── functions/
 │   │   ├── transcribe/     Whisper speech-to-text Edge Function (v2, CORS restricted)
-│   │   ├── rate-limited-login/  Per-IP login rate limiting Edge Function (v4, deployed)
-│   │   └── migrations/         SQL migration files (32 migrations)
+│   │   └── rate-limited-login/  Per-IP login rate limiting Edge Function (v4, deployed)
+│   ├── migrations/         SQL migration files (32 migrations)
+│   ├── pel-auth/          Auth/session edge function
+│   └── pel-api/           Data-access edge function
 ├── tests/
 │   ├── test_buildsequence_iam.js  Build sequence tests (13 tests)
 │   ├── test_teaching_flow.js     Teaching flow tests (31 tests)
@@ -111,8 +113,10 @@ factory file (not hand-copies) so it always tests the shipped code.
 
 | Function | Version | Status | CORS |
 |----------|---------|--------|------|
-| `transcribe` | v2 | Active | Restricted to allowlisted origins |
-| `rate-limited-login` | v4 | Active | Restricted to allowlisted origins |
+| `transcribe` | v6 | Active | Restricted to allowlisted origins |
+| `rate-limited-login` | v5 | Active | Restricted to allowlisted origins |
+| `pel-auth` | v4 | Active | Restricted to allowlisted origins |
+| `pel-api` | v5 | Active | Restricted to allowlisted origins |
 
 ## Certificate printing
 
