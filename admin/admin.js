@@ -1214,7 +1214,7 @@ function sortSel(current){
 async function loadStPrograms(st){
   var w = $('stProgramWrap'); if(!w) return;
   try{
-    var r = await pelTableSelect('programs', 'id,name_en,name_ar', { order: 'name_en' });
+    var r = await pelTableSelect('programs', 'id,name_en,name_ar', { eq: { active: true }, order: 'name_en' });
     var o = '<option value="">' + esc(t('all')) + '</option>' + (r.data || []).map(function(p){
       return '<option value="' + p.id + '">' + esc(lang === 'ar' ? (p.name_ar || p.name_en) : p.name_en) + '</option>';
     }).join('');
@@ -3574,7 +3574,7 @@ async function plansView(){
    plan type (tier) + CEFR level, assigned together. Replaces the old
    scattered buttons (s360PlanSave tier/level-only + p360Assign program-only). */
 async function openAssignPlanModal(uid, onDone, curTier, curLevel){
-  var pr = await pelTableSelect('programs', '*', { order: 'sort_order,created_at' });
+  var pr = await pelTableSelect('programs', '*', { eq: { active: true }, order: 'sort_order,created_at' });
   var catalog = pr.data || [];
   if(!catalog.length){ toast(t('noData'), true); return; }
   var ms = modal(t('assignPlan'), '' +
