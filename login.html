@@ -490,7 +490,6 @@ body.ui-ar .dp-tag{
   opacity:0; pointer-events:none; transition:opacity .6s var(--ease);
 }
 .redirect-overlay.show{ opacity:1; pointer-events:all; }
-
 .redirect-ring{ width:52px; height:52px; border-radius:50%; border:2px solid var(--border); border-top-color:var(--gold); animation:spin .9s linear infinite; }
 .redirect-overlay p{ font-family:'Fraunces',serif; font-size:1.05rem; color:var(--text); }
 
@@ -683,7 +682,7 @@ html[data-theme="light"] .cursor-ring{ border-color:rgba(184,130,30,.5); }
 
 </div>
 
-<div class="redirect-overlay" id="redirectOverlay" aria-hidden="true">
+<div class="redirect-overlay" id="redirectOverlay">
   <div class="redirect-ring"></div>
   <p>نفتح لوحة التحكم...</p>
 </div>
@@ -944,7 +943,6 @@ window.addEventListener('load', async () => {
    Tries cookie-based API first (only if test flag enabled), falls back to Supabase JS client. */
 async function triggerRedirect(){
   document.getElementById('redirectOverlay').classList.add('show');
-  document.getElementById('redirectOverlay').setAttribute('aria-hidden', 'false');
   let target = 'app.html';
   var enableCookieAuth = (localStorage.getItem('pel_cookie_test') === '1') || (new URLSearchParams(window.location.search).get('cookie_auth') === '1');
   // Propagate cookie test flag via localStorage so it survives redirect
