@@ -16236,7 +16236,33 @@ function markLessonComplete(academyId, lessonId, stats){
   // Return the server-authoritative progression promise so the Stage's
   // "Next lesson" button can await the DB route before navigating, instead of
   // guessing the next lesson from the same-academy list.
-  if(completedLessons.has(key)) return Promise.resolve(window.PEL_EFFECTIVE_STATE || null);
+  //
+  // Even when the client cache (completedLessons) already has this lesson,
+  // still call the RPC so PEL_EFFECTIVE_STATE is refreshed from the server.
+  // complete_activity is idempotent (dedupes completions, keeps first score)
+  // and the rewards block below is skipped via the early return — so a
+  // replay refreshes authoritative state without awarding duplicate XP.
+  // This prevents the "stuck on the same lesson" loop when the client's
+  // completedLessons cache and the server's student_progression get out of
+  // sync (e.g. persistStudentState succeeded but complete_activity was
+  // interrupted, or the lesson was completed on another device).
+  const alreadyCached = completedLessons.has(key);
+  if(alreadyCached){
+    try{
+      const c0 = client();
+      if(c0 && currentUser){
+        return pelRpc('complete_activity', { p_lesson_id: lessonId, p_stats: stats || null })
+          .then(({ data, error }) => {
+            if(!error && data && data.ok !== false && data.stage){
+              window.PEL_EFFECTIVE_STATE = data;
+              try{ document.dispatchEvent(new CustomEvent('pel-progress-updated', { detail:data })); }catch(e){}
+            }
+            return (window.PEL_EFFECTIVE_STATE || null);
+          }).catch(() => (window.PEL_EFFECTIVE_STATE || null));
+      }
+    }catch(e){}
+    return Promise.resolve(window.PEL_EFFECTIVE_STATE || null);
+  }
   completedLessons.add(key); persistStudentState();
   // Database-authoritative progression: the server validates, records,
   // advances stage/level and returns the new effective state. Local state
@@ -19216,8 +19242,36 @@ async function openLesson(academyId, lessonId){
     const _list = academyLessonList(_academy);
     const _lessonMeta = _list.find(l => l.id === lessonId);
     if(_lessonMeta && _lessonMeta.locked){
-      toast('<span class="arabic">ذا الدرس مقفل، اكمل الدروس اللي فاته اول شي</span>، This lesson is locked. Complete previous lessons first.');
-      return;
+      // The client's completedLessons cache may be stale (e.g. the lesson was
+      // completed on another device, or persistStudentState raced ahead of
+      // complete_activity). Before blocking, refresh PEL_EFFECTIVE_STATE from
+      // the server (bypass the 30s cache) and re-check the server-side
+      // lesson state. Only block if the SERVER also says this lesson is not
+      // available — this prevents the "stuck on the same lesson" loop when
+      // the client cache is stale but the server has already advanced.
+      let _serverSaysAvailable = false;
+      try{
+        const _st0 = window.PEL_EFFECTIVE_STATE;
+        const _sv0 = (_st0 && Array.isArray(_st0.lessons)) ? _st0.lessons.find(x => x.id === lessonId) : null;
+        if(_sv0 && _sv0.state === 'available') _serverSaysAvailable = true;
+      }catch(e){}
+      if(!_serverSaysAvailable && typeof c_rpc_effective_state === 'function'){
+        try{
+          // Force a fresh fetch (bypass the 30s cache)
+          window.PEL_EFFECTIVE_STATE = null;
+          _pelEffStateTs = 0;
+          await c_rpc_effective_state();
+        }catch(e){}
+        try{
+          const _st = window.PEL_EFFECTIVE_STATE;
+          const _sv = (_st && Array.isArray(_st.lessons)) ? _st.lessons.find(x => x.id === lessonId) : null;
+          if(_sv && _sv.state === 'available') _serverSaysAvailable = true;
+        }catch(e){}
+      }
+      if(!_serverSaysAvailable){
+        toast('<span class="arabic">ذا الدرس مقفل، اكمل الدروس اللي فاته اول شي</span>، This lesson is locked. Complete previous lessons first.');
+        return;
+      }
     }
   }
   wsState = { academyId, lessonId };
@@ -23614,13 +23668,28 @@ function renderDashboardIntel(){
                  lesson 'available' (the home continue card opens exactly
                  that lesson), and a saved mid-lesson position always
                  resumes even while the server still marks it locked.
-                 Block every other locked lesson. */
+                 Block every other locked lesson. If the cached effective
+                 state is stale (completed on another device / cache race),
+                 refresh from the server before blocking. */
               let _serverAvail = false;
               try{
                 const _st = window.PEL_EFFECTIVE_STATE;
                 const _sv = (_st && Array.isArray(_st.lessons)) ? _st.lessons.find(x => x.id === lessonId) : null;
                 _serverAvail = !!(_sv && _sv.state === 'available');
               }catch(e){}
+              if(!_serverAvail && typeof c_rpc_effective_state === 'function'){
+                try{
+                  // Force a fresh fetch (bypass the 30s cache)
+                  window.PEL_EFFECTIVE_STATE = null;
+                  _pelEffStateTs = 0;
+                  await c_rpc_effective_state();
+                }catch(e){}
+                try{
+                  const _st2 = window.PEL_EFFECTIVE_STATE;
+                  const _sv2 = (_st2 && Array.isArray(_st2.lessons)) ? _st2.lessons.find(x => x.id === lessonId) : null;
+                  _serverAvail = !!(_sv2 && _sv2.state === 'available');
+                }catch(e){}
+              }
               let _resume = false;
               try{
                 const _raw = localStorage.getItem('pel_stage_pos');
