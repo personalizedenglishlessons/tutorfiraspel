@@ -227,7 +227,7 @@ body.ui-en .t-ar{ display:none !important; }
       <h1><span class="t-ar">تعذر التحقق من هذي الشهاده</span><span class="t-en">Unable to verify this certificate</span></h1>
       <p class="sub"><span class="t-ar" style="display:block;">ما لقينا سجل لذاك الرمز. تاكد من الرمز وحاول مره ثانيه.</span><span class="t-en" style="display:block;">We could not find a record for this code. Double-check it and try again.</span></p>
       <form class="lookup-form" id="badForm">
-        <input id="badCode" placeholder="PEL-XXXX-XXXX" autocomplete="off" spellcheck="false" aria-label="Verification code">
+        <input id="badCode" placeholder="PEL-XXXX-XXXX" autocomplete="off" spellcheck="false" aria-label="Verification code" aria-hidden="true" tabindex="-1">
         <button class="btn-gold" type="submit"><span class="t-ar">تحقق</span><span class="t-en">Verify</span></button>
       </form>
       <p class="sub" style="margin-top:14px;"><span class="t-ar">تاكد من الرمز المطبوع على شهادتك</span><span class="t-en">Check the code on your certificate</span></p>
@@ -248,7 +248,7 @@ body.ui-en .t-ar{ display:none !important; }
       <h1 style="margin-top:6px;"><span class="t-ar" style="display:block; font-size:.55em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">تحقق من صحه شهاده</span><span class="t-en">Verify a certificate</span></h1>
       <p class="sub"><span class="t-ar" style="display:block;">ادخل رمز التحقق الموجود على الشهاده.</span><span class="t-en" style="display:block;">Enter the verification code printed on the certificate.</span></p>
       <form class="lookup-form" id="mainForm">
-        <input id="mainCode" placeholder="PEL-XXXX-XXXX" autocomplete="off" spellcheck="false" aria-label="Verification code">
+        <input id="mainCode" placeholder="PEL-XXXX-XXXX" autocomplete="off" spellcheck="false" aria-label="رمز التحقق الرئيسي / Main verification code">
         <button class="btn-gold" type="submit"><span class="t-ar">تحقق</span><span class="t-en">Verify</span></button>
       </form>
       <div style="margin-top:26px; padding-top:20px; border-top:1px solid var(--border);">
