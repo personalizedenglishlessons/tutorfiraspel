@@ -16131,7 +16131,7 @@ function renderDbPractice(container, exercises){
       });
     }
     card.querySelectorAll('.dbx-pick').forEach(btn => btn.addEventListener('click', () => {
-      if(card.querySelector('.dbx-answer') && card.querySelector('.dbx-answer').dataset.done === '1') return;
+      if(card.dataset.done === '1') return;
       const ok = btn.dataset.ok === 'right';
       card.querySelectorAll('.dbx-pick').forEach(b => {
         b.disabled = true;
@@ -16141,6 +16141,8 @@ function renderDbPractice(container, exercises){
       const why = card.querySelector('.dbx-why');
       const pp = x.payload || {};
       if(why){ why.style.display = 'block'; why.textContent = (pp.why_en||'') + '، ' + (pp.why_ar||''); }
+      card.dataset.done = '1';
+      card.dataset.ok = ok ? '1' : '0';
       mark(ok);
     }));
   });
@@ -19642,6 +19644,20 @@ function renderLessonReader(container, academy, lesson){
     this.classList.toggle('toggled'); this.innerHTML = `<i data-lucide="heart" width="15" height="15"></i> ${isBookmarked('favlesson',key)?'<span class="arabic">مفضل</span>، Favourited':'<span class="arabic">تفضيل</span>، Favourite'}`; lucide.createIcons();
   });
   document.getElementById('lessonCompleteBtn').addEventListener('click', async function(){
+    // Gate: require every exercise card to be answered (dataset.done === '1').
+    // Wrong answers still complete the lesson (per-exercise correctness is
+    // recorded separately) but a student can never tap "Mark Complete"
+    // while an exercise is unanswered.
+    const cards = document.querySelectorAll('#wsPractice .dbx-card');
+    if(cards.length){
+      const unanswered = [...cards].some(c => c.dataset.done !== '1');
+      if(unanswered){
+        try{ toast(L('Answer every exercise first', 'جاوب على كل تمرين اول'), 'warn'); }catch(e){}
+        const firstUnanswered = [...cards].find(c => c.dataset.done !== '1');
+        if(firstUnanswered) firstUnanswered.scrollIntoView({ behavior:'smooth', block:'center' });
+        return;
+      }
+    }
     this.disabled = true;
     this.setAttribute('aria-busy', 'true');
     this.innerHTML = '<span class="arabic">جاري الحفظ...</span>، <span dir="ltr">Saving...</span>';
