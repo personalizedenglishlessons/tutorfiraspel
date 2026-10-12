@@ -1521,6 +1521,9 @@ function applyIndexLang(lang){
   lang = lang==='ar'?'ar':'en';
   root.lang = lang;
   root.dir = lang==='ar'?'rtl':'ltr';
+  document.title = lang==='ar'
+    ? 'PEL، Personalized English Lessons، تعلم الانجليزيه الامريكيه بثقه'
+    : 'PEL · Personalized English Lessons · Learn American English with confidence';
   document.body.classList.toggle('ui-ar', lang==='ar');
   document.body.classList.toggle('ui-en', lang==='en');
   var btn=document.getElementById('indexLangBtn');
