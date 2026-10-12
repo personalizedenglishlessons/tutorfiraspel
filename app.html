@@ -1627,7 +1627,7 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
     <div class="sidebar-head">
       <span class="sidebar-logo"><img class="pel-logo" src="brand/pel-wordmark.svg" alt="PEL"><img class="pel-logo pel-logo-light" src="brand/pel-wordmark-dark.svg" alt="PEL"><img class="sidebar-logo-mark" src="brand/pel-favicon.svg" alt="PEL"></span>
       <span class="sidebar-name"><span class="arabic" style="display:block; font-size:.92em;">دروس انجليزي مخصصه</span><span style="display:block; font-size:.8em; color:var(--text-muted); margin-top:2px;">Personalized English Lessons</span></span>
-      <button type="button" class="sidebar-collapse-btn" id="collapseBtn" aria-label="Collapse sidebar / طوي القائمة">
+      <button type="button" class="sidebar-collapse-btn" id="collapseBtn" aria-label="Collapse sidebar / طوي القايمه">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
       </button>
     </div>
@@ -1645,7 +1645,7 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
 
     <!-- ================= TOPBAR ================= -->
     <header class="topbar">
-      <button type="button" class="mobile-sidebar-btn" id="mobileSidebarBtn" aria-label="Open menu / فتح القائمة">
+      <button type="button" class="mobile-sidebar-btn" id="mobileSidebarBtn" aria-label="Open menu / فتح القايمه">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
       </button>
 
@@ -1706,7 +1706,7 @@ img,svg,video,canvas{ max-width:100%; height:auto; }
         <section class="view active" id="view-home">
           <div class="page-head">
             <span class="eyebrow"><span class="arabic" style="font-size:.95em;">البدايه</span>، Learning Home</span>
-            <h1><span id="greetingArabic" class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">اهلا بعودتك.</span><span id="greetingText">Welcome back.</span></h1>
+            <h1><span id="greetingArabic" class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">هلا بعودتك!</span><span id="greetingText">Welcome back.</span></h1>
             <p id="homeSubtitle"><span class="arabic" style="display:block; margin-bottom:4px;">درسك الجاي جاهز. كمل من وين وقفت.</span>Your next lesson is ready. Pick up where you left off.</p>
           </div>
           <div id="ccBlock" style="margin-bottom:22px;"></div>
@@ -3552,7 +3552,7 @@ renderCtxLists();
 const phraseBank = {
   'where is the nearest hospital': {ar: 'وين اقرب مستشفى؟'},
   'how much is this': {ar: 'بكم ذا؟'},
-  'thank you very much': {ar: 'شكرا جزيلا'},
+  'thank you very much': {ar: 'تسلم كثير'},
   'nice to meet you': {ar: 'تشرفنا'},
 };
 
@@ -9182,7 +9182,7 @@ const RP_SCRIPTS = {
         any: { slot:'name', next: 2, reply: (s) => L('Thanks, ' + s.name + '. How many nights will you be staying?', 'شكرا ' + s.name + '. كم ليله رح تبقي؟', 'ثانكس، ' + s.name + '. هاو مني نايتس ويل يو بي ستيينج؟') } },
       { key:'nights', expect:'open', ask: L('How many nights will you be staying?', 'كم ليله رح تبقي؟', 'هاو مني نايتس ويل يو بي ستيينج؟'),
         any: { next: 'wrap', reply: L('Great, we have a room ready for you. Your room is 402 and checkout is at noon.', 'ممتاز، عندنا غرفه جاهزه. غرفتك 402 والتسليم الظهر.', 'قريت، وي هاڤ ا روم ريدي فور يو. يور روم از فور او تو اند تشيك اوت از ات نون.') } },
-      { key:'wrap', wrap: L('Enjoy your stay.', 'نتمنى لك اقامه مبسوطه.', 'انجوي يور ستي.') }
+      { key:'wrap', wrap: L('Enjoy your stay.', 'عساك عالقوه.', 'انجوي يور ستي.') }
     ],
     faq: [
       { match: /(checkout|تسليم)/, reply: L('Checkout is at noon, and you can leave your bags with us.', 'التسليم الظهر، وتقدر تترك شنطك عندنا.', 'تشيك اوت از ات نون، اند يو كان ليڤ يور باجز وذ اس.') },
@@ -9517,7 +9517,7 @@ const RP_ALT = {
     'bag.yes': L('Here you go.', 'تفضل.', 'هير يو قو.'),
     'bag.no': L('Alright.', 'حاضر.', 'اولرايت.'),
     'looking.any': L('Let me check the back for you. I will call you when it is ready.', 'خلني اشوف المخزن. بنادي عليك لما يصير جاهز.', 'ليت مي تشيك ذا باك فور يو. اي ويل كول يو وين ات از ريدي.'),
-    'payment.any': L('Thanks very much. Have a lovely day!', 'شكرا جزيلا. يومك حلو!', 'ثانكس ڤري مج. هاڤ ا لوڤلي داي!')
+    'payment.any': L('Thanks very much. Have a lovely day!', 'تسلم كثير. يومك حلو!', 'ثانكس ڤري مج. هاڤ ا لوڤلي داي!')
   },
   'manager': {
     'progress.any': L('Solid progress. Do you need any support from me?', 'تقدم ممتاز. محتاج دعم مني؟', 'سوليد بروقرس. دو يو نيد اني سب-اورت فروم مي؟'),
@@ -9692,7 +9692,7 @@ function replyOut(script, state, leadAr, obj){
   return { en: obj.en, ar: obj.ar, translit: obj.translit, leadAr: leadAr, hint: rpHint(script, state) };
 }
 const RP_WRAPS = [
-  L('Thank you, take care!', 'شكرا لك، مع السلامه!', 'ثانك يو، تيك كير!'),
+  L('Thank you, take care!', 'تسلم، مع السلامه!', 'ثانك يو، تيك كير!'),
   L('Have a great day.', 'يومك مبسوط.', 'هاڤ ا قريت داي.'),
   L('Let me know if there is anything else I can do for you.', 'خبرني اذا فيه شي ثاني اقدر اسويه لك.', 'ليت مي نو اف ذير از انيثينج الس اي كان دو فور يو.')
 ];
@@ -9958,7 +9958,7 @@ function lightCorrection(text){
         '</p>' +
         '<div style="display:flex;gap:10px;justify-content:flex-end;">' +
           '<button type="button" id="delReqCancel" style="padding:10px 16px;border-radius:10px;border:1px solid var(--border,#33353f);background:transparent;color:var(--text,#4B463D);cursor:pointer;">' + (ar() ? 'الغاء' : 'Cancel') + '</button>' +
-          '<button type="button" id="delReqConfirm" style="padding:10px 16px;border-radius:10px;border:none;background:var(--error);color:#fff;cursor:pointer;font-weight:600;">' + (ar() ? 'نعم، ابغى الحذف' : 'Yes, delete my data') + '</button>' +
+          '<button type="button" id="delReqConfirm" style="padding:10px 16px;border-radius:10px;border:none;background:var(--error);color:#fff;cursor:pointer;font-weight:600;">' + (ar() ? 'ايه، ابغى الحذف' : 'Yes, delete my data') + '</button>' +
         '</div>' +
       '</div>';
     document.body.appendChild(ov);
@@ -10745,10 +10745,10 @@ const VOCAB_BANK = [
 {en:'Proficiency', ipa:'/prəˈfɪʃənsi/', ar: 'اتقان، مستوى', translit: 'بروفيشنسي', example:{en:'Test your English proficiency.', ar: 'اختبر اتقانك للانجليزيه.', translit: 'تيست يور انجلش بروفيشنسي.'}, synonyms:'skill, competence', antonyms:'incompetence', family:'proficient, proficiency', collocations:'language proficiency, high proficiency', category:'Fluency Journey', difficulty:'Advanced', tip: 'Proficiency is your skill level.', synonyms_ar: 'اتقان، مستوى', antonyms_ar: 'ضعف', family_ar: 'متمكن، اتقان', collocations_ar: 'اتقان لغوي، مستوى عالي', tip_ar: 'الاتقان هو مستوى مهارتك', mistake:'Confusing proficiency with perfection.'},
 {en:'Tongue-tied', ipa:'/ˈtʌŋ taɪd/', ar: 'عاجز عن الكلام (خجلا)', translit: 'تنق تايد', example:{en:'I got tongue-tied in the interview.', ar: 'صرت عاجزا عن الكلام في المقابله.', translit: 'اي قوت تنق تايد ان ذا انتر-فيو.'}, synonyms:'speechless, flustered', antonyms:'fluent, articulate', family:'tongue, tie', collocations:'feel tongue-tied, get tongue-tied', category:'Fluency Journey', difficulty:'Advanced', tip: 'It means you cannot speak from nerves.', synonyms_ar: 'عاجز عن الكلام', antonyms_ar: 'بليغ', family_ar: 'لسان، ربط', collocations_ar: 'يحس عاجز عن الكلام، يصير عاجز', tip_ar: 'يعني ما تقدر تتكلم من التوتر', mistake:'Staying silent instead of pushing through.'},
 {en:'Hello', ipa:'/həˈloʊ/', ar: 'هلا', translit: 'هلو', example:{en:'Hello, how are you?', ar: 'هلا، كيفك؟', translit: 'هلو، هاو ار يو؟'}, synonyms:'hi, greetings', antonyms:'goodbye', family:'hello', collocations:'say hello, hello there', category:'Greetings', difficulty:'Beginner', tip:'"Hello" works any time of day.', synonyms_ar: 'هلا', antonyms_ar: 'مع السلامه', family_ar: 'هلا', collocations_ar: 'قل هلا، هلا هناك', tip_ar: 'hello تصلح اي وقت باليوم', mistake:'Forgetting to greet before a request.'},
-{en:'Goodbye', ipa:'/ˌɡʊdˈbaɪ/', ar: 'مع السلامه، مع السلامه', translit: 'قودباي', example:{en:'Goodbye, see you tomorrow.', ar: 'مع السلامه، اراك غدا.', translit: 'قودباي، سي يو تومورو.'}, synonyms:'bye, farewell', antonyms:'hello, hi', family:'goodbye', collocations:'say goodbye, wave goodbye', category:'Greetings', difficulty:'Beginner', tip:'"Goodbye" ends a meeting politely.', synonyms_ar: 'مع السلامه', antonyms_ar: 'هلا', family_ar: 'وداع', collocations_ar: 'قل مع السلامه، لوح مع السلامه', tip_ar: 'goodbye تنهي اللقا باحترام', mistake:'Leaving without saying goodbye.'},
+{en:'Goodbye', ipa:'/ˌɡʊdˈbaɪ/', ar: 'مع السلامه', translit: 'قودباي', example:{en:'Goodbye, see you tomorrow.', ar: 'مع السلامه، اشوفك بكره.', translit: 'قودباي، سي يو تومورو.'}, synonyms:'bye, farewell', antonyms:'hello, hi', family:'goodbye', collocations:'say goodbye, wave goodbye', category:'Greetings', difficulty:'Beginner', tip:'"Goodbye" ends a meeting politely.', synonyms_ar: 'مع السلامه', antonyms_ar: 'هلا', family_ar: 'وداع', collocations_ar: 'قل مع السلامه، لوح مع السلامه', tip_ar: 'goodbye تنهي اللقا باحترام', mistake:'Leaving without saying goodbye.'},
 {en:'Welcome', ipa:'/ˈwɛlkəm/', ar: 'اهلا وسهلا', translit: 'ولكم', example:{en:'Welcome to our home.', ar: 'اهلا وسهلا في بيتنا.', translit: 'ولكم تو اور هوم.'}, synonyms:'greetings, come in', antonyms:'goodbye', family:'welcome, welcomed', collocations:'welcome to, you are welcome', category:'Greetings', difficulty:'Beginner', tip:'"Welcome" greets someone who arrives.', synonyms_ar: 'اهلا وسهلا', antonyms_ar: 'مع السلامه', family_ar: 'اهلا وسهلا، هلا', collocations_ar: 'اهلا في، اهلا وسهلا بكم', tip_ar: 'welcome ترحب بلي يجي', mistake:'Saying "welcome" instead of "you are welcome" for thanks.'},
 {en:'Good morning', ipa:'/ɡʊd ˈmɔːrnɪŋ/', ar: 'صباح الخير', translit: 'قود مور-نينق', example:{en:'Good morning, everyone.', ar: 'صباح الخير جميعا.', translit: 'قود مور-نينق، اڤريوان.'}, synonyms:'morning greeting', antonyms:'good night', family:'morning', collocations:'say good morning, good morning to you', category:'Greetings', difficulty:'Beginner', tip: 'Use it before noon.', synonyms_ar: 'صباح الخير', antonyms_ar: 'تصبح على خير', family_ar: 'صباح', collocations_ar: 'قل صباح الخير، صباح الخير لك', tip_ar: 'استخدمها قبل الظهر', mistake:'Saying "good morning" in the evening.'},
-{en:'Thank you', ipa:'/θæŋk juː/', ar: 'شكرا لك', translit: 'ثانك يو', example:{en:'Thank you for your help.', ar: 'شكرا لك على مساعدتك.', translit: 'ثانك يو فور يور هيلب.'}, synonyms:'thanks, much obliged', antonyms:'', family:'thank, thanks', collocations:'say thank you, thank you so much', category:'Greetings', difficulty:'Beginner', tip:'"Thank you" shows gratitude.', synonyms_ar: 'شكرا لك', antonyms_ar: '', family_ar: 'شكرا، شكر', collocations_ar: 'قل شكرا، شكرا جزيلا', tip_ar: 'شكرا تظهر الامتنان', mistake:'Forgetting to thank someone who helped.'},
+{en:'Thank you', ipa:'/θæŋk juː/', ar: 'تسلم', translit: 'ثانك يو', example:{en:'Thank you for your help.', ar: 'تسلم على مساعدتك.', translit: 'ثانك يو فور يور هيلب.'}, synonyms:'thanks, much obliged', antonyms:'', family:'thank, thanks', collocations:'say thank you, thank you so much', category:'Greetings', difficulty:'Beginner', tip:'"Thank you" shows gratitude.', synonyms_ar: 'شكرا لك', antonyms_ar: '', family_ar: 'شكرا، شكر', collocations_ar: 'قل تسلم، تسلم كثير', tip_ar: 'شكرا تظهر الامتنان', mistake:'Forgetting to thank someone who helped.'},
 {en:'Invitation', ipa:'/ˌɪnvɪˈteɪʃən/', ar: 'دعوه', translit: 'انڤيتيشان', example:{en:'Thank you for the invitation.', ar: 'شكرا على الدعوه.', translit: 'ثانك يو فور ذا انفيتيهيشن.'}, synonyms:'invite, summons', antonyms:'rejection', family:'invite, invited', collocations:'accept an invitation, send an invitation', category:'Conversations', difficulty:'Intermediate', tip: 'An invitation asks someone to come.', synonyms_ar: 'دعوه', antonyms_ar: 'رفض', family_ar: 'يدعو، مدعو', collocations_ar: 'اقبل دعوه، ابعت دعوه', tip_ar: 'الدعوه تطلب من احد يجي', mistake:'Forgetting to RSVP to an invitation.'},
 {en:'Host', ipa:'/hoʊst/', ar: 'مضيف', translit: 'هوست', example:{en:'Our host welcomed everyone.', ar: 'مضيفنا رحب بالكل.', translit: 'اور هوست ولكمد اڤريوان.'}, synonyms:'host, entertainer', antonyms:'guest', family:'host, hosted', collocations:'play host, host a gathering', category:'Conversations', difficulty:'Intermediate', tip: 'The host receives the guests.', synonyms_ar: 'مضيف', antonyms_ar: 'ضيف', family_ar: 'مضيف، استضاف', collocations_ar: 'استضاف، استضاف تجمع', tip_ar: 'المضيف يستقبل الضيوف', mistake:'Confusing host (person) with host (a lot).'},
 {en:'Guest', ipa:'/ɡɛst/', ar: 'ضيف', translit: 'قيست', example:{en:'We have guests tonight.', ar: 'عندنا ضيوف الليله.', translit: 'وي هاڤ جستس تونايت.'}, synonyms:'visitor', antonyms:'host', family:'guest, guests', collocations:'welcome a guest, house guest', category:'Conversations', difficulty:'Intermediate', tip: 'A guest is someone you invited.', synonyms_ar: 'ضيف', antonyms_ar: 'مضيف', family_ar: 'ضيف، ضيوف', collocations_ar: 'رحب بضيف، ضيف بالبيت', tip_ar: 'الضيف هو احد مدعو', mistake:'Confusing "guest" with "quest."'},
@@ -11324,7 +11324,7 @@ const SPEAKING_PERSONAS = [
   {id:'bank-teller', title:'Bank Teller', titleAr:'البنك', icon:'landmark', opener:{en:'Good morning, how can I help you today?', ar: 'صباح الخير، كيف اقدر اساعدك اليوم؟', translit: 'قود مورننج، هاو كان اي هيلب يو تودي؟'}},
   {id:'flight-attendant', title:'Flight Attendant', titleAr:'الطياره', icon:'plane', opener:{en:'Welcome aboard. Would you like something to drink?', ar: 'اهلا بكم على متن الرحله. تبي شي تشربه؟', translit: 'ويلكم ابورد. ود يو لايك سمثنق تو درينك؟'}},
   {id:'coworker', title:'Coworker', titleAr:'زميل', icon:'users', opener:{en:'Hey, do you want to grab lunch together?', ar: 'هلا، تبغى نتعشى مع بعض؟', translit: 'هاي، دو يو وانت تو قراب لانش توقذر؟'}},
-  {id:'job-interviewer', title:'Job Interviewer', titleAr:'مقابله عمل', icon:'user-check', opener:{en:'Thanks for coming in. Tell me about yourself.', ar: 'شكرا لحضورك. عرفني بنفسك.', translit: 'ثانكس فور كمنق ان. تيل مي اباوت يور-سلف.'}},
+  {id:'job-interviewer', title:'Job Interviewer', titleAr:'مقابله عمل', icon:'user-check', opener:{en:'Thanks for coming in. Tell me about yourself.', ar: 'تسلم للحضور. عرفني بنفسك.', translit: 'ثانكس فور كمنق ان. تيل مي اباوت يور-سلف.'}},
   {id:'police-officer', title:'Police Officer', titleAr:'الشرطه', icon:'shield', opener:{en:'Good evening, can I see your ID, please?', ar: 'مسا الخير، ممكن اشوف الهويه لو سمحت؟', translit: 'قود ايڤنينج، كان اي سي يور اي دي، بليز؟'}},
   {id:'tour-guide', title:'Tour Guide', titleAr:'الجوله', icon:'map', opener:{en:'Welcome everyone. We start the tour in ten minutes.', ar: 'حياكم الكل. نبدا الجوله لسه عشر دقايق.', translit: 'ويلكم اڤري ون. وي ستارت ذا تور ان تن مينتس.'}},
     {id:'coffee-barista', title:'Coffee Barista', titleAr:'المقهى', icon:'coffee', opener:{en:'Hi, what can I get for you today?', ar: 'هلا، وش اقدر اجيب لك اليوم؟', translit: 'هاي، وات كان اي قيت فور يو تودي؟'}},
@@ -11361,7 +11361,7 @@ const LISTENING_TRACKS = [
     {en:'I have had a sore throat since yesterday.', ar: 'عندي التهاب بالحلق من امس.', translit: 'اي هاڤ هاد ا سور ثروت سينس يستردي.'},
   ]},
   {id:'job-interview', title:'A Job Interview', lines:[
-    {en:'Thank you for coming in. Walk me through your experience.', ar: 'شكرا لحضورك. احك لي عن خبرتك.', translit: 'ثانكس فور كمنق ان. وك مي ثرو يور اكسبيرينس.'},
+    {en:'Thank you for coming in. Walk me through your experience.', ar: 'تسلم للحضور. احك لي عن خبرتك.', translit: 'ثانكس فور كمنق ان. وك مي ثرو يور اكسبيرينس.'},
     {en:'I have three years of experience in customer service.', ar: 'عندي ثلاث سنوات خبره في خدمه العملا.', translit: 'اي هاڤ ثري ييرز اوڤ اكسبيرينس ان كستمر سيرفس.'},
   ]},
   {id:'shopping-return', title:'Returning An Item', lines:[
@@ -14325,7 +14325,7 @@ const LESSON_LIBRARY = {
     vocab:[
       {en:'Hello (on the phone)', ar: 'الو', translit: 'alo', tip: 'The phone greeting, different from in person.'},
       {en:'Who is this?', ar: 'مين معاي؟', translit: 'meen maayi?', tip: 'The natural phone question.'},
-      {en:'Yes?', ar: 'نعم؟', translit: 'naam?', tip: 'A short way to invite them to speak.'},
+      {en:'Yes?', ar: 'ايه؟', translit: 'aih?', tip: 'A short way to invite them to speak.'},
       {en:'From where?', ar: 'من وين؟', translit: 'min wen?', tip: 'Where are you calling from.'},
     ],
     grammar:{title:'The phone opener', rule:'Phones open with alo, then meen maayi (who is this), then the caller states who they are.', saudi:'بالجوال: الو، مين معاي؟', wrong:'Answer with hala on the phone, alo is the phone word.', right:'"Alo? Meen maayi?" (Hello? Who is this?)', mistakes:['Using the in person greeting on the phone.','Not saying who you are before the question.']},
@@ -20246,7 +20246,7 @@ const PRON_DRILLS = [
       { id:'phrases', type:'phrase', title:'Phrases', ar: 'عبارات', weight:0.30, targets:[
         {en:'Good morning',ar: 'صباح الخير'},{en:'How are you',ar: 'كيفك'},{en:'Thank you',ar: 'شكرا لك'} ] },
       { id:'sentences', type:'sentence', title:'Sentences', ar: 'جمل كامله', weight:0.35, targets:[
-        {en:'Hi, how are you today?',ar: 'هاي، كيفك اليوم؟'},{en:'I am good, thank you.',ar: 'انا بخير، شكرا لك.'},{en:'Hello, nice to meet you.',ar: 'هلو، تشرفت بمعرفتك.'} ] }
+        {en:'Hi, how are you today?',ar: 'هاي، كيفك اليوم؟'},{en:'I am good, thank you.',ar: 'انا بخير، تسلم.'},{en:'Hello, nice to meet you.',ar: 'هلو، تشرفت بمعرفتك.'} ] }
     ],
     writingPrompt:{ ar: 'اكتب محادثه قصيره تبدا بتحيه وتسال عن الحال، بعدين رد على سؤال صاحبك «how are you».', en:'Write a short greeting conversation: greet, ask how someone is, and reply to "how are you".' }
   },
