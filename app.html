@@ -16312,7 +16312,7 @@ function markLessonComplete(academyId, lessonId, stats, opts){
           renderUpcomingLesson();
           renderContinueLearning();
           renderHeroIntel();
-          toast('اكتمل الدرس: ' + completedTitle + '، Lesson complete: ' + completedTitle); confettiBurst();
+          toast('خلصت درس ' + completedTitle + '، Lesson complete: ' + completedTitle); confettiBurst();
           // Guided mode: serve the next lesson without leaving the flow.
           // SUPPRESSED when the completion is stage-owned (opts.stage:true) —
           // the stage's own done screen (Next lesson button / 5s auto-advance)
@@ -16345,7 +16345,7 @@ function markLessonComplete(academyId, lessonId, stats, opts){
   renderUpcomingLesson();
   renderContinueLearning();
   renderHeroIntel();
-  toast('اكتمل الدرس: ' + completedTitle + '، Lesson complete: ' + completedTitle); confettiBurst();
+  toast('خلصت درس ' + completedTitle + '، Lesson complete: ' + completedTitle); confettiBurst();
   return rpcPromise;
 }
 function defaultStudentStats(){ return { xp: 0, streak: 0, longestStreak: 0, lastStudyDate: null, streakFreezes: 0 }; }
@@ -16374,7 +16374,7 @@ function awardXp(amount){
         // Consume a freeze: keep the current streak value.
         setStreakFreezes(freezes - 1);
         freezeUsed = true;
-        try{ if(typeof toast==='function') toast((accountPrefs.lang==='ar'?'تم استخدام تجميد السلسله! سلسلتك محفوظه.':'Streak freeze used! Your streak is preserved.'), 'info'); }catch(e){}
+        try{ if(typeof toast==='function') toast((accountPrefs.lang==='ar'?'استعملنا تجميد السلسله — سلسلتك محفوظه.':'Streak freeze used! Your streak is preserved.'), 'info'); }catch(e){}
       } else {
         studentStats.streak = 1;
       }
@@ -19357,7 +19357,12 @@ function renderWorkspace(){
   document.getElementById('wsSaveNote').addEventListener('click', () => {
     lessonNotes[noteKey] = document.getElementById('wsNotes').value;
     const text = document.getElementById('wsNotes').value.trim();
-    if(text) notesStore.unshift({text, lesson: lesson.title, ts: Date.now()});
+    if(text){
+      // Dedupe: don't push a duplicate if the exact same note text for the
+      // same lesson is already at the top of the list (audit finding #3).
+      const dup = notesStore.some(n => n.text === text && n.lesson === lesson.title);
+      if(!dup) notesStore.unshift({text, lesson: lesson.title, ts: Date.now()});
+    }
     persistStudentState();
     try{ localStorage.removeItem('pel_note_draft_'+noteKey); }catch(e){}
     renderCtxLists();
