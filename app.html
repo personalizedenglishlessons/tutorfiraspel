@@ -16231,7 +16231,12 @@ function toggleBookmark(type, id, label, sub){
   persistStudentState();
   if(viewRenderers.bookmarks) { document.getElementById('view-bookmarks').dataset.rendered=''; if(document.getElementById('view-bookmarks').classList.contains('active')) viewRenderers.bookmarks(); }
 }
-function markLessonComplete(academyId, lessonId, stats){
+function markLessonComplete(academyId, lessonId, stats, opts){
+  // opts.stage:true means the call originates from the lesson stage's done
+  // screen. The stage owns its own post-completion navigation (Next lesson
+  // button / 5s auto-advance), so guided auto-start is suppressed to prevent
+  // two independent navigations firing. Capture NOW, before any async.
+  const stageOwned = !!(opts && opts.stage);
   const key = lessonKey(academyId, lessonId);
   // Return the server-authoritative progression promise so the Stage's
   // "Next lesson" button can await the DB route before navigating, instead of
@@ -16307,13 +16312,12 @@ function markLessonComplete(academyId, lessonId, stats){
           renderHeroIntel();
           toast('اكتمل الدرس: ' + completedTitle + '، Lesson complete: ' + completedTitle); confettiBurst();
           // Guided mode: serve the next lesson without leaving the flow.
-          // Guard: only auto-start if the student hasn't opened something else
-          // (e.g. tapped "Back to path" or "Next lesson") in the meantime, and
-          // only if the lesson stage isn't already showing a different lesson.
-          // This was the double-navigation bug Fable found.
-          if(guidedMode()) setTimeout(() => {
-            const stage = window.PEL_LESSON_STAGE;
-            if (stage && stage.state && stage.state.done) return; // stage already owns navigation
+          // SUPPRESSED when the completion is stage-owned (opts.stage:true) —
+          // the stage's own done screen (Next lesson button / 5s auto-advance)
+          // is the single navigation owner for that flow. Without this, two
+          // independent navigations fired and a lesson opened over itself
+          // (the double-navigation bug Fable found).
+          if(guidedMode() && !stageOwned) setTimeout(() => {
             startNextGuidedLesson();
           }, 1400);
           return data;
