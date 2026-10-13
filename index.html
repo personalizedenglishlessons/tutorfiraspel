@@ -39,6 +39,9 @@
 <script src="lib/pel-personalization.js?v=5230cca5" defer></script>
 <script src="lib/onboard.js?v=e6d28e3f" defer></script>
 <script src="lib/pel-assessment.js?v=1f01a69c" defer></script>
+<link rel="stylesheet" href="lib/pel-scene.css?v=1">
+<script src="lib/pel-icons.js?v=1" defer></script>
+<script src="lib/pel-scene.js?v=1" defer></script>
 <style>
 :root{
   --bg:#0E0E10;
@@ -1107,7 +1110,7 @@ img,svg{ max-width:100%; }
 .hero{ padding:calc(var(--header-h) + var(--site-banner-h,0px) + clamp(24px,5vh,64px)) 0 clamp(36px,6vh,72px); min-height:min(100svh,980px); display:flex; align-items:center; }
 .hero > .container{ width:100%; }
 .hero-grid{ grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr); gap:clamp(28px,5vw,80px); }
-.hero h1.arabic-h{ font-size:clamp(2rem,3.9vw,3.4rem) !important; font-weight:800; line-height:1.22 !important; margin-top:16px !important; text-wrap:balance; }
+.hero h1.arabic-h{ font-size:clamp(2rem,3.5vw,3.1rem) !important; font-weight:800; line-height:1.22 !important; margin-top:16px !important; text-wrap:balance; }
 .hero .hero-sub{ font-size:clamp(.98rem,1.25vw,1.12rem) !important; max-width:34em !important; line-height:1.9 !important; margin-top:18px !important; }
 .hero-cta-row{ margin-top:28px !important; }
 .hero-cta-row .btn-gold{ padding:16px 32px !important; font-size:1rem !important; }
@@ -1316,14 +1319,14 @@ nav.primary-nav{ gap:clamp(14px,1.6vw,28px); }
     <div class="header-actions">
       <button type="button" class="lang-pill" id="indexLangBtn" aria-label="Switch language">EN</button>
       <button type="button" class="theme-toggle" id="themeToggle" aria-label="تبديل المظهر">
-        <svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v2M12 19v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M3 12h2M19 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/><circle cx="12" cy="12" r="4.2"/></svg>
+        <svg data-i="sun" width="18" height="18" id="themeIcon"></svg>
       </button>
       <button type="button" class="btn-path" data-open-path aria-haspopup="dialog">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="2.5"/><circle cx="18" cy="5" r="2.5"/><path d="M8.5 19H15a3 3 0 0 0 3-3v-8.5M6 16.5V8a3 3 0 0 1 3-3h3.5"/></svg>
+        <svg data-i="route" width="15" height="15"></svg>
         <span>ابني مسار تعلمي</span>
       </button>
       <a href="login.html" class="btn-outline btn-login magnetic" data-magnetic>
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+        <svg data-i="user" width="15" height="15"></svg>
         <span class="login-text">دخول الطلاب</span>
       </a>
       <button type="button" class="btn-gold magnetic" data-magnetic>سجل الحين</button>
@@ -1354,56 +1357,45 @@ nav.primary-nav{ gap:clamp(14px,1.6vw,28px); }
     <div class="reveal is-visible">
        <span class="eyebrow hero-eyebrow" dir="ltr" style="justify-content:flex-start;"><span class="pel-tag">Personalized English Lessons</span></span>
       <h1 class="arabic-h" dir="rtl">سنين تدرس انجليزي… وبس يكلمك واحد تسكت؟</h1>
-      <p class="arabic hero-sub" dir="rtl">يرن جوالك وتتهرب. تكتب الايميل بالمترجم وقلبك يدق. وبالاجتماع تتمنى محد يسالك. والسالفه مو غباء منك، الطريقه القديمه علمتك تحفظ، مو تتكلم. PEL يغير القصه: دروس قصيره من مواقفك الحقيقيه، تسمع وتنطق وتتصحح فورا، لين تصير انت اللي ترد.</p>
+      <p class="arabic hero-sub" dir="rtl">يرن جوالك فتتجاهله. تكتب الايميل بالمترجم وقلبك يدق. وبالاجتماع تتمنى احد يسبقك بالكلام. السبب طريقه قديمه قايمه على الحفظ. PEL يعلمك من مواقفك الحقيقيه: تسمع وتنطق وتتصحح، وتتدرب مع استاذ فراس لين يطلع ردك طبيعي.</p>
       <div class="hero-cta-row">
         <button type="button" class="btn-gold magnetic" data-open-path id="heroPathCta" style="padding:14px 28px; font-size:.95rem;">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="2.5"/><circle cx="18" cy="5" r="2.5"/><path d="M8.5 19H15a3 3 0 0 0 3-3v-8.5M6 16.5V8a3 3 0 0 1 3-3h3.5"/></svg>
+          <svg data-i="route" width="16" height="16"></svg>
           <span>اعرف بدايتي</span>
         </button>
-        <a href="#pricing" class="btn-outline magnetic" data-magnetic>استكشف المنصه</a>
         <a href="https://wa.me/966557178070?text=%D8%A3%D8%A8%D9%8A%20%D8%A3%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%B9%D9%86%20%D8%A7%D9%84%D9%85%D9%86%D8%B5%D8%A9" target="_blank" rel="noopener" class="btn-wa magnetic" data-magnetic id="heroWaBtn">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.32 4.95L2.05 22l5.3-1.39c1.45.79 3.09 1.21 4.69 1.21 5.46 0 9.9-4.44 9.9-9.9 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2z"/></svg>
+          <svg data-i="chat" width="16" height="16"></svg>
           <span>راسل استاذ فراس</span>
         </a>
       </div>
-      <div class="path-hint" dir="rtl" style="margin-top:14px;">
-        <span class="arabic">اختبر مستواك مجانا، وشوف وش يوقفك بالضبط</span>
-      </div>
-      <div class="trust-row" dir="rtl">
-        <div class="trust-item"><span class="dot"></span>اختبار مستوى مجاني، تعرف وين تبدا</div>
-        <div class="trust-item"><span class="dot"></span>دروس قصيره من مواقفك: مكالمه، ايميل، اجتماع</div>
-        <div class="trust-item"><span class="dot"></span>تغلط؟ نصححك فورا ونقولك ليش</div>
-        <div class="trust-item"><span class="dot"></span>تشوف تقدمك يوم بيوم</div>
-      </div>
+      <div class="fnote" dir="rtl"><span class="mono" aria-hidden="true">ف</span><p class="arabic" data-ar="استاذ فراس يرد عليك بنفسه على واتساب. قل له وين وقفت، وهو يبني لك الخطه." data-en="Tutor Firas answers you himself on WhatsApp. Tell him where you got stuck and he builds your plan.">استاذ فراس يرد عليك بنفسه على واتساب. قل له وين وقفت، وهو يبني لك الخطه.</p></div>
     </div>
 
-    <div class="callstage" id="heroVisual" aria-hidden="true">
-      <div class="phone" id="callScene">
-      <span class="cs-tag t1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3z"/><path d="M19 11a7 7 0 0 1-14 0M12 18v3"/></svg><span data-ar="النطق مكتوب بالعربي" data-en="Pronunciation in Arabic letters">النطق مكتوب بالعربي</span></span>
-        <div class="phone-screen">
+    <div class="callstage vt" id="heroVisual"><div class="vt-world"><div class="vt-rings" aria-hidden="true"><span class="vt-ring" style="--i:0"><svg viewBox="0 0 200 200"><path d="M60 8H140L192 60V140L140 192H60L8 140V60Z"/></svg></span><span class="vt-ring" style="--i:1"><svg viewBox="0 0 200 200"><path d="M60 8H140L192 60V140L140 192H60L8 140V60Z"/></svg></span><span class="vt-ring" style="--i:2"><svg viewBox="0 0 200 200"><path d="M60 8H140L192 60V140L140 192H60L8 140V60Z"/></svg></span><span class="vt-ring" style="--i:3"><svg viewBox="0 0 200 200"><path d="M60 8H140L192 60V140L140 192H60L8 140V60Z"/></svg></span><span class="vt-ring" style="--i:4"><svg viewBox="0 0 200 200"><path d="M60 8H140L192 60V140L140 192H60L8 140V60Z"/></svg></span><span class="vt-ring" style="--i:5"><svg viewBox="0 0 200 200"><path d="M60 8H140L192 60V140L140 192H60L8 140V60Z"/></svg></span><span class="vt-ring" style="--i:6"><svg viewBox="0 0 200 200"><path d="M60 8H140L192 60V140L140 192H60L8 140V60Z"/></svg></span><span class="vt-ring" style="--i:7"><svg viewBox="0 0 200 200"><path d="M60 8H140L192 60V140L140 192H60L8 140V60Z"/></svg></span><span class="vt-ring" style="--i:8"><svg viewBox="0 0 200 200"><path d="M60 8H140L192 60V140L140 192H60L8 140V60Z"/></svg></span></div><div class="vt-core"><div class="phone" id="callScene"><div class="phone-screen">
           <div class="ph-head"><span class="ph-ava" id="csAva">D</span><div class="ph-meta"><div class="ph-name" id="csName"></div><div class="ph-state" id="csState"><i></i> </div></div></div>
           <div class="ph-thread">
             <div class="cv-b cv-in" id="csIn"><div class="cv-wave" id="csWave"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-              <div class="cv-en" id="csInEn"></div>
+              <div class="cv-row"><div class="cv-en" id="csInEn"></div><button type="button" class="say-btn" data-say-from="csInEn" aria-label="Listen"><svg data-i="speaker"></svg></button></div>
               <div class="cv-aid"><div class="cv-chip mean" id="csInMean"></div><div class="cv-chip say" id="csInSay"></div></div></div>
             <div class="cv-typing" id="csTyping"><span></span><span></span><span></span></div>
             <div class="cv-b cv-out" id="csOut"><div class="cv-tag" id="csOutTag"></div><div class="cv-en" id="csOutEn"></div>
               <div class="cv-aid"><div class="cv-chip say" id="csOutSay"></div><div class="cv-chip mean" id="csOutMean"></div></div></div>
-            <div class="cv-ok" id="csOk"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span id="csOkTxt"></span></div>
+            <div class="cv-ok" id="csOk"><svg data-i="check" width="18" height="18"></svg><span id="csOkTxt"></span></div>
           </div>
           <div class="ph-foot" id="csFoot"><i></i><i></i><i></i><i></i></div>
-        </div>
-      <span class="cs-tag t2"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span data-ar="تصحيح فوري" data-en="Instant correction">تصحيح فوري</span></span>
-      </div>
-    </div>
+        </div></div></div><div class="vt-word" aria-hidden="true" style="top:6%;inset-inline-end:-30%;--z:110px;--d:0s"><b>Nice to meet you</b><span>نايس تو ميت يو</span></div><div class="vt-word" aria-hidden="true" style="top:26%;inset-inline-start:-32%;--z:150px;--d:-2s"><b>Could you repeat that?</b><span>كود يو ريبيت ذات</span></div><div class="vt-word" aria-hidden="true" style="top:50%;inset-inline-end:-30%;--z:90px;--d:-4s"><b>I will call you back</b><span>اي ويل كول يو باك</span></div><div class="vt-word" aria-hidden="true" style="top:72%;inset-inline-start:-30%;--z:130px;--d:-1s"><b>Where is gate five?</b><span>وير ايز قيت فايف</span></div><div class="vt-word" aria-hidden="true" style="bottom:-2%;inset-inline-end:-12%;--z:170px;--d:-3s"><b>Let me check</b><span>لت مي تشك</span></div><div class="vt-word" aria-hidden="true" style="top:-2%;inset-inline-start:-14%;--z:60px;--d:-5s"><b>No problem</b><span>نو بروبلم</span></div></div></div>
   </div>
 </section>
 
-<section class="ticker" aria-label="Situations"><div class="ticker-track" id="tickerTrack"></div></section>
+<div class="sadu-band" data-sadu></div>
+<section class="rc-sec" id="situations">
+  <div class="container"><div class="v2-head"><h2 class="arabic-h" data-ar="كل موقف بحياتك، له جمله جاهزه" data-en="A ready sentence for every moment of your day">كل موقف بحياتك، له جمله جاهزه</h2><p class="arabic" data-ar="تسمعها وتنطقها وتعيدها، لين تطلع منك طبيعي." data-en="You hear it, say it and repeat it until it comes out naturally.">تسمعها وتنطقها وتعيدها، لين تطلع منك طبيعي.</p></div></div>
+  <div class="rc-stage"><div class="rc-ring" id="rcRing"></div><div class="rc-fade"></div></div>
+</section>
 
 <section id="forWho" class="v2-sec" style="background:var(--bg);">
   <div class="container">
-    <div class="v2-head"><h2 class="arabic-h" data-ar="مهما كان وضعك، فيه مسار يمشي معك" data-en="Whatever your situation, there is a path that fits">مهما كان وضعك، فيه مسار يمشي معك</h2><p class="arabic" data-ar="طالب، موظف، او مجهز لاختبار؟ نبدا من مستواك انت، مو من اول صفحه بالكتاب." data-en="Student, employee, or exam candidate: we start from your level, not from page one of a textbook.">طالب، موظف، او مجهز لاختبار؟ نبدا من مستواك انت، مو من اول صفحه بالكتاب.</p></div>
+    <div class="v2-head"><h2 class="arabic-h" data-ar="وين تحتاج الانجليزي؟" data-en="Where do you need English?">وين تحتاج الانجليزي؟</h2><p class="arabic" data-ar="قل لنا وين تستخدمه، ونبني لك الخطه على هالمكان." data-en="Tell us where you use it and we build your plan around that place.">قل لنا وين تستخدمه، ونبني لك الخطه على هالمكان.</p></div>
     <div class="aud" id="audWrap"></div>
   </div>
 </section>
@@ -1412,15 +1404,15 @@ nav.primary-nav{ gap:clamp(14px,1.6vw,28px); }
 <!-- PERSONALIZED PLAN PREVIEW -->
 <section id="personalPreview" class="v2-sec" style="background:var(--surface); border-block:1px solid var(--border);">
   <div class="container">
-    <div class="v2-head"><h2 class="arabic-h" data-ar="نفس الموقف، بس هالمره تقدر ترد" data-en="Same moment, but this time you can answer">نفس الموقف، بس هالمره تقدر ترد</h2><p class="arabic" data-ar="اختر موقف وشوف الفرق." data-en="Pick a moment and see the difference.">اختر موقف وشوف الفرق.</p></div>
+    <div class="v2-head"><h2 class="arabic-h" data-ar="نفس الموقف، بس هالمره ترد" data-en="Same moment, but this time you answer">نفس الموقف، بس هالمره ترد</h2><p class="arabic" data-ar="اختر موقف وشوف الفرق." data-en="Pick a moment and see the difference.">اختر موقف وشوف الفرق.</p></div>
     <div class="ba-tabs" id="baTabs"></div>
     <div class="ba-stage">
-      <div class="ba-side ba-before" id="baBefore"><span class="ba-label" data-ar="قبل" data-en="Before">قبل</span><p class="ba-thought" id="baThought"></p></div>
-      <span class="ba-arrow" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-      <div class="ba-side ba-after" id="baAfter"><span class="ba-label" data-ar="بعد PEL" data-en="After PEL">بعد PEL</span><div class="ba-en" id="baEn"></div><div class="ba-line pr" id="baSay"></div><div class="ba-line mn" id="baMean"></div></div>
+      <div class="ba-side ba-before" id="baBefore"><svg data-ill="before" class="ba-ill" width="110" height="110"></svg><span class="ba-label" data-ar="قبل" data-en="Before">قبل</span><p class="ba-thought" id="baThought"></p></div>
+      <span class="ba-arrow" aria-hidden="true"><svg data-i="arrow" width="20" height="20"></svg></span>
+      <div class="ba-side ba-after" id="baAfter"><svg data-ill="after" class="ba-ill" width="110" height="110"></svg><span class="ba-label" data-ar="بعد PEL" data-en="After PEL">بعد PEL</span><div class="ba-row"><div class="ba-en" id="baEn"></div><button type="button" class="say-btn" data-say-from="baEn" aria-label="Listen"><svg data-i="speaker"></svg></button></div><div class="ba-line pr" id="baSay"></div><div class="ba-line mn" id="baMean"></div></div>
     </div>
-    <div class="v2-cta"><button type="button" class="btn-gold magnetic" data-open-path style="padding:15px 30px; font-size:.98rem;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="2.5"/><circle cx="18" cy="5" r="2.5"/><path d="M8.5 19H15a3 3 0 0 0 3-3v-8.5M6 16.5V8a3 3 0 0 1 3-3h3.5"/></svg><span>اعرف بدايتي</span></button><a href="https://wa.me/966557178070?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%20%D8%A7%D8%B3%D8%AA%D8%A7%D8%B0%20%D9%81%D8%B1%D8%A7%D8%B3%D8%8C%20%D8%A7%D8%A8%D9%8A%20%D8%A7%D8%B3%D8%A7%D9%84%20%D8%B9%D9%86%20%D8%A7%D9%84%D9%85%D9%86%D8%B5%D9%87" target="_blank" rel="noopener" class="btn-wa magnetic" data-magnetic><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.32 4.95L2.05 22l5.3-1.39c1.45.79 3.09 1.21 4.69 1.21 5.46 0 9.9-4.44 9.9-9.9 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2z"/></svg><span data-ar="راسل استاذ فراس" data-en="Message Tutor Firas">راسل استاذ فراس</span></a></div>
-    <p class="v2-note" data-ar="اختبار المستوى مجاني، وتشوف نتيجتك قبل لا تدفع." data-en="The level test is free, and you see your result before you pay.">اختبار المستوى مجاني، وتشوف نتيجتك قبل لا تدفع.</p>
+    <div class="v2-cta"><button type="button" class="btn-gold magnetic" data-open-path style="padding:15px 30px; font-size:.98rem;"><svg data-i="route" width="16" height="16"></svg><span>اعرف بدايتي</span></button><a href="https://wa.me/966557178070?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%20%D8%A7%D8%B3%D8%AA%D8%A7%D8%B0%20%D9%81%D8%B1%D8%A7%D8%B3%D8%8C%20%D8%A7%D8%A8%D9%8A%20%D8%A7%D8%B3%D8%A7%D9%84%20%D8%B9%D9%86%20%D8%A7%D9%84%D9%85%D9%86%D8%B5%D9%87" target="_blank" rel="noopener" class="btn-wa magnetic" data-magnetic><svg data-i="chat" width="16" height="16"></svg><span data-ar="راسل استاذ فراس" data-en="Message Tutor Firas">راسل استاذ فراس</span></a></div>
+    <p class="v2-note" data-ar="اختبر مستواك، وشوف نتيجتك قبل لا تدفع." data-en="Take the level test and see your result before you pay.">اختبر مستواك، وشوف نتيجتك قبل لا تدفع.</p>
   </div>
 </section>
 
@@ -1438,25 +1430,26 @@ nav.primary-nav{ gap:clamp(14px,1.6vw,28px); }
 <script src="lib/pel-settings.js?v=ef2290f2"></script>
 <section id="liveTeaching" class="v2-sec" style="background:var(--bg);">
   <div class="container">
-    <div class="v2-head"><h2 class="arabic-h" data-ar="ثلاث خطوات، وتصير تتكلم" data-en="Three steps and you are speaking">ثلاث خطوات، وتصير تتكلم</h2></div>
+    <div class="v2-head"><h2 class="arabic-h" data-ar="ثلاث خطوات وتبدا ترد" data-en="Three steps and you start answering">ثلاث خطوات وتبدا ترد</h2></div>
     <div class="steps">
-      <div class="step"><div class="step-n" aria-hidden="true">1</div><h3 class="arabic-h" data-ar="تتعلم بالتطبيق" data-en="Learn in the app">تتعلم بالتطبيق</h3><p class="arabic" data-ar="دروس قصيره من مواقفك: مكالمه، ايميل، اجتماع. تسمع، تنطق، وتثبت." data-en="Short lessons built from your real moments: calls, emails, meetings. Listen, speak, and make it stick.">دروس قصيره من مواقفك: مكالمه، ايميل، اجتماع. تسمع، تنطق، وتثبت.</p></div>
-      <div class="step"><div class="step-n" aria-hidden="true">2</div><h3 class="arabic-h" data-ar="تتمرن مع الاستاذ" data-en="Practice with the tutor">تتمرن مع الاستاذ</h3><p class="arabic" data-ar="حصص مباشره حسب باقتك: تتكلم ويصحح لك." data-en="Live classes depending on your plan: you speak and get corrected.">حصص مباشره حسب باقتك: تتكلم ويصحح لك.</p></div>
-      <div class="step"><div class="step-n" aria-hidden="true">3</div><h3 class="arabic-h" data-ar="تستخدمها بحياتك" data-en="Use it in your life">تستخدمها بحياتك</h3><p class="arabic" data-ar="ترد على المكالمه، تكتب الايميل، وتتكلم بثقه، بدون مترجم." data-en="Answer the call, write the email, and speak with confidence, without a translator.">ترد على المكالمه، تكتب الايميل، وتتكلم بثقه، بدون مترجم.</p></div>
+      <div class="step"><div class="step-n" aria-hidden="true">1</div><svg data-ill="lesson" class="step-ill" width="120" height="120"></svg><h3 class="arabic-h" data-ar="تتعلم من جوالك" data-en="Learn from your phone">تتعلم من جوالك</h3><p class="arabic" data-ar="دروس قصيره من مواقفك: مكالمه، ايميل، اجتماع. تسمع، تنطق، وتعيد لين تثبت." data-en="Short lessons from your real moments: calls, emails, meetings. Listen, speak, and repeat until it sticks.">دروس قصيره من مواقفك: مكالمه، ايميل، اجتماع. تسمع، تنطق، وتعيد لين تثبت.</p></div>
+      <div class="step"><div class="step-n" aria-hidden="true">2</div><svg data-ill="tutor" class="step-ill" width="120" height="120"></svg><h3 class="arabic-h" data-ar="تتدرب مع استاذ فراس" data-en="Train with Tutor Firas">تتدرب مع استاذ فراس</h3><p class="arabic" data-ar="حصص مباشره حسب باقتك، تتكلم وهو يصححك." data-en="Live classes depending on your plan: you speak and he corrects you.">حصص مباشره حسب باقتك، تتكلم وهو يصححك.</p></div>
+      <div class="step"><div class="step-n" aria-hidden="true">3</div><svg data-ill="life" class="step-ill" width="120" height="120"></svg><h3 class="arabic-h" data-ar="تستخدمها بحياتك" data-en="Use it in your life">تستخدمها بحياتك</h3><p class="arabic" data-ar="ترد على المكالمه، وتكتب الايميل، وتتكلم بثقه، والمترجم يرتاح." data-en="You answer the call, write the email and speak with confidence, and the translator gets a break.">ترد على المكالمه، وتكتب الايميل، وتتكلم بثقه، والمترجم يرتاح.</p></div>
     </div>
   </div>
 </section>
 
+<div class="sadu-band" data-sadu></div>
 <section id="pricing" style="background:var(--surface); border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding-bottom:90px; scroll-margin-top:90px; scroll-margin-bottom:80px;">
   <div class="container">
     <div class="section-head center reveal" dir="rtl">
       <span class="eyebrow">PEL هو الحل</span>
       <h2 class="arabic-h">باقتين وثلاث مدد، واختار اللي يمشي مع هدفك</h2>
-      <p class="arabic">ابد من الصفر لين اول مكالمه تردها، او جهز للستب والتوفل والايلتس. تدفع عبر واتساب ونفعل حسابك خلال دقايق.</p>
+      <p class="arabic">ابد من الصفر لين اول مكالمه تردها، او جهز للستب والتوفل والايلتس. تدفع واتساب، واستاذ فراس يفعل حسابك.</p>
     </div>
     <div class="pricing-grid" id="pricingGrid" dir="rtl"></div>
     <p class="pricing-note arabic">
-      <b>ما تدري وين تبدا؟</b> راسل استاذ فراس واتساب، نسالك عن مستواك وهدفك، ونرجع لك بخطه تناسبك.
+      <b>محتار وين تبدا؟</b> راسل استاذ فراس واتساب، يسالك عن مستواك وهدفك ويرجع لك بخطه تناسبك.
     </p>
   </div>
 </section>
@@ -1548,9 +1541,7 @@ nav.primary-nav{ gap:clamp(14px,1.6vw,28px); }
     }
     // risk reversal: free test, fast activation, refund window
     html += '<div class="pricing-assure" dir="'+(ar?'rtl':'ltr')+'">';
-    html += '<span class="as-chip">'+(ar?'اختبار مستوى مجاني':'Free level test')+'</span>';
-    html += '<span class="as-chip">'+(ar?'تفعيل حسابك خلال دقايق':'Account activated in minutes')+'</span>';
-    html += '<span class="as-chip">'+(ar?'استرجاع خلال 3 ايام':'3-day refund window')+'</span>';
+    html += '<p class="pricing-firas">'+(ar?'تدفع على واتساب، واستاذ فراس بنفسه يسوي حسابك ويفعله.':'You pay on WhatsApp, and Tutor Firas sets up and activates your account himself.')+'</p>';
     html += '</div>';
     html += '<p class="pricing-refund '+(ar?'arabic':'')+'" dir="'+(ar?'rtl':'ltr')+'">'+(ar?'سياسه الاسترجاع: تقدر تسترجع خلال 3 ايام من الدفع. واذا استاذ فراس سوى لك الحساب وفعله بعد الدفع، تنخصم رسوم المنصه حسب الباقه اللي اشتريتها.':'Refund policy: you can request a refund within 3 days of payment. If Tutor Firas has already created and activated your account after payment, platform fees are deducted depending on the plan you bought.')+'</p>';
     // manual credit purchase callout
@@ -1583,20 +1574,21 @@ nav.primary-nav{ gap:clamp(14px,1.6vw,28px); }
 </section>
 
 <!-- FINAL CTA -->
+<div class="sadu-band" data-sadu></div>
 <section class="final-cta">
   <div class="orb orb-1"></div>
   <div class="orb orb-2"></div>
   <div class="container reveal" dir="rtl">
     <span class="eyebrow" style="justify-content:center;">جاهز؟</span>
     <h2 class="arabic-h" style="margin-top:20px;">اول مكالمه تردها بثقه، تبدا من هنا</h2>
-    <p class="arabic">اختبر مستواك مجانا، وراسل استاذ فراس واتساب. نفعل حسابك خلال دقايق وتبدا اول درس اليوم.</p>
+    <p class="arabic">اختبر مستواك، وراسل استاذ فراس واتساب. يفعل حسابك وتبدا اول درس اليوم.</p>
     <div class="final-cta-buttons">
       <button type="button" class="btn-gold magnetic" data-open-path id="finalPathCta">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="2.5"/><circle cx="18" cy="5" r="2.5"/><path d="M8.5 19H15a3 3 0 0 0 3-3v-8.5M6 16.5V8a3 3 0 0 1 3-3h3.5"/></svg>
+        <svg data-i="route" width="16" height="16"></svg>
         <span>خلنا نحدد بدايتك</span>
       </button>
       <a href="https://wa.me/966557178070?text=%D8%A3%D8%A8%D9%8A%20%D8%A3%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%B9%D9%86%20%D8%A7%D9%84%D8%A7%D9%86%D8%B6%D9%85%D8%A7%D9%85%20%D9%84%D9%84%D9%85%D9%86%D8%B5%D8%A9" target="_blank" rel="noopener" class="btn-wa magnetic" data-magnetic>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.32 4.95L2.05 22l5.3-1.39c1.45.79 3.09 1.21 4.69 1.21 5.46 0 9.9-4.44 9.9-9.9 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.15c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.26 8.26 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.23 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.81-.78.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.13-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.16-.48-.29z"/></svg>
+        <svg data-i="chat" width="16" height="16"></svg>
         <span>راسل استاذ فراس</span>
       </a>
       <span class="final-cta-email" dir="ltr">+966 55 717 8070</span>
@@ -1657,14 +1649,14 @@ nav.primary-nav{ gap:clamp(14px,1.6vw,28px); }
   </div>
 </div>
 
-<button type="button" class="back-to-top" id="backToTop" aria-label="العوده للاعلى"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg></button>
+<button type="button" class="back-to-top" id="backToTop" aria-label="العوده للاعلى"><svg data-i="up" width="18" height="18"></svg></button>
 
 <!-- ================= PERSONALIZATION ONBOARDING OVERLAY ================= -->
 <div class="onboard" id="onboardOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Build your learning path">
   <div class="onboard-scrim" data-close-onboard></div>
   <div class="onboard-card" id="onboardCard">
     <button type="button" class="onboard-close" id="onboardClose" aria-label="Close">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      <svg data-i="close" width="18" height="18"></svg>
     </button>
     <div class="onboard-body" id="onboardBody"></div>
   </div>
@@ -1740,7 +1732,7 @@ function applyIndexLang(lang){
   var heroH1=document.querySelector('.hero h1.arabic-h');
   if(heroH1){ var h1ar = (window.PEL_SITE && PEL_SITE.heroHeadline && PEL_SITE.heroHeadline.ar) ? PEL_SITE.heroHeadline.ar : 'سنين تدرس انجليزي… وبس يكلمك واحد تسكت؟'; var h1en = (window.PEL_SITE && PEL_SITE.heroHeadline && PEL_SITE.heroHeadline.en) ? PEL_SITE.heroHeadline.en : 'Years of studying English… and you still freeze when someone talks to you?'; setLang(heroH1, h1ar, h1en); }
   var heroSub=document.querySelector('.hero .hero-sub');
-  if(heroSub){ var hsar = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.ar) ? PEL_SITE.heroSub.ar : 'يرن جوالك وتتهرب. تكتب الايميل بالمترجم وقلبك يدق. وبالاجتماع تتمنى محد يسالك. والسالفه مو غباء منك، الطريقه القديمه علمتك تحفظ، مو تتكلم. PEL يغير القصه: دروس قصيره من مواقفك الحقيقيه، تسمع وتنطق وتتصحح فورا، لين تصير انت اللي ترد.'; var hsen = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.en) ? PEL_SITE.heroSub.en : 'Your phone rings and you dodge it. You write emails through a translator with your heart pounding. In meetings you hope nobody asks you anything. It is not that you are not smart. The old way taught you to memorize, not to speak. PEL changes the story: short lessons from your real situations, you hear it, say it, and get corrected instantly, until you are the one who answers.'; setLang(heroSub, hsar, hsen); }
+  if(heroSub){ var hsar = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.ar) ? PEL_SITE.heroSub.ar : 'يرن جوالك فتتجاهله. تكتب الايميل بالمترجم وقلبك يدق. وبالاجتماع تتمنى احد يسبقك بالكلام. السبب طريقه قديمه قايمه على الحفظ. PEL يعلمك من مواقفك الحقيقيه: تسمع وتنطق وتتصحح، وتتدرب مع استاذ فراس لين يطلع ردك طبيعي.'; var hsen = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.en) ? PEL_SITE.heroSub.en : 'Your phone rings and you let it go. You write emails with a translator and a pounding heart. In meetings you hope someone speaks before you. The cause is an old method built on memorizing. PEL teaches you from your real moments: you listen, speak and get corrected, and you train with Tutor Firas until your answer comes out naturally.'; setLang(heroSub, hsar, hsen); }
   var pathHint=document.querySelector('.path-hint .arabic');
   if(pathHint) setLang(pathHint, 'اختبر مستواك مجانا، وشوف وش يوقفك بالضبط', 'Find out what stops you, it\'s free');
   var pathHintEn=document.querySelector('.path-hint-en');
@@ -1820,8 +1812,8 @@ function applyIndexLang(lang){
   var ltH2c=document.querySelector('#liveTeaching h2');
   if(ltH2c) ltH2c.textContent = lang==='ar' ? 'من "ما اقدر" الى "خلاص رديت"' : 'From "I cannot" to "I did it"';
   var ltSteps=document.querySelectorAll('#liveTeaching .lt-step');
-  var ltAr=[{t:'تتعلم بالتطبيق',d:'دروس قصيره من مواقفك: مكالمه، ايميل، اجتماع. تسمع، تنطق، وتثبت.'},{t:'تتمرن مع الاستاذ',d:'حصص مباشره (حسب باقتك): تتكلم ويصحح لك'},{t:'تستخدمها بحياتك',d:'ترد على المكالمه، تكتب الايميل، وتتكلم بثقه، بدون مترجم'}];
-  var ltEn=[{t:'Learn in the app',d:'Short lessons from your real moments: calls, emails, meetings. You hear it, say it, make it stick.'},{t:'Practice with the tutor',d:'Live sessions, depending on your plan: you speak, he corrects'},{t:'Use it in real life',d:'Answer calls, write emails, speak with confidence, no translator'}];
+  var ltAr=[{t:'تتعلم من جوالك',d:'دروس قصيره من مواقفك: مكالمه، ايميل، اجتماع. تسمع، تنطق، وتعيد لين تثبت.'},{t:'تتدرب مع استاذ فراس',d:'حصص مباشره (حسب باقتك): تتكلم ويصحح لك'},{t:'تستخدمها بحياتك',d:'ترد على المكالمه، تكتب الايميل، وتتكلم بثقه، بدون مترجم'}];
+  var ltEn=[{t:'Learn from your phone',d:'Short lessons from your real moments: calls, emails, meetings. You hear it, say it, make it stick.'},{t:'Train with Tutor Firas',d:'Live sessions, depending on your plan: you speak, he corrects'},{t:'Use it in real life',d:'Answer calls, write emails, speak with confidence, no translator'}];
   ltSteps.forEach(function(step,i){ var arr=lang==='ar'?ltAr:ltEn; if(!arr[i])return; var tEl=step.querySelector('div[style*="font-weight:700"]'); if(tEl) tEl.textContent=arr[i].t; var dEl=step.querySelector('div[style*="color:var(--text-muted)"]'); if(dEl) dEl.textContent=arr[i].d; });
   // any remaining “ابني مسار تعلمي” buttons not covered by data-open-path span
   document.querySelectorAll('[data-open-path]').forEach(function(btn){
@@ -1901,7 +1893,7 @@ function applyIndexLang(lang){
   var pricingEy=document.querySelector('#pricing .section-head .eyebrow');
   if(pricingEy) pricingEy.textContent = lang==='ar' ? 'PEL هو الحل' : 'PEL is the answer';
   var pricingP=document.querySelector('#pricing .section-head p');
-  if(pricingP) setLang(pricingP, 'ابد من الصفر لين اول مكالمه تردها، او جهز للستب والتوفل والايلتس. تدفع عبر واتساب ونفعل حسابك خلال دقايق.', 'Start from zero until you answer your first call, or prepare for STEP, TOEFL and IELTS. Pay on WhatsApp and we activate your account within minutes.');
+  if(pricingP) setLang(pricingP, 'ابد من الصفر لين اول مكالمه تردها، او جهز للستب والتوفل والايلتس. تدفع واتساب، واستاذ فراس يفعل حسابك.', 'Start from zero until you answer your first call, or prepare for STEP, TOEFL and IELTS. You pay on WhatsApp and Tutor Firas activates your account.');
   var pricingNote=document.querySelector('.pricing-note');
   if(pricingNote){
     var pn = (window.PEL_SITE && PEL_SITE.pricingNote) ? PEL_SITE.pricingNote : null;
@@ -1926,7 +1918,7 @@ function applyIndexLang(lang){
   var finalH2=document.querySelector('.final-cta h2');
   if(finalH2) finalH2.textContent = lang==='ar' ? 'اول مكالمه تردها بثقه، تبدا من هنا' : 'Your first confident call starts here';
   var finalP=document.querySelector('.final-cta p.arabic');
-  if(finalP) finalP.textContent = lang==='ar' ? 'اختبر مستواك مجانا، وراسل استاذ فراس واتساب. نفعل حسابك خلال دقايق وتبدا اول درس اليوم.' : 'Take the free level test and message Tutor Firas on WhatsApp. We activate your account within minutes and you start your first lesson today.';
+  if(finalP) finalP.textContent = lang==='ar' ? 'اختبر مستواك، وراسل استاذ فراس واتساب. يفعل حسابك وتبدا اول درس اليوم.' : 'Take the level test and message Tutor Firas on WhatsApp. He activates your account and you start your first lesson today.';
   // personalPreview
   var ppEyebrow=document.querySelector('#personalPreview .eyebrow');
   if(ppEyebrow) ppEyebrow.textContent = lang==='ar' ? 'تعرف هالشعور؟' : 'Know that feeling?';
@@ -2074,7 +2066,7 @@ function applyIndexLang(lang){
   var liveCards=document.querySelectorAll('#liveTeaching .card');
   var liveAr=[
     {t:'تتعلم داخل المنصه',d:'دروس قصيره، 14 دقيقه، على وقتك'},
-    {t:'تتمرن مع الاستاذ',d:'حصه جماعيه صغيره، تتكلم وتسمع ملاحظات مباشره'},
+    {t:'تتدرب مع استاذ فراس',d:'حصه جماعيه صغيره، تتكلم وتسمع ملاحظات مباشره'},
     {t:'تستخدمه مع غيرك',d:'تطبق مع طلاب ثانيين، وتشوف الفرق بنفسك'}
   ];
   var liveEn=[
@@ -2798,7 +2790,23 @@ window.addEventListener('storage', function(e){ if(e.key==='pel_account_prefs') 
 })();
 
 
-</script><script id="pel-v2">
+</script><style id="pel-v3">
+.callstage::before{ display:none !important; }
+.callstage.vt{ padding:0; }
+.vt-core .phone{ width:100%; box-shadow:0 40px 90px -40px rgba(0,0,0,.7), 0 0 70px -36px var(--gold); }
+.cv-row{ display:flex; align-items:flex-start; gap:10px; justify-content:space-between; }
+.cv-row .say-btn{ margin:0; }
+.aud-ico{ width:104px !important; height:104px !important; background:none !important; border-radius:0 !important; color:var(--text) !important; margin-bottom:auto; }
+.aud-item.on .aud-ico{ background:none !important; color:var(--text) !important; }
+.ba-ill{ width:110px; height:110px; color:var(--text); align-self:flex-start; }
+.ba-row{ display:flex; align-items:flex-start; gap:12px; justify-content:space-between; }
+.ba-row .say-btn{ margin-top:6px; }
+.step-ill{ display:block; margin:18px auto 6px; color:var(--text); }
+.pricing-firas{ text-align:center; color:var(--text-secondary); font-size:1rem; line-height:1.8; margin:0 auto; max-width:620px; font-family:'Tajawal',sans-serif; }
+.hero .fnote{ margin-top:30px; }
+@media(max-width:980px){ .vt-core .phone{ width:min(380px,100%); margin-inline:auto; } .vt-world{ margin-inline:auto; } }
+</style>
+<script id="pel-v2">
 (function(){
   'use strict';
   var RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -2858,35 +2866,44 @@ window.addEventListener('storage', function(e){ if(e.key==='pel_account_prefs') 
   if(sc){ play(); document.addEventListener('visibilitychange', function(){ if(document.hidden) clr(); else play(); }); }
 
   /* ---------- ticker ---------- */
-  var TK = { ar:['مكالمه مع عميل','ايميل شغل','اجتماع بالانجليزي','مقابله وظيفه','مطار وسفر','مطعم وكوفي','ستب','توفل','ايلتس','محاضره بالجامعه','مشروع تخرج','واتساب مع اجانب'],
+  var RC = [
+    {p:'call',t:{ar:'مكالمه عميل',en:'Client call'},en:'How can I help you?',pr:'هاو كان اي هيلب يو'},
+    {p:'mail',t:{ar:'ايميل شغل',en:'Work email'},en:'Please find the file attached.',pr:'بليز فايند ذا فايل اتاتشد'},
+    {p:'meeting',t:{ar:'اجتماع',en:'Meeting'},en:'Let me share my screen.',pr:'لت مي شير ماي سكرين'},
+    {p:'job',t:{ar:'مقابله وظيفه',en:'Job interview'},en:'I have three years of experience.',pr:'اي هاف ثري يرز اوڤ اكسبيرينس'},
+    {p:'plane',t:{ar:'مطار وسفر',en:'Airport'},en:'Where is gate five?',pr:'وير ايز قيت فايف'},
+    {p:'cup',t:{ar:'مطعم وكوفي',en:'Cafe'},en:'Can I get a latte, please?',pr:'كان اي قت ا لاتيه بليز'},
+    {p:'lecture',t:{ar:'قاعه الجامعه',en:'University'},en:'Could you explain that again?',pr:'كود يو اكسبلين ذات اقين'},
+    {p:'exam',t:{ar:'ستب وايلتس',en:'STEP and IELTS'},en:'In my opinion, it depends.',pr:'ان ماي اوبينيون، ات ديبيندز'}
+  ];
+  var TK_UNUSED = { ar:['مكالمه مع عميل','ايميل شغل','اجتماع بالانجليزي','مقابله وظيفه','مطار وسفر','مطعم وكوفي','ستب','توفل','ايلتس','محاضره بالجامعه','مشروع تخرج','واتساب مع اجانب'],
              en:['Client calls','Work emails','Meetings','Job interviews','Airports and travel','Cafes and restaurants','STEP','TOEFL','IELTS','University lectures','Class projects','Chatting with foreigners'] };
   function renderTicker(){
-    var tr = $('#tickerTrack'); if(!tr) return;
-    var set = TK[L].map(function(x){ return '<span class="ticker-item" dir="'+(L==='ar'?'rtl':'ltr')+'">'+x+'</span>'; }).join('');
-    tr.innerHTML = '<div class="ticker-set">'+set+'</div><div class="ticker-set" aria-hidden="true">'+set+'</div>';
+    var tr = $('#rcRing'); if(!tr) return;
+    tr.innerHTML = RC.map(function(c,k){ return '<div class="rc" style="--k:'+k+'"><svg data-p="'+c.p+'"></svg><h3 class="arabic-h" dir="'+(L==='ar'?'rtl':'ltr')+'">'+c.t[L]+'</h3><div class="en">'+c.en+'</div><div class="pr">'+c.pr+'</div></div>'; }).join('');
   }
 
   /* ---------- who is it for ---------- */
   var AUD = [
-    { ico:'<path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/>',
+    { ill:'student',
       title:{ar:'طالب مدرسه او جامعه',en:'School or university student'},
-      pain:{ar:'المحاضره بالانجليزي، والمشروع بالانجليزي، وانت تترجم كل جمله بالراس.',en:'Lectures and projects are in English, and you translate every sentence in your head.'},
-      pro:{ar:'نبني لك اساس تفهم فيه وتشارك بالقاعه وتكتب بحثك بثقه، ونشتغل على كلمات موادك.',en:'We build a base you can follow, speak up in class, and write assignments with confidence, using words from your own courses.'} },
-    { ico:'<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>',
+      pain:{ar:'المحاضره بالانجليزي والمشروع بالانجليزي، وانت تترجم كل جمله بالراس.',en:'Lectures and projects are in English, and you translate every sentence in your head.'},
+      pro:{ar:'نبني لك اساس تفهم فيه المحاضره، وتشارك بالقاعه، وتكتب بحثك بثقه.',en:'We build a base for following lectures, speaking up in class and writing your assignments with confidence.'} },
+    { ill:'work',
       title:{ar:'موظف',en:'Employee'},
-      pain:{ar:'اجتماع، ايميل، عميل اجنبي، والتوتر ماسكك قبل لا تتكلم.',en:'Meetings, emails, foreign clients, and nerves hit before you even speak.'},
-      pro:{ar:'تتعلم جمل الشغل الحقيقيه، تنطقها وتكتبها صح، وتتصحح فورا لين يصير ردك طبيعي.',en:'You learn real workplace phrases, say and write them correctly, and get corrected on the spot until replies feel natural.'} },
-    { ico:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="m9 15 2 2 4-4"/>',
+      pain:{ar:'اجتماع، ايميل، عميل اجنبي، وقلبك يدق قبل لا تفتح فمك.',en:'Meetings, emails, foreign clients, and your heart pounds before you open your mouth.'},
+      pro:{ar:'تتعلم جمل الشغل الحقيقيه، تنطقها وتكتبها صح، ويصححك استاذ فراس لين يصير ردك طبيعي.',en:'You learn real workplace phrases, say and write them correctly, and Tutor Firas corrects you until your replies feel natural.'} },
+    { ill:'exam',
       title:{ar:'تجهيز اختبارات: ستب، توفل، ايلتس',en:'Exam prep: STEP, TOEFL, IELTS'},
-      pain:{ar:'الموعد قرب، وما تدري وين نقاط ضعفك بالضبط.',en:'The test date is close and you do not know exactly where you are weak.'},
-      pro:{ar:'تتدرب باسئله بنفس نظام الاختبار، وتصحيح فوري لكتابتك، ونطق مسموع، وحصص مباشره مع استاذ فراس حسب باقتك.',en:'Practice with questions in the real exam format, get instant writing correction, and join live classes with Tutor Firas depending on your plan.'} }
+      pain:{ar:'الموعد قرب وتبي تعرف وين نقاط ضعفك.',en:'The test date is close and you want to know exactly where you are weak.'},
+      pro:{ar:'تتدرب على اسئله بنفس نظام الاختبار وتتصحح كتابتك، مع حصص مباشره مع استاذ فراس حسب باقتك.',en:'You practice questions in the real exam format and get your writing corrected, with live classes with Tutor Firas depending on your plan.'} }
   ];
   var audOn = 0, audTimer;
   function renderAud(){
     var w = $('#audWrap'); if(!w) return;
     w.innerHTML = AUD.map(function(a,i){
       return '<div class="aud-item'+(i===audOn?' on':'')+'" data-i="'+i+'" dir="'+(L==='ar'?'rtl':'ltr')+'" tabindex="0" role="button">'+
-        '<span class="aud-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">'+a.ico+'</svg></span>'+
+        '<span class="aud-ico"><svg data-ill="'+a.ill+'" width="104" height="104"></svg></span>'+
         '<h3 class="arabic-h">'+t(a.title)+'</h3><p class="aud-pain">'+t(a.pain)+'</p><p class="aud-promise">'+t(a.pro)+'</p><span class="aud-bar"><i></i></span></div>';
     }).join('');
     $$('.aud-item',w).forEach(function(el){
@@ -2909,16 +2926,16 @@ window.addEventListener('storage', function(e){ if(e.key==='pel_account_prefs') 
       b:{ar:'يرن الجوال، وتتجاهله وتقول: بدق عليه بعدين.',en:'The phone rings, you let it go and say you will call back later.'},
       en:'Hello, how can I help you?', say:'هيلو، هاو كان اي هيلب يو', mean:{ar:'هلا، كيف اقدر اخدمك؟',en:''} },
     { tab:{ar:'ايميل',en:'An email'},
-      b:{ar:'تكتبه بالمترجم، وتعيد قراءته عشر مرات، وبعدها ما ترسله.',en:'You write it with a translator, reread it ten times, then never send it.'},
+      b:{ar:'تكتبه بالمترجم، وتعيد قراءته عشر مرات، وتخليه بالمسوده.',en:'You write it with a translator, reread it ten times, and leave it in drafts.'},
       en:'Thank you for your email. I will reply by tomorrow.', say:'ثانك يو فور يور ايميل. اي ويل ريبلاي باي تومورو', mean:{ar:'شكرا على ايميلك، برد عليك قبل بكره.',en:''} },
     { tab:{ar:'اجتماع',en:'A meeting'},
-      b:{ar:'الكل يتكلم وانت تهز راسك وتتمنى محد يسالك.',en:'Everyone talks while you nod and hope nobody asks you anything.'},
+      b:{ar:'الكل يتكلم وانت تهز راسك وتتمنى احد يسبقك.',en:'Everyone talks while you nod and hope someone speaks before you.'},
       en:'I agree, and I would like to add one point.', say:'اي اقري، اند اي وود لايك تو اد وان بوينت', mean:{ar:'اوافقك، وابي اضيف نقطه.',en:''} },
     { tab:{ar:'سفر',en:'Travel'},
-      b:{ar:'تقف عند الجوازات وتسلم جوازك بدون كلمه.',en:'You stand at passport control and hand over your passport without a word.'},
+      b:{ar:'تقف عند الجوازات وتسلم جوازك وانت ساكت.',en:'You stand at passport control and hand over your passport in silence.'},
       en:'I am here for tourism, for one week.', say:'اي ام هير فور توريزم، فور وان ويك', mean:{ar:'جاي سياحه، لمده اسبوع.',en:''} },
     { tab:{ar:'اختبار',en:'An exam'},
-      b:{ar:'تحفظ القواعد، وتنساها اول ما تدخل القاعه.',en:'You memorize the rules and forget them the moment you enter the hall.'},
+      b:{ar:'تحفظ القواعد، وتتبخر اول ما تدخل القاعه.',en:'You memorize the rules and they evaporate the moment you enter the hall.'},
       en:'In my opinion, technology makes life easier.', say:'ان ماي اوبينيون، تكنولوجي ميكس لايف ايزير', mean:{ar:'برايي، التقنيه تسهل الحياه.',en:''} }
   ];
   var baOn = 0, baTimer;
@@ -2947,6 +2964,8 @@ window.addEventListener('storage', function(e){ if(e.key==='pel_account_prefs') 
   }
   function refresh(){ L=curLang(); applyStatic(); renderTicker(); renderAud(); renderBaTabs(); renderBa(false); if(sc) play(); }
   refresh(); audKick(); baKick();
+  document.addEventListener('DOMContentLoaded',function(){ document.querySelectorAll('[data-sadu]').forEach(function(el){ if(window.PELI) el.innerHTML=PELI.sadu(); }); });
+  if(window.PELSCENE) document.querySelectorAll('.pricing-grid .card, .pricing-grid > *').forEach(function(){});
   var prev = window.applyIndexLang;
   if(typeof prev === 'function'){
     window.applyIndexLang = function(l){ var r = prev.apply(this, arguments); setTimeout(refresh, 0); return r; };
