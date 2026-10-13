@@ -2002,6 +2002,10 @@ function savePelFeedbackEvent(ev){
 
 let currentUser = null;
 let studentStats = { xp: 0, streak: 0, longestStreak: 0, lastStudyDate: null };
+/* Bridge for other script blocks (Live Classes widget, view renderers) so they
+   can read the currently signed-in user without a bare `currentUser` reference
+   which would throw `ReferenceError` outside this IIFE. */
+Object.defineProperty(window, 'PEL_CURRENT_USER', { get(){ return currentUser; }, configurable: true });
 /* LOCAL date key (YYYY-MM-DD) for the learner's timezone. The app used to use
    toISOString() (UTC) for study-day keys while week boundaries were computed
    in local time - so a learner in Asia/Riyadh (UTC+3) who studied between
@@ -10187,6 +10191,10 @@ function notifPrefs(){ return lsGetUser('pel_notif_prefs', {daily:true, streak:t
 let accountPrefs;
 try{ accountPrefs = JSON.parse(localStorage.getItem('pel_account_prefs') || 'null') || {lang:'ar', direction:'en'}; }
 catch(e){ accountPrefs = {lang:'ar', direction:'en'}; }
+/* Bridge for other script blocks so `window.accountPrefs && accountPrefs.lang`
+   works without a bare `accountPrefs` reference that would throw outside this
+   IIFE. Getter always reflects the live value. */
+Object.defineProperty(window, 'accountPrefs', { get(){ return accountPrefs; }, configurable: true });
 function learningDirection(){
   return accountPrefs.direction === 'ar' ? 'ar' : 'en';
 }
@@ -24484,12 +24492,19 @@ if(window.lucide) lucide.createIcons();
     if(_welcomeStarted) return; _welcomeStarted=true;
     let tries=0;
     const iv=setInterval(async ()=>{
-      tries++;
-      if(tries>40){ clearInterval(iv); return; } // ~30s window
-      const cl=c(); if(!cl) return;
-      let sess=null;
-      try{ const s=await cl.auth.getSession(); sess=s&&s.data&&s.data.session; }catch(e){}
-      if(!sess && !window.PEL_COOKIE_AUTH && !currentUser) return;
+      try{
+        tries++;
+        if(tries>40){ clearInterval(iv); return; } // ~30s window
+        const cl=c(); if(!cl) return;
+        let sess=null;
+        try{ const s=await cl.auth.getSession(); sess=s&&s.data&&s.data.session; }catch(e){}
+        /* `currentUser` is scoped inside the main app IIFE (block 0), so a bare
+           reference here would throw `currentUser is not defined`. The main app
+           exposes `window.PEL_CURRENT_USER`; fall back to `window.currentUser`
+           for forwards-compatibility. */
+        const mainUser = window.PEL_CURRENT_USER || window.currentUser || null;
+        if(!sess && !window.PEL_COOKIE_AUTH && !mainUser) return;
+      }catch(e){ console.warn('[PEL] pelGlobalWelcome interval:', e && e.message || e); return; }
       clearInterval(iv);
       const d=await loadOverview();
       if(d && !d.welcome_seen){ showGlobalWelcome(); }
