@@ -2098,8 +2098,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const pill = document.getElementById('topbarCredits');
   if(pill) pill.addEventListener('click', () => { if(typeof goToView === 'function') goToView('liveClasses'); });
 });
-// Periodic refresh so admin credit adjustments appear without page reload
-const _creditsIntervalId = setInterval(() => { if(typeof currentUser !== 'undefined' && currentUser && !document.hidden) refreshCredits(); }, 60000);
+// Periodic refresh so admin credit adjustments appear without page reload.
+// Reduced 60s → 300s: cuts REST API log-ingestion volume (Supabase quota)
+// while still picking up admin changes within ~5 minutes.
+const _creditsIntervalId = setInterval(() => { if(typeof currentUser !== 'undefined' && currentUser && !document.hidden) refreshCredits(); }, 300000);
 
 async function loadStudentState(){
   // Source of truth is Supabase, keyed by auth.uid(), never localStorage,
@@ -2550,10 +2552,13 @@ async function pelGateSignOut(){
 
 function scheduleEntitlementRecheck(){
   if(entRecheckTimer) clearInterval(entRecheckTimer);
+  // Reduced 5min → 15min: realtime channel (subscribeEntitlement) already
+  // reacts in seconds on admin plan changes; this periodic recheck is only the
+  // offline safety net. Cutting volume 3x saves Supabase log ingestion.
   entRecheckTimer = setInterval(() => {
     if(document.hidden) return;
     loadSubPlan();
-  }, 5 * 60 * 1000);
+  }, 15 * 60 * 1000);
 }
 
 /* Instant entitlement sync: when an admin assigns, extends, suspends or
@@ -3048,6 +3053,17 @@ const PEL_ACTIVITY = (function(){
   function touch(eventType, opts){
     if(!currentUser) return;
     var now = Date.now();
+    /* Skip duplicate `login` within the same browser session (page refresh,
+       SPA reload) — only the FIRST login in a tab session writes a row.
+       Cuts ~60% of activity-event rows (every app.html load was logging in). */
+    if(eventType === 'login'){
+      try{
+        var loginMark = 'pel_login_event_ts';
+        var lastLogin = parseInt(sessionStorage.getItem(loginMark) || '0', 10) || 0;
+        if(now - lastLogin < 30 * 60 * 1000){ return; }
+        sessionStorage.setItem(loginMark, String(now));
+      }catch(e){ /* session storage unavailable - log as before */ }
+    }
     // Throttle: heartbeats min 2min apart, other events min 5s apart (except login/logout)
     if(eventType === 'heartbeat' && now - lastTouch < 120000) return;
     if(eventType !== 'login' && eventType !== 'logout' && now - lastTouch < 5000) return;
@@ -3055,10 +3071,11 @@ const PEL_ACTIVITY = (function(){
 
     var c = client();
     if(!c) return;
-    // Skip page_view events for internal navigation (home, review, profile, settings) —
-    // only log meaningful events (login, logout, open_lesson, heartbeat)
-    if(eventType === 'page_view' && opts && opts.page &&
-       ['home','review','profile','settings'].indexOf(opts.page) !== -1) return;
+    /* Drop ALL page_view events — admin doesn't need per-view navigation,
+       and they were the second-biggest row volume. Meaningful events that
+       matter (login, logout, open_lesson, activity, heartbeat) still fire.
+       Presence/last-page is still updated for non-page_view touches. */
+    if(eventType === 'page_view') return;
     try{
       pelRpc('student_touch', {
         p_session_id: getSessionId(),
@@ -3075,9 +3092,11 @@ const PEL_ACTIVITY = (function(){
 
   function startHeartbeat(){
     if(heartbeatId) clearInterval(heartbeatId);
+    // Reduced 3min → 5min: presence upsert only, no DB insert (heartbeats
+    // are skipped in student_touch's event insert). Cuts API-call volume 40%.
     heartbeatId = setInterval(function(){
       if(!document.hidden && currentUser) touch('heartbeat');
-    }, 180000);
+    }, 300000);
   }
 
   /* visibilitychange fires `heartbeat` when the tab becomes visible again.
