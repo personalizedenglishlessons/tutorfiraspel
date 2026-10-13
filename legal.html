@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; base-uri 'self'; form-action 'self'; object-src 'none';">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; base-uri 'self'; form-action 'self'; object-src 'none'; frame-ancestors 'none';">
 <title>PEL، سياسه الخصوصيه والشروط</title>
 <link rel="canonical" href="https://pel.personalizedenglishlessons.workers.dev/legal.html">
 <meta name="description" content="سياسه الخصوصيه والشروط والاحكام لمنصه Personalized English Lessons، مقدمه من PEL LLC، مع الاستاذ فراس.">
@@ -646,8 +646,9 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold); outline-of
 
 <script>
 (function(){
+  let savedTheme = 'dark';
+  try{ savedTheme = localStorage.getItem('pel-theme') || 'dark'; }catch(e){}
   const root = document.documentElement;
-  const savedTheme = localStorage.getItem('pel-theme') || 'dark';
   root.setAttribute('data-theme', savedTheme);
   document.getElementById('themeToggle').addEventListener('click', () => {
     const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';

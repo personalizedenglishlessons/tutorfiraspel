@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://lewoochehpiycocvfwtz.supabase.co https://api.supabase.co; base-uri 'self'; form-action 'self'; object-src 'none';">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://lewoochehpiycocvfwtz.supabase.co https://api.supabase.co; base-uri 'self'; form-action 'self'; object-src 'none'; frame-ancestors 'none';">
 <title>PEL، Personalized English Lessons، تعلم الانجليزيه الامريكيه بثقه</title>
 <link rel="canonical" href="https://pel.personalizedenglishlessons.workers.dev/">
 <link rel="icon" type="image/svg+xml" href="brand/pel-favicon.svg?v=2">
@@ -1611,12 +1611,12 @@ function applyIndexLang(lang){
   // compact plan preview bilingual
   var ppHead=document.querySelector('#personalPreview .eyebrow');
   if(ppHead) ppHead.textContent = lang==='ar' ? 'تعرف هالشعور؟' : 'Know that feeling?';
-  var ppH2=document.querySelector('#personalPreview h2');
+  let ppH2=document.querySelector('#personalPreview h2');
   if(ppH2) ppH2.textContent = lang==='ar' ? 'قولنا وش يوقفك، ونبني لك طريقك' : 'Tell us what stops you, we build your path';
-  var ppCols=document.querySelectorAll('#personalPreview .reveal > div');
-  var ppAr={say:'انت تقول', items:['ابي انجليزي للشغل','اتجمد لما احد يكلمني بالانجليزي','اقدر ادرس 20 دقيقه يوميا'], build:'PEL يبني', path:'انجليزي الشغل', focus:'تركيزك: محادثه واستماع', todayL:'اليوم', todayV:'تبدا محادثه في الشغل', nextL:'بعدها', nextV:'تسال زميلك عن مساعده', laterL:'بعدين', laterV:'اجتماعات، عملاء، مقابلات'};
-  var ppEn={say:'You tell PEL', items:['I need English for work','I freeze when someone speaks English to me','I can study 20 minutes a day'], build:'PEL builds', path:'Workplace English', focus:'Focus: speaking + listening', todayL:'Today', todayV:'Start a conversation at work', nextL:'Next', nextV:'Ask a coworker for help', laterL:'Later', laterV:'Meetings, customers, interviews'};
-  var ppData = lang==='ar'?ppAr:ppEn;
+  let ppCols=document.querySelectorAll('#personalPreview .reveal > div');
+  let ppAr={say:'انت تقول', items:['ابي انجليزي للشغل','اتجمد لما احد يكلمني بالانجليزي','اقدر ادرس 20 دقيقه يوميا'], build:'PEL يبني', path:'انجليزي الشغل', focus:'تركيزك: محادثه واستماع', todayL:'اليوم', todayV:'تبدا محادثه في الشغل', nextL:'بعدها', nextV:'تسال زميلك عن مساعده', laterL:'بعدين', laterV:'اجتماعات، عملاء، مقابلات'};
+  let ppEn={say:'You tell PEL', items:['I need English for work','I freeze when someone speaks English to me','I can study 20 minutes a day'], build:'PEL builds', path:'Workplace English', focus:'Focus: speaking + listening', todayL:'Today', todayV:'Start a conversation at work', nextL:'Next', nextV:'Ask a coworker for help', laterL:'Later', laterV:'Meetings, customers, interviews'};
+  let ppData = lang==='ar'?ppAr:ppEn;
   if(ppCols.length>=2){
     var sayCol=ppCols[0], buildCol=ppCols[1];
     var labels=sayCol.querySelectorAll('div[style*="letter-spacing:.14em"]');
@@ -1770,15 +1770,15 @@ function applyIndexLang(lang){
   // personalPreview
   var ppEyebrow=document.querySelector('#personalPreview .eyebrow');
   if(ppEyebrow) ppEyebrow.textContent = lang==='ar' ? 'تعرف هالشعور؟' : 'Know that feeling?';
-  var ppH2=document.querySelector('#personalPreview h2');
-  if(ppH2) ppH2.textContent = lang==='ar' ? 'قولنا وش يوقفك، ونبني لك طريقك' : 'Tell us what stops you, we build your path';
-  var ppP=document.querySelector('#personalPreview .section-head p');
+  let ppH2b=document.querySelector('#personalPreview h2');
+  if(ppH2b) ppH2b.textContent = lang==='ar' ? 'قولنا وش يوقفك، ونبني لك طريقك' : 'Tell us what stops you, we build your path';
+  let ppP=document.querySelector('#personalPreview .section-head p');
   if(ppP) ppP.textContent = lang==='ar' ? 'PEL ما يعطي الكل نفس الدروس. قل لنا وش تبي الانجليزي لاجله، ونبني لك خطه على مقاس هدفك ومستواك ووقتك' : 'Tell us why you need English and we build your lessons around that: your level, your goal, your time.';
-  var ppCards=document.querySelectorAll('#personalPreview .card');
-  var ppAr=[{k:'شغل',t:'انجليزي الشغل',d:'تركيزك: محادثه<br>وقتك: 20 دقيقه يوميا<br>مواقف: اجتماع، ايميل، مكالمه'},{k:'سفر',t:'انجليزي السفر',d:'تركيزك: استماع<br>وقتك: 15 دقيقه يوميا<br>مواقف: مطار، فندق، مطعم'},{k:'سؤالف يوميه',t:'انجليزي يومي',d:'تركيزك: محادثه<br>وقتك: 15 دقيقه يوميا<br>مواقف: سؤالف، طلبات، مساعده'}];
-  var ppEn=[{k:'Work',t:'Work English',d:'Focus: speaking<br>Time: 20 min a day<br>Situations: meeting, email, call'},{k:'Travel',t:'Travel English',d:'Focus: listening<br>Time: 15 min a day<br>Situations: airport, hotel, restaurant'},{k:'Everyday',t:'Everyday English',d:'Focus: conversation<br>Time: 15 min a day<br>Situations: small talk, requests, help'}];
+  let ppCards=document.querySelectorAll('#personalPreview .card');
+  let ppArB=[{k:'شغل',t:'انجليزي الشغل',d:'تركيزك: محادثه<br>وقتك: 20 دقيقه يوميا<br>مواقف: اجتماع، ايميل، مكالمه'},{k:'سفر',t:'انجليزي السفر',d:'تركيزك: استماع<br>وقتك: 15 دقيقه يوميا<br>مواقف: مطار، فندق، مطعم'},{k:'سؤالف يوميه',t:'انجليزي يومي',d:'تركيزك: محادثه<br>وقتك: 15 دقيقه يوميا<br>مواقف: سؤالف، طلبات، مساعده'}];
+  let ppEnB=[{k:'Work',t:'Work English',d:'Focus: speaking<br>Time: 20 min a day<br>Situations: meeting, email, call'},{k:'Travel',t:'Travel English',d:'Focus: listening<br>Time: 15 min a day<br>Situations: airport, hotel, restaurant'},{k:'Everyday',t:'Everyday English',d:'Focus: conversation<br>Time: 15 min a day<br>Situations: small talk, requests, help'}];
   ppCards.forEach(function(card,i){
-    var data = lang==='ar'?ppAr[i]:ppEn[i];
+    var data = lang==='ar'?ppArB[i]:ppEnB[i];
     if(!data) return;
     var kEl=card.querySelector('div[style*="letter-spacing:.1em"]');
     if(kEl) kEl.textContent = data.k;
