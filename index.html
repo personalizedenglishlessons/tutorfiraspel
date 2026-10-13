@@ -748,6 +748,10 @@ section{ position:relative; padding:130px 0; }
 .pricing-note b{ color:var(--text-secondary); }
 .pricing-note a{ color:var(--gold); font-weight:600; }
 .pricing-note a:hover{ text-decoration:underline; }
+.pricing-assure{ display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin:30px auto 0; max-width:820px; }
+.pricing-assure .as-chip{ display:inline-flex; align-items:center; gap:8px; padding:9px 16px; border-radius:999px; border:1px solid rgba(200,169,106,.35); background:rgba(200,169,106,.07); color:var(--text-secondary); font-size:.82rem; font-weight:600; }
+.pricing-assure .as-chip::before{ content:""; width:7px; height:7px; border-radius:50%; background:var(--gold); flex-shrink:0; }
+.pricing-refund{ max-width:640px; margin:14px auto 0; text-align:center; font-size:.8rem; line-height:1.8; color:var(--text-muted); }
 
 /* ===== whatsapp button ===== */
 .btn-wa{
@@ -1147,8 +1151,8 @@ section{ padding-top:70px; padding-bottom:70px; }
   <div class="container hero-grid">
     <div class="reveal is-visible">
        <span class="eyebrow hero-eyebrow" dir="ltr" style="justify-content:flex-start;"><span class="pel-tag">Personalized English Lessons</span></span>
-      <h1 class="arabic-h" dir="rtl" style="margin-top:18px; font-size:clamp(2rem,4.5vw,3.2rem); line-height:1.2;">سنين تدرس انجليزي، وما تقدر ترد</h1>
-      <p class="arabic hero-sub" dir="rtl" style="font-size:1rem; max-width:520px; margin-top:14px; line-height:1.8;">المكالمه ترن وانت تتهرب منها، الايميل تنسخه وتترجمه، واذا صار لازم تتكلم، تجيب واحد يتكلم عنك. انت مو ناقص ذكاء ولا حماس، انت بس ما احد دربك على مواقفك. PEL ياخذك من اول كلمه، ويقعدك على طريق واضح، وتدريب يومي لين تصير انت اللي ترد، وتكتب، وتتكلم بثقه.</p>
+      <h1 class="arabic-h" dir="rtl" style="margin-top:18px; font-size:clamp(2rem,4.5vw,3.2rem); line-height:1.2;">سنين تدرس انجليزي… وبس يكلمك واحد تسكت؟</h1>
+      <p class="arabic hero-sub" dir="rtl" style="font-size:1rem; max-width:520px; margin-top:14px; line-height:1.8;">يرن جوالك وتتهرب. تكتب الايميل بالمترجم وقلبك يدق. وبالاجتماع تتمنى محد يسالك. والسالفه مو غباء منك، الطريقه القديمه علمتك تحفظ، مو تتكلم. PEL يغير القصه: دروس قصيره من مواقفك الحقيقيه، تسمع وتنطق وتتصحح فورا، لين تصير انت اللي ترد.</p>
       <div class="hero-cta-row" style="margin-top:26px; gap:12px; flex-wrap:wrap; align-items:center;">
         <button type="button" class="btn-gold magnetic" data-open-path id="heroPathCta" style="padding:14px 28px; font-size:.95rem;">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="2.5"/><circle cx="18" cy="5" r="2.5"/><path d="M8.5 19H15a3 3 0 0 0 3-3v-8.5M6 16.5V8a3 3 0 0 1 3-3h3.5"/></svg>
@@ -1164,9 +1168,9 @@ section{ padding-top:70px; padding-bottom:70px; }
         <span class="arabic">اختبر مستواك مجانا، وشوف وش يوقفك بالضبط</span>
       </div>
       <div class="trust-row" dir="rtl" style="margin-top:18px; gap:10px 18px;">
-        <div class="trust-item"><span class="dot"></span>تتدرب على مواقفك الحقيقيه قبل ما تصير</div>
-        <div class="trust-item"><span class="dot"></span>كل درس قصير: تسمع، تنطق، وتثبت</div>
-        <div class="trust-item"><span class="dot"></span>تغلط؟ نعلمك وين وبالسبب، فورا</div>
+        <div class="trust-item"><span class="dot"></span>اختبار مستوى مجاني، تعرف وين تبدا</div>
+        <div class="trust-item"><span class="dot"></span>دروس قصيره من مواقفك: مكالمه، ايميل، اجتماع</div>
+        <div class="trust-item"><span class="dot"></span>تغلط؟ نصححك فورا ونقولك ليش</div>
         <div class="trust-item"><span class="dot"></span>تشوف تقدمك يوم بيوم</div>
       </div>
     </div>
@@ -1197,7 +1201,7 @@ section{ padding-top:70px; padding-bottom:70px; }
 <section id="personalPreview" style="padding:80px 0; background:var(--surface); border-top:1px solid var(--border);">
   <div class="container">
     <div class="section-head center reveal" dir="rtl" style="max-width:640px; margin:0 auto 40px;">
-      <span class="eyebrow">من الخوف للثقه</span>
+      <span class="eyebrow">تعرف هالشعور؟</span>
       <h2 class="arabic-h" style="font-size:clamp(1.8rem,3.2vw,2.4rem);">قولنا وش يوقفك، ونبني لك طريقك</h2>
     </div>
     <div class="reveal pp-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:20px; max-width:920px; margin:0 auto;">
@@ -1206,7 +1210,7 @@ section{ padding-top:70px; padding-bottom:70px; }
           <span style="width:28px; height:28px; border-radius:8px; background:rgba(200,169,106,.12); display:flex; align-items:center; justify-content:center; color:var(--gold);"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
           <span style="font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); font-weight:700;">انت تقول</span>
         </div>
-        <div class="pp-chip">ما اقدر ارد على مكالمه</div>
+        <div class="pp-chip">اتجمد لما احد يكلمني بالانجليزي</div>
         <div class="pp-chip">ابي انجليزي للشغل</div>
         <div class="pp-chip">عندي 20 دقيقه يوميا</div>
         <button type="button" class="btn-gold magnetic" data-open-path style="margin-top:auto; justify-content:center; padding:14px 22px; font-size:.9rem;"><span>اعرف بدايتي</span></button>
@@ -1242,9 +1246,9 @@ section{ padding-top:70px; padding-bottom:70px; }
 <section id="pricing" style="background:var(--surface); border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding-bottom:90px; scroll-margin-top:90px; scroll-margin-bottom:80px;">
   <div class="container">
     <div class="section-head center reveal" dir="rtl">
-      <span class="eyebrow">اختار طريقك</span>
-      <h2 class="arabic-h">باقتين، ثلاث مدد، وكلها تشمل حصص مباشره</h2>
-      <p class="arabic">واحد لللي يبدا من الصفر، وواحد لللي يستعد للستب او التوفل او الايلتس. تدفع عبر واتساب ونشغل حسابك خلال دقايق.</p>
+      <span class="eyebrow">الحل: PEL</span>
+      <h2 class="arabic-h">باقتين وثلاث مدد، واختار اللي يمشي مع هدفك</h2>
+      <p class="arabic">ابد من الصفر لين اول مكالمه تردها، او جهز للستب والتوفل والايلتس. تدفع عبر واتساب ونفعل حسابك خلال دقايق.</p>
     </div>
     <div class="pricing-grid" id="pricingGrid" dir="rtl"></div>
     <p class="pricing-note arabic">
@@ -1257,8 +1261,8 @@ section{ padding-top:70px; padding-bottom:70px; }
 <section id="liveTeaching" style="padding:80px 0; background:var(--bg);">
   <div class="container">
     <div class="section-head center reveal" dir="rtl" style="max-width:620px; margin:0 auto 36px;">
-      <span class="eyebrow">تعلم وممارسه</span>
-      <h2 class="arabic-h" style="font-size:clamp(1.8rem,3.2vw,2.4rem);">تتعلم، تتمرن، تستخدمها</h2>
+      <span class="eyebrow">التحول</span>
+      <h2 class="arabic-h" style="font-size:clamp(1.8rem,3.2vw,2.4rem);">من "ما اقدر" الى "خلاص رديت"</h2>
     </div>
     <div class="reveal" style="display:flex; align-items:flex-start; justify-content:center; gap:16px; flex-wrap:wrap; max-width:880px; margin:0 auto;">
       <div class="lt-step" style="flex:1; min-width:200px; text-align:center; padding:24px 16px; background:var(--card); border:1px solid var(--border); border-radius:18px; transition:border-color .3s,transform .3s;" onmouseover="this.style.borderColor='rgba(200,169,106,.3)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='none'">
@@ -1266,21 +1270,21 @@ section{ padding-top:70px; padding-bottom:70px; }
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 9h8"/><path d="M8 13h5"/></svg>
         </div>
         <div style="font-weight:700; font-size:.95rem;">تتعلم بالتطبيق</div>
-        <div style="margin-top:6px; font-size:.8rem; color:var(--text-muted); line-height:1.6;">دروس قصيره من مواقف تصير لك: ترسل ايميل، تتكلم بالهاتف، تسال عن سعر</div>
+        <div style="margin-top:6px; font-size:.8rem; color:var(--text-muted); line-height:1.6;">دروس قصيره من مواقفك: مكالمه، ايميل، اجتماع. تسمع، تنطق، وتثبت.</div>
       </div>
       <div class="lt-step" style="flex:1; min-width:200px; text-align:center; padding:24px 16px; background:var(--card); border:1px solid rgba(200,169,106,.3); box-shadow:0 8px 32px -12px rgba(200,169,106,.2); border-radius:18px; position:relative; transition:transform .3s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='none'">
         <div class="lt-icon gm">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
         </div>
-        <div style="font-weight:700; font-size:.95rem;">تتمرن بالحصص</div>
-        <div style="margin-top:6px; font-size:.8rem; color:var(--text-muted); line-height:1.6;">حصه مباشره كل اسبوع: تتكلم، يصحح لك</div>
+        <div style="font-weight:700; font-size:.95rem;">تتمرن مع الاستاذ</div>
+        <div style="margin-top:6px; font-size:.8rem; color:var(--text-muted); line-height:1.6;">حصص مباشره (حسب باقتك): تتكلم ويصحح لك</div>
       </div>
       <div class="lt-step" style="flex:1; min-width:200px; text-align:center; padding:24px 16px; background:var(--card); border:1px solid var(--border); border-radius:18px; transition:border-color .3s,transform .3s;" onmouseover="this.style.borderColor='rgba(63,140,114,.3)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='none'">
         <div class="lt-icon ei">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5"/><path d="M21 11.5a8.5 8.5 0 0 0-8.5-8.5"/></svg>
         </div>
         <div style="font-weight:700; font-size:.95rem;">تستخدمها بحياتك</div>
-        <div style="margin-top:6px; font-size:.8rem; color:var(--text-muted); line-height:1.6;">ترد على المكالمه، تكتب الايميل، تتكلم بثقه</div>
+        <div style="margin-top:6px; font-size:.8rem; color:var(--text-muted); line-height:1.6;">ترد على المكالمه، تكتب الايميل، وتتكلم بثقه، بدون مترجم</div>
       </div>
     </div>
   </div>
@@ -1308,7 +1312,7 @@ section{ padding-top:70px; padding-bottom:70px; }
     } : {
       nameEn:'Start From 0', nameAr: 'ابد من الصفر',
       termEn:'Absolute beginner - first letter', termAr: 'مبتدي من الصفر - اول حرف',
-      descEn:'Freeze at the first word? From the alphabet to your first conversation.', descAr: 'توقف عند اول كلمه؟ من الحروف لين اول محادثه.',
+      descEn:'Freeze at the first word? From the alphabet to your first conversation.', descAr: 'تتجمد عند اول كلمه؟ من الحروف لين اول محادثه تتكلمها بثقه.',
       featEn:['From first letter to first sentence you say','Situations that happen to you: work, travel, daily life','Hear every word, repeat it','See your progress day by day'],
       featAr:['من اول حرف لين اول جمله تقولها','مواقف تصير لك: شغل، سفر، دوام','تسمع نطق كل كلمه وتكررها','تشوف تقدمك يوم بيوم']
     };
@@ -1374,6 +1378,13 @@ section{ padding-top:70px; padding-bottom:70px; }
       html += '</div>'; // subgrid
       html += '</div>'; // track panel
     }
+    // risk reversal: free test, fast activation, refund window
+    html += '<div class="pricing-assure" dir="'+(ar?'rtl':'ltr')+'">';
+    html += '<span class="as-chip">'+(ar?'اختبار مستوى مجاني':'Free level test')+'</span>';
+    html += '<span class="as-chip">'+(ar?'تفعيل حسابك خلال دقايق':'Account activated in minutes')+'</span>';
+    html += '<span class="as-chip">'+(ar?'استرجاع خلال 3 ايام':'3-day refund window')+'</span>';
+    html += '</div>';
+    html += '<p class="pricing-refund '+(ar?'arabic':'')+'" dir="'+(ar?'rtl':'ltr')+'">'+(ar?'سياسه الاسترجاع: تقدر تسترجع خلال 3 ايام من الدفع. واذا تم انشاء حسابك بعد الدفع، تنخصم رسوم المنصه حسب الباقه اللي اشتريتها.':'Refund policy: you can request a refund within 3 days of payment. If your account was already created after you paid, platform fees are deducted depending on the plan you bought.')+'</p>';
     // manual credit purchase callout
     html += '<div style="margin-top:34px;padding:24px;border:1px dashed rgba(200,169,106,.4);border-radius:20px;text-align:center;background:rgba(200,169,106,.04);">';
     html += '<div style="font-weight:700;font-size:1rem;">'+(ar?'تبي حصص اكثر؟':'Need more classes?')+'</div>';
@@ -1409,8 +1420,8 @@ section{ padding-top:70px; padding-bottom:70px; }
   <div class="orb orb-2"></div>
   <div class="container reveal" dir="rtl">
     <span class="eyebrow" style="justify-content:center;">جاهز؟</span>
-    <h2 class="arabic-h" style="margin-top:20px;">ابدا الحين</h2>
-    <p class="arabic">راسل استاذ فراس واتساب، نحدد وينك ونشغل حسابك، وتبدا اول درس اليوم.</p>
+    <h2 class="arabic-h" style="margin-top:20px;">اول مكالمه تردها بثقه، تبدا من هنا</h2>
+    <p class="arabic">اختبر مستواك مجانا، وراسل استاذ فراس واتساب. نفعل حسابك خلال دقايق وتبدا اول درس اليوم.</p>
     <div class="final-cta-buttons">
       <button type="button" class="btn-gold magnetic" data-open-path id="finalPathCta">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="2.5"/><circle cx="18" cy="5" r="2.5"/><path d="M8.5 19H15a3 3 0 0 0 3-3v-8.5M6 16.5V8a3 3 0 0 1 3-3h3.5"/></svg>
@@ -1559,17 +1570,17 @@ function applyIndexLang(lang){
   loginTexts.forEach(function(el){ el.textContent = lang==='ar' ? 'دخول الطلاب' : 'Student Login'; });
   // hero
   var heroH1=document.querySelector('.hero h1.arabic-h');
-  if(heroH1){ var h1ar = (window.PEL_SITE && PEL_SITE.heroHeadline && PEL_SITE.heroHeadline.ar) ? PEL_SITE.heroHeadline.ar : 'سنين تدرس انجليزي، وما تقدر ترد'; var h1en = (window.PEL_SITE && PEL_SITE.heroHeadline && PEL_SITE.heroHeadline.en) ? PEL_SITE.heroHeadline.en : 'Years of English, and you still can\'t reply'; setLang(heroH1, h1ar, h1en); }
+  if(heroH1){ var h1ar = (window.PEL_SITE && PEL_SITE.heroHeadline && PEL_SITE.heroHeadline.ar) ? PEL_SITE.heroHeadline.ar : 'سنين تدرس انجليزي… وبس يكلمك واحد تسكت؟'; var h1en = (window.PEL_SITE && PEL_SITE.heroHeadline && PEL_SITE.heroHeadline.en) ? PEL_SITE.heroHeadline.en : 'Years of studying English… and you still freeze when someone talks to you?'; setLang(heroH1, h1ar, h1en); }
   var heroSub=document.querySelector('.hero .hero-sub');
-  if(heroSub){ var hsar = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.ar) ? PEL_SITE.heroSub.ar : 'المكالمه ترن وانت تتهرب منها، الايميل تنسخه وتترجمه، واذا صار لازم تتكلم، تجيب واحد يتكلم عنك. انت مو ناقص ذكاء ولا حماس، انت بس ما احد دربك على مواقفك. PEL ياخذك من اول كلمه، ويقعدك على طريق واضح، وتدريب يومي لين تصير انت اللي ترد، وتكتب، وتتكلم بثقه.'; var hsen = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.en) ? PEL_SITE.heroSub.en : 'The phone rings and you dodge it. You copy emails to translate them. And when you really have to speak, you bring someone to speak for you. You are not short on brains or motivation, nobody ever trained you on your situations. PEL takes you from your first word, sits you on a clear path, and trains you daily until you\'re the one who answers, writes, and speaks with confidence.'; setLang(heroSub, hsar, hsen); }
+  if(heroSub){ var hsar = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.ar) ? PEL_SITE.heroSub.ar : 'يرن جوالك وتتهرب. تكتب الايميل بالمترجم وقلبك يدق. وبالاجتماع تتمنى محد يسالك. والسالفه مو غباء منك، الطريقه القديمه علمتك تحفظ، مو تتكلم. PEL يغير القصه: دروس قصيره من مواقفك الحقيقيه، تسمع وتنطق وتتصحح فورا، لين تصير انت اللي ترد.'; var hsen = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.en) ? PEL_SITE.heroSub.en : 'Your phone rings and you dodge it. You write emails through a translator with your heart pounding. In meetings you hope nobody asks you anything. It is not that you are not smart. The old way taught you to memorize, not to speak. PEL changes the story: short lessons from your real situations, you hear it, say it, and get corrected instantly, until you are the one who answers.'; setLang(heroSub, hsar, hsen); }
   var pathHint=document.querySelector('.path-hint .arabic');
   if(pathHint) setLang(pathHint, 'اختبر مستواك مجانا، وشوف وش يوقفك بالضبط', 'Find out what stops you, it\'s free');
   var pathHintEn=document.querySelector('.path-hint-en');
   if(pathHintEn) pathHintEn.textContent = lang==='ar' ? '' : 'See your level and what stops you, free';
   // trust items (bilingual)
   var trustItems=document.querySelectorAll('.trust-item');
-  var trustAr=['تتدرب على مواقفك الحقيقيه قبل ما تصير','كل درس قصير: تسمع، تنطق، وتثبت','تغلط؟ نعلمك وين وبالسبب، فورا','تشوف تقدمك يوم بيوم'];
-  var trustEn=['Practice your real situations before they happen','Short lessons: hear it, say it, make it stick','Slip up? We show you where and why, instantly','See your progress day by day'];
+  var trustAr=['اختبار مستوى مجاني، تعرف وين تبدا','دروس قصيره من مواقفك: مكالمه، ايميل، اجتماع','تغلط؟ نصححك فورا ونقولك ليش','تشوف تقدمك يوم بيوم'];
+  var trustEn=['Free level test, know exactly where to start','Short lessons from your real moments: calls, emails, meetings','Make a mistake? Corrected instantly, with the reason','See your progress day by day'];
   trustItems.forEach(function(el,i){ if(trustAr[i]&&trustEn[i]){ el.innerHTML='<span class="dot"></span>'+(lang==='ar'?trustAr[i]:trustEn[i]); el.setAttribute('dir',lang==='ar'?'rtl':'ltr'); } });
 
   // hero social proof removed: fabricated statistics are not allowed on PEL
@@ -1591,12 +1602,12 @@ function applyIndexLang(lang){
   if(personalSubNote) personalSubNote.textContent = lang==='ar' ? 'بدون تسجيل، نتيجتك تطلع قدامك على طول' : 'No signup needed, your result shows right away.';
   // compact plan preview bilingual
   var ppHead=document.querySelector('#personalPreview .eyebrow');
-  if(ppHead) ppHead.textContent = lang==='ar' ? 'خطتك على مقاسك' : '2-minute test finds your level and goal';
+  if(ppHead) ppHead.textContent = lang==='ar' ? 'تعرف هالشعور؟' : 'Know that feeling?';
   var ppH2=document.querySelector('#personalPreview h2');
-  if(ppH2) ppH2.textContent = lang==='ar' ? 'اختبار دقيقتين يحدد مستواك وهدفك' : 'Tell us what you need, we build the path';
+  if(ppH2) ppH2.textContent = lang==='ar' ? 'قولنا وش يوقفك، ونبني لك طريقك' : 'Tell us what stops you, we build your path';
   var ppCols=document.querySelectorAll('#personalPreview .reveal > div');
-  var ppAr={say:'انت تقول', items:['ابي انجليزي للشغل','المحادثه صعبه علي','اقدر ادرس 20 دقيقه يوميا'], build:'PEL يبني', path:'انجليزي الشغل', focus:'تركيزك: محادثه واستماع', todayL:'اليوم', todayV:'تبدا محادثه في الشغل', nextL:'بعدها', nextV:'تسال زميلك عن مساعده', laterL:'بعدين', laterV:'اجتماعات، عملا، مقابلات'};
-  var ppEn={say:'You tell PEL', items:['I need English for work','Speaking is hard for me','I can study 20 minutes a day'], build:'PEL builds', path:'Workplace English', focus:'Focus: speaking + listening', todayL:'Today', todayV:'Start a conversation at work', nextL:'Next', nextV:'Ask a coworker for help', laterL:'Later', laterV:'Meetings, customers, interviews'};
+  var ppAr={say:'انت تقول', items:['ابي انجليزي للشغل','اتجمد لما احد يكلمني بالانجليزي','اقدر ادرس 20 دقيقه يوميا'], build:'PEL يبني', path:'انجليزي الشغل', focus:'تركيزك: محادثه واستماع', todayL:'اليوم', todayV:'تبدا محادثه في الشغل', nextL:'بعدها', nextV:'تسال زميلك عن مساعده', laterL:'بعدين', laterV:'اجتماعات، عملا، مقابلات'};
+  var ppEn={say:'You tell PEL', items:['I need English for work','I freeze when someone speaks English to me','I can study 20 minutes a day'], build:'PEL builds', path:'Workplace English', focus:'Focus: speaking + listening', todayL:'Today', todayV:'Start a conversation at work', nextL:'Next', nextV:'Ask a coworker for help', laterL:'Later', laterV:'Meetings, customers, interviews'};
   var ppData = lang==='ar'?ppAr:ppEn;
   if(ppCols.length>=2){
     var sayCol=ppCols[0], buildCol=ppCols[1];
@@ -1620,8 +1631,8 @@ function applyIndexLang(lang){
   var ppBuildLabel=document.querySelector('#personalPreview .pp-build span[style*="letter-spacing"]');
   if(ppBuildLabel) ppBuildLabel.textContent = lang==='ar' ? 'PEL يبني' : 'PEL builds';
   var ppChips=document.querySelectorAll('#personalPreview .pp-say .pp-chip');
-  var ppChipAr=['ابي انجليزي للشغل','المحادثه صعبه علي','اقدر ادرس 20 دقيقه يوميا'];
-  var ppChipEn=['I need English for work','Speaking is hard for me','I can study 20 minutes a day'];
+  var ppChipAr=['ابي انجليزي للشغل','اتجمد لما احد يكلمني بالانجليزي','اقدر ادرس 20 دقيقه يوميا'];
+  var ppChipEn=['I need English for work','I freeze when someone speaks English to me','I can study 20 minutes a day'];
   ppChips.forEach(function(c,i){ var arr=lang==='ar'?ppChipAr:ppChipEn; if(arr[i]) c.textContent=arr[i]; });
   var ppPathName=document.querySelector('#personalPreview .pp-build div[style*="font-weight:700"][style*="1rem"]');
   if(ppPathName) ppPathName.textContent = lang==='ar' ? 'انجليزي الشغل' : 'Workplace English';
@@ -1637,12 +1648,12 @@ function applyIndexLang(lang){
   if(ppNote) ppNote.textContent = lang==='ar' ? 'بدون تسجيل، نتيجتك تطلع قدامك على طول' : 'No signup, see your plan before you pay anything';
   // live teaching bilingual
   var ltHead=document.querySelector('#liveTeaching .eyebrow');
-  if(ltHead) ltHead.textContent = lang==='ar' ? 'تعلم وممارسه' : 'Learn & practice';
+  if(ltHead) ltHead.textContent = lang==='ar' ? 'التحول' : 'The change';
   var ltH2c=document.querySelector('#liveTeaching h2');
-  if(ltH2c) ltH2c.textContent = lang==='ar' ? 'تتعلم، تتمرن، تستخدمها' : 'Learn, practice, use it';
+  if(ltH2c) ltH2c.textContent = lang==='ar' ? 'من "ما اقدر" الى "خلاص رديت"' : 'From "I cannot" to "I did it"';
   var ltSteps=document.querySelectorAll('#liveTeaching .lt-step');
-  var ltAr=[{t:'اتعلم في PEL',d:'دروس قصيره من حياتك اليوميه'},{t:'تتمرن مع الاستاذ',d:'حصه مباشره كل اسبوع: تتكلم، يصحح لك'},{t:'تستخدمها بحياتك',d:'ترد على المكالمه، تكتب الايميل، تتكلم بثقه'}];
-  var ltEn=[{t:'Learn in PEL',d:'2-minute lessons from situations that happen to you'},{t:'Practice with a teacher',d:'Live group session every week'},{t:'Use it in real life',d:'Answer calls, write emails, speak with confidence'}];
+  var ltAr=[{t:'تتعلم بالتطبيق',d:'دروس قصيره من مواقفك: مكالمه، ايميل، اجتماع. تسمع، تنطق، وتثبت.'},{t:'تتمرن مع الاستاذ',d:'حصص مباشره (حسب باقتك): تتكلم ويصحح لك'},{t:'تستخدمها بحياتك',d:'ترد على المكالمه، تكتب الايميل، وتتكلم بثقه، بدون مترجم'}];
+  var ltEn=[{t:'Learn in the app',d:'Short lessons from your real moments: calls, emails, meetings. You hear it, say it, make it stick.'},{t:'Practice with the tutor',d:'Live sessions, depending on your plan: you speak, he corrects'},{t:'Use it in real life',d:'Answer calls, write emails, speak with confidence, no translator'}];
   ltSteps.forEach(function(step,i){ var arr=lang==='ar'?ltAr:ltEn; if(!arr[i])return; var tEl=step.querySelector('div[style*="font-weight:700"]'); if(tEl) tEl.textContent=arr[i].t; var dEl=step.querySelector('div[style*="color:var(--text-muted)"]'); if(dEl) dEl.textContent=arr[i].d; });
   // any remaining “ابني مسار تعلمي” buttons not covered by data-open-path span
   document.querySelectorAll('[data-open-path]').forEach(function(btn){
@@ -1718,9 +1729,11 @@ function applyIndexLang(lang){
   });
   // pricing header
   var pricingHead=document.querySelector('#pricing .section-head h2');
-  if(pricingHead) setLang(pricingHead, 'باقتين، ثلاث مدد. الحصص المباشره في باقات مختاره.', 'Two paths, three durations. Live classes on select plans.');
+  if(pricingHead) setLang(pricingHead, 'باقتين وثلاث مدد، واختار اللي يمشي مع هدفك', 'Two paths, three durations. Pick the one that fits your goal.');
+  var pricingEy=document.querySelector('#pricing .section-head .eyebrow');
+  if(pricingEy) pricingEy.textContent = lang==='ar' ? 'الحل: PEL' : 'The answer: PEL';
   var pricingP=document.querySelector('#pricing .section-head p');
-  if(pricingP) setLang(pricingP, 'مسارين: واحد لللي يبدا من الصفر، و واحد لللي يستعد للستب او التوفل او الايلتس. تدفع عبر واتساب ونتفعل حسابك خلال دقايق.', 'One path starts from zero, the other preps you for STEP, TOEFL, or IELTS. Pay on WhatsApp, we set up your account in minutes.');
+  if(pricingP) setLang(pricingP, 'ابد من الصفر لين اول مكالمه تردها، او جهز للستب والتوفل والايلتس. تدفع عبر واتساب ونفعل حسابك خلال دقايق.', 'Start from zero until you answer your first call, or prepare for STEP, TOEFL and IELTS. Pay on WhatsApp and we activate your account within minutes.');
   var pricingNote=document.querySelector('.pricing-note');
   if(pricingNote){
     var pn = (window.PEL_SITE && PEL_SITE.pricingNote) ? PEL_SITE.pricingNote : null;
@@ -1743,12 +1756,12 @@ function applyIndexLang(lang){
   var faqH2=document.querySelector('#faq .section-head h2');
   if(faqH2) faqH2.textContent = lang==='ar' ? 'اسئله قبل التسجيل' : 'Questions before you sign up';
   var finalH2=document.querySelector('.final-cta h2');
-  if(finalH2) finalH2.textContent = lang==='ar' ? 'ابدا الحين' : 'Start now';
+  if(finalH2) finalH2.textContent = lang==='ar' ? 'اول مكالمه تردها بثقه، تبدا من هنا' : 'Your first confident call starts here';
   var finalP=document.querySelector('.final-cta p.arabic');
-  if(finalP) finalP.textContent = lang==='ar' ? 'راسل استاذ فراس واتساب، نشغل حسابك وتبدا اليوم.' : 'Message Tutor Firas on WhatsApp, we set up your account and you start today.';
+  if(finalP) finalP.textContent = lang==='ar' ? 'اختبر مستواك مجانا، وراسل استاذ فراس واتساب. نفعل حسابك خلال دقايق وتبدا اول درس اليوم.' : 'Take the free level test and message Tutor Firas on WhatsApp. We activate your account within minutes and you start your first lesson today.';
   // personalPreview
   var ppEyebrow=document.querySelector('#personalPreview .eyebrow');
-  if(ppEyebrow) ppEyebrow.textContent = lang==='ar' ? 'من الخوف للثقه' : 'From fear to confidence';
+  if(ppEyebrow) ppEyebrow.textContent = lang==='ar' ? 'تعرف هالشعور؟' : 'Know that feeling?';
   var ppH2=document.querySelector('#personalPreview h2');
   if(ppH2) ppH2.textContent = lang==='ar' ? 'قولنا وش يوقفك، ونبني لك طريقك' : 'Tell us what stops you, we build your path';
   var ppP=document.querySelector('#personalPreview .section-head p');
@@ -1887,7 +1900,7 @@ function applyIndexLang(lang){
   if(loopP) loopP.textContent = lang==='ar' ? 'كل خطوه تبني على اللي قبلها. تقدمك يرجع للنظام ويعدل طريقك.' : 'Each step builds on the last. Your progress feeds back into the system and adjusts your path.';
   // live teaching bilingual
   var liveH2=document.querySelector('#liveTeaching h2');
-  if(liveH2) liveH2.textContent = lang==='ar' ? 'تتعلم، تتمرن، تستخدمها' : 'Learn, practice, use it';
+  if(liveH2) liveH2.textContent = lang==='ar' ? 'من "ما اقدر" الى "خلاص رديت"' : 'From "I cannot" to "I did it"';
   var liveP=document.querySelector('#liveTeaching .section-head p');
   if(liveP) liveP.textContent = lang==='ar' ? 'كل حصه تتبع خطتك، وملاحظاتها ترجع للوحه تحكمك' : 'Each session follows your plan, and feedback goes straight to your dashboard.';
   var liveCards=document.querySelectorAll('#liveTeaching .card');
@@ -2145,6 +2158,7 @@ const faqs = [
   {qAr: 'اشوف تقدمي؟', aAr: 'اي والله. لوحتك تشوف وين وصلت: محادثه، استماع، مفردات، اسبوع باسبوع. تشوف الفرق بنفسك.', qEn:'Can I see my progress?', aEn:'Yes. Your dashboard shows where you are: speaking, listening, vocabulary, week by week. You see the difference yourself.'},
   {qAr: 'كم سعر الاشتراك؟', aAr: 'مسارين: ابد من الصفر: شهر 650 ⃁، شهرين 800 ⃁، 3 اشهر 1300 ⃁ (افضل قيمه). التجهيز للاختبارات: شهر 1000 ⃁، شهرين 1550 ⃁، 3 اشهر 2350 ⃁ (افضل قيمه). الحصص المباشره مشموله في باقات مختاره. تدفع عبر واتساب ونشغل حسابك خلال دقايق. شوف الباقات بالتفصيل فوق.', qEn:'How much?', aEn:'Two paths: Start From Zero: 1 month 650 ⃁, 2 months 800 ⃁, 3 months 1300 ⃁ (best value). Exam Prep (STEP / TOEFL / IELTS): 1 month 1000 ⃁, 2 months 1550 ⃁, 3 months 2350 ⃁ (best value). Live classes are included on select plans. Pay on WhatsApp, we set up your account in minutes. See the plans above for details.'},
   {qAr: 'الباقات فيها حصص مباشره؟', aAr: 'باقات مختاره فيها حصص مباشره. باقه الشهر لابد من الصفر ما فيها حصص، بس باقه الشهرين فيها حصه كل اسبوع وباقه 3 اشهر فيها حصتين. وباقات التجهيز للاختبارات فيها من حصه لـ 3 حصص بالاسبوع. الاستاذ فراس يحدد المواعيد. تبي اكثر؟ تشتري رصيد للحصص الشخصيه.', qEn:'Do plans include live classes?', aEn:'Select plans include live classes. The 1-month Start From Zero plan has no live classes, but 2 months includes 1/week and 3 months includes 2/week. Exam Prep plans include 1-3 classes per week. Tutor Firas sets the schedule. Want more? Buy extra credits for in-person lessons.'},
+  {qAr: 'فيه استرجاع؟', aAr: 'اي، خلال 3 ايام من الدفع. واذا تم انشاء حسابك بعد الدفع، تنخصم رسوم المنصه حسب الباقه اللي اشتريتها. راسل استاذ فراس واتساب ونرتب لك الموضوع.', qEn:'Is there a refund?', aEn:'Yes, within 3 days of payment. If your account was already created after you paid, platform fees are deducted depending on the plan you bought. Message Tutor Firas on WhatsApp and we will sort it out.'},
   {qAr: 'كيف اسجل؟', aAr: 'راسل استاذ فراس واتساب، نرسل لك تفاصيل الدفع ونشغل حسابك خلال دقايق.', qEn:'How do I sign up?', aEn:'Message Tutor Firas on WhatsApp, we send payment details and set up your account in minutes.'},
   {qAr: 'ايش يصير لما تخلص باقتي؟', aAr: 'تقدمك يبقى محفوظ، ما يضيع. بس يوقف الوصول للدروس. تجدد من لوحتك او تراسل استاذ فراس ونشغل لك باقه جديده.', qEn:'What happens when my plan ends?', aEn:'Your progress stays saved, it doesn\'t disappear. Lesson access pauses. Renew from your dashboard or message Tutor Firas for a new plan.'},
 ];
