@@ -35,7 +35,7 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;500;700&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700;800;900&family=Cairo:wght@400;500;700&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
 <script src="lib/pel-personalization.js?v=5230cca5" defer></script>
 <script src="lib/onboard.js?v=e6d28e3f" defer></script>
 <script src="lib/pel-assessment.js?v=1f01a69c" defer></script>
@@ -1095,6 +1095,195 @@ section{ padding-top:70px; padding-bottom:70px; }
 }
 .skip-link:focus{left:0!important;clip:auto!important;clip-path:none!important;overflow:visible!important;}
 .skip-link{clip:rect(0,0,0,0);clip-path:inset(50%);overflow:hidden;}
+/* ===== PEL design layer v2: motion plays on its own, nothing waits for scroll ===== */
+.reveal{ opacity:1 !important; transform:none !important; transition:none !important; }
+:root{ --gold-a08:rgba(200,169,106,.08); --gold-a14:rgba(200,169,106,.14); --gold-a30:rgba(200,169,106,.3); }
+html[data-theme="light"]{ --gold-a08:rgba(184,130,30,.08); --gold-a14:rgba(184,130,30,.14); --gold-a30:rgba(184,130,30,.3); }
+html{ -webkit-text-size-adjust:100%; }
+body{ overflow-x:hidden; }
+img,svg{ max-width:100%; }
+
+/* ---- hero ---- */
+.hero{ padding:calc(var(--header-h) + var(--site-banner-h,0px) + clamp(24px,5vh,64px)) 0 clamp(36px,6vh,72px); min-height:min(100svh,980px); display:flex; align-items:center; }
+.hero > .container{ width:100%; }
+.hero-grid{ grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr); gap:clamp(28px,5vw,80px); }
+.hero h1.arabic-h{ font-size:clamp(2rem,3.9vw,3.4rem) !important; font-weight:800; line-height:1.22 !important; margin-top:16px !important; text-wrap:balance; }
+.hero .hero-sub{ font-size:clamp(.98rem,1.25vw,1.12rem) !important; max-width:34em !important; line-height:1.9 !important; margin-top:18px !important; }
+.hero-cta-row{ margin-top:28px !important; }
+.hero-cta-row .btn-gold{ padding:16px 32px !important; font-size:1rem !important; }
+.hero .trust-row{ display:grid !important; grid-template-columns:1fr 1fr; gap:12px 24px !important; max-width:560px; margin-top:26px !important; padding-top:22px; border-top:1px solid var(--border); }
+.hero .trust-item{ font-size:.86rem; color:var(--text-secondary); }
+.hero .path-hint{ margin-top:12px !important; }
+
+/* ---- call scene ---- */
+.callstage{ position:relative; display:flex; justify-content:center; align-items:center; padding:clamp(8px,2vw,24px); }
+.callstage::before{ content:""; position:absolute; inset:6% 4%; border-radius:50%; background:radial-gradient(closest-side, var(--gold-a14), transparent 72%); filter:blur(6px); animation:cs-breathe 7s ease-in-out infinite; pointer-events:none; }
+.phone{ position:relative; width:min(380px,100%); border-radius:38px; padding:12px; background:linear-gradient(160deg,var(--card-elevated),var(--surface)); border:1px solid var(--border); box-shadow:var(--shadow-lift), 0 0 80px -40px var(--gold); direction:ltr; }
+.phone-screen{ border-radius:28px; background:var(--bg); border:1px solid var(--border); overflow:hidden; display:flex; flex-direction:column; min-height:min(560px,calc(100svh - 190px)); min-height:520px; }
+.ph-head{ display:flex; align-items:center; gap:12px; padding:16px 18px; border-bottom:1px solid var(--border); background:var(--surface); }
+.ph-ava{ width:38px; height:38px; border-radius:50%; background:linear-gradient(135deg,var(--gold),var(--gold-soft)); color:#171412; display:grid; place-items:center; font-weight:800; font-size:.95rem; position:relative; flex-shrink:0; }
+.ph-ava::after{ content:""; position:absolute; inset:-5px; border-radius:50%; border:1px solid var(--gold); opacity:0; animation:cs-ring 2.4s ease-out infinite; }
+.ph-meta{ flex:1; min-width:0; text-align:left; }
+.ph-name{ font-size:.92rem; font-weight:700; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.ph-state{ font-size:.72rem; color:var(--text-muted); display:flex; align-items:center; gap:6px; margin-top:2px; }
+.ph-state i{ width:6px; height:6px; border-radius:50%; background:var(--success); display:inline-block; animation:cs-blink 1.6s ease-in-out infinite; }
+.ph-thread{ flex:1; padding:20px 16px 12px; display:flex; flex-direction:column; gap:12px; justify-content:flex-start; }
+.cv-b{ max-width:88%; border-radius:20px; padding:14px 16px; opacity:0; transform:translateY(10px) scale(.98); transition:opacity .5s var(--ease), transform .5s var(--ease); }
+.cv-b.show{ opacity:1; transform:none; }
+.cv-in{ align-self:flex-start; background:var(--card); border:1px solid var(--border); border-end-start-radius:6px; border-bottom-left-radius:6px; }
+.cv-out{ align-self:flex-end; background:var(--gold-a14); border:1px solid var(--gold-a30); border-bottom-right-radius:6px; }
+.cv-en{ font-family:'Fraunces',serif; font-size:1.18rem; line-height:1.35; color:var(--text); direction:ltr; text-align:left; }
+.cv-wave{ display:flex; align-items:center; gap:3px; height:16px; margin-bottom:10px; }
+.cv-wave span{ width:3px; height:4px; border-radius:2px; background:var(--gold); opacity:.5; }
+.cv-wave.live span{ animation:cs-wave .9s ease-in-out infinite; opacity:1; }
+.cv-wave span:nth-child(2n){ animation-delay:.12s } .cv-wave span:nth-child(3n){ animation-delay:.24s } .cv-wave span:nth-child(5n){ animation-delay:.36s }
+.cv-aid{ display:flex; flex-direction:column; gap:7px; margin-top:12px; }
+.cv-chip{ direction:rtl; text-align:right; font-family:'Tajawal','Cairo',sans-serif; font-size:.9rem; line-height:1.5; border-radius:12px; padding:8px 12px; opacity:0; transform:translateY(6px); transition:opacity .45s var(--ease), transform .45s var(--ease); }
+.cv-chip.show{ opacity:1; transform:none; }
+.cv-chip.mean{ background:var(--surface); color:var(--text-secondary); }
+.cv-chip.say{ background:var(--gold-a08); color:var(--gold-soft); border:1px dashed var(--gold-a30); }
+html[data-theme="light"] .cv-chip.say{ color:var(--gold); }
+.cv-typing{ align-self:flex-end; display:flex; gap:5px; padding:12px 16px; border-radius:18px; background:var(--card); border:1px solid var(--border); opacity:0; transition:opacity .3s; height:40px; align-items:center; }
+.cv-typing.show{ opacity:1; }
+.cv-typing span{ width:6px; height:6px; border-radius:50%; background:var(--text-muted); animation:cs-dot 1s ease-in-out infinite; }
+.cv-typing span:nth-child(2){ animation-delay:.15s } .cv-typing span:nth-child(3){ animation-delay:.3s }
+.cv-tag{ font-size:.7rem; color:var(--text-muted); margin-bottom:6px; direction:rtl; font-family:'Tajawal',sans-serif; }
+.cv-ok{ align-self:flex-end; display:inline-flex; align-items:center; gap:8px; font-family:'Tajawal','Cairo',sans-serif; font-size:.82rem; font-weight:700; color:var(--success); direction:rtl; opacity:0; transform:scale(.9); transition:opacity .4s, transform .4s var(--ease); }
+.cv-ok.show{ opacity:1; transform:none; }
+.ph-foot{ display:flex; justify-content:center; gap:7px; padding:12px 0 16px; }
+.ph-foot i{ width:6px; height:6px; border-radius:99px; background:var(--border); transition:width .4s var(--ease), background .4s; }
+.ph-foot i.on{ width:22px; background:var(--gold); }
+.cs-tag{ position:absolute; z-index:2; display:flex; align-items:center; gap:8px; padding:9px 14px; border-radius:999px; background:var(--card-elevated); border:1px solid var(--gold-a30); color:var(--text); font-size:.8rem; font-weight:700; font-family:'Tajawal',sans-serif; box-shadow:var(--shadow-soft); white-space:nowrap; animation:cs-float 6s ease-in-out infinite; }
+.cs-tag svg{ color:var(--gold); flex-shrink:0; }
+.cs-tag.t1{ inset-inline-end:22px; top:-18px; }
+.cs-tag.t2{ inset-inline-start:22px; bottom:-18px; animation-delay:-3s; }
+@keyframes cs-breathe{ 0%,100%{ transform:scale(.94); opacity:.8 } 50%{ transform:scale(1.04); opacity:1 } }
+@keyframes cs-ring{ 0%{ transform:scale(.9); opacity:.7 } 100%{ transform:scale(1.5); opacity:0 } }
+@keyframes cs-blink{ 0%,100%{ opacity:1 } 50%{ opacity:.35 } }
+@keyframes cs-wave{ 0%,100%{ height:4px } 50%{ height:16px } }
+@keyframes cs-dot{ 0%,100%{ transform:translateY(0); opacity:.5 } 50%{ transform:translateY(-4px); opacity:1 } }
+@keyframes cs-float{ 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-8px) } }
+
+/* ---- situations ticker ---- */
+.ticker{ padding:0 !important; border-block:1px solid var(--border); background:var(--surface); overflow:hidden; direction:ltr; }
+.ticker-track{ display:flex; width:max-content; animation:tk 46s linear infinite; }
+.ticker:hover .ticker-track{ animation-play-state:paused; }
+.ticker-set{ display:flex; align-items:center; flex-shrink:0; }
+.ticker-item{ display:flex; align-items:center; gap:28px; padding:20px 14px 20px 0; font-family:'Tajawal','Plus Jakarta Sans',sans-serif; font-weight:700; font-size:1.02rem; color:var(--text-secondary); white-space:nowrap; }
+.ticker-item::after{ content:""; width:7px; height:7px; background:var(--gold); transform:rotate(45deg); margin-inline-start:14px; flex-shrink:0; }
+@keyframes tk{ from{ transform:translateX(0) } to{ transform:translateX(-50%) } }
+
+/* ---- shared section head ---- */
+.v2-head{ max-width:760px; margin:0 auto clamp(28px,5vw,52px); text-align:center; }
+.v2-head h2{ font-size:clamp(1.8rem,3.6vw,2.9rem); font-weight:800; line-height:1.3; text-wrap:balance; }
+.v2-head [dir], .step [dir], .v2-note{ text-align:center !important; }
+.v2-head p{ margin-top:14px; color:var(--text-secondary); font-size:clamp(.96rem,1.2vw,1.08rem); line-height:1.8; }
+.v2-sec{ padding:clamp(56px,9vw,110px) 0; }
+
+/* ---- who is it for ---- */
+.aud{ display:flex; gap:14px; align-items:stretch; min-height:370px; }
+.aud-item{ flex:1; position:relative; border-radius:26px; border:1px solid var(--border); background:var(--card); padding:clamp(22px,2.4vw,34px); display:flex; flex-direction:column; justify-content:flex-end; gap:12px; overflow:hidden; cursor:pointer; transition:flex .7s var(--ease), border-color .4s, background .4s; text-align:start; }
+.aud-item.on{ flex:2.3; border-color:var(--gold-a30); background:linear-gradient(170deg,var(--card-elevated),var(--card)); }
+.aud-ico{ width:54px; height:54px; border-radius:16px; background:var(--gold-a14); color:var(--gold); display:grid; place-items:center; margin-bottom:auto; transition:background .4s,color .4s; }
+.aud-item.on .aud-ico{ background:var(--gold); color:#171412; }
+.aud-item h3{ font-size:clamp(1.15rem,1.7vw,1.45rem); font-weight:800; line-height:1.3; color:var(--text); }
+.aud-pain{ color:var(--text-muted); font-size:.95rem; line-height:1.75; }
+.aud-promise{ color:var(--text-secondary); font-size:.98rem; line-height:1.85; max-height:0; opacity:0; overflow:hidden; transition:max-height .7s var(--ease), opacity .5s .1s; }
+.aud-item.on .aud-promise{ max-height:200px; opacity:1; }
+.aud-bar{ position:absolute; inset-inline:0; bottom:0; height:3px; background:transparent; }
+.aud-bar i{ display:block; height:100%; width:0; background:var(--gold); }
+.aud-item.on .aud-bar i{ animation:fill var(--dur-aud,5.5s) linear forwards; }
+@keyframes fill{ from{ width:0 } to{ width:100% } }
+[dir="rtl"] .aud-bar i{ margin-inline-start:0; }
+
+/* ---- before / after ---- */
+.ba-tabs{ display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-bottom:26px; }
+.ba-tab{ position:relative; overflow:hidden; padding:11px 22px; border-radius:999px; border:1px solid var(--border); background:var(--card); color:var(--text-secondary); font-family:'Tajawal','Plus Jakarta Sans',sans-serif; font-weight:700; font-size:.95rem; transition:color .3s, border-color .3s, background .3s; }
+.ba-tab.on{ color:var(--text); border-color:var(--gold); background:var(--gold-a14); }
+.ba-tab i{ position:absolute; inset-inline-start:0; bottom:0; height:2px; width:0; background:var(--gold); }
+.ba-tab.on i{ animation:fill var(--dur-ba,5.2s) linear forwards; }
+.ba-stage{ display:grid; grid-template-columns:minmax(0,.8fr) auto minmax(0,1.2fr); gap:clamp(12px,2vw,26px); align-items:stretch; max-width:1080px; margin:0 auto; }
+.ba-side{ border-radius:24px; padding:clamp(22px,2.6vw,34px); display:flex; flex-direction:column; gap:14px; justify-content:center; min-height:260px; }
+.ba-before{ background:var(--surface); border:1px dashed var(--border); }
+.ba-after{ background:linear-gradient(165deg,var(--card-elevated),var(--card)); border:1px solid var(--gold-a30); box-shadow:0 30px 70px -40px var(--gold); }
+.ba-label{ font-size:.82rem; font-weight:700; color:var(--text-muted); font-family:'Tajawal',sans-serif; display:flex; align-items:center; gap:8px; }
+.ba-after .ba-label{ color:var(--gold); }
+.ba-label::before{ content:""; width:8px; height:8px; border-radius:50%; background:currentColor; opacity:.7; }
+.ba-thought{ font-size:clamp(1rem,1.5vw,1.2rem); line-height:1.85; color:var(--text-secondary); font-family:'Tajawal',sans-serif; }
+.ba-arrow{ align-self:center; width:44px; height:44px; border-radius:50%; background:var(--gold); color:#171412; display:grid; place-items:center; box-shadow:var(--gold-glow); }
+[dir="rtl"] .ba-arrow svg{ transform:scaleX(-1); }
+.ba-en{ font-family:'Fraunces',serif; font-size:clamp(1.3rem,2.4vw,1.9rem); line-height:1.35; color:var(--text); direction:ltr; text-align:left; }
+.ba-line{ direction:rtl; text-align:right; font-family:'Tajawal',sans-serif; line-height:1.7; border-radius:12px; padding:9px 14px; font-size:.98rem; }
+.ba-line.pr{ background:var(--gold-a08); border:1px dashed var(--gold-a30); color:var(--gold-soft); }
+html[data-theme="light"] .ba-line.pr{ color:var(--gold); }
+.ba-line.mn{ background:var(--surface); color:var(--text-secondary); }
+.ba-swap{ animation:swap .55s var(--ease); }
+@keyframes swap{ from{ opacity:0; transform:translateY(8px) } to{ opacity:1; transform:none } }
+.v2-cta{ display:flex; justify-content:center; gap:14px; flex-wrap:wrap; margin-top:clamp(26px,4vw,44px); }
+.v2-note{ text-align:center; margin-top:14px; font-size:.84rem; color:var(--text-muted); font-family:'Tajawal',sans-serif; }
+
+/* ---- how it works ---- */
+.steps{ position:relative; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:clamp(14px,2vw,28px); max-width:1080px; margin:0 auto; counter-reset:st; }
+.steps::before{ content:""; position:absolute; top:34px; inset-inline:12%; height:2px; background:linear-gradient(90deg,transparent,var(--border) 12%,var(--border) 88%,transparent); }
+.step{ position:relative; text-align:center; padding:0 8px; }
+.step-n{ width:68px; height:68px; margin:0 auto 20px; border-radius:50%; background:var(--bg); border:2px solid var(--border); display:grid; place-items:center; font-family:'Fraunces',serif; font-size:1.5rem; color:var(--text-muted); position:relative; z-index:1; animation:stp 9s ease-in-out infinite; }
+.step:nth-child(2) .step-n{ animation-delay:3s } .step:nth-child(3) .step-n{ animation-delay:6s }
+@keyframes stp{ 0%,26%{ border-color:var(--gold); color:#171412; background:var(--gold); box-shadow:var(--gold-glow) } 34%,100%{ border-color:var(--border); color:var(--text-muted); background:var(--bg); box-shadow:none } }
+.step h3{ font-size:clamp(1.1rem,1.6vw,1.35rem); font-weight:800; color:var(--text); }
+.step p{ margin-top:10px; color:var(--text-secondary); font-size:.98rem; line-height:1.85; max-width:22em; margin-inline:auto; }
+
+/* ---- final cta + pricing polish ---- */
+.final-cta h2{ font-weight:800 !important; text-wrap:balance; }
+.pricing-assure, .pricing-refund{ max-width:760px; margin-inline:auto; }
+
+/* ---- device range ---- */
+@media(min-width:1700px){
+  .container{ max-width:1520px; }
+  .hero h1.arabic-h{ font-size:4.2rem !important; }
+  .phone{ width:440px; }
+  .phone-screen{ min-height:620px; }
+  .v2-head h2{ font-size:3.3rem; }
+  .ticker-item{ font-size:1.2rem; }
+}
+@media(min-width:2400px){ html{ font-size:125%; } .container{ max-width:1800px; } }
+
+@media(max-width:980px){
+  .hero{ min-height:0; display:block; }
+  .hero-grid{ grid-template-columns:minmax(0,1fr); }
+  .callstage{ order:2; }
+  .phone-screen{ min-height:500px; }
+  .aud{ flex-direction:column; min-height:0; }
+  .aud-item{ flex:none !important; justify-content:flex-start; }
+  .aud-ico{ margin-bottom:6px; }
+  .aud-promise{ max-height:none; opacity:1; }
+  .aud-bar{ display:none; }
+  .ba-stage{ grid-template-columns:minmax(0,1fr); }
+  .ba-arrow{ transform:rotate(90deg); margin:-4px auto; }
+  [dir="rtl"] .ba-arrow svg{ transform:none; }
+  .steps{ grid-template-columns:minmax(0,1fr); gap:34px; }
+  .steps::before{ display:none; }
+}
+@media(max-width:560px){
+  .hero .trust-row{ grid-template-columns:1fr; }
+  .phone{ border-radius:30px; padding:9px; }
+  .phone-screen{ min-height:480px; border-radius:23px; }
+  .cv-en{ font-size:1.06rem; }
+  .ba-tabs{ gap:6px; } .ba-tab{ padding:9px 13px; font-size:.84rem; }
+  .ticker-item{ font-size:.92rem; padding-block:16px; }
+}
+@media(max-height:600px) and (orientation:landscape){ .hero{ min-height:0; } }
+@media(prefers-reduced-motion:reduce){
+  .ticker-track, .callstage::before, .ph-ava::after, .cs-tag, .step-n, .cv-wave.live span, .cv-typing span, .ph-state i{ animation:none !important; }
+  .cv-b, .cv-chip, .cv-ok{ transition:none !important; }
+  .aud-item.on .aud-bar i, .ba-tab.on i{ animation:none; width:100%; }
+}
+
+html[lang="en"] .hero h1.arabic-h{ font-size:clamp(1.9rem,3.3vw,3rem) !important; line-height:1.15 !important; }
+html[lang="en"] .hero .hero-sub{ line-height:1.7 !important; }
+.primary-nav a, .header-actions > *{ white-space:nowrap; }
+nav.primary-nav{ gap:clamp(14px,1.6vw,28px); }
+@media(min-width:981px){ .header-actions{ gap:clamp(6px,.8vw,12px); } }
+@media(max-width:1320px){ html[lang="en"] .btn-path{ display:none; } }
 </style>
 </head>
 <body>
@@ -1120,8 +1309,8 @@ section{ padding-top:70px; padding-bottom:70px; }
     <nav class="primary-nav">
       <a href="#home">البدايه</a>
       <a href="#personalPreview">خطتك</a>
-      <a href="#pricing">الباقات</a>
       <a href="#liveTeaching">تعلم وممارسه</a>
+      <a href="#pricing">الباقات</a>
       <a href="#faq">الاسئله</a>
     </nav>
     <div class="header-actions">
@@ -1146,8 +1335,8 @@ section{ padding-top:70px; padding-bottom:70px; }
 <div class="mobile-menu" id="mobileMenu" dir="rtl">
   <a href="#home" class="mobile-nav-link">البدايه</a>
   <a href="#personalPreview" class="mobile-nav-link">خطتك</a>
-  <a href="#pricing" class="mobile-nav-link">الباقات</a>
   <a href="#liveTeaching" class="mobile-nav-link">تعلم وممارسه</a>
+  <a href="#pricing" class="mobile-nav-link">الباقات</a>
   <a href="#faq" class="mobile-nav-link">الاسئله</a>
   <div class="mobile-menu-actions">
     <button type="button" class="btn-gold" data-open-path style="width:100%; border:none; border-radius:999px; padding:13px 22px; font-family:inherit; font-weight:700;">ابني مسار تعلمي</button>
@@ -1164,9 +1353,9 @@ section{ padding-top:70px; padding-bottom:70px; }
   <div class="container hero-grid">
     <div class="reveal is-visible">
        <span class="eyebrow hero-eyebrow" dir="ltr" style="justify-content:flex-start;"><span class="pel-tag">Personalized English Lessons</span></span>
-      <h1 class="arabic-h" dir="rtl" style="margin-top:18px; font-size:clamp(2rem,4.5vw,3.2rem); line-height:1.2;">سنين تدرس انجليزي… وبس يكلمك واحد تسكت؟</h1>
-      <p class="arabic hero-sub" dir="rtl" style="font-size:1rem; max-width:520px; margin-top:14px; line-height:1.8;">يرن جوالك وتتهرب. تكتب الايميل بالمترجم وقلبك يدق. وبالاجتماع تتمنى محد يسالك. والسالفه مو غباء منك، الطريقه القديمه علمتك تحفظ، مو تتكلم. PEL يغير القصه: دروس قصيره من مواقفك الحقيقيه، تسمع وتنطق وتتصحح فورا، لين تصير انت اللي ترد.</p>
-      <div class="hero-cta-row" style="margin-top:26px; gap:12px; flex-wrap:wrap; align-items:center;">
+      <h1 class="arabic-h" dir="rtl">سنين تدرس انجليزي… وبس يكلمك واحد تسكت؟</h1>
+      <p class="arabic hero-sub" dir="rtl">يرن جوالك وتتهرب. تكتب الايميل بالمترجم وقلبك يدق. وبالاجتماع تتمنى محد يسالك. والسالفه مو غباء منك، الطريقه القديمه علمتك تحفظ، مو تتكلم. PEL يغير القصه: دروس قصيره من مواقفك الحقيقيه، تسمع وتنطق وتتصحح فورا، لين تصير انت اللي ترد.</p>
+      <div class="hero-cta-row">
         <button type="button" class="btn-gold magnetic" data-open-path id="heroPathCta" style="padding:14px 28px; font-size:.95rem;">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="2.5"/><circle cx="18" cy="5" r="2.5"/><path d="M8.5 19H15a3 3 0 0 0 3-3v-8.5M6 16.5V8a3 3 0 0 1 3-3h3.5"/></svg>
           <span>اعرف بدايتي</span>
@@ -1180,7 +1369,7 @@ section{ padding-top:70px; padding-bottom:70px; }
       <div class="path-hint" dir="rtl" style="margin-top:14px;">
         <span class="arabic">اختبر مستواك مجانا، وشوف وش يوقفك بالضبط</span>
       </div>
-      <div class="trust-row" dir="rtl" style="margin-top:18px; gap:10px 18px;">
+      <div class="trust-row" dir="rtl">
         <div class="trust-item"><span class="dot"></span>اختبار مستوى مجاني، تعرف وين تبدا</div>
         <div class="trust-item"><span class="dot"></span>دروس قصيره من مواقفك: مكالمه، ايميل، اجتماع</div>
         <div class="trust-item"><span class="dot"></span>تغلط؟ نصححك فورا ونقولك ليش</div>
@@ -1188,62 +1377,50 @@ section{ padding-top:70px; padding-bottom:70px; }
       </div>
     </div>
 
-    <div class="hero-preview" id="heroVisual">
-      <div class="phrase-card" id="phraseCard">
-        <div class="phrase-scene" id="phraseScene">
-          <span class="phrase-tag">في الشغل</span>
-          <div class="phrase-en" id="phraseEn" dir="ltr">Could you send me the details?</div>
-          <div class="phrase-ar" id="phraseAr" dir="rtl">تقدر ترسل لي التفاصيل؟</div>
-          <div class="phrase-phon" id="phrasePhon" dir="rtl">كود يو سند مي ذا ديتيلز</div>
+    <div class="callstage" id="heroVisual" aria-hidden="true">
+      <div class="phone" id="callScene">
+      <span class="cs-tag t1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3z"/><path d="M19 11a7 7 0 0 1-14 0M12 18v3"/></svg><span data-ar="النطق مكتوب بالعربي" data-en="Pronunciation in Arabic letters">النطق مكتوب بالعربي</span></span>
+        <div class="phone-screen">
+          <div class="ph-head"><span class="ph-ava" id="csAva">D</span><div class="ph-meta"><div class="ph-name" id="csName"></div><div class="ph-state" id="csState"><i></i> </div></div></div>
+          <div class="ph-thread">
+            <div class="cv-b cv-in" id="csIn"><div class="cv-wave" id="csWave"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+              <div class="cv-en" id="csInEn"></div>
+              <div class="cv-aid"><div class="cv-chip mean" id="csInMean"></div><div class="cv-chip say" id="csInSay"></div></div></div>
+            <div class="cv-typing" id="csTyping"><span></span><span></span><span></span></div>
+            <div class="cv-b cv-out" id="csOut"><div class="cv-tag" id="csOutTag"></div><div class="cv-en" id="csOutEn"></div>
+              <div class="cv-aid"><div class="cv-chip say" id="csOutSay"></div><div class="cv-chip mean" id="csOutMean"></div></div></div>
+            <div class="cv-ok" id="csOk"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span id="csOkTxt"></span></div>
+          </div>
+          <div class="ph-foot" id="csFoot"><i></i><i></i><i></i><i></i></div>
         </div>
-        <div class="phrase-dots" id="phraseDots"></div>
-      </div>
-      <div class="hero-social" dir="rtl">
-        <span class="hero-social-text">منصه تعليميه من PEL LLC</span>
+      <span class="cs-tag t2"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span data-ar="تصحيح فوري" data-en="Instant correction">تصحيح فوري</span></span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- PERSONALIZED PLAN PREVIEW -->
-<section id="personalPreview" style="padding:80px 0; background:var(--surface); border-top:1px solid var(--border);">
+<section class="ticker" aria-label="Situations"><div class="ticker-track" id="tickerTrack"></div></section>
+
+<section id="forWho" class="v2-sec" style="background:var(--bg);">
   <div class="container">
-    <div class="section-head center reveal" dir="rtl" style="max-width:640px; margin:0 auto 40px;">
-      <span class="eyebrow">تعرف هالشعور؟</span>
-      <h2 class="arabic-h" style="font-size:clamp(1.8rem,3.2vw,2.4rem);">قولنا وش يوقفك، ونبني لك طريقك</h2>
+    <div class="v2-head"><h2 class="arabic-h" data-ar="مهما كان وضعك، فيه مسار يمشي معك" data-en="Whatever your situation, there is a path that fits">مهما كان وضعك، فيه مسار يمشي معك</h2><p class="arabic" data-ar="طالب، موظف، او مجهز لاختبار؟ نبدا من مستواك انت، مو من اول صفحه بالكتاب." data-en="Student, employee, or exam candidate: we start from your level, not from page one of a textbook.">طالب، موظف، او مجهز لاختبار؟ نبدا من مستواك انت، مو من اول صفحه بالكتاب.</p></div>
+    <div class="aud" id="audWrap"></div>
+  </div>
+</section>
+
+
+<!-- PERSONALIZED PLAN PREVIEW -->
+<section id="personalPreview" class="v2-sec" style="background:var(--surface); border-block:1px solid var(--border);">
+  <div class="container">
+    <div class="v2-head"><h2 class="arabic-h" data-ar="نفس الموقف، بس هالمره تقدر ترد" data-en="Same moment, but this time you can answer">نفس الموقف، بس هالمره تقدر ترد</h2><p class="arabic" data-ar="اختر موقف وشوف الفرق." data-en="Pick a moment and see the difference.">اختر موقف وشوف الفرق.</p></div>
+    <div class="ba-tabs" id="baTabs"></div>
+    <div class="ba-stage">
+      <div class="ba-side ba-before" id="baBefore"><span class="ba-label" data-ar="قبل" data-en="Before">قبل</span><p class="ba-thought" id="baThought"></p></div>
+      <span class="ba-arrow" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      <div class="ba-side ba-after" id="baAfter"><span class="ba-label" data-ar="بعد PEL" data-en="After PEL">بعد PEL</span><div class="ba-en" id="baEn"></div><div class="ba-line pr" id="baSay"></div><div class="ba-line mn" id="baMean"></div></div>
     </div>
-    <div class="reveal pp-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:20px; max-width:920px; margin:0 auto;">
-      <div class="pp-say" style="border-radius:20px; padding:26px; display:flex; flex-direction:column; gap:14px;">
-        <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
-          <span style="width:28px; height:28px; border-radius:8px; background:rgba(200,169,106,.12); display:flex; align-items:center; justify-content:center; color:var(--gold);"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
-          <span style="font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); font-weight:700;">انت تقول</span>
-        </div>
-        <div class="pp-chip">اتجمد لما احد يكلمني بالانجليزي</div>
-        <div class="pp-chip">ابي انجليزي للشغل</div>
-        <div class="pp-chip">عندي 20 دقيقه يوميا</div>
-        <button type="button" class="btn-gold magnetic" data-open-path style="margin-top:auto; justify-content:center; padding:14px 22px; font-size:.9rem;"><span>اعرف بدايتي</span></button>
-      </div>
-      <div class="pp-build" style="border-radius:20px; padding:26px; display:flex; flex-direction:column; gap:14px;">
-        <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
-          <span style="width:28px; height:28px; border-radius:8px; background:var(--gold); color:#171412; display:flex; align-items:center; justify-content:center; font-size:.75rem; font-weight:800;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.5 5L19 9.5 13.5 11 12 16l-1.5-5L5 9.5 10.5 8 12 3z"/><path d="M5 3v4M19 17v4M3 5h4M17 19h4"/></svg></span>
-          <span style="font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); font-weight:700;">PEL يبني</span>
-        </div>
-        <div style="display:flex; gap:12px; align-items:center; padding:14px 16px; border-radius:14px; background:rgba(200,169,106,.06); border:1px solid rgba(200,169,106,.15);">
-          <span style="min-width:48px; height:48px; border-radius:14px; background:linear-gradient(135deg,var(--gold),var(--gold-soft)); color:#171412; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:1rem; box-shadow:0 4px 16px -4px rgba(200,169,106,.4);">A2</span>
-          <div><div style="font-weight:700; font-size:1rem;">انجليزي الشغل</div><div style="font-size:.78rem; color:var(--text-muted); margin-top:2px;">تركيزك: محادثه واستماع</div></div>
-        </div>
-        <div class="pp-route">
-          <div style="padding-left:10px;"><div class="route-label">اليوم</div><div style="font-size:.9rem; margin-top:3px;">تبدا محادثه في الشغل</div></div>
-        </div>
-        <div class="pp-route">
-          <div style="padding-left:10px;"><div class="route-label">بعدها</div><div style="font-size:.9rem; margin-top:3px;">تسال زميلك عن مساعده</div></div>
-        </div>
-        <div class="pp-route">
-          <div style="padding-left:10px;"><div class="route-label">بعدين</div><div style="font-size:.9rem; margin-top:3px;">اجتماعات، عملاء، مقابلات</div></div>
-        </div>
-      </div>
-    </div>
-    <div style="text-align:center; margin-top:24px; font-size:.82rem; color:var(--text-muted);">بدون تسجيل، تشوف نتيجتك قبل ما تدفع</div>
+    <div class="v2-cta"><button type="button" class="btn-gold magnetic" data-open-path style="padding:15px 30px; font-size:.98rem;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="2.5"/><circle cx="18" cy="5" r="2.5"/><path d="M8.5 19H15a3 3 0 0 0 3-3v-8.5M6 16.5V8a3 3 0 0 1 3-3h3.5"/></svg><span>اعرف بدايتي</span></button><a href="https://wa.me/966557178070?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%20%D8%A7%D8%B3%D8%AA%D8%A7%D8%B0%20%D9%81%D8%B1%D8%A7%D8%B3%D8%8C%20%D8%A7%D8%A8%D9%8A%20%D8%A7%D8%B3%D8%A7%D9%84%20%D8%B9%D9%86%20%D8%A7%D9%84%D9%85%D9%86%D8%B5%D9%87" target="_blank" rel="noopener" class="btn-wa magnetic" data-magnetic><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.32 4.95L2.05 22l5.3-1.39c1.45.79 3.09 1.21 4.69 1.21 5.46 0 9.9-4.44 9.9-9.9 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2z"/></svg><span data-ar="راسل استاذ فراس" data-en="Message Tutor Firas">راسل استاذ فراس</span></a></div>
+    <p class="v2-note" data-ar="اختبار المستوى مجاني، وتشوف نتيجتك قبل لا تدفع." data-en="The level test is free, and you see your result before you pay.">اختبار المستوى مجاني، وتشوف نتيجتك قبل لا تدفع.</p>
   </div>
 </section>
 
@@ -1251,6 +1428,25 @@ section{ padding-top:70px; padding-bottom:70px; }
 <section class="plan-home" id="planHome" style="display:none;" aria-label="Your learning plan"></section>
 
 <!-- PRICING - brought up for faster decision -->
+
+
+<!-- LIVE TEACHING + REAL-LIFE ENGLISH -->
+
+
+<script src="lib/pel-plans.js?v=b7ef7805"></script>
+<script src="lib/pel_config.js?v=5c9ee888"></script>
+<script src="lib/pel-settings.js?v=ef2290f2"></script>
+<section id="liveTeaching" class="v2-sec" style="background:var(--bg);">
+  <div class="container">
+    <div class="v2-head"><h2 class="arabic-h" data-ar="ثلاث خطوات، وتصير تتكلم" data-en="Three steps and you are speaking">ثلاث خطوات، وتصير تتكلم</h2></div>
+    <div class="steps">
+      <div class="step"><div class="step-n" aria-hidden="true">1</div><h3 class="arabic-h" data-ar="تتعلم بالتطبيق" data-en="Learn in the app">تتعلم بالتطبيق</h3><p class="arabic" data-ar="دروس قصيره من مواقفك: مكالمه، ايميل، اجتماع. تسمع، تنطق، وتثبت." data-en="Short lessons built from your real moments: calls, emails, meetings. Listen, speak, and make it stick.">دروس قصيره من مواقفك: مكالمه، ايميل، اجتماع. تسمع، تنطق، وتثبت.</p></div>
+      <div class="step"><div class="step-n" aria-hidden="true">2</div><h3 class="arabic-h" data-ar="تتمرن مع الاستاذ" data-en="Practice with the tutor">تتمرن مع الاستاذ</h3><p class="arabic" data-ar="حصص مباشره حسب باقتك: تتكلم ويصحح لك." data-en="Live classes depending on your plan: you speak and get corrected.">حصص مباشره حسب باقتك: تتكلم ويصحح لك.</p></div>
+      <div class="step"><div class="step-n" aria-hidden="true">3</div><h3 class="arabic-h" data-ar="تستخدمها بحياتك" data-en="Use it in your life">تستخدمها بحياتك</h3><p class="arabic" data-ar="ترد على المكالمه، تكتب الايميل، وتتكلم بثقه، بدون مترجم." data-en="Answer the call, write the email, and speak with confidence, without a translator.">ترد على المكالمه، تكتب الايميل، وتتكلم بثقه، بدون مترجم.</p></div>
+    </div>
+  </div>
+</section>
+
 <section id="pricing" style="background:var(--surface); border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding-bottom:90px; scroll-margin-top:90px; scroll-margin-bottom:80px;">
   <div class="container">
     <div class="section-head center reveal" dir="rtl">
@@ -1265,42 +1461,6 @@ section{ padding-top:70px; padding-bottom:70px; }
   </div>
 </section>
 
-<!-- LIVE TEACHING + REAL-LIFE ENGLISH -->
-<section id="liveTeaching" style="padding:80px 0; background:var(--bg);">
-  <div class="container">
-    <div class="section-head center reveal" dir="rtl" style="max-width:620px; margin:0 auto 36px;">
-      <span class="eyebrow">التحول</span>
-      <h2 class="arabic-h" style="font-size:clamp(1.8rem,3.2vw,2.4rem);">من "ما اقدر" الى "خلاص رديت"</h2>
-    </div>
-    <div class="reveal" style="display:flex; align-items:flex-start; justify-content:center; gap:16px; flex-wrap:wrap; max-width:880px; margin:0 auto;">
-      <div class="lt-step" style="flex:1; min-width:200px; text-align:center; padding:24px 16px; background:var(--card); border:1px solid var(--border); border-radius:18px; transition:border-color .3s,transform .3s;" onmouseover="this.style.borderColor='rgba(200,169,106,.3)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='none'">
-        <div class="lt-icon gi">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 9h8"/><path d="M8 13h5"/></svg>
-        </div>
-        <div style="font-weight:700; font-size:.95rem;">تتعلم بالتطبيق</div>
-        <div style="margin-top:6px; font-size:.8rem; color:var(--text-muted); line-height:1.6;">دروس قصيره من مواقفك: مكالمه، ايميل، اجتماع. تسمع، تنطق، وتثبت.</div>
-      </div>
-      <div class="lt-step" style="flex:1; min-width:200px; text-align:center; padding:24px 16px; background:var(--card); border:1px solid rgba(200,169,106,.3); box-shadow:0 8px 32px -12px rgba(200,169,106,.2); border-radius:18px; position:relative; transition:transform .3s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='none'">
-        <div class="lt-icon gm">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-        </div>
-        <div style="font-weight:700; font-size:.95rem;">تتمرن مع الاستاذ</div>
-        <div style="margin-top:6px; font-size:.8rem; color:var(--text-muted); line-height:1.6;">حصص مباشره (حسب باقتك): تتكلم ويصحح لك</div>
-      </div>
-      <div class="lt-step" style="flex:1; min-width:200px; text-align:center; padding:24px 16px; background:var(--card); border:1px solid var(--border); border-radius:18px; transition:border-color .3s,transform .3s;" onmouseover="this.style.borderColor='rgba(63,140,114,.3)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='none'">
-        <div class="lt-icon ei">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        </div>
-        <div style="font-weight:700; font-size:.95rem;">تستخدمها بحياتك</div>
-        <div style="margin-top:6px; font-size:.8rem; color:var(--text-muted); line-height:1.6;">ترد على المكالمه، تكتب الايميل، وتتكلم بثقه، بدون مترجم</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<script src="lib/pel-plans.js?v=b7ef7805"></script>
-<script src="lib/pel_config.js?v=5c9ee888"></script>
-<script src="lib/pel-settings.js?v=ef2290f2"></script>
 <script>
 /* PRICING - rendered from the live plan_pricing matrix (admin-editable via
    /admin.html > Plans). Two tiers (Start From 0 / Exam Prep) x 3 durations.
@@ -2158,12 +2318,12 @@ new MutationObserver(muts => {
 const faqs = [
   {qAr: 'لمين ذا البرنامج؟', aAr: 'لكل واحد وقف عند كلمه وحس انه يقدر بس ما يقدر: موظف، طالب، اي شخص يبي يتكلم بثقه. ما يهم مستواك، نبدا من وين ما انت.', qEn:'Who is this for?', aEn:'Anyone who\'s frozen at a word and felt like they could, but couldn\'t: workers, students, anyone who wants to speak with confidence. Your level doesn\'t matter, we start where you are.'},
   {qAr: 'لازم اعرف انجليزي قبل؟', aAr: 'لا. لو ما تعرف ولا كلمه، نبدا من الحروف. تختبر مستواك مجانا، ونبني لك خطه على اساسه.', qEn:'Do I need to know English first?', aEn:'No. If you don\'t know a single word, we start from the alphabet. Take the free level test, and we build your plan from there.'},
-  {qAr: 'المنهج امريكي فعلا؟', aAr: 'اي والله. كل درس وتسجيل ونطق مبني على اللهجه الامريكيه.', qEn:'Is it really American English?', aEn:'Yes. Every lesson, recording, and pronunciation is American English.'},
-  {qAr: 'الشرح بالعربي؟', aAr: 'اي والله. كل درس مشروح بالعربي، تفهم كل شي. والكلمات الجديده مكتوب نطقها بجانبها.', qEn:'How are lessons explained?', aEn:'Yes. Every lesson is explained in Arabic, you understand everything. New words have their pronunciation written next to them.'},
+  {qAr: 'المنهج امريكي فعلا؟', aAr: 'اي، كل درس وتسجيل ونطق مبني على اللهجه الامريكيه.', qEn:'Is it really American English?', aEn:'Yes. Every lesson, recording, and pronunciation is American English.'},
+  {qAr: 'الشرح بالعربي؟', aAr: 'اي، كل درس مشروح بالعربي، تفهم كل شي. والكلمات الجديده مكتوب نطقها بجانبها.', qEn:'How are lessons explained?', aEn:'Yes. Every lesson is explained in Arabic, you understand everything. New words have their pronunciation written next to them.'},
   {qAr: 'اقدر ادرس من الجوال؟', aAr: 'اكيد. جوالك يصير فصلك، تفتحه اي وقت وتكمل من وين ما وقفت.', qEn:'Can I study on my phone?', aEn:'Yes. Your phone becomes your classroom, open it anywhere, pick up where you left off.'},
   {qAr: 'كم مده الاشتراك؟', aAr: 'شهر، شهرين، او 3 اشهر. انت تختار. خلال هالفتره كل الدروس متاحه لك.', qEn:'How long is the subscription?', aEn:'One month, two months, or three months. You choose. All lessons are available to you during that time.'},
-  {qAr: 'تقدرون تترجمون لي؟', aAr: 'اي والله. تترجم اي كلمه وانت تتعلم. واذا كتبت شي وغلطت، نشوف وين الغلط ونصححه فورا.', qEn:'Can you translate for me?', aEn:'Yes. Translate any word while you learn. And if you write something and make a mistake, we show you where and fix it instantly.'},
-  {qAr: 'اشوف تقدمي؟', aAr: 'اي والله. لوحتك تشوف وين وصلت: محادثه، استماع، مفردات، اسبوع باسبوع. تشوف الفرق بنفسك.', qEn:'Can I see my progress?', aEn:'Yes. Your dashboard shows where you are: speaking, listening, vocabulary, week by week. You see the difference yourself.'},
+  {qAr: 'تقدرون تترجمون لي؟', aAr: 'اي، تترجم اي كلمه وانت تتعلم. واذا كتبت شي وغلطت، نشوف وين الغلط ونصححه فورا.', qEn:'Can you translate for me?', aEn:'Yes. Translate any word while you learn. And if you write something and make a mistake, we show you where and fix it instantly.'},
+  {qAr: 'اشوف تقدمي؟', aAr: 'اي، لوحتك تشوف وين وصلت: محادثه، استماع، مفردات، اسبوع باسبوع. تشوف الفرق بنفسك.', qEn:'Can I see my progress?', aEn:'Yes. Your dashboard shows where you are: speaking, listening, vocabulary, week by week. You see the difference yourself.'},
   {qAr: 'كم سعر الاشتراك؟', aAr: 'مسارين: ابد من الصفر: شهر 650 ⃁، شهرين 800 ⃁، 3 اشهر 1300 ⃁ (افضل قيمه). التجهيز للاختبارات: شهر 1000 ⃁، شهرين 1550 ⃁، 3 اشهر 2350 ⃁ (افضل قيمه). الحصص المباشره مشموله في باقات مختاره. تدفع عبر واتساب ونشغل حسابك خلال دقايق. شوف الباقات بالتفصيل فوق.', qEn:'How much?', aEn:'Two paths: Start From Zero: 1 month 650 ⃁, 2 months 800 ⃁, 3 months 1300 ⃁ (best value). Exam Prep (STEP / TOEFL / IELTS): 1 month 1000 ⃁, 2 months 1550 ⃁, 3 months 2350 ⃁ (best value). Live classes are included on select plans. Pay on WhatsApp, we set up your account in minutes. See the plans above for details.'},
   {qAr: 'الباقات فيها حصص مباشره؟', aAr: 'باقات مختاره فيها حصص مباشره. باقه الشهر لابد من الصفر ما فيها حصص، بس باقه الشهرين فيها حصه كل اسبوع وباقه 3 اشهر فيها حصتين. وباقات التجهيز للاختبارات فيها من حصه لـ 3 حصص بالاسبوع. الاستاذ فراس يحدد المواعيد. تبي اكثر؟ تشتري رصيد للحصص الشخصيه.', qEn:'Do plans include live classes?', aEn:'Select plans include live classes. The 1-month Start From Zero plan has no live classes, but 2 months includes 1/week and 3 months includes 2/week. Exam Prep plans include 1-3 classes per week. Tutor Firas sets the schedule. Want more? Buy extra credits for in-person lessons.'},
   {qAr: 'فيه استرجاع؟', aAr: 'اي، خلال 3 ايام من الدفع. واذا استاذ فراس سوى لك الحساب وفعله بعد الدفع، تنخصم رسوم المنصه حسب الباقه اللي اشتريتها. راسل استاذ فراس واتساب ونرتب لك الموضوع.', qEn:'Is there a refund?', aEn:'Yes, within 3 days of payment. If Tutor Firas has already created and activated your account after payment, platform fees are deducted depending on the plan you bought. Message Tutor Firas on WhatsApp and we will sort it out.'},
@@ -2638,5 +2798,162 @@ window.addEventListener('storage', function(e){ if(e.key==='pel_account_prefs') 
 })();
 
 
-</script></body>
+</script><script id="pel-v2">
+(function(){
+  'use strict';
+  var RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function curLang(){ try{ var p=JSON.parse(localStorage.getItem('pel_account_prefs')||'null'); if(p&&p.lang) return p.lang==='en'?'en':'ar'; }catch(e){} return document.documentElement.lang==='en'?'en':'ar'; }
+  var L = curLang();
+  function t(o){ return o[L]; }
+  function $(s,r){ return (r||document).querySelector(s); }
+  function $$(s,r){ return Array.prototype.slice.call((r||document).querySelectorAll(s)); }
+
+  /* ---------- scene data ---------- */
+  var SCENES = [
+    { av:'D', name:{ar:'مكالمه من عميل',en:'Call from a client'}, st:{ar:'يتصل الحين',en:'Calling now'},
+      inEn:'Hello, is this a good time to talk?', inMean:'هلا، مناسب نتكلم الحين؟', inSay:'هيلو، ايز ذيس ا قود تايم تو توك',
+      outEn:'Yes, go ahead.', outSay:'يس، قو اهيد', outMean:'ايوه، تفضل' },
+    { av:'M', name:{ar:'ايميل من المدير',en:'Email from your manager'}, st:{ar:'وصلك الحين',en:'Just arrived'},
+      inEn:'Could you send me the details by today?', inMean:'تقدر ترسل لي التفاصيل قبل نهاية اليوم؟', inSay:'كود يو سند مي ذا ديتيلز باي توداي',
+      outEn:'Sure, I will send them in an hour.', outSay:'شور، اي ويل سند ذيم ان ان اور', outMean:'اكيد، برسلها خلال ساعه' },
+    { av:'T', name:{ar:'اجتماع الفريق',en:'Team meeting'}, st:{ar:'جاي دورك',en:'Your turn'},
+      inEn:'Does that work for you?', inMean:'هذا يناسبك؟', inSay:'داز ذات ورك فور يو',
+      outEn:'Yes, that works for me.', outSay:'يس، ذات ووركس فور مي', outMean:'ايوه، يناسبني' },
+    { av:'A', name:{ar:'مطار لندن',en:'London airport'}, st:{ar:'موظف الجوازات',en:'Passport control'},
+      inEn:'What is the purpose of your visit?', inMean:'وش سبب زيارتك؟', inSay:'وات ايز ذا بربوس اوڤ يور ڤيزت',
+      outEn:'I am here for tourism.', outSay:'اي ام هير فور توريزم', outMean:'جاي سياحه' }
+  ];
+  var QS = { ar:{ you:'ردك', ok:'ردينا بثقه' }, en:{ you:'Your reply', ok:'Answered with confidence' } };
+
+  var sc = $('#callScene'); var si = 0, timers = [];
+  function clr(){ timers.forEach(clearTimeout); timers=[]; }
+  function at(ms,fn){ timers.push(setTimeout(fn,ms)); }
+  function setScene(i){
+    var s = SCENES[i];
+    $('#csAva').textContent = s.av; $('#csName').textContent = t(s.name); $('#csState').lastChild.textContent = ' ' + t(s.st);
+    $('#csInEn').textContent = s.inEn; $('#csInMean').textContent = s.inMean; $('#csInSay').textContent = s.inSay;
+    $('#csOutEn').textContent = s.outEn; $('#csOutSay').textContent = s.outSay; $('#csOutMean').textContent = s.outMean;
+    $('#csOutTag').textContent = QS[L].you; $('#csOkTxt').textContent = QS[L].ok;
+    $('#csInMean').style.display = L==='ar' ? '' : 'none';
+    $('#csOutMean').style.display = L==='ar' ? '' : 'none';
+    $$('#csFoot i').forEach(function(d,k){ d.classList.toggle('on', k===i); });
+  }
+  var ids = ['csIn','csInMean','csInSay','csTyping','csOut','csOutSay','csOutMean','csOk'];
+  function reset(){ ids.forEach(function(id){ $('#'+id).classList.remove('show'); }); $('#csWave').classList.remove('live'); }
+  function showAll(){ ids.forEach(function(id){ if(id!=='csTyping') $('#'+id).classList.add('show'); }); }
+  function play(){
+    clr(); reset(); setScene(si);
+    if(RM || document.hidden){ showAll(); if(RM) at(6500,next); return; }
+    var sh = function(id){ return function(){ $('#'+id).classList.add('show'); }; };
+    at(250, sh('csIn'));
+    at(800, function(){ $('#csWave').classList.add('live'); });
+    at(1700, sh('csInMean')); at(2500, sh('csInSay'));
+    at(2600, function(){ $('#csWave').classList.remove('live'); });
+    at(3600, sh('csTyping'));
+    at(4900, function(){ $('#csTyping').classList.remove('show'); $('#csOut').classList.add('show'); });
+    at(5400, sh('csOutSay')); at(5900, sh('csOutMean')); at(6500, sh('csOk'));
+    at(8600, function(){ reset(); at(500,next); });
+  }
+  function next(){ si=(si+1)%SCENES.length; play(); }
+  if(sc){ play(); document.addEventListener('visibilitychange', function(){ if(document.hidden) clr(); else play(); }); }
+
+  /* ---------- ticker ---------- */
+  var TK = { ar:['مكالمه مع عميل','ايميل شغل','اجتماع بالانجليزي','مقابله وظيفه','مطار وسفر','مطعم وكوفي','ستب','توفل','ايلتس','محاضره بالجامعه','مشروع تخرج','واتساب مع اجانب'],
+             en:['Client calls','Work emails','Meetings','Job interviews','Airports and travel','Cafes and restaurants','STEP','TOEFL','IELTS','University lectures','Class projects','Chatting with foreigners'] };
+  function renderTicker(){
+    var tr = $('#tickerTrack'); if(!tr) return;
+    var set = TK[L].map(function(x){ return '<span class="ticker-item" dir="'+(L==='ar'?'rtl':'ltr')+'">'+x+'</span>'; }).join('');
+    tr.innerHTML = '<div class="ticker-set">'+set+'</div><div class="ticker-set" aria-hidden="true">'+set+'</div>';
+  }
+
+  /* ---------- who is it for ---------- */
+  var AUD = [
+    { ico:'<path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/>',
+      title:{ar:'طالب مدرسه او جامعه',en:'School or university student'},
+      pain:{ar:'المحاضره بالانجليزي، والمشروع بالانجليزي، وانت تترجم كل جمله بالراس.',en:'Lectures and projects are in English, and you translate every sentence in your head.'},
+      pro:{ar:'نبني لك اساس تفهم فيه وتشارك بالقاعه وتكتب بحثك بثقه، ونشتغل على كلمات موادك.',en:'We build a base you can follow, speak up in class, and write assignments with confidence, using words from your own courses.'} },
+    { ico:'<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>',
+      title:{ar:'موظف',en:'Employee'},
+      pain:{ar:'اجتماع، ايميل، عميل اجنبي، والتوتر ماسكك قبل لا تتكلم.',en:'Meetings, emails, foreign clients, and nerves hit before you even speak.'},
+      pro:{ar:'تتعلم جمل الشغل الحقيقيه، تنطقها وتكتبها صح، وتتصحح فورا لين يصير ردك طبيعي.',en:'You learn real workplace phrases, say and write them correctly, and get corrected on the spot until replies feel natural.'} },
+    { ico:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="m9 15 2 2 4-4"/>',
+      title:{ar:'تجهيز اختبارات: ستب، توفل، ايلتس',en:'Exam prep: STEP, TOEFL, IELTS'},
+      pain:{ar:'الموعد قرب، وما تدري وين نقاط ضعفك بالضبط.',en:'The test date is close and you do not know exactly where you are weak.'},
+      pro:{ar:'تتدرب باسئله بنفس نظام الاختبار، وتصحيح فوري لكتابتك، ونطق مسموع، وحصص مباشره مع استاذ فراس حسب باقتك.',en:'Practice with questions in the real exam format, get instant writing correction, and join live classes with Tutor Firas depending on your plan.'} }
+  ];
+  var audOn = 0, audTimer;
+  function renderAud(){
+    var w = $('#audWrap'); if(!w) return;
+    w.innerHTML = AUD.map(function(a,i){
+      return '<div class="aud-item'+(i===audOn?' on':'')+'" data-i="'+i+'" dir="'+(L==='ar'?'rtl':'ltr')+'" tabindex="0" role="button">'+
+        '<span class="aud-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">'+a.ico+'</svg></span>'+
+        '<h3 class="arabic-h">'+t(a.title)+'</h3><p class="aud-pain">'+t(a.pain)+'</p><p class="aud-promise">'+t(a.pro)+'</p><span class="aud-bar"><i></i></span></div>';
+    }).join('');
+    $$('.aud-item',w).forEach(function(el){
+      var go=function(){ audOn=+el.dataset.i; audKick(); renderAudState(); };
+      el.addEventListener('click',go); el.addEventListener('mouseenter',function(){ if(!el.classList.contains('on')) go(); });
+      el.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(); } });
+    });
+  }
+  function renderAudState(){
+    $$('#audWrap .aud-item').forEach(function(el,i){
+      var on=i===audOn; el.classList.toggle('on',on);
+      var bar=$('.aud-bar i',el); if(bar){ bar.style.animation='none'; void bar.offsetWidth; bar.style.animation=''; }
+    });
+  }
+  function audKick(){ clearInterval(audTimer); if(!RM) audTimer=setInterval(function(){ audOn=(audOn+1)%AUD.length; renderAudState(); },5500); }
+
+  /* ---------- before / after ---------- */
+  var BA = [
+    { tab:{ar:'مكالمه',en:'A call'},
+      b:{ar:'يرن الجوال، وتتجاهله وتقول: بدق عليه بعدين.',en:'The phone rings, you let it go and say you will call back later.'},
+      en:'Hello, how can I help you?', say:'هيلو، هاو كان اي هيلب يو', mean:{ar:'هلا، كيف اقدر اخدمك؟',en:''} },
+    { tab:{ar:'ايميل',en:'An email'},
+      b:{ar:'تكتبه بالمترجم، وتعيد قراءته عشر مرات، وبعدها ما ترسله.',en:'You write it with a translator, reread it ten times, then never send it.'},
+      en:'Thank you for your email. I will reply by tomorrow.', say:'ثانك يو فور يور ايميل. اي ويل ريبلاي باي تومورو', mean:{ar:'شكرا على ايميلك، برد عليك قبل بكره.',en:''} },
+    { tab:{ar:'اجتماع',en:'A meeting'},
+      b:{ar:'الكل يتكلم وانت تهز راسك وتتمنى محد يسالك.',en:'Everyone talks while you nod and hope nobody asks you anything.'},
+      en:'I agree, and I would like to add one point.', say:'اي اقري، اند اي وود لايك تو اد وان بوينت', mean:{ar:'اوافقك، وابي اضيف نقطه.',en:''} },
+    { tab:{ar:'سفر',en:'Travel'},
+      b:{ar:'تقف عند الجوازات وتسلم جوازك بدون كلمه.',en:'You stand at passport control and hand over your passport without a word.'},
+      en:'I am here for tourism, for one week.', say:'اي ام هير فور توريزم، فور وان ويك', mean:{ar:'جاي سياحه، لمده اسبوع.',en:''} },
+    { tab:{ar:'اختبار',en:'An exam'},
+      b:{ar:'تحفظ القواعد، وتنساها اول ما تدخل القاعه.',en:'You memorize the rules and forget them the moment you enter the hall.'},
+      en:'In my opinion, technology makes life easier.', say:'ان ماي اوبينيون، تكنولوجي ميكس لايف ايزير', mean:{ar:'برايي، التقنيه تسهل الحياه.',en:''} }
+  ];
+  var baOn = 0, baTimer;
+  function renderBaTabs(){
+    var w=$('#baTabs'); if(!w) return;
+    w.innerHTML = BA.map(function(b,i){ return '<button type="button" class="ba-tab'+(i===baOn?' on':'')+'" data-i="'+i+'">'+t(b.tab)+'<i></i></button>'; }).join('');
+    $$('.ba-tab',w).forEach(function(el){ el.addEventListener('click',function(){ baOn=+el.dataset.i; baKick(); renderBa(true); }); });
+  }
+  function renderBa(anim){
+    var b=BA[baOn];
+    $$('#baTabs .ba-tab').forEach(function(el,i){ el.classList.toggle('on',i===baOn); var bar=$('i',el); bar.style.animation='none'; void bar.offsetWidth; bar.style.animation=''; });
+    $('#baThought').textContent = t(b.b);
+    $('#baEn').textContent = b.en;
+    $('#baSay').textContent = (L==='ar'?'انطقها: ':'Say it: ') + b.say;
+    var mn=$('#baMean'); mn.textContent = b.mean.ar; mn.style.display = L==='ar'?'':'none';
+    if(anim && !RM){ ['baBefore','baAfter'].forEach(function(id){ var e=$('#'+id); e.classList.remove('ba-swap'); void e.offsetWidth; e.classList.add('ba-swap'); }); }
+  }
+  function baKick(){ clearInterval(baTimer); if(!RM) baTimer=setInterval(function(){ baOn=(baOn+1)%BA.length; renderBa(true); },5200); }
+
+  /* ---------- static text swap + language hook ---------- */
+  function applyStatic(){
+    $$('[data-ar][data-en]').forEach(function(el){
+      el.textContent = el.getAttribute('data-'+L);
+      el.setAttribute('dir', L==='ar'?'rtl':'ltr'); el.setAttribute('lang', L);
+    });
+  }
+  function refresh(){ L=curLang(); applyStatic(); renderTicker(); renderAud(); renderBaTabs(); renderBa(false); if(sc) play(); }
+  refresh(); audKick(); baKick();
+  var prev = window.applyIndexLang;
+  if(typeof prev === 'function'){
+    window.applyIndexLang = function(l){ var r = prev.apply(this, arguments); setTimeout(refresh, 0); return r; };
+  }
+  window.addEventListener('storage', function(e){ if(e.key==='pel_account_prefs') refresh(); });
+})();
+
+</script>
+</body>
 </html>
