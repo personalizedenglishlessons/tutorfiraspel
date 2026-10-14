@@ -604,7 +604,7 @@ input{ font-size:16px; }
 <div class="auth-shell">
 
   <!-- BRAND SIDE -->
-  <div class="brand-side"><div class="login-star" data-star aria-hidden="true"></div>
+  <div class="brand-side">
     <div class="brand-logo">
       <img class="pel-logo" src="brand/pel-wordmark.svg" alt="PEL">
       <img class="pel-logo pel-logo-light" src="brand/pel-wordmark-dark.svg" alt="PEL">
@@ -616,12 +616,11 @@ input{ font-size:16px; }
 
     <div class="dash-preview lp-wrap" aria-hidden="true">
       <div class="vt lp-vt"><canvas class="vt-cv" aria-hidden="true"></canvas><div class="vt-core"><div class="lp">
-        <div class="lp-top"><span class="lp-pulse"></span><span class="lp-lab" id="lpLab">عبارة اليوم</span><span class="lp-scene" id="lpScene"></span></div>
-        <div class="lp-wave" id="lpWave"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-        <div class="lp-en" id="lpEn" dir="ltr"></div>
-        <div class="lp-say" id="lpSay" dir="rtl"></div>
-        <div class="lp-mean" id="lpMean" dir="rtl"></div>
-        <div class="lp-dots" id="lpDots"><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="lp-top"><span class="lp-pulse"></span><span class="lp-lab" id="lpLab">الباقات</span><span class="lp-scene" id="lpScene"></span></div>
+        <div class="lp-rows" id="lpRows"></div>
+        <div class="lp-note" id="lpNote"></div>
+        <a class="lp-cta" id="lpCta" href="#" target="_blank" rel="noopener"><span id="lpCtaTx">تواصل مع PEL واشترك</span></a>
+        <div class="lp-dots" id="lpDots"><i></i><i></i></div>
       </div></div></div>
       <div class="dp-sub-card">
         <div class="dp-sub-head">
@@ -1473,35 +1472,58 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
 
 
 </script><style id="pel-v3">
+.lp-rows{ margin-top:14px; display:grid; gap:8px; }
+.lp-row{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding:11px 14px; border-radius:13px; border:1px solid var(--border); background:color-mix(in srgb,var(--card) 70%,transparent); }
+.lp-row.ft{ border-color:color-mix(in srgb,var(--gold) 55%,transparent); background:color-mix(in srgb,var(--gold) 9%,transparent); }
+.lp-row b{ font-family:'Tajawal',sans-serif; font-size:.98rem; color:var(--text); font-weight:700; }
+.lp-row small{ display:block; font-weight:500; font-size:.74rem; color:var(--text-muted); margin-top:2px; }
+.lp-row .pr{ font-family:'Fraunces',serif; font-size:1.35rem; color:var(--gold); direction:ltr; white-space:nowrap; }
+.lp-row .pr i{ font-style:normal; font-family:'Tajawal',sans-serif; font-size:.74rem; color:var(--text-secondary); margin-inline-start:5px; }
+.lp-note{ margin-top:10px; font-size:.8rem; color:var(--text-secondary); min-height:1.3em; }
+.lp-cta{ display:flex; align-items:center; justify-content:center; margin-top:12px; padding:13px 16px; border-radius:13px; background:linear-gradient(135deg,var(--gold-soft),var(--gold)); color:#171412; font-family:'Tajawal',sans-serif; font-weight:800; font-size:.98rem; text-decoration:none; transition:transform .2s; }
+.lp-cta:hover{ transform:translateY(-1px); }
+.lp.sw .lp-rows, .lp.sw .lp-note{ opacity:0; transform:translateY(6px); }
+.lp-rows, .lp-note{ transition:opacity .35s, transform .35s var(--ease); }
 .lp-vt{ aspect-ratio:auto; min-height:0; padding:34px 22px; contain:layout paint; }
 .lp-vt::after{ display:none; }
 .lp-vt .vt-cv{ opacity:.7; }
-.lp-vt .vt-core{ position:relative; z-index:1; }
+.lp-vt .vt-core{ position:relative; z-index:1; width:100%; }
 .card-sadu{ position:absolute; inset-inline:0; top:0; opacity:.55; }
 .auth-card::before{ display:none !important; }
-.login-star{ position:absolute; inset-inline-start:-150px; top:-110px; width:420px; color:var(--gold); opacity:.1; animation:starSpin 180s linear infinite; pointer-events:none; }
 .pel-star{ fill:none; stroke:currentColor; stroke-width:1; width:100%; height:auto; display:block; }
-@keyframes starSpin{ to{ transform:rotate(360deg) } }
 .toggle-eye svg{ width:18px; height:18px; }
-@media(max-width:980px){ .login-star{ width:300px; top:-100px; inset-inline-start:-110px; } }
-@media(prefers-reduced-motion:reduce){ .login-star{ animation:none; } }
-</style>
+@media(max-width:980px){ @media(prefers-reduced-motion:reduce){ </style>
 <script>
 (function(){
-  var P=[
-    {sc:{ar:'في الشغل',en:'At work'}, en:'I will get back to you.', say:'اي ويل قت باك تو يو', mean:'برد عليك'},
-    {sc:{ar:'ايميل',en:'Email'}, en:'Could you send me the details?', say:'كود يو سند مي ذا ديتيلز', mean:'تقدر ترسل لي التفاصيل؟'},
-    {sc:{ar:'تعارف',en:'Meeting someone'}, en:'Nice to meet you.', say:'نايس تو ميت يو', mean:'تشرفنا'},
-    {sc:{ar:'مطعم',en:'Restaurant'}, en:'Can I get the receipt?', say:'كان اي قت ذا ريسيت', mean:'ممكن الفاتوره؟'},
-    {sc:{ar:'سفر',en:'Travel'}, en:'How long does it take?', say:'هاو لونغ داز ات تيك', mean:'كم ياخذ وقت؟'}
-  ];
-  var i=0, box=document.querySelector('.lp'); if(!box) return;
-  var en=document.getElementById('lpEn'), say=document.getElementById('lpSay'), mean=document.getElementById('lpMean'), sc=document.getElementById('lpScene'), lab=document.getElementById('lpLab'), dots=document.querySelectorAll('#lpDots i');
-  var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var box=document.querySelector('.lp'); if(!box) return;
+  var T=[{k:'start_from_zero',ar:'ابد من الصفر',en:'Start From 0',noteAr:'لمن يبدأ من الصفر وما يعرف شي',noteEn:'For complete beginners'},
+         {k:'exam_prep',ar:'التجهيز للاختبارات',en:'Exam Prep',noteAr:'ستيب، توفل، ايلتس مع استاذ فراس وجها لوجه',noteEn:'STEP, TOEFL, IELTS with Tutor Firas'}];
+  var FB=[[650,1],[800,2],[1300,3]], FE=[[1000,1],[1550,2],[2350,3]];
+  var i=0, rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
   function isEn(){ return document.body.classList.contains('ui-en'); }
-  function paint(){ var p=P[i], e=isEn(); en.textContent=p.en; say.textContent=p.say; mean.textContent=p.mean; sc.textContent=e?p.sc.en:p.sc.ar; lab.textContent=e?'A phrase for today':'عبارة اليوم'; dots.forEach(function(d,k){ d.classList.toggle('on',k===i); }); }
-  function next(){ if(rm){ i=(i+1)%P.length; paint(); return; } box.classList.add('sw'); setTimeout(function(){ i=(i+1)%P.length; paint(); box.classList.remove('sw'); },380); }
-  paint(); setInterval(function(){ if(!document.hidden) next(); }, 5200);
+  function rows(k){
+    var db=window.PEL_PLANS_DB, out=[];
+    if(db&&db.length){ db.forEach(function(r){ if(r.tier===k) out.push([r.price,r.duration_months,r.featured]); }); out.sort(function(a,b){return a[1]-b[1];}); }
+    if(!out.length) out=(k==='exam_prep'?FE:FB).map(function(x){return [x[0],x[1],x[1]===3];});
+    return out;
+  }
+  function dur(m,e){ if(e) return m+(m===1?' month':' months'); return m===1?'شهر':m===2?'شهرين':'3 اشهر'; }
+  function paint(){
+    var t=T[i], e=isEn(), h='';
+    rows(t.k).forEach(function(r){ h+='<div class="lp-row'+(r[2]?' ft':'')+'"><b>'+dur(r[1],e)+'</b><span class="pr">'+r[0]+'<i>'+(e?'SAR':'ريال')+'</i></span></div>'; });
+    document.getElementById('lpRows').innerHTML=h;
+    document.getElementById('lpScene').textContent=e?t.en:t.ar;
+    document.getElementById('lpLab').textContent=e?'Plans':'الباقات';
+    document.getElementById('lpNote').textContent=e?t.noteEn:t.noteAr;
+    document.getElementById('lpCtaTx').textContent=e?'Message PEL to subscribe':'تواصل مع PEL واشترك';
+    var num=(window.PEL_SITE&&PEL_SITE.whatsapp)||'966557178070';
+    var msg=e?('Hi, I want to subscribe to '+t.en):('السلام عليكم، ابي اشترك في '+t.ar);
+    document.getElementById('lpCta').href='https://wa.me/'+String(num).replace(/\D/g,'')+'?text='+encodeURIComponent(msg);
+    document.querySelectorAll('#lpDots i').forEach(function(d,n){ d.classList.toggle('on',n===i); });
+  }
+  function next(){ if(rm){ i=(i+1)%T.length; paint(); return; } box.classList.add('sw'); setTimeout(function(){ i=(i+1)%T.length; paint(); box.classList.remove('sw'); },380); }
+  paint(); setInterval(function(){ if(!document.hidden) next(); }, 6000);
+  window.addEventListener('pel-db-plans',paint);
   new MutationObserver(paint).observe(document.body,{attributes:true,attributeFilter:['class']});
 })();
 </script>
