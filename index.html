@@ -331,7 +331,7 @@ nav.primary-nav a:hover::after{ width:100%; }
 .btn-outline:hover{ border-color:var(--gold); background:rgba(200,169,106,0.06); transform:translateY(-2px); }
 .btn-login{ padding:10px 18px; font-size:.8rem; gap:6px; }
 
-.magnetic{ will-change:transform; }
+.magnetic{ }
 
 .mobile-toggle{ display:none; width:44px; height:44px; align-items:center; justify-content:center; flex-shrink:0; }
 .mobile-toggle span, .mobile-toggle span::before, .mobile-toggle span::after{
@@ -376,8 +376,7 @@ nav.primary-nav a:hover::after{ width:100%; }
 .hero-glow{
   position:absolute; top:-200px; right:-160px; width:640px; height:640px; border-radius:50%;
   background:radial-gradient(circle, rgba(200,169,106,0.16), transparent 70%);
-  filter:blur(10px);
-  pointer-events:none;
+    pointer-events:none;
 }
 .hero-grid{
   display:grid; grid-template-columns:1.05fr .95fr; gap:60px; align-items:center;
@@ -812,9 +811,9 @@ nav.primary-nav a.active::after{ width:100%; }
   .final-cta-buttons{ flex-direction:column; width:100%; }
   .final-cta-buttons .btn-gold{ width:100%; justify-content:center; }
 }
-.orb{ position:absolute; border-radius:50%; filter:blur(60px); opacity:.35; pointer-events:none; }
-.orb-1{ width:340px; height:340px; background:var(--gold); top:-120px; left:10%; }
-.orb-2{ width:260px; height:260px; background:var(--emerald); bottom:-100px; right:12%; }
+.orb{ position:absolute; border-radius:50%; opacity:.3; pointer-events:none; }
+.orb-1{ width:560px; height:560px; background:radial-gradient(circle, var(--gold) 0%, transparent 68%); top:-220px; left:2%; }
+.orb-2{ width:460px; height:460px; background:radial-gradient(circle, var(--emerald) 0%, transparent 68%); bottom:-200px; right:6%; }
 
 /* ===== footer ===== */
 footer{ padding:80px 0 40px; }
@@ -1118,64 +1117,6 @@ img,svg{ max-width:100%; }
 .hero .trust-item{ font-size:.86rem; color:var(--text-secondary); }
 .hero .path-hint{ margin-top:12px !important; }
 
-/* ---- call scene ---- */
-.callstage{ position:relative; display:flex; justify-content:center; align-items:center; padding:clamp(8px,2vw,24px); }
-.callstage::before{ content:""; position:absolute; inset:6% 4%; border-radius:50%; background:radial-gradient(closest-side, var(--gold-a14), transparent 72%); filter:blur(6px); animation:cs-breathe 7s ease-in-out infinite; pointer-events:none; }
-.phone{ position:relative; width:min(380px,100%); border-radius:38px; padding:12px; background:linear-gradient(160deg,var(--card-elevated),var(--surface)); border:1px solid var(--border); box-shadow:var(--shadow-lift), 0 0 80px -40px var(--gold); direction:ltr; }
-.phone-screen{ border-radius:28px; background:var(--bg); border:1px solid var(--border); overflow:hidden; display:flex; flex-direction:column; min-height:min(560px,calc(100svh - 190px)); min-height:520px; }
-.ph-head{ display:flex; align-items:center; gap:12px; padding:16px 18px; border-bottom:1px solid var(--border); background:var(--surface); }
-.ph-ava{ width:38px; height:38px; border-radius:50%; background:linear-gradient(135deg,var(--gold),var(--gold-soft)); color:#171412; display:grid; place-items:center; font-weight:800; font-size:.95rem; position:relative; flex-shrink:0; }
-.ph-ava::after{ content:""; position:absolute; inset:-5px; border-radius:50%; border:1px solid var(--gold); opacity:0; animation:cs-ring 2.4s ease-out infinite; }
-.ph-meta{ flex:1; min-width:0; text-align:left; }
-.ph-name{ font-size:.92rem; font-weight:700; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.ph-state{ font-size:.72rem; color:var(--text-muted); display:flex; align-items:center; gap:6px; margin-top:2px; }
-.ph-state i{ width:6px; height:6px; border-radius:50%; background:var(--success); display:inline-block; animation:cs-blink 1.6s ease-in-out infinite; }
-.ph-thread{ flex:1; padding:20px 16px 12px; display:flex; flex-direction:column; gap:12px; justify-content:flex-start; }
-.cv-b{ max-width:88%; border-radius:20px; padding:14px 16px; opacity:0; transform:translateY(10px) scale(.98); transition:opacity .5s var(--ease), transform .5s var(--ease); }
-.cv-b.show{ opacity:1; transform:none; }
-.cv-in{ align-self:flex-start; background:var(--card); border:1px solid var(--border); border-end-start-radius:6px; border-bottom-left-radius:6px; }
-.cv-out{ align-self:flex-end; background:var(--gold-a14); border:1px solid var(--gold-a30); border-bottom-right-radius:6px; }
-.cv-en{ font-family:'Fraunces',serif; font-size:1.18rem; line-height:1.35; color:var(--text); direction:ltr; text-align:left; }
-.cv-wave{ display:flex; align-items:center; gap:3px; height:16px; margin-bottom:10px; }
-.cv-wave span{ width:3px; height:4px; border-radius:2px; background:var(--gold); opacity:.5; }
-.cv-wave.live span{ animation:cs-wave .9s ease-in-out infinite; opacity:1; }
-.cv-wave span:nth-child(2n){ animation-delay:.12s } .cv-wave span:nth-child(3n){ animation-delay:.24s } .cv-wave span:nth-child(5n){ animation-delay:.36s }
-.cv-aid{ display:flex; flex-direction:column; gap:7px; margin-top:12px; }
-.cv-chip{ direction:rtl; text-align:right; font-family:'Tajawal','Cairo',sans-serif; font-size:.9rem; line-height:1.5; border-radius:12px; padding:8px 12px; opacity:0; transform:translateY(6px); transition:opacity .45s var(--ease), transform .45s var(--ease); }
-.cv-chip.show{ opacity:1; transform:none; }
-.cv-chip.mean{ background:var(--surface); color:var(--text-secondary); }
-.cv-chip.say{ background:var(--gold-a08); color:var(--gold-soft); border:1px dashed var(--gold-a30); }
-html[data-theme="light"] .cv-chip.say{ color:var(--gold); }
-.cv-typing{ align-self:flex-end; display:flex; gap:5px; padding:12px 16px; border-radius:18px; background:var(--card); border:1px solid var(--border); opacity:0; transition:opacity .3s; height:40px; align-items:center; }
-.cv-typing.show{ opacity:1; }
-.cv-typing span{ width:6px; height:6px; border-radius:50%; background:var(--text-muted); animation:cs-dot 1s ease-in-out infinite; }
-.cv-typing span:nth-child(2){ animation-delay:.15s } .cv-typing span:nth-child(3){ animation-delay:.3s }
-.cv-tag{ font-size:.7rem; color:var(--text-muted); margin-bottom:6px; direction:rtl; font-family:'Tajawal',sans-serif; }
-.cv-ok{ align-self:flex-end; display:inline-flex; align-items:center; gap:8px; font-family:'Tajawal','Cairo',sans-serif; font-size:.82rem; font-weight:700; color:var(--success); direction:rtl; opacity:0; transform:scale(.9); transition:opacity .4s, transform .4s var(--ease); }
-.cv-ok.show{ opacity:1; transform:none; }
-.ph-foot{ display:flex; justify-content:center; gap:7px; padding:12px 0 16px; }
-.ph-foot i{ width:6px; height:6px; border-radius:99px; background:var(--border); transition:width .4s var(--ease), background .4s; }
-.ph-foot i.on{ width:22px; background:var(--gold); }
-.cs-tag{ position:absolute; z-index:2; display:flex; align-items:center; gap:8px; padding:9px 14px; border-radius:999px; background:var(--card-elevated); border:1px solid var(--gold-a30); color:var(--text); font-size:.8rem; font-weight:700; font-family:'Tajawal',sans-serif; box-shadow:var(--shadow-soft); white-space:nowrap; animation:cs-float 6s ease-in-out infinite; }
-.cs-tag svg{ color:var(--gold); flex-shrink:0; }
-.cs-tag.t1{ inset-inline-end:22px; top:-18px; }
-.cs-tag.t2{ inset-inline-start:22px; bottom:-18px; animation-delay:-3s; }
-@keyframes cs-breathe{ 0%,100%{ transform:scale(.94); opacity:.8 } 50%{ transform:scale(1.04); opacity:1 } }
-@keyframes cs-ring{ 0%{ transform:scale(.9); opacity:.7 } 100%{ transform:scale(1.5); opacity:0 } }
-@keyframes cs-blink{ 0%,100%{ opacity:1 } 50%{ opacity:.35 } }
-@keyframes cs-wave{ 0%,100%{ height:4px } 50%{ height:16px } }
-@keyframes cs-dot{ 0%,100%{ transform:translateY(0); opacity:.5 } 50%{ transform:translateY(-4px); opacity:1 } }
-@keyframes cs-float{ 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-8px) } }
-
-/* ---- situations ticker ---- */
-.ticker{ padding:0 !important; border-block:1px solid var(--border); background:var(--surface); overflow:hidden; direction:ltr; }
-.ticker-track{ display:flex; width:max-content; animation:tk 46s linear infinite; }
-.ticker:hover .ticker-track{ animation-play-state:paused; }
-.ticker-set{ display:flex; align-items:center; flex-shrink:0; }
-.ticker-item{ display:flex; align-items:center; gap:28px; padding:20px 14px 20px 0; font-family:'Tajawal','Plus Jakarta Sans',sans-serif; font-weight:700; font-size:1.02rem; color:var(--text-secondary); white-space:nowrap; }
-.ticker-item::after{ content:""; width:7px; height:7px; background:var(--gold); transform:rotate(45deg); margin-inline-start:14px; flex-shrink:0; }
-@keyframes tk{ from{ transform:translateX(0) } to{ transform:translateX(-50%) } }
-
 /* ---- shared section head ---- */
 .v2-head{ max-width:760px; margin:0 auto clamp(28px,5vw,52px); text-align:center; }
 .v2-head h2{ font-size:clamp(1.8rem,3.6vw,2.9rem); font-weight:800; line-height:1.3; text-wrap:balance; }
@@ -1183,55 +1124,17 @@ html[data-theme="light"] .cv-chip.say{ color:var(--gold); }
 .v2-head p{ margin-top:14px; color:var(--text-secondary); font-size:clamp(.96rem,1.2vw,1.08rem); line-height:1.8; }
 .v2-sec{ padding:clamp(56px,9vw,110px) 0; }
 
-/* ---- who is it for ---- */
-.aud{ display:flex; gap:14px; align-items:stretch; min-height:370px; }
-.aud-item{ flex:1; position:relative; border-radius:26px; border:1px solid var(--border); background:var(--card); padding:clamp(22px,2.4vw,34px); display:flex; flex-direction:column; justify-content:flex-end; gap:12px; overflow:hidden; cursor:pointer; transition:flex .7s var(--ease), border-color .4s, background .4s; text-align:start; }
-.aud-item.on{ flex:2.3; border-color:var(--gold-a30); background:linear-gradient(170deg,var(--card-elevated),var(--card)); }
-.aud-ico{ width:54px; height:54px; border-radius:16px; background:var(--gold-a14); color:var(--gold); display:grid; place-items:center; margin-bottom:auto; transition:background .4s,color .4s; }
-.aud-item.on .aud-ico{ background:var(--gold); color:#171412; }
-.aud-item h3{ font-size:clamp(1.15rem,1.7vw,1.45rem); font-weight:800; line-height:1.3; color:var(--text); }
-.aud-pain{ color:var(--text-muted); font-size:.95rem; line-height:1.75; }
-.aud-promise{ color:var(--text-secondary); font-size:.98rem; line-height:1.85; max-height:0; opacity:0; overflow:hidden; transition:max-height .7s var(--ease), opacity .5s .1s; }
-.aud-item.on .aud-promise{ max-height:200px; opacity:1; }
-.aud-bar{ position:absolute; inset-inline:0; bottom:0; height:3px; background:transparent; }
-.aud-bar i{ display:block; height:100%; width:0; background:var(--gold); }
-.aud-item.on .aud-bar i{ animation:fill var(--dur-aud,5.5s) linear forwards; }
-@keyframes fill{ from{ width:0 } to{ width:100% } }
-[dir="rtl"] .aud-bar i{ margin-inline-start:0; }
-
-/* ---- before / after ---- */
-.ba-tabs{ display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-bottom:26px; }
-.ba-tab{ position:relative; overflow:hidden; padding:11px 22px; border-radius:999px; border:1px solid var(--border); background:var(--card); color:var(--text-secondary); font-family:'Tajawal','Plus Jakarta Sans',sans-serif; font-weight:700; font-size:.95rem; transition:color .3s, border-color .3s, background .3s; }
-.ba-tab.on{ color:var(--text); border-color:var(--gold); background:var(--gold-a14); }
-.ba-tab i{ position:absolute; inset-inline-start:0; bottom:0; height:2px; width:0; background:var(--gold); }
-.ba-tab.on i{ animation:fill var(--dur-ba,5.2s) linear forwards; }
-.ba-stage{ display:grid; grid-template-columns:minmax(0,.8fr) auto minmax(0,1.2fr); gap:clamp(12px,2vw,26px); align-items:stretch; max-width:1080px; margin:0 auto; }
-.ba-side{ border-radius:24px; padding:clamp(22px,2.6vw,34px); display:flex; flex-direction:column; gap:14px; justify-content:center; min-height:260px; }
-.ba-before{ background:var(--surface); border:1px dashed var(--border); }
-.ba-after{ background:linear-gradient(165deg,var(--card-elevated),var(--card)); border:1px solid var(--gold-a30); box-shadow:0 30px 70px -40px var(--gold); }
-.ba-label{ font-size:.82rem; font-weight:700; color:var(--text-muted); font-family:'Tajawal',sans-serif; display:flex; align-items:center; gap:8px; }
-.ba-after .ba-label{ color:var(--gold); }
-.ba-label::before{ content:""; width:8px; height:8px; border-radius:50%; background:currentColor; opacity:.7; }
-.ba-thought{ font-size:clamp(1rem,1.5vw,1.2rem); line-height:1.85; color:var(--text-secondary); font-family:'Tajawal',sans-serif; }
-.ba-arrow{ align-self:center; width:44px; height:44px; border-radius:50%; background:var(--gold); color:#171412; display:grid; place-items:center; box-shadow:var(--gold-glow); }
-[dir="rtl"] .ba-arrow svg{ transform:scaleX(-1); }
-.ba-en{ font-family:'Fraunces',serif; font-size:clamp(1.3rem,2.4vw,1.9rem); line-height:1.35; color:var(--text); direction:ltr; text-align:left; }
-.ba-line{ direction:rtl; text-align:right; font-family:'Tajawal',sans-serif; line-height:1.7; border-radius:12px; padding:9px 14px; font-size:.98rem; }
-.ba-line.pr{ background:var(--gold-a08); border:1px dashed var(--gold-a30); color:var(--gold-soft); }
-html[data-theme="light"] .ba-line.pr{ color:var(--gold); }
-.ba-line.mn{ background:var(--surface); color:var(--text-secondary); }
-.ba-swap{ animation:swap .55s var(--ease); }
-@keyframes swap{ from{ opacity:0; transform:translateY(8px) } to{ opacity:1; transform:none } }
-.v2-cta{ display:flex; justify-content:center; gap:14px; flex-wrap:wrap; margin-top:clamp(26px,4vw,44px); }
-.v2-note{ text-align:center; margin-top:14px; font-size:.84rem; color:var(--text-muted); font-family:'Tajawal',sans-serif; }
-
 /* ---- how it works ---- */
 .steps{ position:relative; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:clamp(14px,2vw,28px); max-width:1080px; margin:0 auto; counter-reset:st; }
 .steps::before{ content:""; position:absolute; top:34px; inset-inline:12%; height:2px; background:linear-gradient(90deg,transparent,var(--border) 12%,var(--border) 88%,transparent); }
 .step{ position:relative; text-align:center; padding:0 8px; }
-.step-n{ width:68px; height:68px; margin:0 auto 20px; border-radius:50%; background:var(--bg); border:2px solid var(--border); display:grid; place-items:center; font-family:'Fraunces',serif; font-size:1.5rem; color:var(--text-muted); position:relative; z-index:1; animation:stp 9s ease-in-out infinite; }
-.step:nth-child(2) .step-n{ animation-delay:3s } .step:nth-child(3) .step-n{ animation-delay:6s }
-@keyframes stp{ 0%,26%{ border-color:var(--gold); color:#171412; background:var(--gold); box-shadow:var(--gold-glow) } 34%,100%{ border-color:var(--border); color:var(--text-muted); background:var(--bg); box-shadow:none } }
+.step-n{ width:68px; height:68px; margin:0 auto 20px; border-radius:50%; background:var(--bg); border:2px solid var(--border); display:grid; place-items:center; font-family:'Fraunces',serif; font-size:1.5rem; color:var(--text); position:relative; z-index:1; }
+.step-n::after{ content:""; position:absolute; inset:-2px; border-radius:50%; border:2px solid var(--gold); opacity:0; animation:stp 9s ease-in-out infinite; }
+.step:nth-child(2) .step-n::after{ animation-delay:3s } .step:nth-child(3) .step-n::after{ animation-delay:6s }
+@keyframes stp{ 0%,26%{ opacity:1 } 34%,100%{ opacity:0 } }
+/* pause everything that is off screen, skip rendering far sections */
+section[data-off] *, section[data-off]{ animation-play-state:paused !important; }
+#faq, footer, .final-cta{ content-visibility:auto; contain-intrinsic-size:auto 640px; }
 .step h3{ font-size:clamp(1.1rem,1.6vw,1.35rem); font-weight:800; color:var(--text); }
 .step p{ margin-top:10px; color:var(--text-secondary); font-size:.98rem; line-height:1.85; max-width:22em; margin-inline:auto; }
 
@@ -1276,8 +1179,7 @@ html[data-theme="light"] .ba-line.pr{ color:var(--gold); }
 }
 @media(max-height:600px) and (orientation:landscape){ .hero{ min-height:0; } }
 @media(prefers-reduced-motion:reduce){
-  .ticker-track, .callstage::before, .ph-ava::after, .cs-tag, .step-n, .cv-wave.live span, .cv-typing span, .ph-state i{ animation:none !important; }
-  .cv-b, .cv-chip, .cv-ok{ transition:none !important; }
+  .step-n::after{ animation:none !important; opacity:0; }
   .aud-item.on .aud-bar i, .ba-tab.on i{ animation:none; width:100%; }
 }
 
@@ -1311,7 +1213,6 @@ nav.primary-nav{ gap:clamp(14px,1.6vw,28px); }
     </a>
     <nav class="primary-nav">
       <a href="#home">البدايه</a>
-      <a href="#personalPreview">خطتك</a>
       <a href="#liveTeaching">تعلم وممارسه</a>
       <a href="#pricing">الباقات</a>
       <a href="#faq">الاسئله</a>
@@ -1337,7 +1238,6 @@ nav.primary-nav{ gap:clamp(14px,1.6vw,28px); }
 
 <div class="mobile-menu" id="mobileMenu" dir="rtl">
   <a href="#home" class="mobile-nav-link">البدايه</a>
-  <a href="#personalPreview" class="mobile-nav-link">خطتك</a>
   <a href="#liveTeaching" class="mobile-nav-link">تعلم وممارسه</a>
   <a href="#pricing" class="mobile-nav-link">الباقات</a>
   <a href="#faq" class="mobile-nav-link">الاسئله</a>
@@ -1357,7 +1257,7 @@ nav.primary-nav{ gap:clamp(14px,1.6vw,28px); }
     <div class="reveal is-visible">
        <span class="eyebrow hero-eyebrow" dir="ltr" style="justify-content:flex-start;"><span class="pel-tag">Personalized English Lessons</span></span>
       <h1 class="arabic-h" dir="rtl">سنين تدرس انجليزي… وبس يكلمك واحد تسكت؟</h1>
-      <p class="arabic hero-sub" dir="rtl">يرن جوالك فتتجاهله. تكتب الايميل بالمترجم وقلبك يدق. وبالاجتماع تتمنى احد يسبقك بالكلام. السبب طريقه قديمه قايمه على الحفظ. PEL يعلمك من مواقفك الحقيقيه: تسمع وتنطق وتتصحح، وتتدرب مع استاذ فراس لين يطلع ردك طبيعي.</p>
+      <p class="arabic hero-sub" dir="rtl">تفهم الانجليزي اذا قراته، وبس يكلمك واحد تسكت. الطريقه القديمه علمتك تحفظ ومحد علمك تتكلم. في PEL تتكلم من اول درس، واستاذ فراس يسمعك ويصحح لك. المنصه امريكيه مقرها فلوريدا، والانجليزي اللي تتعلمه هو اللي يتكلمونه هناك.</p>
       <div class="hero-cta-row">
         <button type="button" class="btn-gold magnetic" data-open-path id="heroPathCta" style="padding:14px 28px; font-size:.95rem;">
           <svg data-i="route" width="16" height="16"></svg>
@@ -1368,22 +1268,21 @@ nav.primary-nav{ gap:clamp(14px,1.6vw,28px); }
           <span>راسل استاذ فراس</span>
         </a>
       </div>
-      <div class="fnote" dir="rtl"><span class="mono" aria-hidden="true">ف</span><p class="arabic" data-ar="استاذ فراس يرد عليك بنفسه على واتساب. قل له وين وقفت، وهو يبني لك الخطه." data-en="Tutor Firas answers you himself on WhatsApp. Tell him where you got stuck and he builds your plan.">استاذ فراس يرد عليك بنفسه على واتساب. قل له وين وقفت، وهو يبني لك الخطه.</p></div>
+      <div class="fnote" dir="rtl"><p class="arabic" data-ar="راسل استاذ فراس على واتساب، وهو بنفسه يرد عليك ويبني لك الخطه." data-en="Message Tutor Firas on WhatsApp. He answers you himself and builds your plan.">راسل استاذ فراس على واتساب، وهو بنفسه يرد عليك ويبني لك الخطه.</p></div>
     </div>
 
-    <div class="callstage vt" id="heroVisual"><div class="vt-world"><div class="vt-rings" aria-hidden="true"><span class="vt-ring" style="--i:0"><svg viewBox="0 0 200 200"><path d="M60 8H140L192 60V140L140 192H60L8 140V60Z"/></svg></span><span class="vt-ring" style="--i:1"><svg viewBox="0 0 200 200"><path d="M60 8H140L192 60V140L140 192H60L8 140V60Z"/></svg></span><span class="vt-ring" style="--i:2"><svg viewBox="0 0 200 200"><path d="M60 8H140L192 60V140L140 192H60L8 140V60Z"/></svg></span><span class="vt-ring" style="--i:3"><svg viewBox="0 0 200 200"><path d="M60 8H140L192 60V140L140 192H60L8 140V60Z"/></svg></span><span class="vt-ring" style="--i:4"><svg viewBox="0 0 200 200"><path d="M60 8H140L192 60V140L140 192H60L8 140V60Z"/></svg></span><span class="vt-ring" style="--i:5"><svg viewBox="0 0 200 200"><path d="M60 8H140L192 60V140L140 192H60L8 140V60Z"/></svg></span><span class="vt-ring" style="--i:6"><svg viewBox="0 0 200 200"><path d="M60 8H140L192 60V140L140 192H60L8 140V60Z"/></svg></span><span class="vt-ring" style="--i:7"><svg viewBox="0 0 200 200"><path d="M60 8H140L192 60V140L140 192H60L8 140V60Z"/></svg></span><span class="vt-ring" style="--i:8"><svg viewBox="0 0 200 200"><path d="M60 8H140L192 60V140L140 192H60L8 140V60Z"/></svg></span></div><div class="vt-core"><div class="phone" id="callScene"><div class="phone-screen">
-          <div class="ph-head"><span class="ph-ava" id="csAva">D</span><div class="ph-meta"><div class="ph-name" id="csName"></div><div class="ph-state" id="csState"><i></i> </div></div></div>
-          <div class="ph-thread">
-            <div class="cv-b cv-in" id="csIn"><div class="cv-wave" id="csWave"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-              <div class="cv-row"><div class="cv-en" id="csInEn"></div><button type="button" class="say-btn" data-say-from="csInEn" aria-label="Listen"><svg data-i="speaker"></svg></button></div>
-              <div class="cv-aid"><div class="cv-chip mean" id="csInMean"></div><div class="cv-chip say" id="csInSay"></div></div></div>
-            <div class="cv-typing" id="csTyping"><span></span><span></span><span></span></div>
-            <div class="cv-b cv-out" id="csOut"><div class="cv-tag" id="csOutTag"></div><div class="cv-en" id="csOutEn"></div>
-              <div class="cv-aid"><div class="cv-chip say" id="csOutSay"></div><div class="cv-chip mean" id="csOutMean"></div></div></div>
-            <div class="cv-ok" id="csOk"><svg data-i="check" width="18" height="18"></svg><span id="csOkTxt"></span></div>
-          </div>
-          <div class="ph-foot" id="csFoot"><i></i><i></i><i></i><i></i></div>
-        </div></div></div><div class="vt-word" aria-hidden="true" style="top:6%;inset-inline-end:-30%;--z:110px;--d:0s"><b>Nice to meet you</b><span>نايس تو ميت يو</span></div><div class="vt-word" aria-hidden="true" style="top:26%;inset-inline-start:-32%;--z:150px;--d:-2s"><b>Could you repeat that?</b><span>كود يو ريبيت ذات</span></div><div class="vt-word" aria-hidden="true" style="top:50%;inset-inline-end:-30%;--z:90px;--d:-4s"><b>I will call you back</b><span>اي ويل كول يو باك</span></div><div class="vt-word" aria-hidden="true" style="top:72%;inset-inline-start:-30%;--z:130px;--d:-1s"><b>Where is gate five?</b><span>وير ايز قيت فايف</span></div><div class="vt-word" aria-hidden="true" style="bottom:-2%;inset-inline-end:-12%;--z:170px;--d:-3s"><b>Let me check</b><span>لت مي تشك</span></div><div class="vt-word" aria-hidden="true" style="top:-2%;inset-inline-start:-14%;--z:60px;--d:-5s"><b>No problem</b><span>نو بروبلم</span></div></div></div>
+    <div class="callstage vt" id="heroVisual">
+      <canvas class="vt-cv" id="vtCv" aria-hidden="true"></canvas>
+      <div class="vt-copy" id="vtCopy">
+        <svg class="vt-pic" id="vtPic" data-p="call"></svg>
+        <div class="vt-scene" id="vtScene"></div>
+        <div class="vt-en" id="vtEn" dir="ltr"></div>
+        <div class="vt-say" id="vtSay" dir="rtl"></div>
+        <div class="vt-mean" id="vtMean" dir="rtl"></div>
+        <button type="button" class="say-btn" data-say-from="vtEn" aria-label="Listen"><svg data-i="speaker"></svg></button>
+        <div class="vt-dots" id="vtDots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1393,29 +1292,7 @@ nav.primary-nav{ gap:clamp(14px,1.6vw,28px); }
   <div class="rc-stage"><div class="rc-ring" id="rcRing"></div><div class="rc-fade"></div></div>
 </section>
 
-<section id="forWho" class="v2-sec" style="background:var(--bg);">
-  <div class="container">
-    <div class="v2-head"><h2 class="arabic-h" data-ar="وين تحتاج الانجليزي؟" data-en="Where do you need English?">وين تحتاج الانجليزي؟</h2><p class="arabic" data-ar="قل لنا وين تستخدمه، ونبني لك الخطه على هالمكان." data-en="Tell us where you use it and we build your plan around that place.">قل لنا وين تستخدمه، ونبني لك الخطه على هالمكان.</p></div>
-    <div class="aud" id="audWrap"></div>
-  </div>
-</section>
-
-
 <!-- PERSONALIZED PLAN PREVIEW -->
-<section id="personalPreview" class="v2-sec" style="background:var(--surface); border-block:1px solid var(--border);">
-  <div class="container">
-    <div class="v2-head"><h2 class="arabic-h" data-ar="نفس الموقف، بس هالمره ترد" data-en="Same moment, but this time you answer">نفس الموقف، بس هالمره ترد</h2><p class="arabic" data-ar="اختر موقف وشوف الفرق." data-en="Pick a moment and see the difference.">اختر موقف وشوف الفرق.</p></div>
-    <div class="ba-tabs" id="baTabs"></div>
-    <div class="ba-stage">
-      <div class="ba-side ba-before" id="baBefore"><svg data-ill="before" class="ba-ill" width="110" height="110"></svg><span class="ba-label" data-ar="قبل" data-en="Before">قبل</span><p class="ba-thought" id="baThought"></p></div>
-      <span class="ba-arrow" aria-hidden="true"><svg data-i="arrow" width="20" height="20"></svg></span>
-      <div class="ba-side ba-after" id="baAfter"><svg data-ill="after" class="ba-ill" width="110" height="110"></svg><span class="ba-label" data-ar="بعد PEL" data-en="After PEL">بعد PEL</span><div class="ba-row"><div class="ba-en" id="baEn"></div><button type="button" class="say-btn" data-say-from="baEn" aria-label="Listen"><svg data-i="speaker"></svg></button></div><div class="ba-line pr" id="baSay"></div><div class="ba-line mn" id="baMean"></div></div>
-    </div>
-    <div class="v2-cta"><button type="button" class="btn-gold magnetic" data-open-path style="padding:15px 30px; font-size:.98rem;"><svg data-i="route" width="16" height="16"></svg><span>اعرف بدايتي</span></button><a href="https://wa.me/966557178070?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%20%D8%A7%D8%B3%D8%AA%D8%A7%D8%B0%20%D9%81%D8%B1%D8%A7%D8%B3%D8%8C%20%D8%A7%D8%A8%D9%8A%20%D8%A7%D8%B3%D8%A7%D9%84%20%D8%B9%D9%86%20%D8%A7%D9%84%D9%85%D9%86%D8%B5%D9%87" target="_blank" rel="noopener" class="btn-wa magnetic" data-magnetic><svg data-i="chat" width="16" height="16"></svg><span data-ar="راسل استاذ فراس" data-en="Message Tutor Firas">راسل استاذ فراس</span></a></div>
-    <p class="v2-note" data-ar="اختبر مستواك، وشوف نتيجتك قبل لا تدفع." data-en="Take the level test and see your result before you pay.">اختبر مستواك، وشوف نتيجتك قبل لا تدفع.</p>
-  </div>
-</section>
-
 <!-- PERSONALIZED HOME (returning students with a saved plan) -->
 <section class="plan-home" id="planHome" style="display:none;" aria-label="Your learning plan"></section>
 
@@ -1603,12 +1480,12 @@ nav.primary-nav{ gap:clamp(14px,1.6vw,28px); }
     <div class="footer-top">
       <div class="footer-brand" dir="rtl">
         <a href="#" class="logo"><img class="pel-logo" src="brand/pel-wordmark.svg" alt="PEL"><img class="pel-logo pel-logo-light" src="brand/pel-wordmark-dark.svg" alt="PEL"></a>
-        <p class="arabic">PEL منصه تعليميه من PEL LLC: من اول كلمه لين ترد على المكالمه بنفسك.</p>
+        <p class="arabic">PEL منصه امريكيه من PEL LLC في فلوريدا: من اول كلمه لين ترد على المكالمه بنفسك.</p>
       </div>
       <div class="footer-col" dir="rtl">
         <h5>المنصه</h5>
         <ul>
-          <li><a href="#personalPreview">خطتك</a></li>
+          <li></li>
           <li><a href="#pricing">الباقات</a></li>
           <li><a href="#liveTeaching">تعلم وممارسه</a></li>
         </ul>
@@ -1732,7 +1609,7 @@ function applyIndexLang(lang){
   var heroH1=document.querySelector('.hero h1.arabic-h');
   if(heroH1){ var h1ar = (window.PEL_SITE && PEL_SITE.heroHeadline && PEL_SITE.heroHeadline.ar) ? PEL_SITE.heroHeadline.ar : 'سنين تدرس انجليزي… وبس يكلمك واحد تسكت؟'; var h1en = (window.PEL_SITE && PEL_SITE.heroHeadline && PEL_SITE.heroHeadline.en) ? PEL_SITE.heroHeadline.en : 'Years of studying English… and you still freeze when someone talks to you?'; setLang(heroH1, h1ar, h1en); }
   var heroSub=document.querySelector('.hero .hero-sub');
-  if(heroSub){ var hsar = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.ar) ? PEL_SITE.heroSub.ar : 'يرن جوالك فتتجاهله. تكتب الايميل بالمترجم وقلبك يدق. وبالاجتماع تتمنى احد يسبقك بالكلام. السبب طريقه قديمه قايمه على الحفظ. PEL يعلمك من مواقفك الحقيقيه: تسمع وتنطق وتتصحح، وتتدرب مع استاذ فراس لين يطلع ردك طبيعي.'; var hsen = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.en) ? PEL_SITE.heroSub.en : 'Your phone rings and you let it go. You write emails with a translator and a pounding heart. In meetings you hope someone speaks before you. The cause is an old method built on memorizing. PEL teaches you from your real moments: you listen, speak and get corrected, and you train with Tutor Firas until your answer comes out naturally.'; setLang(heroSub, hsar, hsen); }
+  if(heroSub){ var hsar = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.ar) ? PEL_SITE.heroSub.ar : 'تفهم الانجليزي اذا قراته، وبس يكلمك واحد تسكت. الطريقه القديمه علمتك تحفظ ومحد علمك تتكلم. في PEL تتكلم من اول درس، واستاذ فراس يسمعك ويصحح لك. المنصه امريكيه مقرها فلوريدا، والانجليزي اللي تتعلمه هو اللي يتكلمونه هناك.'; var hsen = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.en) ? PEL_SITE.heroSub.en : 'You can read English fine, but when someone talks to you, you go quiet. The old way taught you to memorize and nobody taught you to speak. At PEL you speak from the first lesson, and Tutor Firas listens and corrects you. The platform is American, based in Florida, and the English you learn is the English spoken there.'; setLang(heroSub, hsar, hsen); }
   var pathHint=document.querySelector('.path-hint .arabic');
   if(pathHint) setLang(pathHint, 'اختبر مستواك مجانا، وشوف وش يوقفك بالضبط', 'Find out what stops you, it\'s free');
   var pathHintEn=document.querySelector('.path-hint-en');
@@ -1912,7 +1789,7 @@ function applyIndexLang(lang){
   }
   // footer + remaining section heads (minimal bilingual to satisfy full-site requirement)
   var footerBrandP=document.querySelector('.footer-brand p.arabic');
-  if(footerBrandP) footerBrandP.textContent = lang==='ar' ? 'PEL منصه تعليميه من PEL LLC: من اول كلمه لين ترد على المكالمه بنفسك.' : 'PEL, a learning platform by PEL LLC: from your first word to answering the call yourself.';
+  if(footerBrandP) footerBrandP.textContent = lang==='ar' ? 'PEL منصه امريكيه من PEL LLC في فلوريدا: من اول كلمه لين ترد على المكالمه بنفسك.' : 'PEL, an American learning platform by PEL LLC in Florida, United States: from your first word to answering the call yourself.';
   var faqH2=document.querySelector('#faq .section-head h2');
   if(faqH2) faqH2.textContent = lang==='ar' ? 'اسئله قبل التسجيل' : 'Questions before you sign up';
   var finalH2=document.querySelector('.final-cta h2');
@@ -2213,9 +2090,9 @@ mobileMenu.querySelectorAll('a, button').forEach(a => a.addEventListener('click'
 const dot = document.getElementById('cursorDot');
 const ring = document.getElementById('cursorRing');
 let mx=0,my=0, rx=0, ry=0;
-window.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; dot.style.left=mx+'px'; dot.style.top=my+'px'; });
-function ringLoop(){ rx += (mx-rx)*0.18; ry += (my-ry)*0.18; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(ringLoop); }
-ringLoop();
+let ringOn=false;
+window.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; dot.style.left=mx+'px'; dot.style.top=my+'px'; if(!ringOn){ ringOn=true; requestAnimationFrame(ringLoop); } }, {passive:true});
+function ringLoop(){ rx += (mx-rx)*0.18; ry += (my-ry)*0.18; ring.style.left=rx+'px'; ring.style.top=ry+'px'; if(Math.abs(mx-rx)<.4 && Math.abs(my-ry)<.4){ ringOn=false; return; } requestAnimationFrame(ringLoop); }
 document.querySelectorAll('a, button').forEach(el => {
   el.addEventListener('mouseenter', () => ring.classList.add('hover'));
   el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
@@ -2816,55 +2693,29 @@ window.addEventListener('storage', function(e){ if(e.key==='pel_account_prefs') 
   function $(s,r){ return (r||document).querySelector(s); }
   function $$(s,r){ return Array.prototype.slice.call((r||document).querySelectorAll(s)); }
 
-  /* ---------- scene data ---------- */
-  var SCENES = [
-    { av:'D', name:{ar:'مكالمه من عميل',en:'Call from a client'}, st:{ar:'يتصل الحين',en:'Calling now'},
-      inEn:'Hello, is this a good time to talk?', inMean:'هلا، مناسب نتكلم الحين؟', inSay:'هيلو، ايز ذيس ا قود تايم تو توك',
-      outEn:'Yes, go ahead.', outSay:'يس، قو اهيد', outMean:'ايوه، تفضل' },
-    { av:'M', name:{ar:'ايميل من المدير',en:'Email from your manager'}, st:{ar:'وصلك الحين',en:'Just arrived'},
-      inEn:'Could you send me the details by today?', inMean:'تقدر ترسل لي التفاصيل قبل نهاية اليوم؟', inSay:'كود يو سند مي ذا ديتيلز باي توداي',
-      outEn:'Sure, I will send them in an hour.', outSay:'شور، اي ويل سند ذيم ان ان اور', outMean:'اكيد، برسلها خلال ساعه' },
-    { av:'T', name:{ar:'اجتماع الفريق',en:'Team meeting'}, st:{ar:'جاي دورك',en:'Your turn'},
-      inEn:'Does that work for you?', inMean:'هذا يناسبك؟', inSay:'داز ذات ورك فور يو',
-      outEn:'Yes, that works for me.', outSay:'يس، ذات ووركس فور مي', outMean:'ايوه، يناسبني' },
-    { av:'A', name:{ar:'مطار لندن',en:'London airport'}, st:{ar:'موظف الجوازات',en:'Passport control'},
-      inEn:'What is the purpose of your visit?', inMean:'وش سبب زيارتك؟', inSay:'وات ايز ذا بربوس اوڤ يور ڤيزت',
-      outEn:'I am here for tourism.', outSay:'اي ام هير فور توريزم', outMean:'جاي سياحه' }
+  /* ---------- hero phrase (text only, the canvas does the motion) ---------- */
+  var HP = [
+    { p:'call', sc:{ar:'مكالمه عميل',en:'Client call'}, en:'Hello, is this a good time to talk?', pr:'هيلو، ايز ذيس ا قود تايم تو توك', mn:'هلا، مناسب نتكلم الحين؟' },
+    { p:'mail', sc:{ar:'ايميل من المدير',en:'Email from your manager'}, en:'Could you send me the details?', pr:'كود يو سند مي ذا ديتيلز', mn:'تقدر ترسل لي التفاصيل؟' },
+    { p:'meeting', sc:{ar:'اجتماع الفريق',en:'Team meeting'}, en:'I agree, and I would like to add one point.', pr:'اي اقري، اند اي وود لايك تو اد وان بوينت', mn:'اوافقك، وابي اضيف نقطه.' },
+    { p:'plane', sc:{ar:'مطار لندن',en:'London airport'}, en:'I am here for tourism, for one week.', pr:'اي ام هير فور توريزم، فور وان ويك', mn:'جاي سياحه، لمده اسبوع.' },
+    { p:'cup', sc:{ar:'مطعم',en:'Restaurant'}, en:'Can I get the receipt, please?', pr:'كان اي قت ذا ريسيت، بليز', mn:'ممكن الفاتوره لو سمحت؟' }
   ];
-  var QS = { ar:{ you:'ردك', ok:'ردينا بثقه' }, en:{ you:'Your reply', ok:'Answered with confidence' } };
-
-  var sc = $('#callScene'); var si = 0, timers = [];
-  function clr(){ timers.forEach(clearTimeout); timers=[]; }
-  function at(ms,fn){ timers.push(setTimeout(fn,ms)); }
-  function setScene(i){
-    var s = SCENES[i];
-    $('#csAva').textContent = s.av; $('#csName').textContent = t(s.name); $('#csState').lastChild.textContent = ' ' + t(s.st);
-    $('#csInEn').textContent = s.inEn; $('#csInMean').textContent = s.inMean; $('#csInSay').textContent = s.inSay;
-    $('#csOutEn').textContent = s.outEn; $('#csOutSay').textContent = s.outSay; $('#csOutMean').textContent = s.outMean;
-    $('#csOutTag').textContent = QS[L].you; $('#csOkTxt').textContent = QS[L].ok;
-    $('#csInMean').style.display = L==='ar' ? '' : 'none';
-    $('#csOutMean').style.display = L==='ar' ? '' : 'none';
-    $$('#csFoot i').forEach(function(d,k){ d.classList.toggle('on', k===i); });
+  var hi = 0, hTimer, vtc = $('#vtCopy'), sc = vtc;
+  function heroPaint(){
+    if(!vtc) return; var p = HP[hi];
+    $('#vtScene').textContent = t(p.sc); $('#vtEn').textContent = p.en; $('#vtSay').textContent = p.pr;
+    var mn = $('#vtMean'); mn.textContent = p.mn; mn.style.display = L==='ar' ? '' : 'none';
+    var pic = $('#vtPic'); if(window.PELI && PELI.PIC[p.p]) pic.innerHTML = PELI.PIC[p.p];
+    $$('#vtDots i').forEach(function(d,k){ d.classList.toggle('on',k===hi); });
   }
-  var ids = ['csIn','csInMean','csInSay','csTyping','csOut','csOutSay','csOutMean','csOk'];
-  function reset(){ ids.forEach(function(id){ $('#'+id).classList.remove('show'); }); $('#csWave').classList.remove('live'); }
-  function showAll(){ ids.forEach(function(id){ if(id!=='csTyping') $('#'+id).classList.add('show'); }); }
-  function play(){
-    clr(); reset(); setScene(si);
-    if(RM || document.hidden){ showAll(); if(RM) at(6500,next); return; }
-    var sh = function(id){ return function(){ $('#'+id).classList.add('show'); }; };
-    at(250, sh('csIn'));
-    at(800, function(){ $('#csWave').classList.add('live'); });
-    at(1700, sh('csInMean')); at(2500, sh('csInSay'));
-    at(2600, function(){ $('#csWave').classList.remove('live'); });
-    at(3600, sh('csTyping'));
-    at(4900, function(){ $('#csTyping').classList.remove('show'); $('#csOut').classList.add('show'); });
-    at(5400, sh('csOutSay')); at(5900, sh('csOutMean')); at(6500, sh('csOk'));
-    at(8600, function(){ reset(); at(500,next); });
+  function heroNext(){
+    var v = $('#heroVisual'); if(document.hidden || (v && v.classList.contains('paused'))) return;
+    vtc.classList.add('out');
+    setTimeout(function(){ hi=(hi+1)%HP.length; heroPaint(); vtc.classList.remove('out'); window.dispatchEvent(new Event('vt:pulse')); }, 380);
   }
-  function next(){ si=(si+1)%SCENES.length; play(); }
-  if(sc){ play(); document.addEventListener('visibilitychange', function(){ if(document.hidden) clr(); else play(); }); }
-
+  function heroKick(){ clearInterval(hTimer); if(!RM) hTimer = setInterval(heroNext, 5400); }
+  function play(){ heroPaint(); heroKick(); }
   /* ---------- ticker ---------- */
   var RC = [
     {p:'call',t:{ar:'مكالمه عميل',en:'Client call'},en:'How can I help you?',pr:'هاو كان اي هيلب يو'},
@@ -2874,7 +2725,9 @@ window.addEventListener('storage', function(e){ if(e.key==='pel_account_prefs') 
     {p:'plane',t:{ar:'مطار وسفر',en:'Airport'},en:'Where is gate five?',pr:'وير ايز قيت فايف'},
     {p:'cup',t:{ar:'مطعم وكوفي',en:'Cafe'},en:'Can I get a latte, please?',pr:'كان اي قت ا لاتيه بليز'},
     {p:'lecture',t:{ar:'قاعه الجامعه',en:'University'},en:'Could you explain that again?',pr:'كود يو اكسبلين ذات اقين'},
-    {p:'exam',t:{ar:'ستب وايلتس',en:'STEP and IELTS'},en:'In my opinion, it depends.',pr:'ان ماي اوبينيون، ات ديبيندز'}
+    {p:'exam',t:{ar:'ستب وايلتس',en:'STEP and IELTS'},en:'In my opinion, it depends.',pr:'ان ماي اوبينيون، ات ديبيندز'},
+    {p:'chat',t:{ar:'واتساب مع اجنبي',en:'Chatting with a foreigner'},en:'Nice to meet you!',pr:'نايس تو ميت يو'},
+    {p:'hotel',t:{ar:'فندق',en:'Hotel'},en:'I have a reservation.',pr:'اي هاف ا ريزرڤيشن'}
   ];
   var TK_UNUSED = { ar:['مكالمه مع عميل','ايميل شغل','اجتماع بالانجليزي','مقابله وظيفه','مطار وسفر','مطعم وكوفي','ستب','توفل','ايلتس','محاضره بالجامعه','مشروع تخرج','واتساب مع اجانب'],
              en:['Client calls','Work emails','Meetings','Job interviews','Airports and travel','Cafes and restaurants','STEP','TOEFL','IELTS','University lectures','Class projects','Chatting with foreigners'] };
@@ -2883,78 +2736,6 @@ window.addEventListener('storage', function(e){ if(e.key==='pel_account_prefs') 
     tr.innerHTML = RC.map(function(c,k){ return '<div class="rc" style="--k:'+k+'"><svg data-p="'+c.p+'"></svg><h3 class="arabic-h" dir="'+(L==='ar'?'rtl':'ltr')+'">'+c.t[L]+'</h3><div class="en">'+c.en+'</div><div class="pr">'+c.pr+'</div></div>'; }).join('');
   }
 
-  /* ---------- who is it for ---------- */
-  var AUD = [
-    { ill:'student',
-      title:{ar:'طالب مدرسه او جامعه',en:'School or university student'},
-      pain:{ar:'المحاضره بالانجليزي والمشروع بالانجليزي، وانت تترجم كل جمله بالراس.',en:'Lectures and projects are in English, and you translate every sentence in your head.'},
-      pro:{ar:'نبني لك اساس تفهم فيه المحاضره، وتشارك بالقاعه، وتكتب بحثك بثقه.',en:'We build a base for following lectures, speaking up in class and writing your assignments with confidence.'} },
-    { ill:'work',
-      title:{ar:'موظف',en:'Employee'},
-      pain:{ar:'اجتماع، ايميل، عميل اجنبي، وقلبك يدق قبل لا تفتح فمك.',en:'Meetings, emails, foreign clients, and your heart pounds before you open your mouth.'},
-      pro:{ar:'تتعلم جمل الشغل الحقيقيه، تنطقها وتكتبها صح، ويصححك استاذ فراس لين يصير ردك طبيعي.',en:'You learn real workplace phrases, say and write them correctly, and Tutor Firas corrects you until your replies feel natural.'} },
-    { ill:'exam',
-      title:{ar:'تجهيز اختبارات: ستب، توفل، ايلتس',en:'Exam prep: STEP, TOEFL, IELTS'},
-      pain:{ar:'الموعد قرب وتبي تعرف وين نقاط ضعفك.',en:'The test date is close and you want to know exactly where you are weak.'},
-      pro:{ar:'تتدرب على اسئله بنفس نظام الاختبار وتتصحح كتابتك، مع حصص مباشره مع استاذ فراس حسب باقتك.',en:'You practice questions in the real exam format and get your writing corrected, with live classes with Tutor Firas depending on your plan.'} }
-  ];
-  var audOn = 0, audTimer;
-  function renderAud(){
-    var w = $('#audWrap'); if(!w) return;
-    w.innerHTML = AUD.map(function(a,i){
-      return '<div class="aud-item'+(i===audOn?' on':'')+'" data-i="'+i+'" dir="'+(L==='ar'?'rtl':'ltr')+'" tabindex="0" role="button">'+
-        '<span class="aud-ico"><svg data-ill="'+a.ill+'" width="104" height="104"></svg></span>'+
-        '<h3 class="arabic-h">'+t(a.title)+'</h3><p class="aud-pain">'+t(a.pain)+'</p><p class="aud-promise">'+t(a.pro)+'</p><span class="aud-bar"><i></i></span></div>';
-    }).join('');
-    $$('.aud-item',w).forEach(function(el){
-      var go=function(){ audOn=+el.dataset.i; audKick(); renderAudState(); };
-      el.addEventListener('click',go); el.addEventListener('mouseenter',function(){ if(!el.classList.contains('on')) go(); });
-      el.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(); } });
-    });
-  }
-  function renderAudState(){
-    $$('#audWrap .aud-item').forEach(function(el,i){
-      var on=i===audOn; el.classList.toggle('on',on);
-      var bar=$('.aud-bar i',el); if(bar){ bar.style.animation='none'; void bar.offsetWidth; bar.style.animation=''; }
-    });
-  }
-  function audKick(){ clearInterval(audTimer); if(!RM) audTimer=setInterval(function(){ audOn=(audOn+1)%AUD.length; renderAudState(); },5500); }
-
-  /* ---------- before / after ---------- */
-  var BA = [
-    { tab:{ar:'مكالمه',en:'A call'},
-      b:{ar:'يرن الجوال، وتتجاهله وتقول: بدق عليه بعدين.',en:'The phone rings, you let it go and say you will call back later.'},
-      en:'Hello, how can I help you?', say:'هيلو، هاو كان اي هيلب يو', mean:{ar:'هلا، كيف اقدر اخدمك؟',en:''} },
-    { tab:{ar:'ايميل',en:'An email'},
-      b:{ar:'تكتبه بالمترجم، وتعيد قراءته عشر مرات، وتخليه بالمسوده.',en:'You write it with a translator, reread it ten times, and leave it in drafts.'},
-      en:'Thank you for your email. I will reply by tomorrow.', say:'ثانك يو فور يور ايميل. اي ويل ريبلاي باي تومورو', mean:{ar:'شكرا على ايميلك، برد عليك قبل بكره.',en:''} },
-    { tab:{ar:'اجتماع',en:'A meeting'},
-      b:{ar:'الكل يتكلم وانت تهز راسك وتتمنى احد يسبقك.',en:'Everyone talks while you nod and hope someone speaks before you.'},
-      en:'I agree, and I would like to add one point.', say:'اي اقري، اند اي وود لايك تو اد وان بوينت', mean:{ar:'اوافقك، وابي اضيف نقطه.',en:''} },
-    { tab:{ar:'سفر',en:'Travel'},
-      b:{ar:'تقف عند الجوازات وتسلم جوازك وانت ساكت.',en:'You stand at passport control and hand over your passport in silence.'},
-      en:'I am here for tourism, for one week.', say:'اي ام هير فور توريزم، فور وان ويك', mean:{ar:'جاي سياحه، لمده اسبوع.',en:''} },
-    { tab:{ar:'اختبار',en:'An exam'},
-      b:{ar:'تحفظ القواعد، وتتبخر اول ما تدخل القاعه.',en:'You memorize the rules and they evaporate the moment you enter the hall.'},
-      en:'In my opinion, technology makes life easier.', say:'ان ماي اوبينيون، تكنولوجي ميكس لايف ايزير', mean:{ar:'برايي، التقنيه تسهل الحياه.',en:''} }
-  ];
-  var baOn = 0, baTimer;
-  function renderBaTabs(){
-    var w=$('#baTabs'); if(!w) return;
-    w.innerHTML = BA.map(function(b,i){ return '<button type="button" class="ba-tab'+(i===baOn?' on':'')+'" data-i="'+i+'">'+t(b.tab)+'<i></i></button>'; }).join('');
-    $$('.ba-tab',w).forEach(function(el){ el.addEventListener('click',function(){ baOn=+el.dataset.i; baKick(); renderBa(true); }); });
-  }
-  function renderBa(anim){
-    var b=BA[baOn];
-    $$('#baTabs .ba-tab').forEach(function(el,i){ el.classList.toggle('on',i===baOn); var bar=$('i',el); bar.style.animation='none'; void bar.offsetWidth; bar.style.animation=''; });
-    $('#baThought').textContent = t(b.b);
-    $('#baEn').textContent = b.en;
-    $('#baSay').textContent = (L==='ar'?'انطقها: ':'Say it: ') + b.say;
-    var mn=$('#baMean'); mn.textContent = b.mean.ar; mn.style.display = L==='ar'?'':'none';
-    if(anim && !RM){ ['baBefore','baAfter'].forEach(function(id){ var e=$('#'+id); e.classList.remove('ba-swap'); void e.offsetWidth; e.classList.add('ba-swap'); }); }
-  }
-  function baKick(){ clearInterval(baTimer); if(!RM) baTimer=setInterval(function(){ baOn=(baOn+1)%BA.length; renderBa(true); },5200); }
-
   /* ---------- static text swap + language hook ---------- */
   function applyStatic(){
     $$('[data-ar][data-en]').forEach(function(el){
@@ -2962,8 +2743,9 @@ window.addEventListener('storage', function(e){ if(e.key==='pel_account_prefs') 
       el.setAttribute('dir', L==='ar'?'rtl':'ltr'); el.setAttribute('lang', L);
     });
   }
-  function refresh(){ L=curLang(); applyStatic(); renderTicker(); renderAud(); renderBaTabs(); renderBa(false); if(sc) play(); }
-  refresh(); audKick(); baKick();
+  function refresh(){ L=curLang(); applyStatic(); renderTicker(); play(); }
+  refresh();
+  if('IntersectionObserver' in window){ var sio=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting) e.target.removeAttribute('data-off'); else e.target.setAttribute('data-off',''); }); },{rootMargin:'120px'}); $$('section').forEach(function(x){ sio.observe(x); }); }
   document.addEventListener('DOMContentLoaded',function(){ document.querySelectorAll('[data-sadu]').forEach(function(el){ if(window.PELI) el.innerHTML=PELI.sadu(); }); });
   if(window.PELSCENE) document.querySelectorAll('.pricing-grid .card, .pricing-grid > *').forEach(function(){});
   var prev = window.applyIndexLang;
