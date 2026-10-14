@@ -20011,6 +20011,7 @@ function renderVocabulary(){
     {id:'everyday', icon:'sun', en:'Everyday Words', ar: 'كلمات يوميه', desc_en:'Common words for daily life', desc_ar: 'كلمات تستخدمها كل يوم', filter: v => v.difficulty==='Beginner'},
     {id:'beginners', icon:'graduation-cap', en:'Essential for Beginners', ar: 'اساسيات للمبتديين', desc_en:'Start here, the most useful words', desc_ar: 'ابدا من هنا، انفع الكلمات', filter: v => v.difficulty==='Beginner' || v.difficulty==='Intermediate'},
     {id:'advanced', icon:'zap', en:'Advanced Vocabulary', ar: 'كلمات متقدمه', desc_en:'Challenge yourself with harder words', desc_ar: 'تحدى نفسك بكلمات اصعب', filter: v => v.difficulty==='Advanced'},
+    {id:'body', icon:'person-standing', en:'Body Parts', ar: 'اعضاء الجسم', desc_en:'Head to toe, the words every student needs', desc_ar: 'من الراس للرجل، كلمات كل طالب يحتاجها', filter: v => v.category==='Body Parts'},
     {id:'all', icon:'library', en:'All Words', ar: 'كل الكلمات', desc_en:'Browse the full vocabulary bank', desc_ar: 'شوف كل الكلمات', filter: () => true},
   ];
   const collectionGrid = document.getElementById('vvCollectionGrid');
