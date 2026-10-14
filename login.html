@@ -615,14 +615,14 @@ input{ font-size:16px; }
     <p class="arabic brand-arabic">دروسك، تدريب النطق، تصحيح الكتابة، وحالة اشتراكك، كلها في مكان واحد</p>
 
     <div class="dash-preview lp-wrap" aria-hidden="true">
-      <div class="vt lp-vt"><div class="vt-world"><div class="vt-rings" aria-hidden="true"><span class="vt-ring" style="--i:0"><svg viewBox="0 0 200 200"><path d="M60 8H140L192 60V140L140 192H60L8 140V60Z"/></svg></span><span class="vt-ring" style="--i:1"><svg viewBox="0 0 200 200"><path d="M60 8H140L192 60V140L140 192H60L8 140V60Z"/></svg></span><span class="vt-ring" style="--i:2"><svg viewBox="0 0 200 200"><path d="M60 8H140L192 60V140L140 192H60L8 140V60Z"/></svg></span><span class="vt-ring" style="--i:3"><svg viewBox="0 0 200 200"><path d="M60 8H140L192 60V140L140 192H60L8 140V60Z"/></svg></span><span class="vt-ring" style="--i:4"><svg viewBox="0 0 200 200"><path d="M60 8H140L192 60V140L140 192H60L8 140V60Z"/></svg></span><span class="vt-ring" style="--i:5"><svg viewBox="0 0 200 200"><path d="M60 8H140L192 60V140L140 192H60L8 140V60Z"/></svg></span><span class="vt-ring" style="--i:6"><svg viewBox="0 0 200 200"><path d="M60 8H140L192 60V140L140 192H60L8 140V60Z"/></svg></span></div><div class="vt-core"><div class="lp">
+      <div class="vt lp-vt"><canvas class="vt-cv" aria-hidden="true"></canvas><div class="vt-core"><div class="lp">
         <div class="lp-top"><span class="lp-pulse"></span><span class="lp-lab" id="lpLab">عبارة اليوم</span><span class="lp-scene" id="lpScene"></span></div>
         <div class="lp-wave" id="lpWave"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
         <div class="lp-en" id="lpEn" dir="ltr"></div>
         <div class="lp-say" id="lpSay" dir="rtl"></div>
         <div class="lp-mean" id="lpMean" dir="rtl"></div>
         <div class="lp-dots" id="lpDots"><i></i><i></i><i></i><i></i><i></i></div>
-      </div></div></div></div>
+      </div></div></div>
       <div class="dp-sub-card">
         <div class="dp-sub-head">
           <div class="dp-sub-icon">
@@ -1473,10 +1473,10 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
 
 
 </script><style id="pel-v3">
-.lp-vt{ min-height:0; padding:0; perspective:1100px; }
-.lp-vt .vt-world{ width:100%; }
-.lp-vt .vt-ring{ width:430px; height:430px; margin:-215px 0 0 -215px; }
-.lp-vt .vt-core{ position:relative; }
+.lp-vt{ aspect-ratio:auto; min-height:0; padding:34px 22px; contain:layout paint; }
+.lp-vt::after{ display:none; }
+.lp-vt .vt-cv{ opacity:.7; }
+.lp-vt .vt-core{ position:relative; z-index:1; }
 .card-sadu{ position:absolute; inset-inline:0; top:0; opacity:.55; }
 .auth-card::before{ display:none !important; }
 .login-star{ position:absolute; inset-inline-start:-150px; top:-110px; width:420px; color:var(--gold); opacity:.1; animation:starSpin 180s linear infinite; pointer-events:none; }
