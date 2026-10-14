@@ -52,15 +52,27 @@ blindly; if you suspect a missed statement, write a NEW forward migration.
    `000000000001_auth_rate_limit.sql` (breaking change, needs commit) or add a
    manual tracker row — decide with the owner, do not do it silently.
 
-2. **Duplicate version `202610070004`.** Two files share this version:
-   `202610070004_db_data_quality_fixes.sql` and
-   `202610070004_db_quality_batch_fix.sql`. Only `db_quality_batch_fix` is in
-   the tracker; `db_data_quality_fixes` is applied live but not tracked. Also
-   duplicates exist at `202610030001`, `202610030002`, `202610030003`,
-   `202610110001`. A future `supabase db push --linked --dry-run` may error
-   or skip these. **Do not rename historical files or insert duplicate
-   tracker rows to "clean this up" without owner approval** — verify with
-   `supabase --workdir <repo> db push --linked --dry-run` first.
+2. **Duplicate versions — CONFIRMED via dry-run (2026-10-14).**
+   `supabase db push --linked --dry-run` reports:
+   ```
+   Skipping migration auth_rate_limit.sql... (file name must match pattern "<timestamp>_name.sql")
+   Found local migration files to be inserted before the last migration on remote database.
+   Rerun the command with --include-all flag to apply these migrations:
+     supabase/migrations/202610030001_update_plan_pricing.sql
+     supabase/migrations/202610030002_fix_v_sound_transliteration_in_exercises.sql
+     supabase/migrations/202610030003_record_v_sound_transliteration_sql.sql
+     supabase/migrations/202610070004_db_quality_batch_fix.sql
+     supabase/migrations/202610110001_fix_p_translit_pen_reference.sql
+   ```
+   These 5 files are applied live but only one file per duplicate version is
+   in the tracker. Running `db push --include-all` would re-run them.
+   Two files share version `202610070004`
+   (`db_data_quality_fixes` + `db_quality_batch_fix`) — only
+   `db_quality_batch_fix` is tracked; the other is applied but untracked.
+   Same for `202610030001/2/3` and `202610110001`.
+   **Do not rename historical files, insert duplicate tracker rows, or run
+   `--include-all` without owner approval.** Prefer `tools/check_migrations.py`
+   + `tools/sql.py` for future migrations until this is cleaned up.
 
 3. **Oct-13 migrations (`202610130001`, `202610130002`) are in the tracker**
    but were applied by the previous session — not re-verified here.
