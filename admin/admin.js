@@ -2871,12 +2871,24 @@ function programForm(){
    Writes to plan_pricing (public-read on index) and site_settings
    (hero / pricing copy). No payment gateway - CTAs are WhatsApp.
    ============================================================ */
+var LC_FIELDS = [
+  ['lc_label_ar','عنوان البطاقه (عربي)','Login card label (AR)'],['lc_label_en','عنوان البطاقه (انجليزي)','Login card label (EN)'],
+  ['lc_name_start_ar','اسم مسار ابد من الصفر (عربي)','Start track name (AR)'],['lc_name_start_en','اسم مسار ابد من الصفر (انجليزي)','Start track name (EN)'],
+  ['lc_note_start_ar','وصف ابد من الصفر (عربي)','Start track note (AR)'],['lc_note_start_en','وصف ابد من الصفر (انجليزي)','Start track note (EN)'],
+  ['lc_name_exam_ar','اسم مسار التجهيز (عربي)','Exam track name (AR)'],['lc_name_exam_en','اسم مسار التجهيز (انجليزي)','Exam track name (EN)'],
+  ['lc_note_exam_ar','وصف التجهيز (عربي)','Exam track note (AR)'],['lc_note_exam_en','وصف التجهيز (انجليزي)','Exam track note (EN)'],
+  ['lc_cta_ar','نص الزر (عربي)','Button text (AR)'],['lc_cta_en','نص الزر (انجليزي)','Button text (EN)'],
+  ['lc_subt_ar','عنوان لما ينتهي الاشتراك (عربي)','Subscription end title (AR)'],['lc_subt_en','عنوان لما ينتهي الاشتراك (انجليزي)','Subscription end title (EN)'],
+  ['lc_sub1_ar','السطر 1 (عربي)','Line 1 (AR)'],['lc_sub1_en','السطر 1 (انجليزي)','Line 1 (EN)'],
+  ['lc_sub2_ar','السطر 2 (عربي)','Line 2 (AR)'],['lc_sub2_en','السطر 2 (انجليزي)','Line 2 (EN)'],
+  ['lc_sub3_ar','السطر 3 (عربي)','Line 3 (AR)'],['lc_sub3_en','السطر 3 (انجليزي)','Line 3 (EN)']
+];
 async function billingView(){
   $('viewArea').innerHTML = pageHead(lang==='ar'?'الاسعار وصفحه البدايه':'Billing & Index',
     lang==='ar'?'عدل اسعار الباقات ونص الصفحه البدايه - التغييرات توصل لـ /index فورا':'Edit plan prices and index copy - changes reach /index immediately') + loadingBlock();
   var [pp, ss] = await Promise.all([
     pelTableSelect('plan_pricing', '*', { order: 'tier,duration_months' }),
-    pelTableSelect('site_settings', 'key,value', { in: { key: ['hero_headline_ar','hero_headline_en','hero_sub_ar','hero_sub_en','pricing_note_ar','pricing_note_en','faqs'] } })
+    pelTableSelect('site_settings', 'key,value', { in: { key: ['hero_headline_ar','hero_headline_en','hero_sub_ar','hero_sub_en','pricing_note_ar','pricing_note_en','faqs'].concat(LC_FIELDS.map(function(f){return f[0];})) } })
   ]);
   if(pp.error || ss.error){
     viewArea.innerHTML = errBlock(lang==='ar'?'فشل تحميل بيانات التسعير':'Failed to load pricing data');
@@ -2933,6 +2945,9 @@ async function billingView(){
   var faqHtml = '<div class="section-title">'+(lang==='ar'?'الاسئله الشايعه':'FAQs (index)')+'</div>' +
     '<div id="faqList">'+faqArr.map(faqRowHtml).join('')+'</div>' +
     '<div class="btn-row" style="margin-bottom:8px;"><button class="btn btn-outline btn-sm" id="faqAdd">'+esc(lang==='ar'?'سؤال جديد':'Add question')+'</button></div>';
+  indexHtml += '<div class="section-title">'+(lang==='ar'?'بطاقه صفحه الدخول (الاسعار تتحدث من الجدول فوق)':'Login page card (prices come from the table above)')+'</div><div class="card" style="margin-bottom:16px;"><div class="form-grid">' +
+    LC_FIELDS.map(function(f){ return '<div class="field"><label>'+esc(lang==='ar'?f[1]:f[2])+'</label><input class="input" data-ix="'+f[0]+'" value="'+esc(val(f[0]))+'" placeholder="'+(lang==='ar'?'فاضي = النص الافتراضي':'empty = default text')+'"></div>'; }).join('') +
+    '</div></div>';
   indexHtml += faqHtml;
 
   $('viewArea').innerHTML = pageHead(lang==='ar'?'الاسعار وصفحه البدايه':'Billing & Index',
