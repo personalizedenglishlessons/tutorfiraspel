@@ -537,7 +537,26 @@ html[data-theme="light"] .cursor-ring{ border-color:rgba(184,130,30,.5); }
 /* ===== PEL login v2 ===== */
 .lp-wrap{ padding:0 !important; background:transparent !important; border:0 !important; box-shadow:none !important; backdrop-filter:none !important; -webkit-backdrop-filter:none !important; overflow:visible !important; max-width:440px; display:flex; flex-direction:column; gap:12px; }
 .lp-wrap::before, .lp-wrap::after{ display:none !important; }
-.lp{ position:relative; border-radius:22px; padding:22px 22px 18px; background:linear-gradient(160deg,var(--card-elevated),var(--card)); border:1px solid color-mix(in srgb,var(--gold) 28%,var(--border)); box-shadow:0 30px 70px -40px var(--gold); overflow:hidden; min-height:206px; }
+/* ===== 3D phrase carousel =====
+   The five phrases the platform actually drills ride a real CSS-3D ring that
+   turns on its own: the front card faces you, the two beside it fall away into
+   depth, the two behind are culled. Auto-playing, no scroll or hover needed.
+   Existing colour tokens only. */
+.car{ position:relative; height:264px; perspective:1250px; }
+.car-ring{ position:absolute; inset:0; transform-style:preserve-3d; --step:72deg; --r:330px; transition:transform 1.15s var(--ease); }
+.car-card{ position:absolute; inset:0; border-radius:22px; padding:22px 22px 18px; background:linear-gradient(160deg,var(--card-elevated),var(--card)); border:1px solid color-mix(in srgb,var(--gold) 28%,var(--border)); box-shadow:0 30px 70px -40px var(--gold); overflow:hidden; transform:rotateY(calc(var(--i) * var(--step))) translateZ(var(--r)); backface-visibility:hidden; opacity:.2; filter:saturate(.45) brightness(.78); transition:opacity .85s var(--ease), filter .85s var(--ease), box-shadow .85s var(--ease), border-color .85s var(--ease); }
+.car-card.on{ opacity:1; filter:none; border-color:var(--gold); box-shadow:0 30px 70px -34px var(--gold), 0 0 0 1px var(--gold-a30); }
+.car-card::after{ content:""; position:absolute; inset:0; border-radius:inherit; background:linear-gradient(118deg,transparent 38%,var(--gold-a08) 50%,transparent 62%); opacity:0; transform:translateX(-130%); pointer-events:none; }
+.car-card.on::after{ animation:car-sheen 1.5s var(--ease) .3s; }
+@keyframes car-sheen{ 0%{ opacity:.9; transform:translateX(-130%) } 100%{ opacity:0; transform:translateX(130%) } }
+.lp-wrap{ perspective:1100px; }
+.lp-wrap .dp-sub-card{ animation:sub-float 9s ease-in-out infinite; }
+@keyframes sub-float{ 0%,100%{ transform:translateZ(54px) translateY(0) } 50%{ transform:translateZ(76px) translateY(-8px) } }
+@media(prefers-reduced-motion:reduce){
+  .car-ring{ transition:none; }
+  .lp-wrap .dp-sub-card{ animation:none; }
+  .car-card.on::after{ animation:none; }
+}
 .lp-top{ display:flex; align-items:center; gap:10px; font-size:.78rem; color:var(--text-muted); }
 .lp-pulse{ width:8px; height:8px; border-radius:50%; background:var(--gold); position:relative; flex-shrink:0; }
 .lp-pulse::after{ content:""; position:absolute; inset:-5px; border-radius:50%; border:1px solid var(--gold); animation:lpRing 2.2s ease-out infinite; }
@@ -583,6 +602,18 @@ input{ font-size:16px; }
 </style>
 </head>
 <body>
+<!-- ===== PEL hand-built icon set ===== -->
+<svg class="pel-sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M19 12H5M11.4 5.6 5 12l6.4 6.4"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.1"/><path d="M12 2.6v2.2M12 19.2v2.2M3.4 12h2.2M18.4 12h2.2M5.9 5.9l1.6 1.6M16.5 16.5l1.6 1.6M5.9 18.1l1.6-1.6M16.5 7.5l1.6-1.6"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 6.6V12l3.4 2"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m7.8 12.3 2.9 2.9 5.6-6.4"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15 9l-6 6M9 9l6 6"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.4 12S6 5.6 12 5.6 21.6 12 21.6 12 18 18.4 12 18.4 2.4 12 2.4 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-eye-off" viewBox="0 0 24 24"><path d="M4 4.6 20 20.4"/><path d="M9.6 6.1A8.6 8.6 0 0 1 12 5.6c6 0 9.6 6.4 9.6 6.4a16 16 0 0 1-3.3 3.9M6.5 8A16.4 16.4 0 0 0 2.4 12s3.6 6.4 9.6 6.4c1.3 0 2.5-.3 3.5-.8"/><path d="M9.9 10.2a3 3 0 0 0 4.1 4.2"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M10.3 3.9 1.9 18a2 2 0 0 0 1.7 3h16.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></symbol>
+</svg>
+<style>.pel-sprite{position:absolute;width:0;height:0;overflow:hidden;}.pel-ic{display:inline-block;vertical-align:middle;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}</style>
 <a href="#loginForm" class="skip-link">تخطي إلى المحتوى · Skip to content</a>
 
 <div class="bg-mesh" aria-hidden="true"></div>
@@ -592,10 +623,10 @@ input{ font-size:16px; }
 <div class="cursor-dot" id="cursorDot"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
-<a href="index.html" class="back-home"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> <span class="label">العودة للمنصة</span></a>
+<a href="index.html" class="back-home"><svg class="pel-ic" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg> <span class="label">العودة للمنصة</span></a>
 <button type="button" class="lang-pill" id="loginLangBtn" aria-label="Switch interface language">EN</button>
 <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v2M12 19v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M3 12h2M19 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/><circle cx="12" cy="12" r="4.2"/></svg>
+  <svg class="pel-ic" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-sun"/></svg>
 </button>
 
 <div class="auth-shell">
@@ -612,32 +643,28 @@ input{ font-size:16px; }
     <p class="arabic brand-arabic">دروسك، تدريب النطق، تصحيح الكتابة، وحالة اشتراكك، كلها في مكان واحد</p>
 
     <div class="dash-preview lp-wrap" aria-hidden="true">
-      <div class="lp">
-        <div class="lp-top"><span class="lp-pulse"></span><span class="lp-lab" id="lpLab">عبارة اليوم</span><span class="lp-scene" id="lpScene"></span></div>
-        <div class="lp-wave" id="lpWave"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-        <div class="lp-en" id="lpEn" dir="ltr"></div>
-        <div class="lp-say" id="lpSay" dir="rtl"></div>
-        <div class="lp-mean" id="lpMean" dir="rtl"></div>
-        <div class="lp-dots" id="lpDots"><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="car">
+        <div class="car-ring" id="lpRing"></div>
       </div>
+      <div class="lp-dots" id="lpDots"><i></i><i></i><i></i><i></i><i></i></div>
       <div class="dp-sub-card">
         <div class="dp-sub-head">
           <div class="dp-sub-icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            <svg class="pel-ic" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>
           </div>
           <b class="dp-sub-title">لما ينتهي اشتراكك</b>
         </div>
         <div class="dp-sub-list">
           <div class="dp-sub-row">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+            <svg class="pel-ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width:2"><use href="#i-check"/></svg>
             <span class="dp-sub-text">تقدّمك يبقى محفوظ</span>
           </div>
           <div class="dp-sub-row">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+            <svg class="pel-ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width:2"><use href="#i-check"/></svg>
             <span class="dp-sub-text">تقدر تراجع دروسك القديمة</span>
           </div>
           <div class="dp-sub-row">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>
+            <svg class="pel-ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width:2"><use href="#i-x"/></svg>
             <span class="dp-sub-text">الدروس الجديدة تحتاج اشتراك شغال</span>
           </div>
         </div>
@@ -666,9 +693,9 @@ input{ font-size:16px; }
               <input type="password" id="loginPassword" placeholder=" " autocomplete="current-password" required>
               <label for="loginPassword">كلمة السر</label>
               <button type="button" class="toggle-eye" data-toggle="loginPassword" aria-label="Show password">
-                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+                <svg class="pel-ic" width="17" height="17" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-eye"/></svg>
               </button>
-              <div class="caps-warning" id="loginCapsWarning"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg> Caps Lock is on</div>
+              <div class="caps-warning" id="loginCapsWarning"><svg class="pel-ic" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width:1.9"><use href="#i-alert"/></svg> Caps Lock is on</div>
             </div>
 
             <input type="text" name="website" id="loginWebsite" tabindex="-1" autocomplete="off" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;" aria-hidden="true">
@@ -827,6 +854,9 @@ document.querySelectorAll('.toggle-eye').forEach(btn => {
     const input = document.getElementById(btn.dataset.toggle);
     const isPw = input.type === 'password';
     input.type = isPw ? 'text' : 'password';
+    const ic = btn.querySelector('use');
+    if(ic) ic.setAttribute('href', isPw ? '#i-eye-off' : '#i-eye');
+    btn.setAttribute('aria-label', isPw ? 'Hide password' : 'Show password');
   });
 });
 
@@ -1477,14 +1507,44 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     {sc:{ar:'مطعم',en:'Restaurant'}, en:'Can I get the receipt?', say:'كان اي قت ذا ريسيت', mean:'ممكن الفاتوره؟'},
     {sc:{ar:'سفر',en:'Travel'}, en:'How long does it take?', say:'هاو لونغ داز ات تيك', mean:'كم ياخذ وقت؟'}
   ];
-  var i=0, box=document.querySelector('.lp'); if(!box) return;
-  var en=document.getElementById('lpEn'), say=document.getElementById('lpSay'), mean=document.getElementById('lpMean'), sc=document.getElementById('lpScene'), lab=document.getElementById('lpLab'), dots=document.querySelectorAll('#lpDots i');
+  var ring=document.getElementById('lpRing'); if(!ring) return;
+  var dots=document.querySelectorAll('#lpDots i');
   var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
   function isEn(){ return document.body.classList.contains('ui-en'); }
-  function paint(){ var p=P[i], e=isEn(); en.textContent=p.en; say.textContent=p.say; mean.textContent=p.mean; sc.textContent=e?p.sc.en:p.sc.ar; lab.textContent=e?'A phrase for today':'عبارة اليوم'; dots.forEach(function(d,k){ d.classList.toggle('on',k===i); }); }
-  function next(){ if(rm){ i=(i+1)%P.length; paint(); return; } box.classList.add('sw'); setTimeout(function(){ i=(i+1)%P.length; paint(); box.classList.remove('sw'); },380); }
-  paint(); setInterval(function(){ if(!document.hidden) next(); }, 5200);
-  new MutationObserver(paint).observe(document.body,{attributes:true,attributeFilter:['class']});
+  function wave(){ var o=''; for(var k=0;k<14;k++) o+='<span></span>'; return o; }
+  function card(p,idx){
+    var e=isEn();
+    return '<article class="car-card" style="--i:'+idx+'" dir="'+(e?'ltr':'rtl')+'">'
+      + '<div class="lp-top"><span class="lp-pulse"></span><span class="lp-lab">'+(e?'A phrase for today':'عبارة اليوم')+'</span><span class="lp-scene">'+p.sc[e?'en':'ar']+'</span></div>'
+      + '<div class="lp-wave">'+wave()+'</div>'
+      + '<div class="lp-en" dir="ltr">'+p.en+'</div>'
+      + '<div class="lp-say" dir="rtl">'+p.say+'</div>'
+      + '<div class="lp-mean" dir="rtl">'+p.mean+'</div>'
+      + '</article>';
+  }
+  var n=P.length, step=360/n, i=0, R=330;
+  function size(){ var w=(ring.parentElement&&ring.parentElement.clientWidth)||430; R=Math.round((w*0.5)/Math.tan(Math.PI/n))+26; }
+  function show(animate){
+    R=R||330;
+    if(!animate) ring.style.transition='none';
+    ring.style.transform='translateZ('+(-R)+'px) rotateY('+(-i*step)+'deg)';
+    var cards=ring.querySelectorAll('.car-card');
+    for(var k=0;k<cards.length;k++) cards[k].classList.toggle('on', k===i);
+    for(var d=0;d<dots.length;d++) dots[d].classList.toggle('on', d===i);
+    if(!animate){ void ring.offsetWidth; ring.style.transition=''; }
+  }
+  function build(){
+    size();
+    ring.style.setProperty('--step', step+'deg');
+    ring.style.setProperty('--r', R+'px');
+    ring.innerHTML=P.map(card).join('');
+    show(false);
+  }
+  build();
+  if(!rm) setInterval(function(){ if(document.hidden) return; i=(i+1)%n; show(true); }, 4600);
+  window.addEventListener('resize', function(){ R=0; size(); R=R||330; ring.style.setProperty('--r', R+'px'); show(false); });
+  /* language flip rebuilds the cards but keeps the reader where they were */
+  new MutationObserver(function(){ var keep=i; build(); i=keep; show(false); }).observe(document.body,{attributes:true,attributeFilter:['class']});
 })();
 </script>
 </body>

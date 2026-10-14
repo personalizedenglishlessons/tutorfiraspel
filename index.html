@@ -1162,7 +1162,7 @@ html[data-theme="light"] .cv-chip.say{ color:var(--gold); }
 @keyframes cs-blink{ 0%,100%{ opacity:1 } 50%{ opacity:.35 } }
 @keyframes cs-wave{ 0%,100%{ height:4px } 50%{ height:16px } }
 @keyframes cs-dot{ 0%,100%{ transform:translateY(0); opacity:.5 } 50%{ transform:translateY(-4px); opacity:1 } }
-@keyframes cs-float{ 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-8px) } }
+@keyframes cs-float{ 0%,100%{ transform:translateZ(var(--tz,0px)) translateY(0) } 50%{ transform:translateZ(var(--tz,0px)) translateY(-8px) } }
 
 /* ---- situations ticker ---- */
 .ticker{ padding:0 !important; border-block:1px solid var(--border); background:var(--surface); overflow:hidden; direction:ltr; }
@@ -1202,23 +1202,42 @@ html[data-theme="light"] .cv-chip.say{ color:var(--gold); }
 .ba-tab.on{ color:var(--text); border-color:var(--gold); background:var(--gold-a14); }
 .ba-tab i{ position:absolute; inset-inline-start:0; bottom:0; height:2px; width:0; background:var(--gold); }
 .ba-tab.on i{ animation:fill var(--dur-ba,5.2s) linear forwards; }
-.ba-stage{ display:grid; grid-template-columns:minmax(0,.8fr) auto minmax(0,1.2fr); gap:clamp(12px,2vw,26px); align-items:stretch; max-width:1080px; margin:0 auto; }
-.ba-side{ border-radius:24px; padding:clamp(22px,2.6vw,34px); display:flex; flex-direction:column; gap:14px; justify-content:center; min-height:260px; }
-.ba-before{ background:var(--surface); border:1px dashed var(--border); }
-.ba-after{ background:linear-gradient(165deg,var(--card-elevated),var(--card)); border:1px solid var(--gold-a30); box-shadow:0 30px 70px -40px var(--gold); }
+/* the stage is a real 3D plane: the "before" board sits back, the "after"
+   board floats forward on its hinge, and the plane leans with the pointer.
+   Existing colour tokens only - no new colours. */
+#personalPreview{ overflow-x:clip; }
+.ba-stage{ position:relative; display:grid; grid-template-columns:minmax(0,.82fr) auto minmax(0,1.18fr); gap:clamp(12px,2vw,26px); align-items:stretch; max-width:1080px; margin:0 auto; perspective:1500px; perspective-origin:50% 40%; transform-style:preserve-3d; transform:rotateX(var(--ba-rx,0deg)) rotateY(var(--ba-ry,0deg)); transition:transform .22s var(--ease); --ba-lean:7deg; --ba-turn:82deg; --ba-hinge:right center; }
+html[lang="en"] .ba-stage{ --ba-lean:-7deg; --ba-turn:-82deg; --ba-hinge:left center; }
+.ba-side{ position:relative; border-radius:24px; padding:clamp(22px,2.6vw,34px); display:flex; flex-direction:column; gap:14px; justify-content:center; min-height:290px; transform-style:preserve-3d; backface-visibility:hidden; will-change:transform,opacity; }
+.ba-before{ background:var(--surface); border:1px dashed var(--border); box-shadow:0 34px 70px -52px rgba(0,0,0,.75); transform:translateZ(-46px) rotateY(var(--ba-lean)) rotateX(2.5deg); }
+.ba-after{ background:linear-gradient(165deg,var(--card-elevated),var(--card)); border:1px solid var(--gold-a30); box-shadow:0 40px 90px -52px var(--gold), var(--shadow-lift); transform-origin:var(--ba-hinge); transform:translateZ(26px) rotateY(0deg); }
+.ba-after > *{ position:relative; z-index:1; }
+.ba-after::before{ content:""; position:absolute; inset:-16% -6%; border-radius:inherit; background:radial-gradient(55% 55% at 74% 16%,var(--gold-a14),transparent 70%); pointer-events:none; animation:ba-glow 7.5s ease-in-out infinite; }
+@keyframes ba-glow{ 0%,100%{ opacity:.35; transform:scale(1) } 50%{ opacity:.95; transform:scale(1.06) } }
+.ba-after::after{ content:""; position:absolute; inset:0; border-radius:inherit; background:linear-gradient(100deg,transparent 34%,var(--gold-a14) 50%,transparent 66%); opacity:0; transform:translateX(-130%); pointer-events:none; }
+.ba-after.ba-swap::after{ animation:ba-sweep .95s var(--ease) .1s; }
+@keyframes ba-sweep{ 0%{ opacity:.85; transform:translateX(-130%) } 100%{ opacity:0; transform:translateX(130%) } }
 .ba-label{ font-size:.82rem; font-weight:700; color:var(--text-muted); font-family:'Tajawal',sans-serif; display:flex; align-items:center; gap:8px; }
 .ba-after .ba-label{ color:var(--gold); }
 .ba-label::before{ content:""; width:8px; height:8px; border-radius:50%; background:currentColor; opacity:.7; }
 .ba-thought{ font-size:clamp(1rem,1.5vw,1.2rem); line-height:1.85; color:var(--text-secondary); font-family:'Tajawal',sans-serif; }
-.ba-arrow{ align-self:center; width:44px; height:44px; border-radius:50%; background:var(--gold); color:#171412; display:grid; place-items:center; box-shadow:var(--gold-glow); }
+/* the hub between the two boards: a gold orb with a ring orbiting in 3D */
+.ba-arrow{ position:relative; align-self:center; width:48px; height:48px; border-radius:50%; background:var(--gold); color:#171412; display:grid; place-items:center; box-shadow:var(--gold-glow); perspective:340px; transform-style:preserve-3d; }
+.ba-arrow::before{ content:""; position:absolute; inset:-8px; border-radius:50%; border:1px dashed var(--gold-a30); animation:ba-orbit 8s linear infinite; }
+.ba-arrow::after{ content:""; position:absolute; inset:0; border-radius:50%; border:1px solid var(--gold-a30); animation:ba-ring 3.6s ease-out infinite; }
+@keyframes ba-orbit{ from{ transform:rotateY(0) rotateZ(0) } to{ transform:rotateY(360deg) rotateZ(360deg) } }
+@keyframes ba-ring{ 0%{ transform:scale(.9); opacity:.7 } 72%,100%{ transform:scale(1.75); opacity:0 } }
 [dir="rtl"] .ba-arrow svg{ transform:scaleX(-1); }
 .ba-en{ font-family:'Fraunces',serif; font-size:clamp(1.3rem,2.4vw,1.9rem); line-height:1.35; color:var(--text); direction:ltr; text-align:left; }
 .ba-line{ direction:rtl; text-align:right; font-family:'Tajawal',sans-serif; line-height:1.7; border-radius:12px; padding:9px 14px; font-size:.98rem; }
 .ba-line.pr{ background:var(--gold-a08); border:1px dashed var(--gold-a30); color:var(--gold-soft); }
 html[data-theme="light"] .ba-line.pr{ color:var(--gold); }
 .ba-line.mn{ background:var(--surface); color:var(--text-secondary); }
-.ba-swap{ animation:swap .55s var(--ease); }
-@keyframes swap{ from{ opacity:0; transform:translateY(8px) } to{ opacity:1; transform:none } }
+/* after board swings open on its hinge, the before board sinks back into depth */
+.ba-after.ba-swap{ animation:ba-door .95s var(--ease) both; }
+@keyframes ba-door{ 0%{ opacity:0; transform:translateZ(-130px) rotateY(var(--ba-turn)) } 62%{ opacity:1 } 100%{ opacity:1; transform:translateZ(26px) rotateY(0deg) } }
+.ba-before.ba-swap{ animation:ba-settle .85s var(--ease) both; }
+@keyframes ba-settle{ 0%{ opacity:.15; transform:translateZ(-180px) rotateY(var(--ba-lean)) rotateX(10deg) } 100%{ opacity:1; transform:translateZ(-46px) rotateY(var(--ba-lean)) rotateX(2.5deg) } }
 .v2-cta{ display:flex; justify-content:center; gap:14px; flex-wrap:wrap; margin-top:clamp(26px,4vw,44px); }
 .v2-note{ text-align:center; margin-top:14px; font-size:.84rem; color:var(--text-muted); font-family:'Tajawal',sans-serif; }
 
@@ -1284,10 +1303,219 @@ html[lang="en"] .hero .hero-sub{ line-height:1.7 !important; }
 nav.primary-nav{ gap:clamp(14px,1.6vw,28px); }
 @media(min-width:981px){ .header-actions{ gap:clamp(6px,.8vw,12px); } }
 @media(max-width:1320px){ html[lang="en"] .btn-path{ display:none; } }
+
+/* ===== PEL custom icon system ===== */
+.pel-sprite{ position:absolute; width:0; height:0; overflow:hidden; }
+.pel-ic{ display:inline-block; vertical-align:middle; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; flex-shrink:0; }
+.pel-kick{ font-family:'Tajawal','Plus Jakarta Sans',sans-serif; font-weight:700; font-size:.78rem; letter-spacing:normal; }
+
+/* ===== situations rail (replaces the flat ticker) ===== */
+/* ===== situations: the 3D belt =====
+   Every real situation the platform drills gets its own card: a drawn scene,
+   the English line you actually need in that moment, and how to say it. The
+   belt turns on its own, forever - nothing to scroll, hover or click.
+   Existing colour tokens only. */
+.sb-sec{ position:relative; padding:clamp(36px,5vw,66px) 0 clamp(30px,4vw,54px); background:linear-gradient(180deg,var(--bg),color-mix(in srgb,var(--surface) 55%,var(--bg))); border-top:1px solid var(--border); border-bottom:1px solid var(--border); overflow:hidden; }
+.sb-head{ text-align:center; margin-bottom:clamp(20px,3vw,34px); }
+.sb-head .eyebrow{ margin-bottom:12px; }
+.sb-head h2{ font-size:clamp(1.4rem,2.7vw,2.1rem); font-weight:800; line-height:1.3; text-wrap:balance; }
+.sb-head p{ margin-top:12px; color:var(--text-muted); font-size:clamp(.86rem,1.1vw,1rem); line-height:1.85; max-width:44em; margin-inline:auto; }
+.sb-stage{ --sbw:clamp(220px,20vw,286px); position:relative; height:clamp(330px,35vw,400px); perspective:1080px; perspective-origin:50% 46%; -webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent); mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent); }
+.sb-belt{ position:absolute; inset:0; transform-style:preserve-3d; }
+.sb-card{ position:absolute; top:50%; left:50%; width:var(--sbw); display:flex; flex-direction:column; padding:13px 13px 14px; border-radius:22px; background:linear-gradient(170deg,var(--card-elevated),var(--card)); border:1px solid var(--border); box-shadow:var(--shadow-lift); will-change:transform,opacity,filter; backface-visibility:hidden; }
+.sb-card.on{ border-color:var(--gold-a30); box-shadow:0 40px 96px -52px var(--gold),0 0 0 1px var(--gold-a08),var(--shadow-lift); }
+
+/* --- the little set inside every card: an animated scene of that moment --- */
+.sb-art{ position:relative; flex:0 0 auto; perspective:620px; height:142px; border-radius:16px; overflow:hidden; margin-bottom:12px; background:radial-gradient(72% 92% at 50% 116%,var(--gold-a14),transparent 68%),linear-gradient(180deg,var(--bg),color-mix(in srgb,var(--bg) 72%,var(--gold) 6%)); border:1px solid var(--border); }
+.sa-3d{ position:absolute; inset:0; transform-style:preserve-3d; }
+.sb-card.on .sa-3d{ animation:sb-tilt 7.6s ease-in-out infinite; }
+@keyframes sb-tilt{ 0%,100%{ transform:rotateY(-5.5deg) rotateX(3deg) } 50%{ transform:rotateY(5.5deg) rotateX(-2deg) } }
+.sa-sky{ position:absolute; inset:0; background:radial-gradient(54% 70% at 50% 14%,var(--gold-a14),transparent 74%); }
+.sa-horizon{ position:absolute; left:-8%; right:-8%; bottom:33px; height:1px; background:linear-gradient(90deg,transparent,var(--gold-a30),transparent); opacity:.75; }
+.sa-floor{ position:absolute; transform:translateZ(-10px); left:16%; right:16%; bottom:14px; height:24px; border-radius:50%; background:radial-gradient(50% 50% at 50% 50%,var(--gold-a14),transparent 72%); filter:blur(6px); }
+.sa-sc{ position:absolute; inset:0; width:100%; height:100%; }
+.sa-sc *{ transform-box:fill-box; transform-origin:center; }
+.sa-ic{ overflow:visible; }
+.sa-sc .fl{ fill:color-mix(in srgb,var(--card) 86%,var(--gold) 14%); stroke:var(--gold-a30); stroke-width:1.2; }
+.sa-sc .gl{ fill:var(--gold-a08); stroke:none; }
+.sa-sc .st2{ fill:none; stroke:var(--gold); stroke-width:1.1; stroke-dasharray:4 6; opacity:.45; }
+.sa-sc .ink{ fill:none; stroke:var(--gold); stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; }
+.sa-sc .ink2{ fill:none; stroke:var(--gold-soft); stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; }
+.sa-sc .ok{ stroke:var(--success); stroke-width:1.9; }
+.sa-tag{ position:absolute; left:9px; top:9px; width:31px; height:31px; border-radius:10px; display:grid; place-items:center; background:color-mix(in srgb,var(--card) 88%,var(--gold) 12%); border:1px solid var(--gold-a30); color:var(--gold); box-shadow:0 6px 18px -10px var(--gold); }
+.sa-tag svg{ width:17px; height:17px; }
+.sc-l1,.sc-l2,.sc-l3{ transform-origin:left center; }
+.sa-scan{ position:absolute; top:-6%; bottom:-6%; width:56%; left:-72%; background:linear-gradient(100deg,transparent,var(--gold-a08) 44%,var(--gold-a14) 50%,var(--gold-a08) 56%,transparent); transform:skewX(-13deg); pointer-events:none; }
+.sa-dust{ position:absolute; inset:0; pointer-events:none; transform:translateZ(22px); }
+.sa-dust i{ position:absolute; bottom:16%; width:3px; height:3px; border-radius:50%; background:var(--gold-soft); opacity:0; }
+.sb-card.on .sa-dust i{ animation-name:sb-mote; animation-timing-function:linear; animation-iteration-count:infinite; }
+@keyframes sb-mote{ 0%{ transform:translateY(0) scale(.5); opacity:0 } 20%{ opacity:.6 } 100%{ transform:translateY(-104px) scale(1); opacity:0 } }
+.sb-card.on .sa-scan{ animation:sb-scan 4.2s var(--ease) .45s infinite; }
+@keyframes sb-scan{ 0%{ left:-72% } 62%,100%{ left:120% } }
+.sa-sc .bar{ fill:var(--gold-soft); stroke:none; opacity:.5; transform-origin:center; }
+.sb-card.on .sc-bars .bar{ animation:sb-bar 1.05s ease-in-out infinite; }
+@keyframes sb-bar{ 0%,100%{ transform:scaleY(.34); opacity:.42 } 50%{ transform:scaleY(1.5); opacity:1 } }
+.sb-card.on .sa-floor{ animation:sb-floor 3.4s ease-in-out infinite; }
+@keyframes sb-floor{ 0%,100%{ opacity:.65; transform:scaleX(.94) } 50%{ opacity:1; transform:scaleX(1.06) } }
+/* scene: two people talking (calls, emails, meetings, interviews) */
+.sb-card.on .sc-a{ animation:sb-bob 3.6s ease-in-out infinite; }
+.sb-card.on .sc-b{ animation:sb-bob 3.6s ease-in-out .8s infinite reverse; }
+@keyframes sb-bob{ 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-5px) } }
+.sb-card.on .sc-bub{ animation:sb-bub 3.6s var(--ease) infinite; }
+@keyframes sb-bub{ 0%,10%{ transform:scale(.74); opacity:0 } 28%{ transform:scale(1); opacity:1 } 86%{ transform:translateY(0) scale(1); opacity:1 } 100%{ transform:translateY(-4px) scale(.86); opacity:0 } }
+/* scene: on the move (airport) */
+.sb-card.on .sc-plane{ animation:sb-fly 5.6s ease-in-out infinite; }
+@keyframes sb-fly{ 0%{ transform:translate(18px,116px) rotate(-18deg) } 50%{ transform:translate(138px,22px) rotate(-5deg) } 100%{ transform:translate(256px,112px) rotate(15deg) } }
+.sb-card.on .sc-stamp{ animation:sb-thump 3.6s var(--ease) infinite; }
+@keyframes sb-thump{ 0%,58%{ transform:translateY(-16px) scale(.8); opacity:0 } 72%{ transform:translateY(0) scale(1.08); opacity:1 } 80%,100%{ transform:translateY(0) scale(1); opacity:1 } }
+/* scene: at the cafe */
+.sb-card.on .sc-steam>path{ animation:sb-steam 3.2s ease-in-out infinite; }
+.sb-card.on .sc-steam>path:nth-child(2){ animation-delay:.5s }
+.sb-card.on .sc-steam>path:nth-child(3){ animation-delay:1s }
+@keyframes sb-steam{ 0%{ transform:translateY(6px); opacity:0 } 35%{ opacity:.9 } 100%{ transform:translateY(-24px); opacity:0 } }
+.sb-card.on .sc-receipt{ animation:sb-slip 3.6s var(--ease) infinite; }
+@keyframes sb-slip{ 0%,16%{ transform:translateY(-14px); opacity:0 } 34%,88%{ transform:translateY(0); opacity:1 } 100%{ transform:translateY(-14px); opacity:0 } }
+/* scene: study and exams */
+.sb-card.on .sc-l1{ animation:sb-draw 3.6s ease-out infinite; }
+.sb-card.on .sc-l2{ animation:sb-draw 3.6s ease-out .22s infinite; }
+.sb-card.on .sc-l3{ animation:sb-draw 3.6s ease-out .44s infinite; }
+@keyframes sb-draw{ 0%{ transform:scaleX(0); opacity:0 } 26%,88%{ transform:scaleX(1); opacity:1 } 100%{ transform:scaleX(1); opacity:0 } }
+.sb-card.on .sc-tick{ animation:sb-tick 3.6s var(--ease) infinite; }
+@keyframes sb-tick{ 0%,52%{ transform:scale(.5); opacity:0 } 68%{ transform:scale(1.14); opacity:1 } 78%,100%{ transform:scale(1); opacity:1 } }
+.sb-card.on .sc-cap{ animation:sb-nod 3.6s ease-in-out infinite; }
+@keyframes sb-nod{ 0%,100%{ transform:rotate(-8deg) } 50%{ transform:rotate(8deg) } }
+
+/* --- the caption: the line arrives like it was just said --- */
+.sb-name{ font-size:1rem; font-weight:800; color:var(--text); line-height:1.4; font-family:'Tajawal','Plus Jakarta Sans',sans-serif; }
+.sb-en{ margin-top:7px; font-family:'Fraunces',serif; font-size:.92rem; line-height:1.35; color:var(--text); direction:ltr; text-align:left; min-height:2.7em; }
+.sb-say{ margin-top:auto; align-self:flex-start; display:inline-block; padding:5px 9px; border-radius:9px; background:var(--gold-a08); border:1px dashed var(--gold-a30); color:var(--gold-soft); font-family:'Tajawal',sans-serif; font-size:.72rem; line-height:1.4; }
+html[data-theme="light"] .sb-say{ color:var(--gold); }
+.sb-card.on .sb-name{ animation:sb-up .55s var(--ease) both; }
+.sb-card.on .sb-en{ animation:sb-type .9s steps(30,end) both; }
+.sb-card.on .sb-say{ animation:sb-up .6s var(--ease) .8s both; }
+@keyframes sb-type{ from{ clip-path:inset(0 100% 0 0) } to{ clip-path:inset(0 0 0 0) } }
+@keyframes sb-up{ from{ opacity:0; transform:translateY(6px) } to{ opacity:1; transform:none } }
+@media(max-width:760px){ .sb-stage{ --sbw:224px; height:352px; perspective:1000px; } .sb-art{ height:118px; } .sb-en{ font-size:.86rem; } .sb-name{ font-size:.94rem; } }
+@media(prefers-reduced-motion:reduce){
+  .sb-card.on .sa-scan,.sb-card.on .sa-floor,.sb-card.on .sc-a,.sb-card.on .sc-b,
+  .sb-card.on .sc-bub,.sb-card.on .sc-plane,.sb-card.on .sc-stamp,.sb-card.on .sc-steam>path,
+  .sb-card.on .sc-receipt,.sb-card.on .sc-l1,.sb-card.on .sc-l2,.sb-card.on .sc-l3,.sb-card.on .sc-tick,
+  .sb-card.on .sa-3d,.sb-card.on .sc-bars .bar,.sb-card.on .sc-cap,.sb-card.on .sa-dust i,.sb-card.on .sb-name,.sb-card.on .sb-en,.sb-card.on .sb-say{ animation:none !important; }
+}
+
+/* ===== hero: the 3D lesson rig =====
+   A real CSS-3D scene. The device is a layered object - back plate, gold bezel
+   rim and a glass sheen each on their own depth plane - and it sways on its own
+   while the lesson loop orbits it as satellites and the correction chips float
+   out in front. Auto-playing from first paint; nothing waits for a scroll or a
+   hover. Existing colour tokens only. */
+.hero{ overflow-x:clip; }
+.callstage{ perspective:1400px; perspective-origin:50% 46%; transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)); transition:transform .3s var(--ease); }
+.rig{ position:relative; transform-style:preserve-3d; will-change:transform; animation:rig-sway 20s ease-in-out infinite; }
+@keyframes rig-sway{ 0%,100%{ transform:rotateY(-10deg) rotateX(2deg) translateY(0) } 50%{ transform:rotateY(10deg) rotateX(-2deg) translateY(-10px) } }
+.rig-halo{ position:absolute; inset:-16% -12%; border-radius:50%; background:radial-gradient(46% 42% at 50% 40%, var(--gold-a14), transparent 72%); filter:blur(14px); transform:translateZ(-130px); pointer-events:none; animation:rig-halo 9s ease-in-out infinite; }
+@keyframes rig-halo{ 0%,100%{ opacity:.7 } 50%{ opacity:1 } }
+.rig-shadow{ position:absolute; left:6%; right:6%; bottom:-46px; height:60px; border-radius:50%; background:radial-gradient(closest-side, rgba(0,0,0,.72), transparent 76%); filter:blur(12px); transform:translateZ(-80px) rotateX(74deg); pointer-events:none; }
+.rig-orbit{ position:absolute; inset:0; transform-style:preserve-3d; pointer-events:none; }
+.rig-tile{ position:absolute; top:50%; left:50%; width:84px; margin:-32px 0 0 -42px; display:flex; flex-direction:column; align-items:center; gap:7px; text-align:center; font-family:'Tajawal','Plus Jakarta Sans',sans-serif; font-size:.7rem; font-weight:700; color:var(--text-muted); white-space:nowrap; will-change:transform,opacity; }
+.rig-tile i{ width:42px; height:42px; border-radius:50%; display:grid; place-items:center; background:var(--card-elevated); border:1px solid var(--gold-a30); box-shadow:var(--shadow-soft); transition:border-color .4s var(--ease), box-shadow .4s var(--ease); }
+.rig-tile svg{ width:18px; height:18px; color:var(--gold); }
+.rig-tile.front{ color:var(--text); }
+.rig-tile.front i{ border-color:var(--gold); box-shadow:0 0 30px -8px var(--gold), var(--shadow-soft); background:var(--card); }
+.phone{ position:relative; transform-style:preserve-3d; }
+.phone-back{ position:absolute; inset:0; border-radius:38px; background:var(--surface); border:1px solid var(--border); transform:translateZ(-30px); box-shadow:0 70px 90px -60px rgba(0,0,0,.9); }
+.phone-screen{ transform:translateZ(0); }
+.phone::before{ content:""; position:absolute; inset:5px; border-radius:33px; border:1px solid var(--gold-a30); transform:translateZ(15px); pointer-events:none; }
+.phone::after{ content:""; position:absolute; inset:12px; border-radius:28px; background:linear-gradient(118deg,transparent 36%,var(--gold-a08) 48%,transparent 60%); transform:translateZ(22px); pointer-events:none; animation:rig-sheen 9s ease-in-out infinite; }
+@keyframes rig-sheen{ 0%,100%{ opacity:.35 } 50%{ opacity:.95 } }
+.cs-tag.t1{ --tz:46px; }
+.cs-tag.t2{ --tz:34px; }
+@media(prefers-reduced-motion:reduce){
+  .rig{ animation:none; }
+  .rig-halo, .phone::after{ animation:none; }
+}
+
+/* ===== v3: hero proof rail, staged before/after, feature stagger ===== */
+.hero .trust-row{ display:grid !important; grid-template-columns:1fr 1fr; gap:1px !important; max-width:640px; margin-top:26px !important; padding-top:0; border:1px solid var(--border); border-radius:18px; overflow:hidden; background:var(--border); }
+.hero .trust-item{ display:flex; align-items:center; gap:12px; padding:14px 16px; background:var(--bg); font-size:.86rem; color:var(--text-secondary); line-height:1.5; opacity:0; transform:translateY(10px); animation:trust-in .65s var(--ease) forwards; animation-delay:calc(var(--i,0)*90ms + 220ms); transition:background .45s var(--ease), color .45s var(--ease); }
+.hero .trust-item:hover{ background:var(--card); color:var(--text); }
+.trust-ico{ width:34px; height:34px; border-radius:11px; display:grid; place-items:center; background:var(--gold-a08); border:1px solid var(--gold-a30); color:var(--gold); flex-shrink:0; transition:transform .45s var(--ease), background .45s var(--ease), color .45s var(--ease); }
+.hero .trust-item:hover .trust-ico{ transform:translateY(-2px); background:var(--gold); color:#171412; }
+.trust-ico svg{ width:17px; height:17px; }
+@keyframes trust-in{ to{ opacity:1; transform:none; } }
+@media(max-width:560px){ .hero .trust-row{ grid-template-columns:1fr; }
+  .hero .trust-item{ padding:12px 15px; }
+  .trust-ico{ width:30px; height:30px; border-radius:9px; } .trust-ico svg{ width:15px; height:15px; } }
+
+.ba-en{ display:flex; flex-direction:column; gap:10px; }
+.ba-eq{ display:inline-flex; align-items:flex-end; gap:3px; height:15px; }
+.ba-eq i{ width:3px; height:5px; border-radius:2px; background:var(--gold); opacity:.45; animation:ba-eq 1.05s ease-in-out infinite; }
+.ba-eq i:nth-child(2){ animation-delay:.14s } .ba-eq i:nth-child(3){ animation-delay:.28s } .ba-eq i:nth-child(4){ animation-delay:.42s } .ba-eq i:nth-child(5){ animation-delay:.56s }
+@keyframes ba-eq{ 0%,100%{ height:5px; opacity:.4 } 50%{ height:15px; opacity:1 } }
+.ba-words{ display:flex; flex-wrap:wrap; gap:.34em; }
+.ba-word{ display:inline-block; opacity:0; filter:blur(7px); transform:translateY(14px); animation:ba-word .7s var(--ease) forwards; animation-delay:calc(var(--i,0)*65ms + 120ms); }
+@keyframes ba-word{ 60%{ opacity:1 } to{ opacity:1; filter:blur(0); transform:none; } }
+
+/* hero sub: every word lifts out of a soft blur, in sequence */
+.hero .hero-sub .hs-w{ display:inline-block; opacity:0; filter:blur(9px); transform:translateY(16px); animation:hs-in .8s var(--ease) forwards; animation-delay:calc(var(--i,0)*28ms + 200ms); }
+@keyframes hs-in{ to{ opacity:1; filter:blur(0); transform:none; } }
+/* feature rail: a gold hairline draws down each cell as it lands */
+.hero .trust-item{ position:relative; overflow:hidden; }
+.hero .trust-item::after{ content:""; position:absolute; inset-inline-start:0; top:0; bottom:0; width:2px; background:var(--gold); transform:scaleY(0); transform-origin:top center; animation:ti-bar .7s var(--ease) forwards; animation-delay:calc(var(--i,0)*90ms + 300ms); }
+@keyframes ti-bar{ to{ transform:scaleY(1); } }
+.ba-line.ba-in.pr{ animation:ba-chip .55s var(--ease) .22s both; }
+.ba-line.ba-in.mn{ animation:ba-chip .55s var(--ease) .38s both; }
+@keyframes ba-chip{ from{ opacity:0; transform:translateY(8px); } to{ opacity:1; transform:none; } }
+
+.price-list li::before{ content:none; }
+.price-list li svg{ width:16px; height:16px; color:var(--gold); flex-shrink:0; margin-top:2px; }
+.price-list li{ opacity:0; transform:translateY(6px); animation:li-in .5s var(--ease) forwards; animation-delay:calc(var(--i,0)*70ms + 140ms); }
+@keyframes li-in{ to{ opacity:1; transform:none; } }
+
+@media(prefers-reduced-motion:reduce){
+  .ba-eq i, .ba-word, .hs-w{ animation:none !important; }
+  .hero .trust-item, .price-list li, .ba-word, .hs-w{ opacity:1 !important; transform:none !important; filter:none !important; }
+  .ba-line.ba-in.pr, .ba-line.ba-in.mn{ animation:none !important; }
+  .ba-after.ba-swap, .ba-before.ba-swap{ animation:none !important; }
+  .ba-after.ba-swap::after, .ba-after::before, .ba-arrow::before, .ba-arrow::after{ animation:none !important; }
+  .ba-after.ba-swap::after{ opacity:0 !important; }
+  .hero .trust-item::after{ animation:none !important; transform:scaleY(1); }
+}
 </style>
 </head>
 <body>
 <a href="#home" class="skip-link" style="position:absolute;top:0;z-index:9999;padding:12px 20px;background:var(--gold);color:#171412;font-weight:600;border-radius:0 0 12px 0;" >تخطي الى المحتوى · Skip to content</a>
+
+<!-- ===== PEL hand-built icon set (drawn for this brand) ===== -->
+<svg class="pel-sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="i-sign" viewBox="0 0 24 24"><path d="M12 2.6v19"/><path d="M12 5h5.9a1.6 1.6 0 0 1 1.6 1.6v2.2a1.6 1.6 0 0 1-1.6 1.6H12"/><path d="M12 11H6.1a1.6 1.6 0 0 0-1.6 1.6v2.2A1.6 1.6 0 0 0 6.1 16.4H12"/><circle cx="12" cy="2.6" r="1" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-person" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M4.6 20.2c.4-4 3.6-6.4 7.4-6.4s7 2.4 7.4 6.4"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.1"/><path d="M12 2.6v2.2M12 19.2v2.2M3.4 12h2.2M18.4 12h2.2M5.9 5.9l1.6 1.6M16.5 16.5l1.6 1.6M5.9 18.1l1.6-1.6M16.5 7.5l1.6-1.6"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.4A8.4 8.4 0 0 1 9.6 4 8.5 8.5 0 1 0 20 14.4Z"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="2.8" width="6" height="10.4" rx="3"/><path d="M5.6 11.2a6.4 6.4 0 0 0 12.8 0M12 17.6v3.2M9.4 20.8h5.2"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m7.8 12.3 2.9 2.9 5.6-6.4"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15 9l-6 6M9 9l6 6"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 6.6V12l3.4 2"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M19 12H5M11.4 5.6 5 12l6.4 6.4"/></symbol>
+  <symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="M12 19V5M5.6 11.4 12 5l6.4 6.4"/></symbol>
+  <symbol id="i-call" viewBox="0 0 24 24"><path d="M7.1 3.2 4.6 3.6c-.9.15-1.5.98-1.35 1.87C4.7 14.1 9.9 19.3 18.5 20.75c.89.15 1.72-.45 1.87-1.35l.4-2.5c.12-.75-.3-1.48-1.02-1.76l-3-1.16c-.62-.24-1.32-.05-1.75.47l-.98 1.2a13.5 13.5 0 0 1-4.7-4.7l1.2-.98c.52-.43.71-1.13.47-1.75l-1.16-3c-.28-.72-1.01-1.14-1.76-1.02Z"/><path d="M15.4 4.4a5 5 0 0 1 4.2 4.2M15.6 7.6a1.9 1.9 0 0 1 1.4 1.4"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2.8" y="5" width="18.4" height="14.2" rx="2.6"/><path d="m4 8.2 8 5.2 8-5.2"/><path d="M15.8 2.4h4.6"/></symbol>
+  <symbol id="i-meet" viewBox="0 0 24 24"><path d="M3 8.4A3.4 3.4 0 0 1 6.4 5h4.8a3.4 3.4 0 0 1 3.4 3.4v1.8a3.4 3.4 0 0 1-3.4 3.4H8.6L5 16.6v-3.4A3.4 3.4 0 0 1 3 10.2Z"/><path d="M18.6 9.6h.8a1.6 1.6 0 0 1 1.6 1.6v3a1.6 1.6 0 0 1-1 1.5v2.1l-2.6-2H15a1.6 1.6 0 0 1-1.6-1.6v-.9"/></symbol>
+  <symbol id="i-badge" viewBox="0 0 24 24"><rect x="5" y="4.6" width="14" height="16.2" rx="2.4"/><path d="M9.6 4.6V3.3A1.2 1.2 0 0 1 10.8 2h2.4a1.2 1.2 0 0 1 1.2 1.3v1.3"/><circle cx="12" cy="10.6" r="2.1"/><path d="M8.7 16.6c.5-1.5 1.8-2.3 3.3-2.3s2.8.8 3.3 2.3"/></symbol>
+  <symbol id="i-plane" viewBox="0 0 24 24"><path d="M21.2 3.2 2.9 10.3a.7.7 0 0 0 .05 1.35l6.1 2.1 2.1 6.1a.7.7 0 0 0 1.35.05Z"/><path d="M21.2 3.2 9.05 13.75"/></symbol>
+  <symbol id="i-cup" viewBox="0 0 24 24"><path d="M4 9.4h12v5.2a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5Z"/><path d="M16 11h1.6a2.6 2.6 0 0 1 0 5.2H16"/><path d="M7.6 3.4c-.55.9-.55 1.6 0 2.5M11 3c-.55.9-.55 1.6 0 2.5"/></symbol>
+  <symbol id="i-exam" viewBox="0 0 24 24"><path d="M6.4 2.8h7.9l4.7 4.7v11.7a2.2 2.2 0 0 1-2.2 2.2H6.4A2.2 2.2 0 0 1 4.2 19.2V5A2.2 2.2 0 0 1 6.4 2.8Z"/><path d="M14.1 2.9v4.9h4.9"/><path d="m8.3 14.6 1.9 1.9 3.6-3.9"/></symbol>
+  <symbol id="i-board" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="11.6" rx="1.7"/><path d="M12 15.6v3.4M8.6 20.6h6.8"/><path d="M7.4 12.1 9.7 9.2l2.2 2.2 3-3.4 1.7 1.8"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7.2A2.2 2.2 0 0 1 5.2 5h3.3l2 2.4h8.3A2.2 2.2 0 0 1 21 9.6v8.2a2.2 2.2 0 0 1-2.2 2.2H5.2A2.2 2.2 0 0 1 3 17.8Z"/><path d="M8.1 16.4v-2.5M12 16.4v-4.5M15.9 16.4v-3.2"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M3.2 6.7A2.7 2.7 0 0 1 5.9 4h8a2.7 2.7 0 0 1 2.7 2.7v3.6a2.7 2.7 0 0 1-2.7 2.7H8.5L5 16.2V13a2.7 2.7 0 0 1-1.8-2.7Z"/><path d="M20.8 12.4v3.2a2.4 2.4 0 0 1-2.4 2.4h-1v2.2l-2.6-2.2h-1.2"/><circle cx="8" cy="8.6" r=".95" fill="currentColor" stroke="none"/><circle cx="11.9" cy="8.6" r=".95" fill="currentColor" stroke="none"/><circle cx="15.8" cy="8.6" r=".95" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-cap" viewBox="0 0 24 24"><path d="M2.6 8.2 12 4l9.4 4.2L12 12.4Z"/><path d="M6 10.5v4c0 1.5 2.7 2.7 6 2.7s6-1.2 6-2.7v-4"/><path d="M21.4 8.5v4.2"/></symbol>
+  <symbol id="i-case" viewBox="0 0 24 24"><rect x="2.8" y="7.2" width="18.4" height="13" rx="2.4"/><path d="M9 7.2V5.4A2 2 0 0 1 11 3.4h2a2 2 0 0 1 2 2v1.8"/><path d="M2.8 12.8h18.4M11 12.8h2"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.4"/><circle cx="12" cy="12" r="4.4"/><circle cx="12" cy="12" r="1.1" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M11 2.6c.65 4.3 2.55 6.2 6.85 6.85-4.3.65-6.2 2.55-6.85 6.85-.65-4.3-2.55-6.2-6.85-6.85 4.3-.65 6.2-2.55 6.85-6.85Z"/><path d="M18.4 15.6c.3 1.6 1 2.3 2.6 2.6-1.6.3-2.3 1-2.6 2.6-.3-1.6-1-2.3-2.6-2.6 1.6-.3 2.3-1 2.6-2.6Z"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.4 12S6 5.6 12 5.6 21.6 12 21.6 12 18 18.4 12 18.4 2.4 12 2.4 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-eye-off" viewBox="0 0 24 24"><path d="M4 4.6 20 20.4"/><path d="M9.6 6.1A8.6 8.6 0 0 1 12 5.6c6 0 9.6 6.4 9.6 6.4a16 16 0 0 1-3.3 3.9M6.5 8A16.4 16.4 0 0 0 2.4 12s3.6 6.4 9.6 6.4c1.3 0 2.5-.3 3.5-.8"/><path d="M9.9 10.2a3 3 0 0 0 4.1 4.2"/></symbol>
+  <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.32 4.95L2.05 22l5.3-1.39c1.45.79 3.09 1.21 4.69 1.21 5.46 0 9.9-4.44 9.9-9.9 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.26 8.26 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.23 8.23Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.81-.78.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.13-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.16-.48-.29Z"/></symbol>
+</svg>
 
 <style>
 .site-banner{display:none;font-size:.85rem;line-height:1.6;text-align:center;padding:.6rem 1.1rem;padding-top:max(.6rem, env(safe-area-inset-top, .6rem));background:linear-gradient(90deg,#8f7030,var(--gold) 50%,#8f7030);color:#171412;overflow-wrap:break-word}
@@ -1316,14 +1544,14 @@ nav.primary-nav{ gap:clamp(14px,1.6vw,28px); }
     <div class="header-actions">
       <button type="button" class="lang-pill" id="indexLangBtn" aria-label="Switch language">EN</button>
       <button type="button" class="theme-toggle" id="themeToggle" aria-label="تبديل المظهر">
-        <svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v2M12 19v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M3 12h2M19 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/><circle cx="12" cy="12" r="4.2"/></svg>
+        <svg id="themeIcon" class="pel-ic" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-sun"/></svg>
       </button>
       <button type="button" class="btn-path" data-open-path aria-haspopup="dialog">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="2.5"/><circle cx="18" cy="5" r="2.5"/><path d="M8.5 19H15a3 3 0 0 0 3-3v-8.5M6 16.5V8a3 3 0 0 1 3-3h3.5"/></svg>
+        <svg class="pel-ic" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-sign"/></svg>
         <span>ابني مسار تعلمي</span>
       </button>
       <a href="login.html" class="btn-outline btn-login magnetic" data-magnetic>
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+        <svg class="pel-ic" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-person"/></svg>
         <span class="login-text">دخول الطلاب</span>
       </a>
       <button type="button" class="btn-gold magnetic" data-magnetic>سجل الحين</button>
@@ -1352,34 +1580,44 @@ nav.primary-nav{ gap:clamp(14px,1.6vw,28px); }
   <div class="hero-glow"></div>
   <div class="container hero-grid">
     <div class="reveal is-visible">
-       <span class="eyebrow hero-eyebrow" dir="ltr" style="justify-content:flex-start;"><span class="pel-tag">Personalized English Lessons</span></span>
-      <h1 class="arabic-h" dir="rtl">سنين تدرس انجليزي… وبس يكلمك واحد تسكت؟</h1>
-      <p class="arabic hero-sub" dir="rtl">يرن جوالك وتتهرب. تكتب الايميل بالمترجم وقلبك يدق. وبالاجتماع تتمنى محد يسالك. والسالفه مو غباء منك، الطريقه القديمه علمتك تحفظ، مو تتكلم. PEL يغير القصه: دروس قصيره من مواقفك الحقيقيه، تسمع وتنطق وتتصحح فورا، لين تصير انت اللي ترد.</p>
+       <span class="eyebrow hero-eyebrow" dir="rtl" style="justify-content:flex-start;"><span class="pel-kick">انجليزي امريكي · مع استاذ فراس</span></span>
+      <h1 class="arabic-h" dir="rtl">تعرف انجليزي اكثر مما تتكلم.</h1>
+      <p class="arabic hero-sub" dir="rtl">درست انجليزي سنين، ويوم وقف قدامك احد رجعت للعربي. المكالمه ترن وتتجاهلها، والايميل ياخذ منك نص ساعه، والاجتماع يمر وانت ساكت. المشكله مو انك ما تعرف، المشكله انك ما نطقتها ولا مره. هنا كل درس موقف حقيقي: تسمعه، تقوله بصوتك، ويتصحح لك على طول، لين يجيك الرد بروحه.</p>
       <div class="hero-cta-row">
         <button type="button" class="btn-gold magnetic" data-open-path id="heroPathCta" style="padding:14px 28px; font-size:.95rem;">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="2.5"/><circle cx="18" cy="5" r="2.5"/><path d="M8.5 19H15a3 3 0 0 0 3-3v-8.5M6 16.5V8a3 3 0 0 1 3-3h3.5"/></svg>
+          <svg class="pel-ic" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-sign"/></svg>
           <span>اعرف بدايتي</span>
         </button>
         <a href="#pricing" class="btn-outline magnetic" data-magnetic>استكشف المنصه</a>
         <a href="https://wa.me/966557178070?text=%D8%A3%D8%A8%D9%8A%20%D8%A3%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%B9%D9%86%20%D8%A7%D9%84%D9%85%D9%86%D8%B5%D8%A9" target="_blank" rel="noopener" class="btn-wa magnetic" data-magnetic id="heroWaBtn">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.32 4.95L2.05 22l5.3-1.39c1.45.79 3.09 1.21 4.69 1.21 5.46 0 9.9-4.44 9.9-9.9 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2z"/></svg>
+          <svg class="pel-ic" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>
           <span>راسل استاذ فراس</span>
         </a>
       </div>
       <div class="path-hint" dir="rtl" style="margin-top:14px;">
-        <span class="arabic">اختبر مستواك مجانا، وشوف وش يوقفك بالضبط</span>
+        <span class="arabic">كم سؤال، وتشوف من وين تبدا بالضبط</span>
       </div>
       <div class="trust-row" dir="rtl">
-        <div class="trust-item"><span class="dot"></span>اختبار مستوى مجاني، تعرف وين تبدا</div>
-        <div class="trust-item"><span class="dot"></span>دروس قصيره من مواقفك: مكالمه، ايميل، اجتماع</div>
-        <div class="trust-item"><span class="dot"></span>تغلط؟ نصححك فورا ونقولك ليش</div>
-        <div class="trust-item"><span class="dot"></span>تشوف تقدمك يوم بيوم</div>
+        <div class="trust-item" style="--i:0"><span class="trust-ico"><svg class="pel-ic" width="17" height="17" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-sign"/></svg></span><span class="trust-txt">نبدا من مستواك انت، مو من الصفحه الاولى</span></div>
+        <div class="trust-item" style="--i:1"><span class="trust-ico"><svg class="pel-ic" width="17" height="17" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="trust-txt">تغلط؟ نقولك الصح، وليش</span></div>
+        <div class="trust-item" style="--i:2"><span class="trust-ico"><svg class="pel-ic" width="17" height="17" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-mic"/></svg></span><span class="trust-txt">تنطقها بصوتك لين تثبت</span></div>
+        <div class="trust-item" style="--i:3"><span class="trust-ico"><svg class="pel-ic" width="17" height="17" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-board"/></svg></span><span class="trust-txt">تشوف وين وصلت، مو بس تحس</span></div>
       </div>
     </div>
 
     <div class="callstage" id="heroVisual" aria-hidden="true">
+      <div class="rig">
+        <span class="rig-halo"></span>
+        <span class="rig-shadow"></span>
+        <div class="rig-orbit" id="rigOrbit">
+          <span class="rig-tile"><i><svg class="pel-ic" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-mic"/></svg></i>تسمعها</span>
+          <span class="rig-tile"><i><svg class="pel-ic" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-chat"/></svg></i>تنطقها</span>
+          <span class="rig-tile"><i><svg class="pel-ic" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></i>يتصحح</span>
+          <span class="rig-tile"><i><svg class="pel-ic" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-badge"/></svg></i>تثبت</span>
+        </div>
       <div class="phone" id="callScene">
-      <span class="cs-tag t1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3z"/><path d="M19 11a7 7 0 0 1-14 0M12 18v3"/></svg><span data-ar="النطق مكتوب بالعربي" data-en="Pronunciation in Arabic letters">النطق مكتوب بالعربي</span></span>
+        <span class="phone-back"></span>
+      <span class="cs-tag t1"><svg class="pel-ic" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-mic"/></svg><span data-ar="النطق مكتوب بالعربي" data-en="Pronunciation in Arabic letters">النطق مكتوب بالعربي</span></span>
         <div class="phone-screen">
           <div class="ph-head"><span class="ph-ava" id="csAva">D</span><div class="ph-meta"><div class="ph-name" id="csName"></div><div class="ph-state" id="csState"><i></i> </div></div></div>
           <div class="ph-thread">
@@ -1389,21 +1627,31 @@ nav.primary-nav{ gap:clamp(14px,1.6vw,28px); }
             <div class="cv-typing" id="csTyping"><span></span><span></span><span></span></div>
             <div class="cv-b cv-out" id="csOut"><div class="cv-tag" id="csOutTag"></div><div class="cv-en" id="csOutEn"></div>
               <div class="cv-aid"><div class="cv-chip say" id="csOutSay"></div><div class="cv-chip mean" id="csOutMean"></div></div></div>
-            <div class="cv-ok" id="csOk"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span id="csOkTxt"></span></div>
+            <div class="cv-ok" id="csOk"><svg class="pel-ic" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width:2.2"><use href="#i-check"/></svg><span id="csOkTxt"></span></div>
           </div>
           <div class="ph-foot" id="csFoot"><i></i><i></i><i></i><i></i></div>
         </div>
-      <span class="cs-tag t2"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span data-ar="تصحيح فوري" data-en="Instant correction">تصحيح فوري</span></span>
+      <span class="cs-tag t2"><svg class="pel-ic" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg><span data-ar="نقولك وين غلطت" data-en="We show you where it slipped">نقولك وين غلطت</span></span>
+      </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="ticker" aria-label="Situations"><div class="ticker-track" id="tickerTrack"></div></section>
+<section class="sb-sec" aria-label="مواقف تصير لك">
+  <div class="container">
+    <div class="sb-head">
+      <span class="eyebrow">مواقف تصير لك فعلا</span>
+      <h2 class="arabic-h" data-ar="كل موقف له جمله تجيك على طول" data-en="Every situation has a line ready for you">كل موقف له جمله تجيك على طول</h2>
+      <p class="arabic" data-ar="من اول مكالمه مع عميل، لاجتماع، لمطار، لاختبار. تشوف الموقف، تسمع الجمله، وتنطقها بصوتك." data-en="From your first client call to a meeting, the airport, the exam. You see the moment, hear the line, and say it out loud.">من اول مكالمه مع عميل، لاجتماع، لمطار، لاختبار. تشوف الموقف، تسمع الجمله، وتنطقها بصوتك.</p>
+    </div>
+  </div>
+  <div class="sb-stage" id="sbStage"><div class="sb-belt" id="sbBelt"></div></div>
+</section>
 
 <section id="forWho" class="v2-sec" style="background:var(--bg);">
   <div class="container">
-    <div class="v2-head"><h2 class="arabic-h" data-ar="مهما كان وضعك، فيه مسار يمشي معك" data-en="Whatever your situation, there is a path that fits">مهما كان وضعك، فيه مسار يمشي معك</h2><p class="arabic" data-ar="طالب، موظف، او مجهز لاختبار؟ نبدا من مستواك انت، مو من اول صفحه بالكتاب." data-en="Student, employee, or exam candidate: we start from your level, not from page one of a textbook.">طالب، موظف، او مجهز لاختبار؟ نبدا من مستواك انت، مو من اول صفحه بالكتاب.</p></div>
+    <div class="v2-head"><h2 class="arabic-h" data-ar="مهما كان وضعك، فيه مسار يمشي معك" data-en="Whatever your situation, there is a path that fits">مهما كان وضعك، فيه مسار يمشي معك</h2><p class="arabic" data-ar="طالب، موظف، او متجه لاختبار؟ كل واحد له مسار ووتيره، ونبدا من مستواك انت." data-en="Student, employee, or heading for an exam? Each one gets a different route and pace, and we start from your own level.">طالب، موظف، او متجه لاختبار؟ كل واحد له مسار ووتيره، ونبدا من مستواك انت.</p></div>
     <div class="aud" id="audWrap"></div>
   </div>
 </section>
@@ -1416,10 +1664,10 @@ nav.primary-nav{ gap:clamp(14px,1.6vw,28px); }
     <div class="ba-tabs" id="baTabs"></div>
     <div class="ba-stage">
       <div class="ba-side ba-before" id="baBefore"><span class="ba-label" data-ar="قبل" data-en="Before">قبل</span><p class="ba-thought" id="baThought"></p></div>
-      <span class="ba-arrow" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      <span class="ba-arrow" aria-hidden="true"><svg class="pel-ic" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width:2.2"><use href="#i-arrow"/></svg></span>
       <div class="ba-side ba-after" id="baAfter"><span class="ba-label" data-ar="بعد PEL" data-en="After PEL">بعد PEL</span><div class="ba-en" id="baEn"></div><div class="ba-line pr" id="baSay"></div><div class="ba-line mn" id="baMean"></div></div>
     </div>
-    <div class="v2-cta"><button type="button" class="btn-gold magnetic" data-open-path style="padding:15px 30px; font-size:.98rem;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="2.5"/><circle cx="18" cy="5" r="2.5"/><path d="M8.5 19H15a3 3 0 0 0 3-3v-8.5M6 16.5V8a3 3 0 0 1 3-3h3.5"/></svg><span>اعرف بدايتي</span></button><a href="https://wa.me/966557178070?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%20%D8%A7%D8%B3%D8%AA%D8%A7%D8%B0%20%D9%81%D8%B1%D8%A7%D8%B3%D8%8C%20%D8%A7%D8%A8%D9%8A%20%D8%A7%D8%B3%D8%A7%D9%84%20%D8%B9%D9%86%20%D8%A7%D9%84%D9%85%D9%86%D8%B5%D9%87" target="_blank" rel="noopener" class="btn-wa magnetic" data-magnetic><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.32 4.95L2.05 22l5.3-1.39c1.45.79 3.09 1.21 4.69 1.21 5.46 0 9.9-4.44 9.9-9.9 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2z"/></svg><span data-ar="راسل استاذ فراس" data-en="Message Tutor Firas">راسل استاذ فراس</span></a></div>
+    <div class="v2-cta"><button type="button" class="btn-gold magnetic" data-open-path style="padding:15px 30px; font-size:.98rem;"><svg class="pel-ic" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-sign"/></svg><span>اعرف بدايتي</span></button><a href="https://wa.me/966557178070?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%20%D8%A7%D8%B3%D8%AA%D8%A7%D8%B0%20%D9%81%D8%B1%D8%A7%D8%B3%D8%8C%20%D8%A7%D8%A8%D9%8A%20%D8%A7%D8%B3%D8%A7%D9%84%20%D8%B9%D9%86%20%D8%A7%D9%84%D9%85%D9%86%D8%B5%D9%87" target="_blank" rel="noopener" class="btn-wa magnetic" data-magnetic><svg class="pel-ic" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg><span data-ar="راسل استاذ فراس" data-en="Message Tutor Firas">راسل استاذ فراس</span></a></div>
     <p class="v2-note" data-ar="اختبار المستوى مجاني، وتشوف نتيجتك قبل لا تدفع." data-en="The level test is free, and you see your result before you pay.">اختبار المستوى مجاني، وتشوف نتيجتك قبل لا تدفع.</p>
   </div>
 </section>
@@ -1440,9 +1688,9 @@ nav.primary-nav{ gap:clamp(14px,1.6vw,28px); }
   <div class="container">
     <div class="v2-head"><h2 class="arabic-h" data-ar="ثلاث خطوات، وتصير تتكلم" data-en="Three steps and you are speaking">ثلاث خطوات، وتصير تتكلم</h2></div>
     <div class="steps">
-      <div class="step"><div class="step-n" aria-hidden="true">1</div><h3 class="arabic-h" data-ar="تتعلم بالتطبيق" data-en="Learn in the app">تتعلم بالتطبيق</h3><p class="arabic" data-ar="دروس قصيره من مواقفك: مكالمه، ايميل، اجتماع. تسمع، تنطق، وتثبت." data-en="Short lessons built from your real moments: calls, emails, meetings. Listen, speak, and make it stick.">دروس قصيره من مواقفك: مكالمه، ايميل، اجتماع. تسمع، تنطق، وتثبت.</p></div>
-      <div class="step"><div class="step-n" aria-hidden="true">2</div><h3 class="arabic-h" data-ar="تتمرن مع الاستاذ" data-en="Practice with the tutor">تتمرن مع الاستاذ</h3><p class="arabic" data-ar="حصص مباشره حسب باقتك: تتكلم ويصحح لك." data-en="Live classes depending on your plan: you speak and get corrected.">حصص مباشره حسب باقتك: تتكلم ويصحح لك.</p></div>
-      <div class="step"><div class="step-n" aria-hidden="true">3</div><h3 class="arabic-h" data-ar="تستخدمها بحياتك" data-en="Use it in your life">تستخدمها بحياتك</h3><p class="arabic" data-ar="ترد على المكالمه، تكتب الايميل، وتتكلم بثقه، بدون مترجم." data-en="Answer the call, write the email, and speak with confidence, without a translator.">ترد على المكالمه، تكتب الايميل، وتتكلم بثقه، بدون مترجم.</p></div>
+      <div class="step"><div class="step-n" aria-hidden="true"><svg class="pel-ic" width="26" height="26" viewBox="0 0 24 24"><use href="#i-target"/></svg></div><h3 class="arabic-h" data-ar="نعرف من وين تبدا" data-en="We find your starting point">نعرف من وين تبدا</h3><p class="arabic" data-ar="كم سؤال، ونحدد مستواك بالضبط، وتبدا من النقطه اللي انت واقف عندها." data-en="A few questions, and we pin your exact level. You start from where you actually stand.">كم سؤال، ونحدد مستواك بالضبط، وتبدا من النقطه اللي انت واقف عندها.</p></div>
+      <div class="step"><div class="step-n" aria-hidden="true"><svg class="pel-ic" width="26" height="26" viewBox="0 0 24 24"><use href="#i-mic"/></svg></div><h3 class="arabic-h" data-ar="تتمرن بصوتك" data-en="You practice out loud">تتمرن بصوتك</h3><p class="arabic" data-ar="كل درس موقف حقيقي: تسمعه، وتنطقه بصوتك، ويتصحح لك على طول لين يثبت." data-en="Every lesson is a real moment: you hear it, say it out loud, and get corrected right away until it sticks.">كل درس موقف حقيقي: تسمعه، وتنطقه بصوتك، ويتصحح لك على طول لين يثبت.</p></div>
+      <div class="step"><div class="step-n" aria-hidden="true"><svg class="pel-ic" width="26" height="26" viewBox="0 0 24 24"><use href="#i-spark"/></svg></div><h3 class="arabic-h" data-ar="تستخدمه برا التطبيق" data-en="You use it in real life">تستخدمه برا التطبيق</h3><p class="arabic" data-ar="ترد المكالمه، وترسل الايميل، وتدخل الاجتماع وانت مطمن." data-en="You pick up the call, send the email, and walk into the meeting calm.">ترد المكالمه، وترسل الايميل، وتدخل الاجتماع وانت مطمن.</p></div>
     </div>
   </div>
 </section>
@@ -1452,11 +1700,11 @@ nav.primary-nav{ gap:clamp(14px,1.6vw,28px); }
     <div class="section-head center reveal" dir="rtl">
       <span class="eyebrow">PEL هو الحل</span>
       <h2 class="arabic-h">باقتين وثلاث مدد، واختار اللي يمشي مع هدفك</h2>
-      <p class="arabic">ابد من الصفر لين اول مكالمه تردها، او جهز للستب والتوفل والايلتس. تدفع عبر واتساب ونفعل حسابك خلال دقايق.</p>
+      <p class="arabic">ابد من الصفر لين اول مكالمه تردها، او تجهز للستب والتوفل والايلتس. الدفع على واتساب، وحسابك يفتح بنفس اليوم.</p>
     </div>
     <div class="pricing-grid" id="pricingGrid" dir="rtl"></div>
     <p class="pricing-note arabic">
-      <b>ما تدري وين تبدا؟</b> راسل استاذ فراس واتساب، نسالك عن مستواك وهدفك، ونرجع لك بخطه تناسبك.
+      <b>محتاج مسارك يتبنى؟</b> راسل استاذ فراس واتساب، نسالك عن مستواك وهدفك، ونرجع لك بخطه على قدك.
     </p>
   </div>
 </section>
@@ -1474,15 +1722,15 @@ nav.primary-nav{ gap:clamp(14px,1.6vw,28px); }
     return t==='exam_prep' ? {
       nameEn:'Exam Prep', nameAr: 'التجهيز للاختبارات',
       termEn:'Advanced - STEP, TOEFL, IELTS', termAr: 'متقدم - STEP و TOEFL و IELTS',
-      descEn:'Exam coming up and can\'t tell if you\'re ready? Drill on real questions with instant correction.', descAr: 'الامتحان قرب وما تقدر تقيّم نفسك؟ تدرب بأسئله حقيقيه وتصحيح فوري.',
-      featEn:['STEP, TOEFL, IELTS, all covered together','Questions in the exam format, practice before it','Writing corrected instantly, before you go','Audio pronunciation for the listening section'],
-      featAr:['ستب، توفل، وايلتس كلكم بجنب بعض','اسئله بنفس نظام الامتحان، تدرب قبله','تصحيح كتابتك فورا، قبل ما تروح','نطق مسموع عشان قسم الاستماع']
+      descEn:'Exam close and your level feels shaky? We drill the same question styles and stop on exactly what costs you marks, until you walk in settled.', descAr: 'الاختبار قرب، وتحس مستواك ما يثبت؟ نتدرب على نفس نمط الاسئله، ونتوقف عند اللي يخصم منك بالضبط، لين تدخل وانت مطمن.',
+      featEn:['STEP, TOEFL and IELTS, and how each one is built','You drill the same question shapes the exam uses','Your writing marked, with the reason for every deduction','Extra work on the listening and speaking sections'],
+      featAr:['ستب وتوفل وايلتس، وتعرف نمط كل واحد','تتدرب على نفس شكل اسئله الاختبار','كتابتك تتصحح، ويطلع لك الغلط وسببه','تدريب زايد على قسم الاستماع والنطق']
     } : {
       nameEn:'Start From 0', nameAr: 'ابد من الصفر',
       termEn:'Absolute beginner - first letter', termAr: 'مبتدي من الصفر - اول حرف',
-      descEn:'Freeze at the first word? From the alphabet to your first conversation.', descAr: 'تتجمد عند اول كلمه؟ من الحروف لين اول محادثه تتكلمها بثقه.',
-      featEn:['From first letter to first sentence you say','Situations that happen to you: work, travel, daily life','Hear every word, repeat it','See your progress day by day'],
-      featAr:['من اول حرف لين اول جمله تقولها','مواقف تصير لك: شغل، سفر، دوام','تسمع نطق كل كلمه وتكررها','تشوف تقدمك يوم بيوم']
+      descEn:'Stuck at the first word? We start you at the letters and build slowly, until you hold a full conversation with confidence.', descAr: 'تتوهق عند اول كلمه؟ نبدا معك من الحروف، ونتدرج معك لين تسوي اول محادثه كامله وانت واثق.',
+      featEn:['You start at the letters and leave with a full conversation','Every word comes with its sound written in Arabic letters','The rules explained in Arabic, step by step','Short lessons you open on your phone whenever you like'],
+      featAr:['تبدا من الحروف، وتطلع باول محادثه كامله','كل كلمه معها نطقها مكتوب بحروف عربيه','القواعد مشروحه بالعربي، خطوه بخطوه','دروس قصيره تفتحها من جوالك وقت ما تبي']
     };
   }
   function durLabel(m,ar){ return m===1?(ar?'شهر':'1 Month'):(m===2?(ar?'شهران':'2 Months'):(ar?'3 اشهر':'3 Months')); }
@@ -1536,7 +1784,7 @@ nav.primary-nav{ gap:clamp(14px,1.6vw,28px); }
         }
         html += '<ul class="price-list">';
         var feats = ar?m.featAr:m.featEn;
-        for (var f=0; f<feats.length; f++) html += '<li class="'+(ar?'arabic':'')+'">'+esc(feats[f])+'</li>';
+        for (var f=0; f<feats.length; f++) html += '<li class="'+(ar?'arabic':'')+'" style="--i:'+f+'"><svg class="pel-ic" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg><span>'+esc(feats[f])+'</span></li>';
         html += '</ul>';
         var waText = ar ? ('السلام عليكم، ابي اشترك بباقه '+dl+' من خطه '+(tier==='exam_prep'?'التجهيز للاختبارات':'ابد من الصفر')+' بـ '+r.price+' ريال. وش طريقه الدفع؟') : ('Hello, I want the '+dl+' plan ('+tier+') at '+r.price+' SAR. How do I pay?');
         html += '<a href="'+waLink(waText)+'" target="_blank" rel="noopener" class="'+(r.featured?'btn-gold':'btn-outline')+' magnetic" data-magnetic>'+(ar?'سجل عن طريق واتساب':'Sign up on WhatsApp')+'</a>';
@@ -1548,8 +1796,8 @@ nav.primary-nav{ gap:clamp(14px,1.6vw,28px); }
     }
     // risk reversal: free test, fast activation, refund window
     html += '<div class="pricing-assure" dir="'+(ar?'rtl':'ltr')+'">';
-    html += '<span class="as-chip">'+(ar?'اختبار مستوى مجاني':'Free level test')+'</span>';
-    html += '<span class="as-chip">'+(ar?'تفعيل حسابك خلال دقايق':'Account activated in minutes')+'</span>';
+    html += '<span class="as-chip">'+(ar?'نعرف من وين تبدا':'We find your starting point')+'</span>';
+    html += '<span class="as-chip">'+(ar?'التفعيل يدوي، على واتساب':'Set up by hand, on WhatsApp')+'</span>';
     html += '<span class="as-chip">'+(ar?'استرجاع خلال 3 ايام':'3-day refund window')+'</span>';
     html += '</div>';
     html += '<p class="pricing-refund '+(ar?'arabic':'')+'" dir="'+(ar?'rtl':'ltr')+'">'+(ar?'سياسه الاسترجاع: تقدر تسترجع خلال 3 ايام من الدفع. واذا استاذ فراس سوى لك الحساب وفعله بعد الدفع، تنخصم رسوم المنصه حسب الباقه اللي اشتريتها.':'Refund policy: you can request a refund within 3 days of payment. If Tutor Firas has already created and activated your account after payment, platform fees are deducted depending on the plan you bought.')+'</p>';
@@ -1589,14 +1837,14 @@ nav.primary-nav{ gap:clamp(14px,1.6vw,28px); }
   <div class="container reveal" dir="rtl">
     <span class="eyebrow" style="justify-content:center;">جاهز؟</span>
     <h2 class="arabic-h" style="margin-top:20px;">اول مكالمه تردها بثقه، تبدا من هنا</h2>
-    <p class="arabic">اختبر مستواك مجانا، وراسل استاذ فراس واتساب. نفعل حسابك خلال دقايق وتبدا اول درس اليوم.</p>
+    <p class="arabic">جاوب كم سؤال، وراسل استاذ فراس واتساب. نفتح لك حسابك بنفس اليوم، وتبدا اول درس على طول.</p>
     <div class="final-cta-buttons">
       <button type="button" class="btn-gold magnetic" data-open-path id="finalPathCta">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="2.5"/><circle cx="18" cy="5" r="2.5"/><path d="M8.5 19H15a3 3 0 0 0 3-3v-8.5M6 16.5V8a3 3 0 0 1 3-3h3.5"/></svg>
+        <svg class="pel-ic" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-sign"/></svg>
         <span>خلنا نحدد بدايتك</span>
       </button>
       <a href="https://wa.me/966557178070?text=%D8%A3%D8%A8%D9%8A%20%D8%A3%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%B9%D9%86%20%D8%A7%D9%84%D8%A7%D9%86%D8%B6%D9%85%D8%A7%D9%85%20%D9%84%D9%84%D9%85%D9%86%D8%B5%D8%A9" target="_blank" rel="noopener" class="btn-wa magnetic" data-magnetic>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.32 4.95L2.05 22l5.3-1.39c1.45.79 3.09 1.21 4.69 1.21 5.46 0 9.9-4.44 9.9-9.9 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.15c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.26 8.26 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.23 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.81-.78.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.13-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.16-.48-.29z"/></svg>
+        <svg class="pel-ic" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>
         <span>راسل استاذ فراس</span>
       </a>
       <span class="final-cta-email" dir="ltr">+966 55 717 8070</span>
@@ -1657,14 +1905,14 @@ nav.primary-nav{ gap:clamp(14px,1.6vw,28px); }
   </div>
 </div>
 
-<button type="button" class="back-to-top" id="backToTop" aria-label="العوده للاعلى"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg></button>
+<button type="button" class="back-to-top" id="backToTop" aria-label="العوده للاعلى"><svg class="pel-ic" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-up"/></svg></button>
 
 <!-- ================= PERSONALIZATION ONBOARDING OVERLAY ================= -->
 <div class="onboard" id="onboardOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Build your learning path">
   <div class="onboard-scrim" data-close-onboard></div>
   <div class="onboard-card" id="onboardCard">
     <button type="button" class="onboard-close" id="onboardClose" aria-label="Close">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      <svg class="pel-ic" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg>
     </button>
     <div class="onboard-body" id="onboardBody"></div>
   </div>
@@ -1738,18 +1986,24 @@ function applyIndexLang(lang){
   loginTexts.forEach(function(el){ el.textContent = lang==='ar' ? 'دخول الطلاب' : 'Student Login'; });
   // hero
   var heroH1=document.querySelector('.hero h1.arabic-h');
-  if(heroH1){ var h1ar = (window.PEL_SITE && PEL_SITE.heroHeadline && PEL_SITE.heroHeadline.ar) ? PEL_SITE.heroHeadline.ar : 'سنين تدرس انجليزي… وبس يكلمك واحد تسكت؟'; var h1en = (window.PEL_SITE && PEL_SITE.heroHeadline && PEL_SITE.heroHeadline.en) ? PEL_SITE.heroHeadline.en : 'Years of studying English… and you still freeze when someone talks to you?'; setLang(heroH1, h1ar, h1en); }
+  if(heroH1){ var h1ar = (window.PEL_SITE && PEL_SITE.heroHeadline && PEL_SITE.heroHeadline.ar) ? PEL_SITE.heroHeadline.ar : 'تعرف انجليزي اكثر مما تتكلم.'; var h1en = (window.PEL_SITE && PEL_SITE.heroHeadline && PEL_SITE.heroHeadline.en) ? PEL_SITE.heroHeadline.en : 'You know more English than you speak.'; setLang(heroH1, h1ar, h1en); }
   var heroSub=document.querySelector('.hero .hero-sub');
-  if(heroSub){ var hsar = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.ar) ? PEL_SITE.heroSub.ar : 'يرن جوالك وتتهرب. تكتب الايميل بالمترجم وقلبك يدق. وبالاجتماع تتمنى محد يسالك. والسالفه مو غباء منك، الطريقه القديمه علمتك تحفظ، مو تتكلم. PEL يغير القصه: دروس قصيره من مواقفك الحقيقيه، تسمع وتنطق وتتصحح فورا، لين تصير انت اللي ترد.'; var hsen = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.en) ? PEL_SITE.heroSub.en : 'Your phone rings and you dodge it. You write emails through a translator with your heart pounding. In meetings you hope nobody asks you anything. It is not that you are not smart. The old way taught you to memorize, not to speak. PEL changes the story: short lessons from your real situations, you hear it, say it, and get corrected instantly, until you are the one who answers.'; setLang(heroSub, hsar, hsen); }
+  if(heroSub){ var hsar = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.ar) ? PEL_SITE.heroSub.ar : 'درست انجليزي سنين، ويوم وقف قدامك احد رجعت للعربي. المكالمه ترن وتتجاهلها، والايميل ياخذ منك نص ساعه، والاجتماع يمر وانت ساكت. المشكله مو انك ما تعرف، المشكله انك ما نطقتها ولا مره. هنا كل درس موقف حقيقي: تسمعه، تقوله بصوتك، ويتصحح لك على طول، لين يجيك الرد بروحه.'; var hsen = (window.PEL_SITE && PEL_SITE.heroSub && PEL_SITE.heroSub.en) ? PEL_SITE.heroSub.en : 'You studied English for years, then the moment someone stood in front of you, you went back to Arabic. The call rings and you dodge it, the email takes you half an hour, the meeting passes and you stay quiet. The problem is not that you do not know, it is that you have never said it out loud. Here every lesson is a real moment: hear it, say it in your voice, get corrected on the spot, until the reply comes on its own.'; setLang(heroSub, hsar, hsen); }
   var pathHint=document.querySelector('.path-hint .arabic');
-  if(pathHint) setLang(pathHint, 'اختبر مستواك مجانا، وشوف وش يوقفك بالضبط', 'Find out what stops you, it\'s free');
+  if(pathHint) setLang(pathHint, 'كم سؤال، وتشوف من وين تبدا بالضبط', 'A few questions and you see exactly where you start');
   var pathHintEn=document.querySelector('.path-hint-en');
   if(pathHintEn) pathHintEn.textContent = lang==='ar' ? '' : 'See your level and what stops you, free';
   // trust items (bilingual)
   var trustItems=document.querySelectorAll('.trust-item');
-  var trustAr=['اختبار مستوى مجاني، تعرف وين تبدا','دروس قصيره من مواقفك: مكالمه، ايميل، اجتماع','تغلط؟ نصححك فورا ونقولك ليش','تشوف تقدمك يوم بيوم'];
-  var trustEn=['Free level test, know exactly where to start','Short lessons from your real moments: calls, emails, meetings','Make a mistake? Corrected instantly, with the reason','See your progress day by day'];
-  trustItems.forEach(function(el,i){ if(trustAr[i]&&trustEn[i]){ el.innerHTML='<span class="dot"></span>'+(lang==='ar'?trustAr[i]:trustEn[i]); el.setAttribute('dir',lang==='ar'?'rtl':'ltr'); } });
+  var trustAr=['نبدا من مستواك انت، مو من الصفحه الاولى','تغلط؟ نقولك الصح، وليش','تنطقها بصوتك لين تثبت','تشوف وين وصلت، مو بس تحس'];
+  var trustEn=['We start at your level, not page one','You slip, we give the right way and the reason','You say it out loud until it sticks','You see how far you got, not just feel it'];
+  var trustIcons=['i-sign','i-check','i-mic','i-board'];
+  trustItems.forEach(function(el,i){
+    if(trustAr[i]&&trustEn[i]){
+      el.innerHTML='<span class="trust-ico"><svg class="pel-ic" width="17" height="17" viewBox="0 0 24 24" aria-hidden="true"><use href="#'+trustIcons[i]+'"/></svg></span><span class="trust-txt">'+(lang==='ar'?trustAr[i]:trustEn[i])+'</span>';
+      el.setAttribute('dir',lang==='ar'?'rtl':'ltr');
+    }
+  });
 
   // hero social proof removed: fabricated statistics are not allowed on PEL
   var heroWa=document.querySelector('#heroWaBtn span');
@@ -1926,7 +2180,7 @@ function applyIndexLang(lang){
   var finalH2=document.querySelector('.final-cta h2');
   if(finalH2) finalH2.textContent = lang==='ar' ? 'اول مكالمه تردها بثقه، تبدا من هنا' : 'Your first confident call starts here';
   var finalP=document.querySelector('.final-cta p.arabic');
-  if(finalP) finalP.textContent = lang==='ar' ? 'اختبر مستواك مجانا، وراسل استاذ فراس واتساب. نفعل حسابك خلال دقايق وتبدا اول درس اليوم.' : 'Take the free level test and message Tutor Firas on WhatsApp. We activate your account within minutes and you start your first lesson today.';
+  if(finalP) finalP.textContent = lang==='ar' ? 'جاوب كم سؤال، وراسل استاذ فراس واتساب. نفتح لك حسابك بنفس اليوم، وتبدا اول درس على طول.' : 'Answer a few questions and message Tutor Firas on WhatsApp. We set up your account the same day and you start your first lesson right away.';
   // personalPreview
   var ppEyebrow=document.querySelector('#personalPreview .eyebrow');
   if(ppEyebrow) ppEyebrow.textContent = lang==='ar' ? 'تعرف هالشعور؟' : 'Know that feeling?';
@@ -2316,19 +2570,18 @@ new MutationObserver(muts => {
 /* FAQ DATA - bilingual. DB copy (site_settings.faqs, editable in Admin >
    Site Settings) is canonical; this built-in list is the offline fallback. */
 const faqs = [
-  {qAr: 'لمين ذا البرنامج؟', aAr: 'لكل واحد وقف عند كلمه وحس انه يقدر بس ما يقدر: موظف، طالب، اي شخص يبي يتكلم بثقه. ما يهم مستواك، نبدا من وين ما انت.', qEn:'Who is this for?', aEn:'Anyone who\'s frozen at a word and felt like they could, but couldn\'t: workers, students, anyone who wants to speak with confidence. Your level doesn\'t matter, we start where you are.'},
-  {qAr: 'لازم اعرف انجليزي قبل؟', aAr: 'لا. لو ما تعرف ولا كلمه، نبدا من الحروف. تختبر مستواك مجانا، ونبني لك خطه على اساسه.', qEn:'Do I need to know English first?', aEn:'No. If you don\'t know a single word, we start from the alphabet. Take the free level test, and we build your plan from there.'},
-  {qAr: 'المنهج امريكي فعلا؟', aAr: 'اي، كل درس وتسجيل ونطق مبني على اللهجه الامريكيه.', qEn:'Is it really American English?', aEn:'Yes. Every lesson, recording, and pronunciation is American English.'},
-  {qAr: 'الشرح بالعربي؟', aAr: 'اي، كل درس مشروح بالعربي، تفهم كل شي. والكلمات الجديده مكتوب نطقها بجانبها.', qEn:'How are lessons explained?', aEn:'Yes. Every lesson is explained in Arabic, you understand everything. New words have their pronunciation written next to them.'},
-  {qAr: 'اقدر ادرس من الجوال؟', aAr: 'اكيد. جوالك يصير فصلك، تفتحه اي وقت وتكمل من وين ما وقفت.', qEn:'Can I study on my phone?', aEn:'Yes. Your phone becomes your classroom, open it anywhere, pick up where you left off.'},
-  {qAr: 'كم مده الاشتراك؟', aAr: 'شهر، شهرين، او 3 اشهر. انت تختار. خلال هالفتره كل الدروس متاحه لك.', qEn:'How long is the subscription?', aEn:'One month, two months, or three months. You choose. All lessons are available to you during that time.'},
-  {qAr: 'تقدرون تترجمون لي؟', aAr: 'اي، تترجم اي كلمه وانت تتعلم. واذا كتبت شي وغلطت، نشوف وين الغلط ونصححه فورا.', qEn:'Can you translate for me?', aEn:'Yes. Translate any word while you learn. And if you write something and make a mistake, we show you where and fix it instantly.'},
-  {qAr: 'اشوف تقدمي؟', aAr: 'اي، لوحتك تشوف وين وصلت: محادثه، استماع، مفردات، اسبوع باسبوع. تشوف الفرق بنفسك.', qEn:'Can I see my progress?', aEn:'Yes. Your dashboard shows where you are: speaking, listening, vocabulary, week by week. You see the difference yourself.'},
-  {qAr: 'كم سعر الاشتراك؟', aAr: 'مسارين: ابد من الصفر: شهر 650 ⃁، شهرين 800 ⃁، 3 اشهر 1300 ⃁ (افضل قيمه). التجهيز للاختبارات: شهر 1000 ⃁، شهرين 1550 ⃁، 3 اشهر 2350 ⃁ (افضل قيمه). الحصص المباشره مشموله في باقات مختاره. تدفع عبر واتساب ونشغل حسابك خلال دقايق. شوف الباقات بالتفصيل فوق.', qEn:'How much?', aEn:'Two paths: Start From Zero: 1 month 650 ⃁, 2 months 800 ⃁, 3 months 1300 ⃁ (best value). Exam Prep (STEP / TOEFL / IELTS): 1 month 1000 ⃁, 2 months 1550 ⃁, 3 months 2350 ⃁ (best value). Live classes are included on select plans. Pay on WhatsApp, we set up your account in minutes. See the plans above for details.'},
-  {qAr: 'الباقات فيها حصص مباشره؟', aAr: 'باقات مختاره فيها حصص مباشره. باقه الشهر لابد من الصفر ما فيها حصص، بس باقه الشهرين فيها حصه كل اسبوع وباقه 3 اشهر فيها حصتين. وباقات التجهيز للاختبارات فيها من حصه لـ 3 حصص بالاسبوع. الاستاذ فراس يحدد المواعيد. تبي اكثر؟ تشتري رصيد للحصص الشخصيه.', qEn:'Do plans include live classes?', aEn:'Select plans include live classes. The 1-month Start From Zero plan has no live classes, but 2 months includes 1/week and 3 months includes 2/week. Exam Prep plans include 1-3 classes per week. Tutor Firas sets the schedule. Want more? Buy extra credits for in-person lessons.'},
-  {qAr: 'فيه استرجاع؟', aAr: 'اي، خلال 3 ايام من الدفع. واذا استاذ فراس سوى لك الحساب وفعله بعد الدفع، تنخصم رسوم المنصه حسب الباقه اللي اشتريتها. راسل استاذ فراس واتساب ونرتب لك الموضوع.', qEn:'Is there a refund?', aEn:'Yes, within 3 days of payment. If Tutor Firas has already created and activated your account after payment, platform fees are deducted depending on the plan you bought. Message Tutor Firas on WhatsApp and we will sort it out.'},
-  {qAr: 'كيف اسجل؟', aAr: 'راسل استاذ فراس واتساب، نرسل لك تفاصيل الدفع ونشغل حسابك خلال دقايق.', qEn:'How do I sign up?', aEn:'Message Tutor Firas on WhatsApp, we send payment details and set up your account in minutes.'},
-  {qAr: 'ايش يصير لما تخلص باقتي؟', aAr: 'تقدمك يبقى محفوظ، ما يضيع. بس يوقف الوصول للدروس. تجدد من لوحتك او تراسل استاذ فراس ونشغل لك باقه جديده.', qEn:'What happens when my plan ends?', aEn:'Your progress stays saved, it doesn\'t disappear. Lesson access pauses. Renew from your dashboard or message Tutor Firas for a new plan.'},
+  {qAr: 'لمين هالمنصه؟', aAr: 'لكل واحد حفظ انجليزي سنين ويبي يتكلمه فعلا: طالب، موظف، او واحد متجه لاختبار. نبدا من مستواك انت، ونبني على قد هدفك.', qEn:'Who is PEL for?', aEn:'For anyone who memorized English for years and actually wants to speak it: a student, an employee, or someone heading for an exam. We start from your level and build toward your goal.'},
+  {qAr: 'لازم اعرف انجليزي قبل؟', aAr: 'لا. اذا ما تعرف ولا كلمه، نبدا معك من الحروف والاصوات، ونتدرج لين تسوي اول محادثه كامله.', qEn:'Do I need English first?', aEn:'No. If you do not know a single word, we start with the alphabet and sounds, and build up until you hold a full conversation.'},
+  {qAr: 'المنهج امريكي فعلا؟', aAr: 'اي. كل درس، وكل تسجيل، وكل دليل نطق مبني على الانجليزي الامريكي.', qEn:'Is it really American English?', aEn:'Yes. Every lesson, recording and pronunciation guide is built on American English.'},
+  {qAr: 'الشرح بالعربي؟', aAr: 'اي. القواعد والكلمات تنشرح بالعربي اول، وبجانب كل كلمه جديده نطقها مكتوب بحروف عربيه.', qEn:'Is the explanation in Arabic?', aEn:'Yes. Grammar and words are explained in Arabic first, and every new word has its pronunciation written in Arabic letters next to it.'},
+  {qAr: 'اقدر ادرس من الجوال؟', aAr: 'اكيد. جوالك يصير فصلك، تفتحه اي وقت وتكمل من وين ما وقفت.', qEn:'Can I study on my phone?', aEn:'Of course. Your phone becomes your classroom, open it anytime and pick up where you left off.'},
+  {qAr: 'كم مده الاشتراك؟', aAr: 'شهر، شهرين، او 3 اشهر، وانت تختار. وخلال المده كلها كل الدروس متاحه لك.', qEn:'How long is the subscription?', aEn:'One month, two months, or three months, you choose. All lessons are open to you for the whole period.'},
+  {qAr: 'اتابع تقدمي كيف؟', aAr: 'لوحتك تعرض لك وين وصلت: محادثه، استماع، مفردات، اسبوع باسبوع.', qEn:'How do I track my progress?', aEn:'Your dashboard shows where you have gotten: speaking, listening, vocabulary, week by week.'},
+  {qAr: 'كم سعر الاشتراك؟', aAr: 'مسارين. ابد من الصفر: شهر 650 \u20C1، شهرين 800 \u20C1، 3 اشهر 1300 \u20C1 (افضل قيمه). التجهيز للاختبارات: شهر 1000 \u20C1، شهرين 1550 \u20C1، 3 اشهر 2350 \u20C1 (افضل قيمه). الدفع على واتساب، ونفتح حسابك بنفس اليوم. التفاصيل فوق في الباقات.', qEn:'How much?', aEn:'Two tracks. Start From Zero: 1 month 650 \u20C1, 2 months 800 \u20C1, 3 months 1300 \u20C1 (best value). Exam Prep: 1 month 1000 \u20C1, 2 months 1550 \u20C1, 3 months 2350 \u20C1 (best value). Pay on WhatsApp and we open your account the same day. Full details in the plans above.'},
+  {qAr: 'الباقات فيها حصص مباشره؟', aAr: 'باقات مختاره فيها حصص مباشره. باقه الشهر من ابد من الصفر بدون حصص، وباقه الشهرين حصه كل اسبوع، وباقه 3 اشهر حصتين. وباقات التجهيز للاختبارات فيها من حصه لـ 3 حصص بالاسبوع. الاستاذ فراس يحدد المواعيد.', qEn:'Do plans include live classes?', aEn:'Select plans include live classes. The 1-month Start From Zero plan has none, 2 months includes one a week, and 3 months includes two a week. Exam Prep plans include 1-3 a week. Tutor Firas sets the schedule.'},
+  {qAr: 'فيه استرجاع؟', aAr: 'اي، خلال 3 ايام من الدفع. واذا استاذ فراس سوى لك الحساب وفعله بعد الدفع، تنخصم رسوم المنصه حسب باقتك. راسل استاذ فراس واتساب ونرتب لك.', qEn:'Is there a refund?', aEn:'Yes, within 3 days of payment. If Tutor Firas already created and activated your account after payment, platform fees are deducted depending on your plan. Message Tutor Firas on WhatsApp and we will sort it out.'},
+  {qAr: 'كيف اسجل؟', aAr: 'راسل استاذ فراس واتساب، نرسل لك تفاصيل الدفع، ونفتح حسابك بنفس اليوم.', qEn:'How do I sign up?', aEn:'Message Tutor Firas on WhatsApp, we send the payment details, and open your account the same day.'},
+  {qAr: 'ايش يصير لما تخلص باقتي؟', aAr: 'تقدمك وشهاداتك تبقى محفوظه، ويوقف الوصول للدروس بس. تجدد من لوحتك، او تراسل استاذ فراس ونفتح لك باقه جديده.', qEn:'What happens when my plan ends?', aEn:'Your progress and certificates stay saved, and only lesson access pauses. Renew from your dashboard, or message Tutor Firas and we open a new plan.'},
 ];
 const faqList = document.getElementById('faqList');
 function renderFaqs(){
@@ -2857,36 +3110,157 @@ window.addEventListener('storage', function(e){ if(e.key==='pel_account_prefs') 
   function next(){ si=(si+1)%SCENES.length; play(); }
   if(sc){ play(); document.addEventListener('visibilitychange', function(){ if(document.hidden) clr(); else play(); }); }
 
-  /* ---------- ticker ---------- */
-  var TK = { ar:['مكالمه مع عميل','ايميل شغل','اجتماع بالانجليزي','مقابله وظيفه','مطار وسفر','مطعم وكوفي','ستب','توفل','ايلتس','محاضره بالجامعه','مشروع تخرج','واتساب مع اجانب'],
-             en:['Client calls','Work emails','Meetings','Job interviews','Airports and travel','Cafes and restaurants','STEP','TOEFL','IELTS','University lectures','Class projects','Chatting with foreigners'] };
-  function renderTicker(){
-    var tr = $('#tickerTrack'); if(!tr) return;
-    var set = TK[L].map(function(x){ return '<span class="ticker-item" dir="'+(L==='ar'?'rtl':'ltr')+'">'+x+'</span>'; }).join('');
-    tr.innerHTML = '<div class="ticker-set">'+set+'</div><div class="ticker-set" aria-hidden="true">'+set+'</div>';
+  /* ---------- situations: the 3D belt ----------
+     Twelve real situations ride a belt that turns by itself. Each card is a
+     small animated set: two people talking, a plane climbing, coffee steaming,
+     a document filling in. The line you need arrives with it, then the belt
+     rolls the next situation round. Runs on first paint, forever - nothing
+     waits for a scroll, hover or tap. House colours only. */
+  var SIT = [
+    {ic:'i-call',   sc:'duo',    ar:'مكالمه مع عميل',      enName:'Client calls',             line:'Hello, how can I help you?',        say:'هيلو، هاو كان اي هيلب يو'},
+    {ic:'i-mail',   sc:'duo',    ar:'ايميل شغل',            enName:'Work emails',              line:'I will get back to you today.',     say:'اي ويل قت باك تو يو تو داي'},
+    {ic:'i-cup',    sc:'cafe',   ar:'مطعم وكوفي',           enName:'Cafes and restaurants',    line:'Can I get the receipt?',            say:'كان اي قت ذا ريسيت'},
+    {ic:'i-plane',  sc:'flight', ar:'مطار وجوازات',         enName:'Airports and passport',    line:'I am here for tourism.',            say:'اي ام هير فور توريزم'},
+    {ic:'i-meet',   sc:'duo',    ar:'اجتماع بالانجليزي',    enName:'Meetings in English',      line:'Can I add one point?',              say:'كان اي اد وان بوينت'},
+    {ic:'i-badge',  sc:'duo',    ar:'مقابله وظيفه',         enName:'Job interviews',           line:'Tell me a bit about yourself.',     say:'تيل مي ا بت اباوت يورسيلف'},
+    {ic:'i-board',  sc:'study',  ar:'محاضره بالجامعه',      enName:'University lectures',      line:'Could you repeat that, please?',    say:'كود يو ريبِيت ذات، بليز'},
+    {ic:'i-folder', sc:'study',  ar:'مشروع تخرج',           enName:'Graduation projects',      line:'Our project is almost done.',       say:'اور بروجكت از اولموست دان'},
+    {ic:'i-exam',   sc:'study',  ar:'ستب',                  enName:'STEP',                     line:'In my opinion, technology helps.',  say:'ان ماي اوبينيون، تكنولوجي هيلبس'},
+    {ic:'i-cap',    sc:'study',  ar:'توفل',                 enName:'TOEFL',                    line:'The main idea of the passage is...', say:'ذا مين ايديا اوف ذا باسيج از'},
+    {ic:'i-target', sc:'study',  ar:'ايلتس',                enName:'IELTS',                    line:'I would like to add one point.',    say:'اي وود لايك تو اد وان بوينت'},
+    {ic:'i-chat',   sc:'duo',    ar:'سوالف مع اجنبي',       enName:'Talking with foreigners',  line:'Where are you from originally?',    say:'وير ار يو فروم اوريجينالي'}
+  ];
+  var SB_SCENES = {
+    /* two people, one bubble - calls, emails, meetings, interviews */
+    duo: '<path class="st2" d="M76 118 C 116 84 184 84 224 118"/>'
+       + '<g class="sc-a"><circle class="fl" cx="76" cy="116" r="27"/>'
+       + '<svg class="sa-ic" x="61" y="101" width="30" height="30" viewBox="0 0 24 24"><use href="#i-person" class="ink"/></svg></g>'
+       + '<g class="sc-b"><circle class="fl" cx="224" cy="116" r="27"/>'
+       + '<svg class="sa-ic" x="209" y="101" width="30" height="30" viewBox="0 0 24 24"><use href="#i-person" class="ink"/></svg></g>'
+       + '<g class="sc-bub"><rect class="fl" x="103" y="18" width="94" height="33" rx="16.5"/>'
+       + '<path class="fl" d="M144 50 l6 11 -12 0 z"/>'
+       + '<g class="sc-bars">'
+       + '<rect class="bar" x="118" y="25.5" width="2.4" height="13" rx="1.2" style="animation-delay:.36s"/>'
+       + '<rect class="bar" x="128" y="25.5" width="2.4" height="13" rx="1.2" style="animation-delay:.12s"/>'
+       + '<rect class="bar" x="138" y="25.5" width="2.4" height="13" rx="1.2" style="animation-delay:0s"/>'
+       + '<rect class="bar" x="148" y="25.5" width="2.4" height="13" rx="1.2" style="animation-delay:.24s"/>'
+       + '<rect class="bar" x="158" y="25.5" width="2.4" height="13" rx="1.2" style="animation-delay:.12s"/>'
+       + '<rect class="bar" x="168" y="25.5" width="2.4" height="13" rx="1.2" style="animation-delay:.30s"/>'
+       + '<rect class="bar" x="178" y="25.5" width="2.4" height="13" rx="1.2" style="animation-delay:.06s"/>'
+       + '</g></g>',
+    /* a boarding pass climbing away - airport */
+    flight: '<path class="st2" d="M-14 128 C 74 128 84 38 150 38 C 216 38 226 128 314 128"/>'
+       + '<g class="sc-stamp"><circle class="fl" cx="150" cy="112" r="21"/>'
+       + '<svg class="sa-ic" x="138" y="100" width="24" height="24" viewBox="0 0 24 24"><use href="#i-badge" class="ink2"/></svg></g>'
+       + '<g class="sc-plane"><svg class="sa-ic" x="0" y="0" width="30" height="30" viewBox="0 0 24 24"><use href="#i-plane" class="ink"/></svg></g>',
+    /* a cup with steam and the receipt coming out - cafe */
+    cafe: '<g class="sc-cup"><circle class="gl" cx="146" cy="112" r="36"/>'
+       + '<svg class="sa-ic" x="117" y="86" width="58" height="58" viewBox="0 0 24 24"><use href="#i-cup" class="ink"/></svg></g>'
+       + '<g class="sc-steam"><path class="ink2" d="M132 84 c-4-8 4-10 0-18"/>'
+       + '<path class="ink2" d="M146 82 c-4-8 4-10 0-18"/>'
+       + '<path class="ink2" d="M160 84 c-4-8 4-10 0-18"/></g>'
+       + '<g class="sc-receipt"><rect class="fl" x="212" y="70" width="42" height="58" rx="6"/>'
+       + '<line class="ink2" x1="221" y1="85" x2="245" y2="87"/>'
+       + '<line class="ink2" x1="221" y1="96" x2="239" y2="98"/>'
+       + '<line class="ink2" x1="221" y1="107" x2="245" y2="109"/></g>',
+    /* a page filling in and getting ticked - lectures, projects, exams */
+    study: '<rect class="fl" x="96" y="22" width="108" height="108" rx="10"/>'
+       + '<line class="ink2 sc-l1" x1="112" y1="44" x2="188" y2="44"/>'
+       + '<line class="ink2 sc-l2" x1="112" y1="60" x2="170" y2="60"/>'
+       + '<line class="ink2 sc-l3" x1="112" y1="76" x2="182" y2="76"/>'
+       + '<g class="sc-tick"><circle class="gl" cx="188" cy="118" r="17"/>'
+       + '<svg class="sa-ic" x="175" y="105" width="26" height="26" viewBox="0 0 24 24"><use href="#i-check" class="ink ok"/></svg></g>'
+       + '<g class="sc-cap"><svg class="sa-ic" x="216" y="80" width="36" height="36" viewBox="0 0 24 24"><use href="#i-cap" class="ink2"/></svg></g>'
+  };
+  var beltRaf=null, beltT0=null, beltR=560, beltPaint=null;
+  var BELT_STEP=4400, BELT_HOLD=.78;
+  function beltEase(x){ return 1-Math.pow(1-x,3); }
+  function beltFrame(now){
+    if(beltT0===null) beltT0=now;
+    if(beltPaint) beltPaint(now-beltT0);
+    beltRaf=requestAnimationFrame(beltFrame);
   }
+  function beltStart(){
+    var belt=$('#sbBelt'); if(!belt) return;
+    var cards=$$('.sb-card', belt); if(!cards.length) return;
+    if(beltRaf){ cancelAnimationFrame(beltRaf); beltRaf=null; }
+    beltT0=null;
+    var n=cards.length, step=360/n;
+    beltR=(cards[0].offsetWidth+14)/(2*Math.sin(Math.PI/n));
+    beltPaint=function(ms){
+      var k=ms/BELT_STEP, i0=Math.floor(k), f=k-i0;
+      var a=-step*(i0+(f<BELT_HOLD?0:beltEase((f-BELT_HOLD)/(1-BELT_HOLD))))+2.4*Math.sin(ms/1350);
+      var degs=[], dists=[], best=0;
+      for(var i=0;i<n;i++){
+        var dg=i*step+a, nm=((dg%360)+360)%360;
+        degs[i]=dg; dists[i]=nm>180?360-nm:nm;
+        if(dists[i]<dists[best]) best=i;
+      }
+      for(var i=0;i<n;i++){
+        var deg=degs[i], dist=dists[i], el=cards[i], on=(i===best);
+        var sc=on?1.045:Math.max(.918,1.045-Math.min(.127,dist/90*.127));
+        var y=Math.sin(deg*Math.PI/180)*9;
+        el.style.transform='translate(-50%,-50%) translateZ('+(-beltR).toFixed(1)+'px) rotateY('+deg.toFixed(2)+'deg) translateZ('+beltR.toFixed(1)+'px) translateY('+y.toFixed(1)+'px) scale('+sc.toFixed(3)+')';
+        var op=on?1:Math.max(.05,.62*Math.pow(1-Math.min(1,Math.max(0,dist-11)/78),1.25));
+        op=Math.round(op*100)/100;
+        if(el._op!==op){ el.style.opacity=op; el._op=op; }
+        var bl=on?0:Math.min(3.2,Math.max(0,dist-11)/20); bl=Math.round(bl*4)/4;
+        var fl=bl>0?'blur('+bl+'px)':'none';
+        if(el._fl!==fl){ el.style.filter=fl; el._fl=fl; }
+        if(el._on!==on){ el.classList.toggle('on',on); el._on=on; }
+      }
+    };
+    if(RM){ beltPaint(0); return; }
+    beltRaf=requestAnimationFrame(beltFrame);
+  }
+  function renderBelt(){
+    var belt=$('#sbBelt'); if(!belt) return;
+    var dust=''; for(var d=0;d<5;d++) dust+='<i style="left:'+(10+d*20)+'%;animation-delay:'+(d*.95).toFixed(2)+'s;animation-duration:'+(5.2+d*.8).toFixed(1)+'s"></i>';
+    belt.innerHTML=SIT.map(function(x,i){
+      return '<article class="sb-card">'
+        + '<div class="sb-art"><span class="sa-sky"></span><div class="sa-3d">'
+        + '<span class="sa-horizon"></span><span class="sa-floor"></span>'
+        + '<svg class="sa-sc" viewBox="40 8 220 136" aria-hidden="true">'+SB_SCENES[x.sc]+'</svg>'
+        + '<span class="sa-dust">'+dust+'</span></div>'
+        + '<span class="sa-tag"><svg class="pel-ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#'+x.ic+'"/></svg></span>'
+        + '<span class="sa-scan"></span></div>'
+        + '<h3 class="sb-name">'+(L==='ar'?x.ar:x.enName)+'</h3>'
+        + '<div class="sb-en" dir="ltr">'+x.line+'</div>'
+        + '<span class="sb-say">'+x.say+'</span>'
+        + '</article>';
+    }).join('');
+    beltStart();
+  }
+  document.addEventListener('visibilitychange', function(){
+    if(document.hidden){ if(beltRaf){ cancelAnimationFrame(beltRaf); beltRaf=null; } }
+    else if(!beltRaf && beltPaint && !RM){ beltT0=null; beltRaf=requestAnimationFrame(beltFrame); }
+  });
+  window.addEventListener('resize', function(){
+    var c=$$('#sbBelt .sb-card');
+    if(c.length) beltR=(c[0].offsetWidth+14)/(2*Math.sin(Math.PI/c.length));
+  });
 
   /* ---------- who is it for ---------- */
   var AUD = [
-    { ico:'<path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/>',
+    { ico:'i-cap',
       title:{ar:'طالب مدرسه او جامعه',en:'School or university student'},
-      pain:{ar:'المحاضره بالانجليزي، والمشروع بالانجليزي، وانت تترجم كل جمله بالراس.',en:'Lectures and projects are in English, and you translate every sentence in your head.'},
-      pro:{ar:'نبني لك اساس تفهم فيه وتشارك بالقاعه وتكتب بحثك بثقه، ونشتغل على كلمات موادك.',en:'We build a base you can follow, speak up in class, and write assignments with confidence, using words from your own courses.'} },
-    { ico:'<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>',
+      pain:{ar:'محاضره بالانجليزي، مشروع بالانجليزي، وانت تترجم كل جمله براسك قبل لا تتكلم.',en:'Lectures in English, projects in English, and you translate every sentence in your head before you speak.'},
+      pro:{ar:'نبدا بكلمات موادك انت، ونتدرب على انك تشارك في القاعه وتسلم بحثك وانت واثق.',en:'We start with the words from your own courses, and drill you until you speak up in class and hand in your work with confidence.'} },
+    { ico:'i-case',
       title:{ar:'موظف',en:'Employee'},
-      pain:{ar:'اجتماع، ايميل، عميل اجنبي، والتوتر ماسكك قبل لا تتكلم.',en:'Meetings, emails, foreign clients, and nerves hit before you even speak.'},
-      pro:{ar:'تتعلم جمل الشغل الحقيقيه، تنطقها وتكتبها صح، وتتصحح فورا لين يصير ردك طبيعي.',en:'You learn real workplace phrases, say and write them correctly, and get corrected on the spot until replies feel natural.'} },
-    { ico:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="m9 15 2 2 4-4"/>',
+      pain:{ar:'ايميل، اجتماع، عميل اجنبي، والتوتر يمسكك قبل لا تفتح فمك.',en:'Emails, meetings, foreign clients, and the nerves hit before you even open your mouth.'},
+      pro:{ar:'نعطيك جمل الشغل زي ما تنطق فعلا، وتتدرب عليها لين يصير ردك سريع وطبيعي.',en:'We give you the workplace phrases the way they are really said, and drill them until your reply is fast and natural.'} },
+    { ico:'i-target',
       title:{ar:'تجهيز اختبارات: ستب، توفل، ايلتس',en:'Exam prep: STEP, TOEFL, IELTS'},
-      pain:{ar:'الموعد قرب، وما تدري وين نقاط ضعفك بالضبط.',en:'The test date is close and you do not know exactly where you are weak.'},
-      pro:{ar:'تتدرب باسئله بنفس نظام الاختبار، وتصحيح فوري لكتابتك، ونطق مسموع، وحصص مباشره مع استاذ فراس حسب باقتك.',en:'Practice with questions in the real exam format, get instant writing correction, and join live classes with Tutor Firas depending on your plan.'} }
+      pain:{ar:'الاختبار قرب، وانت ما تدري اي نقطه بتخصم منك.',en:'The exam is close and you do not know which part will cost you marks.'},
+      pro:{ar:'نمشي معك على اسئله بنفس نمط الاختبار، ونتوقف عند نقطتك الضعيفه بالضبط لين ترفعها، وحصص مباشره حسب باقتك.',en:'We run you through questions in the real exam style and stop on exactly your weak spot until you lift it, plus live classes depending on your plan.'} }
   ];
   var audOn = 0, audTimer;
   function renderAud(){
     var w = $('#audWrap'); if(!w) return;
     w.innerHTML = AUD.map(function(a,i){
       return '<div class="aud-item'+(i===audOn?' on':'')+'" data-i="'+i+'" dir="'+(L==='ar'?'rtl':'ltr')+'" tabindex="0" role="button">'+
-        '<span class="aud-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">'+a.ico+'</svg></span>'+
+        '<span class="aud-ico"><svg class="pel-ic" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><use href="#'+a.ico+'"/></svg></span>'+
         '<h3 class="arabic-h">'+t(a.title)+'</h3><p class="aud-pain">'+t(a.pain)+'</p><p class="aud-promise">'+t(a.pro)+'</p><span class="aud-bar"><i></i></span></div>';
     }).join('');
     $$('.aud-item',w).forEach(function(el){
@@ -2931,12 +3305,103 @@ window.addEventListener('storage', function(e){ if(e.key==='pel_account_prefs') 
     var b=BA[baOn];
     $$('#baTabs .ba-tab').forEach(function(el,i){ el.classList.toggle('on',i===baOn); var bar=$('i',el); bar.style.animation='none'; void bar.offsetWidth; bar.style.animation=''; });
     $('#baThought').textContent = t(b.b);
-    $('#baEn').textContent = b.en;
-    $('#baSay').textContent = (L==='ar'?'انطقها: ':'Say it: ') + b.say;
-    var mn=$('#baMean'); mn.textContent = b.mean.ar; mn.style.display = L==='ar'?'':'none';
+    /* English target line: sound-wave marker, then the words rise in one by one */
+    var en=$('#baEn');
+    if(en && en.dataset.k!==b.en){
+      en.dataset.k=b.en;
+      var words=String(b.en).split(' ');
+      en.innerHTML='<span class="ba-eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="ba-words">'+
+        words.map(function(w,i){ return '<span class="ba-word" style="--i:'+i+'">'+String(w).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</span>'; }).join('')+
+        '</span>';
+    }
+    /* the two Arabic chips settle in after the line lands */
+    var say=$('#baSay');
+    if(say){
+      say.textContent = (L==='ar'?'انطقها: ':'Say it: ') + b.say;
+      say.classList.remove('ba-in'); void say.offsetWidth; if(!RM) say.classList.add('ba-in');
+    }
+    var mn=$('#baMean');
+    if(mn){
+      mn.textContent = b.mean.ar; mn.style.display = L==='ar'?'':'none';
+      mn.classList.remove('ba-in'); void mn.offsetWidth; if(L==='ar'&&!RM) mn.classList.add('ba-in');
+    }
     if(anim && !RM){ ['baBefore','baAfter'].forEach(function(id){ var e=$('#'+id); e.classList.remove('ba-swap'); void e.offsetWidth; e.classList.add('ba-swap'); }); }
   }
   function baKick(){ clearInterval(baTimer); if(!RM) baTimer=setInterval(function(){ baOn=(baOn+1)%BA.length; renderBa(true); },5200); }
+
+  /* ---------- hero rig: the lesson loop orbits the device, on its own ----------
+     Positioned per-frame in JS rather than with CSS keyframes so each satellite
+     can also be faded by depth (near = bright, far = dim) and flagged when it
+     swings around to the front. Starts immediately and loops forever: nothing
+     here waits for a scroll, a hover or a click. */
+  (function(){
+    var stage=$('.callstage'), orbit=$('#rigOrbit'), phone=$('#callScene');
+    if(!stage||!orbit||!phone) return;
+    var tiles=$$('.rig-tile', orbit), n=tiles.length; if(!n) return;
+    /* TILT + radius are tuned so the ring reads as a real orbit around the
+       device: one node swings in front of the empty lower part of the screen,
+       one rides out at each side, and the one behind is hidden by the device
+       itself. That keeps the conversation fully readable. */
+    var T=26000, R=340, TILT=40, t0=null, raf=null;
+    function measure(){ R=Math.max(110, Math.min(phone.offsetWidth*0.9, stage.clientWidth*0.52)); }
+    /* the loop lives on a ring tilted TILT degrees: it sweeps around the
+       device instead of across its face, and every node is billboarded so it
+       always faces the reader. Returns the node's depth (+ front, - behind). */
+    function put(el,deg,radius){
+      el.style.transform='rotateX('+TILT+'deg) rotateZ('+deg.toFixed(1)+'deg) translateX('+radius.toFixed(1)+'px) rotateZ('+(-deg).toFixed(1)+'deg) rotateX('+(-TILT)+'deg)';
+      return Math.sin(deg*Math.PI/180)*radius*Math.sin(TILT*Math.PI/180);
+    }
+    function place(now){
+      if(t0===null) t0=now;
+      var a=(((now-t0)%T)/T)*360, full=R*Math.sin(TILT*Math.PI/180);
+      for(var i=0;i<n;i++){
+        var z=put(tiles[i], a+i*(360/n), R);
+        tiles[i].style.opacity = z>0 ? (z>full*0.6?'1':'0.9') : '0.35';
+        tiles[i].classList.toggle('front', z>full*0.6);
+      }
+      raf=requestAnimationFrame(place);
+    }
+    measure();
+    window.addEventListener('resize', measure);
+    if(RM){
+      /* reduced motion: park the loop around the device, no orbit */
+      for(var k=0;k<n;k++){ put(tiles[k], k*(360/n), R); tiles[k].style.opacity='1'; }
+    } else {
+      raf=requestAnimationFrame(place);
+      document.addEventListener('visibilitychange', function(){
+        if(document.hidden){ if(raf){ cancelAnimationFrame(raf); raf=null; } }
+        else if(!raf){ t0=null; raf=requestAnimationFrame(place); }
+      });
+    }
+    /* pointer tilt layered on top of the auto sway (desktop, fine pointer) */
+    if(!RM && window.matchMedia && window.matchMedia('(hover:hover) and (pointer:fine)').matches){
+      var p=null, tx=0, ty=0;
+      function apply(){ stage.style.setProperty('--ry', tx.toFixed(2)+'deg'); stage.style.setProperty('--rx', ty.toFixed(2)+'deg'); p=null; }
+      stage.addEventListener('pointermove', function(e){
+        var r=stage.getBoundingClientRect(); if(!r.width||!r.height) return;
+        tx=((e.clientX-r.left)/r.width-0.5)*14;
+        ty=-((e.clientY-r.top)/r.height-0.5)*11;
+        if(!p) p=requestAnimationFrame(apply);
+      });
+      stage.addEventListener('pointerleave', function(){ tx=0; ty=0; if(!p) p=requestAnimationFrame(apply); });
+    }
+  })();
+
+  /* ---------- before/after: the 3D plane leans with the pointer ---------- */
+  (function(){
+    var st=$('.ba-stage'); if(!st) return;
+    if(RM) return;
+    if(window.matchMedia && !window.matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+    var raf=null, rx=0, ry=0;
+    function apply(){ st.style.setProperty('--ba-rx', rx.toFixed(2)+'deg'); st.style.setProperty('--ba-ry', ry.toFixed(2)+'deg'); raf=null; }
+    st.addEventListener('pointermove', function(e){
+      var r=st.getBoundingClientRect(); if(!r.width||!r.height) return;
+      ry=((e.clientX-r.left)/r.width-0.5)*5.5;
+      rx=-((e.clientY-r.top)/r.height-0.5)*4;
+      if(!raf) raf=requestAnimationFrame(apply);
+    });
+    st.addEventListener('pointerleave', function(){ rx=0; ry=0; if(!raf) raf=requestAnimationFrame(apply); });
+  })();
 
   /* ---------- static text swap + language hook ---------- */
   function applyStatic(){
@@ -2945,8 +3410,25 @@ window.addEventListener('storage', function(e){ if(e.key==='pel_account_prefs') 
       el.setAttribute('dir', L==='ar'?'rtl':'ltr'); el.setAttribute('lang', L);
     });
   }
-  function refresh(){ L=curLang(); applyStatic(); renderTicker(); renderAud(); renderBaTabs(); renderBa(false); if(sc) play(); }
+  /* hero sub: split into words so each one can lift out of blur (skipped for
+     reduced motion, and for over-long copy where the stagger would drag) */
+  function animHeroSub(){
+    var el=document.querySelector('.hero .hero-sub'); if(!el) return;
+    var txt=(el.textContent||'').replace(/\s+/g,' ').trim(); if(!txt) return;
+    if(el.getAttribute('data-hs')===txt) return;
+    var words=txt.split(' ');
+    if(RM || words.length>90) return;
+    el.setAttribute('data-hs',txt);
+    function safe(w){ return String(w).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+    el.innerHTML=words.map(function(w,i){ return '<span class="hs-w" style="--i:'+i+'">'+safe(w)+'</span>'; }).join(' ');
+  }
+  function refresh(){ L=curLang(); applyStatic(); renderBelt(); renderAud(); renderBaTabs(); renderBa(false); animHeroSub(); if(sc) play(); }
   refresh(); audKick(); baKick();
+  /* the landing copy is also written by the site-settings + language pass,
+     which run outside this closure - re-stage the sub whenever they land */
+  ['pel-lang-changed','pel-site-settings'].forEach(function(ev){
+    window.addEventListener(ev, function(){ setTimeout(animHeroSub, 30); });
+  });
   var prev = window.applyIndexLang;
   if(typeof prev === 'function'){
     window.applyIndexLang = function(l){ var r = prev.apply(this, arguments); setTimeout(refresh, 0); return r; };
