@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{width:540px;height:675px;background:radial-gradient(120% 90% at 50% 0%, #221a10 0%, #14100a 55%, #0d0b07 100%);font-family:'Tajawal','Segoe UI',Tahoma,sans-serif;color:#f3ead9;overflow:hidden;position:relative}
+  body::before{content:"";position:absolute;top:0;inset-inline:8%;height:2px;background:linear-gradient(90deg,transparent,rgba(200,169,106,.8),transparent)}
+  .wrap{padding:34px 38px 26px;height:100%;display:flex;flex-direction:column}
+  .brand{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+  .mark{font-weight:900;font-size:26px;letter-spacing:.14em;color:#e8c987;font-family:'Fraunces',Georgia,serif}
+  .dot{width:7px;height:7px;border-radius:50%;background:#e8c987;box-shadow:0 0 12px rgba(232,201,135,.7)}
+  .tag{font-size:13px;color:#b9a377;margin-inline-start:auto}
+  h1{font-size:31px;font-weight:800;color:#f6e8c8;line-height:1.35;margin-bottom:4px}
+  h1 b{color:#e8c987}
+  .sub{font-size:14px;color:#a2957a;margin-bottom:20px}
+  .card{background:linear-gradient(160deg,rgba(255,255,255,.055),rgba(255,255,255,.02));border:1px solid rgba(200,169,106,.28);border-radius:16px;padding:18px 18px;margin-bottom:13px;flex:1;display:flex;flex-direction:column;justify-content:center}
+  .row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .dur{font-size:18px;font-weight:800;color:#f6e8c8}
+  .price{font-size:24px;font-weight:800;color:#e8c987;direction:ltr;white-space:nowrap}
+  .price i{font-style:normal;font-size:13px;font-weight:600;color:#b9a377;margin-left:5px}
+  .note{font-size:12.5px;color:#8fce9a;margin-top:5px}
+  .note.gold{color:#e8c987}
+  .ft .row{justify-content:flex-start}
+  .cta{margin-top:auto;background:linear-gradient(135deg,#e8c987,#cfae6d);color:#1a140b;text-align:center;font-weight:800;font-size:17px;border-radius:13px;padding:15px}
+  .mini{margin-top:11px;text-align:center;font-size:11.5px;color:#7d7259}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="brand"><span class="mark">PEL</span><span class="dot"></span><span class="tag">دروس الانجليزي مع استاذ فراس</span></div>
+    <h1>كل ما زاد التزامك، <b>نزل سعر الحصه</b> وزاد توفيرك</h1>
+    <div class="sub">الباقات تشمل منصة كامله + حصص مباشره مع الاستاذ</div>
+
+    <div class="card">
+      <div class="row"><span class="dur">شهرين · ابد من الصفر</span><span class="price">800<i>ريال</i></span></div>
+      <div class="note">توفير 500 ريال · 8 حصص مباشره · الحصه بـ 100 ريال</div>
+    </div>
+
+    <div class="card" style="border-color:rgba(232,201,135,.65);box-shadow:0 0 34px -12px rgba(232,201,135,.45)">
+      <div class="row"><span class="dur">3 اشهر · افضل قيمه</span><span class="price">1300<i>ريال</i></span></div>
+      <div class="note">توفير 650 ريال · 24 حصه مباشره · الحصه بـ 54 ريال</div>
+    </div>
+
+    <div class="card">
+      <div class="row"><span class="dur" style="font-size:15px">تجهيز الاختبارات · 3 اشهر</span><span class="price" style="font-size:20px">2350<i>ريال</i></span></div>
+      <div class="note">توفير 650 ريال · 36 حصه · الحصه بـ 65 ريال</div>
+    </div>
+
+    <div class="cta">ابد اليوم، وارسل كلمة (باقه) على واتساب</div>
+    <div class="mini">تدفع مره وحده، ونشغل حسابك خلال دقايق</div>
+  </div>
+</body>
+</html>
