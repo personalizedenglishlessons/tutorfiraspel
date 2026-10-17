@@ -127,3 +127,5 @@ insert into public.lesson_exercises (lesson_id, idx, type, payload) values ('ste
 insert into public.lesson_exercises (lesson_id, idx, type, payload) values ('step-mock-test-timing',4,'order','{"type": "order", "answer": "Keep five minutes to review", "prompt": {"ar": "خلي خمس دقايق للمراجعة", "en": "Build this in English:", "tr": "كيب فايف مينتس تو ريفيو"}, "tokens": ["Keep", "five", "minutes", "to", "review"]}'::jsonb);
 insert into public.lesson_exercises (lesson_id, idx, type, payload) values ('step-mock-test-timing',5,'translate','{"type": "translate", "dir": false, "accept": ["استبعد الخيارات اللي تعرف انها غلط."], "answer": "استبعد الخيارات اللي تعرف انها غلط.", "source": "Eliminate options you know are wrong.", "source_tr": "اليمينيت اوبشنز يو نو ار رونق"}'::jsonb);
 insert into public.lesson_exercises (lesson_id, idx, type, payload) values ('step-mock-test-timing',6,'correct','{"type": "correct", "mode": "pick", "right": "I will review my answers.", "wrong": "I will reviewing my answers.", "why_ar": "بعد will ناخذ الفعل الاساسي.", "why_en": "after will we use the base verb."}'::jsonb);
+
+commit;
