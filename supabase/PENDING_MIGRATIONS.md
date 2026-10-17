@@ -15,27 +15,38 @@ a numeric prefix (e.g. `auth_rate_limit.sql`) and does **not** prove a script
 actually ran — it only shows tracker rows exist. Do not read "all 111 recorded"
 as "all 111 verified applied".
 
-### NEXT AGENT: START HERE (updated 2026-10-17)
+### NEXT AGENT: START HERE (updated 2026-10-17, after live apply session)
 
-Not yet applied to the live DB (apply in this order, using the procedure at the bottom of this file):
-1. `202610130001_saudi_dialect_msa_cleanup.sql`
-2. `202610170001_fill_word_examples.sql` (337 example sentences, safe to re-run)
-3. `202610170002_hand_examples_82.sql` (82 hand-written Saudi examples + fixes Maghrebi 'تاعك' to 'حقك', safe to re-run)
-4. `202610170003_a1_more_exercises.sql` (195 generated A1 exercises tagged gen-a1-20261017, safe to re-run)
-5. `202610170004_strengthen_pack2_lessons.sql` (12 thin C1/C2/STEP pack2 lessons: +4 items, +4 exercises each, safe to re-run)
-6. `202610170005_step_expansion.sql` (9 new STEP lessons in academy step-exam-prep: passive, relative clauses, modals, prepositions, quantifiers, listening x2, writing, mock timing; safe to re-run)
-7. `202610170006_msa_to_saudi_round2.sql` (replaces leftover MSA: لدي، هل، لكن، جدا، سوف، يمكنني etc, scoped per lesson, safe to re-run)
-8. `202610170007_a0_alphabet_first_lock.sql` (alphabet is always the first A0 lesson, safe to re-run)
-9. `202610130002_wipe_activity_tracking.sql` is DESTRUCTIVE. Ask the owner before running.
+Applied to the live DB and verified on 2026-10-17 (all idempotent, safe to re-run):
+1. `202610130001_saudi_dialect_msa_cleanup.sql` — APPLIED (assertion block passed)
+2. `202610170001_fill_word_examples.sql` — APPLIED (spot-verified Reservation/Gate examples)
+3. `202610170002_hand_examples_82.sql` — APPLIED (spot-verified Symptom/hat examples, تاعك gone)
+4. `202610170003_a1_more_exercises.sql` — APPLIED (195 exercises with hint_en='gen-a1-20261017')
+5. `202610170004_strengthen_pack2_lessons.sql` — APPLIED (all 12 pack2 lessons now 8 items each)
+6. `202610170005_step_expansion.sql` — APPLIED (9 new STEP lessons, 4 items each; see note below)
+7. `202610170006_msa_to_saudi_round2.sql` — APPLIED (لدي gone, عندي present)
+8. `202610170007_a0_alphabet_first_lock.sql` — APPLIED (sort_order = -10 on both rows)
+
+All 7 `20261017*` files now have tracker rows (tracker total: 118).
+
+STILL PENDING, DESTRUCTIVE — ask the owner before running:
+- `202610130002_wipe_activity_tracking.sql`
+
+Note on 202610170005: the file as committed opened with `begin;` but had no `commit;`, so
+the Management API silently rolled the whole script back (empty success result). Fixed
+by appending `commit;` (repo commit `1b67a6e`), then re-applied and verified. LESSON:
+the Management API `/database/query` returns `[]` even when a multi-statement script
+rolls back. Always verify with a positive read-only query, never trust `[]` alone.
 
 Owner rules: no pushes of untested work, no removals of existing content, Saudi dialect only (no MSA; write ة (ta marbuta) where the word really has it, e.g. شوية, طاقية, سيارة; do NOT blanket-replace ة with ه), no em/en dashes, no emojis.
 Note: "هذا" is normal Saudi masculine usage, do not replace it.
 
 Content work in progress (see task list in the session): expand STEP, strengthen thin C1/C2 pack2 lessons, raise A1 exercises per lesson, write examples for the 82 words with no same-lesson sentence, keep a0ss-alphabet first in A0. Every new migration must be added here.
 
-### Pending, authored 2026-10-17 (NOT applied, NOT pushed, awaiting owner review)
+### Applied 2026-10-17 session (verified live, tracker rows inserted)
 
-- `202610170001_fill_word_examples.sql`: fills 337 missing word example sentences from sentences already in the same lesson. Idempotent (only rows with null example_en).
+- `202610170001_fill_word_examples.sql`: fills 337 missing word example sentences from sentences already in the same lesson. Idempotent (only rows with null example_en). APPLIED + verified.
+- `202610170002_hand_examples_82.sql` through `202610170007_a0_alphabet_first_lock.sql`: applied in order, each spot-verified with read-only queries (see START HERE above).
 
 ### What was verified vs. applied this session (2026-10-14)
 
