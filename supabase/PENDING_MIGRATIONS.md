@@ -17,21 +17,31 @@ as "all 111 verified applied".
 
 ### NEXT AGENT: START HERE (updated 2026-10-17, after live apply session)
 
-Applied to the live DB and verified on 2026-10-17 (all idempotent, safe to re-run):
+Applied to the live DB and spot-verified on 2026-10-17 (positive read-only checks, not
+an exhaustive postcondition sweep):
 1. `202610130001_saudi_dialect_msa_cleanup.sql` — APPLIED (assertion block passed)
 2. `202610170001_fill_word_examples.sql` — APPLIED (spot-verified Reservation/Gate examples)
 3. `202610170002_hand_examples_82.sql` — APPLIED (spot-verified Symptom/hat examples, تاعك gone)
 4. `202610170003_a1_more_exercises.sql` — APPLIED (195 exercises with hint_en='gen-a1-20261017')
 5. `202610170004_strengthen_pack2_lessons.sql` — APPLIED (all 12 pack2 lessons now 8 items each)
-6. `202610170005_step_expansion.sql` — APPLIED (9 new STEP lessons, 4 items each; see note below)
+6. `202610170005_step_expansion.sql` — APPLIED (9 new STEP lessons, 4 items + 7 exercises each,
+   22 academy links in step-exam-prep, no MSA wording in the new content)
 7. `202610170006_msa_to_saudi_round2.sql` — APPLIED (لدي gone, عندي present)
 8. `202610170007_a0_alphabet_first_lock.sql` — APPLIED (sort_order = -10 on both rows)
 
-All 7 `20261017*` files now have tracker rows (tracker total: 118).
+All 7 `20261017*` files now have tracker rows (tracker total: 118; reconciliation with the
+checker's `(\d+)_…\.sql` pattern shows every repo version tracked, only orphan is the
+deleted 202610130002 below).
+
+CAUTION: `202610170005` is NOT safe to blindly re-run — it deletes and recreates items and
+exercises for its 9 lesson IDs, so a rerun after later manual edits would erase them.
+`202610170003` deletes by tag first; the others use guarded updates. Re-verify before re-running.
 
 REMOVED 2026-10-17 at owner request: `202610130002_wipe_activity_tracking.sql` file deleted
-from the repo. It was already applied by an earlier session (its tracker row remains as an
-orphan, like the other 9 orphans below, so `supabase db push` will never re-run it).
+from the repo. It was already applied by an earlier session. Its tracker row remains, so
+`supabase db push` will not re-run it, but a version with no local file can also make the
+CLI complain that remote has migrations missing locally — that mismatch is expected; do
+not delete the tracker row or try to reconcile it away.
 
 Note on 202610170005: the file as committed opened with `begin;` but had no `commit;`, so
 the Management API silently rolled the whole script back (empty success result). Fixed
