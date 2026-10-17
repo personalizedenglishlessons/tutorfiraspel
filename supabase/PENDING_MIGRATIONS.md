@@ -29,8 +29,9 @@ Applied to the live DB and verified on 2026-10-17 (all idempotent, safe to re-ru
 
 All 7 `20261017*` files now have tracker rows (tracker total: 118).
 
-STILL PENDING, DESTRUCTIVE — ask the owner before running:
-- `202610130002_wipe_activity_tracking.sql`
+REMOVED 2026-10-17 at owner request: `202610130002_wipe_activity_tracking.sql` file deleted
+from the repo. It was already applied by an earlier session (its tracker row remains as an
+orphan, like the other 9 orphans below, so `supabase db push` will never re-run it).
 
 Note on 202610170005: the file as committed opened with `begin;` but had no `commit;`, so
 the Management API silently rolled the whole script back (empty success result). Fixed
