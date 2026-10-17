@@ -1500,19 +1500,29 @@ body.ui-en .lp-track{ font-family:'Fraunces',serif; font-weight:600; }
   var LC=function(k){ var v=window.PEL_SITE&&PEL_SITE.lc&&PEL_SITE.lc[k]; return (typeof v==='string'&&v.trim())?v.trim():null; };
   var T=[{k:'start_from_zero',ar:'ابد من الصفر',en:'Start From 0',noteAr:'لمن يبدأ من الصفر وما يعرف شي',noteEn:'For complete beginners'},
          {k:'exam_prep',ar:'التجهيز للاختبارات',en:'Exam Prep',noteAr:'ستيب، توفل، ايلتس مع استاذ فراس وجها لوجه',noteEn:'STEP, TOEFL, IELTS with Tutor Firas'}];
-  var FB=[[650,1],[800,2],[1300,3]], FE=[[1000,1],[1550,2],[2350,3]];
+  var FB=[[650,1,0],[800,2,1],[1300,3,2]], FE=[[1000,1,1],[1550,2,2],[2350,3,3]];
   var i=0, rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
   function isEn(){ return document.body.classList.contains('ui-en'); }
   function rows(k){
     var db=window.PEL_PLANS_DB, out=[];
-    if(db&&db.length){ db.forEach(function(r){ if(r.tier===k) out.push([r.price,r.duration_months,r.featured]); }); out.sort(function(a,b){return a[1]-b[1];}); }
-    if(!out.length) out=(k==='exam_prep'?FE:FB).map(function(x){return [x[0],x[1],x[1]===3];});
+    if(db&&db.length){ db.forEach(function(r){ if(r.tier===k) out.push([r.price,r.duration_months,r.featured,r.weekly_live_classes]); }); out.sort(function(a,b){return a[1]-b[1];}); }
+    if(!out.length) out=(k==='exam_prep'?FE:FB).map(function(x){return [x[0],x[1],x[1]===3,x[2]];});
     return out;
   }
   function dur(m,e){ if(e) return m+(m===1?' month':' months'); return m===1?'شهر':m===2?'شهرين':'3 اشهر'; }
+  function out0(k){ var rs=rows(k); return rs.length?rs[0][0]:(k==='exam_prep'?1000:650); }
   function paint(){
     var t=T[i], e=isEn(), h='';
-    rows(t.k).forEach(function(r){ h+='<div class="lp-row'+(r[2]?' ft':'')+'"><b>'+dur(r[1],e)+'</b><span class="pr">'+r[0]+'<i>'+(e?'SAR':'ريال')+'</i></span></div>'; });
+    rows(t.k).forEach(function(r){
+      var one=out0(t.k), note='';
+      if(r[1]>1 && one){
+        var sv=Math.max(0,one*r[1]-r[0]);
+        if(sv>0) note=e?('Save '+sv+' SAR'):('توفير '+sv+' ريال');
+      }
+      var cl=(r[3]||0)*r[1]*4;
+      if(r[1]>1 && cl>0) note+=(note?' · ':'')+(e?(cl+' live classes'):(cl+' حصص مباشره'));
+      h+='<div class="lp-row'+(r[2]?' ft':'')+'"><div style="min-width:0;"><b>'+dur(r[1],e)+'</b>'+(note?'<small>'+note+'</small>':'')+'</div><span class="pr">'+r[0]+'<i>'+(e?'SAR':'ريال')+'</i></span></div>';
+    });
     document.getElementById('lpRows').innerHTML=h;
     var L=e?'en':'ar', nk=t.k==='exam_prep'?'exam':'start';
     function set(id,v){ document.getElementById(id).textContent=v; }
