@@ -25,7 +25,8 @@ Not yet applied to the live DB (apply in this order, using the procedure at the 
 5. `202610170004_strengthen_pack2_lessons.sql` (12 thin C1/C2/STEP pack2 lessons: +4 items, +4 exercises each, safe to re-run)
 6. `202610170005_step_expansion.sql` (9 new STEP lessons in academy step-exam-prep: passive, relative clauses, modals, prepositions, quantifiers, listening x2, writing, mock timing; safe to re-run)
 7. `202610170006_msa_to_saudi_round2.sql` (replaces leftover MSA: لدي، هل، لكن، جدا، سوف، يمكنني etc, scoped per lesson, safe to re-run)
-8. `202610130002_wipe_activity_tracking.sql` is DESTRUCTIVE. Ask the owner before running.
+8. `202610170007_a0_alphabet_first_lock.sql` (alphabet is always the first A0 lesson, safe to re-run)
+9. `202610130002_wipe_activity_tracking.sql` is DESTRUCTIVE. Ask the owner before running.
 
 Owner rules: no pushes of untested work, no removals of existing content, Saudi dialect only (no MSA; write ة (ta marbuta) where the word really has it, e.g. شوية, طاقية, سيارة; do NOT blanket-replace ة with ه), no em/en dashes, no emojis.
 Note: "هذا" is normal Saudi masculine usage, do not replace it.
