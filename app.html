@@ -24,6 +24,7 @@
 <script src="lib/cert-sheet.js?v=5636d379" defer></script>
 <script src="lib/pel_config.js?v=5c9ee888"></script>
 <script src="lib/pel_lesson_stage.js?v=31ba6ffc"></script>
+<script src="lib/pel_reading_book.js?v=1"></script>
 <script src="lib/pel_dashboard_life.js?v=412efe80"></script>
 <script src="lib/pel_curriculum_path.js?v=4f44ec39"></script>
 <style>
@@ -19264,7 +19265,7 @@ const GUIDED_TOOL_RULES = {
   listening:     { minLevel:'A2', icon:'headphones',   ar: 'الاستماع',    en:'Listening',     why:'اسمع وجاوب' },
   speaking:      { minLevel:'A2', icon:'messages-square', ar: 'المحادثه',  en:'Speaking',      why:'تكلم بصوتك' },
   reading:       { minLevel:'B1', icon:'book-text',    ar: 'القراءه',     en:'Reading',       why:'اقرا وتدرب' },
-  writing:       { minLevel:'B1', icon:'pen-line',     ar: 'الكتابه',     en:'Writing',       why:'اكتب جمله' },
+  writing:       { minLevel:'B1', icon:'book-open',    ar: 'القراءه',     en:'Reading Workshop', why:'اقرا بنبره صح' },
 };
 const CEFR_ORDER = ['A0','A1','A2','B1','B2','C1','C2'];
 /* Returns the tools available to a student at their current CEFR level. */
@@ -21389,7 +21390,7 @@ viewRenderers.reading = renderReading;
 /* ============================================================
    WRITING WORKSHOP
    ============================================================ */
-function renderWriting(){
+function renderWritingLegacy(){
   const el = document.getElementById('view-writing');
   el.dataset.rendered = '1';
   el.innerHTML = `
@@ -21688,6 +21689,14 @@ function renderWriting(){
     document.getElementById('wsBackBtn').onclick = () => { card.style.display = 'none'; card.innerHTML = ''; };
     render();
   }
+}
+/* The Writing Workshop page is now a book-style Reading Workshop (lib/pel_reading_book.js).
+   The old writing editor stays reachable for pronunciation-drill prompts. */
+function renderWriting(){
+  const el = document.getElementById('view-writing');
+  el.dataset.rendered = '1';
+  if(window.PEL_PENDING_PROMPT || !window.PELReadingBook){ return renderWritingLegacy(); }
+  window.PELReadingBook.render(el);
 }
 viewRenderers.writing = renderWriting;
 
