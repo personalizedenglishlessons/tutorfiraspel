@@ -15,6 +15,10 @@ a numeric prefix (e.g. `auth_rate_limit.sql`) and does **not** prove a script
 actually ran — it only shows tracker rows exist. Do not read "all 111 recorded"
 as "all 111 verified applied".
 
+### Pending, authored 2026-10-17 (NOT applied, NOT pushed, awaiting owner review)
+
+- `202610170001_fill_word_examples.sql`: fills 337 missing word example sentences from sentences already in the same lesson. Idempotent (only rows with null example_en).
+
 ### What was verified vs. applied this session (2026-10-14)
 
 **Applied live:** `202610140001_login_card_site_settings.sql`.
