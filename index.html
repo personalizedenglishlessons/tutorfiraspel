@@ -38,7 +38,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700;800;900&family=Cairo:wght@400;500;700&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
 <script src="lib/pel-personalization.js?v=5230cca5" defer></script>
 <script src="lib/onboard.js?v=e6d28e3f" defer></script>
-<script src="lib/pel-assessment.js?v=1f01a69c" defer></script>
+<script src="lib/pel-assessment.js?v=1f256433" defer></script>
 <link rel="stylesheet" href="lib/pel-scene.css?v=1">
 <script src="lib/pel-icons.js?v=1" defer></script>
 <script src="lib/pel-scene.js?v=1" defer></script>
@@ -1302,7 +1302,7 @@ nav.primary-nav{ gap:clamp(14px,1.6vw,28px); }
 <!-- LIVE TEACHING + REAL-LIFE ENGLISH -->
 
 
-<script src="lib/pel-plans.js?v=b7ef7805"></script>
+<script src="lib/pel-plans.js?v=8186501c"></script>
 <script src="lib/pel_config.js?v=5c9ee888"></script>
 <script src="lib/pel-settings.js?v=ef2290f2"></script>
 <section id="liveTeaching" class="v2-sec" style="background:var(--bg);">
@@ -1402,12 +1402,12 @@ nav.primary-nav{ gap:clamp(14px,1.6vw,28px); }
         html += '<div class="price-term">'+esc(dl)+'</div>';
         html += '<div class="price-value"><span class="amount">'+r.price+'<small>'+PEL_RIYAL()+'</small></span><span class="per">/ '+(ar?(r.duration_months===1?'شهر':(r.duration_months===2?'شهرين':'3 اشهر')):(r.duration_months+' mo'))+'</span></div>';
         if(r.duration_months>1 && save>0){
-          html += '<div class="price-save">'+(ar?('توفير '+save+' '+PEL_RIYAL()+' عن الدفع الشهري'):('Save '+save+' SAR vs paying monthly'))+'</div>';
+          html += '<div class="price-save">'+(ar?('توفير '+save+' '+PEL_RIYAL()+' لو دفعت شهر بشهر'):('Save '+save+' SAR vs month-by-month'))+'</div>';
         } else {
           html += '<div class="price-save">'+(ar?'يعادل':'about')+' '+pm+' '+PEL_RIYAL()+(ar?' شهريا':' / mo')+'</div>';
         }
         if(r.weekly_live_classes>0){
-          html += '<div style="margin:14px 0 0;padding:12px 14px;border:1px solid rgba(200,169,106,.35);border-radius:12px;background:rgba(200,169,106,.08);"><b style="color:var(--gold);font-size:.92rem;">'+r.weekly_live_classes+' '+(ar?(r.weekly_live_classes===1?'حصه اسبوعيه':'حصص اسبوعيه'):(r.weekly_live_classes===1?'class/week':'classes/week'))+'</b><br><span style="font-size:.74rem;color:var(--text-muted);">'+(ar?('مشموله معاك بهالباقه'+(perCls>0?' · الحصه تعادل '+perCls+' ريال':'')):('included'+(perCls>0?' · ~'+perCls+' SAR per class':'')))+'</span></div>';
+          html += '<div style="margin:14px 0 0;padding:12px 14px;border:1px solid rgba(200,169,106,.35);border-radius:12px;background:rgba(200,169,106,.08);"><b style="color:var(--gold);font-size:.92rem;">'+r.weekly_live_classes+' '+(ar?(r.weekly_live_classes===1?'حصه اسبوعيه':'حصص اسبوعيه'):(r.weekly_live_classes===1?'class/week':'classes/week'))+'</b><br><span style="font-size:.74rem;color:var(--text-muted);">'+(ar?('مشموله معاك بهالباقه'+(perCls>0?' · الحصه تقريبا '+perCls+' ريال مع المنصه':'')):('included'+(perCls>0?' · ~'+perCls+' SAR per class, platform included':'')))+'</span></div>';
         } else if(tier==='exam_prep'){
           html += '<div style="margin:14px 0 0;font-size:.78rem;color:var(--text-muted);">'+(ar?'ما فيها حصص مباشره بهالمده':'No live classes at this duration')+'</div>';
         } else {

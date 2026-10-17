@@ -29,9 +29,14 @@ The 3-month "افضل قيمه" badge is now literally true on the metrics shown
 
 1. Never display the per-month equivalent for multi-month plans. It rises from 2m to 3m
    and undermines the offer. Per-month is allowed on the 1-month plan only.
-2. Every multi-month price line leads with the savings: "توفير X ريال عن الدفع الشهري".
-3. Every plan with classes shows the per-class cost: "الحصه تعادل X ريال". This is the
-   strongest commitment argument; keep it adjacent to the classes box.
+2. Every multi-month price line leads with the savings, stated against an explicit
+   comparison: paying the same number of months one at a time
+   ("توفير X ريال لو دفعت شهر بشهر"). Never imply the monthly plan includes the same
+   classes; longer plans include more live classes.
+3. Per-class numbers are bundle equivalents, not standalone class prices: the full
+   bundle price (platform access included) divided by the classes in the plan. Always
+   label them approximate and platform-inclusive
+   ("الحصه تقريبا X ريال مع المنصه"). Never present them as a per-lesson rate.
 4. Longer plans are framed as "الباقه الكامله" (the complete plan), never as a discount.
 5. Copy style: local dialect Arabic, no hamzas, no emojis, no em dashes, and never name
    the target market in user-facing copy (the audience recognizes itself in the dialect).
@@ -57,9 +62,9 @@ and the 3-month perMonth strings in lib/pel-plans.js.
 
 ## Promotion plays (not yet implemented, ranked)
 
-1. Level-test funnel: the free assessment already exists; its results page should end
-   with the value-framed cards (it now does) plus a time-boxed line like
-   "سعرك يثبت لمدة 24 ساعه" (price locks for 24h). Cheap urgency, honest if honored.
+1. Level-test funnel: the free assessment already exists; its results page ends with the
+   value-framed cards (it now does). Avoid fake urgency: no countdowns or price locks
+   unless a genuinely time-limited offer exists.
 2. WhatsApp-first close: the payment flow already runs on WhatsApp. Add to the tutor's
    reply template the savings and per-class numbers for the tier the student asked
    about, so the pitch matches the site exactly.
@@ -72,9 +77,15 @@ and the 3-month perMonth strings in lib/pel-plans.js.
 
 ## Benchmarks collected this session (for future reference)
 
-- Cambly (same market, 1 lesson/week): 200 SAR/month; commitment curve about 10 percent
-  off at 3 months, 25 to 35 percent off at 12 months.
-- Wall Street English (same market): bundles framed as free months (12+2, 18+2).
-- Local institutes: course-based pricing from about 2500 SAR per course.
-- The app's 2m/3m tiers undercut all of these on per-class cost once classes are
-  included, which is the number to lead with in any comparison marketing.
+- Cambly (same market, 1 lesson/week): 200 SAR/month; 3 months 550 SAR, yearly 1806 SAR.
+  Source: https://www.cambly.com/en/subscribe?lang=en&currency=SAR (checked 2026-10-17).
+  Note: at 4 lessons/month that is 50 SAR per standalone lesson, cheaper per lesson than
+  our bundle equivalents; do not claim per-class superiority against Cambly.
+- Wall Street English (same market): bundles framed as free months (12+2, 18+2 free).
+  Source: https://wallstreetenglish.edu.sa/full-access-prices/ (checked 2026-10-17).
+- Local institute course pricing from about 2500 SAR per course.
+  Source: https://www.arabisklondon.com/87290 (checked 2026-10-17).
+- The honest comparison story: our bundles include platform access plus live classes
+  with the same tutor, and the per-class bundle equivalent falls as commitment grows
+  (100 to 54 and 250 to 65). Lead with that in comparison marketing, not with claims
+  of undercutting standalone lesson prices.
