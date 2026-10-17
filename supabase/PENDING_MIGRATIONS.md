@@ -21,7 +21,8 @@ Not yet applied to the live DB (apply in this order, using the procedure at the 
 1. `202610130001_saudi_dialect_msa_cleanup.sql`
 2. `202610170001_fill_word_examples.sql` (337 example sentences, safe to re-run)
 3. `202610170002_hand_examples_82.sql` (82 hand-written Saudi examples + fixes Maghrebi 'تاعك' to 'حقك', safe to re-run)
-4. `202610130002_wipe_activity_tracking.sql` is DESTRUCTIVE. Ask the owner before running.
+4. `202610170003_a1_more_exercises.sql` (113 extra A1 exercises, insert-if-free, safe to re-run)
+5. `202610130002_wipe_activity_tracking.sql` is DESTRUCTIVE. Ask the owner before running.
 
 Owner rules: no pushes of untested work, no removals of existing content, Saudi dialect only (no MSA, no hamza, ه not ة), no em/en dashes, no emojis.
 Note: "هذا" is normal Saudi masculine usage, do not replace it.
