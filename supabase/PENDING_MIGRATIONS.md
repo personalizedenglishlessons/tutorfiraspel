@@ -15,6 +15,18 @@ a numeric prefix (e.g. `auth_rate_limit.sql`) and does **not** prove a script
 actually ran — it only shows tracker rows exist. Do not read "all 111 recorded"
 as "all 111 verified applied".
 
+### NEXT AGENT: START HERE (updated 2026-10-17)
+
+Not yet applied to the live DB (apply in this order, using the procedure at the bottom of this file):
+1. `202610130001_saudi_dialect_msa_cleanup.sql`
+2. `202610170001_fill_word_examples.sql` (337 example sentences, safe to re-run)
+3. `202610130002_wipe_activity_tracking.sql` is DESTRUCTIVE. Ask the owner before running.
+
+Owner rules: no pushes of untested work, no removals of existing content, Saudi dialect only (no MSA, no hamza, ه not ة), no em/en dashes, no emojis.
+Note: "هذا" is normal Saudi masculine usage, do not replace it.
+
+Content work in progress (see task list in the session): expand STEP, strengthen thin C1/C2 pack2 lessons, raise A1 exercises per lesson, write examples for the 82 words with no same-lesson sentence, keep a0ss-alphabet first in A0. Every new migration must be added here.
+
 ### Pending, authored 2026-10-17 (NOT applied, NOT pushed, awaiting owner review)
 
 - `202610170001_fill_word_examples.sql`: fills 337 missing word example sentences from sentences already in the same lesson. Idempotent (only rows with null example_en).
