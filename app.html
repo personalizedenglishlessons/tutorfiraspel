@@ -11552,6 +11552,41 @@ const LISTENING_TRACKS = [
     {en:'Hi, I would like to return this shirt, it is too small.', ar: 'هلا، ابي ارجع ذا القميص، صغير علي.', translit: 'هاي، اي ود لايك تو ريتيرن ذيس شيرت، ات از تو سمول.'},
     {en:'No problem. Do you have the receipt?', ar: 'ولا يهمك. عندك الايصال؟', translit: 'نو بروبلم. دو يو هاڤ ذا ريسيت؟'},
   ]},
+  {id:'bank-visit', title:'At the Bank', lines:[
+    {en:'Good morning. How can I help you?', ar: 'صباح الخير. كيف اقدر اساعدك؟', translit: 'قود مورنينق. هاو كان اي هيلب يو؟'},
+    {en:'I would like to open a new account.', ar: 'ابي افتح حساب جديد.', translit: 'اي ود لايك تو اوبن ا نيو اكاونت.'},
+    {en:'May I see your ID, please?', ar: 'ممكن اشوف هويتك لو سمحت؟', translit: 'ماي اي سي يور اي دي، بليز؟'},
+    {en:'Here you are. How long will it take?', ar: 'تفضل. كم بياخذ وقت؟', translit: 'هير يو ار. هاو لونق ويل ات تيك؟'},
+    {en:'About ten minutes. Please have a seat.', ar: 'تقريبا عشر دقايق. تفضل اجلس.', translit: 'ابوت تن مينتس. بليز هاڤ ا سيت.'},
+  ]},
+  {id:'pharmacy', title:'At the Pharmacy', lines:[
+    {en:'Hello. Do you have anything for a headache?', ar: 'هلا. عندك شي للصداع؟', translit: 'هلو. دو يو هاڤ اني ثينق فور ا هيدايك؟'},
+    {en:'Yes. Take one tablet after eating.', ar: 'ايه. خذ حبة وحدة بعد الاكل.', translit: 'يس. تيك وان تابلت افتر ايتنق.'},
+    {en:'How many times a day?', ar: 'كم مرة باليوم؟', translit: 'هاو ماني تايمز ا داي؟'},
+    {en:'Two times a day. Drink a lot of water.', ar: 'مرتين باليوم. اشرب مويه كثير.', translit: 'تو تايمز ا داي. درينك ا لوت اوف ووتر.'},
+    {en:'Thank you. How much is it?', ar: 'شكرا. كم الحساب؟', translit: 'ثانك يو. هاو ماتش ايز ات؟'},
+  ]},
+  {id:'asking-directions', title:'Asking for Directions', lines:[
+    {en:'Excuse me. Where is the nearest bank?', ar: 'لو سمحت. وين اقرب بنك؟', translit: 'اكسكيوز مي. وير ايز ذا نيرست بانك؟'},
+    {en:'Go straight and turn left at the light.', ar: 'امش على طول ولف يسار عند الاشارة.', translit: 'قو ستريت اند ترن ليفت ات ذا لايت.'},
+    {en:'Is it far from here?', ar: 'هو بعيد من هنا؟', translit: 'ايز ات فار فروم هير؟'},
+    {en:'No. It is about five minutes on foot.', ar: 'لا. تقريبا خمس دقايق مشي.', translit: 'نو. ات ايز ابوت فايف مينتس اون فوت.'},
+    {en:'Thank you so much for your help.', ar: 'شكرا مره على مساعدتك.', translit: 'ثانك يو سو ماتش فور يور هيلب.'},
+  ]},
+  {id:'phone-work-call', title:'A Work Phone Call', lines:[
+    {en:'Hello. This is Omar from the sales team.', ar: 'هلا. معك عمر من فريق المبيعات.', translit: 'هلو. ذس ايز عمر فروم ذا سيلز تيم.'},
+    {en:'Could I speak to Mr. Khaled, please?', ar: 'ممكن اتكلم مع الاستاذ خالد لو سمحت؟', translit: 'كود اي سبيك تو ميستر خالد، بليز؟'},
+    {en:'I am sorry. He is in a meeting right now.', ar: 'اسف. هو في اجتماع الحين.', translit: 'اي ام سوري. هي ايز ان ا ميتنق رايت ناو.'},
+    {en:'Can I take a message?', ar: 'ممكن اخذ رسالة؟', translit: 'كان اي تيك ا ميسج؟'},
+    {en:'Please ask him to call me back today.', ar: 'قل له يتصل علي اليوم لو سمحت.', translit: 'بليز اسك هيم تو كول مي باك تودي.'},
+  ]},
+  {id:'lost-luggage', title:'Lost Luggage', lines:[
+    {en:'Excuse me. My bag did not arrive.', ar: 'لو سمحت. شنطتي ما وصلت.', translit: 'اكسكيوز مي. ماي باق ديد نوت اراڤ.'},
+    {en:'I am sorry to hear that. What does it look like?', ar: 'اسف على كذا. وش شكلها؟', translit: 'اي ام سوري تو هير ذات. وات داز ات لوك لايك؟'},
+    {en:'It is a large black suitcase.', ar: 'هي شنطة سودا كبيرة.', translit: 'ات ايز ا لارج بلاك سوتكيس.'},
+    {en:'Please fill out this form.', ar: 'عبي هذي الاستمارة لو سمحت.', translit: 'بليز فل اوت ذس فورم.'},
+    {en:'We will call you when we find it.', ar: 'بنتصل عليك لما نلقاها.', translit: 'وي ويل كول يو وين وي فايند ات.'},
+  ]},
 ];
 
 /* ---- reading corner articles ---- */
@@ -11582,6 +11617,34 @@ const READING_ARTICLES = [
     {en:'Last Friday, my friends and I went to a new restaurant.', ar: 'الجمعه اللي فاتت، رحت انا واصحابي لمطعم جديد.', translit: 'لاست فرايدي، ماي فرندز اند اي ونت تو ا نو ريسترانت.'},
     {en:'The waiter recommended the grilled salmon.', ar: 'الويتر نصحنا بالسلمون المشوي.', translit: 'ذا ويتر ركمندد ذا قريلد سامون.'},
     {en:'We split the bill and left a good tip.', ar: 'قسمنا الحساب وتركنا بقشيش حلو.', translit: 'وي سبلت ذا بيل اند لفت ا قود تيب.'},
+  ]},
+  {id:'student-day', topic:'Student Life', title:'A Day at University', body:[
+    {en:'Sara wakes up at six every morning.', ar: 'سارة تصحى الساعة ستة كل صباح.', translit: 'ساره ويكس اب ات سكس ايڤري مورنينق.'},
+    {en:'She takes the bus to the university.', ar: 'تركب الباص للجامعة.', translit: 'شي تيكس ذا باس تو ذا يونيفرسيتي.'},
+    {en:'Her first lecture starts at eight.', ar: 'اول محاضرة عندها تبدا الساعة ثمانية.', translit: 'هر فيرست ليكتشر ستارتس ات ايت.'},
+    {en:'After class, she studies in the library.', ar: 'بعد المحاضرة تذاكر في المكتبة.', translit: 'افتر كلاس، شي ستاديز ان ذا لايبريري.'},
+    {en:'In the evening, she finishes her homework.', ar: 'بالليل تخلص واجبها.', translit: 'ان ذي ايڤنينق، شي فينيشز هر هوم ورك.'},
+  ]},
+  {id:'saving-money', topic:'Money', title:'How to Save Money', body:[
+    {en:'Saving money is easier with a simple plan.', ar: 'التوفير اسهل لو عندك خطة بسيطة.', translit: 'سيڤنق ماني ايز ايزير ويذ ا سمبل بلان.'},
+    {en:'First, write down what you spend every month.', ar: 'اول شي اكتب وش تصرف كل شهر.', translit: 'فيرست، رايت داون وات يو سبيند ايڤري مانث.'},
+    {en:'Second, decide how much you want to save.', ar: 'ثاني شي حدد كم تبي توفر.', translit: 'سيكند، ديسايد هاو ماتش يو وانت تو سيڤ.'},
+    {en:'Third, put that money aside on payday.', ar: 'ثالث شي حط هالفلوس جنب يوم الراتب.', translit: 'ثيرد، بوت ذات ماني اسايد اون بايداي.'},
+    {en:'Small steps every month become a big saving.', ar: 'الخطوات الصغيرة كل شهر تصير توفير كبير.', translit: 'سمول ستيبس ايڤري مانث بيكام ا بيق سيڤنق.'},
+  ]},
+  {id:'my-neighborhood', topic:'City Life', title:'My Neighborhood', body:[
+    {en:'I live in a quiet neighborhood in Riyadh.', ar: 'اسكن في حي هادي في الرياض.', translit: 'اي ليڤ ان ا كوايت نيبرهود ان رياض.'},
+    {en:'There is a small market near my house.', ar: 'في سوق صغير قريب من بيتي.', translit: 'ذير ايز ا سمول ماركت نير ماي هاوس.'},
+    {en:'The mosque is five minutes away on foot.', ar: 'المسجد على بعد خمس دقايق مشي.', translit: 'ذا موسك ايز فايف مينتس اواي اون فوت.'},
+    {en:'My neighbors are kind and friendly.', ar: 'جيراني طيبين ومرحبين.', translit: 'ماي نيبرز ار كايند اند فريندلي.'},
+    {en:'I love living here with my family.', ar: 'احب العيش هنا مع اهلي.', translit: 'اي لاڤ ليڤنق هير ويذ ماي فاميلي.'},
+  ]},
+  {id:'learning-english', topic:'Study Tips', title:'Learning English Every Day', body:[
+    {en:'Learning English takes time, but it is possible.', ar: 'تعلم الانجليزي ياخذ وقت، بس ممكن.', translit: 'ليرنق انجلش تيكس تايم، بات ات ايز بوسيبل.'},
+    {en:'Practice a little every day instead of a lot once a week.', ar: 'تدرب شوي كل يوم بدل ما تتدرب كثير مرة بالاسبوع.', translit: 'براكتس ا ليتل ايڤري داي انستيد اوف ا لوت وانس ا ويك.'},
+    {en:'Listen to short audio and repeat out loud.', ar: 'اسمع مقاطع قصيرة وكرر بصوت عالي.', translit: 'ليسن تو شورت اوديو اند ريبيت اوت لاود.'},
+    {en:'Do not be afraid to make mistakes.', ar: 'لا تخاف تغلط.', translit: 'دو نوت بي افريد تو ميك ميستيكس.'},
+    {en:'Mistakes help you learn faster.', ar: 'الاغلاط تساعدك تتعلم اسرع.', translit: 'ميستيكس هيلب يو ليرن فاستر.'},
   ]},
 ];
 
