@@ -254,6 +254,24 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   .streak-mini{ flex-direction:column; gap:2px; width:44px; height:48px; padding:0; justify-content:center; }
   .streak-mini .txt{ display:none; }
   .streak-mini .streak-num{ display:block; }
+  /* iPad: the rail can be opened to the full sidebar (labels back) as an
+     overlay. The rail keeps its 68px of layout space, the open sidebar floats
+     over the page and the dim layer behind it closes it again. */
+  .sidebar.rail-open{ width:var(--sidebar-w); margin-inline-end:calc(68px - var(--sidebar-w)); box-shadow:var(--shadow-lift); }
+  .sidebar.rail-open .sidebar-head{ flex-direction:row; gap:12px; padding:24px 22px; }
+  .sidebar.rail-open .sidebar-head .sidebar-name{ display:block; }
+  .sidebar.rail-open .sidebar-logo .pel-logo{ display:inline-block; }
+  .sidebar.rail-open .sidebar-logo-mark{ display:none; }
+  .sidebar.rail-open .sidebar-collapse-btn{ width:40px; height:40px; margin-inline-start:auto; }
+  .sidebar.rail-open .sidebar-scroll{ padding:14px 12px 20px; }
+  .sidebar.rail-open .side-link{ justify-content:flex-start; padding:11px 12px; }
+  .sidebar.rail-open .side-text-wrap{ display:flex; }
+  .sidebar.rail-open .side-label{ display:flex; }
+  .sidebar.rail-open .sidebar-foot{ display:block; padding:16px 20px; }
+  .sidebar.rail-open .streak-mini{ flex-direction:row; gap:10px; width:auto; height:auto; }
+  .sidebar.rail-open .streak-mini .txt{ display:inline; }
+  .sidebar.rail-open .streak-mini .streak-num{ display:none; }
+  .sidebar-overlay.show{ display:block; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:190; }
 }
 
 /* mobile bottom study dock */
@@ -3339,7 +3357,16 @@ goToView('home');
 
 /* sidebar collapse (desktop: fully hide) + mobile drawer */
 const sidebarEl = document.getElementById('sidebar');
+function pelIsRail(){ return window.innerWidth >= 981 && window.innerWidth <= 1180; }
+function pelCloseRail(){ sidebarEl.classList.remove('rail-open'); document.getElementById('sidebarOverlay').classList.remove('show'); }
 document.getElementById('collapseBtn').addEventListener('click', () => {
+  // iPad icon rail: the button opens and closes the full sidebar instead of hiding it
+  if(pelIsRail()){
+    var open = !sidebarEl.classList.contains('rail-open');
+    sidebarEl.classList.toggle('rail-open', open);
+    document.getElementById('sidebarOverlay').classList.toggle('show', open);
+    return;
+  }
   sidebarEl.classList.add('collapsed');
   sidebarEl.classList.remove('mobile-open');
   document.getElementById('sidebarOverlay').classList.remove('show');
@@ -3365,9 +3392,13 @@ if(dockMoreBtn) dockMoreBtn.addEventListener('click', () => {
   document.getElementById('sidebarOverlay').classList.add('show');
 });
 document.getElementById('sidebarOverlay').addEventListener('click', () => {
+  pelCloseRail();
   sidebarEl.classList.remove('mobile-open');
   document.getElementById('sidebarOverlay').classList.remove('show');
 });
+
+sidebarEl.addEventListener('click', e => { if(e.target.closest('.side-link')) pelCloseRail(); });
+window.addEventListener('resize', () => { if(!pelIsRail()) pelCloseRail(); });
 
 /* context panel toggle (tablet/mobile) */
 const contextPanel = document.getElementById('contextPanel');
