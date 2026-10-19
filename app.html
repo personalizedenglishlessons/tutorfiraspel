@@ -2072,6 +2072,15 @@ function applyStudentStateRow(row){
   if(streakTxt) streakTxt.innerHTML = `<span class="arabic">سلسله ${studentStats.streak || 0} يوم</span>، ${studentStats.streak || 0} day streak`;
   const streakNum = document.getElementById('sidebarStreakNum');
   if(streakNum) streakNum.textContent = studentStats.streak || 0;
+  // Logging in counts as an active day: extend the streak, or break it after two missed days.
+  try{
+    if(currentUser && pelRegisterActiveDay()){
+      saveStudentStats();
+      pelPaintStreak();
+      syncHeroStats();
+      if(typeof renderWeekCard === 'function') renderWeekCard();
+    }
+  }catch(e){}
 }
 function clearStudentState(){
   // Wipes every in-memory trace of the previous session's student data.
@@ -16757,46 +16766,57 @@ function saveStudentStats(){ persistStudentState(); }
      or 85% of users abandon before Week 3. */
 function getStreakFreezes(){ return lsGetUser('pel_streak_freezes', 0); }
 function setStreakFreezes(n){ lsSetUser('pel_streak_freezes', Math.min(2, Math.max(0, n))); }
-function awardXp(amount){
+/* Registers today as an active day. Called on every login / app load AND
+   when XP is awarded, so the streak counts days the student showed up, not
+   only days they finished a lesson.
+   Rule: last active yesterday = +1. One missed day is forgiven (streak kept).
+   Two full days missed (last active 3+ days ago) = streak broken, back to 1. */
+function pelRegisterActiveDay(){
   const today = pelDateKey();
-  if(studentStats.lastStudyDate !== today){
-    const yesterday = pelDateKey(new Date(Date.now() - 86400000));
-    const twoDaysAgo = pelDateKey(new Date(Date.now() - 2*86400000));
-    var freezeUsed = false;
-    if(studentStats.lastStudyDate === yesterday){
-      // Consecutive day, increment streak.
-      studentStats.streak = studentStats.streak + 1;
-    } else if(studentStats.lastStudyDate === twoDaysAgo){
-      // Missed exactly 1 day, check if we have a freeze available.
-      var freezes = getStreakFreezes();
-      if(freezes > 0 && studentStats.streak >= 3){
-        // Consume a freeze: keep the current streak value.
-        setStreakFreezes(freezes - 1);
-        freezeUsed = true;
-        try{ if(typeof toast==='function') toast((accountPrefs.lang==='ar'?'استعملنا تجميد السلسله — سلسلتك محفوظه.':'Streak freeze used! Your streak is preserved.'), 'info'); }catch(e){}
-      } else {
-        studentStats.streak = 1;
-      }
-    } else {
-      // Missed 2+ days, reset streak entirely.
-      studentStats.streak = 1;
-    }
-    // Award a freeze every 3 days of study (capped at 2).
-    // Only when streak actually incremented to a new multiple of 3,
-    // not when a freeze was consumed (streak stayed the same).
-    if(!freezeUsed && studentStats.streak > 0 && studentStats.streak % 3 === 0){
-      var curFreezes = getStreakFreezes();
-      if(curFreezes < 2){
-        setStreakFreezes(curFreezes + 1);
-        try{ if(typeof toast==='function') toast((accountPrefs.lang==='ar'?'حصلت على تجميد سلسله!':'You earned a streak freeze!'), 'success'); }catch(e){}
-      }
-    }
-    studentStats.longestStreak = Math.max(studentStats.longestStreak, studentStats.streak);
-    studentStats.lastStudyDate = today;
-    const studyDays = lsGetUser('pel_study_days', []);
-    if(studyDays.indexOf(today) === -1){ studyDays.push(today); lsSetUser('pel_study_days', studyDays); }
-    renderMiniCal();
+  if(studentStats.lastStudyDate === today) return false;
+  var gap = 99;
+  if(studentStats.lastStudyDate){
+    var p = String(studentStats.lastStudyDate).split('-');
+    var last = new Date(+p[0], (+p[1]||1) - 1, +p[2]||1, 12);
+    var now = new Date(); now = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12);
+    gap = Math.round((now - last) / 86400000);
   }
+  var kept = false;
+  if(gap === 1){
+    studentStats.streak = (studentStats.streak || 0) + 1;
+  } else if(gap === 2){
+    // missed exactly one day: forgiven, the streak keeps its value
+    studentStats.streak = Math.max(1, studentStats.streak || 0);
+    kept = true;
+    try{ if(typeof toast==='function' && studentStats.streak >= 3) toast((accountPrefs.lang==='ar'?'فاتك يوم، لكن سلسلتك باقيه. لا تفوت يومين.':'You missed a day, your streak is safe. Do not miss two.'), 'info'); }catch(e){}
+  } else {
+    studentStats.streak = 1;
+  }
+  // Award a freeze every 3 days of study (capped at 2), only on a real increment.
+  if(!kept && studentStats.streak > 0 && studentStats.streak % 3 === 0){
+    var curFreezes = getStreakFreezes();
+    if(curFreezes < 2){
+      setStreakFreezes(curFreezes + 1);
+      try{ if(typeof toast==='function') toast((accountPrefs.lang==='ar'?'حصلت على تجميد سلسله!':'You earned a streak freeze!'), 'success'); }catch(e){}
+    }
+  }
+  studentStats.longestStreak = Math.max(studentStats.longestStreak || 0, studentStats.streak);
+  studentStats.lastStudyDate = today;
+  return true;
+}
+function pelPaintStreak(){
+  const topStreakEl = document.getElementById('topStreak');
+  if(topStreakEl) topStreakEl.textContent = studentStats.streak || 0;
+  const streakTxt = document.getElementById('sidebarStreakTxt');
+  if(streakTxt) streakTxt.innerHTML = `<span class="arabic">سلسله ${studentStats.streak || 0} يوم</span>، ${studentStats.streak || 0} day streak`;
+  const streakNum = document.getElementById('sidebarStreakNum');
+  if(streakNum) streakNum.textContent = studentStats.streak || 0;
+}
+function awardXp(amount){
+  pelRegisterActiveDay();
+  // "Studied" days (week card, calendar) only count real study, not a bare login
+  const _sd = lsGetUser('pel_study_days', []), _today = pelDateKey();
+  if(_sd.indexOf(_today) === -1){ _sd.push(_today); lsSetUser('pel_study_days', _sd); try{ renderMiniCal(); }catch(e){} }
   studentStats.xp += amount;
   saveStudentStats();
   const topXp = document.getElementById('topXp');
