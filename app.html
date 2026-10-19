@@ -26,6 +26,7 @@
 <script src="lib/pel_lesson_stage.js?v=31ba6ffc"></script>
 <script src="lib/pel_reading_book.js?v=1"></script>
 <script src="lib/pel_practice_studio.js?v=1"></script>
+<script src="lib/pel_skill_tools.js?v=1"></script>
 <script src="lib/pel_dashboard_life.js?v=412efe80"></script>
 <script src="lib/pel_curriculum_path.js?v=4f44ec39"></script>
 <style>
@@ -20440,7 +20441,7 @@ function renderGrammar(){
   }
   if(window.lucide) lucide.createIcons();
 }
-viewRenderers.grammar = renderGrammar;
+viewRenderers.grammar = function(){ const t = skTools(); if(t) t.grammar(document.getElementById('view-grammar')); else renderGrammar(); };
 
 /* ============================================================
    PRONUNCIATION STUDIO
@@ -21032,16 +21033,36 @@ function renderSpeaking(){
       <h1><span class="arabic" style="display:block; font-size:.62em; font-weight:400; color:var(--text-secondary); margin-bottom:4px;">تعلم تتكلم صح، خطوه بخطوه.</span><span dir="ltr">Learn to speak correctly, step by step.</span></h1>
       <p><span class="arabic" style="display:block; margin-bottom:4px;">تخيل انك بالموقف. نعلمك وش تقول، ونفهمك ليه، وتدرب عليه.</span><span dir="ltr">Imagine the situation. We teach you what to say, explain why, and you practice it.</span></p>
     </div>
-    <div class="grid grid-4" id="personaGrid" style="margin-bottom:28px;"></div>
+    <div id="spkPick">
+      <div id="spkChips" style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:18px;"></div>
+      <div class="grid grid-4" id="personaGrid" style="margin-bottom:28px;"></div>
+    </div>
     <div class="card" id="roleplayCard" style="display:none;"></div>`;
   const grid = document.getElementById('personaGrid');
-  grid.innerHTML = SPEAKING_PERSONAS.map(p => `
+  /* Simplified: situations grouped into five themes, one theme at a time. */
+  const SPK_GROUPS = [
+    {id:'travel', ar:'سفر', en:'Travel', ids:['airport-officer','flight-attendant','taxi-driver','receptionist','tour-guide']},
+    {id:'food', ar:'اكل وتسوق', en:'Food and Shopping', ids:['waiter','coffee-barista','cashier','customer','store-return']},
+    {id:'work', ar:'شغل', en:'Work', ids:['manager','coworker','job-interviewer','phone-call','teacher']},
+    {id:'daily', ar:'يومي', en:'Daily Life', ids:['doctor','receptionist-clinic','neighbour','friend','gym-trainer','bank-teller','police-officer']},
+    {id:'freeze', ar:'لما ترتبك', en:'When You Freeze', ids:['nervous-restart','nervous-slow-down','nervous-lost-word','nervous-admit-nervous','nervous-redirect']}
+  ];
+  let spkGroup = 'travel';
+  function drawPersonas(){
+    const g = SPK_GROUPS.find(x => x.id === spkGroup) || SPK_GROUPS[0];
+    const known = new Set(SPK_GROUPS.flatMap(x => x.ids));
+    const list = SPEAKING_PERSONAS.filter(p => g.ids.includes(p.id) || (g.id==='daily' && !known.has(p.id)));
+    document.getElementById('spkChips').innerHTML = SPK_GROUPS.map(x => `<button type="button" class="chip${x.id===spkGroup?' gold':''}" data-spk-group="${x.id}" style="cursor:pointer; padding:9px 16px; font-size:.78rem;"><span class="arabic">${x.ar}</span>، ${x.en}</button>`).join('');
+    document.querySelectorAll('[data-spk-group]').forEach(b => b.addEventListener('click', () => { spkGroup = b.dataset.spkGroup; drawPersonas(); }));
+    grid.innerHTML = list.map(p => `
     <div class="card hoverable persona-card" data-persona="${p.id}">
       <div class="persona-avatar"><i data-lucide="${p.icon}" width="22" height="22"></i></div>
       <h4 style="font-size:.92rem;" dir="ltr">${p.title}</h4>
       <span class="arabic" style="font-size:.82rem; color:var(--text-secondary); display:block; margin-top:2px;">${p.titleAr || ''}</span>
     </div>`).join('');
-  if(window.lucide) lucide.createIcons();
+    if(window.lucide) lucide.createIcons();
+  }
+  drawPersonas();
   grid.addEventListener('click', e => {
     const card = e.target.closest('.persona-card'); if(!card) return;
     startRoleplay(SPEAKING_PERSONAS.find(p => p.id === card.dataset.persona));
@@ -21049,6 +21070,7 @@ function renderSpeaking(){
   function startRoleplay(persona){
     const rc = document.getElementById('roleplayCard');
     rc.style.display = 'block';
+    const pick = document.getElementById('spkPick'); if(pick) pick.style.display = 'none';
     const sc = SCENARIO_TRAINER[persona.id] || DEFAULT_SCENARIO;
     const A = accountPrefs.lang === 'ar';
     let step = 0, placed = [];
@@ -21280,7 +21302,7 @@ function renderSpeaking(){
       rc.scrollIntoView({behavior:'smooth', block:'start'});
     }
 
-    document.getElementById('rpClose')?.addEventListener('click', () => { rc.style.display = 'none'; rc.innerHTML = ''; });
+    document.getElementById('rpClose')?.addEventListener('click', () => { rc.style.display = 'none'; rc.innerHTML = ''; const pk = document.getElementById('spkPick'); if(pk) pk.style.display = ''; });
     render();
   }
 }
@@ -21349,7 +21371,12 @@ function renderListening(){
     if(window.lucide) lucide.createIcons();
   }
 }
-viewRenderers.listening = renderListening;
+let __sk = null;
+function skTools(){
+  if(!__sk && window.PELSkillTools) __sk = window.PELSkillTools.make({ tracks: LISTENING_TRACKS, articles: READING_ARTICLES, topics: GRAMMAR_TOPICS, coach: function(){ renderGrammar(); } });
+  return __sk;
+}
+viewRenderers.listening = function(){ const t = skTools(); if(t) t.listening(document.getElementById('view-listening')); else renderListening(); };
 
 /* ============================================================
    READING CORNER
@@ -21403,7 +21430,7 @@ function renderReading(){
   }
   if(window.lucide) lucide.createIcons();
 }
-viewRenderers.reading = renderReading;
+viewRenderers.reading = function(){ const t = skTools(); if(t) t.reading(document.getElementById('view-reading')); else renderReading(); };
 
 /* ============================================================
    WRITING WORKSHOP
