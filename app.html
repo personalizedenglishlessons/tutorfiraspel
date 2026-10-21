@@ -21,7 +21,7 @@
 <script src="lib/pel-plans.js?v=edf76d37" defer></script>
 <script src="lib/pel-settings.js?v=f5914ebe" defer></script>
 <script src="lib/cert-qr.js?v=a43f19f9" defer></script>
-<script src="lib/cert-sheet.js?v=19aa03eb" defer></script>
+<script src="lib/cert-sheet.js?v=865fb89c" defer></script>
 <script src="lib/pel_config.js?v=5c9ee888"></script>
 <script src="lib/pel_lesson_stage.js?v=d07eae92"></script>
 <script src="lib/pel_reading_book.js?v=7b6c11ce"></script>
@@ -572,7 +572,7 @@ html[data-theme="light"] .eyebrow::before{ background:var(--gold-ink); }
    The certificate CSS, sheet markup and PEL seal live in cert-sheet.js
    (single source of truth shared with the admin print window). */
 #certPrintRoot{ display:none; }
-@page{ size: A4 landscape; margin: 0; }
+@page{ size: A4 portrait; margin: 0; }
 @media print{
   body[data-printing] #appShell,
   body[data-printing] #authGate,
