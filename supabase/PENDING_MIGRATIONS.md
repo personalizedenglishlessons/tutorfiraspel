@@ -31,6 +31,8 @@ an exhaustive postcondition sweep):
 
 9. `202610210001_step_tips_simplify.sql` — PENDING (simpler Saudi titles for 13 STEP lessons, a tips note and a what-not-to-do note per lesson, 3 extra correction exercises per lesson, formal Arabic grammar words simplified). Safe to run: idempotent, only touches items 100/101 and exercises 100-102 of step-* lessons.
 
+10. `202610210002_step_round2_lessons.sql` — PENDING (9 new STEP lessons: if sentences, tenses, comparing, subject-verb agreement, main idea, linking words, word forms, common Saudi errors, -ing or to; each with items, tips, what-not-to-do note and 8 exercises; linked into step-exam-prep at sort 230 to 310). Run after item 9.
+
 All 7 `20261017*` files now have tracker rows (tracker total: 118; reconciliation with the
 checker's `(\d+)_…\.sql` pattern shows every repo version tracked, only orphan is the
 deleted 202610130002 below).
