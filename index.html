@@ -36,9 +36,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700;800;900&family=Cairo:wght@400;500;700&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
-<script src="lib/pel-personalization.js?v=5230cca5" defer></script>
-<script src="lib/onboard.js?v=e6d28e3f" defer></script>
-<script src="lib/pel-assessment.js?v=cdd5a7e5" defer></script>
+<script src="lib/pel-personalization.js?v=b5379fac" defer></script>
+<script src="lib/onboard.js?v=93b3fa05" defer></script>
+<script src="lib/pel-assessment.js?v=cfd07c1a" defer></script>
 <link rel="stylesheet" href="lib/pel-scene.css?v=1">
 <script src="lib/pel-icons.js?v=7a6b5b61" defer></script>
 <script src="lib/pel-scene.js?v=61539017" defer></script>
@@ -1215,7 +1215,7 @@ nav.primary-nav{ gap:clamp(14px,1.6vw,28px); }
       <a href="#home">البدايه</a>
       <a href="#liveTeaching">تعلم وممارسه</a>
       <a href="#pricing">الباقات</a>
-      <a href="#faq">الاسئله</a>
+      <a href="#faq">الأسئلة</a>
     </nav>
     <div class="header-actions">
       <button type="button" class="lang-pill" id="indexLangBtn" aria-label="Switch language">EN</button>
@@ -1240,7 +1240,7 @@ nav.primary-nav{ gap:clamp(14px,1.6vw,28px); }
   <a href="#home" class="mobile-nav-link">البدايه</a>
   <a href="#liveTeaching" class="mobile-nav-link">تعلم وممارسه</a>
   <a href="#pricing" class="mobile-nav-link">الباقات</a>
-  <a href="#faq" class="mobile-nav-link">الاسئله</a>
+  <a href="#faq" class="mobile-nav-link">الأسئلة</a>
   <div class="mobile-menu-actions">
     <button type="button" class="btn-gold" data-open-path style="width:100%; border:none; border-radius:999px; padding:13px 22px; font-family:inherit; font-weight:700;">ابني مسار تعلمي</button>
     <a href="login.html" class="btn-outline">دخول الطلاب</a>
@@ -1302,7 +1302,7 @@ nav.primary-nav{ gap:clamp(14px,1.6vw,28px); }
 <!-- LIVE TEACHING + REAL-LIFE ENGLISH -->
 
 
-<script src="lib/pel-plans.js?v=46fad3ac"></script>
+<script src="lib/pel-plans.js?v=edf76d37"></script>
 <script src="lib/pel_config.js?v=5c9ee888"></script>
 <script src="lib/pel-settings.js?v=f5914ebe"></script>
 <section id="liveTeaching" class="v2-sec" style="background:var(--bg);">
@@ -1346,7 +1346,7 @@ nav.primary-nav{ gap:clamp(14px,1.6vw,28px); }
       termEn:'Advanced - STEP, TOEFL, IELTS', termAr: 'متقدم - STEP و TOEFL و IELTS',
       descEn:'Exam coming up and can\'t tell if you\'re ready? Drill on real questions with instant correction.', descAr: 'الامتحان قرب وما تقدر تقيّم نفسك؟ تدرب بأسئله حقيقيه وتصحيح فوري.',
       featEn:['STEP, TOEFL, IELTS, all covered together','Questions in the exam format, practice before it','Writing corrected instantly, before you go','Audio pronunciation for the listening section'],
-      featAr:['ستب، توفل، وايلتس كلكم بجنب بعض','اسئله بنفس نظام الامتحان، تدرب قبله','تصحيح كتابتك فورا، قبل ما تروح','نطق مسموع عشان قسم الاستماع']
+      featAr:['ستب، توفل، وايلتس كلكم بجنب بعض','أسئلة بنفس نظام الامتحان، تدرب قبله','تصحيح كتابتك فورا، قبل ما تروح','نطق مسموع عشان قسم الاستماع']
     } : {
       nameEn:'Start From 0', nameAr: 'ابد من الصفر',
       termEn:'Absolute beginner - first letter', termAr: 'مبتدي من الصفر - اول حرف',
@@ -1452,8 +1452,8 @@ nav.primary-nav{ gap:clamp(14px,1.6vw,28px); }
 <section id="faq">
   <div class="container">
     <div class="section-head center reveal" dir="rtl">
-      <span class="eyebrow">الاسئله الشايعه</span>
-      <h2 class="arabic-h">اسئله قبل التسجيل</h2>
+      <span class="eyebrow">الأسئلة الشايعه</span>
+      <h2 class="arabic-h">أسئلة قبل التسجيل</h2>
     </div>
     <div class="faq-list" id="faqList" dir="rtl"></div>
   </div>
@@ -1591,12 +1591,12 @@ function applyIndexLang(lang){
     {sel:'.primary-nav a[href="#personalPreview"]', ar: 'خطتك', en:'Your plan'},
     {sel:'.primary-nav a[href="#pricing"]', ar: 'الباقات', en:'Pricing'},
     {sel:'.primary-nav a[href="#liveTeaching"]', ar: 'تعلم وممارسه', en:'Learn & practice'},
-    {sel:'.primary-nav a[href="#faq"]', ar: 'الاسئله', en:'FAQ'},
+    {sel:'.primary-nav a[href="#faq"]', ar: 'الأسئلة', en:'FAQ'},
     {sel:'.mobile-menu a[href="#home"]', ar: 'البدايه', en:'Home'},
     {sel:'.mobile-menu a[href="#personalPreview"]', ar: 'خطتك', en:'Your plan'},
     {sel:'.mobile-menu a[href="#pricing"]', ar: 'الباقات', en:'Pricing'},
     {sel:'.mobile-menu a[href="#liveTeaching"]', ar: 'تعلم وممارسه', en:'Learn & practice'},
-    {sel:'.mobile-menu a[href="#faq"]', ar: 'الاسئله', en:'FAQ'}
+    {sel:'.mobile-menu a[href="#faq"]', ar: 'الأسئلة', en:'FAQ'}
   ];
   navMap.forEach(function(m){ var el=document.querySelector(m.sel); if(el) el.textContent=m[lang]; });
   // section heads - bilingual (preserve structure, just translate)
@@ -1800,7 +1800,7 @@ function applyIndexLang(lang){
   var footerBrandP=document.querySelector('.footer-brand p.arabic');
   if(footerBrandP) footerBrandP.textContent = lang==='ar' ? 'PEL منصه امريكيه من PEL LLC في فلوريدا: من اول كلمه لين ترد على المكالمه بنفسك.' : 'PEL, an American learning platform by PEL LLC in Florida, United States: from your first word to answering the call yourself.';
   var faqH2=document.querySelector('#faq .section-head h2');
-  if(faqH2) faqH2.textContent = lang==='ar' ? 'اسئله قبل التسجيل' : 'Questions before you sign up';
+  if(faqH2) faqH2.textContent = lang==='ar' ? 'أسئلة قبل التسجيل' : 'Questions before you sign up';
   var finalH2=document.querySelector('.final-cta h2');
   if(finalH2) finalH2.textContent = lang==='ar' ? 'اول مكالمه تردها بثقه، تبدا من هنا' : 'Your first confident call starts here';
   var finalP=document.querySelector('.final-cta p.arabic');
@@ -1864,7 +1864,7 @@ function applyIndexLang(lang){
     {t:'تحديد المستوى',d:'تسوي اختبار قصير يحدد مستواك الحقيقي'},
     {t:'خطتك الخاصه',d:'تتابع خطه مبنيه على اهدافك انت بالضبط'},
     {t:'التمرين اليومي',d:'تتمرن يوميا بمحادثات وتمارين تناسب مستواك بالضبط'},
-    {t:'بناء الثقه',d:'تتحول الاجابات الصحه لمحادثه طبيعيه'},
+    {t:'بناء الثقه',d:'تتحول الإجابات الصحه لمحادثه طبيعيه'},
     {t:'الطلاقه',d:'تتكلم انجليزي بطلاقه'}
   ];
   var tStepsEn=[
@@ -1974,7 +1974,7 @@ function applyIndexLang(lang){
   if(liveRightSub) liveRightSub.textContent = lang==='ar' ? 'الثلاثا 8م، اونلوين، 45 دقيقه، 6 طلاب' : 'Tuesday 8pm, online, 45 minutes, 6 students';
   var loopSteps=document.querySelectorAll('#learningLoop .card');
   var loopAr=[
-    {t:'قيم',d:'اسئله خفيفه عن مستواك'},
+    {t:'قيم',d:'أسئلة خفيفه عن مستواك'},
     {t:'خصص',d:'خطه على مقاس هدفك'},
     {t:'اتعلم',d:'دروس من مواقف حقيقيه'},
     {t:'مارس',d:'محادثه وكتابه يوميا'},
@@ -1997,7 +1997,7 @@ function applyIndexLang(lang){
   });
   // faq + final cta heads
   var faqEyebrow=document.querySelector('#faq .eyebrow');
-  if(faqEyebrow) faqEyebrow.textContent = lang==='ar' ? 'الاسئله الشايعه' : 'Common questions';
+  if(faqEyebrow) faqEyebrow.textContent = lang==='ar' ? 'الأسئلة الشايعه' : 'Common questions';
   var finalEyebrow=document.querySelector('.final-cta .eyebrow');
   if(finalEyebrow) finalEyebrow.textContent = lang==='ar' ? 'جاهز؟' : 'Ready?';
   var finalBtn=document.querySelector('#finalPathCta span');

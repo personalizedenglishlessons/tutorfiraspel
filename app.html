@@ -17,14 +17,14 @@
 <script src="vendor/lucide.min.js" integrity="sha384-e4/0BB/wmBhpxvLLrbTidvaESiwxgHfoSGUoRd2s9Ho7YmgxiMftfoo51J/Ojyph" crossorigin="anonymous" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.50.0/dist/umd/supabase.js" integrity="sha384-K0oxqktRvaThvYgGL4G+OK2Ih6VS6Uyu7j3+7WJgp/uWM0Yv6Xi4YEiw0BB+mPfi" crossorigin="anonymous" defer></script>
 <script src="lib/daily-lesson.js?v=2b71d40a" defer></script>
-<script src="lib/pel-personalization.js?v=5230cca5" defer></script>
-<script src="lib/pel-plans.js?v=46fad3ac" defer></script>
+<script src="lib/pel-personalization.js?v=b5379fac" defer></script>
+<script src="lib/pel-plans.js?v=edf76d37" defer></script>
 <script src="lib/pel-settings.js?v=f5914ebe" defer></script>
 <script src="lib/cert-qr.js?v=a43f19f9" defer></script>
 <script src="lib/cert-sheet.js?v=19aa03eb" defer></script>
 <script src="lib/pel_config.js?v=5c9ee888"></script>
-<script src="lib/pel_lesson_stage.js?v=fceacb36"></script>
-<script src="lib/pel_reading_book.js?v=390c50ed"></script>
+<script src="lib/pel_lesson_stage.js?v=d07eae92"></script>
+<script src="lib/pel_reading_book.js?v=7b6c11ce"></script>
 <script src="lib/pel_practice_studio.js?v=7675a22a"></script>
 <script src="lib/pel_skill_tools.js?v=6c9484da"></script>
 <script src="lib/pel_dashboard_life.js?v=412efe80"></script>
@@ -5216,7 +5216,7 @@ const PHON_DICT = {
 'efficient':'افيشانت',
 'effort':'افيرت',
 'efforts':'افيرتس',
-'egypt':'اجابت',
+'egypt':'إجابت',
 'eid':'ايد',
 'eight':'ايت',
 'eighty':'ايتي',
@@ -10073,7 +10073,7 @@ function lightCorrection(text){
         const { data, error } = await pelRpc('student_request_deletion');
         ov.remove();
         if(error || (data && data.error)){
-          toast(ar() ? 'صار خطا، جرب مره ثانيه او راسلنا على واتساب.' : 'Something went wrong, try again or message us on WhatsApp.');
+          toast(ar() ? 'صار خطأ، جرب مره ثانيه او راسلنا على واتساب.' : 'Something went wrong, try again or message us on WhatsApp.');
           return;
         }
         if(data && data.already_pending){
@@ -10083,7 +10083,7 @@ function lightCorrection(text){
         }
       }catch(e){
         ov.remove();
-        toast(ar() ? 'صار خطا، جرب مره ثانيه او راسلنا على واتساب.' : 'Something went wrong, try again or message us on WhatsApp.');
+        toast(ar() ? 'صار خطأ، جرب مره ثانيه او راسلنا على واتساب.' : 'Something went wrong, try again or message us on WhatsApp.');
       }
     });
   });
@@ -10784,7 +10784,7 @@ const VOCAB_BANK = [
 {en:'Consonant', ipa:'/ˈkɒnsənənt/', ar: 'حرف ساكن (مثل b, c, d)', translit: 'كونسانانت', example:{en:'"B" is a consonant letter.', ar:'حرف "B" حرف ساكن.', translit: 'بي از ا كونسوننت ليتر.'}, synonyms:'consonant sound', antonyms:'vowel', family:'consonant, consonantal', collocations:'voiced consonant, double consonant', category:'American Accent Lab', difficulty:'Intermediate', tip: 'Consonants carry rhythm, vowels carry melody.', synonyms_ar: 'حرف ساكن', antonyms_ar: 'حرف متحرك', family_ar: 'حرف ساكن', collocations_ar: 'حرف ساكن مهموس، حرف ساكن مزدوج', tip_ar: 'السواكن تحمل الايقاع والمتغيرات تحمل اللحن', mistake:'Pronouncing silent consonants like the "k" in "knee."'},
 {en:'Stress', ipa:'/strɛs/', ar: 'النبر، التشديد على مقطع', translit: 'ستريس', example:{en:'Stress the second syllable.', ar: 'شدد على المقطع الثاني.', translit: 'سترس ذا سيكند سيلابل.'}, synonyms:'emphasis, accent', antonyms:'unstress', family:'stress, stressed, stressing', collocations:'word stress, stress a syllable', category:'American Accent Lab', difficulty:'Intermediate', tip: 'Stress changes meaning: REcord vs reCORD.', synonyms_ar: 'النبر، التشديد', antonyms_ar: 'بدون نبر', family_ar: 'نبر، مشدد', collocations_ar: 'نبر الكلمه، شدد على مقطع', tip_ar: 'النبر يغير المعنى: REcord مقابل reCORD', mistake:'Stressing every syllable equally.'},
 {en:'Syllable', ipa:'/ˈsɪləbəl/', ar: 'مقطع لفظي', translit: 'سيلابل', example:{en:'"Water" has two syllables.', ar:'كلمه "water" تتكون من مقطعين.', translit: 'واتر هاز تو سيلابلز.'}, synonyms:'beat, unit of sound', antonyms:'', family:'syllable, syllabic', collocations:'stressed syllable, count syllables', category:'American Accent Lab', difficulty:'Intermediate', tip: 'Clap the word to count its syllables.', synonyms_ar: 'مقطع لفظي', antonyms_ar: '', family_ar: 'مقطع، مقطعي', collocations_ar: 'مقطع مشدد، عد المقاطع', tip_ar: 'صفق الكلمه عشان تعد مقاطعها', mistake:'Saying "sy-lla-ble" as four parts; it is three.'},
-{en:'Intonation', ipa:'/ˌɪntəˈneɪʃən/', ar: 'التنغيم، نبره الجمله', translit: 'انتونيهيشن', example:{en:'Rising intonation marks a question.', ar: 'التنغيم الصاعد يدل على سؤال.', translit: 'رايزينج انتونيهيشن ماركس ا كويستشن.'}, synonyms:'pitch, melody', antonyms:'monotone', family:'intonate, intonation', collocations:'rising intonation, falling intonation', category:'American Accent Lab', difficulty:'Intermediate', tip: 'Your voice rises for questions, falls for statements.', synonyms_ar: 'التنغيم، نبره الجمله', antonyms_ar: 'رتيب', family_ar: 'ينغم، تنغيم', collocations_ar: 'تنغيم صاعد، تنغيم هابط', tip_ar: 'صوتك يطلع للاسئله وينزل للجمل', mistake:'Speaking in a flat, robot-like tone.'},
+{en:'Intonation', ipa:'/ˌɪntəˈneɪʃən/', ar: 'التنغيم، نبره الجمله', translit: 'انتونيهيشن', example:{en:'Rising intonation marks a question.', ar: 'التنغيم الصاعد يدل على سؤال.', translit: 'رايزينج انتونيهيشن ماركس ا كويستشن.'}, synonyms:'pitch, melody', antonyms:'monotone', family:'intonate, intonation', collocations:'rising intonation, falling intonation', category:'American Accent Lab', difficulty:'Intermediate', tip: 'Your voice rises for questions, falls for statements.', synonyms_ar: 'التنغيم، نبره الجمله', antonyms_ar: 'رتيب', family_ar: 'ينغم، تنغيم', collocations_ar: 'تنغيم صاعد، تنغيم هابط', tip_ar: 'صوتك يطلع للأسئلة وينزل للجمل', mistake:'Speaking in a flat, robot-like tone.'},
 {en:'Synonym', ipa:'/ˈsɪnənɪm/', ar: 'مرادف، كلمه بنفس المعنى', translit: 'سينونيم', example:{en:'"Happy" is a synonym of "glad."', ar:'كلمه "happy" مرادف لكلمه "glad."', translit: 'هابي از ا سينونيم اوڤ جلاد.'}, synonyms:'equivalent, match', antonyms:'antonym', family:'synonym, synonymous', collocations:'exact synonym, near synonym', category:'Vocabulary Vault', difficulty:'Intermediate', tip: 'Learn synonyms to avoid repeating words.', synonyms_ar: 'مرادف', antonyms_ar: 'ضد', family_ar: 'مرادف، مترادف', collocations_ar: 'مرادف مطابق، مرادف قريب', tip_ar: 'تعلم الكلمات اللي مثلها عشان ما تكرر كلمات', mistake:'Thinking synonyms are always interchangeable in tone.'},
 {en:'Antonym', ipa:'/ˈæntənɪm/', ar: 'ضد، كلمه يعني معاكس', translit: 'انتونيم', example:{en:'"Hot" is an antonym of "cold."', ar:'كلمه "hot" ضد لكلمه "cold."', translit: 'هوت از ان انتونيم اوڤ كولد.'}, synonyms:'opposite', antonyms:'synonym', family:'antonym, antonymous', collocations:'exact antonym', category:'Vocabulary Vault', difficulty:'Intermediate', tip: 'Pair new words with their antonyms to remember both.', synonyms_ar: 'ضد', antonyms_ar: 'مرادف', family_ar: 'ضد، متضاد', collocations_ar: 'ضد مطابق', tip_ar: 'اربط الكلمات الجديده باضدادها عشان تحفظها', mistake:'Confusing antonym with "anonymous."'},
 {en:'Context', ipa:'/ˈkɒntɛkst/', ar: 'السياق، القرينه', translit: 'كونتيكست', example:{en:'Guess the word from its context.', ar: 'خمن الكلمه من سياقها.', translit: 'جيس ذا ورد فروم ايتس كونتيكست.'}, synonyms:'setting, situation', antonyms:'', family:'context, contextual', collocations:'in context, out of context', category:'Vocabulary Vault', difficulty:'Intermediate', tip: 'Context tells you which meaning fits.', synonyms_ar: 'السياق', antonyms_ar: '', family_ar: 'سياق، سياقي', collocations_ar: 'في السياق، خارج السياق', tip_ar: 'السياق يقولك اي معنى يناسب', mistake:'Quoting a word "out of context" changes its sense.'},
@@ -10829,7 +10829,7 @@ const VOCAB_BANK = [
 {en:'Look forward to', ipa:'/lʊk ˈfɔːrwərd tu/', ar: 'يتطلع لـ، ينتظر بشغف', translit: 'لوك فورورد تو', example:{en:'I look forward to the weekend.', ar: 'اتطلع لـ نهايه الاسبوع.', translit: 'اي لوك فورورد تو ذا ويك اند.'}, synonyms:'anticipate, await', antonyms:'dread', family:'look, looked forward', collocations:'look forward to doing, look forward to seeing', category:'Phrasal Verbs Lab', difficulty:'Advanced', tip: 'Follow it with a noun or -ing verb.', synonyms_ar: 'يتطلع لـ', antonyms_ar: 'يخاف من', family_ar: 'ينظر، تطلع', collocations_ar: 'يتطلع لعمل، يتطلع لرويه', tip_ar: 'بعدها اسم او فعل ing', mistake:'Saying "look forward to see" instead of "to seeing."'},
 {en:'Turn out', ipa:'/tɜːrn aʊt/', ar: 'ينتج، يتضح', translit: 'تيرن اوت', example:{en:'It turned out fine.', ar: 'اتضح انه بخير.', translit: 'ات تيرند اوت فوين.'}, synonyms:'result, end up', antonyms:'', family:'turn, turned out', collocations:'turn out well, turn out that', category:'Phrasal Verbs Lab', difficulty:'Advanced', tip: 'It shows how a situation ends.', synonyms_ar: 'ينتج، يتضح', antonyms_ar: '', family_ar: 'يقلب، اتضح', collocations_ar: 'اتضح انه، طلع', tip_ar: 'تبين كيف الموقف ينتهي', mistake:'Confusing it with "turn off."'},
 {en:'Get along', ipa:'/ɡɛt əˈlɒŋ/', ar: 'يتفق مع، يتوافق', translit: 'قت الونج', example:{en:'They get along well.', ar: 'هما يتفقان زينا.', translit: 'ذاي جيت الونق ويل.'}, synonyms:'get on, agree', antonyms:'clash, fight', family:'get, got along', collocations:'get along with, get along well', category:'Phrasal Verbs Lab', difficulty:'Advanced', tip:'Use "get along with" for a person.', synonyms_ar: 'يتفق مع', antonyms_ar: 'يتعارك', family_ar: 'يجيب، اتفق', collocations_ar: 'يتفق مع، يتفقون', tip_ar: 'استخدم get along with للشخص', mistake:'Saying "get along to" instead of "get along with."'},
-{en:'Figure out', ipa:'/ˈfɪɡjər aʊt/', ar: 'يفهم، يحل', translit: 'فيقير اوت', example:{en:'I can\'t figure out the answer.', ar: 'ما اقدر افهم الاجابه.', translit: 'اي كانت فيغير اوت ذا انسر.'}, synonyms:'solve, work out', antonyms:'be confused by', family:'figure, figured out', collocations:'figure out how, figure out what', category:'Phrasal Verbs Lab', difficulty:'Advanced', tip: 'It means to understand or solve.', synonyms_ar: 'يفهم، يحل', antonyms_ar: 'يتحير', family_ar: 'شكل، فهم', collocations_ar: 'افهم كيف، افهم وش', tip_ar: 'تعني يفهم او يحل', mistake:'Saying "figure out of" instead of "figure out."'},
+{en:'Figure out', ipa:'/ˈfɪɡjər aʊt/', ar: 'يفهم، يحل', translit: 'فيقير اوت', example:{en:'I can\'t figure out the answer.', ar: 'ما اقدر افهم الإجابة.', translit: 'اي كانت فيغير اوت ذا انسر.'}, synonyms:'solve, work out', antonyms:'be confused by', family:'figure, figured out', collocations:'figure out how, figure out what', category:'Phrasal Verbs Lab', difficulty:'Advanced', tip: 'It means to understand or solve.', synonyms_ar: 'يفهم، يحل', antonyms_ar: 'يتحير', family_ar: 'شكل، فهم', collocations_ar: 'افهم كيف، افهم وش', tip_ar: 'تعني يفهم او يحل', mistake:'Saying "figure out of" instead of "figure out."'},
 {en:'Episode', ipa:'/ˈɛpɪsoʊd/', ar: 'حلقه (من مسلسل)', translit: 'ابيسود', example:{en:'This episode was exciting.', ar: 'كانت هذي الحلقه مثيره.', translit: 'ذيس ابيسود واز اكسايتينج.'}, synonyms:'instalment, show', antonyms:'', family:'episode, episodic', collocations:'watch an episode, new episode', category:'TV Series English', difficulty:'Advanced', tip: 'A season is made of several episodes.', synonyms_ar: 'حلقه', antonyms_ar: '', family_ar: 'حلقه، عرضي', collocations_ar: 'شاهد حلقه، حلقه جديده', tip_ar: 'الموسم مجموعه من حلقات', mistake:'Pronouncing it "eppi-sode."'},
 {en:'Season', ipa:'/ˈsiːzən/', ar: 'موسم (من مسلسل)', translit: 'سيزان', example:{en:'Season two is better.', ar: 'الموسم الثاني افضل.', translit: 'سيزن تو از بيتر.'}, synonyms:'series run', antonyms:'', family:'season, seasons', collocations:'new season, finale season', category:'TV Series English', difficulty:'Advanced', tip: 'A season groups many episodes.', synonyms_ar: 'موسم', antonyms_ar: '', family_ar: 'موسم، مواسم', collocations_ar: 'موسم جديد، موسم جديد، موسم الاخير', tip_ar: 'الموسم يجمع حلقات كثيره', mistake:'Confusing TV season with weather season.'},
 {en:'Spoiler', ipa:'/ˈspɔɪlər/', ar: 'كاشف للاحداث، حرق للقصه', translit: 'سبويلر', example:{en:'No spoilers, please!', ar: 'لا حرق للاحداث لو سمحت!', translit: 'نو سبويلرز، بليز!'}, synonyms:'reveal, giveaway', antonyms:'teaser', family:'spoil, spoilers', collocations:'spoiler alert, post spoilers', category:'TV Series English', difficulty:'Advanced', tip: 'A spoiler reveals what happens later.', synonyms_ar: 'كاشف للاحداث', antonyms_ar: 'تشويق', family_ar: 'يفسد، كواشف', collocations_ar: 'تحذير حرق، انشر حرق', tip_ar: 'السبويلر يكشف وش يصير بعدين', mistake:'Posting spoilers without a warning.'},
@@ -11516,7 +11516,7 @@ VOCAB_BANK.push.apply(VOCAB_BANK, [
   {en:"Essay", ipa:"/ˈɛseɪ/", ar: "مقال", translit: "ايسي", example:{en:"I wrote an essay about my city.", ar: "كتبت مقال عن مدينتي.", translit: "اي روت ان ايسي اباوت ماي سيتي."}, synonyms:"-", antonyms:"-", family:"-", collocations:"-", category:"Student Life", difficulty:"Beginner", tip:"Stress the first part: ES-say.", synonyms_ar: "-", antonyms_ar: "-", family_ar: "-", collocations_ar: "-", tip_ar: "-"},
   {en:"Summary", ipa:"/ˈsʌməri/", ar: "ملخص", translit: "سامري", example:{en:"Write a short summary.", ar: "اكتب ملخص قصير.", translit: "رايت ا شورت سامري."}, synonyms:"-", antonyms:"-", family:"-", collocations:"-", category:"Student Life", difficulty:"Beginner", tip:"Stress the first part: SUM-ma-ry.", synonyms_ar: "-", antonyms_ar: "-", family_ar: "-", collocations_ar: "-", tip_ar: "-"},
   {en:"Question", ipa:"/ˈkwɛstʃən/", ar: "سؤال", translit: "كويستشن", example:{en:"I have one question.", ar: "عندي سؤال واحد.", translit: "اي هاڤ وان كويستشن."}, synonyms:"-", antonyms:"-", family:"-", collocations:"-", category:"Student Life", difficulty:"Beginner", tip:"The ending sounds like chun.", synonyms_ar: "-", antonyms_ar: "-", family_ar: "-", collocations_ar: "-", tip_ar: "-"},
-  {en:"Answer", ipa:"/ˈænsɝ/", ar: "اجابة", translit: "انسر", example:{en:"Your answer is correct.", ar: "اجابتك صحيحة.", translit: "يور انسر اذ كوريكت."}, synonyms:"-", antonyms:"-", family:"-", collocations:"-", category:"Student Life", difficulty:"Beginner", tip:"The w is silent: AN-ser.", synonyms_ar: "-", antonyms_ar: "-", family_ar: "-", collocations_ar: "-", tip_ar: "-"},
+  {en:"Answer", ipa:"/ˈænsɝ/", ar: "إجابة", translit: "انسر", example:{en:"Your answer is correct.", ar: "إجابتك صحيحة.", translit: "يور انسر اذ كوريكت."}, synonyms:"-", antonyms:"-", family:"-", collocations:"-", category:"Student Life", difficulty:"Beginner", tip:"The w is silent: AN-ser.", synonyms_ar: "-", antonyms_ar: "-", family_ar: "-", collocations_ar: "-", tip_ar: "-"},
   {en:"Topic", ipa:"/ˈtɑːpɪk/", ar: "موضوع", translit: "تابك", example:{en:"Choose a topic for your talk.", ar: "اختر موضوع لحديثك.", translit: "تشوز ا تابك فور يور توك."}, synonyms:"-", antonyms:"-", family:"-", collocations:"-", category:"Student Life", difficulty:"Beginner", tip:"Stress the first part: TOP-ic.", synonyms_ar: "-", antonyms_ar: "-", family_ar: "-", collocations_ar: "-", tip_ar: "-"},
   {en:"Highlighter", ipa:"/ˈhaɪlaɪtɝ/", ar: "قلم تحديد", translit: "هايلايتر", example:{en:"I use a yellow highlighter.", ar: "استخدم قلم تحديد اصفر.", translit: "اي يوز ا يلو هايلايتر."}, synonyms:"-", antonyms:"-", family:"-", collocations:"-", category:"Student Life", difficulty:"Beginner", tip:"Say HI-lie-ter.", synonyms_ar: "-", antonyms_ar: "-", family_ar: "-", collocations_ar: "-", tip_ar: "-"},
   {en:"Notebook", ipa:"/ˈnoʊtbʊk/", ar: "دفتر", translit: "نوتبوك", example:{en:"Open your notebook, please.", ar: "افتح دفترك لو سمحت.", translit: "اوبن يور نوتبوك بليز."}, synonyms:"-", antonyms:"-", family:"-", collocations:"-", category:"Student Life", difficulty:"Beginner", tip:"Stress the first part: NOTE-book.", synonyms_ar: "-", antonyms_ar: "-", family_ar: "-", collocations_ar: "-", tip_ar: "-"},
@@ -12884,7 +12884,7 @@ const LESSON_LIBRARY = {
       {qAr:'"Currently" معناها:', qEn:'"Currently" means:', options:['حاليا','سابقا','قريبا'], correct:0},
     ],
     summary:'You practiced the most important interview question with a clear, structured answer.',
-    takeaway:'جهز اجابتك عن "Tell me about yourself" وتمرن عليها بصوت عالي.',
+    takeaway:'جهز إجابتك عن "Tell me about yourself" وتمرن عليها بصوت عالي.',
   },
   'interview-strengths': {
     title:'Interview: Strengths and Weaknesses', ar: 'المقابله: نقاط القوه والضعف', translit: 'انتر-ڤيو: سترينجثز اند ويكنسز',
@@ -15027,7 +15027,7 @@ const LESSON_LIBRARY = {
       {qAr: 'وش يدل النبره الهابطه؟', qEn:'What does falling intonation signal?', options:["A statement or certainty","A question","Surprise only","Anger"], correct:0},
     ],
     summary:'You learned that rising intonation marks questions, falling intonation marks statements.',
-    takeaway:'اسال صديقك اسئله نعم/لا واستمع اذا صوته يطلع بالنهايه، بعدين جاوب بنبره هابطه.',
+    takeaway:'اسال صديقك أسئلة نعم/لا واستمع اذا صوته يطلع بالنهايه، بعدين جاوب بنبره هابطه.',
   },
   'reduced-syllables': {
     title:'Reduced Syllables', ar: 'المقاطع المخففه', translit: 'ريديوسيد سيلاببلز',
@@ -15888,7 +15888,7 @@ const LESSON_LIBRARY = {
       {qAr: 'وش تسال عن البطاريه؟', qEn:'What do you ask about battery?', options:["What is the battery life?","Is it loud?","What color?","How old?"], correct:0},
     ],
     summary:'You learned electronics shopping phrases including warranty and compatibility.',
-    takeaway:'تدرب على 3 اسئله تسالها قبل تشتري جهاز.',
+    takeaway:'تدرب على 3 أسئلة تسالها قبل تشتري جهاز.',
   },
   'grocery-shopping': {
     title:'Grocery Shopping', ar: 'تسوق البقاله', translit: 'قروسري شوب-ينق',
@@ -15906,7 +15906,7 @@ const LESSON_LIBRARY = {
       {qAr: 'كيف تسال عن السعر؟', qEn:'How do you ask about the price?', options:["How much per kilo?","How much money?","Price?","Cost?"], correct:0},
     ],
     summary:'You learned grocery shopping phrases for navigating a supermarket.',
-    takeaway:'تدرب على 3 اسئله تستخدمها بالبقاله.',
+    takeaway:'تدرب على 3 أسئلة تستخدمها بالبقاله.',
   },
   'returns-without-receipt': {
     title:'Returns Without Receipt', ar: 'الارجاع بدون فاتوره', translit: 'ريترنز وذ راوت ريست',
@@ -16214,7 +16214,7 @@ const LESSON_LIBRARY = {
     vocab:[
       {en:'Edit', ipa:'/ˈɛdɪt/', ar: 'يعدل (القواعد والاملاء)', translit: 'ادات', example:{en:'I need to edit my email.', ar: 'احتاج اعدل ايميلي.', translit: 'اي نيد تو ادات ماي ايميل.'}, tip:'Checking grammar and spelling.'},
       {en:'Revise', ipa:'/rɪˈvaɪz/', ar: 'يراجع ويحسن', translit: 'ريفايز', example:{en:'Revise your draft before sending.', ar: 'راجع مسودتك قبل لا ترسلها.', translit: 'ريفايز يور دراقت بيفور سيندينج.'}, tip:'Checking structure and clarity.'},
-      {en:'Proofread', ipa:'/ˈpruːfriːd/', ar: 'يقرا بدقه ليصحح الاخطاء', translit: 'بروفريد', example:{en:'Please proofread the report.', ar: 'لو سمحت راجع التقرير للاخطاء.', translit: 'بليز بروفريد ذا ريبورت.'}, tip:'The last check before you send.'},
+      {en:'Proofread', ipa:'/ˈpruːfriːd/', ar: 'يقرا بدقه ليصحح الأخطاء', translit: 'بروفريد', example:{en:'Please proofread the report.', ar: 'لو سمحت راجع التقرير للأخطاء.', translit: 'بليز بروفريد ذا ريبورت.'}, tip:'The last check before you send.'},
     ],
     grammar:{title:'Editing and Revision', rule:'Editing checks grammar and spelling. Revision checks structure and clarity. Read aloud, cut unnecessary words, check transitions, verify facts.', saudi:'التحرير يفحص القواعد والاملاء. المراجعه تفحص الهيكل والوضوح. اقرا بصوت عالي، قلل الكلمات الزايده.', wrong:'Skipping the revision step and sending the first draft.', right:'Revise: read aloud, cut unnecessary words, check transitions.', mistakes:["Sending the first draft","Not reading aloud to catch errors"]},
     conversation:[
@@ -17258,7 +17258,7 @@ function recordAndScore(onDone, targetText, btn, _retryCount){
         // Whisper unavailable AND backend not configured: point the learner to
         // the typed input so the mic never looks silently broken.
         const msg = /transcription_not_configured|not configured|empty whisper/i.test(String(e))
-          ? 'محرك الصوت غير متاح - اكتب اجابتك بالاسفل.'
+          ? 'محرك الصوت غير متاح - اكتب إجابتك بالاسفل.'
           : micErrorMessage('network');
         toast('<span class="arabic">'+msg+'</span>');
         onDone(null, null, 'network');
@@ -17392,7 +17392,7 @@ function recordAndScore(onDone, targetText, btn, _retryCount){
         }catch(e2){
           if(btn) btn.classList.remove('recording');
           const msg2 = /transcription_not_configured|not configured|empty whisper/i.test(String(e2))
-            ? 'محرك الصوت غير متاح - اكتب اجابتك بالاسفل.'
+            ? 'محرك الصوت غير متاح - اكتب إجابتك بالاسفل.'
             : micErrorMessage('network');
           toast('<span class="arabic">'+msg2+'</span>');
           onDone(null, null, 'network');
@@ -19201,7 +19201,7 @@ const SAUDI_SWAPS = [
   ['عندما', 'لما'],
   ['تحدث', 'تكلم'], ['المتحدث', 'المتكلم'], ['المتحدثين', 'المتكلمين'], ['المتحدثون', 'المتكلمون'],
   ['الكتابة', 'الكتابه'], ['المراجعة', 'المراجعه'], ['المحادثة', 'المحادثه'],
-  ['القاعدة', 'القاعده'], ['الاجابة', 'الاجابه'], ['اللي طلع', 'النتيجه'],
+  ['القاعدة', 'القاعده'], ['الإجابة', 'الإجابة'], ['اللي طلع', 'النتيجه'],
   ['القراءة', 'القراءه'], ['التمرينة', 'التمرينه'], ['المساعدة', 'المساعده'],
   ['الاكاديمية', 'الاكاديميه'], ['المباشرة', 'المباشره'], ['الواجهة', 'الواجهه'],
   ['العربية', 'العربيه'], ['الانجليزية', 'الانجليزيه'], ['العربية', 'العربيه'],
