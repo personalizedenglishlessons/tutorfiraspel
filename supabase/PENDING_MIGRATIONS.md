@@ -29,6 +29,8 @@ an exhaustive postcondition sweep):
 7. `202610170006_msa_to_saudi_round2.sql` — APPLIED (لدي gone, عندي present)
 8. `202610170007_a0_alphabet_first_lock.sql` — APPLIED (sort_order = -10 on both rows)
 
+9. `202610210001_step_tips_simplify.sql` — PENDING (simpler Saudi titles for 13 STEP lessons, a tips note and a what-not-to-do note per lesson, 3 extra correction exercises per lesson, formal Arabic grammar words simplified). Safe to run: idempotent, only touches items 100/101 and exercises 100-102 of step-* lessons.
+
 All 7 `20261017*` files now have tracker rows (tracker total: 118; reconciliation with the
 checker's `(\d+)_…\.sql` pattern shows every repo version tracked, only orphan is the
 deleted 202610130002 below).
@@ -49,7 +51,7 @@ by appending `commit;` (repo commit `1b67a6e`), then re-applied and verified. LE
 the Management API `/database/query` returns `[]` even when a multi-statement script
 rolls back. Always verify with a positive read-only query, never trust `[]` alone.
 
-Owner rules: no pushes of untested work, no removals of existing content, Saudi dialect only (no MSA; write ة (ta marbuta) where the word really has it, e.g. شوية, طاقية, سيارة; do NOT blanket-replace ة with ه), no em/en dashes, no emojis.
+Owner rules: no pushes of untested work, no removals of existing content, Saudi dialect only (no MSA; write ة (ta marbuta) where the word really has it, e.g. شوية, طاقية, سيارة; do NOT blanket-replace ة with ه; write hamza where the word needs it, e.g. سؤال، أسئلة، إجابة، أخطاء، إذا، لأن. Do not strip hamza from new content), no em/en dashes, no emojis.
 Note: "هذا" is normal Saudi masculine usage, do not replace it.
 
 Content work in progress (see task list in the session): expand STEP, strengthen thin C1/C2 pack2 lessons, raise A1 exercises per lesson, write examples for the 82 words with no same-lesson sentence, keep a0ss-alphabet first in A0. Every new migration must be added here.
