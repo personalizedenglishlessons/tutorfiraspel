@@ -1,0 +1,14 @@
+// Cloudflare Worker "pel" — serves this repo as static assets.
+// Mirrors the live configuration (version 89): whole repo, extensionless
+// HTML redirects, plain 404, security headers from _headers.
+// Deploy: pplx credentials run custom-cred:<uuid>@api.cloudflare.com -- \
+//   bash -c 'export CLOUDFLARE_API_TOKEN=placeholder; npx wrangler deploy'
+{
+  "name": "pel",
+  "compatibility_date": "2026-10-19",
+  "assets": {
+    "directory": ".",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "none"
+  }
+}

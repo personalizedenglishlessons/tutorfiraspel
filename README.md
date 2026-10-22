@@ -6,9 +6,9 @@ asset references are root-relative.
 
 ## Live deployment
 
-- **App:** https://personalizedenglishlessons.github.io/tutorfiraspel/
+- **App:** https://pel.personalizedenglishlessons.workers.dev (Cloudflare Worker `pel`, static assets from the repo root)
 - **Supabase project:** `lewoochehpiycocvfwtz` (ap-northeast-1 / Tokyo)
-- **Hosting:** GitHub Pages (static)
+- **Hosting:** Cloudflare Workers. Pushing to GitHub does NOT auto-deploy; deploy manually with `npx wrangler deploy` from the repo root (`wrangler.jsonc` is committed). Requires a Cloudflare API token with the "Edit Cloudflare Workers" template, passed as `CLOUDFLARE_API_TOKEN`. Old GitHub Pages mirror is retired (CNAME 301s to the Worker).
 
 ## Folder structure
 
