@@ -1518,8 +1518,8 @@ body.ui-en .lp-track{ font-family:'Fraunces',serif; font-weight:600; }
   var box=document.querySelector('.lp'); if(!box) return;
   var LC=function(k){ var v=window.PEL_SITE&&PEL_SITE.lc&&PEL_SITE.lc[k]; return (typeof v==='string'&&v.trim())?v.trim():null; };
   var T=[{k:'start_from_zero',ar:'ابد من الصفر',en:'Start From 0',noteAr:'لمن يبدأ من الصفر وما يعرف شي',noteEn:'For complete beginners'},
-         {k:'exam_prep',ar:'التجهيز للاختبارات',en:'Exam Prep',noteAr:'ستيب، توفل، ايلتس مع استاذ فراس وجها لوجه',noteEn:'STEP, TOEFL, IELTS with Tutor Firas'}];
-  var FB=[[649,1,0],[799,2,1],[1249,3,2]], FE=[[949,1,1],[1499,2,2],[2249,3,3]];
+         {k:'exam_prep',ar:'التجهيز للاختبارات',en:'Exam Prep',noteAr:'تجهيز ستيب وتوفل وايلتس مع استاذ فراس على مقاسك',noteEn:'STEP, TOEFL, IELTS prep shaped around you'}];
+  var FB=[[649,1,0],[799,2,1],[1249,3,2]], FE=[[1099,1,1],[1699,2,2],[2499,3,3]];
   var i=0, rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
   function isEn(){ return document.body.classList.contains('ui-en'); }
   function rows(k){
@@ -1529,7 +1529,7 @@ body.ui-en .lp-track{ font-family:'Fraunces',serif; font-weight:600; }
     return out;
   }
   function dur(m,e){ if(e) return m+(m===1?' month':' months'); return m===1?'شهر':m===2?'شهرين':'3 اشهر'; }
-  function out0(k){ var rs=rows(k); return rs.length?rs[0][0]:(k==='exam_prep'?949:649); }
+  function out0(k){ var rs=rows(k); return rs.length?rs[0][0]:(k==='exam_prep'?1099:649); }
   function paint(){
     var t=T[i], e=isEn(), h='';
     rows(t.k).forEach(function(r){

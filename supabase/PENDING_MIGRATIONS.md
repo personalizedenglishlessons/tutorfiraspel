@@ -35,8 +35,10 @@ an exhaustive postcondition sweep):
 
 11. `202610220001_adjust_plan_prices.sql` — APPLIED 2026-10-22 and verified live (public_index_plans serves 649/799/1249 for start_from_zero and 949/1499/2249 for exam_prep). Charm-pricing adjustment, owner-approved. Marketing text updated in the same change: lib/pel-plans.js + index.html now say included classes are ONLINE ONLY (Zoom / Teams / Google Meet), and in-person classes are separate credits bought from the tutor and requested from the student portal (prices shared on contact). Feature lists rewritten with concrete terms, no litotes.
 
+12. `202610220002_exam_prep_price_hike.sql` — APPLIED 2026-10-22 and verified live (public_index_plans serves 1099/1699/2499 for exam_prep; start_from_zero unchanged at 649/799/1249). Owner-directed increase for the Exam Prep track. Same change: Exam Prep marketing copy rewritten to be personal, not generic (built from the students themselves, plan shaped by Tutor Firas).
+
 All 7 `20261017*` files and both `20261021*` files now have tracker rows (tracker total:
-121 as of 2026-10-22 (after 202610220001); reconciliation with the
+122 as of 2026-10-22 (after 202610220002); reconciliation with the
 checker's `(\d+)_…\.sql` pattern shows every repo version tracked, only orphan is the
 deleted 202610130002 below).
 
