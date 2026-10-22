@@ -24,24 +24,37 @@ URL = f'https://api.supabase.com/v1/projects/{REF}/database/query'
 MIGRATIONS_DIR = os.path.join(os.path.dirname(__file__), '..', 'supabase', 'migrations')
 
 
+class DbError(RuntimeError):
+    pass
+
+
 def query(sql: str):
+    """Run one query/script. Returns the result rows (list). Raises DbError on
+    SQL errors (Management API answers 200 with a {"message": "ERROR ..."} body,
+    which looks like success to curl) or transport failures."""
     proc = subprocess.run(
-        ['curl', '-sS', '--max-time', '300', '-X', 'POST', URL,
+        ['curl', '-sS', '--fail-with-body', '--max-time', '300', '-X', 'POST', URL,
          '-H', 'Content-Type: application/json',
          '--data-binary', json.dumps({'query': sql})],
         capture_output=True, text=True)
     if proc.returncode != 0:
-        raise RuntimeError(f'curl failed: {proc.stderr}')
+        raise DbError(f'curl failed ({proc.returncode}): {proc.stderr or proc.stdout[:500]}')
     try:
-        return json.loads(proc.stdout)
+        res = json.loads(proc.stdout)
     except json.JSONDecodeError:
-        raise RuntimeError(f'non-JSON response: {proc.stdout[:500]}')
+        raise DbError(f'non-JSON response: {proc.stdout[:500]}')
+    if isinstance(res, dict):
+        # SQL error bodies look like {"message": "Failed to run sql query: ERROR: ..."}
+        raise DbError(f'query failed: {res.get("message", json.dumps(res)[:500])}')
+    if not isinstance(res, list):
+        raise DbError(f'unexpected response shape: {json.dumps(res)[:500]}')
+    return res
 
 
 def repo_files():
     out = {}
     for fname in sorted(os.listdir(MIGRATIONS_DIR)):
-        m = re.match(r'(\d+)([\w.]+)\.sql$', fname)
+        m = re.match(r'(\d+)_([\w.]+)\.sql$', fname)
         if m:
             out[m.group(1)] = fname
     return out
@@ -55,7 +68,7 @@ def main() -> int:
         repo = repo_files()
         unrecorded = [v for v in sorted(repo) if v not in applied]
         orphan = [v for v in sorted(applied) if v not in repo]
-        print(f'tracker rows: {len(applied)}; repo files: {len(repo)}')
+        print(f'tracker rows: {len(applied)}; unique numeric versions in repo: {len(repo)}')
         if unrecorded:
             print('In repo but NOT in tracker:')
             for v in unrecorded:
@@ -68,12 +81,22 @@ def main() -> int:
             print('OK: all repo migrations recorded in tracker.')
         return 0
     if cmd == 'sql':
-        print(json.dumps(query(sys.argv[2]), ensure_ascii=False))
+        try:
+            print(json.dumps(query(sys.argv[2]), ensure_ascii=False))
+        except DbError as e:
+            print(f'ERROR: {e}', file=sys.stderr)
+            return 1
         return 0
     if cmd == 'apply':
         path = os.path.join(MIGRATIONS_DIR, sys.argv[2])
         text = open(path).read()
-        res = query(text)
+        try:
+            res = query(text)
+        except DbError as e:
+            print(f'ERROR: {e}', file=sys.stderr)
+            return 1
+        # NOTE: [] is ambiguous — the API returns [] even when a multi-statement
+        # script rolls back. Always verify with a positive read-only query.
         print(json.dumps(res, ensure_ascii=False))
         return 0
     if cmd == 'record':
@@ -88,9 +111,15 @@ def main() -> int:
                f"select '{v}', '{fname[len(v)+1:-4]}', array[$mig${text}$mig$::text] "
                "where not exists (select 1 from supabase_migrations.schema_migrations "
                f"where version='{v}')")
-        res = query(sql)
-        print(json.dumps(res, ensure_ascii=False))
-        rows = query(f"select version, name from supabase_migrations.schema_migrations where version='{v}'")
+        try:
+            query(sql)
+            rows = query(f"select version, name from supabase_migrations.schema_migrations where version='{v}'")
+        except DbError as e:
+            print(f'ERROR: {e}', file=sys.stderr)
+            return 1
+        if not any(r.get('version') == v for r in rows):
+            print(f'ERROR: tracker row for {v} not found after insert', file=sys.stderr)
+            return 1
         print(f'verified tracker row: {json.dumps(rows)}')
         return 0
     print(__doc__)

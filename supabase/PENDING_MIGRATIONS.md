@@ -29,9 +29,9 @@ an exhaustive postcondition sweep):
 7. `202610170006_msa_to_saudi_round2.sql` — APPLIED (لدي gone, عندي present)
 8. `202610170007_a0_alphabet_first_lock.sql` — APPLIED (sort_order = -10 on both rows)
 
-9. `202610210001_step_tips_simplify.sql` — APPLIED 2026-10-22 (verified live: 26 tips/what-not-to-do items at idx 100/101 and 39 correction exercises at idx 100-102 across the 13 step-* lessons, zero `التصريف الثالث`/formal grammar terms left in step content).
+9. `202610210001_step_tips_simplify.sql` — APPLIED 2026-10-22 and verified per lesson: exactly 2 explain items at idx 100/101 and 3 correction exercises at idx 100-102 in each of the 13 target step-* lessons; all five formal grammar phrases (التصريف الثالث، تطابق الفاعل والفعل، المبني للمجهول، الفعل المضارع، الفعل الماضي) now return 0 rows across step-% lesson_items text and lesson_exercises payloads.
 
-10. `202610210002_step_round2_lessons.sql` — APPLIED 2026-10-22 (verified live: all 9 lessons exist with 8 items + 8 exercises each, academy links in step-exam-prep at sort 230-310). NOTE: the 2026-10-21 session was cut off mid-apply and only step-grammar-conditionals + step-grammar-tenses had made it live; the 2026-10-22 session re-ran the whole file (idempotent, deletes and recreates its own 9 lesson IDs) and verified the full set.
+10. `202610210002_step_round2_lessons.sql` — APPLIED 2026-10-22 and verified live: all 9 lessons exist with 8 items + 8 exercises each, academy links in step-exam-prep at sort 230-310. OBSERVED STATE before the 2026-10-22 apply: only step-grammar-conditionals and step-grammar-tenses existed live (with 8 items each); the other 7 did not. The full file was run once on 2026-10-22 and the complete set verified after. CAUTION: this migration deletes and recreates all items and exercises for its 9 lesson IDs, so re-running it after any later manual edits to those lessons would erase them.
 
 All 7 `20261017*` files and both `20261021*` files now have tracker rows (tracker total:
 120 as of 2026-10-22; reconciliation with the
@@ -141,7 +141,10 @@ blindly; if you suspect a missed statement, write a NEW forward migration.
    `pplx credentials run custom-cred:<uuid>@api.supabase.com -- python3 tools/db_admin.py apply <file>`
    `tools/db_admin.py` also has check/record/sql subcommands (mirrors
    check_migrations.py, uses curl because urllib fails through the proxy).
-4. Verify the change is live with a read-only query (RLS: `select policyname, qual from pg_policies where tablename='<table>'`).
+4. Verify the change is live with a positive read-only query (RLS: `select policyname, qual from pg_policies where tablename='<table>'`).
+   Note: the app's translate exercise renderer ignores the `dir` payload field (it detects
+   direction from Arabic characters in `source`), so `"dir": false` in exercise payloads
+   is inert metadata, not a runtime contract.
 5. Record in the tracker so a later `supabase db push` doesn't re-run it:
    `MODE=record SUPABASE_ACCESS_TOKEN=sbp_... python3 tools/check_migrations.py`
    ⚠️ `MODE=record` blindly inserts rows for EVERY untracked repo file.
