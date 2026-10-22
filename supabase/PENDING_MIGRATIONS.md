@@ -29,11 +29,12 @@ an exhaustive postcondition sweep):
 7. `202610170006_msa_to_saudi_round2.sql` — APPLIED (لدي gone, عندي present)
 8. `202610170007_a0_alphabet_first_lock.sql` — APPLIED (sort_order = -10 on both rows)
 
-9. `202610210001_step_tips_simplify.sql` — PENDING (simpler Saudi titles for 13 STEP lessons, a tips note and a what-not-to-do note per lesson, 3 extra correction exercises per lesson, formal Arabic grammar words simplified). Safe to run: idempotent, only touches items 100/101 and exercises 100-102 of step-* lessons.
+9. `202610210001_step_tips_simplify.sql` — APPLIED 2026-10-22 (verified live: 26 tips/what-not-to-do items at idx 100/101 and 39 correction exercises at idx 100-102 across the 13 step-* lessons, zero `التصريف الثالث`/formal grammar terms left in step content).
 
-10. `202610210002_step_round2_lessons.sql` — PENDING (9 new STEP lessons: if sentences, tenses, comparing, subject-verb agreement, main idea, linking words, word forms, common Saudi errors, -ing or to; each with items, tips, what-not-to-do note and 8 exercises; linked into step-exam-prep at sort 230 to 310). Run after item 9.
+10. `202610210002_step_round2_lessons.sql` — APPLIED 2026-10-22 (verified live: all 9 lessons exist with 8 items + 8 exercises each, academy links in step-exam-prep at sort 230-310). NOTE: the 2026-10-21 session was cut off mid-apply and only step-grammar-conditionals + step-grammar-tenses had made it live; the 2026-10-22 session re-ran the whole file (idempotent, deletes and recreates its own 9 lesson IDs) and verified the full set.
 
-All 7 `20261017*` files now have tracker rows (tracker total: 118; reconciliation with the
+All 7 `20261017*` files and both `20261021*` files now have tracker rows (tracker total:
+120 as of 2026-10-22; reconciliation with the
 checker's `(\d+)_…\.sql` pattern shows every repo version tracked, only orphan is the
 deleted 202610130002 below).
 
@@ -135,6 +136,11 @@ blindly; if you suspect a missed statement, write a NEW forward migration.
    `curl -s -o /dev/null -w "%{http_code}" -H "Authorization: Bearer $SUPABASE_PAT" https://api.supabase.com/v1/projects`
 3. Apply each file, in dependency order:
    `SUPABASE_PAT=sbp_... python3 tools/sql.py "$(cat supabase/migrations/<file>.sql)"`
+   Or, from a Perplexity Computer session with the token saved in the secure
+   credential form (host api.supabase.com), skip the raw token entirely:
+   `pplx credentials run custom-cred:<uuid>@api.supabase.com -- python3 tools/db_admin.py apply <file>`
+   `tools/db_admin.py` also has check/record/sql subcommands (mirrors
+   check_migrations.py, uses curl because urllib fails through the proxy).
 4. Verify the change is live with a read-only query (RLS: `select policyname, qual from pg_policies where tablename='<table>'`).
 5. Record in the tracker so a later `supabase db push` doesn't re-run it:
    `MODE=record SUPABASE_ACCESS_TOKEN=sbp_... python3 tools/check_migrations.py`
