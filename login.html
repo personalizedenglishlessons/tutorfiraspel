@@ -175,7 +175,8 @@ body.ui-ar .remember,
 body.ui-ar .form-message,
 body.ui-ar #loginBtnLabel,
 body.ui-ar .redirect-overlay p,
-body.ui-ar .caps-warning{
+body.ui-ar .caps-warning,
+body.ui-ar .legal-row{
   font-family:'Tajawal','Cairo',sans-serif;
 }
 body.ui-ar .panel-label,
@@ -439,6 +440,16 @@ body.ui-ar .dp-tag{
 .no-account{ margin-top:22px; padding-top:18px; border-top:1px solid var(--border, rgba(255,255,255,.08)); text-align:center; font-size:.84rem; color:var(--text-muted); }
 .no-account a{ color:var(--gold); text-decoration:none; font-weight:600; }
 .no-account a:hover{ text-decoration:underline; }
+.legal-row{
+  margin-top:14px; display:flex; align-items:center; justify-content:center; gap:10px;
+  font-size:.76rem; color:var(--text-muted);
+}
+.legal-row a{
+  color:var(--text-muted); text-decoration:none; padding:4px 2px;
+  border-bottom:1px dashed transparent; transition:color .2s, border-color .2s;
+}
+.legal-row a:hover{ color:var(--gold); border-bottom-color:var(--gold); }
+.legal-row .sep{ color:var(--border); }
 @media(max-width:600px){ .brand-side{ padding-top:78px !important; } }
 .row-between{ display:flex; align-items:center; justify-content:flex-start; margin-top:20px; flex-wrap:wrap; gap:10px; }
 .remember{ display:flex; align-items:center; gap:9px; font-size:.82rem; color:var(--text-secondary); }
@@ -677,6 +688,12 @@ input{ font-size:16px; }
             <div class="form-message" id="loginMessage"></div>
 
             <p class="no-account"><span class="na-text">ما عندك حساب؟</span> <a href="https://wa.me/966557178070?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%20%D8%A7%D8%B3%D8%AA%D8%A7%D8%B0%20%D9%81%D8%B1%D8%A7%D8%B3%D8%8C%20%D8%A7%D8%A8%D9%8A%20%D8%A7%D8%B4%D8%AA%D8%B1%D9%83%20%D9%81%D9%8A%20PEL" target="_blank" rel="noopener">تواصل مع استاذ فراس واتساب</a></p>
+
+            <p class="legal-row">
+              <a href="legal.html#terms" target="_blank" rel="noopener" id="termsLink">الشروط والاحكام</a>
+              <span class="sep" aria-hidden="true">·</span>
+              <a href="legal.html#privacy" target="_blank" rel="noopener" id="privacyLink">سياسه الخصوصيه</a>
+            </p>
           </form>
         </div>
       </div>
@@ -763,6 +780,8 @@ function applyLoginLang(lang){
     'label[for="loginPassword"]': ar?'كلمة السر':'Password',
     '#rememberToggle': ar?'<span class="checkbox remember-checkbox"></span> تذكرني':'<span class="checkbox remember-checkbox"></span> Remember me',
     '#loginBtnLabel': ar?'دخول':'Log In',
+    '#termsLink': ar?'الشروط والاحكام':'Terms of Service',
+    '#privacyLink': ar?'سياسه الخصوصيه':'Privacy Policy',
     '.redirect-overlay p': ar?'نفتح لك حسابك...':'Opening your dashboard...'
   };
   Object.keys(T).forEach(function(sel){
