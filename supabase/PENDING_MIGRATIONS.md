@@ -33,8 +33,10 @@ an exhaustive postcondition sweep):
 
 10. `202610210002_step_round2_lessons.sql` — APPLIED 2026-10-22 and verified live: all 9 lessons exist with 8 items + 8 exercises each, academy links in step-exam-prep at sort 230-310. OBSERVED STATE before the 2026-10-22 apply: only step-grammar-conditionals and step-grammar-tenses existed live (with 8 items each); the other 7 did not. The full file was run once on 2026-10-22 and the complete set verified after. CAUTION: this migration deletes and recreates all items and exercises for its 9 lesson IDs, so re-running it after any later manual edits to those lessons would erase them.
 
+11. `202610220001_adjust_plan_prices.sql` — APPLIED 2026-10-22 and verified live (public_index_plans serves 649/799/1249 for start_from_zero and 949/1499/2249 for exam_prep). Charm-pricing adjustment, owner-approved. Marketing text updated in the same change: lib/pel-plans.js + index.html now say included classes are ONLINE ONLY (Zoom / Teams / Google Meet), and in-person classes are separate credits bought from the tutor and requested from the student portal (prices shared on contact). Feature lists rewritten with concrete terms, no litotes.
+
 All 7 `20261017*` files and both `20261021*` files now have tracker rows (tracker total:
-120 as of 2026-10-22; reconciliation with the
+121 as of 2026-10-22 (after 202610220001); reconciliation with the
 checker's `(\d+)_…\.sql` pattern shows every repo version tracked, only orphan is the
 deleted 202610130002 below).
 
